@@ -1,0 +1,111 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "ec49d85b-17bb-4b65-a49f-3086aa5430cd": {
+          "type": "newsletter",
+          "settings": {
+            "bg_new": "rgba(0,0,0,0)",
+            "border_new": "#d9d7dd",
+            "btn_bg_new": "#ffffff",
+            "btn_cl_new": "#1c1919",
+            "btn_cl_new_hover": "#ffffff",
+            "title": "NEWSLETTER",
+            "subheading": "<p>Sign up for private sales, new launches, style tips and more.</p>",
+            "enablesocial": true,
+            "width": "25%"
+          }
+        },
+        "1562342622030": {
+          "type": "menu",
+          "settings": {
+            "link_list": "main-menu",
+            "title": "",
+            "width": "auto"
+          }
+        },
+        "1567410176792": {
+          "type": "menu",
+          "settings": {
+            "link_list": "footer",
+            "title": "",
+            "width": "auto"
+          }
+        },
+        "e9eb7f2c-c446-4ab6-9c0c-636e713bb621": {
+          "type": "menu",
+          "settings": {
+            "link_list": "footer",
+            "title": "",
+            "width": "auto"
+          }
+        },
+        "1595696762386": {
+          "type": "text",
+          "settings": {
+            "widthlogofooter": 150,
+            "title": "Contact Us",
+            "text": "E-Mail: info@info.de<br>\nPhone: 1.888.838.3022<br>\nHours: Monday – Thursday: 9AM – 7PM ET, Friday: 9AM – 2PM ET",
+            "width": "25%"
+          }
+        }
+      },
+      "block_order": [
+        "ec49d85b-17bb-4b65-a49f-3086aa5430cd",
+        "1562342622030",
+        "1567410176792",
+        "e9eb7f2c-c446-4ab6-9c0c-636e713bb621",
+        "1595696762386"
+      ],
+      "custom_css": [
+        ".site-footer__copyright {border-top: none;}",
+        ".footer-email {margin-top: -0.4rem;}",
+        ".site-footer__newsletter-label {--g-color-heading: white;}"
+      ],
+      "settings": {
+        "setwidth": "container-fluid",
+        "background": "#200e10",
+        "border_headfooter": "rgba(0,0,0,0)",
+        "border-copryright": "#7f8b83",
+        "text": "#fff4fe",
+        "text_hover": "#fe899a",
+        "title": "#fff4fe",
+        "footer_align_title": "left",
+        "enable_border": false,
+        "footer_font_family": "--g-font-1",
+        "footer_font_size_title": 14,
+        "footer_font_weight": "700",
+        "footer_spacing": 0.1,
+        "footer_typetext": "uppercase",
+        "acc_mobile": true,
+        "e_ft_currency": true,
+        "enable_image": true,
+        "enable_name": true,
+        "enable_language_selector": true,
+        "payment_info": "svg",
+        "link_list_bottom": "",
+        "copyright": true,
+        "customcopyright": "<p>© Designed with<a href=\"#\" title=\"#\"> <strong>Summit Theme</strong></a></p>",
+        "padding_top": 64,
+        "padding_bottom": 32,
+        "m_padding_top": 32,
+        "m_padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

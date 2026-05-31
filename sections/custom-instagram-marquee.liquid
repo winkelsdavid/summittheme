@@ -1,0 +1,829 @@
+<style>
+.c-{{ section.id }}{
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  background:{{  section.settings.background }};
+}
+@media screen and (max-width: 991px) {
+  .c-{{ section.id }}{
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+}
+
+.c-{{ section.id }} .custom_insta_marquee_container{
+max-height:{{  section.settings.section_height_desktop }}px;
+}
+.custom_insta_marquee_container{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+overflow:hidden;
+}
+.c-{{ section.id }} .marquee-col{
+height:{{  section.settings.section_height_desktop }}px;
+}
+
+.marquee-col{
+width:16.5%;
+flex:0 0 16.5%;
+overflow:hidden;
+position:relative;
+}
+{%  if section.settings.enable_overlay_edges %}
+.c-{{ section.id }} .opacity_item{
+    position: absolute;
+    height: 50px;
+    width: 100%;
+    z-index: 2;
+    left:0;
+}
+{%  else %}
+.c-{{ section.id }} .opacity_item{
+   display:none!important;
+}
+{% endif %}
+{% if  section.settings.overlay_color != blank and section.settings.overlay_color != "rgba(0,0,0,0)"%}
+  {%  assign overlay_color = section.settings.overlay_color %}
+{% else %}
+ {%  assign overlay_color = settings.color_body_bg %}
+{% endif %}
+.c-{{ section.id }} .opacity_item.opacity_top{
+    top: 0;
+    background: linear-gradient(180deg, {{ overlay_color }}, transparent);
+}
+.c-{{ section.id }} .opacity_item.opacity_bottom{
+    bottom: 0;
+    background: linear-gradient(0deg, {{ overlay_color }}, transparent);
+}
+.marquee-col-c{
+display:flex;
+flex-direction:column;
+gap:20px;
+will-change: transform;
+}
+.c-{{ section.id }}  .marquee-col-image{
+border-radius:{{  section.settings.boxes_radius }}px;
+}
+.marquee-col-image{
+    position:relative;
+    padding-top:133%;
+    
+    overflow:hidden;
+}
+.marquee-col-image img,
+.marquee-col-image svg{
+height:100%;
+width:100%;
+object-fit:cover;
+position:absolute;
+top:0;
+left:0;
+}
+.c-{{ section.id }} .marquee_main_image_c{
+height:{{  section.settings.section_height_desktop }}px;
+}
+.c-{{ section.id }}  .marquee_main_image_c{
+border-radius:{{  section.settings.boxes_radius }}px;
+}
+.marquee_main_image_c{
+flex:1;
+position:relative;
+overflow:hidden;
+}
+.marquee_main_image{
+height:100%;
+}
+.marquee_main_image img,
+.marquee_main_image video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.marquee_content{
+position:absolute;
+top:0;
+left:0;
+height:100%;
+width:100%;
+padding:32px 10%;
+display:flex;
+align-items:center;
+flex-direction:column;
+gap:16px;
+justify-content:flex-end;
+}
+.marquee_content-overlay{
+  display:flex;
+  position:absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  background:{{ section.settings.box_overlay_color }};
+  opacity:0.{{ section.settings.box_overlay_opacity }}
+}
+.c-{{ section.id }} .marquee_content 
+.marquee_content .rte{
+margin:0;
+}
+.marquee_content .rte *{
+    color:white;
+    font-size:20px;
+}
+
+.c-{{ section.id }} .marquee_content .btn{
+border-radius: {{  section.settings.button_radius }}px;
+}
+.marquee_content .btn.with_image{
+   /* background: #ffffff;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;*/
+    padding: 4px 8px;
+}
+/*.marquee_content .btn:hover{
+border:1px solid;
+color:#ffffff;
+background:transparent;
+}*/
+.c-{{ section.id }} .animate-down {
+    animation: marquee-down {{  section.settings.animation_speed }}s linear infinite;
+}
+.c-{{ section.id }}  .animate-up {
+    animation: marquee-up {{  section.settings.animation_speed }}s linear infinite;
+}
+.marquee_content .with_image svg{
+      border-radius: 50%;
+    height: 32px;
+    width: 32px;
+}
+@keyframes marquee-down {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0%); }
+}
+
+@keyframes marquee-up {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(-50%); }
+}
+/*.custom_insta_marquee_container:hover .marquee-col {
+    animation-play-state: paused;
+}*/
+@media (max-width:768px){
+.c-{{ section.id }} .custom_insta_marquee_container {
+    max-height: unset;
+}
+.marquee-col{
+max-height:246px;
+width:calc(50% - 10px);
+flex:0 0 calc(50% - 10px);
+}
+.c-{{ section.id }}  .marquee_main_image_c {
+    height: 290px;
+    width: 100%;
+    flex: 0 0 100%;
+}
+.c-{{ section.id }} .animate-down {
+    animation: marquee-down {{  section.settings.animation_speed_mobile }}s linear infinite;
+}
+.c-{{ section.id }}  .animate-up {
+    animation: marquee-up {{  section.settings.animation_speed_mobile }}s linear infinite;
+}
+}
+</style>
+<div class="c-{{ section.id }}" data-aos="{{ section.settings.animation }}">
+    <div class="{{ section.settings.setwidth }}">
+        <div class="container">
+          {% if section.settings.text != blank %}
+            <div {% if section.settings.h_sub_color != "rgba(0,0,0,0)" and section.settings.h_sub_color != blank %}style="--g-font-color-subtop:{{ section.settings.h_sub_color }}"{% endif %} class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
+          {% endif %}
+          {% if section.settings.heading != blank %}
+            <h3 {% if section.settings.h_s_color != "rgba(0,0,0,0)" and section.settings.h_s_color != blank %}style="--g-color-heading:{{ section.settings.h_s_color }}"{% endif %} class="h3 text-{{ section.settings.align-heading }} mb-5 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+            <span>{{ section.settings.heading }}</span>
+            </h3>
+          {% endif %}
+        </div>
+        <div class="custom_insta_marquee_container">
+            <div class="marquee-col marquee-col-first">
+              <div class="opacity_item opacity_top"></div>
+              <div class="marquee-col-c">
+                {%  for block in section.blocks %}
+                    {% if block.type == "first_row" %}
+                        <div class="marquee-col-image">
+                            {% if block.settings.image != blank %}
+                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            {% else %}
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+              </div>
+              <div class="opacity_item opacity_bottom"></div>
+            </div>
+             <div class="marquee-col marquee-col-second">
+              <div class="opacity_item opacity_top"></div>
+              <div class="marquee-col-c">
+                {%  for block in section.blocks %}
+                    {% if block.type == "second_row" %}
+                        <div class="marquee-col-image">
+                            {% if block.settings.image != blank %}
+                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            {% else %}
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <div class="opacity_item opacity_bottom"></div>
+            </div>
+            <div class="marquee_main_image_c">
+                <div class="marquee_main_image">
+                  {% if section.settings.video != blank %}
+                      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+                  {% elsif section.settings.main_image != blank %}
+                    <img src="{{ section.settings.main_image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                    {% else %}
+                    {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                    {% endif %}
+                </div>
+                <div class="marquee_content-overlay"></div>
+                <div class="marquee_content">
+                    <div class="rte">
+                        {{ section.settings.title }}
+                    </div>
+                    {% if section.settings.button_link != blank %}
+                        <a class="btn {{ section.settings.style_btn }} {% if section.settings.button_icon != "none" %} with_image{% endif %}" href="{{ section.settings.button_link }}">
+                            {% if section.settings.button_icon == "instagram" %}
+                              {% render "instagram-icon" %}
+                          {% elsif section.settings.button_icon == "tiktok" %}
+                              {% render "tiktok-icon" %}
+                          {% elsif section.settings.button_icon == "facebook" %}
+                                  {% render "facebook-icon" %}
+                          {% endif %}
+                            <span>{{  section.settings.button_label }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+             <div class="marquee-col marquee-col-third">
+              <div class="opacity_item opacity_top"></div>
+              <div class="marquee-col-c">
+                {%  for block in section.blocks %}
+                    {% if block.type == "third_row" %}
+                        <div class="marquee-col-image">
+                            {% if block.settings.image != blank %}
+                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            {% else %}
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <div class="opacity_item opacity_bottom"></div>
+            </div>
+             <div class="marquee-col marquee-col-forth">
+              <div class="opacity_item opacity_top"></div>
+              <div class="marquee-col-c">
+                {%  for block in section.blocks %}
+                    {% if block.type == "forth_row" %}
+                        <div class="marquee-col-image">
+                            {% if block.settings.image != blank %}
+                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            {% else %}
+                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+                <div class="opacity_item opacity_bottom"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // Define the function so we can call it multiple times
+    const initMarquee = () => {
+        const columns = document.querySelectorAll('.marquee-col-c');
+        
+        columns.forEach((col, index) => {
+            // Check if we've already duplicated content to prevent infinite stacking
+            if (col.getAttribute('data-marquee-initialized') === 'true') return;
+
+            const content = col.innerHTML;
+            col.innerHTML = content + content;
+
+            // Assign direction based on column index
+            if (index % 2 === 0) {
+                col.classList.add('animate-down');
+            } else {
+                col.classList.add('animate-up');
+            }
+
+            // Mark as initialized
+            col.setAttribute('data-marquee-initialized', 'true');
+        });
+    };
+
+    // 1. Run on initial page load
+    initMarquee();
+
+    // 2. Run whenever a section is changed/reloaded in the Shopify Customizer
+    document.addEventListener('shopify:section:load', initMarquee);
+    document.addEventListener('shopify:section:select', initMarquee);
+});
+</script>
+{% schema %}
+{
+  "name": "Instagram Slider",
+  "settings": [ 
+      {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+        "type":"color_background",
+        "id":"background",
+        "label": "Background Section"
+    },
+     {
+    "type": "header",
+    "content": "Heading and subheading"
+    },  
+            {
+          "type": "text",
+          "id": "text",
+          "label": "Sub Title Top",
+          "default":"SOCIAL MEDIA"
+        },
+        {
+          "type": "color_background",
+          "id": "h_sub_color",
+          "label": "Sub Title Top color"
+        },
+         {
+          "type": "text",
+          "id": "heading",
+          "label": "Title",
+          "default":"Follow Us"
+        },
+        {
+          "type": "color_background",
+          "id": "h_s_color",
+          "label": "Heading color"
+        },
+     {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },  
+     {
+        "type":"video",
+        "id":"video",
+        "label": "Video"
+    },        
+    {
+        "type":"image_picker",
+        "id":"main_image",
+        "label": "Main image"
+    },     
+{
+        "type":"color",
+        "id":"box_overlay_color",
+        "label": "Box Overlay Color",
+        "default":"#000000"
+    },    
+    {
+      "type": "range",
+      "id": "box_overlay_opacity",
+      "label": "Box Overlay Opacity",
+      "max": 99,
+      "min": 0,
+      "step": 1,
+      "default": 20
+    },
+    {
+        "type":"richtext",
+        "id":"title",
+        "label": "Title",
+        "default":"<p>INSTAGRAM</p>"
+    },
+    {
+        "type":"url",
+        "id":"button_link",
+        "label": "Button link"
+    },
+    {
+        "type":"text",
+        "id":"button_label",
+        "label": "Button label",
+        "default":"CLICK HERE"
+    }, 
+    {
+      "type": "select",
+      "id": "style_btn",
+      "label": "Style Button",
+      "default": "btn-theme btn-white",
+      "options": [
+        {
+          "value": "btn-theme",
+          "label": "Button Box"
+        },
+        {
+          "value": "btn-theme btn-white",
+          "label": "Button Box White"
+        },
+        {
+          "value": "btn-underline",
+          "label": "Button Line"
+        },
+        {
+          "value": "btn-underline btn-underline-white",
+          "label": "Button Line White"
+        },
+        {
+          "value": "btn-outline",
+          "label": "Button Outline"
+        },
+        {
+          "value": "btn-outline btn-outline-white",
+          "label": "Button Outline White"
+        }
+      ]
+    }, 
+    {
+        "type":"select",
+        "id":"button_icon",
+        "label": "Button icon",
+        "default":"none",
+        "options": [
+          {
+          "value":"none",
+          "label": "None"
+          },
+          {
+          "value":"instagram",
+          "label": "Instagram"
+          },
+          {
+          "value":"tiktok",
+          "label": "Tiktok"
+          },
+          {
+          "value":"facebook",
+          "label": "Facebook"
+          }
+        ]
+    },  
+     {
+        "type":"checkbox",
+        "id":"enable_overlay_edges",
+        "label": "Enable Blurry Edges",
+        "default":true
+    },  
+    {
+        "type":"color",
+        "id":"overlay_color",
+        "label": "Blurry Edge Color",
+        "default":"#f0f0f0",
+        "info":"Match this to the section’s background color for a seamless blend. For example, if the background is white, set it to white. Use 'Transparent' if you want to avoid blurry edges entirely."
+    },    
+    {
+      "type": "range",
+      "id": "section_height_desktop",
+      "label": "Section height desktop",
+      "max": 750,
+      "min": 250,
+      "step": 10,
+      "default": 500
+    },
+     {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Animation speed",
+      "max": 50,
+      "min": 1,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "animation_speed_mobile",
+      "label": "Animation speed mobile",
+      "max": 50,
+      "min": 1,
+      "step": 1,
+      "default": 20
+    }, 
+      {
+      "type": "range",
+      "id": "boxes_radius",
+      "label": "Boxed radius",
+      "max": 100,
+      "min": 1,
+      "step": 1,
+      "default": 20
+    }, 
+      {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button radius",
+      "max": 100,
+      "min": 1,
+      "step": 1,
+      "default": 99
+    }, 
+    {
+      "type":"header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Appearance Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    }
+  ],
+  "blocks": [
+     {
+      "type": "first_row",
+      "name": "First row image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+        }
+      ]
+    },
+    {
+      "type": "second_row",
+      "name": "Second row image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+        }
+      ]
+    },
+    {
+      "type": "third_row",
+      "name": "Third row image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+        }
+      ]
+    },
+    {
+      "type": "forth_row",
+      "name": "Forth row image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+        }
+      ]
+    },
+  ],
+  "presets": [
+    {
+      "name": "Instagram Slider",
+      "category": "Promotional",
+      "blocks": [
+        {
+          "type": "first_row"
+        },
+         {
+          "type": "first_row"
+        },
+         {
+          "type": "first_row"
+        },
+        {
+          "type": "second_row"
+        },
+        {
+          "type": "second_row"
+        },
+        {
+          "type": "second_row"
+        },
+        {
+          "type": "third_row"
+        },
+        {
+          "type": "third_row"
+        },
+                {
+          "type": "third_row"
+        },
+        {
+          "type": "forth_row"
+        },
+         {
+          "type": "forth_row"
+        },
+         {
+          "type": "forth_row"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

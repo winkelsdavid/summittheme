@@ -1,0 +1,547 @@
+{% comment %} image_with_bullets section {% endcomment %}
+
+<style>
+.c-{{ section.id }}{
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  background:{{  section.settings.background }};
+}
+@media screen and (max-width: 991px) {
+  .c-{{ section.id }}{
+      padding-top: {{ section.settings.mobile_padding_top }}px;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+}
+  .iwb-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .iwb-content-side {
+    display: flex;
+    flex-direction: column;
+  }
+
+ .c-{{ section.id }}  .iwb-heading {
+    margin: 0 0 12px;
+    {% if section.settings.heading_color != blank and section.settings.heading_color != "rgba(0,0,0,0)" %}
+    --g-color-heading: {{ section.settings.heading_color }};
+    {% endif %}
+    line-height: 1.2;
+  }
+
+  .iwb-description {
+    margin: 0 0 32px;
+    font-size: 16px;
+    line-height: 1.5;
+     {% if section.settings.text_color != blank and section.settings.text_color != "rgba(0,0,0,0)" %}
+    color: {{ section.settings.text_color }};
+    {% endif %}
+  }
+
+  .iwb-bullets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+ .c-{{ section.id }}  .iwb-bullet-item {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: {{ section.settings.card_bg_color }};
+    border-radius:calc(0.2rem * {{ settings.radius_allimg_range }}) !important;
+    border: 1px solid {{ section.settings.card_border_color }};
+    align-items: flex-start;
+  }
+
+  .iwb-bullet-icon {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .iwb-bullet-icon svg {
+    width: 30px;
+    height: 30px;
+        fill: none;
+    stroke-width: 4px;
+  }
+
+  .iwb-bullet-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .c-{{ section.id }} .iwb-bullet-item{
+    {% if  section.settings.box_align == "right" %}
+        flex-direction:row-reverse;
+    {% endif %}
+    }
+   .c-{{ section.id }} .iwb-bullet-text{
+    text-align:{{ section.settings.box_align }};
+    }
+    
+  .c-{{ section.id }} .iwb-bullet-title {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.3;
+     {% if section.settings.heading_color != blank and section.settings.heading_color != "rgba(0,0,0,0)" %}
+    --g-color-heading: {{ section.settings.heading_color }};
+    {% endif %}
+  }
+
+  .c-{{ section.id }} .iwb-bullet-body {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    {% if section.settings.text_color != blank and section.settings.text_color != "rgba(0,0,0,0)" %}
+    color: {{ section.settings.text_color }};
+    {% endif %}
+    
+  }
+
+  .iwb-image-side {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    border-radius: calc(0.2rem * {{ settings.radius_allimg_range }}) !important;
+  }
+  .iwb-parallax-img{
+  height:100%;
+  }
+  .iwb-image-side img,
+  .iwb-image-side svg {
+    max-width: 100%;
+    height:100%;
+    display: block;
+    object-fit: cover;
+   /* max-height: 740px;*/
+    will-change: transform;
+    transform-origin: 50% 50%;
+  }
+
+  {% if section.settings.image_layout == 'image_left' %}
+   .c-{{ section.id }} .iwb-grid {
+      direction: rtl;
+    }
+   .c-{{ section.id }} .iwb-grid > * {
+      direction: ltr;
+    }
+  {% endif %}
+
+  @media screen and (max-width: 767px) {
+    .iwb-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      direction: ltr;
+    }
+
+    {% if section.settings.image_layout == 'image_right' %}
+      .iwb-image-side { order: -1; }
+    {% endif %}
+
+
+    .iwb-bullet-title {
+      font-size: 17px;
+    }
+
+    .iwb-bullet-body{
+      font-size: 14px;
+    }
+
+    .iwb-bullet-icon,
+    .iwb-bullet-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .iwb-bullets-list {
+      gap: 12px;
+    }
+  }
+</style>
+
+<section class="iwb-section c-{{ section.id }}" id="iwb-{{ section.id }}" data-aos="{{ section.settings.animation }}">
+  <div class="{{ section.settings.setwidth }}">
+    <div class="iwb-grid">
+
+      <!-- Content Side -->
+      <div class="iwb-content-side">
+        {% if section.settings.heading != blank %}
+          <h3 class="iwb-heading">{{ section.settings.heading }}</h3>
+        {% endif %}
+
+        {% if section.settings.description != blank %}
+          <p class="iwb-description">{{ section.settings.description }}</p>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <div class="iwb-bullets-list">
+            {% for block in section.blocks %}
+              <div class="iwb-bullet-item" {{ block.shopify_attributes }}>
+
+                <div class="iwb-bullet-icon" style="--icon-color:{{ block.settings.icon_color }};">
+                    {% render 'list-svg',block:block, icon: block.settings.icon %}
+                </div>
+
+                <div class="iwb-bullet-text">
+                  {% if block.settings.title != blank %}
+                    <h6 class="iwb-bullet-title">{{ block.settings.title }}</h6>
+                  {% endif %}
+                  {% if block.settings.body != blank %}
+                    <p class="iwb-bullet-body">{{ block.settings.body }}</p>
+                  {% endif %}
+                </div>
+
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Image Side -->
+      <div class="iwb-image-side">
+        {% if section.settings.image != blank %}
+        <div class="iwb-parallax-img">
+          {{
+            section.settings.image
+            | image_url: width: 800
+            | image_tag:
+              loading: 'lazy',
+              alt: section.settings.image.alt | default: section.settings.heading
+          }}
+          </div>
+        {% else %}
+           {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg iwb-parallax-img' }}
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+/*(function () {
+  var section = document.getElementById('iwb-{{ section.id }}');
+  
+  if (!section) return;
+  var img = section.querySelector('.iwb-parallax-img');
+  if (!img) return;
+
+  
+
+  var SCALE_START  = 1;
+  var SCALE_END    = 2.5;
+  var ROTATE_START = 0;
+  var ROTATE_END   = 10;
+
+  function clamp(val, min, max) {
+    return Math.min(Math.max(val, min), max);
+  }
+
+  function onScroll() {
+    var rect  = section.getBoundingClientRect();
+    var vh    = window.innerHeight;
+
+    // progress = 0: section top at viewport bottom (just entering)
+    // progress = 1: section bottom at viewport top (just leaving)
+    var total    = rect.height + vh;
+    var traveled = vh - rect.top;
+    var progress = clamp(traveled / total, 0, 1);
+
+    var scale  = SCALE_START  + (SCALE_END  - SCALE_START)  * progress;
+    var rotate = ROTATE_START + (ROTATE_END - ROTATE_START) * progress;
+
+    img.style.transform = 'scale(' + scale + ') rotate(' + rotate + 'deg)';
+  }
+
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+})();*/
+</script>
+
+{% schema %}
+{
+  "name": "Image with Bullets",
+  "tag": "section",
+  "class": "section-image-with-bullets",
+  "settings": [
+    {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        { "value": "",                "label": "None"            },
+        { "value": "fade",            "label": "Fade"            },
+        { "value": "fade-up",         "label": "Fade Up"         },
+        { "value": "fade-down",       "label": "Fade Down"       },
+        { "value": "fade-left",       "label": "Fade Left"       },
+        { "value": "fade-right",      "label": "Fade Right"      },
+        { "value": "fade-up-right",   "label": "Fade Up Right"   },
+        { "value": "fade-up-left",    "label": "Fade Up Left"    },
+        { "value": "fade-down-right", "label": "Fade Down Right" },
+        { "value": "fade-down-left",  "label": "Fade Down Left"  },
+        { "value": "flip-up",         "label": "Flip Up"         },
+        { "value": "flip-down",       "label": "Flip Down"       },
+        { "value": "flip-left",       "label": "Flip Left"       },
+        { "value": "flip-right",      "label": "Flip Right"      },
+        { "value": "slide-up",        "label": "Slide Up"        },
+        { "value": "slide-down",      "label": "Slide Down"      },
+        { "value": "slide-left",      "label": "Slide Left"      },
+        { "value": "slide-right",     "label": "Slide Right"     },
+        { "value": "zoom-in",         "label": "Zoom In"         },
+        { "value": "zoom-in-up",      "label": "Zoom In Up"      },
+        { "value": "zoom-in-down",    "label": "Zoom In Down"    },
+        { "value": "zoom-in-left",    "label": "Zoom In Left"    },
+        { "value": "zoom-in-right",   "label": "Zoom In Right"   },
+        { "value": "zoom-out",        "label": "Zoom Out"        },
+        { "value": "zoom-out-up",     "label": "Zoom Out Up"     },
+        { "value": "zoom-out-down",   "label": "Zoom Out Down"   },
+        { "value": "zoom-out-left",   "label": "Zoom Out Left"   },
+        { "value": "zoom-out-right",  "label": "Zoom Out Right"  }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        { "value": "container",       "label": "Box"             },
+        { "value": "container-fluid", "label": "Container Fluid" },
+        { "value": "full",            "label": "Full"            }
+      ]
+    },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Background Section"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_layout",
+      "label": "Image position",
+      "options": [
+        { "value": "image_right", "label": "Image on right" },
+        { "value": "image_left",  "label": "Image on left"  }
+      ],
+      "default": "image_left"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Read more about the benefits."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Read more about the key benefits and features of this product. Here you can highlight important advantages, unique qualities, and valuable details that help customers better understand what makes it useful."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "box_align",
+      "label": "Box align",
+      "options": [
+        { "value": "right", "label": "right" },
+        { "value": "left",  "label": "left"  }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text color"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Bullet card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Bullet card border",
+      "default": "#D3DBD9"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Appearance Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "bullet",
+      "name": "Bullet",
+      "settings": [
+                {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            {
+              "value": "checkmark-1",
+              "label": "Checkmark 1"
+            },
+            {
+              "value": "checkmark-2",
+              "label": "Checkmark 2"
+            },
+             {
+              "value": "checkmark",
+              "label": "Checkmark 3"
+            },
+            {
+              "value": "checkmark-4",
+              "label": "Checkmark 4"
+            },
+            {
+              "value": "checkmark-5",
+              "label": "Checkmark 5"
+            },
+            {
+              "value": "checkmark-6",
+              "label": "Checkmark 6"
+            },
+            {
+              "value": "checkmark-7",
+              "label": "Checkmark 7"
+            },
+            {
+              "value": "checkmark-8",
+              "label": "Checkmark 8"
+            }
+          ],
+          "default": "checkmark-2",
+          "label": "Icon"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Icon color"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Benefit"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body text",
+          "default": "Here you highlight the benefit of the product."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Bullets",
+      "category": "Image",
+      "blocks": [
+        {
+          "type": "bullet",
+          "settings": {
+            "title": "Cognition & Mental Clarity",
+            "body": "L-theanine, SAM-e, Lion's Mane, Slow-release Caffeine, Mojo Nootropic Blend, Panax Ginseng, Ginger"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "title": "Focus & Productivity",
+            "body": "Mojo Nootropic Blend, SAM-e, L-theanine, Mucuna Pruriens, Panax Ginseng, Slow-Release Caffeine"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "title": "Sustained Energy",
+            "body": "Cordyceps Militaris & Sinensis, Panax Ginseng, Slow-release Caffeine, Mojo Nootropic Blend"
+          }
+        },
+        {
+          "type": "bullet",
+          "settings": {
+            "title": "Positive Vibes",
+            "body": "Mucuna Pruriens, SAM-e, Lion's Mane, L-theanine, Slow-Release Caffeine"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

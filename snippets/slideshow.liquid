@@ -1,0 +1,12 @@
+{%- liquid
+  if template == 'index'
+  case settings.slideshow
+    when 'slideshow-1'  
+    section 'slideshow-1'
+    when 'slideshow-2'  
+    section 'slideshow-2'
+  else
+    section 'slideshow-1'
+  endcase
+endif
+-%}

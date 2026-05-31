@@ -1,0 +1,66 @@
+{%- unless product.has_only_default_variant -%}
+  <nitro-variant-selects
+    id="variant-selects-{{ section.id }}-{{id}}"
+    data-section="{{ section.id }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- for option in product.options_with_values -%}
+      <div class="product-form__input product-form__input--dropdown">
+        <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}-{{id}}">
+          {% if forloop.first %}
+            #{{ index }} -
+          {% endif %}
+          {{ option.name }}
+        </label>
+        <div class="select">
+          <select
+            id="Option-{{ section.id }}-{{ forloop.index0 }}-{{id}}"
+            class="select__select"
+            name="options[{{ option.name | escape }}]"
+            form="{{ product_form_id }}"
+          >
+            {%- for value in option.values -%}
+              {%- liquid
+                assign option_disabled = true
+                if value.available
+                  assign option_disabled = false
+                endif
+
+                if block.settings.skip_unavailable and option_disabled
+                  continue
+                endif
+              -%}
+
+              {%- capture input_id -%}
+                {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+              {%- endcapture -%}
+
+              {%- capture input_dataset -%}
+                data-product-url="{{ value.product_url }}"
+                data-option-value-id="{{ value.id }}"
+              {%- endcapture -%}
+
+              <option
+                id="{{ input_id }}"
+                value="{{ value | escape }}"
+                {% if value.selected %}
+                  selected="selected"
+                {% endif %}
+                {{ input_dataset }}
+              >
+                {% if option_disabled -%}
+                  {{ value }}&nbsp;-&nbsp;Unavailable
+                {%- else -%}
+                  {{- value -}}
+                {%- endif %}
+              </option>
+            {%- endfor -%}
+          </select>
+          <span class="svg-wrapper">
+            {% render 'icon-caret' %}
+          </span>
+        </div>
+      </div>
+    {%- endfor -%}
+  </nitro-variant-selects>
+{%- endunless -%}

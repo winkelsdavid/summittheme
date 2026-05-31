@@ -1,0 +1,578 @@
+<style>
+  .c_progress_ticker-{{ section.id }}{
+    background:{{ section.settings.background }};
+     padding-top:{{ section.settings.padding_top }}px;
+    padding-bottom:{{ section.settings.padding_bottom }}px;
+    {% if section.settings.color != blank %}
+    {% if section.settings.color != "rgba(0,0,0,0)" %}
+    --g-color-heading:{{ section.settings.color   }};
+    --g-font-color-subtop:{{ section.settings.color   }};
+    {% endif %}
+  {% endif %}
+  }
+  .progress_media{
+    position:relative;
+    height:100%;
+     {% if settings.enable_radius_allimg %}
+    border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+     {% endif %}
+    overflow:hidden;
+    }
+    @media (min-width:768px){
+      .progress_media{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    /* padding-right: 15px; */
+    width: calc(100% - 30px);
+    }
+    }
+ .progress_media img{
+    display: block;
+    max-width: 100%;
+   /* position: absolute;
+    top: 0;
+    left: 0;*/
+    min-height: 100%;
+    width: 100%;
+    object-fit:cover;
+}
+.progress_i{
+display:flex;
+align-items:center;
+gap:10px;
+}
+.progress_bar{
+    position: relative;
+    margin: 2px 0;
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #ffffff33;
+}
+.progress_count{
+    position: absolute;
+    top: -2px;
+    left: 0;
+    {% if section.settings.box_color != "rgba(0,0,0,0)" %}
+    background: {{ section.settings.box_color }};
+    {% else %}
+    background:black;
+    {% endif %}
+    bottom: 0;
+    width:0;
+    height: 5px;
+    border-radius: 10px;
+      transition: width 1.2s ease-out;
+}
+.progress_container{
+    padding:30px;
+    {% if settings.enable_radius_allimg %}
+    border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+    {% endif %}
+}
+.c_progress_ticker-{{ section.id }} .progress_item p{
+  font-size:{{ section.settings.progress_bars_size }}px
+}
+@media (max-width:768px){
+      .c_progress_ticker-{{ section.id }}{
+         padding-top:{{ section.settings.mobile_padding_top }}px;
+          padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
+      }   
+      .progress_media img{
+    position: relative;
+}
+.c_progress_ticker-{{ section.id }} .progress_item p{
+  font-size:{{ section.settings.progress_bars_size_mobile }}px
+}
+  }
+</style>
+<div class="c_progress_ticker-{{ section.id }}" data-aos="{{ section.settings.animation }}">
+  <div class="{{ section.settings.setwidth }} mb-4">
+      {% if section.settings.replace_reviews %}
+            {%  render 'rating-custom', align : section.settings.align-heading %}
+      {% else %}
+      {% if section.settings.subtitle != blank %}
+        <div class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">{{ section.settings.subtitle }}</div>
+      {% endif %}
+    {% endif %}
+      {% if section.settings.title != blank %}
+        <h3 class="h3 text-{{ section.settings.align-heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+        <span>{{ section.settings.title }}</span>
+        </h3>
+      {% endif %}
+  </div>
+  <div class="{{ section.settings.setwidth }}">
+    <div class="row gap-desktop">
+    <div class="col-md-6">
+        {% for block in section.blocks %}
+        {% case block.type %}
+            {% when "image" %}
+                <div class="progress_media">
+                <img src="{{ block.settings.image | img_url:"master" }}" loading='lazy' width="auto" height="auto" alt="progress media">
+                </div>
+            {% endcase %}
+        {% endfor %}
+      </div>
+      <div class="col-md-6">
+        <div class="progress_container" style="{% if section.settings.box_background == blank %}background:{{ settings.branding_color }}{% else %}background:{{ section.settings.box_background }}{% endif %}">
+        {% if section.settings.heading != blank %}
+          <{{ section.settings.h_size }} class="{{ section.settings.h_size }} mb-4" style="{% if section.settings.color_h != blank %} {% if section.settings.color_h != "rgba(0,0,0,0)" %}--g-color-heading:{{  section.settings.color_h }}{% endif %}{% endif %}">
+          <span>{{ section.settings.heading }}</span>
+          </{{ section.settings.h_size }}>
+        {%  endif %}
+        <div class="progress_items">
+            {% for block in section.blocks %}
+                {% if block.type == "progress" %}
+                    <div class="progress_item mb-4" style="{% if section.settings.box_color != "rgba(0,0,0,0)" %}color:{{  section.settings.box_color }}{% endif %}">
+                        <p class="mb-1" style="{% if section.settings.box_color != "rgba(0,0,0,0)" %}color:{{  section.settings.box_color }}{% endif %}">{{ block.settings.title }}</p>
+                        <div class="progress_i">
+                        <div class="progress_bar">
+                            <div class="progress_count" style="--progress:{{ block.settings.progress }}%" data-progress="{{ block.settings.progress }}"></div>
+                        </div>
+                        <p style="{% if section.settings.box_color != "rgba(0,0,0,0)" %}color:{{  section.settings.box_color }}{% endif %}">{{ block.settings.progress }}%</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  <script>
+function initProgressBars(context = document) {
+  const progressBars = context.querySelectorAll(".progress_count");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = el.getAttribute("data-progress");
+        el.style.width = target + "%";
+        observer.unobserve(el); // animate only once
+      }
+    });
+  }, {
+    threshold: 0.5 // trigger when 50% visible
+  });
+
+  progressBars.forEach((bar) => {
+    observer.observe(bar);
+  });
+}
+
+// Initial load
+document.addEventListener("DOMContentLoaded", () => {
+  initProgressBars();
+});
+
+// Shopify section load
+document.addEventListener("shopify:section:load", (event) => {
+  const section = event.target;
+  initProgressBars(section);
+});
+
+</script>
+
+{% schema %}
+{
+  "name": "Progress Bars",
+  "settings": [ 
+      {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+        {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+        "type":"color_background",
+        "id":"background",
+        "label": "Background Section"
+      },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub title top"
+        },
+                {
+      "type": "checkbox",
+      "id": "replace_reviews",
+      "label": "Replace Sub Title Top with Review",
+    },
+     {
+      "type": "paragraph",
+      "content": "When activated, the top subtitle is replaced by a review box. This review box can be customized in the Theme Settings under ‘Reviews Above Titles‘",
+    },
+        {
+      "type": "select",
+      "id": "r_type",
+      "label": "Reviews type",
+      "default": "t_1",
+      "options": [
+        {
+          "value": "t_1",
+          "label": "Review Type 1"
+        },
+        {
+          "value": "t_2",
+          "label": "Review Type 2"
+        },
+        {
+          "value": "t_3",
+          "label": "Review Type 3"
+        }
+      ]
+    },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },      
+     {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+     {
+      "type": "text",
+      "id": "heading",
+      "label": "Box heading",
+      "default":"Transformative Benefits"
+    },    
+    {
+      "type": "select",
+      "id": "h_size",
+      "label": "Box heading size",
+      "default": "h4",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+          {
+          "value": "h2",
+          "label": "H2"
+        },
+          {
+          "value": "h3",
+          "label": "H3"
+        },
+          {
+          "value": "h4",
+          "label": "H4"
+        },
+          {
+          "value": "h5",
+          "label": "H5"
+        },
+          {
+          "value": "h6",
+          "label": "H6"
+        },
+      ]
+    },
+     {
+      "type": "range",
+      "id": "progress_bars_size",
+      "label": "Font Size Progress Bars",
+      "max": 20,
+      "min": 10,
+      "step": 1,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "progress_bars_size_mobile",
+      "label": "Font Size Progress Bars Mobile",
+      "max": 20,
+      "min": 10,
+      "step": 1,
+      "default": 13
+    },
+      {
+      "type": "header",
+      "content": "Appearance"
+    },
+     {
+        "type":"color_background",
+        "id":"box_background",
+        "label": "Box background"
+      },
+           {
+          "type": "color",
+          "id": "color",
+          "label": "Section Heading Color"
+        },
+ 
+                 {
+          "type": "color",
+          "id": "color_h",
+          "label": "Box Heading Color"
+        },
+     {
+          "type": "color",
+          "id": "box_color",
+          "label": "Box text color"
+        },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Appearance Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    }
+  ],
+  "blocks": [
+        {
+      "type": "image",
+      "name": "Image",
+      "limit":1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+     {
+      "type": "progress",
+      "name": "progress",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default":"Increased Energy Levels"
+        },
+        {
+          "type": "range",
+          "id": "progress",
+          "label": "Progress",
+          "min":0,
+          "max":100,
+          "default":50
+        }
+      ]
+    },
+  ],
+  "presets": [
+    {
+      "name": "Progress Bars",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type":"progress"
+        },
+        {
+          "type":"progress"
+        },
+        {
+          "type":"progress"
+        },
+        {
+          "type":"progress"
+        },
+        {
+          "type":"progress"
+        },
+         {
+          "type":"progress"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
