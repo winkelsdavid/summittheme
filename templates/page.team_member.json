@@ -9,52 +9,6 @@
  */
 {
   "sections": {
-    "0b30ed92-eb34-4adc-a194-3b7d43f393ce": {
-      "type": "parallax-banner",
-      "blocks": {
-        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-sub_title-1": {
-          "type": "sub_title",
-          "settings": {
-            "subtitle": "Meet Our Team"
-          }
-        },
-        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-heading-1": {
-          "type": "heading",
-          "settings": {
-            "title": "We Pride Ourselves",
-            "size_text": "h1"
-          }
-        },
-        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-paragraph-1": {
-          "type": "paragraph",
-          "settings": {
-            "subtext": "Our team brings a wealth of experience from some of the world’s most formidable production studios, agencies and startups."
-          }
-        }
-      },
-      "block_order": [
-        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-sub_title-1",
-        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-heading-1",
-        "template--21109129412888__0b30ed92-eb34-4adc-a194-3b7d43f393ce-paragraph-1"
-      ],
-      "settings": {
-        "animation": "",
-        "setwidth": "container",
-        "bgsection": "#ffffff",
-        "parrallax_enable": true,
-        "image": "shopify://shop_images/hooke_collection_header_men_headwear.webp",
-        "height_section": "550",
-        "height_section_mobile": "450",
-        "align": "center",
-        "position_text": "mid-center",
-        "bg_box": "#ffffff",
-        "opacity_bgbox": 0,
-        "title_color": "#ffffff",
-        "bg_overlay": "#000000",
-        "gradient_bg": "",
-        "opacity_bg_overlay": 0.2
-      }
-    },
     "main": {
       "type": "s_team_member",
       "blocks": {
@@ -140,7 +94,6 @@
     }
   },
   "order": [
-    "0b30ed92-eb34-4adc-a194-3b7d43f393ce",
     "main"
   ]
 }

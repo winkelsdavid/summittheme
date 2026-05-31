@@ -91,55 +91,6 @@
         "align-content": "left"
       }
     },
-    "b2ef3f00-5f4f-4e93-8187-3970a28a8f9e": {
-      "type": "parallax-banner",
-      "blocks": {
-        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-sub_title-1": {
-          "type": "sub_title",
-          "disabled": true,
-          "settings": {
-            "subtitle": "DAQUÏNI® active"
-          }
-        },
-        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-heading-1": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "title": "We do a premium activewear",
-            "size_text": "h1"
-          }
-        },
-        "94c7371c-d71f-4781-892e-d23c731daa77": {
-          "type": "paragraph",
-          "disabled": true,
-          "settings": {
-            "subtext": "Clothing may not change the world, but the women who wear them will"
-          }
-        }
-      },
-      "block_order": [
-        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-sub_title-1",
-        "template--19549173514560__b2ef3f00-5f4f-4e93-8187-3970a28a8f9e-heading-1",
-        "94c7371c-d71f-4781-892e-d23c731daa77"
-      ],
-      "settings": {
-        "animation": "fade",
-        "setwidth": "full",
-        "bgsection": "#ffffff",
-        "parrallax_enable": true,
-        "image": "shopify://shop_images/Women_f85377fa-ba8a-476c-9969-0e44e69ec716.jpg",
-        "height_section": "650",
-        "height_section_mobile": "450",
-        "align": "center",
-        "position_text": "mid-center",
-        "bg_box": "#ffffff",
-        "opacity_bgbox": 0,
-        "title_color": "#ffffff",
-        "bg_overlay": "#000000",
-        "gradient_bg": "",
-        "opacity_bg_overlay": 0
-      }
-    },
     "3a37a7d4-3633-4dd9-93c8-8609cd17d9c4": {
       "type": "image-content",
       "blocks": {
@@ -383,55 +334,6 @@
         "align_center": true
       }
     },
-    "76e2a71a-c94f-41bf-8fad-ee23089b50a8": {
-      "type": "parallax-banner",
-      "blocks": {
-        "3e4e84ba-bf5f-4c9a-829c-d6154831ff2b": {
-          "type": "sub_title",
-          "disabled": true,
-          "settings": {
-            "subtitle": "DAQUÏNI® active"
-          }
-        },
-        "22d4e948-bf31-4460-897a-7e573c719d07": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "title": "We do a premium activewear",
-            "size_text": "h1"
-          }
-        },
-        "843eb0cd-170d-4a3e-958f-48bef5c376ae": {
-          "type": "paragraph",
-          "disabled": true,
-          "settings": {
-            "subtext": "Clothing may not change the world, but the women who wear them will"
-          }
-        }
-      },
-      "block_order": [
-        "3e4e84ba-bf5f-4c9a-829c-d6154831ff2b",
-        "22d4e948-bf31-4460-897a-7e573c719d07",
-        "843eb0cd-170d-4a3e-958f-48bef5c376ae"
-      ],
-      "settings": {
-        "animation": "fade",
-        "setwidth": "full",
-        "bgsection": "#ffffff",
-        "parrallax_enable": true,
-        "image": "shopify://shop_images/Men-Bottom.webp",
-        "height_section": "650",
-        "height_section_mobile": "450",
-        "align": "center",
-        "position_text": "mid-center",
-        "bg_box": "#ffffff",
-        "opacity_bgbox": 0,
-        "title_color": "#ffffff",
-        "bg_overlay": "#000000",
-        "gradient_bg": "",
-        "opacity_bg_overlay": 0.2
-      }
-    },
     "24a28133-2e01-4361-8b00-ad164f72336f": {
       "type": "image-content",
       "blocks": {
@@ -473,25 +375,6 @@
         "bg_pos": "left",
         "enable_padding": true,
         "align_center": false
-      }
-    },
-    "ee7e9ebd-b251-4a10-a5c6-5ccd33043f75": {
-      "type": "image-content-3",
-      "settings": {
-        "animation": "fade-up",
-        "bgsection": "#ffffff",
-        "subtitle": "PORTRAIT OF",
-        "title": "The makers",
-        "size_text": "h2",
-        "des": "Our filmmakers, DOPs, creation director, designers, photographs and copywriters are the one who work in the shadow to make the brand what it is. You don’t see them very often, but it’s their energy and inspiration you find in everything we do.",
-        "button": "SHOP NOW",
-        "link": "",
-        "style_btn": "btn-theme",
-        "image": "shopify://shop_images/HK24SS-W-TS3-SES-5_d838e785-b416-4930-8102-407770122f63.webp",
-        "linkimg": "",
-        "bgimage": "#b8c19b",
-        "enable_subbg": true,
-        "leftimage": false
       }
     },
     "559f6024-64db-446e-a9dc-976582972dce": {
@@ -734,15 +617,12 @@
     "main",
     "49b0a5ba-1ebd-493b-ae50-1ec847159046",
     "f172e7b1-989c-4feb-a20b-ac2934933476",
-    "b2ef3f00-5f4f-4e93-8187-3970a28a8f9e",
     "3a37a7d4-3633-4dd9-93c8-8609cd17d9c4",
     "brand_carousel_H8ACgC",
     "brand_carousel_rdR6Xg",
     "2d11636f-e0da-4a86-b3b5-c1eda5735347",
     "d72bcc8c-88fe-4415-96f0-06511b070083",
-    "76e2a71a-c94f-41bf-8fad-ee23089b50a8",
     "24a28133-2e01-4361-8b00-ad164f72336f",
-    "ee7e9ebd-b251-4a10-a5c6-5ccd33043f75",
     "559f6024-64db-446e-a9dc-976582972dce",
     "abb14abe-2a33-4a6b-aaa1-d36d5422d78d",
     "a035e328-7cfe-4cf0-81d0-e2f5f0188740",

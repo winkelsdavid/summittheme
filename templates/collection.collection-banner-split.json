@@ -148,47 +148,6 @@
         "marginmobile": "0px 0px 0px 0px"
       }
     },
-    "3718e2cb-5821-407b-acec-0f519cf8d4b4": {
-      "type": "rich-text-hoz",
-      "blocks": {
-        "4aae42f0-8564-4ba9-bf69-e0db437bad2b": {
-          "type": "heading",
-          "settings": {
-            "title": "Summer Savings",
-            "size_text": "h4"
-          }
-        },
-        "05fa68df-6d3c-4ed2-afd2-39d1c6945a8a": {
-          "type": "paragraph",
-          "settings": {
-            "subtext": "Save an additional 10% on all clearance items."
-          }
-        },
-        "71224ca7-db08-44d5-8f55-df529ccb46af": {
-          "type": "button",
-          "settings": {
-            "button": "Shop now",
-            "link": "#",
-            "style_btn": "btn-outline"
-          }
-        }
-      },
-      "block_order": [
-        "4aae42f0-8564-4ba9-bf69-e0db437bad2b",
-        "05fa68df-6d3c-4ed2-afd2-39d1c6945a8a",
-        "71224ca7-db08-44d5-8f55-df529ccb46af"
-      ],
-      "settings": {
-        "animation": "",
-        "setwidth": "container",
-        "bgsection": "#ffffff",
-        "gradient_bg": "linear-gradient(125deg, rgba(249, 247, 242, 1), rgba(255, 242, 238, 1) 99%)",
-        "paddingsection": "20px 0px 40px 0px",
-        "paddingmobile": "40px 0px 20px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
-      }
-    },
     "product-grid": {
       "type": "main-collection-template",
       "settings": {
@@ -218,7 +177,6 @@
   "order": [
     "collection-banner",
     "ea7af2bd-7a4c-4129-ae32-bacb42814742",
-    "3718e2cb-5821-407b-acec-0f519cf8d4b4",
     "product-grid"
   ]
 }

@@ -1,0 +1,14 @@
+# Build artifacts / theme backups (the repo holds the SOURCE folders, not zips)
+*.zip
+
+# Local temp/debug files
+_*
+*.log
+
+# Claude Code local config
+.claude/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini

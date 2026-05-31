@@ -14,52 +14,6 @@
       "disabled": true,
       "settings": {}
     },
-    "54a6a770-9002-4dcf-ad18-910a69016474": {
-      "type": "parallax-banner",
-      "blocks": {
-        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-sub_title-1": {
-          "type": "sub_title",
-          "settings": {
-            "subtitle": "well-being"
-          }
-        },
-        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-heading-1": {
-          "type": "heading",
-          "settings": {
-            "title": "Certified sustainable",
-            "size_text": "h1"
-          }
-        },
-        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-paragraph-1": {
-          "type": "paragraph",
-          "settings": {
-            "subtext": "Making ethical choices should be easy – and we’re putting in the work so you don’t have to. Our styles are designed in Copenhagen and produced ethically in partnership with innovative factories that align with our values"
-          }
-        }
-      },
-      "block_order": [
-        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-sub_title-1",
-        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-heading-1",
-        "template--21227282268440__54a6a770-9002-4dcf-ad18-910a69016474-paragraph-1"
-      ],
-      "settings": {
-        "animation": "fade",
-        "setwidth": "container",
-        "bgsection": "rgba(0,0,0,0)",
-        "parrallax_enable": true,
-        "image": "shopify://shop_images/hooke-banner-create-account_8e52af5d-51b7-4bd7-a5f7-910f424e7ff0.webp",
-        "height_section": "550",
-        "height_section_mobile": "450",
-        "align": "center",
-        "position_text": "mid-center",
-        "bg_box": "#ffffff",
-        "opacity_bgbox": 0,
-        "title_color": "#ffffff",
-        "bg_overlay": "#000000",
-        "gradient_bg": "",
-        "opacity_bg_overlay": 0.1
-      }
-    },
     "c96b8168-4d48-43d1-aeea-c7ab9ce67cb9": {
       "type": "timeline",
       "blocks": {
@@ -194,7 +148,6 @@
   },
   "order": [
     "main",
-    "54a6a770-9002-4dcf-ad18-910a69016474",
     "c96b8168-4d48-43d1-aeea-c7ab9ce67cb9",
     "41ecad90-81ec-4319-8539-f0829f7b6230"
   ]
