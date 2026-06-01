@@ -104,7 +104,7 @@ transition:1s;
   transform-style: preserve-3d;
 }
 </style>
-<div class="loading-overlay_x" style="background:{{ settings.loading_background }}">
+<div class="loading-overlay_x" style="background:{% if settings.loading_animation == '2' %}{{ settings.color_primary }}{% else %}{{ settings.loading_background }}{% endif %}">
   {% if settings.loading_animation == "1" %}
   <div class="loader loader--image">
     <div class="loader__image__holder">
