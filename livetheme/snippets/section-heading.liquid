@@ -1,0 +1,40 @@
+<div class="section-heading">
+<!-- section-heading.liquid - Apply for all section title -->
+{% assign r_class = "text-" | append: section.settings.align-heading %}
+{% if r_alignement != blank %}
+{% assign r_class = "text-" | append: r_alignement %}
+{% endif %}
+{%- if settings.sectionheading == 'heading-1' -%}
+  {% if section.settings.replace_reviews %}
+    {%  render 'rating-custom', align : section.settings.align-heading %}
+  {% else %}
+  {%- if section.settings.title_top != blank -%}
+    <div {% if section.settings.st_color != blank and  section.settings.st_color != "rgba(0,0,0,0)"  %} style="--g-font-color-subtop:{{ section.settings.st_color }}" {% endif %} class="subtop {{ r_class }} text-top {% if section.settings.title != blank %} mb-2 {% else %} mb-4 {% endif %}"  data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+  {%- endif -%}
+  {% endif %}
+  {%- if section.settings.title != blank -%}
+  <h3 {% if section.settings.t_color != blank and  section.settings.t_color != "rgba(0,0,0,0)"  %} style="--g-color-heading:{{ section.settings.t_color }}"{% endif %} class="{{ settings.size_text_heading }} {{ r_class }}  {% if section.settings.des != blank %} mb-2 {% else %} mb-5 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+    <span>{{ section.settings.title }}</span>
+  </h3>
+  {%- endif -%}
+  {%- if section.settings.des != blank -%}
+  <div {% if section.settings.c_color != blank and  section.settings.c_color != "rgba(0,0,0,0)"  %} style="color:{{ section.settings.c_color }}"{% endif %} class="font-family-2 mb-5 txt-body-70 {{ r_class }}" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.des }}</div>
+  {%- endif -%}
+{%- elsif settings.sectionheading == 'heading-2' -%}
+    {% if section.settings.replace_reviews %}
+          {%  render 'rating-custom', align : section.settings.align-heading %}
+  {% else %}
+  {%- if section.settings.title_top != blank -%}
+    <div class="subtop text-center text-top" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.title_top }}</div>
+  {%- endif -%}
+{% endif %}
+  {%- if section.settings.title != blank -%}
+  <h3 class="section-title-2 {% if section.settings.des != blank %} mb-2 {% else %} mb-5 {% endif %}">
+    <span>{{ section.settings.title }}</span>
+  </h3>
+  {%- endif -%}
+  {%- if section.settings.des != blank -%}
+  <p class="font-family-2 mb-5 txt-body-70">{{ section.settings.des }}</p>
+  {%- endif -%}
+{%- endif -%}
+</div>

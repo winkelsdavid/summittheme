@@ -1,0 +1,63 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "cart-template",
+      "settings": {
+        "cart_notes_enable": true
+      }
+    },
+    "2979a36a-c6b2-4ef9-a5cc-d84aa4da690b": {
+      "type": "product-list-swiper",
+      "settings": {
+        "animation": "fade-up",
+        "setwidth": "container",
+        "e_size": "auto",
+        "e_repeat": "no-repeat",
+        "e_position": "center center",
+        "bgsection": "rgba(0,0,0,0)",
+        "title_color": "rgba(0,0,0,0)",
+        "title_top": "recomment",
+        "title": "You May Also Like",
+        "des": "",
+        "align-heading": "left",
+        "collection": "camping",
+        "limit": 8,
+        "perviewDesktop": 4,
+        "spaceBetween": 30,
+        "nowrap": true,
+        "arrows": true,
+        "scrollbar": false,
+        "enable_same_height": true,
+        "buttonall": "",
+        "buttonall_link": "",
+        "style_btn": "btn-theme",
+        "enable_first_banner": false,
+        "width_banner": 30,
+        "subtitle_banner": "Sub Title",
+        "title_banner": "Title Banner",
+        "size_text": "h2",
+        "des_banner": "Protection from the",
+        "pos_banner": "mid-center",
+        "button_banner": "discover now",
+        "link_banner": "",
+        "style_btn_banner": "btn-underline btn-underline-white",
+        "text_banner_color": "#ffffff",
+        "overlay_banner": "#000000",
+        "opacity_banner": 0.2
+      }
+    }
+  },
+  "order": [
+    "main",
+    "2979a36a-c6b2-4ef9-a5cc-d84aa4da690b"
+  ]
+}

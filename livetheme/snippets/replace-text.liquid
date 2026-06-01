@@ -1,0 +1,50 @@
+<!-- prettier-ignore -->
+
+{% liquid  
+  
+ assign txt = text | replace: ']', '] ' 
+
+ if quantity 
+   assign txt = txt | replace: '[quantity]', quantity 
+ endif 
+
+ if name 
+   assign txt = txt | replace: '[name]', name 
+ endif 
+
+ assign price_token = '' 
+ assign price_value = nil 
+
+ if txt contains '[price]' and price 
+   assign price_token = '[price]' 
+   assign price_value = price 
+ elsif txt contains '[compare_price]' and compare_price 
+   assign price_token = '[compare_price]' 
+   assign price_value = compare_price 
+ elsif txt contains '[amount_saved]' and amount_saved 
+   assign price_token = '[amount_saved]' 
+   assign price_value = amount_saved 
+ elsif txt contains '[amount_saved_rounded]' and amount_saved_rounded 
+   assign price_token = '[amount_saved_rounded]' 
+   assign price_value = amount_saved_rounded 
+ elsif txt contains '[price_each]' and price_each 
+   assign price_token = '[price_each]' 
+   assign price_value = price_each 
+ elsif txt contains '[compare_price_each]' and compare_price_each 
+   assign price_token = '[compare_price_each]' 
+   assign price_value = compare_price_each 
+ endif 
+
+ if price_token != '' 
+  capture wrapped_price
+  echo "<span>"
+    echo price_value | money_without_trailing_zeros
+    echo "</span>"
+  endcapture
+  echo txt | replace: price_token, wrapped_price
+ else 
+  echo txt
+ endif 
+
+  
+ %}

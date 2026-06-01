@@ -1,0 +1,22 @@
+<style>
+    {%- if settings.enable_400 -%}
+    @font-face {
+        font-family: '{{ settings.font_name_custom }}';
+        src: url('{{ settings.font_link_woff2 }} ') format('woff2'),
+             url('{{ settings.font_link_woff }}') format('woff');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+    {%- endif -%}
+    {%- if settings.enable_700 -%}
+    @font-face {
+        font-family: '{{ settings.font_name_custom }}';
+        src: url('{{ settings.font_link_woff2_bold }} ') format('woff2'),
+             url('{{ settings.font_link_woff_bold }}') format('woff');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+    {%- endif -%}
+</style>

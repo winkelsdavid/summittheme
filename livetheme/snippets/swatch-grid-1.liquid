@@ -1,0 +1,85 @@
+{%- if settings.e_swatch -%}
+  {%- liquid
+    assign counter = 0
+    assign uniqueColors = '' 
+    assign keywords_1  = settings.contain_color
+  -%}
+  {%- for option in product.options -%}
+    {%- if option contains keywords_1 -%}
+      {%- assign enable_color = 'show'-%}
+      {%- break -%}
+    {%- else -%}
+      {%- assign enable_color = 'hide'-%}
+    {% endif %}
+  {%- endfor -%} 
+  <ul class="product-card__swatch list-unstyled {% if settings.swatch_color %} sw_color{% endif %} {% if settings.swatch_color_circle %}round-color{% endif %} {{ enable_color }}">
+  
+  {%- for option in product.options -%}
+    {%- if option contains keywords_1 -%}
+      {%- liquid 
+        assign index0 = forloop.index0
+      -%}
+      {%- for variant in product.variants -%}
+        {%- liquid 
+          assign color =  variant.options[index0]
+          assign palette_config = settings.color_swatch_config | newline_to_br | split: '<br />'
+          assign lowercase_value = color | downcase
+     
+         assign style_property = '--swatch-bg: ' | append: lowercase_value
+         for item in palette_config
+           assign parts = item | split: ':'
+           assign name = parts.first | downcase | strip
+           if lowercase_value == name
+             assign val = parts.last | strip
+             if val contains '#' 
+               assign style_property = '--swatch-bg: ' | append: val 
+             elsif images[val] != blank 
+               assign image = images[val] | image_url: width: 72 
+               assign style_property = '--swatch-bg: url(' | append: image | append: ')' 
+             endif 
+             break
+           endif
+         endfor
+        -%}
+        
+        {%- if counter < 4  -%}
+          {% unless uniqueColors contains color %}
+          {%- assign uniqueColors = uniqueColors | append: color | append: '|' %}
+          {%- if variant.image != blank -%}
+            <li  
+            class="js-swatch-card-item st-tooltip-top {% if variant == product.selected_or_first_available_variant %} active {% endif %}" 
+            data-url="{{ variant.url | within: collection }}" 
+            data-id="{{ variant.id }}" 
+            data-image="{{ variant.image | image_url: width: 720 }}" 
+            data-price="{{ variant.price }}" data-toggle="tooltip" data-placement="top" data-tooltipalltimes="true" title="{{ color | escape }}">
+              {% comment %} <span class="st-tooltip__content">{{ color | escape }}</span> {% endcomment %}
+              {%- if settings.swatch_color -%}
+              <span
+              class="swatch-color st-color-{{ color | escape | downcase | handle }}"
+              style="{{style_property}}" 
+                > </span>
+              {%- else -%}
+                <img data-sizes="auto" 
+                  src="{{ variant.image | image_url: width: 100, height: 100 }}" 
+                  class="lazyload" 
+                  data-src="{{ variant.image | image_url: width: 100, height: 100 }}" 
+                  alt="{{ variant.image.alt }}" 
+                  loading="lazy"
+                  width="{{ variant.image.width }}"
+                  height="{{ variant.image.height }}"
+                />
+              {%- endif -%}
+            </li>
+            {%- assign counter = counter | plus: 1 -%}
+          {%- endif -%}
+            {% endunless %}
+        {%- else -%}
+  	  <li><a class="small swatch-more" href="{{ product.url | within: collection }}" title="{{ 'products.product.view_more' | t }}">+ {{ product.variants.size }}</a></li>
+      {%- break -%}
+    {%- endif -%}
+          
+      {%- endfor -%}
+    {% endif %}
+  {%- endfor -%}
+</ul>
+{%- endif -%}

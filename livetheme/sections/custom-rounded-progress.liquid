@@ -1,0 +1,821 @@
+{% comment %} before_after_stats section {% endcomment %}
+
+<style>
+.bas-section-{{ section.id }} {
+  padding-top: {{ section.settings.padding_top }}px;
+  padding-bottom: {{ section.settings.padding_bottom }}px;
+  background: {{ section.settings.background }};
+}
+@media screen and (max-width: 991px) {
+  .bas-section-{{ section.id }} {
+    padding-top: {{ section.settings.mobile_padding_top }}px;
+    padding-bottom: {{ section.settings.mobile_padding_bottom }}px;
+  }
+}
+.container_small{
+  max-width: calc(500px * 2 + 54px);
+  margin:0 auto;
+  padding: 0 20px;
+}
+.c_progress_circles{
+margin-top:50px;
+}
+@media (max-width:768px){
+.c_progress_circles{
+margin-top:50px;
+}
+}
+
+/* Cards wrapper */
+.bas-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+ /* max-width: calc(346px * 2 + 54px);*/
+  column-gap: 54px;
+  margin: 0 auto;
+}
+
+.bas-card {
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  position: relative;
+  padding: 85px 20px 85px;
+  min-height: 385px;
+}
+
+.bas-before-card {
+  background-color: {{ section.settings.before_card_bg }};
+  border: 1px solid {{ section.settings.before_card_border }};
+}
+
+.bas-after-card {
+  background-color: {{ section.settings.after_card_bg }};
+  border: 1px solid {{ section.settings.after_card_border }};
+}
+
+/* Badge */
+.bas-badge {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  right: 0;
+  max-width: 209px;
+  height: 47px;
+  margin: 0 auto;
+  border-radius: 100px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  z-index: 1;
+}
+
+.bas-before-card .bas-badge {
+  background-color: {{ section.settings.before_badge_bg }};
+  color: {{ section.settings.before_badge_color }};
+  border: 1px solid {{ section.settings.before_badge_border }};
+}
+
+.bas-after-card .bas-badge {
+  background-color: {{ section.settings.after_badge_bg }};
+  color: {{ section.settings.after_badge_color }};
+  border: 1px solid {{ section.settings.after_badge_border }};
+  font-weight: bold;
+}
+
+/* Circle progress */
+.bas-circle-wrap {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  margin: 0 auto 20px;
+}
+
+.bas-circle-inner {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.bas-circle-wrap svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg);
+  width: 100%;
+    height: 100%;
+}
+
+.bas-circle-wrap circle {
+  fill: none;
+  stroke-width: 26px;
+  stroke-linecap: round;
+  stroke-dasharray: 675;
+  stroke-dashoffset: 675;
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bas-circle-label {
+  font-size: 39px;
+  line-height: 1.25;
+  letter-spacing: -1.67px;
+}
+
+.bas-before-card .bas-circle-wrap circle { stroke: {{ section.settings.before_circle_color }}; }
+.bas-after-card  .bas-circle-wrap circle { stroke: {{ section.settings.after_circle_color }};  }
+.bas-before-card .bas-circle-label { color: {{ section.settings.before_circle_color }}; }
+.bas-after-card  .bas-circle-label { color: {{ section.settings.after_circle_color }};  }
+
+/* Stats list */
+.bas-stats {
+  list-style: none;
+  margin: 20px auto 0;
+  padding: 0;
+  width: 100%;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bas-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.bas-stat-label {
+  font-size: 14px;
+  line-height: 22px;
+  min-width: 94px;
+  padding-right: 5px;
+  color: {{ section.settings.stat_label_color }};
+  max-width:94px;
+}
+
+.bas-stat-bar {
+  position: relative;
+  flex: 1;
+  height: 8px;
+  border-radius: 100px;
+}
+
+.bas-before-card .bas-stat-bar { background: {{ section.settings.before_bar_track }}; }
+.bas-after-card  .bas-stat-bar { background: {{ section.settings.after_bar_track }};  }
+
+.bas-stat-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 8px;
+  border-radius: 100px;
+  width: 0%;
+  transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bas-before-card .bas-stat-fill { background-color: {{ section.settings.before_bar_fill }}; }
+.bas-after-card  .bas-stat-fill { background-color: {{ section.settings.after_bar_fill }};  }
+
+/* Logo slot */
+.bas-logo {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.bas-logo svg,
+.bas-logo img {
+  display: block;
+  margin: 0 auto;
+  max-height: 30px;
+  width: auto;
+}
+
+@media screen and (max-width: 750px) {
+  .bas-cards {
+    flex-direction: column;
+    row-gap: 50px;
+    max-width: 100%;
+  }
+  .bas-card {
+    min-width: unset;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .bas-cards {/* max-width: calc(500px * 2 + 54px);*/ }
+  .bas-badge  { max-width: 280px; height: 54px; font-size: 22px; }
+  .bas-stats  { max-width: 310px; }
+  .bas-stat-label { font-size: 18px; min-width: 115px; }
+}
+</style>
+
+<section
+  class="bas-section-{{ section.id }}"
+  id="bas-{{ section.id }}"
+  data-aos="{{ section.settings.animation }}"
+>
+    <div class="{{ section.settings.setwidth }}">
+      {% if section.settings.replace_reviews %}
+            {%  render 'rating-custom', align : section.settings.align-heading %}
+      {% else %}
+      {% if section.settings.subtitle != blank %}
+        <div class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">{{ section.settings.subtitle }}</div>
+      {% endif %}
+    {% endif %}
+      {% if section.settings.title != blank %}
+        <h3 class="h3 text-{{ section.settings.align-heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+        <span>{{ section.settings.title }}</span>
+        </h3>
+      {% endif %}
+  </div>
+  <div class="{{ section.settings.setwidth }} c_progress_circles">
+    <div class="bas-cards">
+
+      {%- comment -%} ── BEFORE CARD ── {%- endcomment -%}
+      <div class="bas-card bas-before-card" data-bas-card>
+        {% if section.settings.before_badge != blank %}
+          <span class="bas-badge">{{ section.settings.before_badge }}</span>
+        {% endif %}
+
+        <div class="bas-circle-wrap"
+          data-bas-circle
+          data-value="{{ section.settings.before_circle_value }}"
+        >
+          <div class="bas-circle-inner">
+            <span class="bas-circle-label">{{ section.settings.before_circle_value }}%</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+            <circle cx="120" cy="120" r="107"></circle>
+          </svg>
+        </div>
+
+        <ul class="bas-stats">
+          {% for block in section.blocks %}
+            {% if block.type == 'before_stat' %}
+              <li class="bas-stat-row" {{ block.shopify_attributes }}>
+                <span class="bas-stat-label">{{ block.settings.label }}</span>
+                <div class="bas-stat-bar">
+                  <span class="bas-stat-fill" data-bas-fill data-width="{{ block.settings.value }}"></span>
+                </div>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      {%- comment -%} ── AFTER CARD ── {%- endcomment -%}
+      <div class="bas-card bas-after-card" data-bas-card>
+        {% if section.settings.after_badge != blank %}
+          <span class="bas-badge">{{ section.settings.after_badge }}</span>
+        {% endif %}
+
+        <div class="bas-circle-wrap"
+          data-bas-circle
+          data-value="{{ section.settings.after_circle_value }}"
+        >
+          <div class="bas-circle-inner">
+            <span class="bas-circle-label">{{ section.settings.after_circle_value }}%</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+            <circle cx="120" cy="120" r="107"></circle>
+          </svg>
+        </div>
+
+        <ul class="bas-stats">
+          {% for block in section.blocks %}
+            {% if block.type == 'after_stat' %}
+              <li class="bas-stat-row" {{ block.shopify_attributes }}>
+                <span class="bas-stat-label">{{ block.settings.label }}</span>
+                <div class="bas-stat-bar">
+                  <span class="bas-stat-fill" data-bas-fill data-width="{{ block.settings.value }}"></span>
+                </div>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var CIRCUMFERENCE = 675; // 2 * π * 107 ≈ 672 — using original value
+
+  function animateSection(section) {
+    // Circles
+    section.querySelectorAll('[data-bas-circle]').forEach(function (wrap) {
+      var value   = parseFloat(wrap.getAttribute('data-value')) || 0;
+      var circle  = wrap.querySelector('circle');
+      if (!circle) return;
+      var offset  = CIRCUMFERENCE - (CIRCUMFERENCE * value / 100);
+      circle.style.strokeDashoffset = offset;
+    });
+
+    // Progress bars
+    section.querySelectorAll('[data-bas-fill]').forEach(function (fill) {
+      var width = fill.getAttribute('data-width') || '0';
+      fill.style.width = width + '%';
+    });
+  }
+
+  function init() {
+    var section = document.getElementById('bas-{{ section.id }}');
+    if (!section) return;
+
+    var triggered = false;
+
+    function check() {
+      if (triggered) return;
+      var rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9) {
+        triggered = true;
+        animateSection(section);
+        window.removeEventListener('scroll', check);
+      }
+    }
+
+    window.addEventListener('scroll', check, { passive: true });
+    check(); // fire immediately if already in view
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Before After Stats",
+  "tag": "section",
+  "class": "section-before-after-stats",
+  "settings": [
+      {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+        {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        { "value": "container_small",       "label": "Small"             },
+        { "value": "container",       "label": "Box"             },
+        { "value": "container-fluid", "label": "Container Fluid" },
+        { "value": "full",            "label": "Full"            }
+      ]
+    },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Section background"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub title top"
+        },
+                {
+      "type": "checkbox",
+      "id": "replace_reviews",
+      "label": "Replace Sub Title Top with Review",
+    },
+     {
+      "type": "paragraph",
+      "content": "When activated, the top subtitle is replaced by a review box. This review box can be customized in the Theme Settings under ‘Reviews Above Titles‘",
+    },
+        {
+      "type": "select",
+      "id": "r_type",
+      "label": "Reviews type",
+      "default": "t_1",
+      "options": [
+        {
+          "value": "t_1",
+          "label": "Review Type 1"
+        },
+        {
+          "value": "t_2",
+          "label": "Review Type 2"
+        },
+        {
+          "value": "t_3",
+          "label": "Review Type 3"
+        }
+      ]
+    },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },      
+     {
+      "type": "select",
+      "id": "align-heading",
+      "label": "Align Heading",
+      "default": "center",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },  
+    {
+      "type": "header",
+      "content": "Stat label color"
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color",
+      "label": "Stat label color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Before Card"
+    },
+    {
+      "type": "text",
+      "id": "before_badge",
+      "label": "Badge text",
+      "default": "Vibe Before"
+    },
+    {
+      "type": "color",
+      "id": "before_card_bg",
+      "label": "Card background",
+      "default": "#202F13"
+    },
+    {
+      "type": "color",
+      "id": "before_card_border",
+      "label": "Card border",
+      "default": "#202F13"
+    },
+    {
+      "type": "color",
+      "id": "before_badge_bg",
+      "label": "Badge background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "before_badge_color",
+      "label": "Badge text color",
+      "default": "#13362b"
+    },
+    {
+      "type": "color",
+      "id": "before_badge_border",
+      "label": "Badge border",
+      "default": "#dddddd"
+    },
+    {
+      "type": "range",
+      "id": "before_circle_value",
+      "label": "Circle value (%)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "before_circle_color",
+      "label": "Circle & label color",
+      "default": "#E8937F"
+    },
+    {
+      "type": "color",
+      "id": "before_bar_track",
+      "label": "Bar track color",
+      "default": "#ffffff1a"
+    },
+    {
+      "type": "color",
+      "id": "before_bar_fill",
+      "label": "Bar fill color",
+      "default": "#E8937F"
+    },
+    {
+      "type": "header",
+      "content": "After Card"
+    },
+    {
+      "type": "text",
+      "id": "after_badge",
+      "label": "Badge text",
+      "default": "Vibe After"
+    },
+    {
+      "type": "color",
+      "id": "after_card_bg",
+      "label": "Card background",
+      "default": "#13362B"
+    },
+    {
+      "type": "color",
+      "id": "after_card_border",
+      "label": "Card border",
+      "default": "#13362B"
+    },
+    {
+      "type": "color",
+      "id": "after_badge_bg",
+      "label": "Badge background",
+      "default": "#ABFCB2"
+    },
+    {
+      "type": "color",
+      "id": "after_badge_color",
+      "label": "Badge text color",
+      "default": "#055A47"
+    },
+    {
+      "type": "color",
+      "id": "after_badge_border",
+      "label": "Badge border",
+      "default": "#ABFCB2"
+    },
+    {
+      "type": "range",
+      "id": "after_circle_value",
+      "label": "Circle value (%)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 95
+    },
+    {
+      "type": "color",
+      "id": "after_circle_color",
+      "label": "Circle & label color",
+      "default": "#ABFCB2"
+    },
+    {
+      "type": "color",
+      "id": "after_bar_track",
+      "label": "Bar track color",
+      "default": "#055A47"
+    },
+    {
+      "type": "color",
+      "id": "after_bar_fill",
+      "label": "Bar fill color",
+      "default": "#ABFCB2"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Mobile Padding"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "before_stat",
+      "name": "Before — Stat row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Brain Fog"
+        },
+        {
+          "type": "range",
+          "id": "value",
+          "label": "Bar value (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 61
+        }
+      ]
+    },
+    {
+      "type": "after_stat",
+      "name": "After — Stat row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Brain Fog"
+        },
+        {
+          "type": "range",
+          "id": "value",
+          "label": "Bar value (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 14
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before After Stats",
+      "category": "Text",
+      "blocks": [
+        { "type": "before_stat", "settings": { "label": "Brain Fog",   "value": 61 } },
+        { "type": "before_stat", "settings": { "label": "Productivity","value": 29 } },
+        { "type": "before_stat", "settings": { "label": "Motivation",  "value": 21 } },
+        { "type": "before_stat", "settings": { "label": "Mood",        "value": 21 } },
+        { "type": "after_stat",  "settings": { "label": "Brain Fog",   "value": 14 } },
+        { "type": "after_stat",  "settings": { "label": "Productivity","value": 96 } },
+        { "type": "after_stat",  "settings": { "label": "Motivation",  "value": 94 } },
+        { "type": "after_stat",  "settings": { "label": "Mood",        "value": 85 } }
+      ]
+    }
+  ]
+}
+{% endschema %}

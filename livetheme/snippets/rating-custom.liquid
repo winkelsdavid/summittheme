@@ -1,0 +1,131 @@
+          {% case section.settings.r_type %}
+            {% when "t_1" %}
+            <div
+              class="rating-custom reviews-block mb-2 text-{{ align }}"
+              style="--font_size:{{ settings.t1_font_size }}px;--radius:{{ settings.t1_radius }}px;--border-color:{{ settings.t1_border_color }};--stars-color:{{ settings.t1_stars_color }};--background:{% if settings.t1_background != blank %}{{ settings.t1_background }}{% else %}{{ settings.branding_color }}{% endif %};"
+            >
+              <div class="trustpilot-block-rating-text">
+                {% comment %}
+                {% assign sanitized_text = settings.t1_text | strip_html | downcase | replace: 'out of', '/' %}
+                {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
+                {% assign rating_string = pre_slash | split: ' ' | last | strip %}
+                {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
+                {% if rating == 0 %}{% assign rating = rating_string | plus: 0.0 %}{% endif %}
+                 {% endcomment %}
+                {% assign rating = settings.stars_rating %}
+                {% assign fill_percentage_3 = rating | divided_by: 5.0 | times: 100 %}
+                <svg
+                  class="trustpilot-star-five"
+                  style="--height:{{ settings.stars_height }}px"
+                  height="15"
+                  width="80"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 96"
+                >
+                  <defs>
+                      <linearGradient id="grad-1-{{ ii }}-{{ section.id }}{{ rating_c }}">
+                        <stop offset="{{ fill_percentage_3 }}%" stop-color="{{ settings.t1_stars_color }}" />
+                        <stop offset="{{ fill_percentage_3 }}%" stop-color="transparent" />
+                      </linearGradient>
+                      <linearGradient id="grad-stars-{{ ii }}-{{ section.id }}{{ rating_c }}">
+                        <stop offset="{% if fill_percentage_3 > 0 and fill_percentage_3 <= 100 %}{{ fill_percentage_3 | plus : 2 }}{% else %}{{ fill_percentage_3 }}{% endif %}%" stop-color="#fff" />
+                        <stop offset="{% if fill_percentage_3 > 0 and fill_percentage_3 <= 100 %}{{ fill_percentage_3 | plus : 2 }}{% else %}{{ fill_percentage_3 }}{% endif %}%" stop-color="transparent" />
+                      </linearGradient>
+                  </defs>
+                  <g fill="none"><g fill="url(#grad-1-{{ ii }}-{{ section.id }}{{ rating_c }})"><path d="M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96z"></path></g><path d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z" fill="url(#grad-stars-{{ ii }}-{{ section.id }}{{ rating_c }})"></path></g>
+                </svg>
+                <span class="rating-excellent" style="--color:{{ settings.t1_text_color }}">{{ settings.t1_text }}</span>
+              </div>
+            </div>
+            {% when "t_2" %}
+                  <div
+                  class="rating-custom-2 reviews-block mb-2 text-{{ align }}"
+                  style="--radius:{{ settings.radius }}px;--mobile-font_size:{{ settings.t2_mobile_font_size }}px;--font_size:{{ settings.t2_font_size }}px;{% if settings.t2_border_color != "rgba(0,0,0,0)" %}--border-color:{{ settings.t2_border_color }};{% endif %}--stars-color:{{ settings.t2_stars_color }};--background:{% if settings.t2_background != blank %} {{ settings.t2_background }}{% else %}{{ settings.branding_color }}{% endif %};"
+                >
+                  <div class="trustpilot-block-rating-text-2">
+                    <div class="stars">
+                      {% comment %}
+                        {% assign sanitized_text = settings.t2_text | strip_html | downcase | replace: 'out of', '/' %}
+                        {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
+                        {% assign rating_string = pre_slash | split: ' ' | last | strip %}
+                        {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
+                        {% if rating == 0 %}{% assign rating = rating_string | plus: 0.0 %}{% endif %}
+                         {% endcomment %}
+                          {% assign rating = settings.stars_rating_2 %}
+                      {% for ii in (1..5) %}
+                        {% assign fill_percentage_1 = 0 %}
+                        {% assign rating_minus = ii | minus: 1 %}
+                          {% if rating >= ii %}
+                            {% assign fill_percentage_1 = 100 %}
+                          {% elsif rating > rating_minus %}
+                            {% assign decimal = rating | minus: ii | plus: 1 %}
+                            {% assign fill_percentage_1 = decimal | times: 100 %}
+                          {% endif %}
+                        <svg class="star reviews-summary-star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="--stars-color:{{ settings.t2_stars_color }};--height:{{ settings.t2_stars_height }}px">
+                          <defs>
+                              <linearGradient id="grad-2-{{ ii }}-{{ section.id }}{{ rating_c }}">
+                                <stop offset="{% if fill_percentage_1 > 0 and fill_percentage_1 <= 98 %}{{ fill_percentage_1 | plus : 2 }}{% else %}{{ fill_percentage_1 }}{% endif %}%" stop-color="{{ settings.t2_stars_color }}" />
+                                <stop offset="{% if fill_percentage_1 > 0 and fill_percentage_1 <= 98 %}{{ fill_percentage_1 | plus : 2 }}{% else %}{{ fill_percentage_1 }}{% endif %}%" stop-color="transparent" />
+                              </linearGradient>
+                            </defs>
+                          <path  d="M11.5245 3.46353C11.6741 3.00287 12.3259 3.00287 12.4755 3.46353L14.1329 8.56434C14.1998 8.77035 14.3918 8.90983 14.6084 8.90983H19.9717C20.4561 8.90983 20.6575 9.52964 20.2656 9.81434L15.9266 12.9668C15.7514 13.0941 15.678 13.3198 15.745 13.5258L17.4023 18.6266C17.552 19.0873 17.0248 19.4704 16.6329 19.1857L12.2939 16.0332C12.1186 15.9059 11.8814 15.9059 11.7061 16.0332L7.3671 19.1857C6.97524 19.4704 6.448 19.0873 6.59768 18.6266L8.25503 13.5258C8.32197 13.3198 8.24864 13.0941 8.07339 12.9668L3.73438 9.81434C3.34253 9.52964 3.54392 8.90983 4.02828 8.90983H9.39159C9.6082 8.90983 9.80018 8.77035 9.86712 8.56434L11.5245 3.46353Z" fill="url(#grad-2-{{ ii }}-{{ section.id }}{{ rating_c }})"></path>
+                        </svg>
+                      {% endfor %}
+                    </div>
+                    <span class="rating-excellent-2" style="--color:{{ settings.t2_text_color }}">{{ settings.t2_text }}</span>
+                  </div>
+                </div>
+            {% when "t_3" %}
+                <div class="reviews_images reviews-block mb-2 text-{{ align }}" style="--font-color:{{ settings.t3_text_color }};border:1px solid {{ settings.t3_border_color }};background:{{ settings.t3_background }};{% if settings.t3_border_color != "rgba(0,0,0,0)" %}:1px solid {{ settings.t3_border_color }};{% endif %}border-radius:{{ settings.roundness }}px;">
+                    <div class="reviews_images_r">
+                      {% if settings.image_1 != blank %}
+                        <img src="{{ settings.image_1 | img_url:"100x" }}" loading="lazy" style='--width:{{ settings.images_size }}px;--width-mobile:{{ settings.images_size_mobile }}px'>
+                      {% endif  %}
+                      {% if settings.image_2 != blank %}
+                        <img src="{{ settings.image_2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ settings.images_margin }}px;--width:{{ settings.images_size }}px;--width-mobile:{{ settings.images_size_mobile }}px'>
+                      {% endif  %}
+                      {% if settings.image_3 != blank %}
+                        <img src="{{ settings.image_3 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ settings.images_margin }}px;--width:{{ settings.images_size }}px;--width-mobile:{{ settings.images_size_mobile }}px'>
+                      {% endif  %}
+                    </div>
+                    <div class="reviews_text">
+                        <div class="review-block-rating-text-2 ">
+                          {% if settings.t3_add_stars %}
+                        <div class="stars" style="color:{{ settings.t3_stars_color }};--height:{{ settings.t3_stars_height }}px">
+                          {% comment %}
+                          {% assign sanitized_text = settings.t3_text | strip_html | downcase | replace: 'out of', '/' %}
+                          {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
+                          {% assign rating_string = pre_slash | split: ' ' | last | strip %}
+                          {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
+                          {% if rating == 0 %}{% assign rating = rating_string | plus: 0.0 %}{% endif %}
+                           {% endcomment %}
+                          {% assign rating = settings.stars_rating_3 %}
+                          {% for ii in (1..5) %}
+                            {% assign fill_percentage_2 = 0 %}
+                          {% assign rating_minus = ii | minus: 1 %}
+                          {% if rating >= ii %}
+                            {% assign fill_percentage_2 = 100 %}
+                          {% elsif rating > rating_minus %}
+                            {% assign decimal = rating | minus: ii | plus: 1 %}
+                            {% assign fill_percentage_2 = decimal | times: 100 %}
+                          {% endif %}
+                            <svg class="star reviews-summary-star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="--stars-color:{{ settings.t3_stars_color }};--height:{{ settings.t3_stars_height }}px">
+                              <defs>
+                                  <linearGradient id="grad-{{ ii }}-{{ section.id }}{{ rating_c }}">
+                                    <stop offset="{% if fill_percentage_2 > 0 and fill_percentage_2 <= 100 %}{{ fill_percentage_2 | plus : 2 }}{% else %}{{ fill_percentage_2 }}{% endif %}%" stop-color="{{ settings.t3_stars_color }}" />
+                                    <stop offset="{% if fill_percentage_2 > 0 and fill_percentage_2 <= 100 %}{{ fill_percentage_2 | plus : 2 }}{% else %}{{ fill_percentage_2 }}{% endif %}%" stop-color="transparent" />
+                                  </linearGradient>
+                                </defs>
+                              <path fill="url(#grad-{{ ii }}-{{ section.id }}{{ rating_c }})" d="M11.5245 3.46353C11.6741 3.00287 12.3259 3.00287 12.4755 3.46353L14.1329 8.56434C14.1998 8.77035 14.3918 8.90983 14.6084 8.90983H19.9717C20.4561 8.90983 20.6575 9.52964 20.2656 9.81434L15.9266 12.9668C15.7514 13.0941 15.678 13.3198 15.745 13.5258L17.4023 18.6266C17.552 19.0873 17.0248 19.4704 16.6329 19.1857L12.2939 16.0332C12.1186 15.9059 11.8814 15.9059 11.7061 16.0332L7.3671 19.1857C6.97524 19.4704 6.448 19.0873 6.59768 18.6266L8.25503 13.5258C8.32197 13.3198 8.24864 13.0941 8.07339 12.9668L3.73438 9.81434C3.34253 9.52964 3.54392 8.90983 4.02828 8.90983H9.39159C9.6082 8.90983 9.80018 8.77035 9.86712 8.56434L11.5245 3.46353Z"></path>
+                            </svg>
+                          {% endfor %}
+                        </div>
+                      {% endif %}
+                        <span class="review-excellent-2" style="color:{{ settings.t3_text_color }};--size:{{ settings.stars_text_size }}px;--size-mobile:{{ settings.stars_text_size_mobile }}px">{{ settings.t3_text }}</span>
+                        </div>
+                        <div class="review_images_content" style="color:{{ settings.text_color }};--size:{{ settings.content_size }}px;--size-mobile:{{ settings.content_size_mobile }}px">
+                          {{ settings.content }}
+                        </div>
+                    </div>
+                </div>
+          {% endcase %}
