@@ -38,6 +38,7 @@
       "shipping_text" : "Compre agora e receba até:"
     },
     "cart": {
+      "title_upsell": "Você também pode gostar",
       "coupon_code_title": "Lista de cupons",
       "coupon_first_label": "Gaste",
       "coupon_last_label": "para frete grátis",

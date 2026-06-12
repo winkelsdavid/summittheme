@@ -1,6 +1,6 @@
 
 <style>
-  .c_fast-delivery {
+  .c-cart-delivery {
     padding: 0 10px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -14,7 +14,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
 }
-.c_fast-delivery span {
+.c-cart-delivery span {
     display: flex;
     align-items: center;
     grid-gap: 8px;
@@ -33,18 +33,22 @@ fill:#000;
 .site-header__cart .mini-cart-content .with_stroke svg circle{
 stroke: var(--icon-color)
 }
-.c_fast-delivery>span:nth-child(2) {
+.c-cart-delivery>span:nth-child(2) {
     padding: 0 28px;
 }
+.c-cart-delivery{
+background:{{ settings.checkout_icons_background }}!important;
+border-radius:{{ settings.checkout_icons_radius }}px!important;
+}
 @media (max-width: 768px) {
-    .c_fast-delivery {
+    .c-cart-delivery {
         font-size: 12px;
     }
-    .c_fast-delivery span {
+    .c-cart-delivery span {
     font-size: 12px;
             grid-gap: 2px;
 }
-.c_fast-delivery>span:nth-child(2) {
+.c-cart-delivery>span:nth-child(2) {
     padding: 0 10px;
 }
 }
@@ -65,11 +69,18 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 gap:2px;
+{% if settings.countdown_box_text_color != blank and settings.countdown_box_text_color != "rgba(0,0,0,0)" %}
+border:1px solid {{ settings.countdown_box_border }};
+{% else %}
 border:1px solid {{ settings.branding_color }};
+{% endif %}
 border-radius:{{ settings.radius_allimg_range }}px;
-height:48px;
-width:48px;
+height:44px;
+width:44px;
 background:{{ settings.countdown_box_background }};
+{% if settings.countdown_box_text_color != blank and settings.countdown_box_text_color != "rgba(0,0,0,0)" %}
+  color:{{ settings.countdown_box_text_color }};
+{% endif %}
 }
 .cart-drawer-countdown-item li .countdown-time{
     font-size: 20px;
@@ -126,17 +137,17 @@ width:42px;
     </span>
     <div class="mini-cart-content shadow text-center p-0 d-flex flex-column">
       <div class="mini-cart-header ">
-        <div class=" text-left d-flex justify-content-between align-items-center border-bottom pb-3 pt-4 px-4 ">
+        <div class=" text-left d-flex justify-content-between align-items-center border-bottom pb-1 pt-1 px-4 ">
             <div class="d-flex align-items-center">
               <span>{{ 'layout.cart.title' | t }}</span>
               <span class="js-cart-count site-header__cart-indicator ml-2">{{ cart.item_count }}</span>
             </div>
-              {% if settings.data_countdown != blank %}
+              {% if settings.data_countdown != blank and settings.enable_cart_countdown != false %}
                 <div class="kik_cart_timer_c">
                 {% if settings.data_countdown_title != blank %}
-                  <p>{{ settings.data_countdown_title }}</p>
+                  <p id="cart_drawer_countdown">{{ settings.data_countdown_title }}</p>
                 {% else %}
-                  <p>{{ 'general.cart.countdown_title' | t  }}</p>
+                  <p id="cart_drawer_countdown">{{ 'general.cart.countdown_title' | t  }}</p>
                 {% endif %}
                 <div
                   class="kik_cart_timer_an {{ section.id }}"
@@ -172,7 +183,9 @@ width:42px;
         {% assign total_savings = total_savings | plus: cart.total_discount %}
 
 {% if settings.show_discount_information %}
+  {% comment %}
   {% if total_savings > 0 %}
+   {% endcomment %}
     {% if settings.discount_information_text != blank %}
       {% assign discount_template = settings.discount_information_text %}
     {% else %}
@@ -192,7 +205,6 @@ width:42px;
       </p>
     </div>
   {% endif %}
-{% endif %}
 
 
         {% comment %}
@@ -315,6 +327,8 @@ width:42px;
               <div class="drawer-crossell-inner pt-lg-3">
               {%- if settings.title_upsell != blank -%}
                 <h6 class="text-left mb-lg-4 mb-3 pb-1 pt-3">{{ settings.title_upsell }}</h6>
+              {% else %}
+                <h6 class="text-left mb-lg-4 mb-3 pb-1 pt-3"> {{ 'general.cart.title_upsell' | t }}</h6>
               {%- endif -%}
               
                 <div class="product-recommendations-cart position-relative">
@@ -346,7 +360,7 @@ width:42px;
             </div>
           {% endif %}
         </div>
-      <footer class="mini-cart-footer js-cart-bottom pb-4 px-4">
+      <footer class="mini-cart-footer js-cart-bottom pb-1 px-4">
           <div class="mini-cart-total font-family-1">
             {%- if settings.e_notecart -%}
             <div class="d-flex align-items-center mb-3 pb-3 border-bottom block-addon gap-5 ">
@@ -473,6 +487,7 @@ width:42px;
                   customElements.define('discount-code', DiscountCode);
               </script>
              {%- endif -%}
+             {%  comment %}
               {%- if settings.shipping_calculator  and template != 'cart' -%}
                 <div class="block-addon__box">
                   <div class="small txt-body font-family-2 d-flex align-items-center js-open-addon" title="{{ 'cart.general.calc_title' | t }}">
@@ -484,6 +499,7 @@ width:42px;
                   </div>
                 </div>
               {%- endif -%}
+              {% endcomment %}
             </div>
           {%  endif %}
             {% comment %} <div class="bottom-total">
@@ -571,7 +587,7 @@ width:42px;
 
 
 
-          <div class="mini-cart-btns mt-3 d-flex flex-column w-100 gap-2">
+          <div class="mini-cart-btns mt-2 d-flex flex-column w-100 gap-2">
             {%- if settings.enable_term -%}
             <checkout-button class="checkbox" name="checkout">
               <div class="d-flex w-100 flex-column">
@@ -589,7 +605,7 @@ width:42px;
               </div>
             </checkout-button>
             {% else %}
-              <a name="checkout" class="w-100 btn gradient-theme js-cart-btn-checkout btn-theme d-flex align-items-center justify-content-center " href="/checkout"> {{ 'cart.general.checkout' | t }} <span class="divider d-inline-block px-2"> • </span> <span class="js-cart-total"></span></a>
+              <a name="checkout" class="w-100 btn gradient-theme js-cart-btn-checkout btn-theme d-flex align-items-center justify-content-center " href="/checkout"> {% if settings.checkout_custom_text != blank %}{{ settings.checkout_custom_text }}{% else %}{{ 'cart.general.checkout' | t }}{% endif %} <span class="divider d-inline-block px-2"> • </span> <span class="js-cart-total"></span></a>
             {%- endif -%}
 
             {% if settings.show_view_all_cart %}
@@ -609,9 +625,9 @@ width:42px;
           {%- endif -%}
           {% endcomment %}
                   {% if settings.enable_checkout_icon %}
-                    <div class="c_fast-delivery">
+                    <div class="c-cart-delivery">
                         <span {% if settings.checkout_icon_color != blank and settings.checkout_icon_color != "rgba(0,0,0,0)" %} class="with_stroke" {% endif %}  style="--icon-color:{{ settings.checkout_icon_color }};">
-                            {% render 'list-svg', icon: settings.checkout_icon_1_svg %}
+                            {% render 'list-svg-cart', icon_color: settings.checkout_icon_color , icon: settings.checkout_icon_1_svg %}
                           {% if settings.checkout_icons_label_1 != blank %}
                           {{ settings.checkout_icons_label_1 }}
                           {% else %}
@@ -621,7 +637,7 @@ width:42px;
                      
                         <span> | </span>
                         <span {% if settings.checkout_icon_color_1 != blank and settings.checkout_icon_color_2 != "rgba(0,0,0,0)" %} class="with_stroke" {% endif %} style="--icon-color:{{ settings.checkout_icon_color_2 }};">
-                          {% render 'list-svg', icon: settings.checkout_icon_2_svg %}
+                          {% render 'list-svg-cart', icon_color: settings.checkout_icon_color_2 , icon: settings.checkout_icon_2_svg %}
                           {% if settings.checkout_icons_label_2 != blank %}
                           {{ settings.checkout_icons_label_2 }}
                           {% else %}
@@ -795,7 +811,7 @@ width:42px;
     color: black;
   }
 {% endstylesheet %}
-{% if settings.data_countdown != blank %}
+{% if settings.data_countdown != blank and settings.enable_cart_countdown != false %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     kik_cart_init_timer();

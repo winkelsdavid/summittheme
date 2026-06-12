@@ -55,7 +55,7 @@
           {%- endif -%}
       </div>
       {% unless enablqv %}
-      <span class="position-relative btn btn-sm btn btn-outline js-grid-cart small {% unless product.available %} disabled {% endunless %}" title="{% if product.available %} {{ 'products.product.add_to_cart' | t }} {% else %} {{ 'products.product.sold_out' | t }} {% endif %}" data-id="{{ product.selected_or_first_available_variant.id }}">
+      <span class="position-relative btn btn-sm btn btn-theme js-grid-cart small {% unless product.available %} disabled {% endunless %}" title="{% if product.available %} {{ 'products.product.add_to_cart' | t }} {% else %} {{ 'products.product.sold_out' | t }} {% endif %}" data-id="{{ product.selected_or_first_available_variant.id }}">
         <div class="product-card__loading spinner-{{ settings.loading }}" role="status"></div>
         {% if product.available %}
           <span>+ {{ 'products.product.add_to' | t }}</span>

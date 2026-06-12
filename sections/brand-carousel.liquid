@@ -56,6 +56,7 @@ display:none!important;
     align-items: center;
   }
 </style>
+{%- assign speed_multiplier = 51 | minus : section.settings.slidescroll -%}
 <div class="customstyle{{ section.id }} " data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}
   <div class="{{ section.settings.setwidth }}">
@@ -66,7 +67,7 @@ display:none!important;
         <div class="brand-slider row mb-0" id="collection-list-{{ section.id }}"
             data-rows="{{ section.settings.rows }}"
             data-slidesToShow="{{ section.settings.slidestoshow }}"
-            data-slidestoscroll="{{ section.settings.slidescroll }}"
+            data-slidestoscroll="{{ speed_multiplier }}"
             data-arrows="{{ section.settings.arrows }}"
             data-dots="{{ section.settings.dots }}" 
             data-draggable="{{ section.settings.draggable }}" 
@@ -303,8 +304,7 @@ display:none!important;
     {
       "type": "color",
       "id": "bgsection",
-      "label": "Background Section",
-      "default": "#ffffff"
+      "label": "Background Section"
     },
     {
       "type": "text",
@@ -405,7 +405,7 @@ display:none!important;
       "type": "checkbox",
       "id": "automatic_sliding",
       "label": "Automatic Slider",
-      "default": false
+      "default": true
     },
     {
       "type": "checkbox",
@@ -459,7 +459,7 @@ display:none!important;
       "min": 1,
       "step": 1,
       "unit": "ste",
-      "default": 6
+      "default": 1
     },
     {
       "type": "select",
@@ -505,7 +505,7 @@ display:none!important;
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "range",
@@ -514,7 +514,7 @@ display:none!important;
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "header",

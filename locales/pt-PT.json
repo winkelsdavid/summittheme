@@ -38,6 +38,7 @@
       "shipping_text" : "Encomende agora e receba até:"
     },
     "cart": {
+      "title_upsell": "Também poderás gostar de",
       "coupon_code_title": "Lista de cupões",
       "coupon_first_label": "Gaste",
       "coupon_last_label": "para envio grátis",

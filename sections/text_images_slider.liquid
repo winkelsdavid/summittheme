@@ -319,14 +319,14 @@ function initCustomVideoSlider_2(sectionId) {
 
   // Read autoplay setting from data attribute
   const autoplayEnabled_2 = container_2.dataset.autoslide === 'true';
-
+{%- assign speed_multiplier = 51 | minus : section.settings.speed -%}
 const swiper_2 = new Swiper(`.custom_video_items-${sectionId}`, {
   slidesPerView: 2.8,
   spaceBetween: 12,
    centeredSlides: true,
    freeMode: autoplayEnabled_2 ? true : false, // Enables continuous scroll
   loop: true,
-  speed: autoplayEnabled_2 ? {{  section.settings.speed | times : 1000 }} : 300, // Controls how fast it scrolls
+  speed: autoplayEnabled_2 ? {{  speed_multiplier | times : 1000 }} : 300, // Controls how fast it scrolls
   autoplay: autoplayEnabled_2 ? {
      delay: 1,
     disableOnInteraction: false,
@@ -543,8 +543,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
     {
       "type": "color_background",
       "id": "bgsection",
-      "label": "Background Section",
-      "default": "#ffffff"
+      "label": "Background Section"
     },
     {
       "type": "select",
@@ -612,7 +611,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "range",
@@ -621,7 +620,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "header",
@@ -683,8 +682,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
         {
           "type": "color",
           "id": "bgtext",
-          "label": "Background Text Block",
-          "default": "#ffffff"
+          "label": "Background Text Block"
         },
         {
           "type": "color",

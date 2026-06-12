@@ -38,6 +38,7 @@
       "shipping_text" : "Bestil nu og modtag inden:"
     },
     "cart": {
+      "title_upsell": "Du vil måske også synes om",
       "coupon_code_title": "Liste over kuponer",
       "coupon_first_label": "Brug",
       "coupon_last_label": "for gratis fragt",

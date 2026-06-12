@@ -2287,6 +2287,13 @@ input.spr-summary-actions-newreview:hover {
         }
     {% endif %}
 {% endif %}
+  {% if settings.enable_button_hover %}
+  {% if settings.btn_animation == "hover_2" %}
+        .btn-theme{
+          border:2px solid var(--g-cta-button);
+        }
+  {% endif %}
+  {% endif %}
 .btn-theme:hover,
 .shopify-payment-button .shopify-payment-button__button--unbranded:hover,
 .spr-summary-actions-newreview:hover,
@@ -2301,7 +2308,9 @@ input.spr-summary-actions-newreview:hover {
   {% if settings.enable_button_hover %}
   {% if settings.btn_animation == "hover_2" %}
   background:transparent!important;
-  border:1px solid!important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border:2px solid!important;
   border-color: var(--g-cta-button);
   color:var(--g-cta-button)!important;
   {% endif %}
@@ -2469,6 +2478,10 @@ td {
   text-align: left;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
+/*.drawer-crossell__item .btn-outline:hover{
+      border-color: var(--g-main);
+    color: var(--g-main);
+}*/
 @media only screen and (max-width: 749px) {
   .responsive-table thead {
     display: none;
@@ -6044,6 +6057,7 @@ p a:not(.button):focus,
   font-weight: 500;
   line-height: 1;
   letter-spacing:var(--g-label-space);
+  text-align:center;
 }
 .product-label {
   position: absolute;
@@ -10165,6 +10179,9 @@ a.text-primary:active {
   letter-spacing: var(--g-font-spacing-btn);
   text-transform: var(--g-text-transform-btn);
   position: relative;
+}
+.btn-underline.btn-underline-white{
+  color:white!important;
 }
 .btn-underline:before{
   transform-origin: 100% 50%;

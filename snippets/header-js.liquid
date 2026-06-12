@@ -37,7 +37,7 @@
     theme.strings = {
     stringHurrify: {{ 'products.product.hurrify' | t: number: 'number' | json }},
     stockAvailable: {{ 'products.product.stock_available' | t: count: '1' | json }},
-    freeShipping: {% if settings.free_shipping_text != blank %}{{ settings.free_shipping_text | json }}{% else %}{{ 'general.cart.coupon_free_delivery' | t }}{% endif %},
+    freeShipping: {% if settings.free_shipping_text != blank %}{{ settings.free_shipping_text | json }}{% else %}{{ 'general.cart.coupon_free_delivery' | t | json }}{% endif %},
     addToCart: {{ 'products.product.add_to_cart' | t | json }},
     addToCartSuccess: {{ 'products.product.product_added_to_cart_html' | t | json }},
     soldOut: {{ 'products.product.sold_out' | t | json }},
@@ -83,8 +83,8 @@
     colorVariant1 : {{ settings.contain_color | json }},
     colorVariant2 : {{ settings.contain_color_2 | json }},
     {% if settings.shipping_calculator and template != 'password' %}
-      shippingCalcSubmitButton: {{ settings.shipping_calculator_submit_button_label | default: 'general.cart.shipping_submit' | t  | json }},
-      shippingCalcSubmitButtonDisabled: {{ settings.shipping_calculator_submit_button_label_disabled | default: 'general.cart.shipping_calculating' | t  | json }},
+      shippingCalcSubmitButton: {{ settings.shipping_calculator_submit_button_label | default: 'Calculate shipping' | json }},
+      shippingCalcSubmitButtonDisabled: {{ settings.shipping_calculator_submit_button_label_disabled | default: 'Calculating...' | json }},
       {% if customer %}shippingCalcCustomerIsLoggedIn: true,{% endif %}
       shippingCalcMoneyFormat: {{ shop.money_with_currency_format | json }}
     {% endif %}

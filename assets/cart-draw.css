@@ -125,7 +125,7 @@ background-color: white;
 }
 .drawer-crossell__item .product-card__info{
   flex: 1;
-  padding: 0 0 0 1.5rem !important;
+  padding: 0 0 4px 1.5rem !important;
   margin-bottom: 1rem;
   background-color: transparent;
 }
@@ -149,7 +149,7 @@ background-color: white;
     margin-bottom: 0;
   }
   .drawer-crossell__item .product-card__info{
-    padding: 0 0 0 1rem !important;
+    padding: 0 0 4px 1rem !important;
   }
   .drawer-crossell .product-card__price{
     margin-bottom: 0rem;

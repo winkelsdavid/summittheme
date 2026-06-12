@@ -4,6 +4,8 @@
 # Local temp/debug files
 _*
 *.log
+livetheme/
+theme-import-safe/
 
 # Claude Code local config
 .claude/

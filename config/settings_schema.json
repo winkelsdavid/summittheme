@@ -31,6 +31,11 @@
         "default": 30
       },
       {
+      "type": "checkbox",
+      "id": "enable_smoothness",
+      "label": "Smooth Scrolling Animition"
+    },
+      {
         "type": "header",
         "content": "Loading animation"
       },
@@ -2638,16 +2643,8 @@
             "label": "Hover 1"
           },
           {
-            "value": "hover_2",
-            "label": "Hover 2"
-          },
-          {
-            "value": "hover_3",
-            "label": "Hover 3"
-          },
-          {
             "value": "hover_4",
-            "label": "Hover 4"
+            "label": "Hover 2"
           }
         ]
       },
@@ -2948,48 +2945,6 @@
       },
       {
         "type": "header",
-        "content": "📦 Shipping Rates Calculator"
-      },
-      {
-        "type": "checkbox",
-        "id": "shipping_calculator",
-        "label": "Enable shipping calculator",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "shipping_calculator_heading",
-        "label": "Heading text",
-        "default": "Get shipping estimates"
-      },
-      {
-        "type": "text",
-        "id": "shipping_calculator_default_country",
-        "label": "Default country selection",
-        "default": "United States"
-      },
-      {
-        "type": "paragraph",
-        "content": "If your customer is logged-in, the country in his default shipping address will be selected. If you are not sure about the  spelling to use here, refer to the first checkout page."
-      },
-      {
-        "type": "text",
-        "id": "shipping_calculator_submit_button_label",
-        "label": "Submit button label",
-        "default": "Calculate shipping"
-      },
-      {
-        "type": "text",
-        "id": "shipping_calculator_submit_button_label_disabled",
-        "label": "Submit button label when calculating",
-        "default": "Calculating..."
-      },
-      {
-        "type": "paragraph",
-        "content": "Do not forget to include the snippet shipping-calculator in your cart.liquid template where you want the shipping calculator to appear. You can get the snippet here: [shipping-calculator.liquid](https://github.com/carolineschnapp/shipping-calculator/blob/master/shipping-calculator.liquid) ."
-      },
-      {
-        "type": "header",
         "content": "Tax and Shipping Information"
       },
       {
@@ -3201,6 +3156,12 @@
         "content": "Cart countdown"
       },
       {
+      "type": "checkbox",
+      "id": "enable_cart_countdown",
+      "label": "Enable cart coundtdown",
+      "default": true
+    },
+      {
       "type": "text",
       "id": "data_countdown_title",
       "label": "Title",
@@ -3210,6 +3171,16 @@
       "type": "color_background",
       "id": "countdown_box_background",
       "label": "Boxes color"
+    },
+    {
+      "type": "color",
+      "id": "countdown_box_border",
+      "label": "Boxes border color"
+    },
+    {
+      "type": "color",
+      "id": "countdown_box_text_color",
+      "label": "Boxes text color"
     },
       {
       "type": "text",
@@ -3272,6 +3243,19 @@
         "id": "enable_checkout_icon",
         "label": "Enable checkout icons",
         "default":true
+      },
+      {
+        "type": "color",
+        "id": "checkout_icons_background",
+        "label": "Background"
+      },
+      {
+        "type": "range",
+        "id": "checkout_icons_radius",
+        "label": "Radius",
+        "default":0,
+        "min":0,
+        "max":100
       },
       {
         "type": "range",

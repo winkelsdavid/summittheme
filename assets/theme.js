@@ -4662,7 +4662,9 @@ theme.miniCart = (function () {
       $(cartTotal).html(
         theme.Currency.formatMoney(cart.total_price, theme.moneyFormat)
       );
+      if (cart.items && cart.items.length > 0 && cart.items[0].product_id) {
       observeProductRecommendations(cart.items[0].product_id);
+      }
       theme.freeShipping.load(cart);
     });
   }
@@ -4994,6 +4996,9 @@ $('.bottom-total').html(`
             .done(function (item) {
               theme.miniCart.updateElements();
               theme.miniCart.generateCart();
+              if (item.item_count === 0) {
+                $('.discount-information').hide();
+              }
             });
         });
         $(".js-qty__plus").unbind("click");
@@ -5101,7 +5106,7 @@ $('.bottom-total').html(`
   }
 
   // 2. Button remove items
-  $(document).on("click", ".js-remove-mini-cart", function () {
+/*  $(document).on("click", ".js-remove-mini-cart", function () {
     const loadingIndicator = document.querySelector(".recommend-loading");
     var itemId = $(this).data("id");
     var isOuterMiniCart = $(this).closest(miniCart).length === 0 ? true : false; // check element from mini cart or not
@@ -5118,7 +5123,28 @@ $('.bottom-total').html(`
         generateCart();
       }
     });
-  });
+  });*/
+  $(document).on("click", ".js-remove-mini-cart", function () {
+    const loadingIndicator = document.querySelector(".recommend-loading");
+    var itemId = $(this).data("id");
+    var isOuterMiniCart = $(this).closest(miniCart).length === 0 ? true : false;
+
+    $(this).parents(".mini-cart-item").fadeOut(100);
+    loadingIndicator.classList.add("loading");
+    theme.GiftWrap.checkGift(itemId);
+
+    // Remove from cart, then check inside the callback
+    Shopify.changeItem(itemId, 0, function (cart) {
+        updateElements(cart);
+        
+        if (cart.item_count === 0) {
+            $('.discount-information').hide();
+        }
+        if (cart.items.length > numberDisplayed || isOuterMiniCart) {
+            generateCart();
+        }
+    });
+});
 
   //Keep popup when click cart / UX
   $(document).on("click", cartToggle, function () {

@@ -148,11 +148,12 @@ border:1px solid;
 color:#ffffff;
 background:transparent;
 }*/
+{%- assign speed_multiplier = 51 | minus : section.settings.animation_speed -%}
 .c-{{ section.id }} .animate-down {
-    animation: marquee-down {{  section.settings.animation_speed }}s linear infinite;
+    animation: marquee-down {{  speed_multiplier }}s linear infinite;
 }
 .c-{{ section.id }}  .animate-up {
-    animation: marquee-up {{  section.settings.animation_speed }}s linear infinite;
+    animation: marquee-up {{  speed_multiplier }}s linear infinite;
 }
 .marquee_content .with_image svg{
       border-radius: 50%;
@@ -185,11 +186,12 @@ flex:0 0 calc(50% - 10px);
     width: 100%;
     flex: 0 0 100%;
 }
+{%- assign speed_multiplier = 51 | minus : section.settings.animation_speed_mobile -%}
 .c-{{ section.id }} .animate-down {
-    animation: marquee-down {{  section.settings.animation_speed_mobile }}s linear infinite;
+    animation: marquee-down {{  speed_multiplier }}s linear infinite;
 }
 .c-{{ section.id }}  .animate-up {
-    animation: marquee-up {{  section.settings.animation_speed_mobile }}s linear infinite;
+    animation: marquee-up {{  speed_multiplier }}s linear infinite;
 }
 }
 </style>
@@ -562,8 +564,7 @@ document.addEventListener("DOMContentLoaded", function() {
     {
         "type":"richtext",
         "id":"title",
-        "label": "Title",
-        "default":"<p>INSTAGRAM</p>"
+        "label": "Title"
     },
     {
         "type":"url",
@@ -701,7 +702,7 @@ document.addEventListener("DOMContentLoaded", function() {
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "range",
@@ -710,7 +711,7 @@ document.addEventListener("DOMContentLoaded", function() {
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "header",

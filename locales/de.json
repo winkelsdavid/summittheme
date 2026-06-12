@@ -38,6 +38,7 @@
       "shipping_text" : "Bestelle jetzt und erhalte bis zum:"
     },
     "cart": {
+      "title_upsell": "Das könnte dir auch gefallen",
         "coupon_code_title": "Kuponliste",
         "coupon_first_label": "Kaufe für",
         "coupon_last_label": "für kostenlosen Versand",

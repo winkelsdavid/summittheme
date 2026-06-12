@@ -486,10 +486,11 @@ function initReviewSlider_2(sectionId, autoplayEnabled, autoplaySpeed) {
 
   new Swiper(sliderSelector_2, config_2);
 }
-
+{%- assign speed_multiplier = 51 | minus : section.settings.speed -%}
 // Initial load
 document.addEventListener('DOMContentLoaded', () => {
-  initReviewSlider_2('{{ section.id }}', {{ section.settings.autoplay | json }}, {{ section.settings.speed }});
+  
+  initReviewSlider_2('{{ section.id }}', {{ section.settings.autoplay | json }}, {{ speed_multiplier }});
 });
 
 // Re-init on section load in Customizer
@@ -501,12 +502,12 @@ document.addEventListener('shopify:section:load', (event) => {
   const autoplayEnabled = section.dataset.autoplay === "true";
   const autoplaySpeed = parseInt(section.dataset.autoplaySpeed || "3");*/
 
-  initReviewSlider_2('{{ section.id }}', {{ section.settings.autoplay | json }}, {{ section.settings.speed }});
+  initReviewSlider_2('{{ section.id }}', {{ section.settings.autoplay | json }}, {{ speed_multiplier }});
 });
 
 // Optional: Re-init on resize (if layout depends on viewport)
 window.addEventListener('resize', () => {
-  initReviewSlider_2('{{ section.id }}', {{ section.settings.autoplay | json }}, {{ section.settings.speed }});
+  initReviewSlider_2('{{ section.id }}', {{ section.settings.autoplay | json }}, {{ speed_multiplier }});
 });
 </script>
 
@@ -855,7 +856,7 @@ window.addEventListener('resize', () => {
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "range",
@@ -864,7 +865,7 @@ window.addEventListener('resize', () => {
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "header",

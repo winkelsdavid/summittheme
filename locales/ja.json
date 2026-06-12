@@ -38,6 +38,7 @@
       "shipping_text" : "今すぐ注文すると、以下の日付までにお届けします："
     },
     "cart": {
+      "title_upsell": "こちらもおすすめです",
       "coupon_code_title": "クーポン一覧",
       "coupon_first_label": "購入金額",
       "coupon_last_label": "で送料無料",

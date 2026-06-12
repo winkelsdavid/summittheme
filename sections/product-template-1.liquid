@@ -2217,9 +2217,9 @@ display:none;
                               {% if block.settings.display_price_on_button %}
                                 <span class="product_custom_prices">
                                   <span> - </span>
-                                  <span class="custom_price">{{ product.price | money }}</span>
-                                  {% if product.compare_at_price != blank %}
-                                    <span class="compare_price">({{ product.compare_at_price | money }})</span>
+                                  <span class="custom_price">{{ product.selected_or_first_available_variant.price | money }}</span>
+                                  {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %} 
+                                    <span class="compare_price">({{ product.selected_or_first_available_variant.compare_at_price | money }})</span>
                                   {% else %}
                                     <span class="compare_price"></span>
                                   {% endif %}
@@ -2889,7 +2889,7 @@ display:none;
       });
     });
 
-    updateCustomPrices();
+  //  updateCustomPrices();
   }
 
   document.addEventListener('DOMContentLoaded', initCustomPriceUpdater);

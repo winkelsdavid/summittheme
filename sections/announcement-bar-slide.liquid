@@ -2,7 +2,8 @@
   {%- liquid
     assign type = section.settings.announ_type
     assign scroll_type = section.settings.scroll_type
-    assign speed = section.settings.speed
+    assign reverse_speed = 31 | minus : section.settings.speed
+    assign speed = reverse_speed
     assign size_icon = section.settings.size_icon
   -%}
 <style>
@@ -81,8 +82,10 @@
     display: block;
     background-color: {{ section.settings.text }};
   }
-  .announcement-item__in .image-content__image{
+  .announcement-item__in .image-content__image,
+  .announcement-item__in_c .image-content__image{
       width: {{ size_icon }}px;
+      border-radius:0!important;
     }
   .announcement-item__in .link{
     color: rgba(var(--color-body-text-rgb),1);
@@ -97,12 +100,21 @@
     <div class="announcement-wrapper container text-center ">
       <div class="row justify-content-center">
           <div class="col-lg-7 col-12">
-              <div class="swiper announcement-swiper announswipercol-{{ section.id }}" data-autoplay="{{ section.settings.auto_rotate }}" data-speed="{{ section.settings.auto_rotate_speed}}000">
+            {% assign reversed_speed = 8 | minus: section.settings.auto_rotate_speed %}
+              <div class="swiper announcement-swiper announswipercol-{{ section.id }}" data-autoplay="{{ section.settings.auto_rotate }}" data-speed="{{ reversed_speed }}000">
                   <div class="swiper-wrapper">
                       {%- for block in section.blocks -%}
                           {%- case block.type -%}
                           {%- when 'Item' -%}
-                          <div id="{{ block.id }}" class="swiper-slide rte m-0"  {{ block.shopify_attributes }} >
+                          <div id="{{ block.id }}" class="swiper-slide announcement-item__in_c rte m-0 d-flex align-items-center justify-content-center"  {{ block.shopify_attributes }} >
+                            {% if block.settings.image != blank %}
+                                <img class="image-content__image mr-2"
+                                  src="{{ block.settings.image | image_url: width: 240 }}"
+                                  alt="{{ block.settings.image.alt | escape }}"
+                                  loading="lazy"
+                                  width="{{ block.settings.image.width }}"
+                                  height="{{ block.settings.image.height }}">
+                              {% endif %}  
                               <div class="py-1 my-1 {{ section.settings.size_text }}">
                               {{ block.settings.code }} 
                               {% if block.settings.button_text != blank %} 

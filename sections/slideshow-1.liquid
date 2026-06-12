@@ -13,6 +13,10 @@
   --slide-color-dot: {{ section.settings.color_dot_nav.red }},{{ section.settings.color_dot_nav.green }},{{ section.settings.color_dot_nav.blue }};
   --slide-color-dotactive:{{ section.settings.color_dot_active.red }},{{ section.settings.color_dot_active.green }},{{ section.settings.color_dot_active.blue }};
 }
+[data-section-type="slideshow-section"].full .slideshow__image img,
+[data-section-type="slideshow-section"].full video{
+border-radius:0!important;
+}
 .slideshow-wrapper {
   position: relative;
   overflow:hidden;
@@ -217,8 +221,8 @@
 .no-js .slideshow__text-content,.slick-initialized .slick-active .slideshow__text-content li .slideshow__toptitle,.slick-initialized .slick-active .slideshow__text-content li .slideshow__title,
 .slick-initialized .slick-active .slideshow__text-content li .slideshow__subtitle,.slick-initialized .slick-active .slideshow__text-content .slideshow__btn{
   transform: translateY(0);
-  transition: transform 0.7s cubic-bezier(.29,.63,.44,1);
-  transition-delay: .1s;
+ /* transition: transform 0.7s cubic-bezier(.29,.63,.44,1);
+  transition-delay: .1s;*/
 }
 .slick-initialized .slick-active .slideshow__text-content li .slideshow__title{
   transition-delay: .3s;
@@ -226,10 +230,10 @@
 .slick-initialized .slick-active .slideshow__text-content li .slideshow__subtitle{
   transition-delay: .4s;
 }
-.slick-initialized .slick-active .slideshow__text-content .slideshow__btn{
+/*.slick-initialized .slick-active .slideshow__text-content .slideshow__btn{
   transition-delay: .5s;
   transition: background 0.4s ease 0s, color 0.4s ease 0s, border 0.4s ease 0s, transform 0.5s cubic-bezier(.29,.63,.44,1) .5s;
-}
+}*/
 
 @media only screen and (max-width:749px) {
   .slideshow__text-wrap--desktop .slideshow__text-content {
@@ -651,9 +655,9 @@ margin-right:auto;
       {%- assign text_horizontal_alignment = text_alignments.first -%}
       {%- assign text_vertical_alignment = text_alignments.last | strip -%}
       
-      <div class="slide {% if block.settings.image2 != blank %}slideshow__slide-split {% endif %} slideshow__slide slideshow__slide--{{ block.id }}" {{ block.shopify_attributes }} style="background-color: {{ block.settings.bgwrap }};">
+      <div class="slide {% if block.settings.image2 != blank %}slideshow__slide-split {% endif %} slideshow__slide slideshow__slide--{{ block.id }}" {{ block.shopify_attributes }} style="background-color: {% if block.settings.bgwrap != blank and block.settings.bgwrap != "rgba(0,0,0,0)"%}{{ block.settings.bgwrap }}{% else %}{{ settings.color_body_bg }}{% endif %};">
          {% if block.settings.blurry_transition %}
-              <div class="slideshow_blurry" style="background:linear-gradient(360deg, {{ block.settings.blurry_color }}, #ffffff00)"></div>
+              <div class="slideshow_blurry" style="background:linear-gradient(360deg, {% if block.settings.blurry_color != blank and block.settings.blurry_color != "rgba(0,0,0,0)"%}{{ block.settings.blurry_color }}{% else %}{{ settings.color_body_bg }}{% endif %}, #ffffff00)"></div>
             {% endif %} 
         <style>
            {% if block.settings.slide_toptitle_color != "rgba(0,0,0,0)" %}
@@ -866,6 +870,7 @@ margin-right:auto;
                   <h2 class="h1 mega-title slideshow__title font-family-1" {% if  block.settings.slide_title_color != "rgba(0,0,0,0)" and block.settings.slide_title_color != blank  %}style="--g-color-heading:{{ block.settings.slide_title_color }}"{% endif %}>
                     {{ block.settings.slide_title }}
                   </h2>
+                  
                 </li>
                 {%- endunless -%}
                 {%- unless block.settings.subheading == blank -%}
@@ -941,6 +946,26 @@ margin-right:auto;
                       background:{{ block.settings.bg_button }};
                       {% endif %}
                     }
+                    {% if settings.enable_button_hover %}
+                  {% if settings.btn_animation == "hover_1" %}
+                      .btn-theme.slideshow__btn{{ block.id }}{
+                      border:unset;
+                      }
+                  {% endif %}
+                    {% endif %}
+                    
+                    .btn-outline.slideshow__btn{{ block.id }}{
+                      color:{{ block.settings.color_button }};
+                      border: 1px solid {{ block.settings.bg_button }};
+                      background:transparent;
+                    }
+                    {% if settings.enable_button_hover == false %}
+                      .btn-theme.slideshow__btn{{ block.id }}::before{
+                      background:{{ block.settings.bg_button_hover }};
+                      opacity:0;
+                      display:block;
+                      transition:.5s;
+                    }
                     .btn-theme.slideshow__btn{{ block.id }}:hover{
                       color:{{ block.settings.color_button_hover }};
                       {% if block.settings.bg_button != "rgba(0,0,0,0)" %}
@@ -952,20 +977,9 @@ margin-right:auto;
                         {% endif %}*/
                       {% endunless %}
                     }
-                    .btn-theme.slideshow__btn{{ block.id }}::before{
-                      background:{{ block.settings.bg_button_hover }};
-                      opacity:0;
-                      display:block;
-                      transition:.5s;
-                    }
                      .btn-theme.slideshow__btn{{ block.id }}:hover:before{
                       opacity:1;
                       width:100%;
-                    }
-                    .btn-outline.slideshow__btn{{ block.id }}{
-                      color:{{ block.settings.color_button }};
-                      border: 1px solid {{ block.settings.bg_button }};
-                      background:transparent;
                     }
                     .btn-outline.slideshow__btn{{ block.id }}:hover{
                       border-color:{{ block.settings.bg_button_hover }};
@@ -974,6 +988,9 @@ margin-right:auto;
                         background:{{ block.settings.bg_button_hover }};
                       {% endunless %}
                     }
+                    {% endif %}
+                  
+                    
                     .btn-outline.slideshow__btn{{ block.id }}::before{
                       background:{{ block.settings.bg_button_hover }};
                     }
@@ -1004,21 +1021,32 @@ margin-right:auto;
                       border: 1px solid {{ block.settings.bg_button_2 }};
                       background:{{ block.settings.bg_button_2 }};
                     }
+                    .btn-theme.slideshow__btn-2{{ block.id }}::before{
+                      background:{{ block.settings.bg_button_hover_2 }};
+                    }
+                     .btn-outline.slideshow__btn-2{{ block.id }}::before{
+                      background:{{ block.settings.bg_button_hover_2 }};
+                    }
+                    {% if settings.enable_button_hover %}
+                      {% if settings.btn_animation == "hover_3" %}
+                    .btn-theme.slideshow__btn-2{{ block.id }}:after{
+                       background:{{ block.settings.bg_button }};
+                    }
+                  {% endif %}
+                    {% endif %}
+                    .btn-outline.slideshow__btn-2{{ block.id }}{
+                      color:{{ block.settings.color_button_2 }};
+                      border: 1px solid {{ block.settings.bg_button_2 }};
+                      background:transparent;
+                    }
+                    {% if settings.enable_button_hover == false %}
                     .btn-theme.slideshow__btn-2{{ block.id }}:hover{
                       color:{{ block.settings.color_button_hover_2 }};
                       border-color:{{ block.settings.bg_button_hover_2 }};
                       {% unless settings.enable_button_hover %}
                         background:{{ block.settings.bg_button_hover_2 }};
                       {% endunless %}
-                    }
-                    .btn-theme.slideshow__btn-2{{ block.id }}::before{
-                      background:{{ block.settings.bg_button_hover_2 }};
-                    }
-                    .btn-outline.slideshow__btn-2{{ block.id }}{
-                      color:{{ block.settings.color_button_2 }};
-                      border: 1px solid {{ block.settings.bg_button_2 }};
-                      background:transparent;
-                    }
+                    } 
                     .btn-outline.slideshow__btn-2{{ block.id }}:hover{
                       border-color:{{ block.settings.bg_button_hover_2 }};
                       color:{{ block.settings.color_button_hover_2 }};
@@ -1026,9 +1054,7 @@ margin-right:auto;
                         background:{{ block.settings.bg_button_hover_2 }}; 
                       {% endunless %}
                     }
-                    .btn-outline.slideshow__btn-2{{ block.id }}::before{
-                      background:{{ block.settings.bg_button_hover_2 }};
-                    }
+                  {% endif %}
                     
                     .btn-underline.slideshow__btn-2{{ block.id }}{
                       color:{{ block.settings.color_button_2 }} !important;
@@ -1145,7 +1171,7 @@ margin-right:auto;
       -%}
       {%- if show_text or show_link_button -%}
       <div class="slideshow__text-content slideshow__text-content--mobile slideshow__text-content--mobile-{{ forloop.index0 }}" {% unless forloop.first %}style="display:none"{% endunless %} >
-        <div class="container" style="background-color: {{ block.settings.bgwrap }};">
+        <div class="container" style="background-color: {% if block.settings.bgwrap != blank and block.settings.bgwrap != "rgba(0,0,0,0)"%}{{ block.settings.bgwrap }}{% else %}{{ settings.color_body_bg }}{% endif %};">
 
             {% if block.settings.replace_reviews %}
                 {%  render 'rating-custom', section: block , align : section.settings.align-heading %}
@@ -1196,20 +1222,31 @@ margin-right:auto;
                   border: 1px solid {{ block.settings.bg_button }};
                   background:{{ block.settings.bg_button }};
                 }
+                   .btn-theme.slideshow__btn{{ block.id }}::before{
+                  background:{{ block.settings.bg_button_hover }};
+                }
+                /*.btn-theme.slideshow__btn{{ block.id }}:after{
+                  background:{{ block.settings.bg_button }};
+                }*/
+                .btn-outline.slideshow__btn{{ block.id }}{
+                  color:{{ block.settings.color_button }};
+                  border: 1px solid {{ block.settings.bg_button }};
+                  background:transparent;
+                }
+                {% if settings.enable_button_hover %}
+                      {% if settings.btn_animation == "hover_3" %}
+                    .btn-theme.slideshow__btn{{ block.id }}:after{
+                       background:{{ block.settings.bg_button }};
+                    }
+                  {% endif %}
+                    {% endif %}
+                {% if settings.enable_button_hover == false %}
                 .btn-theme.slideshow__btn{{ block.id }}:hover{
                   color:{{ block.settings.color_button_hover }};
                   border-color:{{ block.settings.bg_button_hover }};
                   {% unless settings.enable_button_hover %}
                     background:{{ block.settings.bg_button_hover }};
                   {% endunless %}
-                }
-                .btn-theme.slideshow__btn{{ block.id }}::before{
-                  background:{{ block.settings.bg_button_hover }};
-                }
-                .btn-outline.slideshow__btn{{ block.id }}{
-                  color:{{ block.settings.color_button }};
-                  border: 1px solid {{ block.settings.bg_button }};
-                  background:transparent;
                 }
                 .btn-outline.slideshow__btn{{ block.id }}:hover{
                   border-color:{{ block.settings.bg_button_hover }};
@@ -1218,6 +1255,7 @@ margin-right:auto;
                     background:{{ block.settings.bg_button_hover }};
                   {% endunless %}
                 }
+              {% endif %}
                 .btn-outline.slideshow__btn{{ block.id }}::before{
                   background:{{ block.settings.bg_button_hover }};
                 }
@@ -1243,13 +1281,6 @@ margin-right:auto;
                   border: 1px solid {{ block.settings.bg_button_2 }};
                   background:{{ block.settings.bg_button_2 }};
                 }
-                .btn-theme.slideshow__btn-2{{ block.id }}:hover{
-                  color:{{ block.settings.color_button_hover_2 }};
-                  border-color:{{ block.settings.bg_button_hover_2 }};
-                  {% unless settings.enable_button_hover %}
-                    background:{{ block.settings.bg_button_hover_2 }};
-                  {% endunless %}
-                }
                 .btn-theme.slideshow__btn-2{{ block.id }}::before{
                   background:{{ block.settings.bg_button_hover_2 }};
                 }
@@ -1258,6 +1289,14 @@ margin-right:auto;
                   border: 1px solid {{ block.settings.bg_button_2 }};
                   background-color:transparent;
                 }
+                {% if settings.enable_button_hover == false %}
+                .btn-theme.slideshow__btn-2{{ block.id }}:hover{
+                  color:{{ block.settings.color_button_hover_2 }};
+                  border-color:{{ block.settings.bg_button_hover_2 }};
+                  {% unless settings.enable_button_hover %}
+                    background:{{ block.settings.bg_button_hover_2 }};
+                  {% endunless %}
+                }
                 .btn-outline.slideshow__btn-2{{ block.id }}:hover{
                   border-color:{{ block.settings.bg_button_hover_2 }};
                   color:{{ block.settings.color_button_hover_2 }};
@@ -1265,6 +1304,8 @@ margin-right:auto;
                     background:{{ block.settings.bg_button_hover_2 }};
                   {% endunless %}
                 }
+                {% endif %}
+
                 .btn-outline.slideshow__btn-2{{ block.id }}::before{
                   background:{{ block.settings.bg_button_hover_2 }};
                 }
@@ -1704,7 +1745,7 @@ margin-right:auto;
           "type": "checkbox",
           "id": "show_overlay",
           "label": "Show overlay",
-          "default": false
+          "default": true
         },
         {
           "type": "checkbox",
@@ -1726,13 +1767,13 @@ margin-right:auto;
           "min": 0,
           "step": 0.1,
           "unit": " op",
-          "default": 0.4
+          "default": 0.5
         },
         {
           "type": "text",
           "id": "slide_toptitle",
           "label": "Top Title",
-          "default": "Design by Shopifytemplate"
+          "default":"Top Title"
         },
            {
                 "type": "checkbox",
@@ -1787,13 +1828,13 @@ margin-right:auto;
           "type": "color",
           "id": "slide_toptitle_color",
           "label": "Top title color",
-          "default": "#999999"
+          "default": "#ffffff"
         },
         {
           "type": "text",
           "id": "slide_title",
           "label": "Heading",
-          "default": "Image slide"
+          "default": "Heading Text"
         },
         {
           "type": "color",
@@ -1804,8 +1845,7 @@ margin-right:auto;
         {
           "type": "textarea",
           "id": "subheading",
-          "label": "Subheading",
-          "default": "Tell your brand's story through images"
+          "label": "Subheading"
         },
         {
           "type": "color",
@@ -1821,7 +1861,7 @@ margin-right:auto;
           "type": "select",
           "id": "icon_1",
           "label": "Icon 1",
-          "default": "globe",
+          "default": "checkmark-2",
           "options": [
             {
               "value": "gift",
@@ -1913,13 +1953,14 @@ margin-right:auto;
         {
           "type": "text",
           "id": "icon_text_1",
-          "label": "text 1"
+          "label": "text 1",
+          "default":"Selling Point 1"
         },
                 {
           "type": "select",
           "id": "icon_2",
           "label": "Icon 2",
-          "default": "globe",
+          "default": "checkmark-2",
           "options": [
             {
               "value": "gift",
@@ -2011,13 +2052,14 @@ margin-right:auto;
         {
           "type": "text",
           "id": "icon_text_2",
-          "label": "text 2"
+          "label": "text 2",
+          "default":"Selling Point 2"
         },
                 {
           "type": "select",
           "id": "icon_3",
           "label": "Icon 3",
-          "default": "globe",
+          "default": "checkmark-2",
           "options": [
             {
               "value": "gift",
@@ -2109,7 +2151,8 @@ margin-right:auto;
         {
           "type": "text",
           "id": "icon_text_3",
-          "label": "text 3"
+          "label": "text 3",
+          "default":"Selling Point 3"
         },
         {
           "type": "range",
@@ -2117,17 +2160,19 @@ margin-right:auto;
           "label": "Spacing between",
           "min":4,
           "max":32,
-          "default":12
+          "default":21
         },
         {
           "type": "color",
           "id": "icon_color",
-          "label": "Icons color"
+          "label": "Icons color",
+          "default":"#ffffff"
         },
         {
           "type": "color",
           "id": "icons_text_color",
-          "label": "Text color"
+          "label": "Text color",
+          "default":"#ffffff"
         },
         {
           "type": "range",
@@ -2135,12 +2180,13 @@ margin-right:auto;
           "label": "Icons size",
           "min":10,
           "max":32,
-          "default":16
+          "default":27
         },
         {
           "type": "color_background",
           "id": "icon_background",
-          "label": "Icon background"
+          "label": "Icon background",
+          "default":"linear-gradient(54deg, rgba(231, 231, 231, 0.35) 14%, rgba(242, 242, 242, 0.15) 83%)"
         },
          {
           "type": "range",
@@ -2148,7 +2194,7 @@ margin-right:auto;
           "label": "Icons padding top",
           "min":0,
           "max":10,
-          "default":0
+          "default":3
         },
         {
           "type": "range",
@@ -2156,7 +2202,7 @@ margin-right:auto;
           "label": "Icons padding left",
           "min":0,
           "max":10,
-          "default":0
+          "default":10
         },
         {
           "type": "range",
@@ -2164,7 +2210,7 @@ margin-right:auto;
           "label": "Icons radius",
           "min":0,
           "max":50,
-          "default":0
+          "default":50
         },
          {
           "type": "range",
@@ -2172,7 +2218,7 @@ margin-right:auto;
           "label": "Text size desktop",
           "min":10,
           "max":32,
-          "default":16
+          "default":14
         },
         {
           "type": "range",
@@ -2180,7 +2226,7 @@ margin-right:auto;
           "label": "Text size mobile",
           "min":10,
           "max":32,
-          "default":14
+          "default":12
         },
         {
           "type": "header",
@@ -2189,7 +2235,8 @@ margin-right:auto;
         {
           "type": "text",
           "id": "button_label",
-          "label": "Button label"
+          "label": "Button label",
+          "default":"Get Yours Now"
         },
         {
           "type": "url",
@@ -2223,26 +2270,26 @@ margin-right:auto;
         {
           "type": "color",
           "id": "bg_button",
-          "label": "Background Button",
-          "default": "#000000"
+          "label": "Background Button"
         },
         {
           "type": "color",
           "id": "color_button",
-          "label": "Color Button",
+          "label": "Button Text Color",
           "default": "#ffffff"
         },
         {
           "type": "color_background",
           "id": "bg_button_hover",
           "label": "Background Button Hover",
-          "default": "#FF6F2E"
+          "visible_if":"{{ settings.enable_button_hover == false }}"
         },
         {
           "type": "color",
           "id": "color_button_hover",
           "label": "Color Button Hover",
-          "default": "#ffffff"
+          "default": "#ffffff",
+          "visible_if":"{{ settings.enable_button_hover == false }}"
         },
         {
           "type": "header",
@@ -2298,13 +2345,15 @@ margin-right:auto;
           "type": "color_background",
           "id": "bg_button_hover_2",
           "label": "Background Button Hover",
-          "default": "#FF6F2E"
+          "default": "#FF6F2E",
+          "visible_if":"{{ settings.enable_button_hover == false }}"
         },
         {
           "type": "color",
           "id": "color_button_hover_2",
           "label": "Color Button Hover",
-          "default": "#ffffff"
+          "default": "#ffffff",
+          "visible_if":"{{ settings.enable_button_hover == false }}"
         },
          {
           "type": "checkbox",
@@ -2362,9 +2411,6 @@ margin-right:auto;
       "name": "Slideshow 1",
       "category": "Image",
       "blocks": [
-        {
-          "type": "image"
-        },
         {
           "type": "image"
         }

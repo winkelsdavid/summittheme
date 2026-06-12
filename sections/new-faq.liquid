@@ -1,0 +1,587 @@
+<style>
+   #custom-faq-{{ section.id }} {
+    --section-bg: {{ section.settings.bg_color }};
+    {% if section.settings.text_color != blank and section.settings.text_color != "rgba(0,0,0,0)" %}
+    --text-main: {{ section.settings.text_color }};
+    {% endif %}
+     {% if section.settings.h_color != blank and section.settings.h_color != "rgba(0,0,0,0)" %}
+    --g-color-heading:{{ section.settings.h_color }};
+    {%  endif %}
+    {% if section.settings.text_muted_color != blank and section.settings.text_muted_color != "rgba(0,0,0,0)" %}
+    --text-muted: {{ section.settings.text_muted_color }};
+    {%  endif %}
+    --card-bg: {{ section.settings.card_bg_color }};
+    --accordion-border: {{ section.settings.border_color }};
+    {% if section.settings.chevron_bg_color != blank and section.settings.chevron_bg_color != "rgba(0,0,0,0)" %}
+    --chevron-bg: {{ section.settings.chevron_bg_color }};
+    {% else %}
+    --chevron-bg: {{ settings.branding_color }};
+    {% endif %}
+    --chevron-icon: {{ section.settings.chevron_icon_color }};
+  }
+    #custom-faq-{{ section.id }}{
+    padding-top:{{ section.settings.padding_top }}px;
+    padding-bottom:{{ section.settings.padding_bottom }}px;
+    background-color: var(--section-bg);
+  color: var(--text-main);
+  }
+  @media (max-width:768px){
+     #custom-faq-{{ section.id }}{
+    padding-top:{{ section.settings.mobile_padding_top }}px;
+    padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
+  }
+  }
+.section-stack--horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .section-stack--horizontal {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .section-stack__intro { width: 35%; }
+  .section-stack__main { width: 60%; }
+  .hidden { display: none; }
+  .lg\:block { display: block; }
+  .lg\:hidden { display: none; }
+}
+
+.v-stack { display: flex; flex-direction: column; }
+.gap-4 { gap: 1rem; }
+.gap-10 { gap: 2.5rem; }
+.bold { font-weight: 600; }
+
+.h2 { 
+  margin-top: 0; 
+  margin-bottom: 1rem; 
+}
+
+.prose p, .availability-text {
+  color: var(--text-main);
+}
+
+.text-subdued { 
+  color: var(--text-muted); 
+  font-size: 0.9em; 
+  margin-top: 4px; 
+}
+
+/* Accordion Wrapper styling using custom variable variables */
+#custom-faq-{{ section.id }} .accordion-box {
+  background-color: var(--card-bg);
+  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  padding: 10px 24px;
+}
+
+.accordion {
+  border-bottom: 1px solid var(--accordion-border);
+}
+.accordion:last-child {
+  border-bottom: none;
+}
+
+.accordion__summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 20px 0;
+}
+.accordion__summary::-webkit-details-marker { display: none; }
+
+.accordion__toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+/* Dynamic Chevron Color Styles */
+.circle-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: var(--chevron-bg);
+  color: var(--chevron-icon);
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s;
+}
+.circle-chevron svg{
+height:6px;
+width:8px;
+fill:transparent
+}
+.circle-chevron svg.icon path{
+stroke:currentColor;
+}
+.accordion[open] .circle-chevron {
+  transform: rotate(180deg);
+  opacity: 0.85;
+}
+
+/* Dropdown Animation Engine */
+.accordion__content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+.accordion[open] .accordion__content-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.accordion__content .prose {
+  padding-bottom: 20px;
+  line-height: 1.6;
+  font-size: 1rem;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.accordion[open] .accordion__content .prose {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.05s;
+}
+.avatar_team_image img{
+max-width: {{  section.settings.team_image_width }}px;
+}
+/* ==========================================================================
+   Mobile Adaptive Styles
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .section-stack--horizontal { gap: 32px; }
+  
+  .h2 { margin-bottom: 12px; }
+  #custom-faq-{{ section.id }} .accordion-box { padding: 8px 16px; }
+  .accordion__summary { padding: 16px 0; }
+  .accordion__toggle { font-size: 1rem; gap: 12px; }
+  .accordion__toggle span:first-child { flex: 1; }
+
+  .lg\:hidden .faq-availability {
+    margin-top: 8px;
+  }
+  .lg\:hidden .v-stack.gap-4 {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align:center;
+  }
+  
+  .hidden { display: none !important; }
+  .lg\:block { display: none !important; }
+  .lg\:hidden { display: block !important; }
+  .avatar_team_image img{
+max-width: {{  section.settings.team_image_width_mobile }}px;
+}
+}
+</style>
+<div id="custom-faq-{{ section.id }}" class="section section-boxed custom-faq-section" data-aos="{{ section.settings.animation }}">
+<div class="{{ section.settings.setwidth }}">
+  <div class="section-stack section-stack--horizontal">
+    
+    <!-- Intro Block -->
+    <div class="section-stack__intro">
+      <div class="v-stack gap-10">
+        <div class="prose">
+          <h3 class="h3">{{ section.settings.heading }}</h3>
+          <p>{{ section.settings.subheading }}</p>
+        </div>
+        
+        <!-- Desktop Availability Details -->
+        <div class="hidden lg:block">
+          <div class="faq-availability">
+            <div class="v-stack gap-4 avatar_team_image">
+              {%- if section.settings.team_image != blank -%}
+                <img src="{{ section.settings.team_image | image_url: width: 346 }}" 
+                     alt="{{ section.settings.team_image.alt | escape }}" 
+                     width="{{  section.settings.team_image_width }}" 
+                     loading="lazy" >
+              {%- endif -%}
+              <div class="v-stack">
+                <span class="availability-text">{{ section.settings.availability_text }}</span>
+                <span class="text-subdued">{{ section.settings.response_time }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion/FAQ Block -->
+    <div class="section-stack__main">
+      <div class="accordion-box">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'faq_item' -%}
+            <details class="accordion group" aria-expanded="false">
+              <summary class="accordion__summary">
+                <div class="accordion__toggle bold">
+                  <span>{{ block.settings.question }}</span>
+                  <span class="circle-chevron">
+                    <svg role="presentation" focusable="false" width="8" height="6" class="icon icon-chevron-bottom-small" viewBox="0 0 8 6">
+                        <path d="m1 1.5 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+                    </svg>
+                  </span>
+                </div>
+              </summary>
+              <div class="accordion__content-wrapper">
+                <div class="accordion__content">
+                  <div class="prose">
+                    {{ block.settings.answer }}
+                  </div>
+                </div>
+              </div>
+            </details>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <!-- Mobile Availability Details -->
+    <div class="lg:hidden">
+      <div class="faq-availability">
+        <div class="v-stack gap-4">
+          {%- if section.settings.team_image != blank -%}
+            <img src="{{ section.settings.team_image | image_url: width: 346 }}" 
+                 alt="{{ section.settings.team_image.alt | escape }}" 
+                 width="160" 
+                 loading="lazy" 
+                 style="max-width: 160px">
+          {%- endif -%}
+          <div class="v-stack">
+            <span class="availability-text">{{ section.settings.availability_text }}</span>
+            <span class="text-subdued">{{ section.settings.response_time }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ Advanced",
+  "settings": [
+        {
+      "type": "select",
+      "id": "animation",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Feft"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
+      ],
+      "label": "Select Animation"
+    },
+    {
+      "type": "select",
+      "id": "setwidth",
+      "label": "Full Width",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Have a question ? We are here to help."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Check out the most common questions our customers asked. Still have questions ? Contact our customer support."
+    },
+    {
+      "type": "image_picker",
+      "id": "team_image",
+      "label": "Support Team Avatars Image"
+    },
+    {
+      "type": "range",
+      "id": "team_image_width",
+      "label": "Support Team Avatar width",
+      "default":180,
+      "min":120,
+      "max":220
+    },
+        {
+      "type": "range",
+      "id": "team_image_width_mobile",
+      "label": "Support Team Avatar width mobile",
+      "default":180,
+      "min":120,
+      "max":220
+    },
+    {
+      "type": "inline_richtext",
+      "id": "availability_text",
+      "label": "Availability Hours",
+      "default": "Our customer support is available monday to friday: 8am-8:30pm."
+    },
+    {
+      "type": "text",
+      "id": "response_time",
+      "label": "Average Answer Time",
+      "default": "Average answer time: 24h"
+    },
+    {
+      "type": "header",
+      "content": "Color Customization"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "h_color",
+      "label": "Heading Color"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Main Text Color"
+    },
+    {
+      "type": "color",
+      "id": "text_muted_color",
+      "label": "Small Text Color"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "FAQ Card Background",
+      "default": "#f3f4f6"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "FAQ Divider Border",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "color",
+      "id": "chevron_bg_color",
+      "label": "Chevron Button Circle Background"
+    },
+    {
+      "type": "color",
+      "id": "chevron_icon_color",
+      "label": "Chevron Arrow Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Appearance Mobile"
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_top",
+      "label": "Padding top",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "mobile_padding_bottom",
+      "label": "Padding bottom",
+      "max": 150,
+      "min": 0,
+      "step": 2,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Any question?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Advanced",
+      "category":"Text",
+      "blocks": [
+        { "type": "faq_item" },
+        { "type": "faq_item" },
+        { "type": "faq_item" },
+        { "type": "faq_item" },
+        { "type": "faq_item" },
+        { "type": "faq_item" }
+      ]
+    }
+  ]
+}
+{%endschema%}

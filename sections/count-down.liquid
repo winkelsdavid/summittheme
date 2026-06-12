@@ -160,80 +160,91 @@
 {%- endif -%}
 {% if section.settings.data_countdown != blank %}
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    kik_hero_init_timer();
-    document.addEventListener("shopify:section:load", function () {
-      kik_hero_init_timer();
-    });
-    function kik_hero_init_timer() {
-      const ms_sec = 1000,
-            ms_min = ms_sec * 60,
-            ms_hr  = ms_min * 60,
-            ms_day = ms_hr * 24;
+  // 1. Core initialization function
+  function kik_hero_init_timer() {
+    const ms_sec = 1000,
+          ms_min = ms_sec * 60,
+          ms_hr  = ms_min * 60,
+          ms_day = ms_hr * 24;
 
-      const HERO_STORAGE_KEY = "kik_hero_timer_start_{{ section.id }}";
-      const timerWrapper = document.querySelector(".kik_hero_timer_an.{{ section.id }}");
+    const HERO_STORAGE_KEY = "kik_hero_timer_start_{{ section.id }}";
+    const timerWrapper = document.querySelector(".kik_hero_timer_an.{{ section.id }}");
 
-      if (!timerWrapper) return;
+    if (!timerWrapper) return;
 
-      const isEnabledSetTo = timerWrapper.getAttribute("data-enable-set-to") === "true";
-      const hoursToSet     = parseInt(timerWrapper.getAttribute("data-set-hours")) || 24;
+    const isEnabledSetTo = timerWrapper.getAttribute("data-enable-set-to") === "true";
+    const hoursToSet     = parseInt(timerWrapper.getAttribute("data-set-hours")) || 24;
 
-      let targetTimestamp;
+    let targetTimestamp;
 
-      if (isEnabledSetTo) {
-        const localStartTime = localStorage.getItem(HERO_STORAGE_KEY);
-        let startTime;
-        if (localStartTime) {
-          startTime = parseInt(localStartTime);
-        } else {
-          startTime = new Date().getTime();
-          localStorage.setItem(HERO_STORAGE_KEY, startTime);
-        }
-        targetTimestamp = startTime + (hoursToSet * ms_hr);
+    if (isEnabledSetTo) {
+      const localStartTime = localStorage.getItem(HERO_STORAGE_KEY);
+      let startTime;
+      if (localStartTime) {
+        startTime = parseInt(localStartTime);
       } else {
-        const rawDate   = timerWrapper.getAttribute("data-time");
-        targetTimestamp = new Date(rawDate).getTime();
+        startTime = new Date().getTime();
+        localStorage.setItem(HERO_STORAGE_KEY, startTime);
+      }
+      targetTimestamp = startTime + (hoursToSet * ms_hr);
+    } else {
+      const rawDate   = timerWrapper.getAttribute("data-time");
+      targetTimestamp = new Date(rawDate).getTime();
+    }
+
+    // Clear any existing interval running for this specific section identifier
+    if (window.kik_hero_interval_{{ section.id | replace: '-', '_' }}) {
+      clearInterval(window.kik_hero_interval_{{ section.id | replace: '-', '_' }});
+    }
+
+    function heroUpdateDisplay() {
+      const currentTime = new Date().getTime();
+      let gap = targetTimestamp - currentTime;
+
+      if (gap < 0) {
+        {% if section.settings.action_timer == "resets_itself" %}
+          const newNow = new Date().getTime();
+          localStorage.setItem(HERO_STORAGE_KEY, newNow);
+          targetTimestamp = newNow + (hoursToSet * ms_hr);
+          gap = targetTimestamp - newNow;
+        {% else %}
+          const hero_text_countdown = document.querySelector("#hero_text_countdown");
+          timerWrapper.style.display = "none";
+          if (hero_text_countdown) {
+            hero_text_countdown.style.display = "none";
+          }
+          clearInterval(window.kik_hero_interval_{{ section.id | replace: '-', '_' }});
+          return;
+        {% endif %}
       }
 
-      if (window.kik_hero_interval_{{ section.id | replace: '-', '_' }}) {
-        clearInterval(window.kik_hero_interval_{{ section.id | replace: '-', '_' }});
-      }
+      const d = Math.floor(gap / ms_day);
+      const h = Math.floor((gap % ms_day) / ms_hr);
+      const m = Math.floor((gap % ms_hr)  / ms_min);
+      const s = Math.floor((gap % ms_min) / ms_sec);
 
-      function heroUpdateDisplay() {
-        const currentTime = new Date().getTime();
-        let gap = targetTimestamp - currentTime;
+      timerWrapper.querySelectorAll(".hero_days").forEach(el    => el.innerText = d);
+      timerWrapper.querySelectorAll(".hero_hours").forEach(el   => el.innerText = h);
+      timerWrapper.querySelectorAll(".hero_minutes").forEach(el => el.innerText = m);
+      timerWrapper.querySelectorAll(".hero_seconds").forEach(el => el.innerText = s);
+    }
 
-        if (gap < 0) {
-          {% if section.settings.action_timer == "resets_itself" %}
-            const newNow = new Date().getTime();
-            localStorage.setItem(HERO_STORAGE_KEY, newNow);
-            targetTimestamp = newNow + (hoursToSet * ms_hr);
-            gap = targetTimestamp - newNow;
-          {% else %}
-            const hero_text_countdown = document.querySelector("#hero_text_countdown");
-            timerWrapper.style.display = "none";
-            if (hero_text_countdown) {
-              hero_text_countdown.style.display = "none";
-            }
-            clearInterval(window.kik_hero_interval_{{ section.id | replace: '-', '_' }});
-            return;
-          {% endif %}
-        }
+    window.kik_hero_interval_{{ section.id | replace: '-', '_' }} = setInterval(heroUpdateDisplay, 1000);
+    heroUpdateDisplay();
+  }
 
-        const d = Math.floor(gap / ms_day);
-        const h = Math.floor((gap % ms_day) / ms_hr);
-        const m = Math.floor((gap % ms_hr)  / ms_min);
-        const s = Math.floor((gap % ms_min) / ms_sec);
+  // 2. Run immediately on normal storefront page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", kik_hero_init_timer);
+  } else {
+    kik_hero_init_timer();
+  }
 
-        timerWrapper.querySelectorAll(".hero_days").forEach(el    => el.innerText = d);
-        timerWrapper.querySelectorAll(".hero_hours").forEach(el   => el.innerText = h);
-        timerWrapper.querySelectorAll(".hero_minutes").forEach(el => el.innerText = m);
-        timerWrapper.querySelectorAll(".hero_seconds").forEach(el => el.innerText = s);
-      }
-
-      window.kik_hero_interval_{{ section.id | replace: '-', '_' }} = setInterval(heroUpdateDisplay, 1000);
-      heroUpdateDisplay();
+  // 3. Listen for Shopify Design/Theme Editor lifecycle events globally
+  document.addEventListener("shopify:section:load", function (event) {
+    // Only re-init if the loaded section matches this snippet instance
+    if (event.detail.sectionId === "{{ section.id }}") {
+      kik_hero_init_timer();
     }
   });
 </script>
@@ -366,7 +377,7 @@
       "type": "select",
       "id": "setwidth",
       "label": "Full Width",
-      "default": "container",
+      "default": "full",
       "options": [
         {
           "value": "container",
@@ -385,8 +396,7 @@
     {
       "type": "color",
       "id": "bgsection",
-      "label": "Background Section",
-      "default": "#000000"
+      "label": "Background Section"
     },
     {
       "id": "gradient_bg",
@@ -480,7 +490,7 @@
       "type": "text",
       "id": "data_countdown",
       "label": "Time count down",
-      "default": "2025-05-11T00:00:00",
+      "default": "2026-12-11T00:00:00",
       "info": "2025-05-11T00:00:00"
     },
     {
@@ -588,7 +598,7 @@
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "range",
@@ -597,7 +607,7 @@
       "max": 150,
       "min": 0,
       "step": 2,
-      "default": 80
+      "default": 60
     },
     {
       "type": "header",

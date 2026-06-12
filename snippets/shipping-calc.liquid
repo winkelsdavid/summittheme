@@ -22,7 +22,7 @@
         
     </style>
     <div id="shipping-calculator" class="text-left">
-      <h5 class="mb-3">{{ settings.shipping_calculator_heading | default: 'general.cart.shipping_title' | t }}</h5>
+      <h5 class="mb-3">{{ settings.shipping_calculator_heading | default: 'Get shipping estimates' }}</h5>
       <div class="shipping-calculator-input d-flex flex-column text-left">
         <p class="field ship-field">
           <label for="address_country">Country</label>
@@ -38,7 +38,7 @@
         </p>
       </div>
       <p class="field mt-4 text-left d-flex gap-3">
-          <button type="button" class="get-rates btn btn-theme" >{{ settings.shipping_calculator_submit_button_label | default: 'general.cart.shipping_submit' | t }}</button>
+          <button type="button" class="get-rates btn btn-theme" >{{ settings.shipping_calculator_submit_button_label | default: 'Calculate shipping' }}</button>
           <button class="link discount-close btn btn-close-addon"> {{ 'cart.general.close' | t }}</button>
         </p>
       <div id="wrapper-response"></div>

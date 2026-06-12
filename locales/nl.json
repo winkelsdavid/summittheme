@@ -38,6 +38,7 @@
       "shipping_text" : "Bestel nu en ontvang het op:"
     },
     "cart": {
+      "title_upsell": "Dit vind je misschien ook leuk",
       "coupon_code_title": "Couponlijst",
       "coupon_first_label": "Besteed",
       "coupon_last_label": "voor gratis verzending",

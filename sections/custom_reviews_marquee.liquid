@@ -152,11 +152,12 @@ font-weight:700;
     background: linear-gradient(0deg, {{ overlay_color }}, transparent);
 }
 {% if section.settings.animated %}
+  {%- assign speed_multiplier = 51 | minus : section.settings.animation_speed -%}
 .c-{{ section.id }} .animate-down {
-    animation: marquee-down {{  section.settings.animation_speed }}s linear infinite;
+    animation: marquee-down {{  speed_multiplier }}s linear infinite;
 }
 .c-{{ section.id }}  .animate-up {
-    animation: marquee-up {{  section.settings.animation_speed }}s linear infinite;
+    animation: marquee-up {{  speed_multiplier }}s linear infinite;
 }
 {% endif %}
 @keyframes marquee-down {
@@ -234,11 +235,12 @@ bottom:-1px;
     overflow: hidden;
 }
 {% if section.settings.animated %}
+  {%- assign speed_multiplier = 51 | minus : section.settings.animation_speed_mobile -%}
 .c-{{ section.id }} .animate-down {
-    animation: marquee-down {{  section.settings.animation_speed_mobile }}s linear infinite;
+    animation: marquee-down {{  speed_multiplier }}s linear infinite;
 }
 .c-{{ section.id }}  .animate-up {
-    animation: marquee-up {{  section.settings.animation_speed_mobile }}s linear infinite;
+    animation: marquee-up {{  speed_multiplier }}s linear infinite;
 }
 {% endif %}
 }
@@ -276,11 +278,12 @@ display:none;
     background: linear-gradient(-90deg, {{ overlay_color }}, transparent);
 }
 {% if section.settings.animated %}
+{%- assign speed_multiplier = 51 | minus : section.settings.animation_speed_mobile -%}
 .c-{{ section.id }} .animate-down {
-    animation: marquee-left {{  section.settings.animation_speed_mobile }}s linear infinite;
+    animation: marquee-left {{  speed_multiplier }}s linear infinite;
 }
 .c-{{ section.id }}  .animate-up {
-    animation: marquee-right {{  section.settings.animation_speed_mobile }}s linear infinite;
+    animation: marquee-right {{  speed_multiplier }}s linear infinite;
 }
 {% endif %}
 }

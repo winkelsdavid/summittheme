@@ -38,6 +38,7 @@
       "shipping_text" : "Ordina ora e ricevi entro il:"
     },
     "cart": {
+      "title_upsell": "Ti potrebbe piacere anche",
       "coupon_code_title": "Lista coupon",
       "coupon_first_label": "Spendi",
       "coupon_last_label": "per la spedizione gratuita",
