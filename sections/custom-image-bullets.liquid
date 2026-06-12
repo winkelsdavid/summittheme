@@ -167,6 +167,48 @@
       gap: 12px;
     }
   }
+
+  /* === Content-matched hover animations (Hydrate. Plump. Glow.) === */
+  .c-{{ section.id }} .iwb-bullet-item{
+    transition: transform .35s, box-shadow .35s;
+    will-change: transform;
+  }
+  @media (hover: hover){
+    .c-{{ section.id }} .iwb-bullet-item--plump:hover{ animation: orellaPlump .5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .c-{{ section.id }} .iwb-bullet-item--jelly:hover{ animation: orellaJelly .65s ease-in-out; }
+    .c-{{ section.id }} .iwb-bullet-item--shine:hover{ animation: orellaShine .9s ease forwards; filter: brightness(1.03); }
+    .c-{{ section.id }} .iwb-bullet-item--guard:hover{ animation: orellaGuard .7s ease-out forwards; }
+  }
+  @keyframes orellaPlump{
+    0%{ transform: scale(1); }
+    45%{ transform: scale(1.05); }
+    70%{ transform: scale(1.015); }
+    100%{ transform: scale(1.035); box-shadow: 0 10px 28px rgba(32,14,16,0.13); }
+  }
+  @keyframes orellaJelly{
+    0%{ transform: scale(1,1); }
+    25%{ transform: scale(1.04,0.94); }
+    50%{ transform: scale(0.96,1.05); }
+    70%{ transform: scale(1.02,0.98); }
+    100%{ transform: scale(1,1); }
+  }
+  @keyframes orellaShine{
+    from{ background-image: linear-gradient(110deg, rgba(255,255,255,0) 35%, #ffd9e2 50%, rgba(255,255,255,0) 65%); background-size:250% 100%; background-repeat:no-repeat; background-position:130% 0; box-shadow:0 3px 14px rgba(32,14,16,0.07); }
+    to{ background-image: linear-gradient(110deg, rgba(255,255,255,0) 35%, #ffd9e2 50%, rgba(255,255,255,0) 65%); background-size:250% 100%; background-repeat:no-repeat; background-position:-30% 0; box-shadow:0 6px 26px rgba(254,137,154,0.45); }
+  }
+  @keyframes orellaGuard{
+    0%{ box-shadow: 0 3px 14px rgba(32,14,16,0.07), 0 0 0 0 #fe899a, 0 0 0 0 rgba(254,137,154,0.5); }
+    100%{ box-shadow: 0 3px 14px rgba(32,14,16,0.07), 0 0 0 2px #fe899a, 0 0 0 16px rgba(254,137,154,0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .c-{{ section.id }} .iwb-bullet-item--plump:hover,
+    .c-{{ section.id }} .iwb-bullet-item--jelly:hover,
+    .c-{{ section.id }} .iwb-bullet-item--shine:hover,
+    .c-{{ section.id }} .iwb-bullet-item--guard:hover{
+      animation: none; filter: none;
+      box-shadow: 0 6px 18px rgba(32,14,16,0.10);
+    }
+  }
 </style>
 
 <section class="iwb-section c-{{ section.id }}" id="iwb-{{ section.id }}" data-aos="{{ section.settings.animation }}">
@@ -186,7 +228,24 @@
         {% if section.blocks.size > 0 %}
           <div class="iwb-bullets-list">
             {% for block in section.blocks %}
-              <div class="iwb-bullet-item" {{ block.shopify_attributes }}>
+              {%- liquid
+                assign hs = block.settings.hover_style
+                if hs == blank or hs == 'auto'
+                  case forloop.index
+                    when 1
+                      assign hs = 'plump'
+                    when 2
+                      assign hs = 'jelly'
+                    when 3
+                      assign hs = 'shine'
+                    when 4
+                      assign hs = 'guard'
+                    else
+                      assign hs = 'plump'
+                  endcase
+                endif
+              -%}
+              <div class="iwb-bullet-item iwb-bullet-item--{{ hs }}" {{ block.shopify_attributes }}>
 
                 <div class="iwb-bullet-icon" style="--icon-color:{{ block.settings.icon_color }};">
                     {% render 'list-svg',block:block, icon: block.settings.icon %}
@@ -503,6 +562,20 @@
           "id": "body",
           "label": "Body text",
           "default": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out."
+        },
+        {
+          "type": "select",
+          "id": "hover_style",
+          "label": "Hover animation",
+          "info": "Auto = matched by position (1 Plump, 2 Jelly, 3 Shine, 4 Guard)",
+          "options": [
+            { "value": "auto",  "label": "Auto (by position)" },
+            { "value": "plump", "label": "Plump (bounce scale)" },
+            { "value": "jelly", "label": "Jelly (squash & stretch)" },
+            { "value": "shine", "label": "Shine (light sweep)" },
+            { "value": "guard", "label": "Guard (pulsing ring)" }
+          ],
+          "default": "auto"
         }
       ]
     }
