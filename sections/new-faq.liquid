@@ -244,13 +244,12 @@ max-width: {{  section.settings.team_image_width_mobile }}px;
     <!-- Mobile Availability Details -->
     <div class="lg:hidden">
       <div class="faq-availability">
-        <div class="v-stack gap-4">
+        <div class="v-stack gap-4 avatar_team_image">
           {%- if section.settings.team_image != blank -%}
             <img src="{{ section.settings.team_image | image_url: width: 346 }}" 
                  alt="{{ section.settings.team_image.alt | escape }}" 
-                 width="160" 
-                 loading="lazy" 
-                 style="max-width: 160px">
+                 width="{{  section.settings.team_image_width }}" 
+                 loading="lazy">
           {%- endif -%}
           <div class="v-stack">
             <span class="availability-text">{{ section.settings.availability_text }}</span>

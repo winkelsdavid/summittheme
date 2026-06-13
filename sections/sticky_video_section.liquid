@@ -10,15 +10,18 @@
   assign sticky_video = section.settings.video
   assign sticky_product = section.settings.product
   assign delay_seconds = section.settings.delay | default: 5
-  assign aspect_ratio = section.settings.aspect_ratio | default: '15/23'
+  assign show_widget = true
+  if section.settings.only_homepage and request.page_type != 'index'
+    assign show_widget = false
+  endif
 -%}
 
-{%- if sticky_video != blank -%}
+{%- if sticky_video != blank and show_widget -%}
   <div
     class="sticky-video-widget"
     id="StickyVideo-{{ section.id }}"
     data-delay="{{ delay_seconds }}"
-    style="--sticky-video-aspect-ratio: {{ aspect_ratio }};"
+    style="--sticky-video-aspect-ratio: 15/23;"
   >
     <button
       type="button"
@@ -28,9 +31,14 @@
     >
       &times;
     </button>
+    {% if section.settings.action == "atc" %}
         <span  class="js-grid-cart" 
             data-id="{{ sticky_product.selected_or_first_available_variant.id }}">
-          
+        {% elsif section.settings.action == "gtp" %}
+          <span data-tooltip="true" data-placement="left" class="js-btn-quickview" title="" data-toggle="modal" data-target="#jsQuickview" data-handle="{{ sticky_product.handle }}" data-pavailable="true" data-original-title="Quickshop">
+        {% else %}
+        <a href="{{ sticky_product.url }}">  
+        {% endif %}
       <div class="sticky-video-widget__media">
         {{
           sticky_video
@@ -42,18 +50,22 @@
             class: 'sticky-video-widget__video'
         }}
       </div>
+      {% if section.settings.action == "atc" or section.settings.action == "gtp" %}
       </span>
+    {% else %}
+      </a>
+    {%  endif %}
   </div>
 
   <style>
     .sticky-video-widget {
       position: fixed;
-      bottom: 140px;
+      bottom: 90px;
       right:30px;
       width: {{  section.settings.video_width }}px;
       z-index: 99;
       background: #ffffff;
-      border-radius: {{  section.settings.video_radius }}px;
+      border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
       overflow: hidden;
       opacity: 0;
@@ -61,7 +73,9 @@
       transition: opacity 0.6s ease, transform 0.6s ease;
       pointer-events: none;
     }
-
+    body:has(.wsp-whatsapp) .sticky-video-widget {
+      bottom:160px;
+    }
     /* Desktop only */
     @media screen and (max-width: 749px) {
       .sticky-video-widget {
@@ -222,6 +236,11 @@
   "name": "Sticky Video Product",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "only_homepage",
+      "label": "Only show on homepage"
+    },
+    {
       "type": "video",
       "id": "video",
       "label": "Video"
@@ -236,30 +255,9 @@
       "default": 150
     },
     {
-      "type": "range",
-      "id": "video_radius",
-      "label": "Video roundness",
-      "min": 0,
-      "max": 50,
-      "step": 1,
-      "default": 12
-    },
-    {
       "type": "product",
       "id": "product",
       "label": "Product"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_info",
-      "label": "Show product name and price",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "label",
-      "label": "Overlay text",
-      "default": "hydrating skincare routine"
     },
     {
       "type": "range",
@@ -272,11 +270,24 @@
       "default": 5
     },
     {
-      "type": "text",
-      "id": "aspect_ratio",
-      "label": "Aspect ratio (width / height)",
-      "info": "Use the format width/height, e.g. 15/23",
-      "default": "15/23"
+      "type": "select",
+      "id": "action",
+      "label": "Action on click",
+      "default":"atc",
+      "options": [
+        {
+        "label": "Add to cart",
+        "value":"atc"
+        },
+         {
+        "label": "Quick Buy",
+        "value":"gtp"
+        },
+        {
+        "label": "Go to product",
+        "value":"qb"
+        },
+      ]
     }
   ],
   "presets": [

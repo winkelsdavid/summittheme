@@ -35,6 +35,16 @@
       "id": "enable_smoothness",
       "label": "Smooth Scrolling Animition"
     },
+         {
+        "type": "range",
+        "id": "smoothness_intensity",
+        "min": 1,
+        "max": 5,
+        "step": 1,
+        "label": "Smoothness intensity",
+        "default": 1,
+        "visible_if": "{{ settings.enable_smoothness }}"
+      },
       {
         "type": "header",
         "content": "Loading animation"

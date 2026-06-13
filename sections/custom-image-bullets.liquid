@@ -244,8 +244,7 @@
                       assign hs = 'plump'
                   endcase
                 endif
-              -%}
-              <div class="iwb-bullet-item iwb-bullet-item--{{ hs }}" {{ block.shopify_attributes }}>
+              -%}<div class="iwb-bullet-item iwb-bullet-item--{{ hs }}" {{ block.shopify_attributes }}>
 
                 <div class="iwb-bullet-icon" style="--icon-color:{{ block.settings.icon_color }};">
                     {% render 'list-svg',block:block, icon: block.settings.icon %}
@@ -338,34 +337,118 @@
       "type": "select",
       "id": "animation",
       "options": [
-        { "value": "",                "label": "None"            },
-        { "value": "fade",            "label": "Fade"            },
-        { "value": "fade-up",         "label": "Fade Up"         },
-        { "value": "fade-down",       "label": "Fade Down"       },
-        { "value": "fade-left",       "label": "Fade Left"       },
-        { "value": "fade-right",      "label": "Fade Right"      },
-        { "value": "fade-up-right",   "label": "Fade Up Right"   },
-        { "value": "fade-up-left",    "label": "Fade Up Left"    },
-        { "value": "fade-down-right", "label": "Fade Down Right" },
-        { "value": "fade-down-left",  "label": "Fade Down Left"  },
-        { "value": "flip-up",         "label": "Flip Up"         },
-        { "value": "flip-down",       "label": "Flip Down"       },
-        { "value": "flip-left",       "label": "Flip Left"       },
-        { "value": "flip-right",      "label": "Flip Right"      },
-        { "value": "slide-up",        "label": "Slide Up"        },
-        { "value": "slide-down",      "label": "Slide Down"      },
-        { "value": "slide-left",      "label": "Slide Left"      },
-        { "value": "slide-right",     "label": "Slide Right"     },
-        { "value": "zoom-in",         "label": "Zoom In"         },
-        { "value": "zoom-in-up",      "label": "Zoom In Up"      },
-        { "value": "zoom-in-down",    "label": "Zoom In Down"    },
-        { "value": "zoom-in-left",    "label": "Zoom In Left"    },
-        { "value": "zoom-in-right",   "label": "Zoom In Right"   },
-        { "value": "zoom-out",        "label": "Zoom Out"        },
-        { "value": "zoom-out-up",     "label": "Zoom Out Up"     },
-        { "value": "zoom-out-down",   "label": "Zoom Out Down"   },
-        { "value": "zoom-out-left",   "label": "Zoom Out Left"   },
-        { "value": "zoom-out-right",  "label": "Zoom Out Right"  }
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "fade-up",
+          "label": "Fade Up"
+        },
+        {
+          "value": "fade-down",
+          "label": "Fade Down"
+        },
+        {
+          "value": "fade-left",
+          "label": "Fade Left"
+        },
+        {
+          "value": "fade-right",
+          "label": "Fade Right"
+        },
+        {
+          "value": "fade-up-right",
+          "label": "Fade Up Right"
+        },
+        {
+          "value": "fade-up-left",
+          "label": "Fade Up Left"
+        },
+        {
+          "value": "fade-down-right",
+          "label": "Fade Down Right"
+        },
+        {
+          "value": "fade-down-left",
+          "label": "Fade Down Left"
+        },
+        {
+          "value": "flip-up",
+          "label": "Flip Up"
+        },
+        {
+          "value": "flip-down",
+          "label": "Flip Down"
+        },
+        {
+          "value": "flip-left",
+          "label": "Flip Left"
+        },
+        {
+          "value": "flip-right",
+          "label": "Flip Right"
+        },
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "slide-down",
+          "label": "Slide Down"
+        },
+        {
+          "value": "slide-left",
+          "label": "Slide Left"
+        },
+        {
+          "value": "slide-right",
+          "label": "Slide Right"
+        },
+        {
+          "value": "zoom-in",
+          "label": "Zoom In"
+        },
+        {
+          "value": "zoom-in-up",
+          "label": "Zoom In Up"
+        },
+        {
+          "value": "zoom-in-down",
+          "label": "Zoom In Down"
+        },
+        {
+          "value": "zoom-in-left",
+          "label": "Zoom In Left"
+        },
+        {
+          "value": "zoom-in-right",
+          "label": "Zoom In Right"
+        },
+        {
+          "value": "zoom-out",
+          "label": "Zoom Out"
+        },
+        {
+          "value": "zoom-out-up",
+          "label": "Zoom Out Up"
+        },
+        {
+          "value": "zoom-out-down",
+          "label": "Zoom Out Down"
+        },
+        {
+          "value": "zoom-out-left",
+          "label": "Zoom Out Left"
+        },
+        {
+          "value": "zoom-out-right",
+          "label": "Zoom Out Right"
+        }
       ],
       "label": "Select Animation"
     },
@@ -375,9 +458,18 @@
       "label": "Full Width",
       "default": "container",
       "options": [
-        { "value": "container",       "label": "Box"             },
-        { "value": "container-fluid", "label": "Container Fluid" },
-        { "value": "full",            "label": "Full"            }
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
       ]
     },
     {
@@ -394,8 +486,14 @@
       "id": "image_layout",
       "label": "Image position",
       "options": [
-        { "value": "image_right", "label": "Image on right" },
-        { "value": "image_left",  "label": "Image on left"  }
+        {
+          "value": "image_right",
+          "label": "Image on right"
+        },
+        {
+          "value": "image_left",
+          "label": "Image on left"
+        }
       ],
       "default": "image_left"
     },
@@ -425,8 +523,14 @@
       "id": "box_align",
       "label": "Box align",
       "options": [
-        { "value": "right", "label": "right" },
-        { "value": "left",  "label": "left"  }
+        {
+          "value": "right",
+          "label": "right"
+        },
+        {
+          "value": "left",
+          "label": "left"
+        }
       ],
       "default": "left"
     },
@@ -506,7 +610,7 @@
       "type": "bullet",
       "name": "Bullet",
       "settings": [
-                {
+        {
           "type": "select",
           "id": "icon",
           "options": [
@@ -518,7 +622,7 @@
               "value": "checkmark-2",
               "label": "Checkmark 2"
             },
-             {
+            {
               "value": "checkmark",
               "label": "Checkmark 3"
             },
@@ -569,11 +673,26 @@
           "label": "Hover animation",
           "info": "Auto = matched by position (1 Plump, 2 Jelly, 3 Shine, 4 Guard)",
           "options": [
-            { "value": "auto",  "label": "Auto (by position)" },
-            { "value": "plump", "label": "Plump (bounce scale)" },
-            { "value": "jelly", "label": "Jelly (squash & stretch)" },
-            { "value": "shine", "label": "Shine (light sweep)" },
-            { "value": "guard", "label": "Guard (pulsing ring)" }
+            {
+              "value": "auto",
+              "label": "Auto (by position)"
+            },
+            {
+              "value": "plump",
+              "label": "Plump (bounce scale)"
+            },
+            {
+              "value": "jelly",
+              "label": "Jelly (squash & stretch)"
+            },
+            {
+              "value": "shine",
+              "label": "Shine (light sweep)"
+            },
+            {
+              "value": "guard",
+              "label": "Guard (pulsing ring)"
+            }
           ],
           "default": "auto"
         }
