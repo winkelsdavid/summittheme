@@ -1,0 +1,16 @@
+{
+  "name": "summit-theme-tools",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lokale Dev-Tools fuer das Summit-Theme (Theme-Health-Checker). Kein Teil des Live-Themes.",
+  "type": "module",
+  "bin": {
+    "check-theme": "check-theme.mjs"
+  },
+  "scripts": {
+    "check": "node check-theme.mjs"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2"
+  }
+}

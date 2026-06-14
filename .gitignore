@@ -7,6 +7,9 @@ _*
 livetheme/
 theme-import-safe/
 
+# Node dev-tool dependencies (local checker only, not part of the live theme)
+node_modules/
+
 # Claude Code local config
 .claude/
 
