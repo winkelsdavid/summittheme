@@ -13,6 +13,12 @@ Rebuild** — die Ziel-Architektur (Web-Components, `global.js`) existiert schon
 (R1–R9). Performance/Cleanup → [`SUMMIT_PATCH_REQUIREMENTS.md`](SUMMIT_PATCH_REQUIREMENTS.md)
 (P1–P3). Gate → `node dev-tools/check-theme.mjs <zip>`.
 
+**Stand (2026-06-15).** **Track A abgeschlossen** — Phase 0 ✓, Phase 1 (Identifier T0–T4) ✓,
+Phase 2 (Labeling 2a+2b) ✓, Phase 3 (Parse + DB-Verifikation) ✓. Offen in Track A nur:
+Operator-Mapping (Operator-Task, pre-launch) · **T5** Video-Resource-Typing (bewusst deferred)
+· optional `Title→Heading` global. **Track B (Phasen 4–7) noch nicht gestartet** = der gesamte
+verbleibende V1-Aufwand (Perf/a11y/CWV/jQuery-raus). HEAD: `bb15444`.
+
 ---
 
 ## Leitprinzip der Reihenfolge
@@ -66,27 +72,30 @@ Anwendung **tier-weise** nach Risiko/Kopplung: **T0** JSON-Fixes + Label-Typos (
 **T3** per-Section Block-Types + lokale IDs → **T4** Slug-Renames + Reconcile →
 **T5** Resource-Typing (`video`→`video_url`, separat/später).
 
-Über den **vollen Satz** (alle 96), pro Section. Bekannte Fälle (nicht abschließend):
+**Status: abgeschlossen** (2026-06-15) über den vollen Satz, pro Section. Detail-Tracker:
+[`RENAME_MAP.md`](RENAME_MAP.md). Tier-weise nach Risiko/Kopplung umgesetzt:
 
-- [ ] **Slugs** → semantisch + kebab-case
-  - `new-faq` → `faq-advanced` (temporales Präfix raus, matcht Name „FAQ Advanced")
-  - `sticky_video_section` → `sticky-video-product` (Underscores raus, `_section`-Suffix raus)
-  - `custom_comparaison_table` → `custom-comparison-table` (Tippfehler + Underscores)
-  - `advanced-content` → konkret benennen
-- [ ] **Setting-IDs** → snake_case + CONTENT/DESIGN-Keyword
-  - `code` (announcement-bar-slide, **Anzeigetext!**) → `content`
-  - `question` (new-faq) → `question_heading`
-  - `response_time` (new-faq) → `response_time_caption`
-  - `announ_type` → `announcement_type`
-  - `setwidth` → `section_width`
-- [ ] **Block-Types** → semantisch snake_case: `Item` → `slide`
-- [ ] **Ressourcen typisieren** (R8), wo als freier Text-Link gebaut
-- [ ] **Konsumenten mitziehen:** Liquid-Refs (`{% when %}`, `block.settings.x`,
-  `section.settings.x`), `config/settings_data.json`, `templates/*.json`,
-  Section-Groups (`header-group.json` / `footer-group.json`)
+- [x] **T0** — 49 invalide Schemas repariert + Label-Typos + Trailing-Comma-JSON (`ead68bd`,`1ee4c3b`,`7848ffd`)
+- [x] **T1** — Hyphen-ID-Bugfixes (timeline / pnewsletter / product-with-image) (`9458631`)
+- [x] **T2** — geteilte „Heading-Family"-IDs, Snippet-koordiniert (`85569b5`)
+- [x] **T3a** — geteilte Labels geklärt: `setwidth`-Label „Full Width"→„Section Width" (57×),
+  „HTML / Description"→„Description" (38×) (`047701a`)
+- [x] **T3b** — 44 kryptische Content-IDs → keyword-tragend (→ `pool` statt AI-Pass), Saved-Werte
+  migriert, 0 Kollisionen (`5936c56`); + Block-`text`→`content`-Gap in 4 Sections (`614b1bd`)
+- [x] **T3c** — 18 Block-Types → semantisch snake_case (`Item`→`slide`, `first_row`→`column_1`…),
+  82 Instanzen structure-aware migriert; revert + korrekt neu angewandt, **auf Frisch-Install
+  verifiziert** (`fabce3a`). Lektion: Shopify droppt Blocks **nicht** bei Type-Rename — die App
+  muss beim Theme-Update nur die Saved-Daten mit-migrieren (Frisch-Install ist atomar).
+- [x] **T4** — 24 Section-Slugs → semantisch kebab-case + alle Ref-Updates (`48f9cbc`)
+- [x] **product-template-1 + header** — verbleibende statische Content-IDs keyword-tragend (`dcd1e66`,`4df8156`,`64c9160`)
+- [x] **Konsumenten mitgezogen:** Liquid-Refs (`{% when %}`, `section/block.settings.x`),
+  `settings_data.json`, `templates/*.json`, Section-Groups — alles reconciled, JSON strict-valid
+- [ ] **T5 deferred** — Resource-Typing (`video`→`video_url`, R8): fragiler Type-Change
+  (MP4-CDN-URLs werden abgelehnt, manche Felder rendern via `video_tag`), moderater Mapping-Wert.
+  Non-destruktiv genug für später.
 
-*Warum hier:* nach Launch destruktiv; Labels (t-Keys) und Mapping keyen auf
-stabile IDs.
+*Warum hier:* nach Launch destruktiv; Labels und Mapping keyen auf stabile IDs. **In der DB
+verifiziert** (Phase 3): Paths = Contract R1, keine Alt-IDs.
 
 ---
 
@@ -118,13 +127,21 @@ IDs aus Phase 1.
 
 ## Phase 3 — Mapping-Rebuild · *Summit-Admin-Seite, Greenfield*
 
-- [ ] Theme neu parsen (`parse-theme`)
-- [ ] Mappings auf die sauberen IDs neu bauen (Test-Mappings sind Wegwerf,
-  pre-launch gefahrlos)
-- [ ] **Messen:** % deterministisch (pool/role/static) vs. AI-Pass — die
-  empirische Abnahme von Phase 1–2
+- [x] **Theme geparst** → `summitthemd` v1 in Summit/Nitro-DB: **92 Sections / 3165 Felder**
+  (5 System-Sections korrekt übersprungen = 0 Settings; kein Datenverlust).
+- [x] **DB-Verifikation der Identität-Schicht** (2026-06-15, read-only via Management API):
+  Renames 1:1 in der DB — Slug `sec_announcement_bar_slide`, Block-Type `slide`, Feld
+  `block:slide:content`; Path-Format = Contract R1; keine Alt-IDs. Auto-Klassifizierung:
+  11 `color_role` aus der Brand-Palette (`color_primary`→primary …) — semantische Color-IDs
+  greifen. **3 Label-Kollisionen** gefunden → gefixt (`f82c70a`).
+- [ ] **Operator-Mapping** auf die sauberen IDs (aktuell `completeness=0%`, alles `unmapped` —
+  korrekt: Operator-Task, pre-launch gefahrlos).
+- [ ] **Finale ROI-Messung:** % deterministisch (pool/role/static) vs. AI-Pass — materialisiert
+  erst nach dem Mapping. Strukturelle Fläche schon vermessen: **~52 %** Config (number/select/
+  boolean) · **~20 %** Text (Pool-Kandidaten) · **~19 %** Color · **~5 %** Media · ~4 % Refs.
 
-*Warum hier:* validiert die Identität-Schicht; muss vor Launch stehen.
+*Warum hier:* validiert die Identität-Schicht; muss vor Launch stehen. Strukturell bestätigt,
+Mapping-Coverage offen.
 
 ---
 
@@ -182,11 +199,11 @@ Hauptbrocken (3–4 Wo), aber bounded.
 
 ## Definition of Done (V1)
 
-- Aktiver Satz **sauber gemappt** — Operator sieht vorsortierte ~10 %
-  Content-Fläche, minimaler AI-Pass
-- Alle Labels **klar + i18n** (Operator in Summit-UI & Kunde im Shopify-Editor)
-- **Gate bestanden:** Perf ≥ 60 (Ziel 80+) · a11y ≥ 90 · JS-off ✓
-- **Kein jQuery / Legacy-Ballast** mehr im initialen Load
+- [~] Aktiver Satz **sauber gemappt** — IDs/Labels parse-verifiziert ✓; Operator-Mapping +
+  finale ROI-Messung (vorsortierte Content-Fläche, minimaler AI-Pass) noch offen
+- [x] Alle Labels **klar** (2a Title Case + 2b Semantik) — i18n über `locales/*.json` (Storefront)
+- [ ] **Gate bestanden:** Perf ≥ 60 (Ziel 80+) · a11y ≥ 90 · JS-off ✓ — *Track B, offen*
+- [ ] **Kein jQuery / Legacy-Ballast** mehr im initialen Load — *Track B, offen*
 
 ---
 
@@ -196,6 +213,8 @@ Entscheidung 2026-06-15: **nichts droppen, alles behalten.** Diese Liste bleibt 
 Referenz für einen optionalen späteren Aufräum-Pass (z. B. wenn das Mapping empirisch
 zeigt, welche Sections tote Fläche sind). Drop = Datei löschen + Refs aus
 `settings_data.json` / `locales` ziehen. Stand des Scans: committed Repo (Source of Truth).
+⚠️ **Slug-Namen unten sind pre-T4** (vor den Slug-Renames `48f9cbc`, z. B. `custom_comparaison`,
+`tab-infor`, `new-faq`) — vor einem echten Drop-Pass neu scannen.
 
 **Aktuell nicht platzierte Sections** (orphan, alle mit `presets` → im Editor wählbar, nur
 nirgends eingesetzt):
