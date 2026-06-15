@@ -631,13 +631,13 @@ display:none;
                 <div class="reviews_images product-block" {{ block.shopify_attributes }} style="--font-color:{{ block.settings.text_color }};border:1px solid {{ block.settings.border_color }};background:{{ block.settings.background }};{% if block.settings.border_color != "rgba(0,0,0,0)" %}:1px solid {{ block.settings.border_color }};{% endif %}border-radius:{{ block.settings.roundness }}px;">
                     <div class="reviews_images_r">
                       {% if block.settings.image_1 != blank %}
-                        <img src="{{ block.settings.image_1 | img_url:"100x" }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                        <img src="{{ block.settings.image_1 | image_url: width: 100 }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
                       {% if block.settings.image_2 != blank %}
-                        <img src="{{ block.settings.image_2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                        <img src="{{ block.settings.image_2 | image_url: width: 100 }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
                       {% if block.settings.image_3 != blank %}
-                        <img src="{{ block.settings.image_3 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                        <img src="{{ block.settings.image_3 | image_url: width: 100 }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
                     </div>
                     <div class="reviews_text">
@@ -861,7 +861,7 @@ display:none;
                     <div class="customer-review-avatar-container">
                       <div class="customer-review-avatar">
                         <img
-                          src="{{ block.settings.image | img_url: "200x" }}"
+                          src="{{ block.settings.image | image_url: width: 200 }}"
                           alt="{{ block.settings.name }}"
                           loading="lazy"
                         >
@@ -1069,7 +1069,7 @@ display:none;
                     <div class="promo_c">
                       <div class="promo_copy_icon">
                         {% if block.settings.icon != blank %}
-                          <img src="{{ block.settings.icon | img_url:"100x" }}" loading="lazy">
+                          <img src="{{ block.settings.icon | image_url: width: 100 }}" loading="lazy">
                         {% else %}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1372,7 +1372,7 @@ display:none;
                                 </svg>
                               </button>
                             {% else %}
-                                    <img src="{{ block.settings[image] | img_url:"500x" }}" loading="lazy" alt="">
+                                    <img src="{{ block.settings[image] | image_url: width: 500 }}" loading="lazy" alt="">
                             {% endif %}
                           </div>
                         </div>
@@ -1577,7 +1577,7 @@ display:none;
                     {% else %}
                     {% if block.settings.icon != blank %}
                       <img
-                        src="{{ block.settings.icon | img_url:"100x" }}"
+                        src="{{ block.settings.icon | image_url: width: 100 }}"
                         loading="lazy"
                         style="width:{{ block.settings.icon_width }}px"
                       >
@@ -1594,7 +1594,7 @@ display:none;
                         <span style="--icon-color:{{ block.settings.icon_color_2 }};">
                           {% if block.settings.icon_1 != blank %}
                             <img
-                              src="{{ block.settings.icon_1 | img_url:"100x" }}"
+                              src="{{ block.settings.icon_1 | image_url: width: 100 }}"
                               loading="lazy"
                               style="width:{{ block.settings.icons_width }}px"
                             >
@@ -1612,7 +1612,7 @@ display:none;
                         <span style="--icon-color:{{ block.settings.icon_color_3 }};">
                           {% if block.settings.icon_2 != blank %}
                             <img
-                              src="{{ block.settings.icon_2 | img_url:"100x" }}"
+                              src="{{ block.settings.icon_2 | image_url: width: 100 }}"
                               loading="lazy"
                               style="width:{{ block.settings.icons_width }}px"
                             >
@@ -1943,7 +1943,7 @@ display:none;
               </style>
                 <div class="product-block salepoint salepoint-{{ block.id }} d-flex align-items-center"  style="--icon-color:{{ block.settings.icon_color }};--stroke:{{ block.settings.icon_stroke }}" {{ block.shopify_attributes }}>
                   {% if block.settings.c_icon != blank %}
-                    <img src="{{ block.settings.c_icon | img_url:"100x" }}" alt="Salepoint icon" loading="lazy" width="{{ block.settings.icon_size }}">
+                    <img src="{{ block.settings.c_icon | image_url: width: 100 }}" alt="Salepoint icon" loading="lazy" width="{{ block.settings.icon_size }}">
                   {% else %}
                   {% render 'list-svg', block:block,  icon: block.settings.icon %}
                   {% endif %}
@@ -2412,7 +2412,7 @@ display:none;
                     <div class="bundles_heading">
                       {% if block.settings.icon != blank %}
                         <img
-                          src="{{ block.settings.icon | img_url:"100x" }}"
+                          src="{{ block.settings.icon | image_url: width: 100 }}"
                           loading="lazy"
                           width="{{ block.settings.icon_width }}px"
                           height="auto"
@@ -2438,7 +2438,7 @@ display:none;
                             >
                             <picture>
                               <img
-                                src="{{ prod.featured_image | img_url:"200x" }}"
+                                src="{{ prod.featured_image | image_url: width: 200 }}"
                                 loading="lazy"
                                 alt="{{ prod.title }}"
                               >
@@ -2653,7 +2653,7 @@ display:none;
                   >
                     {% if block.settings.custom_icon != blank %}
                       <img
-                        src="{{ block.settings.custom_icon | img_url:"100x" }}"
+                        src="{{ block.settings.custom_icon | image_url: width: 100 }}"
                         loading="lazy"
                         style="width:{{ block.settings.icon_size }}px"
                       >

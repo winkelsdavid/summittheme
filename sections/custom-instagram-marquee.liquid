@@ -215,7 +215,7 @@ flex:0 0 calc(50% - 10px);
                     {% if block.type == "column_1" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
-                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
                             {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
                             {% endif %}
@@ -232,7 +232,7 @@ flex:0 0 calc(50% - 10px);
                     {% if block.type == "column_2" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
-                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
                             {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
                             {% endif %}
@@ -247,7 +247,7 @@ flex:0 0 calc(50% - 10px);
                   {% if section.settings.video != blank %}
                       {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
                   {% elsif section.settings.main_image != blank %}
-                    <img src="{{ section.settings.main_image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                    <img src="{{ section.settings.main_image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                     {% else %}
                     {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
                     {% endif %}
@@ -278,7 +278,7 @@ flex:0 0 calc(50% - 10px);
                     {% if block.type == "column_3" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
-                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
                             {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
                             {% endif %}
@@ -295,7 +295,7 @@ flex:0 0 calc(50% - 10px);
                     {% if block.type == "column_4" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
-                            <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
+                            <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
                             {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
                             {% endif %}

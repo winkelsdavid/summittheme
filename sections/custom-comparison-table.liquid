@@ -336,7 +336,7 @@ border-top-right-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
                   {% endif %}
                 {% endif %}
                   <div class="media_image {{ section.settings.image_ratio }} {{ section.settings.image-fit }}">
-                    <img src="{{ block.settings.image | img_url:"1000X" }}" loading="lazy">
+                    <img src="{{ block.settings.image | image_url: width: 1000 }}" loading="lazy">
                   </div>
                 </div>
               {% endif %}
@@ -358,7 +358,7 @@ border-top-right-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
             {% if block.settings[heading] != blank %}
                 <div class="comp_heading">
                   {% if block.settings[icon] != blank %}
-                    <img src='{{ block.settings[icon] | img_url:"100x" }}' loading="lazy" height="32" width="32">
+                    <img src='{{ block.settings[icon] | image_url: width: 100 }}' loading="lazy" height="32" width="32">
                   {% endif %}
                   <p>{{ block.settings[heading] }}</p>
                 </div>

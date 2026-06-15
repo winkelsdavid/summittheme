@@ -186,7 +186,7 @@
                           <div class="custom_media_icons">
                             {% if section.settings[icon] != blank %}
                           <div class="media_icon_icon">
-                            <img src="{{ section.settings[icon] | img_url:"100x" }}" loading="lazy" style="--width:{{ section.settings.icon_size }}px;--mobile-width:{{ section.settings.mobile_width }}px">
+                            <img src="{{ section.settings[icon] | image_url: width: 100 }}" loading="lazy" style="--width:{{ section.settings.icon_size }}px;--mobile-width:{{ section.settings.mobile_width }}px">
                           </div>
                         {% endif %}
                           <div class="media_icon_content" style="color:{{ section.settings.text_color }}">

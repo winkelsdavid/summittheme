@@ -108,13 +108,13 @@ transition:1s;
   {% if settings.loading_animation == "1" %}
   <div class="loader loader--image">
     <div class="loader__image__holder">
-      <img src="{{ settings.loading_image | img_url:"400x" }}" width="{{ settings.loading_image_size}}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
+      <img src="{{ settings.loading_image | image_url: width: 400 }}" width="{{ settings.loading_image_size}}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
     </div>
   </div>
   {% elsif  settings.loading_animation == "2" %}
     <div class="loader loader--image loader-image-2">
     <div class="loader__image__holder_2">
-      <img src="{{ settings.loading_image | img_url:"400x" }}" width="{{ settings.loading_image_size }}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
+      <img src="{{ settings.loading_image | image_url: width: 400 }}" width="{{ settings.loading_image_size }}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
     </div>
     <div class="preloader-indicator">
       <div class="indicator-wrapper">
@@ -125,7 +125,7 @@ transition:1s;
   {% else %}
      <div class="loader loader--image loader--image_3">
     <div class="loader__image__holder_3">
-      <img src="{{ settings.loading_image | img_url:"400x" }}" width="{{ settings.loading_image_size}}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
+      <img src="{{ settings.loading_image | image_url: width: 400 }}" width="{{ settings.loading_image_size}}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
       <div class="loader_hider" style="background:{{ settings.loading_background }}"></div>
     </div>
     

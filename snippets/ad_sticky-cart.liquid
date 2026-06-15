@@ -383,7 +383,7 @@ color:var(--sticky-cart-cl_2);
       {% else %}
         <span class="delivery-icon" style="display: inline-flex; margin-right: 5px;">
           {% if section.settings.Shipping_icon != blank %}
-                <img src="{{ section.settings.Shipping_icon | img_url:"100x" }}" style="width:{{ section.settings.shipping_icon_width }}px">
+                <img src="{{ section.settings.Shipping_icon | image_url: width: 100 }}" style="width:{{ section.settings.shipping_icon_width }}px">
           {% else %}
                   {% render 'list-svg', icon : section.settings.icon_svg %}
               {% endif %}

@@ -682,7 +682,7 @@ padding-top:4px!important;
                           <div class="c_icon_item" style="padding:{{ block.settings.icon_padding }}px {{ block.settings.icon_padding_left_right }}px;background:{{ block.settings.icon_background }};border-radius:{{ block.settings.icon_radius }}px;--icon-size:{{ block.settings.icons_size }}px;--icon-color:{{ block.settings.icons_color }}">
                             <div class="c_item_icon" style="display:flex;--icon-color:{{ block.settings.icon_color }}">
                               {% if block.settings[c_icon] != blank %}
-                                  <img src="{{ block.settings[c_icon] | img_url:"100x" }}" alt="{{ block.settings[icon_text] }}" width="{{ block.settings.icons_size }}">
+                                  <img src="{{ block.settings[c_icon] | image_url: width: 100 }}" alt="{{ block.settings[icon_text] }}" width="{{ block.settings.icons_size }}">
                               {% else %}
                                 {% render 'list-svg', block: block ,icon: block.settings[icon] %}
                               {% endif %}
@@ -875,7 +875,7 @@ padding-top:4px!important;
                     <div class="c_icon_item" style="padding:{{ block.settings.icon_padding }}px {{ block.settings.icon_padding_left_right }}px;background:{{ block.settings.icon_background }};border-radius:{{ block.settings.icon_radius }}px;--icon-size:{{ block.settings.icons_size }}px;--icon-color:{{ block.settings.icons_color }}">
                       <div class="c_item_icon" style="display:flex;--icon-color:{{ block.settings.icon_color }}">
                       {% if block.settings[c_icon] != blank %}
-                          <img src="{{ block.settings[c_icon] | img_url:"100x" }}" alt="{{ block.settings[icon_text] }}" width="{{ block.settings.icons_size }}">
+                          <img src="{{ block.settings[c_icon] | image_url: width: 100 }}" alt="{{ block.settings[icon_text] }}" width="{{ block.settings.icons_size }}">
                       {% else %}
                         {% render 'list-svg',block:block, icon: block.settings[icon] %}
                       {% endif %}

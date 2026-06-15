@@ -361,7 +361,7 @@ display:flex;
                         <div class="product_info">
                             {%  if product.featured_image != blank %}
                                 <div class="product_media">
-                                    <img src='{{ product.featured_image | img_url:"200x" }}' loading="lazy" alt='product image'>
+                                    <img src='{{ product.featured_image | image_url: width: 200 }}' loading="lazy" alt='product image'>
                                 </div>
                             {% endif %}
                                 <div class="c_product_info">

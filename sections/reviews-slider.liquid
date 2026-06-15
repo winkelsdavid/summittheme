@@ -387,7 +387,7 @@ color:{{ section.settings.text_color }};
                           {% if block.settings.pdp_link != blank %}
                             <a href="{{ block.settings.pdp_link }}">
                           {% endif %}
-                              <img src="{{ block.settings.image | img_url:"300x" }}" height="auto" width="45" loading="lazy" alt="{{ block.settings.name }}">
+                              <img src="{{ block.settings.image | image_url: width: 300 }}" height="auto" width="45" loading="lazy" alt="{{ block.settings.name }}">
                           {% if block.settings.pdp_link != blank %}
                             </a>
                           {% endif %}
