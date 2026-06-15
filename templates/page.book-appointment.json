@@ -41,19 +41,19 @@
           }
         },
         "3a8115ee-2125-4ed9-a072-5f0200b847d1": {
-          "type": "store",
+          "type": "budget",
           "settings": {
             "store_location": "Carnaby - Boutique"
           }
         },
         "81b46c33-c19b-4cdd-9ba0-4ad779b3b398": {
-          "type": "store",
+          "type": "budget",
           "settings": {
             "store_location": "New York Nolita - Boutique"
           }
         },
         "3ad8d6b0-2a9b-4db4-91da-d967067ae9a2": {
-          "type": "store",
+          "type": "budget",
           "settings": {
             "store_location": "Bristol - Boutique"
           }

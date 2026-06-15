@@ -21,7 +21,7 @@
     endcase
 
     for block in section.blocks
-        if block.type == 'related-product'
+        if block.type == 'related_products'
             assign validRelated = left_size
         else
             assign validRelated = left_size
@@ -130,7 +130,7 @@
             </div>
             
             {%- for block in section.blocks -%}
-                {%- if block.type == 'related-product' -%}
+                {%- if block.type == 'related_products' -%}
                     <div class="{{ right_size }}" data-aos-delay="200" data-aos="{{ section.settings.animation }}" >
                       <div class="product-block product-related mt-lg-0 mt-4 {% if section.settings.tab_size  == 'full' %} pl-0 {% endif %}">
                             <product-pairs class="product-pairs isolate product-pairs--loaded" data-id="{{ section.id }}" 
@@ -474,7 +474,7 @@
       ]
     },
     {
-      "type": "related-product",
+      "type": "related_products",
       "name": "Featured products ",
       "limit": 1,
       "settings": [

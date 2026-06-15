@@ -21,7 +21,7 @@
           }
         },
         "a114a493-fb4e-4f52-9dba-52eacd1564d2": {
-          "type": "sub_title",
+          "type": "subtitle",
           "disabled": true,
           "settings": {
             "subtitle": "Activewear"
@@ -126,7 +126,7 @@
       "type": "service",
       "blocks": {
         "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-0": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Our Story",
@@ -136,7 +136,7 @@
           }
         },
         "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-1": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Sustainability",
@@ -146,7 +146,7 @@
           }
         },
         "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-2": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Astro Technology",
@@ -156,7 +156,7 @@
           }
         },
         "4273663e-a3ea-49a8-a7c1-c872309fc99c": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Warranty",

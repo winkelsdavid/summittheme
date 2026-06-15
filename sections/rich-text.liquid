@@ -54,7 +54,7 @@
         {%- case block.type -%}
           {%- when 'spacer' -%}
             <div class="hero-image__space" style="--hero-spacer: {{ block.settings.hero-spacer }}px;"></div>
-          {%- when 'sub_title' -%}
+          {%- when 'subtitle' -%}
               {%- if block.settings.subtitle != blank -%}
                 <div class="subtop mb-3">{{ block.settings.subtitle }}</div>
               {%- endif -%}
@@ -412,7 +412,7 @@
   ],
   "blocks": [
     {
-      "type": "sub_title",
+      "type": "subtitle",
       "name": "Sub Title",
       "settings": [
         {

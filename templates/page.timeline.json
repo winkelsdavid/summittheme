@@ -18,7 +18,7 @@
       "type": "timeline",
       "blocks": {
         "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-1": {
-          "type": "time",
+          "type": "milestone",
           "settings": {
             "bg": "#e4ffdf",
             "title": "A small business in Aarhus",
@@ -29,7 +29,7 @@
           }
         },
         "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-2": {
-          "type": "time",
+          "type": "milestone",
           "settings": {
             "bg": "#ffd7db",
             "title": "The vision of Peder Tang",
@@ -40,7 +40,7 @@
           }
         },
         "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-3": {
-          "type": "time",
+          "type": "milestone",
           "settings": {
             "bg": "#fff5d2",
             "title": "At the heart of the creation",
@@ -51,7 +51,7 @@
           }
         },
         "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-4": {
-          "type": "time",
+          "type": "milestone",
           "settings": {
             "bg": "#cdedfc",
             "title": "Industry completely",

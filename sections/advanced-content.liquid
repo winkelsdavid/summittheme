@@ -227,7 +227,7 @@
                   </div>
                   
                 </div>
-                {%- when 'productcustom' -%}
+                {%- when 'product_item' -%}
                   <div data-aos="{{ section.settings.animation }}" data-aos-delay="{{ forloop.index | times: 200 }}">
                     {%- assign productLookbook = all_products[block.settings.product] -%}
                     {%- if productLookbook != blank -%}
@@ -236,7 +236,7 @@
                       {%- render 'product-grid-blank' -%}
                     {%- endif -%}
                   </div>
-                {%- when 'productlist' -%}
+                {%- when 'product_list' -%}
                   <div class="{% if forloop.last == true %} mb-0 {% else %} mb-5 mb-lg-0 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-delay="{{ forloop.index | times: 200 }}">
                     {%- assign collection = collections[block.settings.mini_collection] -%}
                     {%- if collection != blank -%}
@@ -1146,7 +1146,7 @@
       ]
     },
     {
-      "type": "productcustom",
+      "type": "product_item",
       "name": "Product Item",
       "settings": [
         {
@@ -1225,7 +1225,7 @@
       ]
     },
     {
-      "type": "productlist",
+      "type": "product_list",
       "name": "Product List",
       "settings": [
         {

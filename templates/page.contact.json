@@ -61,7 +61,7 @@
       "type": "service",
       "blocks": {
         "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-0": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Adress",
@@ -71,7 +71,7 @@
           }
         },
         "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-1": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Call us",
@@ -81,7 +81,7 @@
           }
         },
         "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-2": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Open",
@@ -91,7 +91,7 @@
           }
         },
         "d58418bf-4652-4e45-8cbb-19e0434944cf": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "#ffffff",
             "title": "Emails",
