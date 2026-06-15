@@ -93,7 +93,17 @@ Strategie), jede Section zieht ihre Konsumenten mit (Liquid-Refs, `settings_data
   trugen kein Keyword → AI-Pass. → `content` (Block-Type trägt die Rolle, z.B. `block:heading:content`).
   **Type-aware:** footers section-level `text` (eine *Farbe*) korrekt unberührt. 6 Schema + 14 Saved-Instanzen.
   Block-Content-Fläche jetzt vollständig vorsortiert (außer Deferred product-template-1/header).
-- [ ] T5 — Resource-Typing (separat/später)
+- [x] **product-template-1 (Teil) — erledigt 2026-06-15.** Statisch referenzierte Content-Felder → pool
+  (block `text`→`content` ×6, `gtab_des`→`gtab_description`, `banner_des/text`→`banner_description/caption`).
+  **Gelassen:** dynamisch via `settings[..]`-Loops zugegriffene Felder (`tier_*`, `text_1..4`, `icon_text_*`,
+  `video_pick_*`) — static rename bräche sie (T3c-Klasse); sind Preis-Tier-/Icon-Config + Inzidentale.
+- [x] **header (Teil) — erledigt 2026-06-15.** 5 referenzierte Content-Felder → pool (`des/btn_menu_banner_lv*`
+  →`description/button_*`, `sidebar_bio`→`sidebar_description`; Schema + 2 Snippets + header-group.json,
+  Block-Types unverändert). **Gelassen:** 15 tote `menu_banner_*`-Felder (0 Refs → totes Mapping-Feld) + `font_sizemenu` (Design).
+- [~] **T5 — Resource-Typing: bewusst zurückgestellt.** Die ~13 Video-URL-`text`-Felder sind ein
+  Typänderungs-Problem: `video_url` lehnt MP4-CDN-URLs ab, `url` ist semantisch schief, ein Teil rendert via
+  `video_tag` (braucht Media-Objekt, kein String) → fragil bei geringem Mapping-Wert (Video-URLs sind keine
+  Prime-Generierungs-Targets). Empfehlung: lassen, oder separater validierter Pass auf Frisch-Install.
 
 ---
 
