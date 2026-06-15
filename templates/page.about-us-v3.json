@@ -540,7 +540,7 @@
       "type": "icon-list",
       "blocks": {
         "16485444103c52f5e9-0": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Our Story",
@@ -551,7 +551,7 @@
           }
         },
         "8fb6874d-8c42-405c-9da3-134f7a8a0c73": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Sustainability",
@@ -562,7 +562,7 @@
           }
         },
         "16485444103c52f5e9-1": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Astro Technology",
@@ -573,7 +573,7 @@
           }
         },
         "16485444103c52f5e9-2": {
-          "type": "service",
+          "type": "icon_item",
           "settings": {
             "bgblock": "rgba(0,0,0,0)",
             "title": "Warranty",
