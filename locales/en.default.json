@@ -51,7 +51,7 @@
       "timer_title" :"We can reserve your order for [time] minutes",
       "terms_before" :"I agree with the",
       "terms_after" :"terms and conditions",
-      "countdown_title" :"SALE ENDS IN",
+      "countdown_title" :"SALE ENDS IN"
     },
     "password_page": {
       "login_form_heading": "Enter store using password",

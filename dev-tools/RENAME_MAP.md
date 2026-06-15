@@ -76,7 +76,10 @@ Strategie), jede Section zieht ihre Konsumenten mit (Liquid-Refs, `settings_data
   0 alte IDs/Refs/Keys übrig, 0 invalide Schemas. **Bonus: `align_heading` war via Hyphen-
   Dot ein Latent-Bug (Subtraktion) → Ausrichtung greift jetzt wieder → visuell prüfen.**
 - [~] **T3 — in Arbeit.** **T3a ✅** (Labels: „Full Width"→„Section Width" 57×, „HTML / Description"→„Description" 38×, structure-aware). **T3b ✅** (44 kryptische Content-IDs → keyword-tragende Namen → `pool` statt AI-Pass; 37 Sections + 1 Snippet + 38 JSON, Saved-Werte migriert; Dry-Run 0 Kollisionen, word-boundary-safe). Bewusst gelassen: `text`/`name` (mehrdeutig) + Inzidental-Felder (Reviewer-Namen/Daten/Badges/Tabellen-Zellen) — keine Prime-Generierungs-Targets. **T3c VERWORFEN** (Block-Types) — versucht + revertiert (Commit `1cf66c4`): **Shopify wirft bereits platzierte Blocks weg, sobald ein Block-Type umbenannt wird — selbst bei vollständiger Schema+Saved-Migration.** Das Repo war 0-Mismatch-konsistent (saved==schema), der Editor verlor trotzdem die Blocks (Slideshow, Testimonials-Slider u.a.). → **Block-Type-Renames sind TABU** (anders als Setting-/Content-IDs, die nur ein Feld leeren statt einen Block zu droppen). `block:Item:`/`block:image:` etc. bleiben wie sie sind.
-  - *Nebenbefund:* `templates/page.json` hat einen **vorbestehenden** strict-JSON-Fehler (Trailing-Comma-Klasse, wie T0 — Shopify ok, `parse-theme` nicht). Separater Mini-Fix nötig (eigener „T0-für-Templates"-Sweep).
+  - *Nebenbefund — ERLEDIGT 2026-06-15:* Theme-JSON-Sweep (Templates/Config/Locale). 3 Dateien
+    (`templates/page.json`, `config/settings_schema.json`, `locales/en.default.json`) hatten
+    vorbestehende Trailing-Commas (Shopify ok, strict `parse-theme` nicht) → gefixt, Kommentare
+    erhalten. **Alle 84 Theme-JSON jetzt strict-valide.**
 - [x] **T4 — erledigt 2026-06-15.** 24 Section-Slugs → semantisch kebab-case (`git mv`) +
   59 platzierte Section-Instanz-Types migriert (structure-aware, anchor auf Section-ID →
   Block-Types `service`/`line` unberührt). Bsp: `new-faq`→`faq-advanced`, `service`→`icon-list`,

@@ -3036,13 +3036,13 @@
         "type": "checkbox",
         "id": "show_review_information",
         "label": "Show review Information",
-        "default": true,
+        "default": true
       },
       {
         "type": "checkbox",
         "id": "review_gradient_background",
         "label": "Use Gradient Background",
-        "default": false,
+        "default": false
       },
       {
         "type": "text",
@@ -3072,17 +3072,17 @@
       {
         "type": "image_picker",
         "id": "review_image_information_1",
-        "label": "Image Reviewer 1",
+        "label": "Image Reviewer 1"
       },
       {
         "type": "image_picker",
         "id": "review_image_information_2",
-        "label": "Image Reviewer 2",
+        "label": "Image Reviewer 2"
       },
       {
         "type": "image_picker",
         "id": "review_image_information_3",
-        "label": "Image Reviewer 3",
+        "label": "Image Reviewer 3"
       },
       {
         "type": "header",
@@ -3111,12 +3111,12 @@
       {
         "type": "color",
         "id": "timer_background_color",
-        "label": "Timer Background Color",
+        "label": "Timer Background Color"
       },
       {
         "type": "color",
         "id": "timer_color",
-        "label": "Timer Color",
+        "label": "Timer Color"
       },
       {
         "type": "color",
