@@ -99,11 +99,17 @@ Shopify-Content-Translation bereits mehrsprachig; `t:`-Keys würden nur die *Edi
 lokalisieren (6853 Labels × 10 ≈ 68k Strings) — kein V1-Mehrwert. R9 wird über **klare
 Labels** erfüllt, nicht über den Key-Mechanismus.
 
-- [ ] Jedes Label **klar + rollenbenennend** (nicht kryptisch / leer / doppelt)
-- [ ] **Label-Bugs:** „Zoom Out **Feft**" → „Left" · „Dot,Line" → „Separator style" ·
-  `setwidth`-Label „Full Width" → „Section Width"
-- ⚙️ **Wird pro Section gemeinsam mit Phase 1 in EINEM Datei-Durchgang gemacht**
-  (id + label in einem Edit) — jede Section nur einmal anfassen.
+- [x] **Konvention festgelegt** (2026-06-15): Variante A — Title Case überall →
+  [`LABEL_STYLEGUIDE.md`](LABEL_STYLEGUIDE.md). Auslöser: DB-Parse zeigte gemischtes Casing
+  („Featured products" vs „Product Content") + 3 Label-Kollisionen.
+- [x] **2a Maschinell** (`commit bdc916a`): 1531 Labels auf Title Case (`_labelpass.py`,
+  Akronyme/Eigennamen/Einheiten erhalten, Trailing-Spaces getrimmt).
+- [x] **2b Targeted Semantik** (`commit ad05f98`): 348 Änderungen — „Sub Title"→„Subtitle",
+  Verb-Drop (Select/Choose), „Align X"→„X Alignment", kryptisch→klar („Background Section"→
+  „Background Color", Overlay-Labels via id/type verifiziert), Typo „Midle"→„Middle".
+- [x] **3 Label-Kollisionen** vorab gefixt (`commit f82c70a`): Header/Footer/Product Grid eindeutig.
+- [ ] *Bewusst ausgelassen (targeted scope):* `Title`→`Heading` global (287, „Title" meist korrekt);
+  exhaustives Durchwortern jedes Labels. Non-destruktiv, jederzeit nachholbar.
 
 *Warum hier:* „aufgeräumt für Operator (Summit-UI & Shopify-Editor)". Hängt an stabilen
 IDs aus Phase 1.
