@@ -92,10 +92,67 @@
     }
   }, true);
 
+  // =========================================================================
+  // ARIA tab controller — replaces the Bootstrap tab/pill plugin.
+  // The markup already carries role="tab"/"tabpanel"/"tablist" + aria-*; we
+  // only supply the switching behaviour, reproducing Bootstrap's class model
+  // (.nav-link.active, .tab-pane.show.active) so the existing CSS keeps working.
+  // =========================================================================
+  function activateTab(trigger) {
+    if (!trigger) return;
+    var sel = trigger.getAttribute('href') || trigger.getAttribute('data-target') || trigger.getAttribute('data-bs-target');
+    var pane = null;
+    try { pane = sel ? document.querySelector(sel) : null; } catch (e) { pane = null; }
+    var nav = trigger.closest('[role="tablist"], .nav');
+    if (nav) {
+      nav.querySelectorAll('[data-toggle="tab"], [data-toggle="pill"], [role="tab"]').forEach(function (t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+      });
+    }
+    trigger.classList.add('active');
+    trigger.setAttribute('aria-selected', 'true');
+    trigger.removeAttribute('tabindex');
+    var content = pane ? pane.closest('.tab-content') : null;
+    var siblings = content ? content.children : (pane && pane.parentElement ? pane.parentElement.children : []);
+    Array.prototype.forEach.call(siblings, function (p) {
+      if (p.classList && p.classList.contains('tab-pane')) p.classList.remove('show', 'active');
+    });
+    if (pane) {
+      pane.classList.add('active');
+      void pane.offsetWidth; // reflow so the .fade transition runs
+      pane.classList.add('show');
+      // Compat event: theme.js re-inits Slick carousels inside the panel on tab change.
+      if (window.jQuery) { try { window.jQuery(trigger).trigger('shown.bs.tab'); } catch (e) {} }
+      trigger.dispatchEvent(new CustomEvent('shown.tab', { bubbles: true, detail: { relatedTarget: pane } }));
+    }
+  }
+
+  document.addEventListener('click', function (e) {
+    var tab = e.target.closest('[data-toggle="tab"], [data-toggle="pill"]');
+    if (tab) { e.preventDefault(); activateTab(tab); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    var tab = e.target.closest('[role="tab"]');
+    if (!tab || ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Home', 'End'].indexOf(e.key) === -1) return;
+    var nav = tab.closest('[role="tablist"], .nav');
+    if (!nav) return;
+    var tabs = Array.prototype.slice.call(nav.querySelectorAll('[role="tab"], [data-toggle="tab"], [data-toggle="pill"]'));
+    var i = tabs.indexOf(tab), next;
+    if (e.key === 'Home') next = tabs[0];
+    else if (e.key === 'End') next = tabs[tabs.length - 1];
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = tabs[(i + 1) % tabs.length];
+    else next = tabs[(i - 1 + tabs.length) % tabs.length];
+    if (next) { e.preventDefault(); next.focus(); activateTab(next); }
+  });
+
   // ---- Public API ----
   window.NativeUI = window.NativeUI || {};
   window.NativeUI.openModal = openModal;
   window.NativeUI.closeModal = closeModal;
+  window.NativeUI.activateTab = activateTab;
 
   // ---- jQuery / Bootstrap compatibility bridge ----
   // While vendor.js (jQuery + Bootstrap) is still loaded, route the legacy
@@ -111,6 +168,10 @@
           if (action === 'hide') closeModal(this);
           else openModal(this);
         });
+        return this;
+      };
+      jq.fn.tab = function (action) {
+        this.each(function () { if (action === 'show') activateTab(this); });
         return this;
       };
     }
