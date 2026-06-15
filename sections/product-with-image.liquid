@@ -128,8 +128,8 @@
                             </video>
                         {%- endif -%}
                             <div class="product-image__banner position-absolute d-flex {{ positiontxt }}" style="
-                                    --bg-overlay-rgba: {{ block.settings.bg-overlay.red }}, {{ block.settings.bg-overlay.green }}, {{ block.settings.bg-overlay.blue }};
-                                    --bg-opacity: {{ block.settings.bg-opacity }};
+                                    --bg-overlay-rgba: {{ block.settings.bg_overlay_color.red }}, {{ block.settings.bg_overlay_color.green }}, {{ block.settings.bg_overlay_color.blue }};
+                                    --bg-opacity: {{ block.settings.bg_opacity }};
                                     {%- if text_color != 'transparent' -%}
                                     --g-font-color-subtop: {{ text_color }};
                                     --g-color-heading :  {{ text_color }};
@@ -715,13 +715,13 @@
         },
         {
           "type": "color",
-          "id": "bg-overlay",
+          "id": "bg_overlay_color",
           "label": "Overlay color",
           "default": "#000000"
         },
         {
           "type": "range",
-          "id": "bg-opacity",
+          "id": "bg_opacity",
           "min": 0,
           "max": 1,
           "step": 0.1,

@@ -37,7 +37,7 @@
                         <div class="or-timeline__date pb-3 pb-lg-0 d-lg-inline-block d-block">{{block.settings.time}}</div>
                         {% endif %}
                         {% if block.settings.link != blank %}
-                        <a target="_blank" href="{{block.settings.link}}" title="{{ section.settings.button-text }}" class="mt-4 {{ section.settings.style_btn }}">{{section.settings.button-text}}</a>
+                        <a target="_blank" href="{{block.settings.link}}" title="{{ section.settings.button_text }}" class="mt-4 {{ section.settings.style_btn }}">{{section.settings.button_text}}</a>
                         {% endif %}
                         
                     </div>
@@ -297,7 +297,7 @@
     },
     {
       "type": "color",
-      "id": "caption-bg",
+      "id": "caption_bg",
       "label": "Caption background",
       "default": "#fff"
     },
@@ -309,7 +309,7 @@
     },
     {
       "type": "text",
-      "id": "button-text",
+      "id": "button_text",
       "label": "Button text",
       "default": "Read more"
     },
@@ -507,7 +507,7 @@
 {% style %}
 .customstyle{{ section.id }}{
     --or-tl-border:{{ section.settings.border }};
-    --or-tl-bg : {{ section.settings.caption-bg }};
+    --or-tl-bg : {{ section.settings.caption_bg }};
     --or-tl-textcolor : {{ section.settings.title_color }};
     
 }

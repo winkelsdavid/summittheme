@@ -58,7 +58,14 @@ Strategie), jede Section zieht ihre Konsumenten mit (Liquid-Refs, `settings_data
   66× „Zoom Out Feft"→„Zoom Out Left", 17× „Feaf"→„Leaf", „Dot,Line"→„Separator style".
   **0 invalide Schemas übrig.** „Full Width"/„HTML / Description" bewusst nach T2/T3
   verschoben (Kollisionsgefahr Options- vs. Feld-Label).
-- [ ] T1 — Hyphen-ID-Bugfixes
+- [x] **T1 — erledigt 2026-06-15.** Hyphen-IDs → snake_case in 3 Sections (+ Schema-IDs,
+  Liquid-Refs, gespeicherte Werte in settings_data.json/page.timeline.json mitgezogen).
+  `timeline`: `button-text`→`button_text`, `caption-bg`→`caption_bg`; `pnewsletter`:
+  `pnew-width/height`→`popup_width/height` (+ Doppelkomma-Fix); `product-with-image`:
+  `bg-overlay`→`bg_overlay_color`, `bg-opacity`→`bg_opacity`. **3 vorher kaputte Settings
+  funktionieren wieder.** (`align-heading`/`align-content` bleiben für T2; restliche
+  Hyphen-IDs `hero-spacer`/`img-in-hero`/`image-fit`/`border-copryright`/`trust-heading`/
+  `padding-left/right` → in ihren T3-Section-Passes.)
 - [ ] T2 — Heading-Family (Snippet-koordiniert)
 - [ ] T3 — per-Section Block-Types + IDs
 - [ ] T4 — Slug-Renames + Reconcile

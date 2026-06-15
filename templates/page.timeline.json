@@ -77,9 +77,9 @@
         "des": "ineteenth century America idealized white woman’s modesty",
         "align-heading": "center",
         "border": "#202025",
-        "caption-bg": "#fff6ed",
+        "caption_bg": "#fff6ed",
         "title_color": "#202025",
-        "button-text": "",
+        "button_text": "",
         "style_btn": "btn-underline"
       }
     },

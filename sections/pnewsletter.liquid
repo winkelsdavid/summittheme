@@ -7,8 +7,8 @@
     assign pnewletter_description =  section.settings.pnewletter_description
     assign image_right = true
     assign pnewletter_bgimage = section.settings.pnewletter_bgimage 
-    assign pnew-width = section.settings.pnew-width
-    assign pnew-height = section.settings.pnew-height
+    assign popup_width = section.settings.popup_width
+    assign popup_height = section.settings.popup_height
     assign pnew_size_heading = section.settings.pnew_size_heading
     assign button = section.settings.button
     assign pnewletter_description_sub = section.settings.pnewletter_description_sub
@@ -33,7 +33,7 @@
             when 'pnew_style-3' 
                 render 'pnew-2' , pnewletter_title: pnewletter_title, pnewletter_description: pnewletter_description, pnew_size_heading: pnew_size_heading, button: button , pnewletter_description_sub: pnewletter_description_sub, subtitle: subtitle
             when 'pnew_style-4' 
-                render 'pnew-3' , pnewletter_title: pnewletter_title, pnewletter_description: pnewletter_description, pnewletter_bgimage: pnewletter_bgimage, pnew_size_heading: pnew_size_heading, button: button, , pnewletter_description_sub: pnewletter_description_sub, subtitle: subtitle
+                render 'pnew-3' , pnewletter_title: pnewletter_title, pnewletter_description: pnewletter_description, pnewletter_bgimage: pnewletter_bgimage, pnew_size_heading: pnew_size_heading, button: button, pnewletter_description_sub: pnewletter_description_sub, subtitle: subtitle
             else 
             render 'pnew-1' , pnewletter_title: pnewletter_title, pnewletter_description: pnewletter_description, pnew_size_heading: pnew_size_heading, button: button , pnewletter_description_sub: pnewletter_description_sub, subtitle: subtitle
           endcase 
@@ -80,16 +80,16 @@
   }
   @media (min-width: 992px){
     .modal-dialog.modal-dialog--newsletter{
-      max-width: {{ pnew-width }}px;
+      max-width: {{ popup_width }}px;
     }
     {%- if pnew_style == 'pnew_style-1' or pnew_style == 'pnew_style-2' -%}
     .popup-newsletter--content{
-      min-height: {{ pnew-height }}px;
+      min-height: {{ popup_height }}px;
     }
   {%- elsif pnew_style == 'pnew_style-3'-%}
     @media (min-width: 992px){
       .pnew_style-3 .popup-newsletter--content{
-        min-height: {{ pnew-height }}px;
+        min-height: {{ popup_height }}px;
       }
     }
   {%- elsif pnew_style == 'pnew_style-4'-%}
@@ -98,7 +98,7 @@
     }
     @media (min-width: 992px){
       .bg-newsletter-padding{
-        min-height: {{ pnew-height }}px;
+        min-height: {{ popup_height }}px;
       }
       .pnew_style-4 .popup-newsletter--content{
         min-height:auto;
@@ -196,7 +196,7 @@
     },
     {
       "type": "range",
-      "id": "pnew-width",
+      "id": "popup_width",
       "min": 500,
       "max": 900,
       "step": 10,
@@ -206,7 +206,7 @@
     },
     {
       "type": "range",
-      "id": "pnew-height",
+      "id": "popup_height",
       "min": 300,
       "max": 600,
       "step": 10,
