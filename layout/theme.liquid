@@ -56,12 +56,6 @@
     </style>
     {%- render 'social-meta-tags' -%}
     {%- render 'header-css' -%}
-    {%- comment -%} Perf-Gate: AOS-Initialzustand neutralisieren. AOS setzt [data-aos] auf
-        opacity:0 bis das JS feuert -> auf Mobil-Drosselung erst ~13s -> Hero-Text (LCP-Element)
-        unsichtbar -> LCP 13s. Beim Einanimieren verschiebt sich Layout -> Desktop-CLS 0.426.
-        Override: Content sofort sichtbar + an Endposition -> behebt Mobile-LCP + Desktop-CLS.
-        Trade-off: Scroll-Fade-In-Animationen entfallen. {%- endcomment -%}
-    <style>[data-aos]{opacity:1!important;transform:none!important;transition:none!important;}</style>
       <link rel="preload" href="{{ 'lazysizes.min.js' | asset_url }}" as="script">
       <link rel="preload" href="{{ 'vendor.js' | asset_url }}" as="script">
        {{- 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true -}}
