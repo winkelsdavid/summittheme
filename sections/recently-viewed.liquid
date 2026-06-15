@@ -74,7 +74,7 @@
                     const recentlyViewedProductsElement = parsedHtml.querySelector("recently-productsviewed");
                     if (recentlyViewedProductsElement && recentlyViewedProductsElement.hasChildNodes()) {
                         this.innerHTML = recentlyViewedProductsElement.innerHTML;
-                        AOS.init();
+                        // AOS entfernt (Perf Slice 1) — Content via CSS-Override sichtbar
                     }
                     theme.tooltip.load();
                     if(typeof jdgm !== 'undefined'){

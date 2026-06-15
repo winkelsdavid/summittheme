@@ -41,14 +41,10 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
     if (container) {
       this._createInstance(container);
     }
-    if (AOS) {
-      AOS.refreshHard();
-    }
+    // AOS entfernt (Perf Slice 1) — kein refresh noetig
   },
   _loadSubSections: function () {
-    if (AOS) {
-      AOS.refreshHard();
-    }
+    // AOS entfernt (Perf Slice 1) — kein refresh noetig
   },
   _onSectionUnload: function (evt) {
     this.instances = _.filter(this.instances, function (instance) {
@@ -3868,22 +3864,11 @@ theme.init = function () {
     evt.preventDefault();
   });
 
-  //scroll animation
-
-  AOS.init({
-    startEvent: "DOMContentLoaded",
-    offset: 30, // offset (in px) from the original trigger point
-    delay: 0, // values from 0 to 3000, with step 50ms
-    duration: 700,
-    once: true,
-  });
-
-  window.addEventListener("load", function () {
-    AOS.refresh();
-  });
-  document
-    .querySelectorAll("img")
-    .forEach((img) => img.addEventListener("load", () => AOS.refresh()));
+  // scroll animation (AOS) ENTFERNT — Perf-Migration Slice 1.
+  // AOS.init + window.load-AOS.refresh + ein AOS.refresh()-Listener pro <img>
+  // verursachten massives Layout-Thrashing auf Mobil (N Bilder x 1259 Elemente).
+  // Content wird via CSS-Override [data-aos]{opacity:1;transform:none} (theme.liquid)
+  // statisch sichtbar gehalten. Lib bleibt vorerst dormant in vendor.js.
 
   // Sections
   var sections = new theme.Sections();
