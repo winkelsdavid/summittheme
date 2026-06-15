@@ -1,4 +1,24 @@
 <!-- drawer-nav.liquid -->
+<style>
+  /* Native <details> disclosure mapping for drawer 3rd-level submenu.
+     Mirrors the previous Bootstrap-collapse behavior 1:1:
+     - .collapse:not(.show){display:none} -> <details> hides submenu when not [open] (native).
+     - icon +/- visibility was driven by the button's .collapsed state:
+         .drawer__nav-toggle--open  : display:none  default, display:block when .collapsed (closed) -> Plus
+         .drawer__nav-toggle--close : display:block default, display:none when .collapsed (closed) -> Minus
+       remapped onto details:not([open]) (Plus) / details[open] (Minus). */
+  .drawer__nav-disclosure { width: 100%; }
+
+  /* summary keeps the toggle-btn look; hide the native marker/arrow */
+  summary.drawer__nav-toggle-btn { list-style: none; cursor: pointer; }
+  summary.drawer__nav-toggle-btn::-webkit-details-marker { display: none; }
+
+  /* Plus visible when closed, Minus visible when open */
+  .drawer__nav-disclosure:not([open]) > summary .drawer__nav-toggle--open { display: block; }
+  .drawer__nav-disclosure:not([open]) > summary .drawer__nav-toggle--close { display: none; }
+  .drawer__nav-disclosure[open] > summary .drawer__nav-toggle--open { display: none; }
+  .drawer__nav-disclosure[open] > summary .drawer__nav-toggle--close { display: block; }
+</style>
 <div class="grid grid--no-gutters meganav__scroller meganav__scroller--has-list">
   <div class="grid__item meganav__list">
     {%- for childlink in link.links -%}
@@ -6,38 +26,39 @@
       {%- if childlink.links != blank -%}
       {%- assign grandchild_list_handle = childlink.title | handleize -%}
       <div class="drawer__nav-has-sublist">
-        <a href="{{ childlink.url }}" 
-           class="meganav__link drawer__nav-link drawer__nav-link--split{% if childlink.active %} meganav__link--active{% endif %}" 
+        <a href="{{ childlink.url }}"
+           class="meganav__link drawer__nav-link drawer__nav-link--split{% if childlink.active %} meganav__link--active{% endif %}"
            id="DrawerLabel-{{ grandchild_list_handle }}"
            {% if childlink.active %} aria-current="page"{% endif %}
            >
           {%- render 'processMenuTitle' , itemName: childlink.title -%}
           {%- render 'processMenuLabel' , itemName: childlink.title -%}
         </a>
-        <button data-toggle="collapse" data-target="#DrawerLinklist-{{ grandchild_list_handle }}" type="button" aria-controls="DrawerLinklist-{{ grandchild_list_handle }}" class="text-link drawer__nav-toggle-btn drawer__nav-toggle-btn--small collapsed" aria-label="{{ link.title }} {{ 'general.drawers.menu' | t }}" aria-expanded="false">
-          <span class="drawer__nav-toggle--open">
-            {%- render 'icon-plus' -%}
-          </span>
-          <span class="drawer__nav-toggle--close">
-            {%- render 'icon-minus' -%}
-          </span>
-        </button>
-      </div>
-
-      <div class="collapse meganav meganav--drawer" id="DrawerLinklist-{{ grandchild_list_handle }}" aria-labelledby="DrawerLabel-{{ grandchild_list_handle }}" role="navigation">
-        <ul class="meganav__nav meganav__nav--third-level">
-          {%- for grandchildlink in childlink.links -%}
-          <li>
-            <a href="{{ grandchildlink.url }}" class="meganav__link{% if grandchildlink.active %} meganav__link--active{% endif %}"{% if grandchildlink.active %} aria-current="page"{% endif %}>
-              {%- render 'processMenuTitle' , itemName: grandchildlink.title -%}
-              {%- render 'processMenuLabel' , itemName: grandchildlink.title -%}
-            </a>
-          </li>
-          {%- endfor -%}
-        </ul>
+        <details class="drawer__nav-disclosure">
+          <summary class="text-link drawer__nav-toggle-btn drawer__nav-toggle-btn--small" aria-label="{{ link.title }} {{ 'general.drawers.menu' | t }}">
+            <span class="drawer__nav-toggle--open">
+              {%- render 'icon-plus' -%}
+            </span>
+            <span class="drawer__nav-toggle--close">
+              {%- render 'icon-minus' -%}
+            </span>
+          </summary>
+          <div class="meganav meganav--drawer" aria-labelledby="DrawerLabel-{{ grandchild_list_handle }}" role="navigation">
+            <ul class="meganav__nav meganav__nav--third-level">
+              {%- for grandchildlink in childlink.links -%}
+              <li>
+                <a href="{{ grandchildlink.url }}" class="meganav__link{% if grandchildlink.active %} meganav__link--active{% endif %}"{% if grandchildlink.active %} aria-current="page"{% endif %}>
+                  {%- render 'processMenuTitle' , itemName: grandchildlink.title -%}
+                  {%- render 'processMenuLabel' , itemName: grandchildlink.title -%}
+                </a>
+              </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        </details>
       </div>
       {%- else -%}
-      <a href="{{ childlink.url }}" 
+      <a href="{{ childlink.url }}"
          class="drawer__nav-link meganav__link{% if childlink.active %} meganav__link--active{% endif %}"
          {% if childlink.active %} aria-current="page"{% endif %}
          >

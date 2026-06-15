@@ -1,3 +1,50 @@
+<style>
+  /* Native <details> migration for drawer sub-menus (was Bootstrap collapse).
+     Design mapped 1:1 from header-oncss.liquid (.drawer__nav-toggle--open/--close,
+     .meganav--drawer) and header-css.liquid (.collapse:not(.show)). */
+
+  /* Let the <details> dissolve so its <summary> (toggle) and the submenu <div>
+     lay out exactly like the old <button> + sibling .collapse div did. */
+  .drawer__nav-disclosure {
+    display: contents;
+  }
+
+  /* Summary = the old toggle button. Remove the native disclosure marker and
+     keep it interactive/right-aligned like .drawer__nav-toggle-btn (margin-left:auto). */
+  .drawer__nav-disclosure > summary.drawer__nav-toggle-btn {
+    cursor: pointer;
+    list-style: none;
+  }
+  .drawer__nav-disclosure > summary.drawer__nav-toggle-btn::-webkit-details-marker {
+    display: none;
+  }
+  .drawer__nav-disclosure > summary.drawer__nav-toggle-btn::marker {
+    content: "";
+  }
+
+  /* Submenu wrapper breaks onto its own full-width line below the link row,
+     replicating the original sibling .collapse.meganav--drawer placement. */
+  .drawer__nav-disclosure > .meganav--drawer {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+
+  /* +/- icon visibility, mapped from the old .collapsed state of the button:
+       closed (was .collapsed)        -> Plus  (--open)  visible, Minus (--close) hidden
+       open   (was no .collapsed)     -> Minus (--close) visible, Plus  (--open)  hidden */
+  .drawer__nav-disclosure:not([open]) > summary .drawer__nav-toggle--open {
+    display: block;
+  }
+  .drawer__nav-disclosure:not([open]) > summary .drawer__nav-toggle--close {
+    display: none;
+  }
+  .drawer__nav-disclosure[open] > summary .drawer__nav-toggle--open {
+    display: none;
+  }
+  .drawer__nav-disclosure[open] > summary .drawer__nav-toggle--close {
+    display: block;
+  }
+</style>
 <div id="NavDrawer" class="drawer drawer--left">
   <div class="drawer__inner">
     <div class="modal-header js-drawer-close py-4">
@@ -13,19 +60,21 @@
                 {%- render 'processMenuTitle' , itemName: link.title -%}
                 {%- render 'processMenuLabel' , itemName: link.title -%}
               </a>
-              <button data-toggle="collapse" data-target="#DrawerLinklist-{{ child_list_handle }}" for="DrawerLinklist-{{ child_list_handle }}" type="button" aria-controls="DrawerLinklist-{{ child_list_handle }}" class="text-link drawer__nav-toggle-btn collapsed" aria-label="{%- render 'processMenuTitle' , itemName: link.title -%}" aria-expanded="true">
-                <span class="drawer__nav-toggle--open">
-                  {%- render 'icon-plus' -%}
-                </span>
-                <span class="drawer__nav-toggle--close">
-                  {%- render 'icon-minus' -%}
-                </span>
-              </button>
-            </div>
-            <div class="collapse meganav meganav--drawer" id="DrawerLinklist-{{ child_list_handle }}" aria-labelledby="DrawerLabel-{{ child_list_handle }}" role="navigation">
-              <ul class="meganav__nav">
-                {%- render 'drawer-nav', link: link -%}
-              </ul>
+              <details class="drawer__nav-disclosure">
+                <summary class="text-link drawer__nav-toggle-btn" aria-label="{%- render 'processMenuTitle' , itemName: link.title -%}">
+                  <span class="drawer__nav-toggle--open">
+                    {%- render 'icon-plus' -%}
+                  </span>
+                  <span class="drawer__nav-toggle--close">
+                    {%- render 'icon-minus' -%}
+                  </span>
+                </summary>
+                <div class="meganav meganav--drawer" id="DrawerLinklist-{{ child_list_handle }}" aria-labelledby="DrawerLabel-{{ child_list_handle }}" role="navigation">
+                  <ul class="meganav__nav">
+                    {%- render 'drawer-nav', link: link -%}
+                  </ul>
+                </div>
+              </details>
             </div>
           </li>
         {%- else -%}
