@@ -3881,9 +3881,10 @@ theme.init = function () {
   window.addEventListener("load", function () {
     AOS.refresh();
   });
-  document
-    .querySelectorAll("img")
-    .forEach((img) => img.addEventListener("load", () => AOS.refresh()));
+  // Perf: per-<img> AOS.refresh()-Listener ENTFERNT. Rief bei JEDEM Bild-Load
+  // AOS.refresh() (Neuberechnung ALLER ~1259 AOS-Elemente) -> Layout-Thrashing
+  // auf Mobil. Bilder haben feste width/height (kein Reflow beim Laden), daher
+  // unnoetig. ALLE AOS-Scroll-Animationen bleiben voll erhalten.
 
   // Sections
   var sections = new theme.Sections();
