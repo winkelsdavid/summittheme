@@ -29,7 +29,7 @@
       }
     },
     "cb7ea1a7-8d89-4948-9f3b-6c1dfeeb4fed": {
-      "type": "image-content",
+      "type": "image-with-text",
       "blocks": {
         "template--21738344218897__cb7ea1a7-8d89-4948-9f3b-6c1dfeeb4fed-image_block-1": {
           "type": "image_block",
@@ -73,7 +73,7 @@
       }
     },
     "de61d62f-2c10-440b-bf01-23e65dfdff7b": {
-      "type": "image-content",
+      "type": "image-with-text",
       "blocks": {
         "7cbe75bb-ab0e-4ab2-86bf-2e72132b27f2": {
           "type": "text_block",

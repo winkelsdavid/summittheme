@@ -29,7 +29,7 @@
       }
     },
     "16634028377c76965e": {
-      "type": "line",
+      "type": "divider",
       "disabled": true,
       "settings": {
         "animation": "fade",

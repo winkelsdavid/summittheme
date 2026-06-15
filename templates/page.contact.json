@@ -14,7 +14,7 @@
       "settings": {}
     },
     "e7285e43-2bb7-46e5-a5e4-538568d8723e": {
-      "type": "image-content",
+      "type": "image-with-text",
       "blocks": {
         "template--16736981025086__e7285e43-2bb7-46e5-a5e4-538568d8723e-1666759876b5fa9979-0": {
           "type": "image_block",
@@ -58,7 +58,7 @@
       }
     },
     "fb754d90-39ba-47df-8255-8b3096ae9437": {
-      "type": "service",
+      "type": "icon-list",
       "blocks": {
         "template--16736981025086__fb754d90-39ba-47df-8255-8b3096ae9437-16667679904d65e643-0": {
           "type": "service",
@@ -130,7 +130,7 @@
       }
     },
     "c025329d-7132-4163-b678-b778c06ac8f9": {
-      "type": "line",
+      "type": "divider",
       "settings": {
         "animation": "fade",
         "background_section": "#ffffff",

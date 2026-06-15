@@ -10,7 +10,7 @@
 {
   "sections": {
     "main": {
-      "type": "page-brands",
+      "type": "brands",
       "blocks": {
         "1562225793110": {
           "type": "character",

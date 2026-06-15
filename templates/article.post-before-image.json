@@ -10,7 +10,7 @@
 {
   "sections": {
     "a84dd781-3d1c-41cb-9d83-ad1d311d7202": {
-      "type": "line",
+      "type": "divider",
       "settings": {
         "animation": "",
         "background_section": "#ffffff",
@@ -40,7 +40,7 @@
       }
     },
     "41de82a4-89b0-45fd-83c7-8ac696436d08": {
-      "type": "line",
+      "type": "divider",
       "settings": {
         "animation": "",
         "background_section": "#ffffff",

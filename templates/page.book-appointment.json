@@ -81,7 +81,7 @@
       }
     },
     "92a60825-bfef-4c9c-ab38-16a23650ee97": {
-      "type": "line",
+      "type": "divider",
       "settings": {
         "animation": "",
         "background_section": "#ffffff",

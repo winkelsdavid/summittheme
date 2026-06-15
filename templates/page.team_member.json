@@ -10,7 +10,7 @@
 {
   "sections": {
     "main": {
-      "type": "s_team_member",
+      "type": "team-member",
       "blocks": {
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2": {
           "type": "member",

@@ -14,7 +14,7 @@
       "settings": {}
     },
     "49b0a5ba-1ebd-493b-ae50-1ec847159046": {
-      "type": "image-content",
+      "type": "image-with-text",
       "blocks": {
         "template--21250050228504__49b0a5ba-1ebd-493b-ae50-1ec847159046-text_block-1": {
           "type": "text_block",
@@ -92,7 +92,7 @@
       }
     },
     "3a37a7d4-3633-4dd9-93c8-8609cd17d9c4": {
-      "type": "image-content",
+      "type": "image-with-text",
       "blocks": {
         "18d2b540-6aa2-4967-b7fd-c7eefd2bd1e5": {
           "type": "image_block",
@@ -136,7 +136,7 @@
       }
     },
     "brand_carousel_H8ACgC": {
-      "type": "brand-carousel",
+      "type": "logo-carousel",
       "blocks": {
         "logo_HQKik3": {
           "type": "logo",
@@ -193,7 +193,7 @@
       }
     },
     "brand_carousel_rdR6Xg": {
-      "type": "brand-carousel",
+      "type": "logo-carousel",
       "blocks": {
         "logo_KKYcPj": {
           "type": "logo",
@@ -285,7 +285,7 @@
       }
     },
     "d72bcc8c-88fe-4415-96f0-06511b070083": {
-      "type": "image-content-6",
+      "type": "image-video-with-text",
       "blocks": {
         "template--16716887458110__d72bcc8c-88fe-4415-96f0-06511b070083-16666725974cf35e4d-0": {
           "type": "image_block",
@@ -335,7 +335,7 @@
       }
     },
     "24a28133-2e01-4361-8b00-ad164f72336f": {
-      "type": "image-content",
+      "type": "image-with-text",
       "blocks": {
         "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-1": {
           "type": "text_block",
@@ -441,7 +441,7 @@
       }
     },
     "abb14abe-2a33-4a6b-aaa1-d36d5422d78d": {
-      "type": "s_team_member",
+      "type": "team-member",
       "blocks": {
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-0": {
           "type": "member",
@@ -537,7 +537,7 @@
       }
     },
     "895c09e5-5c6d-4c4d-8492-727381e40aa0": {
-      "type": "service",
+      "type": "icon-list",
       "blocks": {
         "16485444103c52f5e9-0": {
           "type": "service",

@@ -30,7 +30,7 @@
       }
     },
     "41de82a4-89b0-45fd-83c7-8ac696436d08": {
-      "type": "line",
+      "type": "divider",
       "settings": {
         "animation": "",
         "background_section": "#ffffff",
