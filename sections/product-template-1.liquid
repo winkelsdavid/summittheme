@@ -465,7 +465,7 @@ display:none;
                   class="product-block product__text{% if block.settings.text_style == 'uppercase' %} text-uppercase {% elsif block.settings.text_style == 'subtitle' %} subtop{% endif %}"
                   {{ block.shopify_attributes }}
                 >
-                  {{- block.settings.text -}}
+                  {{- block.settings.content -}}
                 </p>
               {%- when 'title' -%}
                 <style>
@@ -518,7 +518,7 @@ display:none;
                 >
                   <div class="trustpilot-block-rating-text">
                     {% comment %}
-                    {% assign sanitized_text = block.settings.text | strip_html | downcase | replace: 'out of', '/' %}
+                    {% assign sanitized_text = block.settings.content | strip_html | downcase | replace: 'out of', '/' %}
                     {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
                     {% assign rating_string = pre_slash | split: ' ' | last | strip %}
                     {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
@@ -546,7 +546,7 @@ display:none;
                         </defs>
                       <g fill="none"><g fill="url(#grad-1-{{ ii }}-{{ section.id }})"><path d="M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96z"></path></g><path d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z" fill="url(#grad-stars-{{ ii }}-{{ section.id }})"></path></g>
                     </svg>
-                    <span class="rating-excellent" style="--color:{{ block.settings.text_color }}">{{ block.settings.text }}</span>
+                    <span class="rating-excellent" style="--color:{{ block.settings.text_color }}">{{ block.settings.content }}</span>
                     {% if block.settings.show_truspilot  %}
                     
                     <div class="trustpilot_container">
@@ -597,7 +597,7 @@ display:none;
                   <div class="trustpilot-block-rating-text-2">
                     <div class="stars">
                       {% comment %}
-                      {% assign sanitized_text = block.settings.text | strip_html | downcase | replace: 'out of', '/' %}
+                      {% assign sanitized_text = block.settings.content | strip_html | downcase | replace: 'out of', '/' %}
                       {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
                       {% assign rating_string = pre_slash | split: ' ' | last | strip %}
                       {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
@@ -624,7 +624,7 @@ display:none;
                         </svg>
                       {% endfor %}
                     </div>
-                    <span class="rating-excellent-2" style="--color:{{ block.settings.text_color }}">{{ block.settings.text }}</span>
+                    <span class="rating-excellent-2" style="--color:{{ block.settings.text_color }}">{{ block.settings.content }}</span>
                   </div>
                 </div>
               {% when 'review_images' %}
@@ -645,7 +645,7 @@ display:none;
                         {% if block.settings.add_stars %}
                         <div class="stars" style="color:{{ block.settings.stars_color }};--height:{{ block.settings.stars_height }}px">
                         {% comment %}
-                        {% assign sanitized_text = block.settings.text | strip_html | downcase | replace: 'out of', '/' %}
+                        {% assign sanitized_text = block.settings.content | strip_html | downcase | replace: 'out of', '/' %}
                         {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
                         {% assign rating_string = pre_slash | split: ' ' | last | strip %}
                         {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
@@ -673,7 +673,7 @@ display:none;
                           {% endfor %}
                         </div>
                       {% endif %}
-                        <span class="review-excellent-2" style="color:{{ block.settings.text_color }};--size:{{ block.settings.stars_text_size }}px;--size-mobile:{{ block.settings.stars_text_size_mobile }}px">{{ block.settings.text }}</span>
+                        <span class="review-excellent-2" style="color:{{ block.settings.text_color }};--size:{{ block.settings.stars_text_size }}px;--size-mobile:{{ block.settings.stars_text_size_mobile }}px">{{ block.settings.content }}</span>
                         </div>
                         <div class="review_images_content" style="color:{{ block.settings.text_color }};--size:{{ block.settings.content_size }}px;--size-mobile:{{ block.settings.content_size_mobile }}px">
                           {{ block.settings.content }}
@@ -930,7 +930,7 @@ display:none;
                           </svg>
                         </div>
                       </div>
-                      <p class="customer-review-text">{{ block.settings.text }}</p>
+                      <p class="customer-review-text">{{ block.settings.content }}</p>
                     </div>
                   </div>
                 </div>               
@@ -959,7 +959,7 @@ display:none;
                       {% render 'list-svg', block:block,  icon: block.settings.icon %}
                     </div>
                     <div class="c_box_text">
-                      {{ block.settings.text }}
+                      {{ block.settings.content }}
                     </div>
                 </div>
               {%- when 'promo' -%}
@@ -1692,8 +1692,8 @@ display:none;
                 </div>
               {%- when 'block_banner' -%}
                 {%- liquid
-                  assign banner_text = block.settings.banner_text
-                  assign banner_des = block.settings.banner_des
+                  assign banner_text = block.settings.banner_caption
+                  assign banner_des = block.settings.banner_description
                   assign banner_icon = block.settings.banner_icon
                   assign banner_icon_svg = block.settings.banner_icon_svg
                   assign banner_txt_color = block.settings.banner_txt_color
@@ -2702,7 +2702,7 @@ display:none;
                   {%- if block.settings.enable_tabvertical -%}
                     {%- render 'product-information-vertical',
                       product: product,
-                      gtab_des: block.settings.gtab_des,
+                      gtab_des: block.settings.gtab_description,
                       stab_title1: block.settings.stab_title1,
                       stab_content1: block.settings.stab_content1,
                       stab_title2: block.settings.stab_title2,
@@ -2718,7 +2718,7 @@ display:none;
                   {%- else -%}
                     {%- render 'product-information',
                       product: product,
-                      gtab_des: block.settings.gtab_des,
+                      gtab_des: block.settings.gtab_description,
                       stab_title1: block.settings.stab_title1,
                       stab_content1: block.settings.stab_content1,
                       stab_title2: block.settings.stab_title2,
@@ -3840,7 +3840,7 @@ function formatPrice(value) {
       "settings": [
         {
           "type": "text",
-          "id": "text",
+          "id": "content",
           "default": "Text block",
           "label": "Text"
         },
@@ -3969,7 +3969,7 @@ function formatPrice(value) {
         },
         {
           "type": "richtext",
-          "id": "text",
+          "id": "content",
           "default": "<p>Icon and text block</p>",
           "label": "Text"
         }
@@ -4007,7 +4007,7 @@ function formatPrice(value) {
         },
         {
           "type": "richtext",
-          "id": "text",
+          "id": "content",
           "label": "content"
         },
           {
@@ -4107,7 +4107,7 @@ function formatPrice(value) {
         },
         {
           "type": "richtext",
-          "id": "text",
+          "id": "content",
           "label": "content"
         },
         {
@@ -4206,7 +4206,7 @@ function formatPrice(value) {
         },
         {
           "type": "richtext",
-          "id": "text",
+          "id": "content",
           "label": "Reviews text"
         },
         {
@@ -4310,7 +4310,7 @@ function formatPrice(value) {
         },
         {
           "type": "textarea",
-          "id": "text",
+          "id": "content",
           "label": "content"
         },
         {
@@ -7097,7 +7097,7 @@ function formatPrice(value) {
         },
         {
           "type": "text",
-          "id": "gtab_des",
+          "id": "gtab_description",
           "label": "Title (Description tab)",
           "default": "Description"
         },
@@ -7247,13 +7247,13 @@ function formatPrice(value) {
       "settings": [
         {
           "type": "text",
-          "id": "banner_text",
+          "id": "banner_caption",
           "label": "Title",
           "default": "Rewards"
         },
         {
           "type": "text",
-          "id": "banner_des",
+          "id": "banner_description",
           "label": "Description",
           "default": "Join to earn 84 points from this item"
         },
