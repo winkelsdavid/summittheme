@@ -116,7 +116,7 @@
                                   height="{{ block.settings.image.height }}">
                               {% endif %}  
                               <div class="py-1 my-1 {{ section.settings.size_text }}">
-                              {{ block.settings.code }} 
+                              {{ block.settings.content }} 
                               {% if block.settings.button_text != blank %} 
                               <a class="d-inline-block px-2" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a> 
                               {% endif %}
@@ -145,7 +145,7 @@
                   width="{{ block.settings.image.width }}"
                   height="{{ block.settings.image.height }}">
               {% endif %}  
-              {{ block.settings.code }} 
+              {{ block.settings.content }} 
                 {% if block.settings.button_text != blank %} 
                 <a class="d-inline-block px-2 link" href="{{ block.settings.button_link }}">
                   {{ block.settings.button_text }}</a> 
@@ -448,7 +448,7 @@
         },
         {
           "type": "textarea",
-          "id": "code",
+          "id": "content",
           "label": "HTML and Text",
           "default": "Use HTML to format your text so it can be easily read."
         },

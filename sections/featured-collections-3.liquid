@@ -144,7 +144,7 @@
                       endcapture 
                       assign collectionTitle = featured_collection.title | default: 'Collection title' 
                       assign enable_customize = block.settings.enable_customize
-                      assign text_customize = block.settings.text_customize
+                      assign text_customize = block.settings.custom_link_label
                       assign url_customize = block.settings.url_customize
                     -%}
                     {%- capture url -%}
@@ -824,7 +824,7 @@
         },
         {
           "type": "text",
-          "id": "text_customize",
+          "id": "custom_link_label",
           "label": "Text customize",
           "default": "Shop now"
         },

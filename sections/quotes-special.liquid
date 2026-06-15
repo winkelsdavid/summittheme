@@ -142,9 +142,9 @@
                           {%- endif -%}
                           <div class="{{ section.settings.size_text }}">{{ block.settings.quote }}</div>
                         </div>
-                        <div class=" font-family-2 mt-1">{{ block.settings.author }}</div>
-                        {%- if block.settings.info != blank -%}
-                        <i class="small">{{ block.settings.info }}</i>
+                        <div class=" font-family-2 mt-1">{{ block.settings.author_caption }}</div>
+                        {%- if block.settings.author_info_caption != blank -%}
+                        <i class="small">{{ block.settings.author_info_caption }}</i>
                     {%- endif -%}
                   </div>
                 </div>
@@ -632,13 +632,13 @@
         },
         {
           "type": "text",
-          "id": "author",
+          "id": "author_caption",
           "label": "Author",
           "default": "Author's name"
         },
         {
           "type": "text",
-          "id": "info",
+          "id": "author_info_caption",
           "label": "Author's info"
         },
         {

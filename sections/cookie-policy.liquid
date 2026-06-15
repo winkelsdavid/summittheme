@@ -37,17 +37,17 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-12  {% if cookie_style == 'style-2' %} mb-4 {%- else -%} col-sm-8 col-md-9 col-lg-10 {% endif %}">
-            {{ section.settings.cookie_message }}
-            {%- if section.settings.cookie_url_text != blank -%}
-            <a class="link" title="{{ section.settings.cookie_url_text }}"  href="{{ section.settings.cookie_url }}" target="_blank">{{ section.settings.cookie_url_text }}</a>
+            {{ section.settings.cookie_content }}
+            {%- if section.settings.cookie_url_label != blank -%}
+            <a class="link" title="{{ section.settings.cookie_url_label }}"  href="{{ section.settings.cookie_url }}" target="_blank">{{ section.settings.cookie_url_label }}</a>
             {%- endif -%}
           </div>
           <div class="col">
-            {%- if section.settings.cookie_ok != blank -%}
-            <button class="btn js-btn-ok {{ section.settings.style_btn }} mr-3">{{ section.settings.cookie_ok }}</button>
+            {%- if section.settings.accept_button != blank -%}
+            <button class="btn js-btn-ok {{ section.settings.style_btn }} mr-3">{{ section.settings.accept_button }}</button>
             {%- endif -%}
-            {%- if section.settings.decline != blank -%}
-            <button class="btn js-btn-decline {{ section.settings.decline_style_btn }}">{{ section.settings.decline }}</button>
+            {%- if section.settings.decline_button != blank -%}
+            <button class="btn js-btn-decline {{ section.settings.decline_style_btn }}">{{ section.settings.decline_button }}</button>
           {%- endif -%}
           </div>
         </div>
@@ -96,7 +96,7 @@
     },
     {
       "type": "textarea",
-      "id": "cookie_message",
+      "id": "cookie_content",
       "default": "This website uses cookies to ensure you get the best experience on our website.",
       "label": "Message"
     },
@@ -107,13 +107,13 @@
     },
     {
       "type": "text",
-      "id": "cookie_url_text",
+      "id": "cookie_url_label",
       "default": "Learn More",
       "label": "Info link text"
     },
     {
       "type": "text",
-      "id": "cookie_ok",
+      "id": "accept_button",
       "default": "Got it!",
       "label": "Accept button text"
     },
@@ -151,7 +151,7 @@
         },
         {
       "type": "text",
-      "id": "decline",
+      "id": "decline_button",
       "default": "Decline",
       "label": "Decline Button"
     },

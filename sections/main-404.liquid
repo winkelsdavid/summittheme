@@ -8,16 +8,16 @@
             height="{{ section.settings.image_404.height }}"
              data-src="{{ section.settings.image_404 | image_url: width: 1920 }}" alt="404 Image" />
           {%- endif -%}
-          {%- if section.settings.found_html != blank -%}
-          <h4 class="page-404--title h3 mb-2">{{ section.settings.found_html }}</h4>
+          {%- if section.settings.heading_404 != blank -%}
+          <h4 class="page-404--title h3 mb-2">{{ section.settings.heading_404 }}</h4>
           {%- endif -%}
-          {%- if section.settings.sub_404 != blank -%}
-          <p class="page-404--sub">{{ section.settings.sub_404 }}</p>
+          {%- if section.settings.description_404 != blank -%}
+          <p class="page-404--sub">{{ section.settings.description_404 }}</p>
           {%- endif -%}
           <div class="text-center btn_404 mt-4">
-            {%- if section.settings.found_btnleft_text != blank -%}
+            {%- if section.settings.button_label != blank -%}
             <a href="{{ section.settings.found_btnleft_link }}" class="btn btn-theme gradient-theme btn-404">
-              {{ section.settings.found_btnleft_text }}
+              {{ section.settings.button_label }}
             </a>
             {%- endif -%}
           </div>                      	
@@ -42,19 +42,19 @@
     },
     {
       "type": "text",
-      "id": "found_html",
+      "id": "heading_404",
       "label": "Title 404",
       "default": "404 Error"
     },
     {
       "type": "textarea",
-      "id": "sub_404",
+      "id": "description_404",
       "label": "Description",
       "default": "Oops, This Page Could Not Be Found!"
     },
     {
       "type": "text",
-      "id": "found_btnleft_text",
+      "id": "button_label",
       "label": "Button Text"
     },
     {

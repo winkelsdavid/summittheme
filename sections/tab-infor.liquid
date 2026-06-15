@@ -41,7 +41,7 @@
                                 <div class="tab-info__number">{{ forloop.index | prepend: '00' | slice: -2, 2 | append: '.' }}</div>
                                 <div>
                                     <h5 class="{{ block.settings.size_text }}">{{ block.settings.title_tab }}</h5>
-                                    <div class="tab-info__content">{{ block.settings.des_tab }}</div>
+                                    <div class="tab-info__content">{{ block.settings.tab_description }}</div>
                                 </div>
                             </div>
                     {%- endfor -%}
@@ -412,7 +412,7 @@
         },
         {
           "type": "richtext",
-          "id": "des_tab",
+          "id": "tab_description",
           "label": "Description Tab",
           "default": "<p>Description Tab</p>"
         },

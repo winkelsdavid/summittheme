@@ -376,8 +376,8 @@ content:unset!important;
     id="bns-app-{{ section_id }}"
     data-min="{{ min_items }}"
     data-max="{{ max_items }}"
-    data-dup-msg="{{ section.settings.duplicate_message }}"
-    data-limit-msg="{{ section.settings.limit_message }}"
+    data-dup-msg="{{ section.settings.duplicate_caption }}"
+    data-limit-msg="{{ section.settings.limit_caption }}"
   >
 
     <!-- ── Sidebar ── -->
@@ -386,8 +386,8 @@ content:unset!important;
 
         <!-- Header -->
         <div>
-          {% if section.settings.eyebrow != blank %}
-            <div class="subtop text-top mb-2 bns-eyebrow aos-init aos-animate" data-aos="fade-up">{{ section.settings.eyebrow }}</div>
+          {% if section.settings.eyebrow_subheading != blank %}
+            <div class="subtop text-top mb-2 bns-eyebrow aos-init aos-animate" data-aos="fade-up">{{ section.settings.eyebrow_subheading }}</div>
           {% endif %}
           {% if section.settings.heading != blank %}
             <h2 class="bns-heading">{{ section.settings.heading }}</h2>
@@ -830,13 +830,13 @@ content:unset!important;
     },
     {
       "type": "text",
-      "id": "limit_message",
+      "id": "limit_caption",
       "label": "Max-items error message",
       "default": "You can only add a maximum of 3 products in the bundle."
     },
     {
       "type": "text",
-      "id": "duplicate_message",
+      "id": "duplicate_caption",
       "label": "Duplicate-product error message",
       "default": "This product is already in the bundle."
     },
@@ -846,7 +846,7 @@ content:unset!important;
     },
     {
       "type": "text",
-      "id": "eyebrow",
+      "id": "eyebrow_subheading",
       "label": "Sub Heading",
       "default": "build your bundle"
     },

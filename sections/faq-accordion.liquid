@@ -77,9 +77,9 @@
                 <div class="row {% if section.settings.e_reverse %} flex-row-reverse {% endif %}">
           {%- endif -%}
             <div class="{% if section.settings.e_right == false %} col-md-12 {% else %}col-md-6 {% endif %} col-12" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
-                {%- if section.settings.left_html != blank -%}
+                {%- if section.settings.faq_content != blank -%}
                     <div class="mb-5 {% if section.settings.e_reverse %} pl-lg-5 {% else %} pr-lg-5 {% endif %}">
-                        {{ section.settings.left_html }}
+                        {{ section.settings.faq_content }}
                     </div>
                 {%- endif -%}
                 {%- if section.blocks.size > 0 -%}
@@ -98,7 +98,7 @@
                             </div>
                             <div id="faq-{{ block.id }}" class="pl-2 collapse {% if  forloop.first == true and section.settings.e_first_open %}show{% endif %}" aria-labelledby="headingOne" data-parent="#accordion-faqs">
                                 <div class="card-body px-0">
-                                    {{ block.settings.faq_des }}
+                                    {{ block.settings.faq_description }}
                                 </div>
                             </div>
                         </div>
@@ -504,7 +504,7 @@
     },
     {
       "type": "textarea",
-      "id": "left_html",
+      "id": "faq_content",
       "label": "Block left HTML"
     },
     {
@@ -580,7 +580,7 @@
         },
         {
           "type": "richtext",
-          "id": "faq_des",
+          "id": "faq_description",
           "label": "Faq Answer",
           "default": "<p>Answer Description</p>"
         }

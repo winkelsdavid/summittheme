@@ -150,7 +150,7 @@
                     {%-liquid
                         assign icon_image = block.settings.icon_image
                         assign block_title = block.settings.block_title
-                        assign block_des = block.settings.block_des
+                        assign block_des = block.settings.block_description
                     -%}
                         <div class="block-product-imgtxt__item flex-column c_align_{{ block.settings.alignment }}">
                             {%- if icon_image != blank -%}
@@ -438,7 +438,7 @@
         },
         {
           "type": "richtext",
-          "id": "block_des",
+          "id": "block_description",
           "label": "Description",
           "default": "<p>Made of flax, a natural material that won’t irritate sensitive skin</p>"
         },

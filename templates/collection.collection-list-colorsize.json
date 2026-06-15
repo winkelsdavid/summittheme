@@ -18,7 +18,7 @@
         "show_collection_image": true,
         "save_allproducts": true,
         "title_all": "All Products",
-        "des_all": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.<\/p>",
+        "description_all": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.<\/p>",
         "style_banner": "full",
         "heading_size": "h2",
         "img_height": "450px",

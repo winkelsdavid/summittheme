@@ -63,9 +63,9 @@
                 <h2 class="mb-3 {{ block.settings.size_text }}">{{ block.settings.title }}</h2>
               {%- endif -%}
             {%- when 'paragraph' -%}
-              {%- if block.settings.subtext != blank -%}
+              {%- if block.settings.description_body != blank -%}
                 <div class="m-0 parallax-banner__sub rte mb-3 txt-body">
-                  {{ block.settings.subtext }}
+                  {{ block.settings.description_body }}
                 </div>
               {%- endif -%}
             {%- when 'image' -%}
@@ -473,7 +473,7 @@
       "settings": [
         {
           "type": "textarea",
-          "id": "subtext",
+          "id": "description_body",
           "label": "Html / Description",
           "default": "Protection from the"
         }

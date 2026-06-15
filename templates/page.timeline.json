@@ -101,7 +101,7 @@
             "promo_size_title": "h3",
             "space_heading": "mb-4",
             "promo_paragraph": "",
-            "promo_btn": "Shop now",
+            "promo_button": "Shop now",
             "promo_link": "shopify://collections/camping",
             "style_btn": "btn-theme btn-white",
             "promo_color": "#ffffff",

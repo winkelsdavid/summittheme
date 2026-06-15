@@ -60,8 +60,8 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
                 {%- if section.settings.f_title != blank -%}
                     <h5 class="mb-3">{{ section.settings.f_title }}</h5>
                 {%- endif -%}
-                {%- if section.settings.f_des != blank -%}
-                    <div class="text-body">{{ section.settings.f_des }}</div>
+                {%- if section.settings.first_description != blank -%}
+                    <div class="text-body">{{ section.settings.first_description }}</div>
                 {%- endif -%}
                 </div>
             </div>
@@ -81,8 +81,8 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
             assign quote = block.settings.quote
             assign rate = block.settings.rate
             assign avatar = block.settings.avatar
-            assign author = block.settings.author
-            assign info = block.settings.info
+            assign author = block.settings.author_caption
+            assign info = block.settings.author_info_caption
             assign bg_item = section.settings.bg_item
             assign size_text = section.settings.size_text
             assign aligntext = section.settings.aligntext
@@ -354,7 +354,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     },
     {
       "type": "textarea",
-      "id": "f_des",
+      "id": "first_description",
       "label": "Des First Block",
       "default": "4.98 average<br>213 reviews"
     },
@@ -546,13 +546,13 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
         },
         {
           "type": "text",
-          "id": "author",
+          "id": "author_caption",
           "label": "Author",
           "default": "Author's name"
         },
         {
           "type": "text",
-          "id": "info",
+          "id": "author_info_caption",
           "label": "Author's info"
         },
         {

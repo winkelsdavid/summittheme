@@ -318,7 +318,7 @@ border-top-right-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
               {% if block.settings.image != blank %}
                 <div class="table_media">
                   {% if loop_i == highlists_position %}
-                  {% if section.settings.badge_text != blank %}
+                  {% if section.settings.badge_caption != blank %}
                     <div class="badge_c" style="background:{{ section.settings.badge_background }};color:{{ section.settings.badge_color }};border-radius:{{ section.settings.badge_round }}px;">
                       {% if section.settings.icon_style == "star" %}
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
@@ -331,7 +331,7 @@ border-top-right-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
                             <path d="M0.632812 7.2002H17.3578C17.3578 7.2002 17.0529 7.94131 16.8 8.4002C14.7994 12.0309 9 15.6002 9 15.6002C9 15.6002 3.20061 12.0309 1.2 8.4002C0.947142 7.94131 0.632812 7.2002 0.632812 7.2002Z" fill="var(--badge-icon-text-color)"></path>
                           </svg>
                       {% endif %}
-                        <span>{{ section.settings.badge_text }}</span>
+                        <span>{{ section.settings.badge_caption }}</span>
                     </div>
                   {% endif %}
                 {% endif %}
@@ -664,7 +664,7 @@ document.addEventListener('DOMContentLoaded', initializeScrollSync);
     {
         "type": "text",
         "label": "Badge text",
-        "id":"badge_text",
+        "id":"badge_caption",
         "default":"TOP SELLER"
     },
             {

@@ -70,8 +70,8 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
             assign quote = block.settings.quote
             assign rate = block.settings.rate
             assign avatar = block.settings.avatar
-            assign author = block.settings.author
-            assign info = block.settings.info
+            assign author = block.settings.author_caption
+            assign info = block.settings.author_info_caption
             assign bg_item = section.settings.bg_item
             assign size_text = section.settings.size_text
             assign aligntext = section.settings.aligntext
@@ -545,13 +545,13 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
         },
         {
           "type": "text",
-          "id": "author",
+          "id": "author_caption",
           "label": "Author",
           "default": "Author's name"
         },
         {
           "type": "text",
-          "id": "info",
+          "id": "author_info_caption",
           "label": "Author's info"
         },
         {

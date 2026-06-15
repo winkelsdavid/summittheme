@@ -70,7 +70,7 @@
         "5b0f48ed-12f4-43e7-a7fd-3e3ea948966e": {
           "type": "paragraph",
           "settings": {
-            "subtext": "Since 1983, Running Bare has been privately owned and operated by the Powell family with my mother, Corin and myself at the helm. As lifelong Sydneysiders, and women in business, it is very important that we continue to support our local community — just as we have done for almost 40 years of being in the activewear trade. All activewear fabrics are cut on site at our headquarters in sunny Sydney, Australia, while just one suburb over, garments are being crafted and sewn. Being so close to the action means we can personally check production at a moment’s notice. At Running Bare, we are on a mission to keep it local, which not only guarantees exceptionally high quality, but also boosts our local economy and gifts people from all over the world a little slice of iconic Sydney."
+            "description_body": "Since 1983, Running Bare has been privately owned and operated by the Powell family with my mother, Corin and myself at the helm. As lifelong Sydneysiders, and women in business, it is very important that we continue to support our local community — just as we have done for almost 40 years of being in the activewear trade. All activewear fabrics are cut on site at our headquarters in sunny Sydney, Australia, while just one suburb over, garments are being crafted and sewn. Being so close to the action means we can personally check production at a moment’s notice. At Running Bare, we are on a mission to keep it local, which not only guarantees exceptionally high quality, but also boosts our local economy and gifts people from all over the world a little slice of iconic Sydney."
           }
         }
       },
@@ -262,7 +262,7 @@
         "8a950665-fd5a-43a3-bf89-8ba1c9967e92": {
           "type": "paragraph",
           "settings": {
-            "subtext": "The Running Bare all-female design team is a collective of in-house designers, pattern makers & machinists who work together to create garments of the highest level. Working with stretch fabrics, we have always understood the importance of the perfect fit & flawless patterns – these are keystones of our longevity & success. Our pattern makers are the craftswomen who create the perfect Running Bare silhouettes, to compliment every woman’s shape from sizes 8 -22 in both classic and petite fits. Having perfected our pattern blocks over decades, our pattern makers expertly customise and craft our designs specific to fabric, function, size & fit. Every garment design is tested, re-tested & then tested again, to ensure we deliver the perfect Running Bare fit for which we are now famous. We want you to live in our products, so we make them to last. The ability to control every step & to focus on the detailed aspects of the manufacturing process is at the heart of everything we do at Running Bare."
+            "description_body": "The Running Bare all-female design team is a collective of in-house designers, pattern makers & machinists who work together to create garments of the highest level. Working with stretch fabrics, we have always understood the importance of the perfect fit & flawless patterns – these are keystones of our longevity & success. Our pattern makers are the craftswomen who create the perfect Running Bare silhouettes, to compliment every woman’s shape from sizes 8 -22 in both classic and petite fits. Having perfected our pattern blocks over decades, our pattern makers expertly customise and craft our designs specific to fabric, function, size & fit. Every garment design is tested, re-tested & then tested again, to ensure we deliver the perfect Running Bare fit for which we are now famous. We want you to live in our products, so we make them to last. The ability to control every step & to focus on the detailed aspects of the manufacturing process is at the heart of everything we do at Running Bare."
           }
         }
       },
@@ -299,7 +299,7 @@
             "enable_video": false,
             "overlay_color": "#000000",
             "overlay_opacity": 30,
-            "text_circle": "New Fashion style store",
+            "circle_caption": "New Fashion style store",
             "video_url": "https://www.youtube.com/watch?v=Yghmzsr3S14&ab_channel=Kandra"
           }
         },
@@ -384,8 +384,8 @@
           "type": "quote",
           "settings": {
             "title": "Perfect !",
-            "author": "John Alvy",
-            "info": "Engineer",
+            "author_caption": "John Alvy",
+            "author_info_caption": "Engineer",
             "rate": 5,
             "quote": "These are comfortable and they look great. I love that the sole is not super thick and oversized like other shoes. Much more subtle understated..."
           }
@@ -394,8 +394,8 @@
           "type": "quote",
           "settings": {
             "title": "Awesome !",
-            "author": "Jacquelyn Rizzo",
-            "info": "Producer",
+            "author_caption": "Jacquelyn Rizzo",
+            "author_info_caption": "Producer",
             "rate": 5,
             "quote": "I love this shirt. It feels like a soft sweater but lightweight like a shirt. I wore it to work today. It was 85 and I was fine running around."
           }
@@ -404,8 +404,8 @@
           "type": "quote",
           "settings": {
             "title": "Amazing !",
-            "author": "Hailee Parsons",
-            "info": "Designer",
+            "author_caption": "Hailee Parsons",
+            "author_info_caption": "Designer",
             "rate": 5,
             "quote": "Just right for fall and winter. Quality is there. Order usual size unless you want over sized. Absolutely beautiful and looks amazingly flattering..."
           }

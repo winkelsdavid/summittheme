@@ -19,7 +19,7 @@
         "save_allproducts": true,
         "img_bannercollection": "shopify:\/\/shop_images\/KDL_4416.webp",
         "title_all": "All Products",
-        "des_all": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.<\/p>",
+        "description_all": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.<\/p>",
         "style_banner": "full",
         "heading_size": "h2",
         "img_height": "450px",

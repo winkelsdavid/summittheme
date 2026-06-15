@@ -45,12 +45,12 @@
           </svg>
           <div class="time-ago small txt-body-70"></div>
         </div>
-        {% if section.settings.verify != blank %}
+        {% if section.settings.verified_label != blank %}
         <div class="d-flex gap-1 align-items-center">
           <svg class="svg-verified" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19.5 6L9 18L4.5 13.5" stroke="#108043" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span class="small txt-verified"> {{ section.settings.verify }} </span>
+          <span class="small txt-verified"> {{ section.settings.verified_label }} </span>
         </div>
         {% endif %}
       </div>
@@ -104,7 +104,7 @@
     },
     {
           "type": "text",
-          "id": "verify",
+          "id": "verified_label",
           "label": "Verify",
           "default": "Verified"
         }

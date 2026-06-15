@@ -248,8 +248,8 @@ margin-top:50px;
 
       {%- comment -%} ── BEFORE CARD ── {%- endcomment -%}
       <div class="bas-card bas-before-card" data-bas-card>
-        {% if section.settings.before_badge != blank %}
-          <span class="bas-badge">{{ section.settings.before_badge }}</span>
+        {% if section.settings.before_badge_caption != blank %}
+          <span class="bas-badge">{{ section.settings.before_badge_caption }}</span>
         {% endif %}
 
         <div class="bas-circle-wrap"
@@ -280,8 +280,8 @@ margin-top:50px;
 
       {%- comment -%} ── AFTER CARD ── {%- endcomment -%}
       <div class="bas-card bas-after-card" data-bas-card>
-        {% if section.settings.after_badge != blank %}
-          <span class="bas-badge">{{ section.settings.after_badge }}</span>
+        {% if section.settings.after_badge_caption != blank %}
+          <span class="bas-badge">{{ section.settings.after_badge_caption }}</span>
         {% endif %}
 
         <div class="bas-circle-wrap"
@@ -584,7 +584,7 @@ margin-top:50px;
     },
     {
       "type": "text",
-      "id": "before_badge",
+      "id": "before_badge_caption",
       "label": "Badge text",
       "default": "Before"
     },
@@ -651,7 +651,7 @@ margin-top:50px;
     },
     {
       "type": "text",
-      "id": "after_badge",
+      "id": "after_badge_caption",
       "label": "Badge text",
       "default": "After"
     },

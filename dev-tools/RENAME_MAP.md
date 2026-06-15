@@ -75,7 +75,8 @@ Strategie), jede Section zieht ihre Konsumenten mit (Liquid-Refs, `settings_data
   Dry-Run-Kollisionscheck vorab (0 harte Kollisionen), jede Datei vor Schreiben validiert,
   0 alte IDs/Refs/Keys übrig, 0 invalide Schemas. **Bonus: `align_heading` war via Hyphen-
   Dot ein Latent-Bug (Subtraktion) → Ausrichtung greift jetzt wieder → visuell prüfen.**
-- [ ] T3 — per-Section Block-Types + IDs
+- [~] **T3 — in Arbeit.** **T3a ✅** (Labels: „Full Width"→„Section Width" 57×, „HTML / Description"→„Description" 38×, structure-aware). **T3b ✅** (44 kryptische Content-IDs → keyword-tragende Namen → `pool` statt AI-Pass; 37 Sections + 1 Snippet + 38 JSON, Saved-Werte migriert; Dry-Run 0 Kollisionen, word-boundary-safe). Bewusst gelassen: `text`/`name` (mehrdeutig) + Inzidental-Felder (Reviewer-Namen/Daten/Badges/Tabellen-Zellen) — keine Prime-Generierungs-Targets. **T3c offen** (Block-Types).
+  - *Nebenbefund:* `templates/page.json` hat einen **vorbestehenden** strict-JSON-Fehler (Trailing-Comma-Klasse, wie T0 — Shopify ok, `parse-theme` nicht). Separater Mini-Fix nötig (eigener „T0-für-Templates"-Sweep).
 - [ ] T4 — Slug-Renames + Reconcile
 - [ ] T5 — Resource-Typing (separat/später)
 

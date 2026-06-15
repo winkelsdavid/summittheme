@@ -343,7 +343,7 @@ color:var(--sticky-cart-cl_2);
                     </svg>
                   </span>
               </div>
-              <span class="sticky-add-to-cart__rating-text">{% if section.settings.stars_text != blank %}{{ section.settings.stars_text }}{% else %}{{ 'general.sticky_cart.stars_text' | t }}{% endif %}</span>
+              <span class="sticky-add-to-cart__rating-text">{% if section.settings.stars_caption != blank %}{{ section.settings.stars_caption }}{% else %}{{ 'general.sticky_cart.stars_text' | t }}{% endif %}</span>
             </div>
         {% endif %}
       <h3 class="m-0 font-family-2">{{ product.title }} <span id="js-sticky-title">{%- unless product.has_only_default_variant -%}- {{ current_variant.title }}{%- endunless -%}</span></h3>
@@ -453,7 +453,7 @@ color:var(--sticky-cart-cl_2);
                     </svg>
                   </span>
               </div>
-              <span class="sticky-add-to-cart__rating-text">{{ section.settings.stars_text }}</span>
+              <span class="sticky-add-to-cart__rating-text">{{ section.settings.stars_caption }}</span>
             </div>
         {% endif %}
       <button id="js-sticky-close" class="hide">

@@ -37,7 +37,7 @@
         "5b0f48ed-12f4-43e7-a7fd-3e3ea948966e": {
           "type": "paragraph",
           "settings": {
-            "subtext": "Born on the banks of the Restigouche River in 2012, Astro is a Quebec brand whose mission is to promote outdoor living, sustainable fishing and conscious hunting. Through our photos, videos and design, we share our vision that inspires a growing community of adventure enthusiasts to explore, protect and better understand nature and its fragility. Our products, manufactured in an ecological and responsible way, combine comfort, style and quality to meet the needs of this community that shares our passion for the outdoor and its way of life."
+            "description_body": "Born on the banks of the Restigouche River in 2012, Astro is a Quebec brand whose mission is to promote outdoor living, sustainable fishing and conscious hunting. Through our photos, videos and design, we share our vision that inspires a growing community of adventure enthusiasts to explore, protect and better understand nature and its fragility. Our products, manufactured in an ecological and responsible way, combine comfort, style and quality to meet the needs of this community that shares our passion for the outdoor and its way of life."
           }
         }
       },
@@ -80,7 +80,7 @@
             "enable_video": false,
             "overlay_color": "#000000",
             "overlay_opacity": 30,
-            "text_circle": "New Fashion style store",
+            "circle_caption": "New Fashion style store",
             "video_url": "https://www.youtube.com/watch?v=Yghmzsr3S14&ab_channel=Kandra"
           }
         },
@@ -258,8 +258,8 @@
           "type": "quote",
           "settings": {
             "title": "Perfect !",
-            "author": "John Doe",
-            "info": "Verified Review",
+            "author_caption": "John Doe",
+            "author_info_caption": "Verified Review",
             "rate": 5,
             "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
           }
@@ -268,8 +268,8 @@
           "type": "quote",
           "settings": {
             "title": "Amazing!",
-            "author": "John Doe",
-            "info": "Verified Review",
+            "author_caption": "John Doe",
+            "author_info_caption": "Verified Review",
             "rate": 5,
             "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
           }
@@ -278,8 +278,8 @@
           "type": "quote",
           "settings": {
             "title": "Awesome !",
-            "author": "John Doe",
-            "info": "Verified Review",
+            "author_caption": "John Doe",
+            "author_info_caption": "Verified Review",
             "rate": 5,
             "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
           }
@@ -288,8 +288,8 @@
           "type": "quote",
           "settings": {
             "title": "Great!",
-            "author": "John Doe",
-            "info": "Verified Review",
+            "author_caption": "John Doe",
+            "author_info_caption": "Verified Review",
             "rate": 5,
             "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
           }

@@ -21,7 +21,7 @@ data-section-type="beforeafter">
         <div class="section-block">
             {%- render 'section-heading' -%}
             <div class="before-after-block">
-                <div id="beer-slider-{{section.id}}" class="beer-slider" data-beer-label="{%- if section.settings.text_after != blank -%}{{ section.settings.text_after }} {%- endif -%}">
+                <div id="beer-slider-{{section.id}}" class="beer-slider" data-beer-label="{%- if section.settings.after_caption != blank -%}{{ section.settings.after_caption }} {%- endif -%}">
                     {%- if section.settings.image2 != blank -%}
                         {%- capture sizes -%}
                             (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
@@ -35,7 +35,7 @@ data-section-type="beforeafter">
                         {%- else -%}
                         {{ 'image' | placeholder_svg_tag: 'placeholder-svg svg-1' }}
                     {%- endif -%}
-                <div class="beer-reveal" data-beer-label="{%- if section.settings.text_before != blank -%}{{ section.settings.text_before }}{%- endif -%}">
+                <div class="beer-reveal" data-beer-label="{%- if section.settings.before_caption != blank -%}{{ section.settings.before_caption }}{%- endif -%}">
                     {%- if section.settings.image != blank -%}
                     {%- capture sizes -%}
                         (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px,
@@ -313,13 +313,13 @@ data-section-type="beforeafter">
     },
     {
       "type": "text",
-      "id": "text_before",
+      "id": "before_caption",
       "label": "Before Text",
       "default": "Before"
     },
     {
       "type": "text",
-      "id": "text_after",
+      "id": "after_caption",
       "label": "After Text",
       "default": "After"
     },

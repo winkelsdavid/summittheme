@@ -9,7 +9,7 @@
         "show_collection_image": true,
         "save_allproducts": true,
         "title_all": "All Products",
-        "des_all": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.</p>",
+        "description_all": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.</p>",
         "style_banner": "full",
         "heading_size": "h2",
         "img_height": "450px",
@@ -31,7 +31,7 @@
             "collection": "outdoor",
             "image": "shopify://shop_images/pi1.jpg",
             "enable_customize": false,
-            "text_customize": "FLEECE &  FIBER PILE",
+            "custom_link_label": "FLEECE &  FIBER PILE",
             "url_customize": ""
           }
         },
@@ -41,7 +41,7 @@
             "collection": "drinkwear",
             "image": "shopify://shop_images/pi2.jpg",
             "enable_customize": true,
-            "text_customize": "Climbing",
+            "custom_link_label": "Climbing",
             "url_customize": ""
           }
         },
@@ -51,7 +51,7 @@
             "collection": "hunting",
             "image": "shopify://shop_images/pi3.jpg",
             "enable_customize": false,
-            "text_customize": "SWEATERS &  KNIT",
+            "custom_link_label": "SWEATERS &  KNIT",
             "url_customize": ""
           }
         },
@@ -61,7 +61,7 @@
             "collection": "camping",
             "image": "shopify://shop_images/pi4.jpg",
             "enable_customize": false,
-            "text_customize": "JACKETS",
+            "custom_link_label": "JACKETS",
             "url_customize": ""
           }
         },
@@ -71,7 +71,7 @@
             "collection": "outdoor",
             "image": "shopify://shop_images/pi5.jpg",
             "enable_customize": true,
-            "text_customize": "Cycling",
+            "custom_link_label": "Cycling",
             "url_customize": ""
           }
         },
@@ -81,7 +81,7 @@
             "collection": "mens-top",
             "image": "shopify://shop_images/pi6.jpg",
             "enable_customize": false,
-            "text_customize": "RAINWEAR",
+            "custom_link_label": "RAINWEAR",
             "url_customize": ""
           }
         },
@@ -92,7 +92,7 @@
             "collection": "boots",
             "image": "shopify://shop_images/pi7.jpg",
             "enable_customize": false,
-            "text_customize": "TROUSERS",
+            "custom_link_label": "TROUSERS",
             "url_customize": ""
           }
         },
@@ -103,7 +103,7 @@
             "collection": "knives",
             "image": "shopify://shop_images/pi8.jpg",
             "enable_customize": false,
-            "text_customize": "Shop now",
+            "custom_link_label": "Shop now",
             "url_customize": ""
           }
         }

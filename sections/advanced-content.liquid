@@ -79,8 +79,8 @@
                     {%- if block.settings.title != blank -%}
                     <h3 class="mb-3 {{ block.settings.size_text }} ">{{ block.settings.title }}</h3>
                     {%- endif -%}
-                    {%- if block.settings.code != blank -%}
-                      <div class="rte-setting">{{ block.settings.code }}</div>
+                    {%- if block.settings.content != blank -%}
+                      <div class="rte-setting">{{ block.settings.content }}</div>
                     {%- endif -%}
                     {%- if block.settings.answer_content != blank -%}
                       <div>
@@ -167,7 +167,7 @@
                             <path d="M 60, 60 m -60, 0 a 60,60 0 0,1 120,0 a 60,60 0 0,1 -120,0" id="txt-path"></path>
                             </defs>
                             <text>
-                            <textPath startOffset="0" xlink:href="#txt-path"> {{ block.settings.text_circle }}</textPath>
+                            <textPath startOffset="0" xlink:href="#txt-path"> {{ block.settings.circle_caption }}</textPath>
                             </text>
                             </svg>
                           <div class="video-section__load-player-icon">
@@ -193,9 +193,9 @@
                     data-aos="{{ section.settings.animation }}" data-aos-delay="{{ forloop.index | times: 200 }}">
                   
                     {%- if block.settings.enable_top == true -%}
-                      {%- if block.settings.code != blank -%}
+                      {%- if block.settings.content != blank -%}
                         <div class="position-relative">
-                          {{ block.settings.code }}
+                          {{ block.settings.content }}
                         </div>
                       {%- endif -%}
                     {%- endif -%}
@@ -217,9 +217,9 @@
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                   {%- endif -%}
                     {%- if block.settings.enable_top == false -%}
-                    {%- if block.settings.code != blank -%}
+                    {%- if block.settings.content != blank -%}
                       <div class="position-relative">
-                        {{ block.settings.code }}
+                        {{ block.settings.content }}
                       </div>
                     {%- endif -%}
                   {%- endif -%}
@@ -345,7 +345,7 @@
                       assign promo_heading = block.settings.promo_heading
                       assign promo_size_title = block.settings.promo_size_title
                       assign promo_paragraph = block.settings.promo_paragraph
-                      assign promo_btn = block.settings.promo_btn
+                      assign promo_btn = block.settings.promo_button
                       assign promo_link = block.settings.promo_link
                       assign promo_color = block.settings.promo_color
                       assign promo_overlay = block.settings.promo_overlay
@@ -907,7 +907,7 @@
         },
         {
           "type": "textarea",
-          "id": "code",
+          "id": "content",
           "label": "HTML"
         },
         {
@@ -1128,7 +1128,7 @@
         },
         {
           "type": "textarea",
-          "id": "code",
+          "id": "content",
           "label": "HTML"
         },
         {
@@ -1500,7 +1500,7 @@
         },
         {
           "type": "text",
-          "id": "promo_btn",
+          "id": "promo_button",
           "label": "Button "
         },
         {
@@ -1772,7 +1772,7 @@
         },
         {
           "type": "text",
-          "id": "text_circle",
+          "id": "circle_caption",
           "label": "Text Circle",
           "default": "Fashion2 style store"
         },

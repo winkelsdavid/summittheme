@@ -376,15 +376,15 @@
               <h4 class="h5 site-footer__section-title ">{{ block.settings.title | escape }}</h4>
             {%- endif -%}
               <div class="site-footer__list site-footer-block">
-                {%- if block.settings.contact_des != blank -%}
-                  <div class="footer-mid__des mb-3">{{ block.settings.contact_des }}
+                {%- if block.settings.contact_description != blank -%}
+                  <div class="footer-mid__des mb-3">{{ block.settings.contact_description }}
                 </div>
                 {%- endif -%}
                 <ul class="list-unstyled footer-mid__info">
-                  {%- if block.settings.contact_addess != blank -%}
+                  {%- if block.settings.contact_address != blank -%}
                     <li>
                       {%- render 'icon-home' -%}
-                      {{ block.settings.contact_addess }}
+                      {{ block.settings.contact_address }}
                     </li>
                   {%- endif -%}
                   {%- if block.settings.contact_phone != blank -%}
@@ -551,7 +551,7 @@
             -%}
             </div>
             {%- if section.settings.copyright -%}
-            <div class="pt-2 customCopyright">{%- if section.settings.customcopyright != blank %} {{ section.settings.customcopyright }} {% else %}&copy; {{ 'now' | date: "%Y" }}, <b class="text-capitalize">{{ shop.name | link_to: '/' }}</b>.{%- endif -%}</div>
+            <div class="pt-2 customCopyright">{%- if section.settings.copyright_content != blank %} {{ section.settings.copyright_content }} {% else %}&copy; {{ 'now' | date: "%Y" }}, <b class="text-capitalize">{{ shop.name | link_to: '/' }}</b>.{%- endif -%}</div>
             {%- endif -%}
             </div>
            
@@ -914,7 +914,7 @@
     },
     {
       "type": "richtext",
-      "id": "customcopyright",
+      "id": "copyright_content",
       "label": "Custom Copyright",
       "default": "<p>© 2021, Your Store. Powered by Shopify</p>"
     },
@@ -1227,13 +1227,13 @@
         },
         {
           "type": "textarea",
-          "id": "contact_des",
+          "id": "contact_description",
           "label": "Description",
           "default": "Have a question? Give us a call or fill out the contact form. We’d love to hear from you"
         },
         {
           "type": "text",
-          "id": "contact_addess",
+          "id": "contact_address",
           "label": "Addess",
           "default": "123 Sky Tower, West 21th Street, Suite 721, NY"
         },
