@@ -105,7 +105,7 @@
                   <div class="swiper-wrapper">
                       {%- for block in section.blocks -%}
                           {%- case block.type -%}
-                          {%- when 'slide' -%}
+                          {%- when 'Item' -%}
                           <div id="{{ block.id }}" class="swiper-slide announcement-item__in_c rte m-0 d-flex align-items-center justify-content-center"  {{ block.shopify_attributes }} >
                             {% if block.settings.image != blank %}
                                 <img class="image-content__image mr-2"
@@ -438,7 +438,7 @@
   ],
   "blocks": [
     {
-      "type": "slide",
+      "type": "Item",
       "name": "Item",
       "settings": [
         {

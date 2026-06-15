@@ -82,7 +82,7 @@
                     <label for="request-store">{{ section.settings.store_label }}</label>
                     <select id="request-store" name="contact[contact_store]" required>
                         {% for block in section.blocks %}
-                            {%- if block.type == 'budget' -%}
+                            {%- if block.type == 'store' -%}
                                 {%- if block.settings.store_location != blank -%}
                                     <option>{{ block.settings.store_location }}</option>
                                 {%- endif -%}
@@ -578,7 +578,7 @@
       ]
     },
     {
-      "type": "budget",
+      "type": "store",
       "name": "Budget",
       "settings": [
         {
@@ -605,13 +605,13 @@
           "type": "interested"
         },
         {
-          "type": "budget"
+          "type": "store"
         },
         {
-          "type": "budget"
+          "type": "store"
         },
         {
-          "type": "budget"
+          "type": "store"
         }
       ]
     }

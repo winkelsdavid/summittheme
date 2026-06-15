@@ -212,7 +212,7 @@ flex:0 0 calc(50% - 10px);
               <div class="opacity_item opacity_top"></div>
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
-                    {% if block.type == "column_1" %}
+                    {% if block.type == "first_row" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
@@ -229,7 +229,7 @@ flex:0 0 calc(50% - 10px);
               <div class="opacity_item opacity_top"></div>
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
-                    {% if block.type == "column_2" %}
+                    {% if block.type == "second_row" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
@@ -275,7 +275,7 @@ flex:0 0 calc(50% - 10px);
               <div class="opacity_item opacity_top"></div>
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
-                    {% if block.type == "column_3" %}
+                    {% if block.type == "third_row" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
@@ -292,7 +292,7 @@ flex:0 0 calc(50% - 10px);
               <div class="opacity_item opacity_top"></div>
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
-                    {% if block.type == "column_4" %}
+                    {% if block.type == "forth_row" %}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | img_url:"master" }}" alt="instagram image" loading="lazy">
@@ -738,7 +738,7 @@ document.addEventListener("DOMContentLoaded", function() {
   ],
   "blocks": [
      {
-      "type": "column_1",
+      "type": "first_row",
       "name": "First row image",
       "settings": [
         {
@@ -749,7 +749,7 @@ document.addEventListener("DOMContentLoaded", function() {
       ]
     },
     {
-      "type": "column_2",
+      "type": "second_row",
       "name": "Second row image",
       "settings": [
         {
@@ -760,7 +760,7 @@ document.addEventListener("DOMContentLoaded", function() {
       ]
     },
     {
-      "type": "column_3",
+      "type": "third_row",
       "name": "Third row image",
       "settings": [
         {
@@ -771,7 +771,7 @@ document.addEventListener("DOMContentLoaded", function() {
       ]
     },
     {
-      "type": "column_4",
+      "type": "forth_row",
       "name": "Forth row image",
       "settings": [
         {
@@ -788,40 +788,40 @@ document.addEventListener("DOMContentLoaded", function() {
       "category": "Promotional",
       "blocks": [
         {
-          "type": "column_1"
+          "type": "first_row"
         },
          {
-          "type": "column_1"
+          "type": "first_row"
         },
          {
-          "type": "column_1"
+          "type": "first_row"
         },
         {
-          "type": "column_2"
+          "type": "second_row"
         },
         {
-          "type": "column_2"
+          "type": "second_row"
         },
         {
-          "type": "column_2"
+          "type": "second_row"
         },
         {
-          "type": "column_3"
+          "type": "third_row"
         },
         {
-          "type": "column_3"
+          "type": "third_row"
         },
                 {
-          "type": "column_3"
+          "type": "third_row"
         },
         {
-          "type": "column_4"
+          "type": "forth_row"
         },
          {
-          "type": "column_4"
+          "type": "forth_row"
         },
          {
-          "type": "column_4"
+          "type": "forth_row"
         }
       ]
     }
