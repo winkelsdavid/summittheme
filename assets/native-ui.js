@@ -62,6 +62,7 @@
     // Clear any legacy Bootstrap open state so a dialog shown via the old ".show"
     // class (rather than native [open]) is reliably hidden too.
     dlg.classList.remove('show');
+    if (dlg.style && dlg.style.display) dlg.style.display = ''; // clear inline display:block (Bootstrap plugin)
     if (typeof dlg.close === 'function' && dlg.open) {
       dlg.close(); // native close -> 'close' event -> compat hidden.bs.modal + scroll unlock
     } else {
