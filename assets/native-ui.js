@@ -40,6 +40,7 @@
   function openModal(target) {
     var dlg = resolve(target);
     if (!dlg) return null;
+    dlg.classList.remove('fade'); // Bootstrap fade transition isn't used by native <dialog>
     if (typeof dlg.showModal === 'function') {
       if (!dlg.open) {
         try { dlg.showModal(); }
@@ -55,11 +56,18 @@
 
   function closeModal(target) {
     var dlg = resolve(target);
-    // No explicit target -> close the top-most open dialog.
-    if (!dlg) dlg = document.querySelector('dialog.modal[open]');
+    // No explicit target -> close the top-most open dialog (native [open] or legacy .show).
+    if (!dlg) dlg = document.querySelector('dialog.modal[open], dialog.modal.show');
     if (!dlg) return;
-    if (typeof dlg.close === 'function') { if (dlg.open) dlg.close(); }
-    else { dlg.removeAttribute('open'); dlg.dispatchEvent(new CustomEvent('close', { bubbles: false })); }
+    // Clear any legacy Bootstrap open state so a dialog shown via the old ".show"
+    // class (rather than native [open]) is reliably hidden too.
+    dlg.classList.remove('show');
+    if (typeof dlg.close === 'function' && dlg.open) {
+      dlg.close(); // native close -> 'close' event -> compat hidden.bs.modal + scroll unlock
+    } else {
+      dlg.removeAttribute('open');
+      dlg.dispatchEvent(new Event('close', { bubbles: false }));
+    }
   }
 
   // ---- Delegated open / close ----
@@ -161,8 +169,10 @@
   // the Bootstrap 'hidden.bs.modal' jQuery event on close so existing listeners
   // keep working. Falls away cleanly once vendor.js is removed.
   (function bridge() {
-    var jq = window.jQuery;
-    if (jq && jq.fn) {
+    var seen = [];
+    [window.jQuery, window.$].forEach(function (jq) {
+      if (!jq || !jq.fn || seen.indexOf(jq) !== -1) return;
+      seen.push(jq);
       jq.fn.modal = function (action) {
         this.each(function () {
           if (action === 'hide') closeModal(this);
@@ -174,7 +184,7 @@
         this.each(function () { if (action === 'show') activateTab(this); });
         return this;
       };
-    }
+    });
     document.addEventListener('close', function (e) {
       if (e.target && e.target.tagName === 'DIALOG' && window.jQuery) {
         try { window.jQuery(e.target).trigger('hidden.bs.modal'); } catch (err) {}
