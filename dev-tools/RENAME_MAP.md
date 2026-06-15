@@ -88,6 +88,11 @@ Strategie), jede Section zieht ihre Konsumenten mit (Liquid-Refs, `settings_data
   behalten. Jeder Section-Type löst auf eine Datei auf; 0 Block-Mismatches; JSON valide.
   **Deploy-Hinweis:** sicher bei Frisch-Install; bei In-Place-Update eines Bestands-Themes
   müssen die Section-Instanz-Types des Merchants mit-migriert werden (sonst Section-Drop wie T3c-Klasse).
+- [x] **Block-`text`-Nachzug — erledigt 2026-06-15.** Die Block-Content-Felder mit id `text`
+  (image-with-text Heading/Subheading/Body, image-video-with-text, image-auto-slider, footer-Textspalte)
+  trugen kein Keyword → AI-Pass. → `content` (Block-Type trägt die Rolle, z.B. `block:heading:content`).
+  **Type-aware:** footers section-level `text` (eine *Farbe*) korrekt unberührt. 6 Schema + 14 Saved-Instanzen.
+  Block-Content-Fläche jetzt vollständig vorsortiert (außer Deferred product-template-1/header).
 - [ ] T5 — Resource-Typing (separat/später)
 
 ---

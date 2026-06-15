@@ -57,7 +57,7 @@
           "settings": {
             "widthlogofooter": 150,
             "title": "Contact Us",
-            "text": "E-Mail: info@info.de<br>\nPhone: 1.888.838.3022<br>\nHours: Monday – Thursday: 9AM – 7PM ET, Friday: 9AM – 2PM ET",
+            "content": "E-Mail: info@info.de<br>\nPhone: 1.888.838.3022<br>\nHours: Monday – Thursday: 9AM – 7PM ET, Friday: 9AM – 2PM ET",
             "width": "25%"
           }
         }

@@ -426,7 +426,7 @@
         {%- endif -%}
 
         {%- when 'text' -%}
-        <div class="site-footer__section text-lg-{{ footer_align_title }} {% if block.settings.title == blank and block.settings.logofooter == blank and  block.settings.text == blank %} pb-0 {% endif  %}">
+        <div class="site-footer__section text-lg-{{ footer_align_title }} {% if block.settings.title == blank and block.settings.logofooter == blank and  block.settings.content == blank %} pb-0 {% endif  %}">
           {%- if block.settings.title != blank -%}
           <h4 class="h5 site-footer__section-title">{{ block.settings.title | escape }}</h4>
           {%- endif -%}
@@ -449,7 +449,7 @@
                 </a>
               </div>
             {%- endif -%}
-            <div class="rte-setting">{{ block.settings.text }}</div>
+            <div class="rte-setting">{{ block.settings.content }}</div>
           </div>
         </div>
 
@@ -1114,7 +1114,7 @@
         },
         {
           "type": "textarea",
-          "id": "text",
+          "id": "content",
           "label": "Text",
           "default": "<p>Share store details, promotions, or brand content with your customers</p>"
         },
