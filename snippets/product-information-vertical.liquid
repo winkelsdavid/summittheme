@@ -1,92 +1,70 @@
+<style>
+  .nav-tab-info-vertical summary.card-header{ cursor: pointer; list-style: none; }
+  .nav-tab-info-vertical summary.card-header::-webkit-details-marker{ display: none; }
+  .nav-tab-info-vertical summary .card-link i{ transition: transform .2s ease; }
+  .nav-tab-info-vertical details:not([open]) > summary .card-link i{ transform: rotate(0deg) !important; }
+  .nav-tab-info-vertical details[open] > summary .card-link i{ transform: rotate(90deg) !important; }
+  .nav-tab-info-vertical details[open] > summary.card-header .card-link{ color: var(--g-main); }
+  .nav-tab-info-vertical details[open] .card-body{ animation: pivReveal .25s ease; }
+  @keyframes pivReveal{ from{ opacity: 0; transform: translateY(-6px); } to{ opacity: 1; transform: none; } }
+</style>
 <div id="accordion" class="nav-tab-info-vertical">
-    <div class="card">
-      <div class="card-header">
-        <a class="card-link collapsed"  data-toggle="collapse" data-target="#collapseOne" href="#">
-            {% render 'icon-arrow-right' %} {{ gtab_des | default: 'Description' }}
-        </a>
+    <details class="card" name="product-info-accordion">
+      <summary class="card-header">
+        <span class="card-link">{% render 'icon-arrow-right' %} {{ gtab_des | default: 'Description' }}</span>
+      </summary>
+      <div class="card-body px-0">
+          {{ product.description }}
       </div>
-      <div id="collapseOne" class="collapse" data-parent="#accordion">
-        <div class="card-body px-0">
-            {{ product.description }}
-        </div>
-      </div>
-    </div>
+    </details>
     {% if stab_title1 != blank %}
-    <div class="card">
-      <div class="card-header">
-        {% if stab_title1 != blank %}
-        <a class="collapsed card-link" data-toggle="collapse" data-target="#collapseTwo"  href="#">
-          {% render 'icon-arrow-right' %} {{ stab_title1 }}
-        </a>
-        {% endif %}
+    <details class="card" name="product-info-accordion">
+      <summary class="card-header">
+        <span class="card-link">{% render 'icon-arrow-right' %} {{ stab_title1 }}</span>
+      </summary>
+      <div class="card-body px-0">
+        {{ stab_content1 }}
       </div>
-      <div id="collapseTwo" class="collapse" data-parent="#accordion">
-        <div class="card-body px-0">
-          {{ stab_content1 }}
-        </div>
-      </div>
-    </div>
+    </details>
     {% endif %}
     {% if stab_title2 != blank %}
-    <div class="card">
-      <div class="card-header">
-        {% if stab_title2 != blank %}
-        <a class="collapsed card-link" data-toggle="collapse" data-target="#collapseTwo2"  href="#">
-          {% render 'icon-arrow-right' %} {{ stab_title2 }}
-        </a>
-        {% endif %}
+    <details class="card" name="product-info-accordion">
+      <summary class="card-header">
+        <span class="card-link">{% render 'icon-arrow-right' %} {{ stab_title2 }}</span>
+      </summary>
+      <div class="card-body px-0">
+        {{ stab_content2 }}
       </div>
-      <div id="collapseTwo2" class="collapse" data-parent="#accordion">
-        <div class="card-body px-0">
-          {{ stab_content2 }}
-        </div>
-      </div>
-    </div>
+    </details>
     {% endif %}
     {% if stab_title3 != blank %}
-    <div class="card">
-      <div class="card-header">
-        {% if stab_title3 != blank %}
-        <a class="collapsed card-link" data-toggle="collapse" data-target="#collapseTwo3"  href="#">
-          {% render 'icon-arrow-right' %} {{ stab_title3 }}
-        </a>
-        {% endif %}
+    <details class="card" name="product-info-accordion">
+      <summary class="card-header">
+        <span class="card-link">{% render 'icon-arrow-right' %} {{ stab_title3 }}</span>
+      </summary>
+      <div class="card-body px-0">
+        {{ stab_content3 }}
       </div>
-      <div id="collapseTwo3" class="collapse" data-parent="#accordion">
-        <div class="card-body px-0">
-          {{ stab_content3 }}
-        </div>
-      </div>
-    </div>
+    </details>
     {% endif %}
     {% if stab_title4 != blank %}
-    <div class="card">
-      <div class="card-header">
-        {% if stab_title4 != blank %}
-        <a class="collapsed card-link" data-toggle="collapse" data-target="#collapseTwo4"  href="#">
-          {% render 'icon-arrow-right' %}  {{ stab_title4 }}
-        </a>
-        {% endif %}
+    <details class="card" name="product-info-accordion">
+      <summary class="card-header">
+        <span class="card-link">{% render 'icon-arrow-right' %}  {{ stab_title4 }}</span>
+      </summary>
+      <div class="card-body px-0">
+        {{ stab_content4 }}
       </div>
-      <div id="collapseTwo4" class="collapse" data-parent="#accordion">
-        <div class="card-body px-0">
-          {{ stab_content4 }}
-        </div>
-      </div>
-    </div>
+    </details>
     {% endif %}
     {% if gtab_review_enable %}
-    <div class="card">
-      <div class="card-header">
-        <a class="collapsed card-link" data-toggle="collapse" data-target="#collapseThree"  href="#">
-          {% render 'icon-arrow-right' %} {{ gtab_review }}
-        </a>
+    <details class="card" name="product-info-accordion">
+      <summary class="card-header">
+        <span class="card-link">{% render 'icon-arrow-right' %} {{ gtab_review }}</span>
+      </summary>
+      <div class="card-body px-0">
+          <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
       </div>
-      <div id="collapseThree" class="collapse" data-parent="#accordion">
-        <div class="card-body px-0">
-            <div id="shopify-product-reviews" data-id="{{ product.id }}">{{ product.metafields.spr.reviews }}</div>
-        </div>
-      </div>
-    </div>
+    </details>
     {% endif %}
   </div>
