@@ -4005,7 +4005,8 @@ theme.quickview = (function () {
       },
     })
       .done(function (product) {
-        $(quickviewId).removeClass().addClass("modal fade show loadqvpopup");
+        $(quickviewId).removeClass().addClass("modal loadqvpopup");
+        if (window.NativeUI) NativeUI.openModal(quickviewId);
         var title = product.title;
         var type = product.type;
         var vendor = product.vendor;

@@ -1,5 +1,5 @@
 <!-- cross-sell.liquid -->
-<div class="modal fade" id="jsCrosssell" role="dialog" aria-hidden="true">
+<dialog class="modal" id="jsCrosssell">
   <div class="modal-dialog modal-dialog--crosssell modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -46,4 +46,24 @@
       </div>
     </div>
   </div>
-</div>
+</dialog>
+
+<style>
+  /* cross-sell modal: per-modal sizing/centering (global dialog.modal reset + ::backdrop are defined globally) */
+  dialog.modal#jsCrosssell .modal-dialog--crosssell {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    margin: 0 auto;
+  }
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    dialog.modal#jsCrosssell .modal-dialog--crosssell {
+      max-width: calc(100% - 30px);
+    }
+  }
+  @media (min-width: 992px) {
+    dialog.modal#jsCrosssell .modal-dialog--crosssell {
+      max-width: 960px;
+    }
+  }
+</style>

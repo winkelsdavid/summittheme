@@ -8,7 +8,7 @@
           <path d="M8.816 12.397a2.882 2.882 0 1 1 0-5.764h8.527a2.882 2.882 0 1 1 0 5.764" stroke="currentColor" stroke-width=".987" stroke-miterlimit="10"></path>
           <path d="M8.81 9.515h8.54" stroke="currentColor" stroke-width=".934" stroke-miterlimit="10"></path></svg>{{ section.settings.sizeguide_title | default: 'Size guide' }}
 </a>
-<div class="modal fade" id="jsSizeGuide" role="dialog" aria-hidden="true">
+<dialog class="modal" id="jsSizeGuide">
   <div class="modal-dialog modal-dialog--sizeguide modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -24,8 +24,24 @@
       </div>
     </div>
   </div>
-</div>
+</dialog>
 <style>
   .modal-dialog--sizeguide img{width:100%}.open-sizeguide{display: block;font-size: 14px;}.open-sizeguide i{margin-right:5px}.js-sizeguide-content td,.js-sizeguide-content th{border:1px solid rgba(0,0,0,.1)}@media (min-width:992px){.open-sizeguide{}}
+  /* #jsSizeGuide: per-modal sizing/centering for native <dialog> only.
+     Global reset (dialog.modal border/padding/background/margin/width + ::backdrop + :not([open])) is global.
+     No dedicated .modal-dialog--sizeguide width in theme.css -> inherits generic .modal-dialog max-width:960px @>=992 (theme.css 6923-6927). */
+  dialog.modal#jsSizeGuide .modal-dialog.modal-dialog--sizeguide {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+    margin: 0.5rem auto;
+  }
+  @media (min-width: 992px) {
+    dialog.modal#jsSizeGuide .modal-dialog.modal-dialog--sizeguide {
+      max-width: 960px;
+      min-height: calc(100% - 3.5rem);
+      margin: 1.75rem auto;
+    }
+  }
 </style>
 {%- endif -%}

@@ -1,6 +1,23 @@
 {%- if settings.enable_compare -%}
   <!-- popup-compare.liquid -->
-  <div class="modal fade" id="jsCompare" role="dialog" aria-hidden="true">
+  <style>
+    /* Per-modal sizing/centering for native <dialog> (global reset lives in theme.css/native-ui).
+       Reproduces Bootstrap .modal-dialog-centered + .modal-dialog--compare max-width (theme.css 6925). */
+    dialog.modal .modal-dialog {
+      display: flex;
+      align-items: center;
+      min-height: calc(100% - 1rem);
+      margin: 0.5rem auto;
+    }
+    @media (min-width: 992px) {
+      dialog.modal .modal-dialog.modal-dialog--compare {
+        max-width: 960px;
+        min-height: calc(100% - 3.5rem);
+        margin: 1.75rem auto;
+      }
+    }
+  </style>
+  <dialog class="modal" id="jsCompare">
     <div class="modal-dialog modal-dialog--compare modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header p-0">
@@ -12,5 +29,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </dialog>
 {%- endif -%}

@@ -1,4 +1,4 @@
-<div class="modal fade" id="jsSoldout" role="dialog" aria-hidden="true">
+<dialog class="modal" id="jsSoldout">
   <div class="modal-dialog modal-dialog--soldout modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -23,4 +23,19 @@
       </div>
     </div>
   </div>
-</div>
+</dialog>
+
+<style>
+  /* #jsSoldout: per-modal sizing/centering only.
+     Global reset (dialog.modal border/padding/background/margin/width + ::backdrop + :not([open])) is global. */
+  dialog.modal#jsSoldout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  dialog.modal#jsSoldout .modal-dialog.modal-dialog--soldout {
+    max-width: 460px;
+    width: 100%;
+    margin: auto;
+  }
+</style>

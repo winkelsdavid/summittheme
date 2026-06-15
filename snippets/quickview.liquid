@@ -153,11 +153,30 @@
   /*.round-color.list-product-options .color label[data-value=white], .round-color.list-product-options .color label[data-value=White]{
     border:1px solid #ddd!important;
   }*/
- 
+
+  /* --- native <dialog> centering/sizing for #jsQuickview ---
+     Reproduces Bootstrap's .modal (flex container) + .modal-dialog-centered
+     vertical centering + .modal-lg width, since the vendor Bootstrap CSS that
+     used to supply this geometry no longer applies to the <dialog>.
+     The global dialog.modal reset (border/padding/background/margin/::backdrop)
+     is defined globally and is intentionally NOT duplicated here. */
+  dialog#jsQuickview.modal{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  dialog#jsQuickview.modal:not([open]){
+    display:none;
+  }
+  dialog#jsQuickview .modal-dialog{
+    width:100%;
+    max-width:800px;
+    margin:auto;
+  }
+
 </style>
 <!-- quickview.liquid -->
-<div class="modal fade bd-example-modal-lg" id="jsQuickview" role="dialog" aria-hidden="true" data-type="{{ settings.select_product_option_display }}" 
-  data-color="{{ settings.qv_variant }}">
+<dialog class="modal bd-example-modal-lg" id="jsQuickview" data-type="{{ settings.select_product_option_display }}" data-color="{{ settings.qv_variant }}">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header p-0">
@@ -220,4 +239,4 @@
       </div>
     </div>
   </div>
-</div>
+</dialog>

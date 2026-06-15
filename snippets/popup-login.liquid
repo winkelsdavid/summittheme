@@ -1,5 +1,28 @@
 <!-- popup-login.liquid -->
-<div class="modal fade" id="jsLogin" role="dialog" aria-hidden="true">
+<style>
+  /* Per-modal layout for native <dialog> #jsLogin.
+     Global dialog.modal reset (+ ::backdrop, :not([open])) lives globally.
+     vendor Bootstrap no longer centers/sizes .modal-dialog on a <dialog>,
+     so reproduce .modal-dialog-centered flex centering + the inherited
+     generic .modal-dialog max-width:960px (@>=992) here. */
+  dialog.modal#jsLogin .modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    margin: 1.75rem auto;
+    pointer-events: none;
+  }
+  dialog.modal#jsLogin .modal-dialog .modal-content {
+    pointer-events: auto;
+    width: 100%;
+  }
+  @media (min-width: 992px) {
+    dialog.modal#jsLogin .modal-dialog.modal-dialog--login {
+      max-width: 960px;
+    }
+  }
+</style>
+<dialog class="modal" id="jsLogin">
   <div class="modal-dialog modal-dialog--login modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header p-0">
@@ -61,4 +84,4 @@
       </div>
     </div>
   </div>
-</div>
+</dialog>

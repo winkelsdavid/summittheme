@@ -1,4 +1,4 @@
-<div class="modal fade" id="jsContact" role="dialog" aria-hidden="true">
+<dialog class="modal" id="jsContact">
   <div class="modal-dialog modal-dialog-form-product  modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -71,4 +71,44 @@
         </div>
     </div>
   </div>
-</div>
+</dialog>
+
+{%- comment -%}
+  Native <dialog> sizing/centering for #jsContact (was Bootstrap .modal.fade).
+  The global dialog.modal reset (border/padding/background/margin/width +
+  ::backdrop + :not([open])) lives globally and is NOT duplicated here.
+  Only the per-modal geometry that Bootstrap's vendor CSS used to provide is
+  reproduced: .modal-dialog-centered flex-centering + the inherited generic
+  .modal-dialog max-width (960px @>=992, Bootstrap's 500px default below).
+{%- endcomment -%}
+<style>
+  dialog.modal#jsContact {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  dialog.modal#jsContact .modal-dialog {
+    width: auto;
+    margin: 0.5rem auto;
+  }
+  dialog.modal#jsContact .modal-dialog.modal-dialog-centered {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+  }
+  @media (min-width: 576px) {
+    dialog.modal#jsContact .modal-dialog {
+      max-width: 500px;
+      margin: 1.75rem auto;
+    }
+    dialog.modal#jsContact .modal-dialog.modal-dialog-centered {
+      min-height: calc(100% - 3.5rem);
+    }
+  }
+  @media (min-width: 992px) {
+    dialog.modal#jsContact .modal-dialog.modal-dialog-form-product {
+      max-width: 960px;
+    }
+  }
+</style>

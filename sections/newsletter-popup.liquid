@@ -18,7 +18,7 @@
   data-section-id="{{ section.id }}" 
   data-section-type="popupnewletter">
 
-  <div class="modal fade" id="jsPopupNewsletter{{ section.id }}" role="dialog" aria-hidden="true" data-delay="{{ section.settings.pnewletter_time_delay }}">
+  <dialog class="modal" id="jsPopupNewsletter{{ section.id }}" data-delay="{{ section.settings.pnewletter_time_delay }}">
     <div class="modal-dialog modal-dialog--newsletter modal-dialog-centered" role="document">
       <div class="modal-content modal-content--newsletter">
         <div class="modal-header p-0">
@@ -40,7 +40,7 @@
         -%}
       </div>
     </div>
-  </div>
+  </dialog>
 </div>
 {%- endif -%}
   {%- style -%}
@@ -134,8 +134,8 @@
         transition:.5s;
         transition-delay:.5s;
   }
-  .popupnew-pnewsletter.pnew_style-1 .modal.show .modal-content,
-  .popupnew-pnewsletter.pnew_style-2 .modal.show .modal-content{
+  .popupnew-pnewsletter.pnew_style-1 dialog.modal[open] .modal-content,
+  .popupnew-pnewsletter.pnew_style-2 dialog.modal[open] .modal-content{
       width: 100%;
   }
  .popupnew-pnewsletter.pnew_style-1  .modal-body > .row,
@@ -163,6 +163,22 @@
 
 
 }
+  /* native <dialog> sizing/centering for this newsletter popup (Bootstrap flex centering no longer applies) */
+  .popupnew-{{ section.id }} dialog.modal .modal-dialog{
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  @media (min-width: 992px){
+    .popupnew-{{ section.id }} dialog.modal .modal-dialog.modal-dialog--newsletter{
+      max-width: {{ popup_width }}px;
+    }
+  }
+  .popupnew-{{ section.id }} dialog.modal::backdrop{
+    background: rgba(0,0,0,.5);
+  }
   {%- endstyle -%}
 
 {% schema %}

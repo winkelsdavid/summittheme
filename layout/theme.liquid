@@ -56,6 +56,15 @@
     </style>
     {%- render 'social-meta-tags' -%}
     {%- render 'header-css' -%}
+    {%- comment -%} Native <dialog> modal baseline — ersetzt das Bootstrap-.modal-Overlay.
+        Ueberschreibt die Legacy-Regel .modal{display:none;position:fixed} (theme.css), die
+        sonst geoeffnete <dialog class="modal"> verborgen haelt. Per-Modal-Groesse ist scoped
+        im jeweiligen Modal-Snippet. {%- endcomment -%}
+    <style>
+      dialog.modal{ display:none; position:fixed; inset:0; width:100%; height:100%; max-width:100%; max-height:100%; margin:0; padding:1rem; border:0; background:transparent; overflow:auto; z-index:1050; }
+      dialog.modal[open]{ display:flex; align-items:center; justify-content:center; }
+      dialog.modal::backdrop{ background:rgba(0,0,0,.5); }
+    </style>
       <link rel="preload" href="{{ 'lazysizes.min.js' | asset_url }}" as="script">
       <link rel="preload" href="{{ 'vendor.js' | asset_url }}" as="script">
        {{- 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true -}}
