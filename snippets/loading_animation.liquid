@@ -133,7 +133,7 @@ transition:1s;
   {% endif %}
 </div>
 <script>
-  window.addEventListener('load', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     const loader = document.querySelector('.loading-overlay_x');
     {% if  settings.loading_animation == "1" %}
     loader.classList.add('fadout');
