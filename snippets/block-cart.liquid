@@ -405,47 +405,44 @@ width:42px;
                   <span>{{ 'general.cart.coupon_code_title' | t }}</span>
                 </div>
                 <discount-code class="open-add-on block-addon__box--wrap">
+                  <style>.card-coupon > summary{ list-style:none; cursor:pointer; } .card-coupon > summary::-webkit-details-marker{ display:none; }</style>
                   {%- if settings.coupon_code_title != blank -%}
                   <div id="list-coupon" class="mb-4 text-left">
-                    <div class="card-coupon">
-                      <div class="card-header-coupon" id="headcoupon1">
+                    <details class="card-coupon">
+                      <summary class="card-header-coupon" id="headcoupon1">
                         <h6 class="mb-0">
-                          <span class="heading-coupon collapsed d-flex align-items-center position-relative py-3" data-toggle="collapse" data-target="#coupon1" aria-expanded="false" aria-controls="coupon1">
+                          <span class="heading-coupon d-flex align-items-center position-relative py-3">
                             {{ settings.coupon_code_title }}
                             <span class="coupon-icon">
                               <i class="icon-plus"></i>
                               </span>
                           </span>
                         </h6>
+                      </summary>
+                      <div class="pb-3">
+                        {{ settings.coupon_code_content }}
                       </div>
-                      <div id="coupon1" class="collapse" aria-labelledby="headcoupon1" data-parent="#list-coupon">
-                        <div class="pb-3">
-                          {{ settings.coupon_code_content }}
-                        </div>
-                      </div>
-                    </div>
+                    </details>
                   </div>
                 {% else %}
                    <div id="list-coupon" class="mb-4 text-left">
-                    <div class="card-coupon">
-                      <div class="card-header-coupon" id="headcoupon1">
+                    <details class="card-coupon">
+                      <summary class="card-header-coupon" id="headcoupon1">
                         <h6 class="mb-0">
-                          <span class="heading-coupon collapsed d-flex align-items-center position-relative py-3" data-toggle="collapse" data-target="#coupon1" aria-expanded="false" aria-controls="coupon1">
-                            {{ 'general.cart.coupon_code_title' | t }} 
+                          <span class="heading-coupon d-flex align-items-center position-relative py-3">
+                            {{ 'general.cart.coupon_code_title' | t }}
                             <span class="coupon-icon">
                               <i class="icon-plus"></i>
                               </span>
                           </span>
                         </h6>
-                      </div>
+                      </summary>
                       {% if settings.coupon_code_content != blank %}
-                      <div id="coupon1" class="collapse" aria-labelledby="headcoupon1" data-parent="#list-coupon">
-                        <div class="pb-3">
-                          {{ settings.coupon_code_content }}
-                        </div>
+                      <div class="pb-3">
+                        {{ settings.coupon_code_content }}
                       </div>
                       {% endif %}
-                    </div>
+                    </details>
                   </div>
                 {%- endif -%}
                 <div class="d-flex flex-column align-items-center">
