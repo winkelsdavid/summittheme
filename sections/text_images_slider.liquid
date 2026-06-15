@@ -101,7 +101,7 @@
   {%- render 'style-section' -%}
   <style>
     .customstyle{{ section.id }}{
-      background:{{ section.settings.bgsection }}
+      background:{{ section.settings.background_section }}
     }
   </style>
     
@@ -542,7 +542,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
     },
     {
       "type": "color_background",
-      "id": "bgsection",
+      "id": "background_section",
       "label": "Background Section"
     },
     {
@@ -707,7 +707,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
     },
                   {
                 "type": "select",
-                "id": "r_type",
+                "id": "reviews_type",
                 "label": "Reviews type",
                 "default": "t_1",
                 "options": [

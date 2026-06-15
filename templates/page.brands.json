@@ -130,10 +130,10 @@
       "settings": {
         "animation": "",
         "setwidth": "container",
-        "bgsection": "",
-        "title_top": "",
+        "background_section": "",
+        "subtitle_top": "",
         "title": "Featured Brands",
-        "des": "Promotions, new products and sales. Directly to your inbox."
+        "description": "Promotions, new products and sales. Directly to your inbox."
       }
     }
   },

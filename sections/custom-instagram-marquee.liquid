@@ -199,10 +199,10 @@ flex:0 0 calc(50% - 10px);
     <div class="{{ section.settings.setwidth }}">
         <div class="container">
           {% if section.settings.text != blank %}
-            <div {% if section.settings.h_sub_color != "rgba(0,0,0,0)" and section.settings.h_sub_color != blank %}style="--g-font-color-subtop:{{ section.settings.h_sub_color }}"{% endif %} class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
+            <div {% if section.settings.h_sub_color != "rgba(0,0,0,0)" and section.settings.h_sub_color != blank %}style="--g-font-color-subtop:{{ section.settings.h_sub_color }}"{% endif %} class="subtop text-{{ section.settings.align_heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
           {% endif %}
           {% if section.settings.heading != blank %}
-            <h3 {% if section.settings.h_s_color != "rgba(0,0,0,0)" and section.settings.h_s_color != blank %}style="--g-color-heading:{{ section.settings.h_s_color }}"{% endif %} class="h3 text-{{ section.settings.align-heading }} mb-5 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+            <h3 {% if section.settings.h_s_color != "rgba(0,0,0,0)" and section.settings.h_s_color != blank %}style="--g-color-heading:{{ section.settings.h_s_color }}"{% endif %} class="h3 text-{{ section.settings.align_heading }} mb-5 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
             <span>{{ section.settings.heading }}</span>
             </h3>
           {% endif %}
@@ -518,7 +518,7 @@ document.addEventListener("DOMContentLoaded", function() {
         },
      {
       "type": "select",
-      "id": "align-heading",
+      "id": "align_heading",
       "label": "Align Heading",
       "default": "center",
       "options": [

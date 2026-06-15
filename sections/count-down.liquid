@@ -90,7 +90,7 @@
 -%}
 {%- render 'style-section' -%}
 {%- if bg_full -%}
-  <div style="background-color: {{ section.settings.bgsection }};" data-aos="{{ section.settings.animation }} " class=" cd-section position-relative customstyle{{ section.id }}">
+  <div style="background-color: {{ section.settings.background_section }};" data-aos="{{ section.settings.animation }} " class=" cd-section position-relative customstyle{{ section.id }}">
     {% if section.settings.image_bg != blank %}
       {% assign bg_image = section.settings.image_bg %}
         <section class="cd-bg lazyload"
@@ -118,8 +118,8 @@
                     {%- if  section.settings.title != blank -%}
                         <h3 class="text-lg-left text-center {{ section.settings.size_text }}">{{ section.settings.title }}</h3>
                     {%- endif -%}
-                    {%- if  section.settings.des != blank -%}
-                        <div class="text-lg-left text-center">{{ section.settings.des }}</div>
+                    {%- if  section.settings.description != blank -%}
+                        <div class="text-lg-left text-center">{{ section.settings.description }}</div>
                     {%- endif -%}
                 </div>
                 <div class="col-lg-7 col-12 d-flex align-items-center {% if section.settings.e_button %} justify-content-between {% else %} justify-content-center {% endif %} mt-lg-0 mt-4 flex-lg-row flex-column">
@@ -395,7 +395,7 @@
     },
     {
       "type": "color",
-      "id": "bgsection",
+      "id": "background_section",
       "label": "Background Section"
     },
     {
@@ -483,7 +483,7 @@
     },
     {
       "type": "textarea",
-      "id": "des",
+      "id": "description",
       "label": "HTML / Description"
     },
     {

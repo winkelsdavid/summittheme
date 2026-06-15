@@ -1174,7 +1174,7 @@ margin-right:auto;
         <div class="container" style="background-color: {% if block.settings.bgwrap != blank and block.settings.bgwrap != "rgba(0,0,0,0)"%}{{ block.settings.bgwrap }}{% else %}{{ settings.color_body_bg }}{% endif %};">
 
             {% if block.settings.replace_reviews %}
-                {%  render 'rating-custom', section: block , align : section.settings.align-heading %}
+                {%  render 'rating-custom', section: block , align : section.settings.align_heading %}
               {% else %}
           {%- unless block.settings.slide_toptitle == blank -%}
           <p class="slideshow__toptitle mb-2 slideshow__toptitle--mobile subtop" style="color:{{ block.settings.slide_toptitle_color }}">
@@ -1786,7 +1786,7 @@ margin-right:auto;
     },
                   {
                 "type": "select",
-                "id": "r_type",
+                "id": "reviews_type",
                 "label": "Reviews type",
                 "default": "t_1",
                 "options": [

@@ -22,10 +22,10 @@
                 <div class="d-flex h-100 flex-column justify-content-between">
                     <div class="top-info">
                     {% if section.settings.replace_reviews %}
-                      {%  render 'rating-custom', align : section.settings.align-heading %}
+                      {%  render 'rating-custom', align : section.settings.align_heading %}
                     {% else %}
-                        {%- if section.settings.title_top != blank -%}
-                            <div class="subtop mb-2"> {{ section.settings.title_top }}</div>
+                        {%- if section.settings.subtitle_top != blank -%}
+                            <div class="subtop mb-2"> {{ section.settings.subtitle_top }}</div>
                         {%- endif -%}
                       {%  endif %}
                         {%- if section.settings.title != blank -%}
@@ -236,7 +236,7 @@
     },
     {
       "type": "color",
-      "id": "bgsection",
+      "id": "background_section",
       "label": "Background Section"
     },
     {
@@ -245,7 +245,7 @@
     },
     {
       "type": "text",
-      "id": "title_top",
+      "id": "subtitle_top",
       "label": "Sub Title Top",
       "default": "Sub Title Top"
     },
@@ -260,7 +260,7 @@
     },
       {
     "type": "select",
-    "id": "r_type",
+    "id": "reviews_type",
     "label": "Reviews type",
     "default": "t_1",
     "options": [

@@ -75,7 +75,7 @@ display:flex;
               data-draggable="{{ section.settings.draggable }}" 
               data-infinite="{{ section.settings.infinite }}"
                 >
-        <div class="text-{{ section.settings.align-heading }} mt-n4 mb-5">
+        <div class="text-{{ section.settings.align_heading }} mt-n4 mb-5">
           <ul class="nav nav-tabs nav-tabs-1 d-inline-flex style-{{ style_tab }}" role="tablist">
             {%- for block in section.blocks -%}
             <li class="nav-item" role="presentation">
@@ -272,12 +272,12 @@ display:flex;
     },
     {
       "type": "color",
-      "id": "bgsection",
+      "id": "background_section",
       "label": "Background Section"
     },
     {
       "type": "text",
-      "id": "title_top",
+      "id": "subtitle_top",
       "label": "Sub Title Top",
       "default": "Sub Title Top"
     },
@@ -292,7 +292,7 @@ display:flex;
     },
         {
       "type": "select",
-      "id": "r_type",
+      "id": "reviews_type",
       "label": "Reviews type",
       "default": "t_1",
       "options": [
@@ -318,12 +318,12 @@ display:flex;
     },
     {
       "type": "textarea",
-      "id": "des",
+      "id": "description",
       "label": "HTML / Description"
     },
     {
       "type": "select",
-      "id": "align-heading",
+      "id": "align_heading",
       "label": "Align Heading",
       "default": "center",
       "options": [
@@ -347,17 +347,17 @@ display:flex;
     },
     {
       "type": "color_background",
-      "id": "st_color",
+      "id": "subtitle_top_color",
       "label": "Sub Title Top color"
     },
     {
       "type": "color_background",
-      "id": "t_color",
+      "id": "heading_color",
       "label": "Title color"
     },
     {
       "type": "color",
-      "id": "c_color",
+      "id": "description_color",
       "label": "Description color"
     },
     {

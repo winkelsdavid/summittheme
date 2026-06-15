@@ -83,11 +83,11 @@
       "settings": {
         "animation": "fade",
         "setwidth": "container",
-        "bgsection": "#ffffff",
-        "title_top": "Top Team",
+        "background_section": "#ffffff",
+        "subtitle_top": "Top Team",
         "title": "Team Of Highly",
-        "des": "",
-        "align-heading": "center",
+        "description": "",
+        "align_heading": "center",
         "items": "3",
         "layout": "2"
       }

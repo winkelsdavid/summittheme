@@ -66,7 +66,15 @@ Strategie), jede Section zieht ihre Konsumenten mit (Liquid-Refs, `settings_data
   funktionieren wieder.** (`align-heading`/`align-content` bleiben für T2; restliche
   Hyphen-IDs `hero-spacer`/`img-in-hero`/`image-fit`/`border-copryright`/`trust-heading`/
   `padding-left/right` → in ihren T3-Section-Passes.)
-- [ ] T2 — Heading-Family (Snippet-koordiniert)
+- [x] **T2 — erledigt 2026-06-15 (vollständig/SOTA).** Atomarer Rename der 8 geteilten
+  „Heading-Family"-IDs über 56 Sections + 3 Snippets (`section-heading`/`style-section`/
+  `rating-custom`) + 27 JSON (settings_data + Templates, comment-aware): `des`→`description`,
+  `title_top`→`subtitle_top`, `align-heading`→`align_heading`, `st_color`→`subtitle_top_color`,
+  `t_color`→**`heading_color`** (statt `title_color` wg. Kollision in 5 Sections),
+  `c_color`→`description_color`, `bgsection`→`background_section`, `r_type`→`reviews_type`.
+  Dry-Run-Kollisionscheck vorab (0 harte Kollisionen), jede Datei vor Schreiben validiert,
+  0 alte IDs/Refs/Keys übrig, 0 invalide Schemas. **Bonus: `align_heading` war via Hyphen-
+  Dot ein Latent-Bug (Subtraktion) → Ausrichtung greift jetzt wieder → visuell prüfen.**
 - [ ] T3 — per-Section Block-Types + IDs
 - [ ] T4 — Slug-Renames + Reconcile
 - [ ] T5 — Resource-Typing (separat/später)

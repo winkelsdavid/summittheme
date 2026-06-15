@@ -125,16 +125,16 @@
             text-{%- if section.settings.h_align == 'start' -%}left{%- elsif section.settings.h_align == 'center' -%}center{%- else -%}right{% endif %}" 
             id="v-pills-tab-{{ section.id }}" role="tablist" aria-orientation="vertical">
               {% if section.settings.replace_reviews %}
-                  {%  render 'rating-custom', align : section.settings.align-heading %}
+                  {%  render 'rating-custom', align : section.settings.align_heading %}
               {% else %}
-                {%- if section.settings.title_top != blank -%}
-                <div class="pl-0 pr-5 subtop text-{{ section.settings.align-heading }} text-top mb-4" data-aos="{{ section.settings.animation }}" data-aos-duration="300" style="--g-font-color-subtop:{{ section.settings.s_color }}">{{ section.settings.title_top }}</div>
+                {%- if section.settings.subtitle_top != blank -%}
+                <div class="pl-0 pr-5 subtop text-{{ section.settings.align_heading }} text-top mb-4" data-aos="{{ section.settings.animation }}" data-aos-duration="300" style="--g-font-color-subtop:{{ section.settings.s_color }}">{{ section.settings.subtitle_top }}</div>
               {%- endif -%}
             {% endif %}
                 {%- for block in section.blocks -%}
                     <a class="disabled-anchor pl-0 pr-5 nav-link tab-v {% if forloop.index == 1 %} active {% endif %}" id="v-pills-{{ block.id }}-tab" data-toggle="pill" data-hover="tab" href="#v-pills-{{block.id}}" role="tab" aria-controls="v-pills-{{block.id}}" aria-selected="{% if forloop.index == 1 %}true{% else %}false{% endif %}">
                       {%- if block.settings.title_tab != blank -%}
-                      <span class="tab-title {{ section.settings.size_text }}"  {% if section.settings.t_color != "rgba(0,0,0,0)" and  section.settings.t_color != blank %}style="--g-color-heading:{{ section.settings.t_color }}"{% endif %}>{{ block.settings.title_tab }}</span>
+                      <span class="tab-title {{ section.settings.size_text }}"  {% if section.settings.heading_color != "rgba(0,0,0,0)" and  section.settings.heading_color != blank %}style="--g-color-heading:{{ section.settings.heading_color }}"{% endif %}>{{ block.settings.title_tab }}</span>
                       {%- endif -%}
                     </a>
                 {%- endfor -%}
@@ -389,7 +389,7 @@
     },
     {
       "type": "color",
-      "id": "bgsection",
+      "id": "background_section",
       "label": "Background Section"
     },
     {
@@ -503,7 +503,7 @@
     },
     {
       "type": "text",
-      "id": "title_top",
+      "id": "subtitle_top",
       "label": "Sub Title Top",
       "default": "Sub Title Top"
     },
@@ -518,7 +518,7 @@
     },
       {
     "type": "select",
-    "id": "r_type",
+    "id": "reviews_type",
     "label": "Reviews type",
     "default": "t_1",
     "options": [
@@ -616,7 +616,7 @@
     },
     {
       "type": "color",
-      "id": "t_color",
+      "id": "heading_color",
       "label": "Title color",
       "default": "#000000"
     },

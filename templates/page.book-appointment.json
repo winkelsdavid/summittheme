@@ -70,11 +70,11 @@
       ],
       "settings": {
         "animation": "fade",
-        "bgsection": "#ffffff",
-        "title_top": "",
+        "background_section": "#ffffff",
+        "subtitle_top": "",
         "title": "Virtual Appointments",
-        "des": "Schedule Your Free Appointment Today",
-        "align-heading": "center",
+        "description": "Schedule Your Free Appointment Today",
+        "align_heading": "center",
         "enable_interested": true,
         "enable_store": true,
         "answer_content": "<p>Need help finding just the right diamond or piece of jewelry? </p><p>Our experts are here to help.</p>"
@@ -84,7 +84,7 @@
       "type": "line",
       "settings": {
         "animation": "",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "setwidth": "full",
         "bgborder": "#dddddd",
         "wborder": "1px"

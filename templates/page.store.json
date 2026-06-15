@@ -18,13 +18,13 @@
       "settings": {
         "animation": "",
         "setwidth": "container",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",
-        "title_top": "",
+        "subtitle_top": "",
         "title": "Our Stores",
         "text": "<p>Come visit us at our London locations to discover the iconic collections you love, IRL. See you there.</p>",
-        "align-heading": "center",
+        "align_heading": "center",
         "align-content": "center"
       }
     },
@@ -64,7 +64,7 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container-fluid",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
         "bg_pos": "left",
@@ -111,7 +111,7 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container-fluid",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
         "bg_pos": "left",

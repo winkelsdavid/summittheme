@@ -65,11 +65,11 @@
         {% for block in section.blocks %}
           {% case block.type %}
             {% when "heading" %}
-              <h3 class="h3 text-{{ section.settings.align-heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+              <h3 class="h3 text-{{ section.settings.align_heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
               <span style="color:{{ block.settings.color }}">{{ block.settings.text }}</span>
               </h3>
             {% when "subheading" %}
-            <div class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" style="color:{{ block.settings.color }}">{{ block.settings.text }}</div>
+            <div class="subtop text-{{ section.settings.align_heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" style="color:{{ block.settings.color }}">{{ block.settings.text }}</div>
             {% endcase %}
         {% endfor %}
       </div>
@@ -133,7 +133,7 @@
                   -%}
                   <div class="{{ block_width }}">
                     {% if block.settings.replace_reviews %}
-                        {%  render 'rating-custom', section: block , align : section.settings.align-heading %}
+                        {%  render 'rating-custom', section: block , align : section.settings.align_heading %}
                       {% else %}
                     {%- if block.settings.subtitle != blank -%}
                       <div class="subtop mb-3">{{ block.settings.subtitle }}</div>
@@ -317,7 +317,7 @@
     },
     {
       "type": "color",
-      "id": "bgsection",
+      "id": "background_section",
       "label": "Background Section"
     },
     {
@@ -505,7 +505,7 @@
     },
                   {
                 "type": "select",
-                "id": "r_type",
+                "id": "reviews_type",
                 "label": "Reviews type",
                 "default": "t_1",
                 "options": [

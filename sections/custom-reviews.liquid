@@ -154,7 +154,7 @@
 <div class="custom_reviews_slider custom_reviews_slider-{{ section.id }}" data-aos="{{ section.settings.animation }}">
   <div class="container">
     {% if section.settings.stars_text != blank %}
-    <div class="c_testimonial-header-review justify-{{ section.settings.align-heading }}">
+    <div class="c_testimonial-header-review justify-{{ section.settings.align_heading }}">
         <span style="color:{{ section.settings.r_t_color }}">{{ section.settings.stars_text }}</span>
         <div class="c_testimonial-header-review-stars">
           <div class="c_testimonial-reviewbox-rating">
@@ -183,12 +183,12 @@
       </div>
     {% endif %}
       {% if section.settings.heading != blank %}
-        <h3 class="h3 text-{{ section.settings.align-heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+        <h3 class="h3 text-{{ section.settings.align_heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
         <span>{{ section.settings.heading }}</span>
       </h3>
       {% endif %}
     {% if section.settings.text != blank %}
-    <div class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
+    <div class="subtop text-{{ section.settings.align_heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
     {% endif %}
   </div>
   <div class="custom_slider_items swiper custom_slider_items-{{ section.id }}">
@@ -488,7 +488,7 @@ window.addEventListener('resize', () => {
         },
      {
       "type": "select",
-      "id": "align-heading",
+      "id": "align_heading",
       "label": "Align Heading",
       "default": "center",
       "options": [

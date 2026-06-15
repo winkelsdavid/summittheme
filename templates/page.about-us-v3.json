@@ -49,7 +49,7 @@
       "settings": {
         "animation": "fade",
         "setwidth": "full",
-        "bgsection": "#e7e8e3",
+        "background_section": "#e7e8e3",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
         "bg_pos": "left",
@@ -81,13 +81,13 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",
-        "title_top": "",
+        "subtitle_top": "",
         "title": "",
         "text": "",
-        "align-heading": "center",
+        "align_heading": "center",
         "align-content": "left"
       }
     },
@@ -127,7 +127,7 @@
       "settings": {
         "animation": "fade",
         "setwidth": "full",
-        "bgsection": "#51553c",
+        "background_section": "#51553c",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
         "bg_pos": "left",
@@ -176,11 +176,11 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container",
-        "bgsection": "#ffffff",
-        "title_top": "",
+        "background_section": "#ffffff",
+        "subtitle_top": "",
         "title": "Find us in a store near you",
-        "des": "",
-        "align-heading": "center",
+        "description": "",
+        "align_heading": "center",
         "grayscale": false,
         "arrows": true,
         "draggable": true,
@@ -233,11 +233,11 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container",
-        "bgsection": "#ffffff",
-        "title_top": "",
+        "background_section": "#ffffff",
+        "subtitle_top": "",
         "title": "",
-        "des": "",
-        "align-heading": "center",
+        "description": "",
+        "align_heading": "center",
         "grayscale": false,
         "arrows": true,
         "draggable": true,
@@ -274,13 +274,13 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",
-        "title_top": "",
+        "subtitle_top": "",
         "title": "",
         "text": "",
-        "align-heading": "center",
+        "align_heading": "center",
         "align-content": "left"
       }
     },
@@ -328,7 +328,7 @@
       "settings": {
         "animation": "fade",
         "setwidth": "container",
-        "bgsection": "#f3efe9",
+        "background_section": "#f3efe9",
         "size": "50-50",
         "enable_padding": true,
         "align_center": true
@@ -369,7 +369,7 @@
       "settings": {
         "animation": "fade",
         "setwidth": "container",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
         "bg_pos": "left",
@@ -419,12 +419,12 @@
       "settings": {
         "animation": "fade",
         "setwidth": "container",
-        "bgsection": "#222f25",
+        "background_section": "#222f25",
         "title_color": "#ffffff",
-        "title_top": "",
+        "subtitle_top": "",
         "title": "We Love Our Clients",
-        "des": "We are very fortunate to have formed excellent \npartnerships with many of our clients.",
-        "align-heading": "center",
+        "description": "We are very fortunate to have formed excellent \npartnerships with many of our clients.",
+        "align_heading": "center",
         "aligntext": "text-left",
         "style": "style-2",
         "color_rate": "#f1f1f1",
@@ -501,11 +501,11 @@
       "settings": {
         "animation": "fade",
         "setwidth": "container",
-        "bgsection": "",
-        "title_top": "",
+        "background_section": "",
+        "subtitle_top": "",
         "title": "Team Of Highly Skilled",
-        "des": "We are very fortunate to have formed excellent partnerships with many of our clients.",
-        "align-heading": "center",
+        "description": "We are very fortunate to have formed excellent partnerships with many of our clients.",
+        "align_heading": "center",
         "items": "3",
         "layout": "2"
       }
@@ -528,11 +528,11 @@
       "disabled": true,
       "settings": {
         "animation": "",
-        "bgsection": "#ffffff",
-        "title_top": "Questions?",
+        "background_section": "#ffffff",
+        "subtitle_top": "Questions?",
         "title": "Send us an email",
-        "des": "",
-        "align-heading": "center",
+        "description": "",
+        "align_heading": "center",
         "answer_content": "<p>This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\">Terms of Service</a> apply.</p>"
       }
     },
@@ -593,11 +593,11 @@
       "settings": {
         "animation": "fade-up",
         "setwidth": "container",
-        "bgsection": "#ffffff",
-        "title_top": "",
+        "background_section": "#ffffff",
+        "subtitle_top": "",
         "title": "",
-        "des": "",
-        "align-heading": "center",
+        "description": "",
+        "align_heading": "center",
         "paddingbox": "0px 0px 0px 0px",
         "iconcolor": "#202025",
         "titlecolor": "#202025",

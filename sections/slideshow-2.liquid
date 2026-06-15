@@ -646,7 +646,7 @@ padding-top:4px!important;
                   
               <ul class="list-unstyled"  >
                           {% if block.settings.replace_reviews %}
-                              {%  render 'rating-custom', section: block , align : section.settings.align-heading %}
+                              {%  render 'rating-custom', section: block , align : section.settings.align_heading %}
                           {% else %}
                     {%- unless block.settings.slide_toptitle == blank -%}
                     <li class="mb-3">
@@ -845,7 +845,7 @@ padding-top:4px!important;
         <div class="slideshow__text-content slideshow__text-content--mobile slideshow__text-content--mobile-{{ forloop.index0 }} text-center" {% unless forloop.first %}style="display:none"{% endunless %}>
       <div class="container" style="background-color: {{ block.settings.bgwrap }};">
                         {% if block.settings.replace_reviews %}
-                            {%  render 'rating-custom', section: block , align : section.settings.align-heading,  rating_c: "0" %}
+                            {%  render 'rating-custom', section: block , align : section.settings.align_heading,  rating_c: "0" %}
               {% else %}
             {%- unless block.settings.slide_toptitle == blank -%}
             <p class="slideshow__toptitle slideshow__toptitle--mobile mb-0 subtop" style="--g-font-color-subtop:{{ block.settings.slide_toptitle_color }};">
@@ -1350,7 +1350,7 @@ padding-top:4px!important;
     },
             {
           "type": "select",
-          "id": "r_type",
+          "id": "reviews_type",
           "label": "Reviews type",
           "default": "t_1",
           "options": [

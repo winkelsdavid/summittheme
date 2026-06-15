@@ -231,14 +231,14 @@ margin-top:50px;
 >
     <div class="{{ section.settings.setwidth }}">
       {% if section.settings.replace_reviews %}
-            {%  render 'rating-custom', align : section.settings.align-heading %}
+            {%  render 'rating-custom', align : section.settings.align_heading %}
       {% else %}
       {% if section.settings.subtitle != blank %}
-        <div class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">{{ section.settings.subtitle }}</div>
+        <div class="subtop text-{{ section.settings.align_heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">{{ section.settings.subtitle }}</div>
       {% endif %}
     {% endif %}
       {% if section.settings.title != blank %}
-        <h3 class="h3 text-{{ section.settings.align-heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+        <h3 class="h3 text-{{ section.settings.align_heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
         <span>{{ section.settings.title }}</span>
         </h3>
       {% endif %}
@@ -525,7 +525,7 @@ margin-top:50px;
     },
         {
       "type": "select",
-      "id": "r_type",
+      "id": "reviews_type",
       "label": "Reviews type",
       "default": "t_1",
       "options": [
@@ -550,7 +550,7 @@ margin-top:50px;
         },      
      {
       "type": "select",
-      "id": "align-heading",
+      "id": "align_heading",
       "label": "Align Heading",
       "default": "center",
       "options": [

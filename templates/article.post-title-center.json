@@ -13,7 +13,7 @@
       "type": "article-template",
       "settings": {
         "animation": "fade",
-        "bgsection": "rgba(0,0,0,0)",
+        "background_section": "rgba(0,0,0,0)",
         "gradient_bg": "linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8) 100%)",
         "layout_featured": "in-image",
         "align": "center",
@@ -33,7 +33,7 @@
       "type": "line",
       "settings": {
         "animation": "",
-        "bgsection": "#ffffff",
+        "background_section": "#ffffff",
         "setwidth": "full",
         "bgborder": "#dddddd",
         "wborder": "1px"
@@ -44,11 +44,11 @@
       "settings": {
         "animation": "fade",
         "setwidth": "container",
-        "bgsection": "#ffffff",
-        "title_top": "",
+        "background_section": "#ffffff",
+        "subtitle_top": "",
         "title": "You may so like",
-        "des": "",
-        "align-heading": "center",
+        "description": "",
+        "align_heading": "center",
         "blog": "news",
         "item_style": "blog-3",
         "enable_btn_blog": true,

@@ -284,7 +284,7 @@ color:{{ section.settings.text_color }};
   <div class="container">
     {% if section.settings.stars_text != blank %}
       {% comment %}
-    <div class="c_testimonial-header-r justify-{{ section.settings.align-heading }}">
+    <div class="c_testimonial-header-r justify-{{ section.settings.align_heading }}">
         <span>{{ section.settings.stars_text }}</span>
         <div class="c_testimonial-header-r-stars">
           <div class="reviewbox-rating-i">
@@ -293,7 +293,7 @@ color:{{ section.settings.text_color }};
         </div>
       </div>
       {% endcomment %}
-      <div class="rating-custom-2 product-block text-{{ section.settings.align-heading }}" style="--mobile-font_size:{{ section.settings.mobile_font_size }}px;--font_size:{{ section.settings.font_size }}px;{% if section.settings.stars_border_color != "rgba(0,0,0,0)" %}--border-color:{{ section.settings.stars_border_color }};{% endif %}--stars-color:{{ section.settings.stars_color }};--background:{% if section.settings.stars_background != blank %}{{ section.settings.stars_background }}{% else %}{{ settings.branding_color }}{% endif %};">
+      <div class="rating-custom-2 product-block text-{{ section.settings.align_heading }}" style="--mobile-font_size:{{ section.settings.mobile_font_size }}px;--font_size:{{ section.settings.font_size }}px;{% if section.settings.stars_border_color != "rgba(0,0,0,0)" %}--border-color:{{ section.settings.stars_border_color }};{% endif %}--stars-color:{{ section.settings.stars_color }};--background:{% if section.settings.stars_background != blank %}{{ section.settings.stars_background }}{% else %}{{ settings.branding_color }}{% endif %};">
           <div class="trustpilot-block-rating-text-2">
             <div class="stars">
               {% assign sanitized_text = section.settings.stars_text | strip_html | downcase | replace: 'out of', '/' %}
@@ -326,12 +326,12 @@ color:{{ section.settings.text_color }};
       </div>
     {% endif %}
       {% if section.settings.heading != blank %}
-        <h3 class="h3 text-{{ section.settings.align-heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
+        <h3 class="h3 text-{{ section.settings.align_heading }} mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}">
         <span>{{ section.settings.heading }}</span>
       </h3>
       {% endif %}
     {% if section.settings.text != blank %}
-    <div class="subtop text-{{ section.settings.align-heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
+    <div class="subtop text-{{ section.settings.align_heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
     {% endif %}
   </div>
   <div class="slider_items-i swiper slider_items-i-{{ section.id }} {{ section.settings.setwidth }}">
@@ -744,7 +744,7 @@ window.addEventListener('resize', () => {
         },
      {
       "type": "select",
-      "id": "align-heading",
+      "id": "align_heading",
       "label": "Align Heading",
       "default": "center",
       "options": [
