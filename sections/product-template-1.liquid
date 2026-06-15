@@ -465,7 +465,7 @@ display:none;
                   class="product-block product__text{% if block.settings.text_style == 'uppercase' %} text-uppercase {% elsif block.settings.text_style == 'subtitle' %} subtop{% endif %}"
                   {{ block.shopify_attributes }}
                 >
-                  {{- block.settings.content -}}
+                  {{- block.settings.text -}}
                 </p>
               {%- when 'title' -%}
                 <style>
@@ -518,7 +518,7 @@ display:none;
                 >
                   <div class="trustpilot-block-rating-text">
                     {% comment %}
-                    {% assign sanitized_text = block.settings.content | strip_html | downcase | replace: 'out of', '/' %}
+                    {% assign sanitized_text = block.settings.text | strip_html | downcase | replace: 'out of', '/' %}
                     {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
                     {% assign rating_string = pre_slash | split: ' ' | last | strip %}
                     {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
@@ -546,7 +546,7 @@ display:none;
                         </defs>
                       <g fill="none"><g fill="url(#grad-1-{{ ii }}-{{ section.id }})"><path d="M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96z"></path></g><path d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z" fill="url(#grad-stars-{{ ii }}-{{ section.id }})"></path></g>
                     </svg>
-                    <span class="rating-excellent" style="--color:{{ block.settings.text_color }}">{{ block.settings.content }}</span>
+                    <span class="rating-excellent" style="--color:{{ block.settings.text_color }}">{{ block.settings.text }}</span>
                     {% if block.settings.show_truspilot  %}
                     
                     <div class="trustpilot_container">
@@ -597,7 +597,7 @@ display:none;
                   <div class="trustpilot-block-rating-text-2">
                     <div class="stars">
                       {% comment %}
-                      {% assign sanitized_text = block.settings.content | strip_html | downcase | replace: 'out of', '/' %}
+                      {% assign sanitized_text = block.settings.text | strip_html | downcase | replace: 'out of', '/' %}
                       {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
                       {% assign rating_string = pre_slash | split: ' ' | last | strip %}
                       {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
@@ -624,20 +624,20 @@ display:none;
                         </svg>
                       {% endfor %}
                     </div>
-                    <span class="rating-excellent-2" style="--color:{{ block.settings.text_color }}">{{ block.settings.content }}</span>
+                    <span class="rating-excellent-2" style="--color:{{ block.settings.text_color }}">{{ block.settings.text }}</span>
                   </div>
                 </div>
               {% when 'review_images' %}
                 <div class="reviews_images product-block" {{ block.shopify_attributes }} style="--font-color:{{ block.settings.text_color }};border:1px solid {{ block.settings.border_color }};background:{{ block.settings.background }};{% if block.settings.border_color != "rgba(0,0,0,0)" %}:1px solid {{ block.settings.border_color }};{% endif %}border-radius:{{ block.settings.roundness }}px;">
                     <div class="reviews_images_r">
                       {% if block.settings.image_1 != blank %}
-                        <img src="{{ block.settings.image_1 | image_url: width: 100 }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                        <img src="{{ block.settings.image_1 | img_url:"100x" }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
                       {% if block.settings.image_2 != blank %}
-                        <img src="{{ block.settings.image_2 | image_url: width: 100 }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                        <img src="{{ block.settings.image_2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
                       {% if block.settings.image_3 != blank %}
-                        <img src="{{ block.settings.image_3 | image_url: width: 100 }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                        <img src="{{ block.settings.image_3 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
                     </div>
                     <div class="reviews_text">
@@ -645,7 +645,7 @@ display:none;
                         {% if block.settings.add_stars %}
                         <div class="stars" style="color:{{ block.settings.stars_color }};--height:{{ block.settings.stars_height }}px">
                         {% comment %}
-                        {% assign sanitized_text = block.settings.content | strip_html | downcase | replace: 'out of', '/' %}
+                        {% assign sanitized_text = block.settings.text | strip_html | downcase | replace: 'out of', '/' %}
                         {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
                         {% assign rating_string = pre_slash | split: ' ' | last | strip %}
                         {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
@@ -673,7 +673,7 @@ display:none;
                           {% endfor %}
                         </div>
                       {% endif %}
-                        <span class="review-excellent-2" style="color:{{ block.settings.text_color }};--size:{{ block.settings.stars_text_size }}px;--size-mobile:{{ block.settings.stars_text_size_mobile }}px">{{ block.settings.content }}</span>
+                        <span class="review-excellent-2" style="color:{{ block.settings.text_color }};--size:{{ block.settings.stars_text_size }}px;--size-mobile:{{ block.settings.stars_text_size_mobile }}px">{{ block.settings.text }}</span>
                         </div>
                         <div class="review_images_content" style="color:{{ block.settings.text_color }};--size:{{ block.settings.content_size }}px;--size-mobile:{{ block.settings.content_size_mobile }}px">
                           {{ block.settings.content }}
@@ -861,7 +861,7 @@ display:none;
                     <div class="customer-review-avatar-container">
                       <div class="customer-review-avatar">
                         <img
-                          src="{{ block.settings.image | image_url: width: 200 }}"
+                          src="{{ block.settings.image | img_url: "200x" }}"
                           alt="{{ block.settings.name }}"
                           loading="lazy"
                         >
@@ -930,7 +930,7 @@ display:none;
                           </svg>
                         </div>
                       </div>
-                      <p class="customer-review-text">{{ block.settings.content }}</p>
+                      <p class="customer-review-text">{{ block.settings.text }}</p>
                     </div>
                   </div>
                 </div>               
@@ -959,7 +959,7 @@ display:none;
                       {% render 'list-svg', block:block,  icon: block.settings.icon %}
                     </div>
                     <div class="c_box_text">
-                      {{ block.settings.content }}
+                      {{ block.settings.text }}
                     </div>
                 </div>
               {%- when 'promo' -%}
@@ -1069,7 +1069,7 @@ display:none;
                     <div class="promo_c">
                       <div class="promo_copy_icon">
                         {% if block.settings.icon != blank %}
-                          <img src="{{ block.settings.icon | image_url: width: 100 }}" loading="lazy">
+                          <img src="{{ block.settings.icon | img_url:"100x" }}" loading="lazy">
                         {% else %}
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -1372,7 +1372,7 @@ display:none;
                                 </svg>
                               </button>
                             {% else %}
-                                    <img src="{{ block.settings[image] | image_url: width: 500 }}" loading="lazy" alt="">
+                                    <img src="{{ block.settings[image] | img_url:"500x" }}" loading="lazy" alt="">
                             {% endif %}
                           </div>
                         </div>
@@ -1577,7 +1577,7 @@ display:none;
                     {% else %}
                     {% if block.settings.icon != blank %}
                       <img
-                        src="{{ block.settings.icon | image_url: width: 100 }}"
+                        src="{{ block.settings.icon | img_url:"100x" }}"
                         loading="lazy"
                         style="width:{{ block.settings.icon_width }}px"
                       >
@@ -1594,7 +1594,7 @@ display:none;
                         <span style="--icon-color:{{ block.settings.icon_color_2 }};">
                           {% if block.settings.icon_1 != blank %}
                             <img
-                              src="{{ block.settings.icon_1 | image_url: width: 100 }}"
+                              src="{{ block.settings.icon_1 | img_url:"100x" }}"
                               loading="lazy"
                               style="width:{{ block.settings.icons_width }}px"
                             >
@@ -1612,7 +1612,7 @@ display:none;
                         <span style="--icon-color:{{ block.settings.icon_color_3 }};">
                           {% if block.settings.icon_2 != blank %}
                             <img
-                              src="{{ block.settings.icon_2 | image_url: width: 100 }}"
+                              src="{{ block.settings.icon_2 | img_url:"100x" }}"
                               loading="lazy"
                               style="width:{{ block.settings.icons_width }}px"
                             >
@@ -1692,8 +1692,8 @@ display:none;
                 </div>
               {%- when 'block_banner' -%}
                 {%- liquid
-                  assign banner_text = block.settings.banner_caption
-                  assign banner_des = block.settings.banner_description
+                  assign banner_text = block.settings.banner_text
+                  assign banner_des = block.settings.banner_des
                   assign banner_icon = block.settings.banner_icon
                   assign banner_icon_svg = block.settings.banner_icon_svg
                   assign banner_txt_color = block.settings.banner_txt_color
@@ -1943,7 +1943,7 @@ display:none;
               </style>
                 <div class="product-block salepoint salepoint-{{ block.id }} d-flex align-items-center"  style="--icon-color:{{ block.settings.icon_color }};--stroke:{{ block.settings.icon_stroke }}" {{ block.shopify_attributes }}>
                   {% if block.settings.c_icon != blank %}
-                    <img src="{{ block.settings.c_icon | image_url: width: 100 }}" alt="Salepoint icon" loading="lazy" width="{{ block.settings.icon_size }}">
+                    <img src="{{ block.settings.c_icon | img_url:"100x" }}" alt="Salepoint icon" loading="lazy" width="{{ block.settings.icon_size }}">
                   {% else %}
                   {% render 'list-svg', block:block,  icon: block.settings.icon %}
                   {% endif %}
@@ -2412,7 +2412,7 @@ display:none;
                     <div class="bundles_heading">
                       {% if block.settings.icon != blank %}
                         <img
-                          src="{{ block.settings.icon | image_url: width: 100 }}"
+                          src="{{ block.settings.icon | img_url:"100x" }}"
                           loading="lazy"
                           width="{{ block.settings.icon_width }}px"
                           height="auto"
@@ -2438,7 +2438,7 @@ display:none;
                             >
                             <picture>
                               <img
-                                src="{{ prod.featured_image | image_url: width: 200 }}"
+                                src="{{ prod.featured_image | img_url:"200x" }}"
                                 loading="lazy"
                                 alt="{{ prod.title }}"
                               >
@@ -2653,7 +2653,7 @@ display:none;
                   >
                     {% if block.settings.custom_icon != blank %}
                       <img
-                        src="{{ block.settings.custom_icon | image_url: width: 100 }}"
+                        src="{{ block.settings.custom_icon | img_url:"100x" }}"
                         loading="lazy"
                         style="width:{{ block.settings.icon_size }}px"
                       >
@@ -2702,7 +2702,7 @@ display:none;
                   {%- if block.settings.enable_tabvertical -%}
                     {%- render 'product-information-vertical',
                       product: product,
-                      gtab_des: block.settings.gtab_description,
+                      gtab_des: block.settings.gtab_des,
                       stab_title1: block.settings.stab_title1,
                       stab_content1: block.settings.stab_content1,
                       stab_title2: block.settings.stab_title2,
@@ -2718,7 +2718,7 @@ display:none;
                   {%- else -%}
                     {%- render 'product-information',
                       product: product,
-                      gtab_des: block.settings.gtab_description,
+                      gtab_des: block.settings.gtab_des,
                       stab_title1: block.settings.stab_title1,
                       stab_content1: block.settings.stab_content1,
                       stab_title2: block.settings.stab_title2,
@@ -3208,7 +3208,7 @@ function formatPrice(value) {
 
 {% schema %}
 {
-  "name": "Product Overview",
+  "name": "Product overview",
   "settings": [
     {
       "type": "header",
@@ -3308,7 +3308,7 @@ function formatPrice(value) {
       "options": [
         {
           "value": "auto",
-          "label": "Adapt To Image"
+          "label": "Adapt to image"
         },
         {
           "value": "portrait",
@@ -3320,7 +3320,7 @@ function formatPrice(value) {
         }
       ],
       "default": "auto",
-      "label": "Image Ratio"
+      "label": "Image ratio"
     },
     {
       "type": "checkbox",
@@ -3337,7 +3337,7 @@ function formatPrice(value) {
     {
       "type": "checkbox",
       "id": "enable_video_looping",
-      "label": "Enable Video Looping",
+      "label": "Enable video looping",
       "default": false
     },
     {
@@ -3358,7 +3358,7 @@ function formatPrice(value) {
     {
       "type": "checkbox",
       "id": "hide_mobile",
-      "label": "Hide On Mobile"
+      "label": "Hide on mobile"
     },
     {
       "type": "color_background",
@@ -3368,7 +3368,7 @@ function formatPrice(value) {
     {
       "type": "color",
       "id": "text_color",
-      "label": "Text Color"
+      "label": "Text color"
     },
     {
       "type": "range",
@@ -3382,7 +3382,7 @@ function formatPrice(value) {
     {
       "type": "range",
       "id": "mobile_width",
-      "label": "Icons Size Mobile",
+      "label": "Icons Size mobile",
       "min": 10,
       "max": 30,
       "step": 1,
@@ -3439,7 +3439,7 @@ function formatPrice(value) {
     {
       "type": "checkbox",
       "id": "stock_enable",
-      "label": "Show Stock When Less Than 10 Products Available",
+      "label": "Show stock when less than 10 products available",
       "default": true
     },
     {
@@ -3461,7 +3461,7 @@ function formatPrice(value) {
     {
       "type": "page",
       "id": "sizeguide_page",
-      "label": "Page",
+      "label": "Select page",
       "info": "[Create new page](/admin/pages/new) and enter your HTML size guide"
     },
     {
@@ -3544,7 +3544,7 @@ function formatPrice(value) {
     {
       "type": "range",
       "id": "icons_padding_top",
-      "label": "Icons Padding Top",
+      "label": "Icons padding top",
       "max": 100,
       "min": 0,
       "step": 2,
@@ -3553,7 +3553,7 @@ function formatPrice(value) {
     {
       "type": "range",
       "id": "icons_padding_bottom",
-      "label": "Icons Padding Bottom",
+      "label": "Icons padding bottom",
       "max": 100,
       "min": 0,
       "step": 2,
@@ -3572,7 +3572,7 @@ function formatPrice(value) {
     {
       "type": "select",
       "id": "enable_2_on",
-      "label": "Enable On",
+      "label": "Enable on",
       "default": "both",
       "options": [
         {
@@ -3597,11 +3597,11 @@ function formatPrice(value) {
       "options": [
         {
           "value": "add_cart",
-          "label": "Add To Cart"
+          "label": "Add to Cart"
         },
         {
           "value": "scroll_top",
-          "label": "Scroll To Top"
+          "label": "Scroll to top"
         }
       ]
     },
@@ -3626,7 +3626,7 @@ function formatPrice(value) {
     {
       "type": "color",
       "id": "star_1_2",
-      "label": "Stars Color",
+      "label": "stars Color",
       "default": "#262626"
     },
     {
@@ -3650,13 +3650,13 @@ function formatPrice(value) {
     {
       "type": "checkbox",
       "id": "add_stars_text",
-      "label": "Add Stars And Text",
+      "label": "Add stars and text",
       "default": true
     },
     {
       "type": "text",
       "id": "stars_caption",
-      "label": "Stars Text",
+      "label": "Stars text",
       "default": "Excellent 4.8 | 1319 reviews"
     },
      {
@@ -3672,7 +3672,7 @@ function formatPrice(value) {
     {
       "type": "image_picker",
       "id": "Shipping_icon",
-      "label": "Shipping Icon"
+      "label": "Shipping icon"
     },
     {
       "type": "select",
@@ -3761,7 +3761,7 @@ function formatPrice(value) {
     {
       "type": "range",
       "id": "shipping_icon_width",
-      "label": "Shipping Icon Width",
+      "label": "Shipping icon width",
       "min": 10,
       "max": 100,
       "default": 20
@@ -3769,18 +3769,18 @@ function formatPrice(value) {
     {
       "type": "text",
       "id": "shipping_text",
-      "label": "Shipping Text",
+      "label": "Shipping text",
       "default": "Get It By"
     },
         {
           "type": "checkbox",
           "id": "pulsating_dot",
-          "label": "Pulsating Dot"
+          "label": "Pulsating dot"
     },
     {
       "type": "color",
       "id": "dot_color",
-      "label": "Dot Color"
+      "label": "Dot color"
     },
      {
       "type": "checkbox",
@@ -3799,7 +3799,7 @@ function formatPrice(value) {
     {
       "type": "range",
       "id": "delivery_in",
-      "label": "Delivery In",
+      "label": "Delivery in",
       "max": 100,
       "min": 0,
       "step": 1,
@@ -3808,7 +3808,7 @@ function formatPrice(value) {
     {
       "type": "range",
       "id": "delivery_size",
-      "label": "Delivery Size",
+      "label": "Delivery size",
       "max": 16,
       "min": 8,
       "step": 1,
@@ -3817,7 +3817,7 @@ function formatPrice(value) {
     {
       "type": "range",
       "id": "delivery_size_mobile",
-      "label": "Delivery Size Mobile",
+      "label": "Delivery size mobile",
       "max": 15,
       "min": 8,
       "step": 1,
@@ -3826,7 +3826,7 @@ function formatPrice(value) {
     {
       "type": "text",
       "id": "atc_text",
-      "label": "Button Label",
+      "label": "Button label",
       "default": "Get it now"
     }
   ],
@@ -3840,7 +3840,7 @@ function formatPrice(value) {
       "settings": [
         {
           "type": "text",
-          "id": "content",
+          "id": "text",
           "default": "Text block",
           "label": "Text"
         },
@@ -3854,7 +3854,7 @@ function formatPrice(value) {
             },
             {
               "value": "subtitle",
-              "label": "Subtitle"
+              "label": "Sub Title"
             },
             {
               "value": "uppercase",
@@ -3868,7 +3868,7 @@ function formatPrice(value) {
     },
     {
       "type": "icon_text_box",
-      "name": "Icon And Text Box",
+      "name": "Icon and text box",
       "settings": [
                 {
           "type": "select",
@@ -3957,19 +3957,19 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color",
-          "label": "Icon Color"
+          "label": "Icon color"
         },
         {
           "type": "range",
           "id": "icon_size",
           "default": 20,
-          "label": "Icon Size",
+          "label": "Icon size",
           "min":12,
           "max":48
         },
         {
           "type": "richtext",
-          "id": "content",
+          "id": "text",
           "default": "<p>Icon and text block</p>",
           "label": "Text"
         }
@@ -3991,7 +3991,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "stars_height",
-          "label": "Stars Height",
+          "label": "Stars height",
           "default": 15,
           "min": 10,
           "max": 50
@@ -3999,7 +3999,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "stars_rating",
-          "label": "Stars Rating",
+          "label": "Stars rating",
           "default": 4.5,
           "min": 3,
           "max": 5,
@@ -4007,8 +4007,8 @@ function formatPrice(value) {
         },
         {
           "type": "richtext",
-          "id": "content",
-          "label": "Content"
+          "id": "text",
+          "label": "content"
         },
           {
         "type":"checkbox",
@@ -4019,7 +4019,7 @@ function formatPrice(value) {
           {
         "type": "select",
         "id": "trust_icon",
-        "label": "Trust Icon",
+        "label": "Trust icon",
         "default": "trustpilot",
         "options": [
           {
@@ -4047,7 +4047,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "font_size",
-          "label": "Font Size",
+          "label": "Font size",
           "default": 12,
           "min": 10,
           "max": 30
@@ -4055,18 +4055,18 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "text_color",
-          "label": "Text Color"
+          "label": "Text color"
         },
 
         {
           "type": "color",
           "id": "border_color",
-          "label": "Border Color"
+          "label": "Border color"
         },
         {
           "type": "color",
           "id": "stars_color",
-          "label": "Stars Color"
+          "label": "Stars color"
         },
         {
           "type": "color_background",
@@ -4091,7 +4091,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "stars_height",
-          "label": "Stars Height",
+          "label": "Stars height",
           "default": 15,
           "min": 10,
           "max": 50
@@ -4099,7 +4099,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "stars_rating",
-          "label": "Stars Rating",
+          "label": "Stars rating",
           "default": 4.5,
           "min": 3,
           "max": 5,
@@ -4107,13 +4107,13 @@ function formatPrice(value) {
         },
         {
           "type": "richtext",
-          "id": "content",
-          "label": "Content"
+          "id": "text",
+          "label": "content"
         },
         {
           "type": "range",
           "id": "font_size",
-          "label": "Font Size",
+          "label": "Font size",
           "default": 12,
           "min": 10,
           "max": 30
@@ -4121,7 +4121,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_font_size",
-          "label": "Mobile Font Size",
+          "label": "Mobile Font size",
           "default": 11,
           "min": 10,
           "max": 30
@@ -4129,18 +4129,18 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "text_color",
-          "label": "Text Color"
+          "label": "Text color"
         },
 
         {
           "type": "color",
           "id": "border_color",
-          "label": "Border Color"
+          "label": "Border color"
         },
         {
           "type": "color",
           "id": "stars_color",
-          "label": "Stars Color"
+          "label": "Stars color"
         },
         {
           "type": "color_background",
@@ -4151,7 +4151,7 @@ function formatPrice(value) {
     },
     {
       "type": "review_images",
-      "name": "Reviews With Images",
+      "name": "Reviews with images",
       "limit": 1,
       "settings": [
         {
@@ -4172,18 +4172,18 @@ function formatPrice(value) {
          {
           "type": "checkbox",
           "id": "add_stars",
-          "label": "Add Stars",
+          "label": "Add stars",
           "default":true
         },
                  {
           "type": "color",
           "id": "stars_color",
-          "label": "Stars Color"
+          "label": "Stars color"
         },
         {
           "type": "color",
           "id": "border_color",
-          "label": "Border Color"
+          "label": "Border color"
         },
         {
           "type": "color_background",
@@ -4193,12 +4193,12 @@ function formatPrice(value) {
          {
           "type": "color",
           "id": "text_color",
-          "label": "Text Color"
+          "label": "Text color"
         },
         {
           "type": "range",
           "id": "stars_rating",
-          "label": "Stars Rating",
+          "label": "Stars rating",
           "default": 4.5,
           "min": 3,
           "max": 5,
@@ -4206,8 +4206,8 @@ function formatPrice(value) {
         },
         {
           "type": "richtext",
-          "id": "content",
-          "label": "Reviews Text"
+          "id": "text",
+          "label": "Reviews text"
         },
         {
           "type": "richtext",
@@ -4225,7 +4225,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "images_size",
-          "label": "Images Size",
+          "label": "Images size",
           "default": 50,
           "min": 20,
           "max":120
@@ -4233,7 +4233,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "images_size_mobile",
-          "label": "Images Size Mobile",
+          "label": "Images size mobile",
           "default": 45,
           "min": 20,
           "max":120
@@ -4241,7 +4241,7 @@ function formatPrice(value) {
          {
           "type": "range",
           "id": "images_margin",
-          "label": "Images Margin",
+          "label": "Images margin",
           "default": 20,
           "min": 15,
           "max":35
@@ -4257,7 +4257,7 @@ function formatPrice(value) {
          {
           "type": "range",
           "id": "stars_text_size_mobile",
-          "label": "Font Size Heading Mobile",
+          "label": "Font Size Heading mobile",
           "default": 14,
           "min": 10,
           "max":20
@@ -4265,7 +4265,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "stars_height",
-          "label": "Stars Height",
+          "label": "Stars height",
           "default": 15,
           "min": 10,
           "max":25
@@ -4273,7 +4273,7 @@ function formatPrice(value) {
          {
           "type": "range",
           "id": "content_size",
-          "label": "Font Size Subtitle",
+          "label": "Font Size Sub Title",
           "default": 16,
           "min": 10,
           "max":24
@@ -4281,7 +4281,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "content_size_mobile",
-          "label": "Font Size Subtitle Mobile",
+          "label": "Font Size Sub Title mobile",
           "default": 16,
           "min": 10,
           "max":24
@@ -4296,7 +4296,7 @@ function formatPrice(value) {
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "image"
         },
         {
           "type": "text",
@@ -4306,27 +4306,27 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "name_color",
-          "label": "Name Color"
+          "label": "Name color"
         },
         {
           "type": "textarea",
-          "id": "content",
-          "label": "Content"
+          "id": "text",
+          "label": "content"
         },
         {
           "type": "color",
           "id": "text_color",
-          "label": "Text Color"
+          "label": "Text color"
         },
         {
           "type": "color",
           "id": "border_color",
-          "label": "Border Color"
+          "label": "Border color"
         },
         {
           "type": "color",
           "id": "stars_color",
-          "label": "Stars Color"
+          "label": "Stars color"
         },
         {
           "type": "color_background",
@@ -4340,7 +4340,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "padding_top",
-          "label": "Padding Top",
+          "label": "Padding top",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4349,7 +4349,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "padding_bottom",
-          "label": "Padding Bottom",
+          "label": "Padding bottom",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4362,7 +4362,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_padding_top",
-          "label": "Padding Top",
+          "label": "Padding top",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4371,7 +4371,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_padding_bottom",
-          "label": "Padding Bottom",
+          "label": "Padding bottom",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4392,7 +4392,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "color",
-          "label": "Text Color"
+          "label": "Text color"
         },
         {
           "type": "image_picker",
@@ -4402,7 +4402,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "icon_size",
-          "label": "Icon Size",
+          "label": "Icon size",
           "min": 20,
           "max": 100,
           "default": 32
@@ -4415,39 +4415,39 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "subtitle",
-          "label": "Content"
+          "label": "content"
         },
         {
           "type": "text",
           "id": "time",
-          "label": "Promo End Date",
+          "label": "Promo end date",
           "info": "January 1, 2000 00:00:00"
         },
         {
           "type": "checkbox",
           "id": "set_to",
-          "label": "Set To 24 Hours"
+          "label": "Set to 24 hours"
         },
         {
           "type": "select",
           "id": "action_timer",
-          "label": "Action After Timer",
+          "label": "Action after Timer",
           "default": "invisible",
           "options": [
             {
               "value": "invisible",
-              "label": "Turns Invisible"
+              "label": "Turns invisible"
             },
             {
               "value": "resets_itself",
-              "label": "Resets Itself"
+              "label": "Resets itself"
             }
           ]
         },
         {
           "type": "range",
           "id": "spacing_top",
-          "label": "Spacing Top",
+          "label": "Spacing top",
           "default": 10,
           "min": 0,
           "max": 100
@@ -4455,7 +4455,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "spacing_bottom",
-          "label": "Spacing Bottom",
+          "label": "Spacing bottom",
           "default": 32,
           "min": 0,
           "max": 100
@@ -4476,7 +4476,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "heading_size",
-          "label": "Heading Size",
+          "label": "Heading size",
           "default": "h6",
           "options": [
             {
@@ -4508,7 +4508,7 @@ function formatPrice(value) {
         {
           "type": "image_picker",
           "id": "image_1",
-          "label": "Image 1"
+          "label": "image 1"
         },
         {
           "type": "text",
@@ -4523,7 +4523,7 @@ function formatPrice(value) {
         {
           "type": "image_picker",
           "id": "image_2",
-          "label": "Image 2"
+          "label": "image 2"
         },
         {
           "type": "text",
@@ -4538,7 +4538,7 @@ function formatPrice(value) {
         {
           "type": "image_picker",
           "id": "image_3",
-          "label": "Image 3"
+          "label": "image 3"
         },
         {
           "type": "text",
@@ -4553,7 +4553,7 @@ function formatPrice(value) {
         {
           "type": "image_picker",
           "id": "image_4",
-          "label": "Image 4"
+          "label": "image 4"
         },
         {
           "type": "text",
@@ -4572,7 +4572,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "padding_top",
-          "label": "Padding Top",
+          "label": "Padding top",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4581,7 +4581,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "padding_bottom",
-          "label": "Padding Bottom",
+          "label": "Padding bottom",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4594,7 +4594,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_padding_top",
-          "label": "Padding Top",
+          "label": "Padding top",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4603,7 +4603,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_padding_bottom",
-          "label": "Padding Bottom",
+          "label": "Padding bottom",
           "max": 150,
           "min": 0,
           "step": 2,
@@ -4636,7 +4636,7 @@ function formatPrice(value) {
          {
           "type": "range",
           "id": "font_size",
-          "label": "Font Size",
+          "label": "Font size",
           "default": 38,
           "min": 10,
           "max": 50
@@ -4644,7 +4644,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "font_size_mobile",
-          "label": "Font Size Mobile",
+          "label": "Font size mobile",
           "default":24,
           "min": 10,
           "max": 50
@@ -4663,13 +4663,13 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "enable_badge",
-          "label": "Enable Save Badge",
+          "label": "Enable SAVE Badge",
           "default": true
         },  
         {
           "type": "range",
           "id": "b_font_size",
-          "label": "Font Size",
+          "label": "Font size",
           "default": 12,
           "min": 0,
           "max": 50
@@ -4677,7 +4677,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "b_size",
-          "label": "Badge Size",
+          "label": "Badge size",
           "default": 6,
           "min": 0,
           "max": 50
@@ -4685,7 +4685,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "b_roundness",
-          "label": "Badge Roundness",
+          "label": "Badge roundness",
           "default": 4,
           "min": 0,
           "max": 100
@@ -4693,7 +4693,7 @@ function formatPrice(value) {
         {
           "type": "color_background",
           "id": "b_bk",
-          "label": "Badge Background"
+          "label": "Badge background"
         },
         {
           "type": "color",
@@ -4732,7 +4732,7 @@ function formatPrice(value) {
                 {
           "type": "range",
           "id": "b2_font_size",
-          "label": "Font Size",
+          "label": "Font size",
           "default": 12,
           "min": 0,
           "max": 50
@@ -4740,7 +4740,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "b2_size",
-          "label": "Badge Size",
+          "label": "Badge size",
           "default": 6,
           "min": 0,
           "max": 50
@@ -4748,7 +4748,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "b2_roundness",
-          "label": "Badge Roundness",
+          "label": "Badge roundness",
           "default": 4,
           "min": 0,
           "max": 100
@@ -4756,7 +4756,7 @@ function formatPrice(value) {
         {
           "type": "color_background",
           "id": "b2_bk",
-          "label": "Badge Background"
+          "label": "Badge background"
         },
         {
           "type": "color",
@@ -4770,7 +4770,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "p_size",
-          "label": "Price Size",
+          "label": "Price size",
           "default": 24,
           "min": 0,
           "max": 50
@@ -4778,7 +4778,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_p_size",
-          "label": "Price Size Mobile",
+          "label": "Price size mobile",
           "default": 24,
           "min": 0,
           "max": 50
@@ -4791,7 +4791,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "p_c_size",
-          "label": "Comapre Price Size",
+          "label": "Comapre price size",
           "default": 18,
           "min": 0,
           "max": 50
@@ -4799,7 +4799,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_p_c_size",
-          "label": "Compare Price Size Mobile",
+          "label": "Compare price size mobile",
           "default": 24,
           "min": 0,
           "max": 50
@@ -4807,7 +4807,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "p_c_color",
-          "label": "Compare Price Color"
+          "label": "Compare price Color"
         }
       ]
     },
@@ -4849,19 +4849,19 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "hurrify_text",
-          "label": "Hurrify Text",
+          "label": "Hurrify text",
           "default": "Hurrify, 8 item(s) left in stock!"
         },
         {
           "type": "color",
           "id": "text_color",
-          "label": "Text Color",
+          "label": "Text color",
           "default": "#dc3545"
         },
         {
           "type": "range",
           "id": "hurrify_progress",
-          "label": "Hurrify Progress",
+          "label": "Hurrify progress",
           "default": 90,
           "min": 0,
           "max": 100,
@@ -4870,7 +4870,7 @@ function formatPrice(value) {
         {
           "type": "color_background",
           "id": "hurrify_background",
-          "label": "Hurrify Background"
+          "label": "Hurrify background"
         },
         {
         "type":"header",
@@ -4889,7 +4889,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "enable_payment_button",
-          "label": "Show Dynamic Checkout Button",
+          "label": "Show dynamic checkout button",
           "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
           "default": true
         },
@@ -4902,13 +4902,13 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "display_price_on_button",
-          "label": "Display Price On Button",
+          "label": "Display price on button",
           "default": true
         },
         {
           "type": "color",
           "id": "compare_color",
-          "label": "Compare Price Color",
+          "label": "Compare price color",
           "default": "#b2b2b2"
         },
         {
@@ -4928,7 +4928,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "waitlist",
-          "label": "Show Waitlist",
+          "label": "Show waitlist",
           "default": true
         },
         {
@@ -4947,7 +4947,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "product_selector",
-          "label": "Option Type",
+          "label": "Option type",
           "options": [
             {
               "value": "radio",
@@ -5100,12 +5100,12 @@ function formatPrice(value) {
             }
           ],
           "default": "tier_1",
-          "label": "Default Selected Option"
+          "label": "Default Selected option"
         },
         {
           "type": "checkbox",
           "id": "display_selected_indicator",
-          "label": "Display Round Button In Option",
+          "label": "Display round button in option",
           "default": true
         },
         {
@@ -5115,7 +5115,7 @@ function formatPrice(value) {
           "max": 40,
           "step": 2,
           "unit": "px",
-          "label": "Border Radius",
+          "label": "Border radius",
           "default": 10
         },
         {
@@ -5125,7 +5125,7 @@ function formatPrice(value) {
           "max": 5,
           "step": 1,
           "unit": "px",
-          "label": "Border Width",
+          "label": "Border width",
           "default": 2
         },
 
@@ -5138,46 +5138,46 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "enable_variant_selectors",
-          "label": "Show Variant Selectors",
+          "label": "Show variant selectors",
           "default": true,
           "info": "Show variant picker in each quantity break"
         },
         {
           "type": "checkbox",
           "id": "enable_variant_selectors_on_quantity_of_1",
-          "label": "Show Variant Selectors For Single Quantity",
+          "label": "Show variant selectors for single quantity",
           "default": false,
           "visible_if": "{{ block.settings.enable_variant_selectors }}"
         },
         {
           "type": "checkbox",
           "id": "update_prices",
-          "label": "Enable Variant Price Updates",
+          "label": "Enable variant price updates",
           "default": false,
           "info": "This option will dynamically change the displayed bundle prices based on the selected variant. ATTENTION: This option might NOT work with currency converters."
         },
         {
           "type": "checkbox",
           "id": "skip_unavailable",
-          "label": "Hide & Automatically Skip Sold Out Variants",
+          "label": "Hide & automatically skip sold out variants",
           "default": false
         },
         {
           "type": "checkbox",
           "id": "full_width_pickers",
-          "label": "Make Variant Pickers Full Width",
+          "label": "Make variant pickers full width",
           "default": false
         },
         {
           "type": "checkbox",
           "id": "hide_pickers_overlay",
-          "label": "Making Variant Pickers Semi Transparent",
+          "label": "Making variant pickers semi transparent",
           "default": true
         },
         {
           "type": "inline_richtext",
           "id": "pickers_label",
-          "label": "Variant Selectors Label",
+          "label": "Variant selectors label",
           "info": "Shown above the variant selectors."
         },
         {
@@ -5187,7 +5187,7 @@ function formatPrice(value) {
           "max": 100,
           "step": 5,
           "unit": "%",
-          "label": "Images Width",
+          "label": "Images width",
           "default": 70,
           "info": "Width of images that can be added with normal & vertical styles."
         },
@@ -5209,12 +5209,12 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "tier_1_badge",
-          "label": "Tier #1 Badge Text"
+          "label": "Tier #1 Badge text"
         },
         {
           "type": "select",
           "id": "tier_1_badge_style",
-          "label": "Tier #1 Badge Style",
+          "label": "Tier #1 Badge style",
           "options": [
             {
               "value": "1",
@@ -5232,7 +5232,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_1_badge_roundness",
-          "label": "Tier #1 Badge Border Radius",
+          "label": "Tier #1 Badge border radius",
           "min": 0,
           "max": 50,
           "step": 2,
@@ -5243,7 +5243,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_1_badge_element",
-          "label": "Tier #1 Badge Element",
+          "label": "Tier #1 Badge element",
           "options": [
             {
               "value": "h1",
@@ -5277,7 +5277,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_1_badge_size",
-          "label": "Tier #1 Badge Size",
+          "label": "Tier #1 Badge size",
           "min": 12,
           "max": 27,
           "step": 1,
@@ -5287,7 +5287,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_1_badge_size_mobile",
-          "label": "Tier #1 Badge Size Mobile",
+          "label": "Tier #1 Badge size mobile",
           "min": 8,
           "max": 19,
           "step": 1,
@@ -5315,7 +5315,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_1_benefit_position",
-          "label": "Tier #1 Benefit Position",
+          "label": "Tier #1 Benefit position",
           "options": [
             {
               "value": "top",
@@ -5332,7 +5332,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "tier_1_benefit_transparent",
-          "label": "Tier #1 Benefit Background Transparent",
+          "label": "Tier #1 Benefit background transparent",
           "default": true,
           "visible_if": "{{ block.settings.tier_1_benefit != blank }}"
         },
@@ -5346,20 +5346,20 @@ function formatPrice(value) {
           "type": "text",
           "id": "tier_1_percentage_off_text",
           "default": "0",
-          "label": "Tier #1 Percentage Off",
+          "label": "Tier #1 Percentage off",
           "info": "Percentage to be discounted from the quantity's total price"
         },
         {
           "type": "text",
           "id": "tier_1_fixed_amount_off",
-          "label": "Tier #1 Fixed Amount Off",
+          "label": "Tier #1 Fixed amount off",
           "default": "0",
           "info": "A fixed amount which will be subtracted from the quantity's total price. Please don't include currency symbol"
         },
         {
           "type": "text",
           "id": "tier_1_price_text",
-          "label": "Tier #1 Price Text",
+          "label": "Tier #1 Price text",
           "default": "[price]"
         },
         {
@@ -5368,21 +5368,21 @@ function formatPrice(value) {
           "options": [
             {
               "value": "price",
-              "label": "Regular Price"
+              "label": "Regular price"
             },
             {
               "value": "compare_price",
-              "label": "Compare Price"
+              "label": "Compare price"
             }
           ],
           "default": "compare_price",
-          "label": "Tier #1 Compare Price Based On",
+          "label": "Tier #1 Compare price based on",
           "info": "[Regular price] - Will take into account the above %age or fixed discount. [Compare Price] - compare price x bundle quantity "
         },
         {
           "type": "text",
           "id": "tier_1_compare_price_text",
-          "label": "Tier #1 Compare Price Text",
+          "label": "Tier #1 Compare price text",
           "default": "[compare_price]"
         },
         {
@@ -5403,12 +5403,12 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "tier_2_badge",
-          "label": "Tier #2 Badge Text"
+          "label": "Tier #2 Badge text"
         },
         {
           "type": "select",
           "id": "tier_2_badge_style",
-          "label": "Tier #2 Badge Style",
+          "label": "Tier #2 Badge style",
           "options": [
             {
               "value": "1",
@@ -5426,7 +5426,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_2_badge_roundness",
-          "label": "Tier #2 Badge Border Radius",
+          "label": "Tier #2 Badge border radius",
           "min": 0,
           "max": 50,
           "step": 2,
@@ -5437,7 +5437,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_2_badge_element",
-          "label": "Tier #2 Badge Element",
+          "label": "Tier #2 Badge element",
           "options": [
             {
               "value": "h1",
@@ -5471,7 +5471,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_2_badge_size",
-          "label": "Tier #2 Badge Size",
+          "label": "Tier #2 Badge size",
           "min": 12,
           "max": 27,
           "step": 1,
@@ -5482,7 +5482,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_2_badge_size_mobile",
-          "label": "Tier #2 Badge Size Mobile",
+          "label": "Tier #2 Badge size mobile",
           "min": 8,
           "max": 19,
           "step": 1,
@@ -5510,7 +5510,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_2_benefit_position",
-          "label": "Tier #2 Benefit Position",
+          "label": "Tier #2 Benefit position",
           "options": [
             {
               "value": "top",
@@ -5527,7 +5527,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "tier_2_benefit_transparent",
-          "label": "Tier #2 Benefit Background Transparent",
+          "label": "Tier #2 Benefit background transparent",
           "default": true,
           "visible_if": "{{ block.settings.tier_2_benefit != blank }}"
         },
@@ -5542,20 +5542,20 @@ function formatPrice(value) {
           "type": "text",
           "id": "tier_2_percentage_off_text",
           "default": "0",
-          "label": "Tier #2 Percentage Off",
+          "label": "Tier #2 Percentage off",
           "info": "Percentage to be discounted from the quantity's total price"
         },
         {
           "type": "text",
           "id": "tier_2_fixed_amount_off",
-          "label": "Tier #2 Fixed Amount Off",
+          "label": "Tier #2 Fixed amount off",
           "default": "0",
           "info": "A fixed amount which will be subtracted from the quantity's total price. Please don't include currency symbol"
         },
         {
           "type": "text",
           "id": "tier_2_price_text",
-          "label": "Tier #2 Price Text",
+          "label": "Tier #2 Price text",
           "default": "[price]"
         },
         {
@@ -5564,21 +5564,21 @@ function formatPrice(value) {
           "options": [
             {
               "value": "price",
-              "label": "Regular Price"
+              "label": "Regular price"
             },
             {
               "value": "compare_price",
-              "label": "Compare Price"
+              "label": "Compare price"
             }
           ],
           "default": "compare_price",
-          "label": "Tier #2 Compare Price Based On",
+          "label": "Tier #2 Compare price based on",
           "info": "[Regular price] - Will take into account the above %age or fixed discount. [Compare Price] - compare price x bundle quantity "
         },
         {
           "type": "text",
           "id": "tier_2_compare_price_text",
-          "label": "Tier #2 Compare Price Text",
+          "label": "Tier #2 Compare price text",
           "default": "[compare_price]"
         },
         {
@@ -5599,12 +5599,12 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "tier_3_badge",
-          "label": "Tier #3 Badge Text"
+          "label": "Tier #3 Badge text"
         },
         {
           "type": "select",
           "id": "tier_3_badge_style",
-          "label": "Tier #3 Badge Style",
+          "label": "Tier #3 Badge style",
           "options": [
             {
               "value": "1",
@@ -5621,7 +5621,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_3_badge_roundness",
-          "label": "Tier #3 Badge Border Radius",
+          "label": "Tier #3 Badge border radius",
           "min": 0,
           "max": 50,
           "step": 2,
@@ -5632,7 +5632,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_3_badge_element",
-          "label": "Tier #3 Badge Element",
+          "label": "Tier #3 Badge element",
           "options": [
             {
               "value": "h1",
@@ -5666,7 +5666,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_3_badge_size",
-          "label": "Tier #3 Badge Size",
+          "label": "Tier #3 Badge size",
           "min": 12,
           "max": 27,
           "step": 1,
@@ -5676,7 +5676,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_3_badge_size_mobile",
-          "label": "Tier #3 Badge Size Mobile",
+          "label": "Tier #3 Badge size mobile",
           "min": 8,
           "max": 19,
           "step": 1,
@@ -5704,7 +5704,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_3_benefit_position",
-          "label": "Tier #3 Benefit Position",
+          "label": "Tier #3 Benefit position",
           "options": [
             {
               "value": "top",
@@ -5721,7 +5721,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "tier_3_benefit_transparent",
-          "label": "Tier #3 Benefit Background Transparent",
+          "label": "Tier #3 Benefit background transparent",
           "default": true,
           "visible_if": "{{ block.settings.tier_3_benefit != blank }}"
         },
@@ -5735,20 +5735,20 @@ function formatPrice(value) {
           "type": "text",
           "id": "tier_3_percentage_off_text",
           "default": "0",
-          "label": "Tier #3 Percentage Off",
+          "label": "Tier #3 Percentage off",
           "info": "Percentage to be discounted from the quantity's total price"
         },
         {
           "type": "text",
           "id": "tier_3_fixed_amount_off",
-          "label": "Tier #3 Fixed Amount Off",
+          "label": "Tier #3 Fixed amount off",
           "default": "0",
           "info": "A fixed amount which will be subtracted from the quantity's total price. Please don't include currency symbol"
         },
         {
           "type": "text",
           "id": "tier_3_price_text",
-          "label": "Tier #3 Price Text",
+          "label": "Tier #3 Price text",
           "default": "[price]"
         },
         {
@@ -5757,21 +5757,21 @@ function formatPrice(value) {
           "options": [
             {
               "value": "price",
-              "label": "Regular Price"
+              "label": "Regular price"
             },
             {
               "value": "compare_price",
-              "label": "Compare Price"
+              "label": "Compare price"
             }
           ],
           "default": "compare_price",
-          "label": "Tier #3 Compare Price Based On",
+          "label": "Tier #3 Compare price based on",
           "info": "[Regular price] - Will take into account the above %age or fixed discount. [Compare Price] - compare price x bundle quantity "
         },
         {
           "type": "text",
           "id": "tier_3_compare_price_text",
-          "label": "Tier #3 Compare Price Text",
+          "label": "Tier #3 Compare price text",
           "default": "[compare_price]"
         },
         {
@@ -5792,12 +5792,12 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "tier_4_badge",
-          "label": "Tier #4 Badge Text"
+          "label": "Tier #4 Badge text"
         },
         {
           "type": "select",
           "id": "tier_4_badge_style",
-          "label": "Tier #4 Badge Style",
+          "label": "Tier #4 Badge style",
           "options": [
             {
               "value": "1",
@@ -5815,7 +5815,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_4_badge_roundness",
-          "label": "Tier #4 Badge Border Radius",
+          "label": "Tier #4 Badge border radius",
           "min": 0,
           "max": 50,
           "step": 2,
@@ -5826,7 +5826,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_4_badge_element",
-          "label": "Tier #4 Badge Element",
+          "label": "Tier #4 Badge element",
           "options": [
             {
               "value": "h1",
@@ -5860,7 +5860,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_4_badge_size",
-          "label": "Tier #4 Badge Size",
+          "label": "Tier #4 Badge size",
           "min": 12,
           "max": 27,
           "step": 1,
@@ -5870,7 +5870,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "tier_4_badge_size_mobile",
-          "label": "Tier #4 Badge Size Mobile",
+          "label": "Tier #4 Badge size mobile",
           "min": 8,
           "max": 19,
           "step": 1,
@@ -5897,7 +5897,7 @@ function formatPrice(value) {
         {
           "type": "select",
           "id": "tier_4_benefit_position",
-          "label": "Tier #4 Benefit Position",
+          "label": "Tier #4 Benefit position",
           "options": [
             {
               "value": "top",
@@ -5914,7 +5914,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "tier_4_benefit_transparent",
-          "label": "Tier #4 Benefit Background Transparent",
+          "label": "Tier #4 Benefit background transparent",
           "default": true,
           "visible_if": "{{ block.settings.tier_4_benefit != blank }}"
         },
@@ -5929,20 +5929,20 @@ function formatPrice(value) {
           "type": "text",
           "id": "tier_4_percentage_off_text",
           "default": "0",
-          "label": "Tier #4 Percentage Off",
+          "label": "Tier #4 Percentage off",
           "info": "Percentage to be discounted from the quantity's total price"
         },
         {
           "type": "text",
           "id": "tier_4_fixed_amount_off",
-          "label": "Tier #4 Fixed Amount Off",
+          "label": "Tier #4 Fixed amount off",
           "default": "0",
           "info": "A fixed amount which will be subtracted from the quantity's total price. Please don't include currency symbol"
         },
         {
           "type": "text",
           "id": "tier_4_price_text",
-          "label": "Tier #4 Price Text",
+          "label": "Tier #4 Price text",
           "default": "[price]"
         },
         {
@@ -5951,28 +5951,28 @@ function formatPrice(value) {
           "options": [
             {
               "value": "price",
-              "label": "Regular Price"
+              "label": "Regular price"
             },
             {
               "value": "compare_price",
-              "label": "Compare Price"
+              "label": "Compare price"
             }
           ],
           "default": "compare_price",
-          "label": "Tier #4 Compare Price Based On",
+          "label": "Tier #4 Compare price based on",
           "info": "[Regular price] - Will take into account the above %age or fixed discount. [Compare Price] - compare price x bundle quantity "
         },
         {
           "type": "text",
           "id": "tier_4_compare_price_text",
-          "label": "Tier #4 Compare Price Text",
+          "label": "Tier #4 Compare price text",
           "default": "[compare_price]"
         }
       ]
     },
     {
       "type": "delivery_date",
-      "name": "Delivery Date",
+      "name": "Delivery date",
       "limit": 1,
       "settings": [
         {
@@ -5982,12 +5982,12 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "pulsating_dot",
-          "label": "Pulsating Dot"
+          "label": "Pulsating dot"
         },
         {
           "type": "color",
           "id": "dot_color",
-          "label": "Dot Color"
+          "label": "Dot color"
         },
         {
           "type": "image_picker",
@@ -6081,12 +6081,12 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color",
-          "label": "Icon Color"
+          "label": "Icon color"
         },
         {
           "type": "range",
           "id": "icon_width",
-          "label": "Icon Width",
+          "label": "Icon width",
           "max": 100,
           "min": 0,
           "step": 1,
@@ -6095,22 +6095,22 @@ function formatPrice(value) {
                 {
           "type": "color_background",
           "id": "box_1_bk",
-          "label": "Box 1 Background"
+          "label": "Box 1 background"
         },
         {
           "type": "color",
           "id": "box_1_color",
-          "label": "Box 1 Font Color"
+          "label": "Box 1 Font color"
         },
         {
           "type": "text",
           "id": "delivery_label",
-          "label": "Delivery Label"
+          "label": "Delivery label"
         },
         {
           "type": "range",
           "id": "delivery_in",
-          "label": "Delivery In",
+          "label": "Delivery in",
           "max": 100,
           "min": 0,
           "step": 1,
@@ -6119,7 +6119,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "box_1_font_size",
-          "label": "Box 1 Font Size",
+          "label": "Box 1 font size",
           "max": 16,
           "min": 0,
           "step": 1,
@@ -6128,7 +6128,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "box_1_font_size_mobile",
-          "label": "Box 1 Font Size Mobile",
+          "label": "Box 1 font size mobile",
           "max": 16,
           "min": 0,
           "step": 1,
@@ -6226,7 +6226,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color_2",
-          "label": "Icon Color"
+          "label": "Icon color"
         },
          {
           "type":"header",
@@ -6241,17 +6241,17 @@ function formatPrice(value) {
           {
           "type": "color_background",
           "id": "box_2_bk",
-          "label": "Box 2 Background"
+          "label": "Box 2 background"
         },
         {
           "type": "color",
           "id": "box_2_color",
-          "label": "Box 2 Color"
+          "label": "Box 2 color"
         },
         {
           "type": "text",
           "id": "label_1",
-          "label": "Box 2 Text 1",
+          "label": "Box 2 text 1",
           "default": "Fast Delivery"
         },
         {
@@ -6346,18 +6346,18 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color_3",
-          "label": "Icon Color"
+          "label": "Icon color"
         },
         {
           "type": "text",
           "id": "label_2",
-          "label": "Box 2 Text 2",
+          "label": "Box 2 text 2",
           "default": "Secure Checkout"
         },
         {
           "type": "range",
           "id": "icons_width",
-          "label": "Icons Width",
+          "label": "Icons width",
           "max": 100,
           "min": 0,
           "step": 1,
@@ -6366,7 +6366,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "box_2_font_size",
-          "label": "Box 2 Font Size",
+          "label": "Box 2 font size",
           "max": 16,
           "min": 0,
           "step": 1,
@@ -6375,7 +6375,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "box_2_font_size_mobile",
-          "label": "Box 2 Font Size Mobile",
+          "label": "Box 2 font size mobile",
           "max": 16,
           "min": 0,
           "step": 1,
@@ -6384,7 +6384,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "boxs_roundness",
-          "label": "Boxs Roundness",
+          "label": "Boxs roundness",
           "max": 100,
           "min": 0,
           "step": 1,
@@ -6393,7 +6393,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "paddding_top",
-          "label": "Padding Top",
+          "label": "Padding top",
           "max": 100,
           "min": 0,
           "step": 1,
@@ -6402,7 +6402,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "paddding_bottom",
-          "label": "Padding Bottom",
+          "label": "Padding bottom",
           "max": 100,
           "min": 0,
           "step": 1,
@@ -6415,7 +6415,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "spacing_top",
-          "label": "Spacing Top",
+          "label": "Spacing top",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6423,7 +6423,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "spacing_bottom",
-          "label": "Spacing Bottom",
+          "label": "Spacing bottom",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6435,7 +6435,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_spacing_top",
-          "label": "Spacing Top",
+          "label": "Spacing top",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6443,7 +6443,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_spacing_bottom",
-          "label": "Spacing Bottom",
+          "label": "Spacing bottom",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6452,18 +6452,18 @@ function formatPrice(value) {
     },
     {
       "type": "bundle",
-      "name": "Product Bundle",
+      "name": "Product bundle",
       "limit": 1,
       "settings": [
         {
           "type": "checkbox",
           "id": "open_by_default",
-          "label": "Open By Default"
+          "label": "Open by default"
         },
         {
           "type": "checkbox",
           "id": "enable_clickable",
-          "label": "Enable Clickable"
+          "label": "Enable clickable"
         },
         {
           "type": "color_background",
@@ -6473,7 +6473,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "box_bk",
-          "label": "Box Background"
+          "label": "Box background"
         },
         {
           "type": "image_picker",
@@ -6483,7 +6483,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "icon_width",
-          "label": "Icon Width",
+          "label": "Icon width",
           "min": 0,
           "max": 100,
           "step": 1,
@@ -6498,7 +6498,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "h_color",
-          "label": "Heading Color"
+          "label": "Heading color"
         },
         {
           "type": "product_list",
@@ -6508,7 +6508,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "p_color",
-          "label": "Product Content Color"
+          "label": "Product content color"
         },
         {
           "type": "header",
@@ -6517,7 +6517,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "spacing_top",
-          "label": "Spacing Top",
+          "label": "Spacing top",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6525,7 +6525,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "spacing_bottom",
-          "label": "Spacing Bottom",
+          "label": "Spacing bottom",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6537,7 +6537,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_spacing_top",
-          "label": "Spacing Top",
+          "label": "Spacing top",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6545,7 +6545,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "mobile_spacing_bottom",
-          "label": "Spacing Bottom",
+          "label": "Spacing bottom",
           "min": 0,
           "max": 100,
           "default": 15
@@ -6571,7 +6571,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "no_border",
-          "label": "Disable Border"
+          "label": "Disable border"
         },
         {
           "type": "text",
@@ -6631,12 +6631,12 @@ function formatPrice(value) {
           "type": "text",
           "id": "shipping_button",
           "default": "Delivery information",
-          "label": "Shipping Button"
+          "label": "Shipping button"
         },
         {
           "type": "page",
           "id": "page_shipping",
-          "label": "Shipping Page"
+          "label": "Shipping page"
         }
       ]
     },
@@ -6798,17 +6798,17 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color",
-          "label": "Icon Color"
+          "label": "Icon color"
         },
         {
           "type": "image_picker",
           "id": "c_icon",
-          "label": "Custom Icon"
+          "label": "Custom icon"
         },
         {
           "type": "range",
           "id": "icon_size",
-          "label": "Icon Size",
+          "label": "Icon size",
           "default":24,
           "min":10,
           "max":50
@@ -6816,7 +6816,7 @@ function formatPrice(value) {
         {
           "type": "richtext",
           "id": "free_word",
-          "label": "Free Worldwide Shipping",
+          "label": "Free worldwide shipping",
           "default": "<p>Free worldwide shipping</p>"
         }
       ]
@@ -6856,25 +6856,25 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "product_vendor_enable",
-          "label": "Show Product Vendor",
+          "label": "Show product vendor",
           "default": true
         },
         {
           "type": "checkbox",
           "id": "product_type_enable",
-          "label": "Show Product Type",
+          "label": "Show product type",
           "default": true
         },
         {
           "type": "checkbox",
           "id": "variant_sku_enable",
-          "label": "Show Variant SKU",
+          "label": "Show variant sku",
           "default": true
         },
         {
           "type": "checkbox",
           "id": "variant_available_enable",
-          "label": "Show Variant Availability",
+          "label": "Show variant availability",
           "default": true
         }
       ]
@@ -6890,7 +6890,7 @@ function formatPrice(value) {
           "min": 10,
           "max": 110,
           "step": 1,
-          "label": "Min Value",
+          "label": "Min value",
           "default": 12
         },
         {
@@ -6899,7 +6899,7 @@ function formatPrice(value) {
           "min": 25,
           "max": 125,
           "step": 1,
-          "label": "Max Value",
+          "label": "Max value",
           "default": 30
         },
         {
@@ -6909,7 +6909,7 @@ function formatPrice(value) {
           "max": 20,
           "step": 1,
           "unit": "s",
-          "label": "Duration Time",
+          "label": "Duration time",
           "default": 3
         },
         {
@@ -6928,7 +6928,7 @@ function formatPrice(value) {
     },
     {
       "type": "tabcustom",
-      "name": "Collapsible Row",
+      "name": "Collapsible row",
       "settings": [
         {
           "type": "checkbox",
@@ -6938,7 +6938,7 @@ function formatPrice(value) {
         {
           "type": "checkbox",
           "id": "no_border",
-          "label": "Disable Border"
+          "label": "Disable border"
         },
         {
           "type": "text",
@@ -6949,7 +6949,7 @@ function formatPrice(value) {
         {
           "type": "range",
           "id": "font_size",
-          "label": "Font Size",
+          "label": "Font size",
           "default": 16,
           "min":10,
           "max":24
@@ -6965,7 +6965,7 @@ function formatPrice(value) {
         {
           "type": "image_picker",
           "id": "custom_icon",
-          "label": "Custom Icon"
+          "label": "Custom icon"
         },
         {
           "type": "select",
@@ -7058,12 +7058,12 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color",
-          "label": "Icon Color"
+          "label": "Icon color"
         },
         {
           "type": "range",
           "id": "icon_size",
-          "label": "Icon Size",
+          "label": "Icon size",
           "min": 10,
           "max": 100,
           "default": 24
@@ -7071,13 +7071,13 @@ function formatPrice(value) {
         {
           "type": "richtext",
           "id": "answer_content",
-          "label": "Tab Content",
+          "label": "Tab content",
           "default": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.</p><p>Ex: Shipping and return policies, size guides, and other common questions.</p>"
         },
         {
           "type": "page",
           "id": "page",
-          "label": "Page"
+          "label": "Select Page"
         }
       ]
     },
@@ -7097,21 +7097,21 @@ function formatPrice(value) {
         },
         {
           "type": "text",
-          "id": "gtab_description",
-          "label": "Title (Description Tab)",
+          "id": "gtab_des",
+          "label": "Title (Description tab)",
           "default": "Description"
         },
         {
           "type": "checkbox",
           "id": "gtab_review_enable",
-          "label": "Review Tab",
+          "label": "Review tab",
           "default": true,
           "info": "[Install review application here](https://apps.shopify.com/product-reviews)"
         },
         {
           "type": "text",
           "id": "gtab_review",
-          "label": "Title (Review Tab)",
+          "label": "Title (Review tab)",
           "default": "Review"
         },
         {
@@ -7171,7 +7171,7 @@ function formatPrice(value) {
     },
     {
       "type": "related-product",
-      "name": "Featured Products",
+      "name": "Featured products ",
       "limit": 1,
       "settings": [
         {
@@ -7247,13 +7247,13 @@ function formatPrice(value) {
       "settings": [
         {
           "type": "text",
-          "id": "banner_caption",
+          "id": "banner_text",
           "label": "Title",
           "default": "Rewards"
         },
         {
           "type": "text",
-          "id": "banner_description",
+          "id": "banner_des",
           "label": "Description",
           "default": "Join to earn 84 points from this item"
         },
@@ -7265,7 +7265,7 @@ function formatPrice(value) {
         {
           "type": "textarea",
           "id": "banner_icon_svg",
-          "label": "SVG Icon"
+          "label": "SVG icon "
         },
         {
           "type": "color",
@@ -7276,7 +7276,7 @@ function formatPrice(value) {
         {
           "id": "banner_bg_color",
           "type": "color_background",
-          "label": "Background"
+          "label": "Background "
         },
         {
           "type": "range",
@@ -7292,7 +7292,7 @@ function formatPrice(value) {
     },
     {
       "type": "icon_with_text",
-      "name": "Icon With Text",
+      "name": "Icon with Text",
       "settings": [
         {
           "type": "select",

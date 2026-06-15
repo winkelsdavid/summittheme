@@ -384,8 +384,6 @@
           "type": "quote",
           "settings": {
             "title": "Perfect !",
-            "author_caption": "John Alvy",
-            "author_info_caption": "Engineer",
             "rate": 5,
             "quote": "These are comfortable and they look great. I love that the sole is not super thick and oversized like other shoes. Much more subtle understated..."
           }
@@ -394,8 +392,6 @@
           "type": "quote",
           "settings": {
             "title": "Awesome !",
-            "author_caption": "Jacquelyn Rizzo",
-            "author_info_caption": "Producer",
             "rate": 5,
             "quote": "I love this shirt. It feels like a soft sweater but lightweight like a shirt. I wore it to work today. It was 85 and I was fine running around."
           }
@@ -404,8 +400,6 @@
           "type": "quote",
           "settings": {
             "title": "Amazing !",
-            "author_caption": "Hailee Parsons",
-            "author_info_caption": "Designer",
             "rate": 5,
             "quote": "Just right for fall and winter. Quality is there. Order usual size unless you want over sized. Absolutely beautiful and looks amazingly flattering..."
           }

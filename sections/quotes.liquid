@@ -70,8 +70,8 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
             assign quote = block.settings.quote
             assign rate = block.settings.rate
             assign avatar = block.settings.avatar
-            assign author = block.settings.author_caption
-            assign info = block.settings.author_info_caption
+            assign author = block.settings.author
+            assign info = block.settings.info
             assign bg_item = section.settings.bg_item
             assign size_text = section.settings.size_text
             assign aligntext = section.settings.aligntext
@@ -220,7 +220,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
           "label": "Zoom Out Right"
         }
       ],
-      "label": "Animation"
+      "label": "Select Animation"
     },
     {
       "type": "select",
@@ -245,7 +245,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "color",
       "id": "background_section",
-      "label": "Background Color"
+      "label": "Background Section"
     },
     {
       "type": "color",
@@ -256,17 +256,17 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "image_picker",
       "id": "image_bg",
-      "label": "Background Image"
+      "label": "Background image"
     },
     {
       "type": "text",
       "id": "subtitle_top",
-      "label": "Subtitle Top"
+      "label": "Sub Title Top"
     },
             {
       "type": "checkbox",
       "id": "replace_reviews",
-      "label": "Replace Subtitle Top With Review"
+      "label": "Replace Sub Title Top with Review"
     },
      {
       "type": "paragraph",
@@ -275,7 +275,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
         {
       "type": "select",
       "id": "reviews_type",
-      "label": "Reviews Type",
+      "label": "Reviews type",
       "default": "t_1",
       "options": [
         {
@@ -307,7 +307,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "select",
       "id": "align_heading",
-      "label": "Heading Alignment",
+      "label": "Align Heading",
       "default": "center",
       "options": [
         {
@@ -331,17 +331,17 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "color_background",
       "id": "subtitle_top_color",
-      "label": "Subtitle Top Color"
+      "label": "Sub Title Top color"
     },
     {
       "type": "color_background",
       "id": "heading_color",
-      "label": "Title Color"
+      "label": "Title color"
     },
     {
       "type": "color",
       "id": "description_color",
-      "label": "Description Color"
+      "label": "Description color"
     },
     {
       "type": "header",
@@ -350,7 +350,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "select",
       "id": "aligntext",
-      "label": "Text Align",
+      "label": "Text Align ",
       "default": "text-left",
       "options": [
         {
@@ -370,7 +370,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "select",
       "id": "style",
-      "label": "Style Testimonial",
+      "label": "Style Testimonial ",
       "default": "style-1",
       "options": [
         {
@@ -436,7 +436,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
       "max": 100,
       "step": 1,
       "unit": "%",
-      "label": "Width Of Column",
+      "label": "Width of Column",
       "default": 100
     },
     {
@@ -489,7 +489,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "range",
       "id": "padding_top",
-      "label": "Padding Top",
+      "label": "Padding top",
       "max": 150,
       "min": 0,
       "step": 2,
@@ -498,7 +498,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "range",
       "id": "padding_bottom",
-      "label": "Padding Bottom",
+      "label": "Padding bottom",
       "max": 150,
       "min": 0,
       "step": 2,
@@ -511,7 +511,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "range",
       "id": "mobile_padding_top",
-      "label": "Padding Top",
+      "label": "Padding top",
       "max": 150,
       "min": 0,
       "step": 2,
@@ -520,7 +520,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {
       "type": "range",
       "id": "mobile_padding_bottom",
-      "label": "Padding Bottom",
+      "label": "Padding bottom",
       "max": 150,
       "min": 0,
       "step": 2,
@@ -545,14 +545,14 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
         },
         {
           "type": "text",
-          "id": "author_caption",
+          "id": "author",
           "label": "Author",
           "default": "Author's name"
         },
         {
           "type": "text",
-          "id": "author_info_caption",
-          "label": "Author'S Info"
+          "id": "info",
+          "label": "Author's info"
         },
         {
           "type": "range",

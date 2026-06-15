@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "collection-banner": {
@@ -141,11 +150,7 @@
         "spaceBetween": 30,
         "nowrap": true,
         "arrows": true,
-        "scrollbar": false,
-        "paddingsection": "30px 0px 0px 0px",
-        "paddingmobile": "40px 0px 0px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
+        "scrollbar": false
       }
     },
     "product-grid": {
