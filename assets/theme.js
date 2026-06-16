@@ -2920,96 +2920,6 @@ theme.slickCarousel = (function () {
   return Carousels;
 })();
 
-// Slick Press
-theme.slickPress = (function () {
-  function slickPress(container) {
-    this.$container = $(container).on("init", this._a11y.bind(this));
-    var sectionId = this.$container.data("section-id");
-    var pressSub = "#sub-" + sectionId;
-
-    this.settings = {
-      arrows: this.$container.data("arrows") || false,
-      dots: this.$container.data("dots") || false,
-    };
-    this.$container
-      .slick({
-        rtl: theme.rtl,
-        rows: 1,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: this.settings.arrows,
-        dots: this.settings.dots,
-        autoplay: false,
-        accessibility: true,
-        draggable: true,
-        infinite: true,
-        adaptiveHeight: true,
-        asNavFor: pressSub,
-      })
-      .css("opacity", "1");
-
-    $(pressSub).slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      infinite: true,
-      arrows: false,
-      asNavFor: this.$container,
-      draggable: true,
-      accessibility: true,
-      focusOnSelect: true,
-      centerMode: true,
-      centerPadding: "0px",
-    });
-  }
-
-  slickPress.prototype = _.assignIn({}, slickPress.prototype, {
-    _a11y: function (event, obj) {
-      var $list = obj.$list;
-      var $wrapper = this.$container;
-      // Remove default Slick aria-live attr until slider is focused
-      $list.removeAttr("aria-live");
-
-      // When an element in the slider is focused set aria-live
-      $wrapper.on("focusin", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.attr("aria-live", "polite");
-        }
-      });
-
-      // Remove aria-live
-      $wrapper.on("focusout", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.removeAttr("aria-live");
-        }
-      });
-    },
-
-    _goToSlide: function (slideIndex) {
-      this.$container.slick("slickGoTo", slideIndex);
-    },
-
-    onUnload: function () {
-      delete this.$container;
-    },
-
-    onBlockSelect: function (evt) {
-      // Ignore the cloned version
-      var $slide = $(
-        ".carousel__slide-wrapper--" +
-          evt.detail.blockId +
-          ":not(.slick-cloned)"
-      );
-      var slideIndex = $slide.data("slick-index");
-
-      // Go to selected slide, pause autoplay
-      console.log(this);
-      this._goToSlide(slideIndex);
-    },
-  });
-
-  return slickPress;
-})();
-
 // Productlists
 theme.Productlists = (function () {
   function Productlists(container) {
@@ -3548,7 +3458,6 @@ theme.init = function () {
   sections.register("productlist", theme.Productlists);
   sections.register("producttab", theme.Producttabs);
   sections.register("slickCarousels", theme.slickCarousel);
-  sections.register("slickPress", theme.slickPress);
   sections.register("video", theme.Video);
   sections.register("swipercustom", theme.SwiperCustom);
   sections.register("announcementswiper", theme.AnnouncementSwiper);
@@ -3610,6 +3519,7 @@ theme.quickview = (function () {
     quickviewAddCartButton = ".qv-add-button",
     quickviewPrice = ".qv-product-price",
     quickviewComparePrice = ".qv-product-compare-price";
+  var qvSwiper = null;
   quickLoad = "#loading_qv";
   quickQty = ".popup-quantity";
   // 1. Show quickview
@@ -3642,6 +3552,10 @@ theme.quickview = (function () {
     var quickviewAvaible = $(this).attr("data-pavailable");
     var jdmgReview = $(this).attr("data-viewjdmg");
     product_handle = $(this).data("handle");
+    if (qvSwiper) {
+      try { qvSwiper.destroy(true, true); } catch (e) {}
+      qvSwiper = null;
+    }
     $(quickviewThumb).removeClass().empty();
     $(".qv-product-options").empty().removeClass("pb-3");
     var desc = $(this).find(".txt-short").text();
@@ -3736,15 +3650,43 @@ theme.quickview = (function () {
             '" ></div>';
           $(quickviewThumb).append(image_embed);
         });
-        $(quickviewThumb)
-          .slick({
-            rtl: theme.rtl,
-            dots: true,
-            arrows: true,
-            respondTo: "min",
-            useTransform: true,
-          })
-          .css("opacity", "1");
+        (function () {
+          // Wrap the runtime-built <div><img></div> slides into Swiper structure
+          // (replaces Slick; same pattern as the Instagram feed slider).
+          var cont = document.querySelector(quickviewThumb);
+          if (!cont) return;
+          var wrapper = document.createElement("div");
+          wrapper.className = "swiper-wrapper";
+          Array.prototype.slice.call(cont.children).forEach(function (s) {
+            if (s.nodeType === 1) {
+              s.classList.add("swiper-slide");
+              wrapper.appendChild(s);
+            }
+          });
+          cont.appendChild(wrapper);
+          cont.classList.add("swiper");
+          var prev = document.createElement("div");
+          prev.className = "swiper-button-prev";
+          var next = document.createElement("div");
+          next.className = "swiper-button-next";
+          var pagi = document.createElement("div");
+          pagi.className = "swiper-pagination";
+          cont.appendChild(prev);
+          cont.appendChild(next);
+          cont.appendChild(pagi);
+          cont.style.opacity = "1";
+          qvSwiper = window.Swiper
+            ? new Swiper(cont, {
+                slidesPerView: 1,
+                loop: false,
+                autoHeight: true,
+                observer: true,
+                observeParents: true,
+                navigation: { nextEl: next, prevEl: prev },
+                pagination: { el: pagi, clickable: true },
+              })
+            : null;
+        })();
 
         if (product.variants[0].option1 !== "Default Title") {
           $(options).each(function (i, option) {
@@ -3921,7 +3863,7 @@ theme.quickview = (function () {
                     if (v.title == selectedOptions) {
                       if (v.featured_image !== null) {
                         var iSlick = v.featured_image.position - 1;
-                        $(quickviewThumb).slick("slickGoTo", iSlick);
+                        if (qvSwiper) qvSwiper.slideTo(iSlick);
                       }
                       var price = theme.Currency.formatMoney(
                         v.price,
@@ -4107,7 +4049,7 @@ theme.quickview = (function () {
         if (v.title == selectedOptions) {
           if (v.featured_image !== null) {
             var iSlick = v.featured_image.position - 1;
-            $(quickviewThumb).slick("slickGoTo", iSlick);
+            if (qvSwiper) qvSwiper.slideTo(iSlick);
           }
           var price = theme.Currency.formatMoney(v.price, theme.moneyFormat);
           var compare_price = theme.Currency.formatMoney(
