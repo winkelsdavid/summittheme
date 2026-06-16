@@ -2558,6 +2558,23 @@
       },
       {
         "type": "select",
+        "id": "qv_image_ratio",
+        "label": "Image Ratio",
+        "info": "Image format inside the Quick View popup. The popup adapts to this ratio.",
+        "default": "1x1",
+        "options": [
+          {
+            "value": "1x1",
+            "label": "1:1 (Square)"
+          },
+          {
+            "value": "2x3",
+            "label": "2:3 (Portrait)"
+          }
+        ]
+      },
+      {
+        "type": "select",
         "id": "select_product_option_display",
         "label": "Display Variant",
         "default": "dropdown",

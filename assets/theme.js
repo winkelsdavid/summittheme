@@ -3844,7 +3844,9 @@ theme.quickview = (function () {
             ? new Swiper(cont, {
                 slidesPerView: 1,
                 loop: false,
-                autoHeight: true,
+                // autoHeight off: the gallery fills a fixed-ratio box (see
+                // quickview.liquid Image Ratio CSS), it must not size to the image.
+                autoHeight: false,
                 observer: true,
                 observeParents: true,
                 navigation: { nextEl: next, prevEl: prev },
