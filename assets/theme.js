@@ -2439,6 +2439,12 @@ theme.Slideshow = (function () {
 
     this.swiper = window.Swiper ? new Swiper(node, opts) : null;
 
+    // Swiper 6.7 adds 'swiper-container-initialized', but the section CSS gates
+    // the reveal on '.swiper-initialized' (the Swiper 7+ name). Add it explicitly
+    // so the slideshow — which is opacity:0 until initialized — becomes visible.
+    // (Also a fail-safe: reveals the static first slide even if Swiper is absent.)
+    node.classList.add("swiper-initialized");
+
     // Pause auto-rotate while the slideshow has keyboard focus (a11y), resume on blur.
     if (this.swiper && this.autorotate) {
       this._focusIn = function () {
