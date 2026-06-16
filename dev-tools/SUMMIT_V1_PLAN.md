@@ -148,6 +148,13 @@ Labels** erfüllt, nicht über den Key-Mechanismus.
   Verb-Drop (Select/Choose), „Align X"→„X Alignment", kryptisch→klar („Background Section"→
   „Background Color", Overlay-Labels via id/type verifiziert), Typo „Midle"→„Middle".
 - [x] **3 Label-Kollisionen** vorab gefixt (`commit f82c70a`): Header/Footer/Product Grid eindeutig.
+- [x] **2a-Nachzug / Vollständigkeit (2026-06-16):** Re-Audit deckte auf, dass 2a **4 settings-schwere
+  Dateien verfehlt** hatte — `config/settings_schema.json`, `sections/header.liquid`,
+  `sections/product-template-1.liquid`, `sections/quotes.liquid`. **490 `label`/`name` deterministisch
+  auf Title Case normalisiert** (Akronyme HTML/SKU/CTA…, Eigennamen TikTok/WhatsApp/iOS, Einheiten `px`,
+  reservierter `theme_info` geschützt); **idempotent verifiziert (0 Rest, unabhängiger Re-Scan).**
+  Casing damit theme-weit vollständig konsistent. Offen (semantisch, 2b): Tippfehler (`Comapre`/`Boxs`/
+  `Midle`/`Coundtdown`) + Terminologie (`Des`→`Description`, `Sub Title`→`Subtitle`).
 - [ ] *Bewusst ausgelassen (targeted scope):* `Title`→`Heading` global (287, „Title" meist korrekt);
   exhaustives Durchwortern jedes Labels. Non-destruktiv, jederzeit nachholbar.
 
