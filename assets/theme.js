@@ -1331,120 +1331,100 @@ window.AjaxCart = (function () {
 
 /*================ TEMPLATES ================*/
 theme.customerTemplates = (function () {
+  function on(el, evt, fn) {
+    if (el) el.addEventListener(evt, fn);
+  }
+
   function initEventListeners() {
-    // Show reset password form
-    $("#RecoverPassword").on("click", function (evt) {
+    // Show / hide reset password form
+    on(document.getElementById("RecoverPassword"), "click", function (evt) {
       evt.preventDefault();
       toggleRecoverPasswordForm();
     });
-
-    // Hide reset password form
-    $("#HideRecoverPasswordLink").on("click", function (evt) {
+    on(document.getElementById("HideRecoverPasswordLink"), "click", function (evt) {
       evt.preventDefault();
       toggleRecoverPasswordForm();
     });
   }
 
-  /**
-   *
-   *  Show/Hide recover password form
-   *
-   */
   function toggleRecoverPasswordForm() {
-    $("#RecoverPasswordForm").toggleClass("hide");
-    $("#CustomerLoginForm").toggleClass("hide");
+    var form = document.getElementById("RecoverPasswordForm");
+    var login = document.getElementById("CustomerLoginForm");
+    if (form) form.classList.toggle("hide");
+    if (login) login.classList.toggle("hide");
   }
 
-  /**
-   *
-   *  Show reset password success message
-   *
-   */
   function resetPasswordSuccess() {
-    // check if reset password form was successfully submited
-    if (!$(".reset-password-success").length) {
+    if (!document.querySelector(".reset-password-success")) {
       return;
     }
-
-    // show success message
-    $("#ResetSuccess").removeClass("hide");
+    var success = document.getElementById("ResetSuccess");
+    if (success) success.classList.remove("hide");
   }
 
-  /**
-   *
-   *  Show/hide customer address forms
-   *
-   */
   function customerAddressForm() {
-    var $newAddressForm = $("#AddressNewForm");
-
-    if (!$newAddressForm.length) {
+    var newAddressForm = document.getElementById("AddressNewForm");
+    if (!newAddressForm) {
       return;
     }
 
     // Initialize observers on address selectors, defined in shopify_common.js
-    if (Shopify) {
+    if (window.Shopify) {
       // eslint-disable-next-line no-new
       new Shopify.CountryProvinceSelector(
         "AddressCountryNew",
         "AddressProvinceNew",
-        {
-          hideElement: "AddressProvinceContainerNew",
-        }
+        { hideElement: "AddressProvinceContainerNew" }
       );
     }
 
     // Initialize each edit form's country/province selector
-    $(".address-country-option").each(function () {
-      var formId = $(this).data("form-id");
-      var countrySelector = "AddressCountry_" + formId;
-      var provinceSelector = "AddressProvince_" + formId;
-      var containerSelector = "AddressProvinceContainer_" + formId;
-
+    document.querySelectorAll(".address-country-option").forEach(function (el) {
+      var formId = el.getAttribute("data-form-id");
       // eslint-disable-next-line no-new
-      new Shopify.CountryProvinceSelector(countrySelector, provinceSelector, {
-        hideElement: containerSelector,
-      });
+      new Shopify.CountryProvinceSelector(
+        "AddressCountry_" + formId,
+        "AddressProvince_" + formId,
+        { hideElement: "AddressProvinceContainer_" + formId }
+      );
     });
 
     // Toggle new/edit address forms
-    $(".address-new-toggle").on("click", function () {
-      $newAddressForm.toggleClass("hide");
+    document.querySelectorAll(".address-new-toggle").forEach(function (el) {
+      el.addEventListener("click", function () {
+        newAddressForm.classList.toggle("hide");
+      });
     });
 
-    $(".address-edit-toggle").on("click", function () {
-      var formId = $(this).data("form-id");
-      $("#EditAddress_" + formId).toggleClass("hide");
+    document.querySelectorAll(".address-edit-toggle").forEach(function (el) {
+      el.addEventListener("click", function () {
+        var formId = el.getAttribute("data-form-id");
+        var edit = document.getElementById("EditAddress_" + formId);
+        if (edit) edit.classList.toggle("hide");
+      });
     });
 
-    $(".address-delete").on("click", function () {
-      var $el = $(this);
-      var formId = $el.data("form-id");
-      var confirmMessage = $el.data("confirm-message");
-
-      // eslint-disable-next-line no-alert
-      if (
-        confirm(
-          confirmMessage || "Are you sure you wish to delete this address?"
-        )
-      ) {
-        Shopify.postLink("/account/addresses/" + formId, {
-          parameters: { _method: "delete" },
-        });
-      }
+    document.querySelectorAll(".address-delete").forEach(function (el) {
+      el.addEventListener("click", function () {
+        var formId = el.getAttribute("data-form-id");
+        var confirmMessage = el.getAttribute("data-confirm-message");
+        // eslint-disable-next-line no-alert
+        if (
+          confirm(
+            confirmMessage || "Are you sure you wish to delete this address?"
+          )
+        ) {
+          Shopify.postLink("/account/addresses/" + formId, {
+            parameters: { _method: "delete" },
+          });
+        }
+      });
     });
   }
 
-  /**
-   *
-   *  Check URL for reset password hash
-   *
-   */
   function checkUrlHash() {
-    var hash = window.location.hash;
-
     // Allow deep linking to recover password form
-    if (hash === "#recover") {
+    if (window.location.hash === "#recover") {
       toggleRecoverPasswordForm();
     }
   }
@@ -1462,9 +1442,8 @@ theme.customerTemplates = (function () {
 /*================ SECTIONS ================*/
 theme.HeaderSection = (function () {
   function HeaderSection(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr("data-section-id");
-    var stickyId = $container.attr("data-sticky");
+    var sectionId = container.getAttribute("data-section-id");
+    var stickyId = container.getAttribute("data-sticky");
     theme.NavDrawer = new theme.Drawers("NavDrawer", "left");
     this.selectors = {
       headerID: ".section-" + sectionId,
@@ -1600,11 +1579,9 @@ theme.HeaderSection = (function () {
     },
     // hoverMenu
     delayMenu: function () {
-      var megaMenu = $(".site-nav__item-mega");
-      megaMenu.each(function (index) {
-        var childLink = $(this).find(".d-col-link");
-        childLink.each(function (i) {
-          $(this).css("animation-delay", `${((i + 1) / 10) * 0.8}s`);
+      document.querySelectorAll(".site-nav__item-mega").forEach(function (mega) {
+        mega.querySelectorAll(".d-col-link").forEach(function (link, i) {
+          link.style.animationDelay = ((i + 1) / 10) * 0.8 + "s";
         });
       });
     },
