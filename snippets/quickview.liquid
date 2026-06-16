@@ -1,10 +1,32 @@
+{%- liquid
+  # Match the quickview gallery image ratio to the product grid's
+  # "Size Image Product Grid" setting (same ratios as .product-card__image.*).
+  case settings.size_image_grid
+    when 'square'
+      assign qv_ar = '1 / 1'
+    when 'landscape'
+      assign qv_ar = '4 / 3'
+    when 'portrait'
+      assign qv_ar = '4 / 5'
+    when 'wide'
+      assign qv_ar = '5 / 3'
+    else
+      assign qv_ar = ''
+  endcase
+-%}
 <style>
   .qv-content{text-align:left}.rtl .qv-content{text-align:right}#qv-product-images{margin:0 0 24px;min-height: 400px;opacity: 0;transition: opacity 0.1s ease-in;}#jsQuickview .option-selection{margin-bottom:16px}#jsQuickview select.option{width: calc(100% - 120px);}#jsQuickview span.option{min-width:120px;display:inline-block;text-transform:capitalize;margin-bottom:6px;}#jsQuickview .slick-dots{bottom:20px}#jsQuickview .slick-dots li button:before{font-size:35px;color:#000;transition:all ease .3s}#jsQuickview .qv-product-price{display:inline-block;margin:0}#jsQuickview .qv-product-price .money{color:{{ settings.color_primary }}}#jsQuickview .qv-add-button{display: inline-block; float: left; margin-left: 20px; width: calc(100% - 120px);}#jsQuickview .qv-product-description{max-height:180px;overflow:hidden;position:relative;}#jsQuickview .qv-product-description:after{position:absolute;content:"";width:100%;left:0;bottom:0;background:#fff}.rtl #jsQuickview .qv-product-description:after{right:0;left:auto}.qv-add-to-cart .quantity{height:40px;display:inline-block;width:100px;float:left}.qv-add-to-cart .quantity span{display:none}.qv-quantity{height:50px;width:100%;text-align:center;}
   #qv-product-images .swiper-button-prev{left: 20px;}#qv-product-images .swiper-button-next{right: 20px;}
   #qv-product-images .swiper-button-prev,#qv-product-images .swiper-button-next{opacity: 0;transition: all 0.3s ease;}
   #qv-product-images:hover .swiper-button-next{opacity: 1;}
   #qv-product-images:hover .swiper-button-prev{opacity: 1;}
-  #qv-product-images .swiper-slide img {display: block;height: 400px;object-fit: cover;width: 100%;background-color:var(--color-item-product);}
+  {%- if qv_ar != blank -%}
+  #qv-product-images .swiper-slide{ aspect-ratio: {{ qv_ar }}; }
+  #qv-product-images .swiper-slide img{ display:block; width:100%; height:100%; object-fit:cover; background-color:var(--color-item-product); }
+  {%- else -%}
+  /* Natural: keep the image's own aspect ratio (no crop) */
+  #qv-product-images .swiper-slide img{ display:block; width:100%; height:auto; background-color:var(--color-item-product); }
+  {%- endif -%}
   #jsQuickview .option-selection.color .single-option-radio{
     padding-left:8px;
     padding-top:4px;
@@ -66,8 +88,7 @@
     font-size:14px;
   }
   @media (min-width:1000px){
-    #qv-product-images{min-height: 620px;margin:0}
-    #qv-product-images .swiper-slide img {height: 620px;}
+    #qv-product-images{min-height: 0;margin:0}
   }
   @media( max-width:999px ){
     .qv-content{
@@ -173,6 +194,18 @@
     max-width:800px;
     margin:auto;
   }
+
+  /* Image column: size to the grid ratio (set above), not the old fixed
+     min-height that left a big empty gap for short ratios (wide/square). */
+  #qv-product-images{ min-height: 0; }
+  #jsQuickview .left-qv{ display:flex; align-items:center; background-color: var(--color-item-product); }
+  #jsQuickview .left-qv #qv-product-images{ width:100%; }
+
+  /* Add-to-cart row: the old `float:left; width:calc(100% - 120px)` overflowed
+     the column inside the flex (.d-flex) wrapper (long DE button label was cut
+     off). Make it a proper flex row: fixed qty, button fills the rest. */
+  #jsQuickview .qv-add-to-cart > .d-flex{ gap: 16px; align-items: center; }
+  #jsQuickview .qv-add-button{ flex: 1 1 0; min-width: 0; width: auto; margin-left: 0; float: none; }
 
 </style>
 <!-- quickview.liquid -->
