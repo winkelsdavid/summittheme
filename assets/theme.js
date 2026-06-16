@@ -5300,7 +5300,7 @@ theme.exLink = (function () {
   for (let i = 0, linksLength = links.length; i < linksLength; i++) {
     if (
       links[i].hostname !== window.location.hostname &&
-      $(links[i]).attr("href") !== "javascript:void(0)"
+      links[i].getAttribute("href") !== "javascript:void(0)"
     ) {
       links[i].target = "_blank";
     }
@@ -5312,27 +5312,28 @@ theme.collectionView = (function () {
   var btnView = ".js-btn-view",
     btnViewActive = ".js-btn-view.active";
 
-  $(document).on("click", btnView, function () {
-    var value = $(this).data("col"),
-      $gridItemCol = $(".js-col");
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(btnView);
+    if (!btn) return;
+    var value = parseInt(btn.getAttribute("data-col"), 10);
 
-    $(btnView).removeClass("active");
-    $(this).addClass("active");
+    document.querySelectorAll(btnView).forEach(function (b) {
+      b.classList.remove("active");
+    });
+    btn.classList.add("active");
 
-    $gridItemCol.removeClass().addClass("js-col col-sm-6 col-6");
-    if (value === 3) {
-      $gridItemCol.addClass("col-lg-4");
-    } else if (value === 4) {
-      $gridItemCol.addClass("col-lg-3");
-    } else if (value === 5) {
-      $gridItemCol.addClass("col-lg-2-4");
-    } else if (value === 6) {
-      $gridItemCol.addClass("col-lg-2");
-    }
+    document.querySelectorAll(".js-col").forEach(function (col) {
+      col.className = "js-col col-sm-6 col-6";
+      if (value === 3) col.classList.add("col-lg-4");
+      else if (value === 4) col.classList.add("col-lg-3");
+      else if (value === 5) col.classList.add("col-lg-2-4");
+      else if (value === 6) col.classList.add("col-lg-2");
+    });
   });
 
   function triggerCollectionView() {
-    $(btnViewActive).trigger("click");
+    var active = document.querySelector(btnViewActive);
+    if (active) active.click();
   }
 
   return {
@@ -5888,42 +5889,47 @@ window.addEventListener(
 
 // Back to top
 theme.backToTop = (function () {
-  $(document).ready(function () {
+  function init() {
     "use strict";
     var progressPath = document.querySelector(".progress-wrap path");
-    if (progressPath != null) {
-      var pathLength = progressPath.getTotalLength();
-      progressPath.style.transition = progressPath.style.WebkitTransition =
-        "none";
-      progressPath.style.strokeDasharray = pathLength + " " + pathLength;
-      progressPath.style.strokeDashoffset = pathLength;
-      progressPath.getBoundingClientRect();
-      progressPath.style.transition = progressPath.style.WebkitTransition =
-        "stroke-dashoffset 10ms linear";
-      var updateProgress = function () {
-        var scroll = $(window).scrollTop();
-        var height = $(document).height() - $(window).height();
-        var progress = pathLength - (scroll * pathLength) / height;
-        progressPath.style.strokeDashoffset = progress;
-      };
-      updateProgress();
-      $(window).scroll(updateProgress);
-      var offset = 50;
-      var duration = 550;
-      jQuery(window).on("scroll", function () {
-        if (jQuery(this).scrollTop() > offset) {
-          jQuery(".progress-wrap").addClass("active-progress");
-        } else {
-          jQuery(".progress-wrap").removeClass("active-progress");
-        }
-      });
-      jQuery(".progress-wrap").on("click", function (event) {
+    if (progressPath == null) return;
+    var pathLength = progressPath.getTotalLength();
+    progressPath.style.transition = progressPath.style.WebkitTransition = "none";
+    progressPath.style.strokeDasharray = pathLength + " " + pathLength;
+    progressPath.style.strokeDashoffset = pathLength;
+    progressPath.getBoundingClientRect();
+    progressPath.style.transition = progressPath.style.WebkitTransition =
+      "stroke-dashoffset 10ms linear";
+    var updateProgress = function () {
+      var scroll = window.pageYOffset;
+      var height = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = pathLength - (scroll * pathLength) / height;
+      progressPath.style.strokeDashoffset = progress;
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress);
+    var offset = 50;
+    var wrap = document.querySelector(".progress-wrap");
+    window.addEventListener("scroll", function () {
+      if (!wrap) return;
+      if (window.pageYOffset > offset) {
+        wrap.classList.add("active-progress");
+      } else {
+        wrap.classList.remove("active-progress");
+      }
+    });
+    if (wrap) {
+      wrap.addEventListener("click", function (event) {
         event.preventDefault();
-        jQuery("html, body").animate({ scrollTop: 0 }, duration);
-        return false;
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
     }
-  });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
 
 theme.popOver = (function () {
