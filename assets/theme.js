@@ -1290,53 +1290,59 @@ window.QtySelector = (function () {
   custom success and error responses.
 */
 window.AjaxCart = (function () {
-  var styleCart = $(".js-mini-cart").attr("data-cartmini");
-  var cart = function ($form) {
-    this.cache = {
-      $cartIconIndicator: $(".site-header__cart-indicator"),
-    };
+  var _mc = document.querySelector(".js-mini-cart");
+  var styleCart = _mc ? _mc.getAttribute("data-cartmini") : null;
 
-    this.$form = $form;
+  var cart = function (form) {
+    // accept a jQuery object or a DOM <form>
+    this.form = form && form.jquery ? form[0] : form;
     this.eventListeners();
 
     this.showNotice = false;
-    if (this.$form.length) {
-      this.showNotice = this.$form.hasClass("js-form--notice") ? true : false;
+    if (this.form) {
+      this.showNotice = this.form.classList.contains("js-form--notice");
     }
   };
 
   cart.prototype.eventListeners = function () {
-    if (this.$form.length) {
-      this.$form.on("submit", $.proxy(this.addItemFromForm, this));
+    if (this.form) {
+      this.form.addEventListener("submit", this.addItemFromForm.bind(this));
     }
   };
 
   cart.prototype.addItemFromForm = function (evt) {
     evt.preventDefault();
-    var $form = this.$form;
-    var $submitButton = $form.find('button[type="submit"]');
-    $submitButton.addClass("is-loading");
-    var params = {
-      type: "POST",
-      url: "/cart/add.js",
-      data: this.$form.serialize(),
-      dataType: "json",
-      success: $.proxy(function (lineItem) {
-        this.success(lineItem);
-      }, this),
-      error: $.proxy(function (XMLHttpRequest, textStatus) {
-        this.error(XMLHttpRequest, textStatus);
-      }, this),
-      complete: function () {
-        $submitButton.removeClass("is-loading");
-      },
-    };
-    $.ajax(params);
+    var form = this.form;
+    var submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.classList.add("is-loading");
+    var self = this;
+    fetch(window.Shopify.routes.root + "cart/add.js", {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: new FormData(form),
+    })
+      .then(function (r) {
+        return r.json().then(function (data) {
+          if (!r.ok) throw data;
+          return data;
+        });
+      })
+      .then(function (lineItem) {
+        self.success(lineItem);
+      })
+      .catch(function (err) {
+        self.error(err);
+      })
+      .finally(function () {
+        if (submitButton) submitButton.classList.remove("is-loading");
+      });
   };
 
   cart.prototype.success = function (item) {
-    theme.miniCart.updateElements();
-    theme.miniCart.generateCart();
+    if (theme.miniCart) {
+      theme.miniCart.updateElements();
+      theme.miniCart.generateCart();
+    }
     if (styleCart != "true") {
       if (this.showNotice) {
         var htmlVariant =
@@ -1360,16 +1366,14 @@ window.AjaxCart = (function () {
           "notice"
         );
       } else {
-        theme.crosssell.showPopup(item);
+        if (theme.crosssell) theme.crosssell.showPopup(item);
       }
     }
   };
 
   // Error handling reference from Shopify.onError in api.jquery.js
-  cart.prototype.error = function (XMLHttpRequest) {
-    var data = JSON.parse(XMLHttpRequest.responseText);
-
-    if (data.message) {
+  cart.prototype.error = function (data) {
+    if (data && data.message) {
       theme.alert.new("", data.description, 3000, "warning");
     }
   };
