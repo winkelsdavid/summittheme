@@ -744,6 +744,29 @@ theme.slideToggle = function (el) {
   }
 };
 
+// Vanilla cookie get/set (replaces the jquery.cookie plugin).
+theme.cookie = {
+  get: function (name) {
+    var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    return m ? decodeURIComponent(m.pop()) : null;
+  },
+  set: function (name, value, days, path) {
+    var expires = "";
+    if (days) {
+      var d = new Date();
+      d.setTime(d.getTime() + days * 864e5);
+      expires = "; expires=" + d.toUTCString();
+    }
+    document.cookie =
+      name +
+      "=" +
+      encodeURIComponent(value) +
+      expires +
+      "; path=" +
+      (path || "/");
+  },
+};
+
 theme.Drawers = (function () {
   var Drawer = function (id, position, options) {
     var defaults = {
@@ -5669,45 +5692,63 @@ theme.bundleProduct = (function () {
 // Upsell
 theme.upsell = (function () {
   const upsellPopupSelector = "#jsUpsell";
-  const $acceptButton = $("#jsUpsell .btn-accept");
-  const upsellProductId = $("#jsUpsell").data("id") || "";
+  const upsellEl = document.querySelector(upsellPopupSelector);
+  if (!upsellEl) return;
+  const acceptButton = upsellEl.querySelector(".btn-accept");
+  const upsellProductId = upsellEl.getAttribute("data-id") || "";
   const acceptButtonClass = "js-btn-accept";
-  const delayTime = $("#jsUpsell").data("delay") || 3000;
-  const isUpsellActive = $(upsellPopupSelector).length === 1;
+  const delayTime = parseInt(upsellEl.getAttribute("data-delay"), 10) || 3000;
 
   function showUpsellPopupWithDelay() {
     setTimeout(() => {
-      $(upsellPopupSelector).modal("show");
+      if (window.NativeUI) NativeUI.openModal(upsellPopupSelector);
     }, delayTime);
   }
 
   function handleAcceptButtonClick() {
-    const isAcceptButton = $acceptButton.hasClass(acceptButtonClass);
+    const isAcceptButton = acceptButton.classList.contains(acceptButtonClass);
 
     if (isAcceptButton) {
-      Shopify.addItem(upsellProductId, 1, (item) => {
-        theme.miniCart.updateElements();
-        theme.miniCart.generateCart();
+      fetch(window.Shopify.routes.root + "cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ id: upsellProductId, quantity: 1 }),
+      })
+        .then((r) => r.json())
+        .then((item) => {
+          if (theme.miniCart) {
+            theme.miniCart.updateElements();
+            theme.miniCart.generateCart();
+          }
 
-        const variantInfo =
-          item.variant_title !== null ? `<i>(${item.variant_title})</i>` : "";
-        const alertContent = `<div class="media mt-2 alert--cart"><a class="mr-3" href="/cart"><img class="lazyload" data-src="${item.image}"></a><div class="media-body align-self-center"><p class="m-0 font-weight-bold">${item.product_title} x ${item.quantity}</p>${variantInfo}<div><div>`;
+          const variantInfo =
+            item.variant_title !== null
+              ? `<i>(${item.variant_title})</i>`
+              : "";
+          const alertContent = `<div class="media mt-2 alert--cart"><a class="mr-3" href="/cart"><img class="lazyload" data-src="${item.image}"></a><div class="media-body align-self-center"><p class="m-0 font-weight-bold">${item.product_title} x ${item.quantity}</p>${variantInfo}<div><div>`;
 
-        theme.alert.new(
-          theme.strings.addToCartSuccess,
-          alertContent,
-          3000,
-          "notice"
-        );
-      });
+          theme.alert.new(
+            theme.strings.addToCartSuccess,
+            alertContent,
+            3000,
+            "notice"
+          );
+        });
     }
 
-    $(upsellPopupSelector).modal("hide");
+    if (window.NativeUI) NativeUI.closeModal(upsellPopupSelector);
   }
 
-  if (isUpsellActive) {
-    $(document).ready(showUpsellPopupWithDelay);
-    $acceptButton.on("click", handleAcceptButtonClick);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", showUpsellPopupWithDelay);
+  } else {
+    showUpsellPopupWithDelay();
+  }
+  if (acceptButton) {
+    acceptButton.addEventListener("click", handleAcceptButtonClick);
   }
 })();
 
@@ -5722,21 +5763,25 @@ Shopify.onError = function (t, r) {
 
 // Fake-viewers
 theme.fakeViewer = (function () {
-  var $fakeViewClass = $(".js-fake-view"),
-    minValue = $fakeViewClass.data("min"),
-    maxValue = $fakeViewClass.data("max"),
-    duration = $fakeViewClass.data("duration");
+  var els = document.querySelectorAll(".js-fake-view");
+  if (!els.length) return;
+  var first = els[0];
+  var minValue = parseInt(first.getAttribute("data-min"), 10);
+  var maxValue = parseInt(first.getAttribute("data-max"), 10);
+  var duration = parseInt(first.getAttribute("data-duration"), 10);
 
   function updateFakeViewCount() {
     var value =
       Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
-    $fakeViewClass.text(value);
+    els.forEach(function (el) {
+      el.textContent = value;
+    });
   }
 
   function initFakeViewCount() {
     updateFakeViewCount();
 
-    if (minValue !== undefined && maxValue !== undefined && duration) {
+    if (!isNaN(minValue) && !isNaN(maxValue) && duration) {
       setInterval(updateFakeViewCount, duration);
     }
   }
@@ -5746,45 +5791,47 @@ theme.fakeViewer = (function () {
 
 // Product-suggest
 theme.productSuggest = (function () {
-  var $productNotification = $(".product-notification"),
-    $closeButton = $(".close-notifi"),
-    suggestionDuration = $productNotification.data("time") || 0,
-    suggestionCookie = "productSuggestClosed";
+  var notification = document.querySelector(".product-notification");
+  if (!notification) return;
+  var closeButton = document.querySelector(".close-notifi");
+  var suggestionDuration =
+    parseInt(notification.getAttribute("data-time"), 10) || 0;
+  var suggestionCookie = "productSuggestClosed";
 
   function closeSuggestion() {
-    $productNotification.remove();
-    $.cookie(suggestionCookie, "closed", { expires: 1, path: "/" });
+    notification.remove();
+    theme.cookie.set(suggestionCookie, "closed", 1, "/");
   }
 
   function toggleSuggestion() {
-    if ($productNotification.hasClass("active")) {
-      $productNotification.removeClass("active");
+    if (notification.classList.contains("active")) {
+      notification.classList.remove("active");
     } else {
-      var $productItems = $(".data-product"),
-        randomIndex = Math.floor(Math.random() * $productItems.length),
-        $selectedProduct = $($productItems[randomIndex]);
+      var items = document.querySelectorAll(".data-product");
+      if (!items.length) return;
+      var selected = items[Math.floor(Math.random() * items.length)];
 
-      $productNotification.addClass("active");
-      var $productImage = $productNotification.find(".product-image img");
-      $productImage.attr({
-        src: $selectedProduct.data("image"),
-        width: $selectedProduct.data("wimage"),
-        height: $selectedProduct.data("himage"),
-      });
-      $productNotification.find(".product-image").attr({
-        href: $selectedProduct.data("url"),
-        title: $selectedProduct.data("title"),
-      });
-      $productNotification
-        .find(".product-name")
-        .text($selectedProduct.data("title"))
-        .attr("href", $selectedProduct.data("url"));
-      $productNotification
-        .find(".time-ago")
-        .text($selectedProduct.data("time"));
-      $productNotification
-        .find(".from-ago")
-        .text($selectedProduct.data("local"));
+      notification.classList.add("active");
+      var img = notification.querySelector(".product-image img");
+      if (img) {
+        img.setAttribute("src", selected.getAttribute("data-image"));
+        img.setAttribute("width", selected.getAttribute("data-wimage"));
+        img.setAttribute("height", selected.getAttribute("data-himage"));
+      }
+      var imgLink = notification.querySelector(".product-image");
+      if (imgLink) {
+        imgLink.setAttribute("href", selected.getAttribute("data-url"));
+        imgLink.setAttribute("title", selected.getAttribute("data-title"));
+      }
+      var name = notification.querySelector(".product-name");
+      if (name) {
+        name.textContent = selected.getAttribute("data-title");
+        name.setAttribute("href", selected.getAttribute("data-url"));
+      }
+      var timeAgo = notification.querySelector(".time-ago");
+      if (timeAgo) timeAgo.textContent = selected.getAttribute("data-time");
+      var fromAgo = notification.querySelector(".from-ago");
+      if (fromAgo) fromAgo.textContent = selected.getAttribute("data-local");
     }
   }
 
@@ -5795,10 +5842,10 @@ theme.productSuggest = (function () {
   }
 
   function init() {
-    if ($.cookie(suggestionCookie) === "closed") {
-      $productNotification.remove();
+    if (theme.cookie.get(suggestionCookie) === "closed") {
+      notification.remove();
     } else {
-      $closeButton.on("click", closeSuggestion);
+      if (closeButton) closeButton.addEventListener("click", closeSuggestion);
       handleSuggestionInterval();
     }
   }
@@ -5807,33 +5854,27 @@ theme.productSuggest = (function () {
 })();
 
 theme.activeAccordion = (function () {
-  $(".collapse").on("shown.bs.collapse", function () {
-    $(this).prev().addClass("active-acc");
-  });
-  $(".collapse").on("hidden.bs.collapse", function () {
-    $(this).prev().removeClass("active-acc");
-  });
+  // Bootstrap collapse accordions were migrated to native <details>; the
+  // "active-acc" state is now driven purely by CSS ([open]). No JS hook needed.
 })();
 
 // Anchor scroll
 theme.anchorScroll = (function () {
-  $(document).on("click", 'a[href^="#"]', function (event) {
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest('a[href^="#"]');
+    if (!link) return;
     event.preventDefault();
-
-    var $clickedLink = $(this);
-    var disableAnchor = $clickedLink.hasClass("disabled-anchor");
-
-    if (!disableAnchor) {
-      var target = $clickedLink.attr("href");
-      var targetOffsetTop = $(target).offset().top;
-
-      $("html, body").animate(
-        {
-          scrollTop: targetOffsetTop,
-        },
-        500
-      );
+    if (link.classList.contains("disabled-anchor")) return;
+    var target = link.getAttribute("href");
+    var targetEl = null;
+    try {
+      targetEl = target && target !== "#" ? document.querySelector(target) : null;
+    } catch (e) {
+      return;
     }
+    if (!targetEl) return;
+    var top = targetEl.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({ top: top, behavior: "smooth" });
   });
 })();
 
