@@ -2118,16 +2118,19 @@ theme.Product = (function () {
       $thumbnailsToHide.removeClass("is-active");
       $thumbnailToShow.addClass("is-active");
       $thumbnailToShow.trigger("click");
-      var $thumbnails = $(this.selectors.productThumbsWrapper, this.$container);
-      // If there is a slick carousel, get the slide index, and position it into view with animation.
-      if ($thumbnails.hasClass("slick-initialized")) {
-        // eslint-disable-next-line shopify/jquery-dollar-sign-reference
-        var currentActiveSlideIndex = $thumbnails.slick("slickCurrentSlide");
-        var newActiveSlideIndex = parseInt(
-          $thumbnailToShow.attr("data-slick-index")
+      // Move the Swiper main+thumb pair to the matching slide (variant change).
+      if (this.mainSwiper && this._galleryMainEl) {
+        var $slide = this._galleryMainEl.querySelector(
+          '.swiper-slide[data-image-id="' + imageId + '"]'
         );
-        if (currentActiveSlideIndex !== newActiveSlideIndex) {
-          $thumbnails.slick("slickGoTo", newActiveSlideIndex, false);
+        if ($slide && $slide.parentElement) {
+          var newIndex = Array.prototype.indexOf.call(
+            $slide.parentElement.children,
+            $slide
+          );
+          if (newIndex >= 0 && newIndex !== this.mainSwiper.activeIndex) {
+            this.mainSwiper.slideTo(newIndex);
+          }
         }
       }
     },
@@ -2194,256 +2197,141 @@ theme.Product = (function () {
     /*
       Thumbnail slider
      */
+    /*
+      Thumbnail slider (Swiper, replaces Slick asNavFor main+thumb sync).
+      - media-bottom (default), media-left, media-right, media-nothumb: main
+        fade slider + thumb-nav (Swiper thumbs module = two-way asNavFor).
+      - media-left/right: thumbs vertical on desktop, horizontal <992 (Swiper 6
+        can't switch direction per-breakpoint -> rebuild on resize across 992).
+      - media-list/grid/collage: Slick used 'unslick' (static CSS grid) -> no
+        carousel, left untouched.
+      Markup is wrapped at runtime (like Slick did) so the same template still
+      serves the grid layouts.
+    */
     _productThumbnailSlider: function () {
-      var $productThumbsWrapper = $(this.selectors.productThumbsWrapper);
-      var $productMainWrapper = $(this.selectors.productImageMain);
-      var $productThumbs = $(this.selectors.productThumbs);
-      if (!$productThumbs.length) {
+      var self = this;
+      var thumbsEl = document.querySelector(this.selectors.productThumbsWrapper);
+      var mainEl = document.querySelector(this.selectors.productImageMain);
+      var thumbs = document.querySelectorAll(this.selectors.productThumbs);
+      if (!thumbsEl || !mainEl || !thumbs.length || thumbs.length <= 1) {
+        if (mainEl) mainEl.style.opacity = "1";
         return;
       }
 
-      if ($productThumbs.length > 1) {
-        $productThumbsWrapper.on(
-          "init" + this.settings.namespace,
-          this._productSwipeInit.bind(this)
-        );
-        if (
-          this.settings.sectionTem === "media-left" ||
-          this.settings.sectionTem === "media-right"
-        ) {
-          $productThumbsWrapper
-            .slick({
-              accessibility: true,
-              arrows: true,
-              dots: false,
-              infinite: false,
-              autoplay: false,
-              slidesToShow: 5,
-              slidesToScroll: 1,
-              focusOnSelect: true,
-              asNavFor: $productMainWrapper,
-              vertical: true,
-              verticalSwiping: true,
-              responsive: [
-                {
-                  breakpoint: 992,
-                  settings: {
-                    vertical: false,
-                    verticalSwiping: false,
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                  },
-                },
-              ],
-            })
-            .css("opacity", "1");
-          slideMain();
-        } else if (this.settings.sectionTem === "media-nothumb") {
-          $productThumbsWrapper
-            .slick({
-              accessibility: true,
-              arrows: true,
-              dots: false,
-              infinite: false,
-              autoplay: false,
-              slidesToShow: 6,
-              slidesToScroll: 1,
-              focusOnSelect: true,
-              asNavFor: $productMainWrapper,
-              responsive: [
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                  },
-                },
-              ],
-            })
-            .css("opacity", "1");
-          slideMain();
-        } else if (
-          this.settings.sectionTem === "media-list" ||
-          this.settings.sectionTem === "media-grid" ||
-          this.settings.sectionTem === "media-collage-1" ||
-          this.settings.sectionTem === "media-collage-2"
-        ) {
-          $productThumbsWrapper
-            .slick({
-              accessibility: true,
-              arrows: true,
-              dots: false,
-              infinite: false,
-              autoplay: false,
-              slidesToShow: 6,
-              slidesToScroll: 1,
-              focusOnSelect: true,
-              asNavFor: $productMainWrapper,
-              responsive: [
-                {
-                  breakpoint: 9999,
-                  settings: "unslick",
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                  },
-                },
-              ],
-            })
-            .css("opacity", "1");
-          $productMainWrapper
-            .slick({
-              arrows: true,
-              dots: false,
-              infinite: false,
-              autoplay: false,
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              fade: true,
-              adaptiveHeight: true,
-              accessibility: true,
-              draggable: false,
-              asNavFor: $productThumbsWrapper,
-              responsive: [
-                {
-                  breakpoint: 9999,
-                  settings: "unslick",
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                  },
-                },
-              ],
-            })
-            .css("opacity", "1");
-          $productThumbsWrapper.slick(
-            "slickGoTo",
-            $productThumbsWrapper.find(".is-active").attr("data-slick-index"),
-            true
-          );
-          $(window).on("resize", function () {
-            $productThumbsWrapper.slick("resize");
-            $productMainWrapper.slick("resize");
-          });
-        } else {
-          $productThumbsWrapper
-            .slick({
-              accessibility: true,
-              arrows: true,
-              dots: false,
-              infinite: false,
-              autoplay: false,
-              slidesToShow: 6,
-              slidesToScroll: 1,
-              focusOnSelect: true,
-              asNavFor: $productMainWrapper,
-              responsive: [
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                  },
-                },
-              ],
-            })
-            .css("opacity", "1");
-          slideMain();
-        }
-        function slideMain() {
-          $productMainWrapper
-            .slick({
-              arrows: true,
-              dots: false,
-              infinite: false,
-              autoplay: false,
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              fade: true,
-              adaptiveHeight: true,
-              accessibility: true,
-              draggable: false,
-              asNavFor: $productThumbsWrapper,
-            })
-            .css("opacity", "1");
-        }
-      }
-      // Show highlighted thumbnail by repositioning slider
+      var mode = this.settings.sectionTem;
       if (
-        this.settings.sectionTem === "media-left" ||
-        this.settings.sectionTem === "media-right" ||
-        this.settings.sectionTem === "media-nothumb" ||
-        this.settings.sectionTem === "media-bottom"
+        mode === "media-list" ||
+        mode === "media-grid" ||
+        mode === "media-collage-1" ||
+        mode === "media-collage-2"
       ) {
-        $productThumbsWrapper.slick(
-          "slickGoTo",
-          $productThumbsWrapper.find(".is-active").attr("data-slick-index"),
-          true
+        mainEl.style.opacity = "1";
+        return;
+      }
+
+      this._galleryVertical = mode === "media-left" || mode === "media-right";
+
+      // Wrap raw children into Swiper structure once (Slick did this at runtime).
+      function wrapOnce(containerEl, navClass) {
+        if (containerEl.querySelector(":scope > .swiper-wrapper")) return null;
+        var w = document.createElement("div");
+        w.className = "swiper-wrapper";
+        Array.prototype.slice.call(containerEl.children).forEach(function (c) {
+          if (c.nodeType === 1) {
+            c.classList.add("swiper-slide");
+            w.appendChild(c);
+          }
+        });
+        containerEl.appendChild(w);
+        containerEl.classList.add("swiper");
+        var prev = document.createElement("div");
+        prev.className = "swiper-button-prev " + navClass + "-prev";
+        var next = document.createElement("div");
+        next.className = "swiper-button-next " + navClass + "-next";
+        containerEl.appendChild(prev);
+        containerEl.appendChild(next);
+        return { prev: prev, next: next };
+      }
+
+      this._galleryThumbsEl = thumbsEl;
+      this._galleryMainEl = mainEl;
+      this._thumbNav = wrapOnce(thumbsEl, "gallery-thumb");
+      this._mainNav = wrapOnce(mainEl, "gallery-main");
+
+      this._initGallerySwipers();
+
+      if (this._galleryVertical) {
+        var wasDesktop = window.innerWidth >= 992;
+        var onResize = function () {
+          var isDesktop = window.innerWidth >= 992;
+          if (isDesktop !== wasDesktop) {
+            wasDesktop = isDesktop;
+            self._initGallerySwipers();
+          }
+        };
+        this._galleryResize = $.debounce ? $.debounce(150, onResize) : onResize;
+        $(window).on("resize", this._galleryResize);
+      }
+    },
+
+    _initGallerySwipers: function () {
+      if (!window.Swiper) return;
+      if (this.thumbsSwiper) {
+        try { this.thumbsSwiper.destroy(true, false); } catch (e) {}
+      }
+      if (this.mainSwiper) {
+        try { this.mainSwiper.destroy(true, false); } catch (e) {}
+      }
+
+      var thumbsEl = this._galleryThumbsEl;
+      var mainEl = this._galleryMainEl;
+      var thumbNav = this._thumbNav;
+      var mainNav = this._mainNav;
+      var vertical = this._galleryVertical && window.innerWidth >= 992;
+
+      var thumbOpts = {
+        slidesPerGroup: 1,
+        spaceBetween: 0,
+        watchSlidesProgress: true,
+        slideToClickedSlide: true,
+        navigation: thumbNav
+          ? { nextEl: thumbNav.next, prevEl: thumbNav.prev }
+          : false,
+      };
+      if (this._galleryVertical) {
+        thumbOpts.direction = vertical ? "vertical" : "horizontal";
+        thumbOpts.slidesPerView = vertical ? 5 : 4;
+      } else {
+        thumbOpts.direction = "horizontal";
+        thumbOpts.slidesPerView = 4;
+        thumbOpts.breakpoints = { 481: { slidesPerView: 6 } };
+      }
+      this.thumbsSwiper = new Swiper(thumbsEl, thumbOpts);
+      thumbsEl.style.opacity = "1";
+
+      this.mainSwiper = new Swiper(mainEl, {
+        effect: "fade",
+        fadeEffect: { crossFade: true },
+        slidesPerView: 1,
+        spaceBetween: 0,
+        autoHeight: true,
+        simulateTouch: false, // no mouse-drag on desktop (Slick draggable:false); touch-swipe on mobile stays on
+        navigation: mainNav
+          ? { nextEl: mainNav.next, prevEl: mainNav.prev }
+          : false,
+        thumbs: { swiper: this.thumbsSwiper },
+      });
+      mainEl.style.opacity = "1";
+
+      // Position on the active (featured/variant) image.
+      var active = thumbsEl.querySelector(".swiper-slide.is-active");
+      if (active && active.parentElement) {
+        var idx = Array.prototype.indexOf.call(
+          active.parentElement.children,
+          active
         );
+        if (idx >= 0) this.mainSwiper.slideTo(idx, 0);
       }
-    },
-
-    _productSwipeInit: function (evt, obj) {
-      // Slider is initialized. Setup custom swipe events
-      this.settings.productThumbIndex = obj.currentSlide;
-      this.settings.productThumbMax = obj.slideCount - 1; // we need the 0-based index
-
-      var self = this;
-
-      $(this.selectors.productImageWrappers).on(
-        "swipeleft swiperight",
-        function (event) {
-          if (event.type === "swipeleft") {
-            self._goToNextThumbnail();
-          }
-
-          if (event.type === "swiperight") {
-            self._goToPrevThumbnail();
-          }
-
-          // Trigger click on newly requested thumbnail
-          $(
-            '.product-single__thumbnail-item[data-slick-index="' +
-              self.settings.productThumbIndex +
-              '"]'
-          )
-            .find(".product-single__thumbnail")
-            .trigger("click");
-        }
-      );
-    },
-    _goToNextThumbnail: function () {
-      this.settings.productThumbIndex++;
-
-      if (this.settings.productThumbIndex > this.settings.productThumbMax) {
-        this.settings.productThumbIndex = 0;
-      }
-
-      $(this.selectors.productThumbsWrapper).slick(
-        "slickGoTo",
-        this.settings.productThumbIndex,
-        true
-      );
-    },
-
-    _goToPrevThumbnail: function () {
-      this.settings.productThumbIndex--;
-
-      if (this.settings.productThumbIndex < 0) {
-        this.settings.productThumbIndex = this.settings.productThumbMax;
-      }
-
-      $(this.selectors.productThumbsWrapper).slick(
-        "slickGoTo",
-        this.settings.productThumbIndex,
-        true
-      );
     },
 
     _initQtySelector: function () {
@@ -2456,7 +2344,9 @@ theme.Product = (function () {
     onUnload: function () {
       $(this.selectors.productImageWrappers).off(this.settings.namespace);
       $(this.selectors.productThumbs).off(this.settings.namespace);
-      $(this.selectors.productThumbs).slick("unslick");
+      if (this._galleryResize) $(window).off("resize", this._galleryResize);
+      if (this.mainSwiper) { try { this.mainSwiper.destroy(true, true); } catch (e) {} }
+      if (this.thumbsSwiper) { try { this.thumbsSwiper.destroy(true, true); } catch (e) {} }
       if (this.ProductModal) {
         this.ProductModal.$modal.off(this.settings.namespace);
       }
