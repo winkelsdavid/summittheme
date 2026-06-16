@@ -750,11 +750,13 @@ theme.cookie = {
     var m = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
     return m ? decodeURIComponent(m.pop()) : null;
   },
-  set: function (name, value, days, path) {
+  set: function (name, value, daysOrDate, path) {
     var expires = "";
-    if (days) {
+    if (daysOrDate instanceof Date) {
+      expires = "; expires=" + daysOrDate.toUTCString();
+    } else if (daysOrDate) {
       var d = new Date();
-      d.setTime(d.getTime() + days * 864e5);
+      d.setTime(d.getTime() + daysOrDate * 864e5);
       expires = "; expires=" + d.toUTCString();
     }
     document.cookie =
@@ -2725,35 +2727,41 @@ theme.Cart = (function () {
 })();
 
 theme.noteCart = (function () {
-  if ($(".block-notecart") != undefined) {
-    var $el = $("#cart__note");
-    var $btnsubmit = $(".cart-notes-submit");
-    var $editNote = $(".edit-notecart");
-    var $closeNote = $(".cart-note-close");
-    var $drawCart = $(".mini-cart-content");
-    var noteText;
-    function noteUpdate(noteText) {
-      params = {
-        type: "POST",
-        url: "/cart/update.js",
-        data: "note=" + theme.attributeToString(noteText),
-      };
-      $.ajax(params);
-    }
-    $btnsubmit.on("click", function () {
-      noteText = $el.val();
-      noteUpdate(noteText);
-      $(this).closest(".js-note-cart").removeClass("active");
-    });
-    $editNote.on("click", function () {
-      $(this).siblings().toggleClass("active");
-      $(this).closest($drawCart).toggleClass("overlay");
-    });
-    $closeNote.on("click", function () {
-      $(this).closest(".js-note-cart").removeClass("active");
-      $(this).closest($drawCart).removeClass("overlay");
+  var drawSel = ".mini-cart-content";
+  function noteUpdate(noteText) {
+    fetch(window.Shopify.routes.root + "cart/update.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ note: theme.attributeToString(noteText) }),
     });
   }
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".cart-notes-submit");
+    if (!btn) return;
+    var noteEl = document.querySelector("#cart__note");
+    noteUpdate(noteEl ? noteEl.value : "");
+    var nc = btn.closest(".js-note-cart");
+    if (nc) nc.classList.remove("active");
+  });
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".edit-notecart");
+    if (!btn) return;
+    if (btn.parentElement) {
+      Array.prototype.forEach.call(btn.parentElement.children, function (sib) {
+        if (sib !== btn) sib.classList.toggle("active");
+      });
+    }
+    var draw = btn.closest(drawSel);
+    if (draw) draw.classList.toggle("overlay");
+  });
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".cart-note-close");
+    if (!btn) return;
+    var nc = btn.closest(".js-note-cart");
+    if (nc) nc.classList.remove("active");
+    var draw = btn.closest(drawSel);
+    if (draw) draw.classList.remove("overlay");
+  });
 })();
 theme.attributeToString = function (attribute) {
   if (typeof attribute !== "string") {
@@ -2762,7 +2770,7 @@ theme.attributeToString = function (attribute) {
       attribute = "";
     }
   }
-  return jQuery.trim(attribute);
+  return ("" + attribute).trim();
 };
 
 // Instagrams
@@ -5305,8 +5313,7 @@ theme.compare = (function () {
 // Popup newsletter
 theme.popupNewletter = (function () {
   function popupNewletter(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr("data-section-id");
+    var sectionId = container.getAttribute("data-section-id");
     this.selectors = {
       popupSection: ".popupnew-" + sectionId,
       formSection: "#jsPopupNewsletter" + sectionId,
@@ -5318,35 +5325,39 @@ theme.popupNewletter = (function () {
       this.showPopup();
     },
     showPopup: function () {
-      var $popupNewsletter = $(this.selectors.formSection),
-        $newsletterForm = $(this.selectors.formSection).find("form"),
-        date = new Date(),
-        minutes = theme.timePopupNewsletter;
-      minutesdelay = $popupNewsletter.attr("data-delay");
-      if ($popupNewsletter.length === 1) {
+      var formSel = this.selectors.formSection;
+      var popupEl = document.querySelector(formSel);
+      var newsletterForm = popupEl ? popupEl.querySelector("form") : null;
+      var date = new Date();
+      var minutes = theme.timePopupNewsletter;
+      var minutesdelay = popupEl ? popupEl.getAttribute("data-delay") : 0;
+
+      if (popupEl) {
         date.setTime(date.getTime() + minutes * 60 * 1000);
         var setCookies = function () {
-          $.cookie("cookiesNewsletter", "disabled", {
-            expires: date,
-            path: "/",
-          });
+          theme.cookie.set("cookiesNewsletter", "disabled", date, "/");
         };
-        if ($.cookie("cookiesNewsletter") !== "disabled") {
-          $(window).on("load", function () {
+        if (theme.cookie.get("cookiesNewsletter") !== "disabled") {
+          window.addEventListener("load", function () {
             setTimeout(function () {
-              $popupNewsletter.modal("show");
+              if (window.NativeUI) NativeUI.openModal(formSel);
             }, minutesdelay * 1000);
           });
-          $popupNewsletter.on("hidden.bs.modal", setCookies);
-          $newsletterForm.submit(setCookies);
+          popupEl.addEventListener("close", setCookies);
+          popupEl.addEventListener("modal:hidden", setCookies);
+          if (newsletterForm) {
+            newsletterForm.addEventListener("submit", setCookies);
+          }
         }
       }
-      if (Shopify.designMode) {
+      if (window.Shopify && Shopify.designMode) {
         document.addEventListener("shopify:section:select", function (event) {
-          $(event.target).find($popupNewsletter).modal("show");
+          var el = event.target.querySelector(formSel);
+          if (el && window.NativeUI) NativeUI.openModal(el);
         });
         document.addEventListener("shopify:section:deselect", function (event) {
-          $(event.target).find($popupNewsletter).modal("hide");
+          var el = event.target.querySelector(formSel);
+          if (el && window.NativeUI) NativeUI.closeModal(el);
         });
       }
     },
