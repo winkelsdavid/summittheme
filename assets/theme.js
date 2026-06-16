@@ -5839,18 +5839,50 @@ theme.anchorScroll = (function () {
 
 // Notice when soldout
 theme.alert = (function () {
+  var colors = {
+    notice: "#2e7d32",
+    error: "#c62828",
+    warning: "#ef6c00",
+    default: "#333",
+  };
   function createAlert(title, mess, time, type) {
     var aTitle = title || "",
       aTime = time || 2000,
       aMessage = mess || "",
       aClass = type || "default";
-    $.growl({
-      title: aTitle,
-      message: aMessage,
-      duration: aTime,
-      style: aClass,
-      size: "large",
+    var container = document.getElementById("theme-toast-container");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "theme-toast-container";
+      container.style.cssText =
+        "position:fixed;top:20px;right:20px;z-index:99999;display:flex;flex-direction:column;gap:10px;max-width:320px;";
+      document.body.appendChild(container);
+    }
+    var toast = document.createElement("div");
+    toast.setAttribute("role", "alert");
+    toast.style.cssText =
+      "background:" +
+      (colors[aClass] || colors.default) +
+      ";color:#fff;padding:12px 16px;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,.2);opacity:0;transform:translateX(20px);transition:opacity .3s,transform .3s;font-size:14px;line-height:1.35;";
+    toast.innerHTML =
+      (aTitle
+        ? '<strong style="display:block;margin-bottom:2px;">' + aTitle + "</strong>"
+        : "") +
+      "<span>" +
+      aMessage +
+      "</span>";
+    container.appendChild(toast);
+    requestAnimationFrame(function () {
+      toast.style.opacity = "1";
+      toast.style.transform = "translateX(0)";
     });
+    setTimeout(function () {
+      toast.style.opacity = "0";
+      toast.style.transform = "translateX(20px)";
+      setTimeout(function () {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 300);
+    }, aTime);
   }
 
   return {
@@ -5860,18 +5892,25 @@ theme.alert = (function () {
 
 // Notice when soldout
 theme.noticeSoldout = (function () {
-  var $soldoutWrapFormClass = $(".js-contact-soldout"),
-    $textClass = $(".js-notify-text"),
-    $soldoutValueId = $("#ContactProduct");
   function noticeSoldout(variant) {
-    $soldoutWrapFormClass.find(".form-success").remove();
+    var wrap = document.querySelector(".js-contact-soldout");
+    var textEl = document.querySelector(".js-notify-text");
+    var valueEl = document.getElementById("ContactProduct");
+    if (wrap) {
+      var success = wrap.querySelector(".form-success");
+      if (success) success.remove();
+    }
+    var span = textEl ? textEl.querySelector("span") : null;
     if (variant.available) {
-      $textClass.find("span").text("");
-      $soldoutWrapFormClass.addClass("hide");
+      if (span) span.textContent = "";
+      if (wrap) wrap.classList.add("hide");
     } else {
-      $textClass.find("span").text(+variant.name);
-      $soldoutWrapFormClass.removeClass("hide");
-      $soldoutValueId.val(variant.name).attr("value", variant.name);
+      if (span) span.textContent = +variant.name;
+      if (wrap) wrap.classList.remove("hide");
+      if (valueEl) {
+        valueEl.value = variant.name;
+        valueEl.setAttribute("value", variant.name);
+      }
     }
   }
   return {
@@ -5881,29 +5920,36 @@ theme.noticeSoldout = (function () {
 
 // Sticky cart
 theme.stickyCart = function () {
-  var $anchor = $("#js-anchor-sticky-cart"),
-    $stickyCartWrapper = $(".sticky-cart-wr");
-
-  if (!$anchor.length || !$stickyCartWrapper.length) return;
+  var anchor = document.getElementById("js-anchor-sticky-cart");
+  var wrapper = document.querySelector(".sticky-cart-wr");
+  if (!anchor || !wrapper) return;
 
   function handleStickyCart() {
-    var anchorTop = $anchor.offset().top,
-      anchorHeight = $anchor.outerHeight(),
-      windowHeight = $(window).height(),
-      windowScroll = $(window).scrollTop();
+    var anchorTop = anchor.getBoundingClientRect().top + window.pageYOffset;
+    var anchorHeight = anchor.offsetHeight;
+    var windowHeight = window.innerHeight;
+    var windowScroll = window.pageYOffset;
 
-    $stickyCartWrapper.toggleClass(
+    wrapper.classList.toggle(
       "active",
       windowScroll > anchorTop + anchorHeight - windowHeight
     );
   }
 
-  $(window).off("scroll.stickyCart").on("scroll.stickyCart", handleStickyCart);
+  if (theme._stickyCartScroll) {
+    window.removeEventListener("scroll", theme._stickyCartScroll);
+  }
+  theme._stickyCartScroll = handleStickyCart;
+  window.addEventListener("scroll", handleStickyCart);
   handleStickyCart();
 };
 
 // Run on initial load
-$(document).ready(theme.stickyCart);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", theme.stickyCart);
+} else {
+  theme.stickyCart();
+}
 
 // Re-run when sections are loaded in the theme editor
 if (window.Shopify && Shopify.designMode) {
@@ -5970,17 +6016,17 @@ theme.backToTop = (function () {
 })();
 
 theme.popOver = (function () {
-  $("body").on("click", function (e) {
-    $("[data-hotspot]").each(function () {
-      // hide any open popovers when the anywhere else in the body is clicked
-      if (
-        !$(this).is(e.target) &&
-        $(this).has(e.target).length === 0 &&
-        $(".popover").has(e.target).length === 0
-      ) {
-        $(this).next().removeClass("active");
+  document.body.addEventListener("click", function (e) {
+    document.querySelectorAll("[data-hotspot]").forEach(function (hotspot) {
+      var next = hotspot.nextElementSibling;
+      if (!next) return;
+      // hide any open popovers when anywhere else in the body is clicked
+      var hitHotspot = hotspot === e.target || hotspot.contains(e.target);
+      var hitPopover = !!e.target.closest(".popover");
+      if (!hitHotspot && !hitPopover) {
+        next.classList.remove("active");
       } else {
-        $(this).next().addClass("active");
+        next.classList.add("active");
       }
     });
   });
@@ -5988,41 +6034,85 @@ theme.popOver = (function () {
 
 // Tooltip
 theme.tooltip = (function () {
+  // Lightweight vanilla tooltip (replaces the Bootstrap 4 jQuery tooltip plugin).
   var selector = '[data-toggle="tooltip"],[data-tooltip="true"]';
-  function loadTooltip() {
-    $(selector).tooltip(); //Bootstrap 4
+  var tip = null;
+
+  function textOf(el) {
+    if (el.getAttribute("title")) {
+      // mirror Bootstrap: stash title so the native tooltip doesn't double up
+      el.setAttribute("data-original-title", el.getAttribute("title"));
+      el.removeAttribute("title");
+    }
+    return el.getAttribute("data-original-title") || "";
   }
-  $(document).on("click", selector, function () {
-    $(this).tooltip("hide");
+
+  function show(el) {
+    var text = textOf(el);
+    if (!text) return;
+    hide();
+    tip = document.createElement("div");
+    tip.className = "theme-tooltip";
+    tip.textContent = text;
+    tip.style.cssText =
+      "position:absolute;z-index:99999;background:#000;color:#fff;padding:4px 8px;border-radius:4px;font-size:12px;white-space:nowrap;pointer-events:none;transform:translate(-50%,-100%);";
+    document.body.appendChild(tip);
+    var r = el.getBoundingClientRect();
+    tip.style.left = r.left + r.width / 2 + window.pageXOffset + "px";
+    tip.style.top = r.top + window.pageYOffset - 6 + "px";
+  }
+
+  function hide() {
+    if (tip && tip.parentNode) tip.parentNode.removeChild(tip);
+    tip = null;
+  }
+
+  document.addEventListener("mouseover", function (e) {
+    var el = e.target.closest(selector);
+    if (el) show(el);
   });
-  loadTooltip();
+  document.addEventListener("mouseout", function (e) {
+    if (e.target.closest(selector)) hide();
+  });
+  document.addEventListener("focusin", function (e) {
+    var el = e.target.closest(selector);
+    if (el) show(el);
+  });
+  document.addEventListener("focusout", hide);
+  document.addEventListener("click", function (e) {
+    if (e.target.closest(selector)) hide();
+  });
+
+  function loadTooltip() {
+    // delegation handles current + future elements; kept for API compatibility
+  }
   return {
     load: loadTooltip,
   };
 })();
 
 theme.hasInput = (function () {
-  var inPut = $(".form-group .form-control");
-
-  inPut.blur(function () {
-    if (!this.value) {
-      $(this).removeClass("has-value");
-    } else {
-      $(this).addClass("has-value");
-    }
+  document.querySelectorAll(".form-group .form-control").forEach(function (input) {
+    input.addEventListener("blur", function () {
+      if (!this.value) {
+        this.classList.remove("has-value");
+      } else {
+        this.classList.add("has-value");
+      }
+    });
   });
 
-  var inpuSearch = $("#Search-In-Template");
-  if (inpuSearch.length != 0) {
-    if (inpuSearch.val().length != 0) {
-      inpuSearch.addClass("has-value");
-    }
-  } else {
-    return;
+  var search = document.getElementById("Search-In-Template");
+  if (search && search.value.length !== 0) {
+    search.classList.add("has-value");
   }
 })();
 
-$(theme.init);
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", theme.init);
+} else {
+  theme.init();
+}
 
 class CountdownTimer extends HTMLElement {
   connectedCallback() {
