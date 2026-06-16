@@ -4592,8 +4592,7 @@ theme.miniCart = (function () {
 
       // add list items
       let lastLine;
-      console.log(cart.items, 'ini items')
-      
+
       // Create array of fetch promises
       var fetchPromises = [];
       for (let i = 0; i < forLoop; i++) {
@@ -4602,7 +4601,6 @@ theme.miniCart = (function () {
           fetch(`/products/${product.handle}.js`)
             .then(response => response.json())
             .then(productData => {
-              console.log(productData, 'ini productnya')
               var variant = productData.variants.find(v => v.id === product.variant_id);
 
               if(variant) {
@@ -4639,11 +4637,7 @@ theme.miniCart = (function () {
               theme.moneyFormat
             );
 
-          console.log('Ini compare: ', product.price)
-          console.log('Ini final: ', product.final_price)
-          console.log('Ini compare_at_price: ', compareAtPrice)
-          console.log('Ini product: ', product)
-          
+
           // Calculate savings for this item
           if (compareAtPrice && compareAtPrice > product.final_price) {
             var itemSavings = (compareAtPrice - product.final_price) * product.quantity;
@@ -4701,7 +4695,7 @@ theme.miniCart = (function () {
           htmlCart +=
             `		${priceDisplay} ${badge}<div class="d-flex align-items-center mt-2 justify-content-between"><div class="js-qty mt-1"><input data-line="` +
             line +
-            `" type="text" min="0" class="change-minicart js-qty__input" pattern="[0-9]*" value="${product.quantity}" data-max="${product.inventory_quantity}"><button type="button" class="js-qty__adjust js-qty__minus" aria-label="Reduce item quantity by one"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-minus" viewBox="0 0 22 3"><path fill="#000" d="M21.5.5v2H.5v-2z" fill-rule="evenodd"></path></svg><span class="icon__fallback-text">−</span></button><button type="button" class="js-qty__adjust js-qty__plus" aria-label="Increase item quantity by one"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 22 21"><path d="M12 11.5h9.5v-2H12V0h-2v9.5H.5v2H10V21h2v-9.5z" fill="#000" fill-rule="evenodd"></path></svg><span class="icon__fallback-text">+</span></button></div><button class="btn js-remove-mini-cart link pr-0" data-id="${product.id}">Remove</button></div>`;
+            `" type="text" min="0" class="change-minicart js-qty__input" pattern="[0-9]*" value="${product.quantity}" data-max="${product.inventory_quantity}"><button type="button" class="js-qty__adjust js-qty__minus" aria-label="Reduce item quantity by one"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-minus" viewBox="0 0 22 3"><path fill="#000" d="M21.5.5v2H.5v-2z" fill-rule="evenodd"></path></svg><span class="icon__fallback-text">−</span></button><button type="button" class="js-qty__adjust js-qty__plus" aria-label="Increase item quantity by one"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-plus" viewBox="0 0 22 21"><path d="M12 11.5h9.5v-2H12V0h-2v9.5H.5v2H10V21h2v-9.5z" fill="#000" fill-rule="evenodd"></path></svg><span class="icon__fallback-text">+</span></button></div><button class="btn js-remove-mini-cart link pr-0" data-id="${product.id}" data-key="${product.key}">Remove</button></div>`;
           htmlCart += `	</div>`;
           htmlCart += `</div>`;
         }
@@ -5035,6 +5029,10 @@ setHtmlAll('.bottom-total', `
     if (!btn) return;
     var loadingIndicator = document.querySelector(".recommend-loading");
     var itemId = parseInt(btn.getAttribute("data-id"), 10);
+    // Use the line-item KEY for /cart/change.js — the bare numeric variant id
+    // returned HTTP 400. Fall back to the variant id for items rendered before
+    // the data-key was added.
+    var itemKey = btn.getAttribute("data-key") || itemId;
     var isOuterMiniCart = !btn.closest(miniCart);
 
     var item = btn.closest(".mini-cart-item");
@@ -5043,20 +5041,20 @@ setHtmlAll('.bottom-total', `
     theme.GiftWrap.checkGift(itemId);
 
     // Remove from cart, then check inside the callback
-    changeCartLine({ id: itemId, quantity: 0 })
+    changeCartLine({ id: itemKey, quantity: 0 })
       .then(function (r) {
         return r.json();
       })
       .then(function (cart) {
         updateElements();
+        generateCart();
         if (cart.item_count === 0) {
           setDisplayAll(".discount-information", false);
         }
-        if (cart.items.length > numberDisplayed || isOuterMiniCart) {
-          generateCart();
-        }
       })
-      .catch(function () {});
+      .catch(function (err) {
+        console.error("mini-cart remove failed:", err);
+      });
   });
 
   //Keep popup when click cart / UX
