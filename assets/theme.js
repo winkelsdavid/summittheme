@@ -670,6 +670,22 @@ slate.Variants = (function () {
 })();
 
 /*================ MODULES ================*/
+// Vanilla replacement for the $.fn.prepareTransition (Snook) plugin: add an
+// 'is-transitioning' class for the duration of the element's CSS transition.
+theme.prepareTransition = function (el) {
+  if (!el) return el;
+  var duration = parseFloat(getComputedStyle(el).transitionDuration) || 0;
+  if (duration !== 0) {
+    el.classList.add("is-transitioning");
+    void el.offsetWidth; // force reflow so the transition runs
+    el.addEventListener("transitionend", function handler() {
+      el.classList.remove("is-transitioning");
+      el.removeEventListener("transitionend", handler);
+    });
+  }
+  return el;
+};
+
 theme.Drawers = (function () {
   var Drawer = function (id, position, options) {
     var defaults = {
@@ -679,68 +695,77 @@ theme.Drawers = (function () {
       dirOpenClass: "js-drawer-open-" + position,
     };
 
-    this.nodes = {
-      $parent: $("body, html"),
-      $page: $(".page-element"),
-    };
-
-    this.config = $.extend(defaults, options);
+    this.config = Object.assign(defaults, options);
     this.position = position;
 
-    this.$drawer = $("#" + id);
-    if (!this.$drawer.length) {
+    this.drawer = document.getElementById(id);
+    if (!this.drawer) {
       return false;
     }
 
+    this.page = document.querySelector(".page-element");
     this.drawerIsOpen = false;
+    // Bind handlers once so they can be detached on close.
+    this._onKeyup = this._onKeyup.bind(this);
+    this._onPageClick = this._onPageClick.bind(this);
+    this._onPageTouch = function (e) {
+      e.preventDefault();
+    };
     this.init();
   };
 
   Drawer.prototype.init = function () {
-    $(this.config.open).on("click", $.proxy(this.open, this));
-    this.$drawer.on("click", this.config.close, $.proxy(this.close, this));
+    var self = this;
+    document.querySelectorAll(this.config.open).forEach(function (btn) {
+      btn.addEventListener("click", self.open.bind(self));
+    });
+    // Delegated close (close buttons live inside the drawer)
+    this.drawer.addEventListener("click", function (evt) {
+      if (evt.target.closest(self.config.close)) {
+        self.close(evt);
+      }
+    });
+  };
+
+  Drawer.prototype._setParentClass = function (add) {
+    var method = add ? "add" : "remove";
+    var cls = [this.config.openClass, this.config.dirOpenClass];
+    [document.body, document.documentElement].forEach(function (el) {
+      cls.forEach(function (c) {
+        el.classList[method](c);
+      });
+    });
   };
 
   Drawer.prototype.open = function (evt) {
-    // Keep track if drawer was opened from a click, or called by another function
     var externalCall = false;
 
-    // Prevent following href if link is clicked
     if (evt) {
       evt.preventDefault();
     } else {
       externalCall = true;
     }
 
-    // Without this, the drawer opens, the click event bubbles up to $nodes.page
-    // which closes the drawer.
+    // Stop the click bubbling to the page click handler (which would re-close).
     if (evt && evt.stopPropagation) {
       evt.stopPropagation();
-      // save the source of the click, we'll focus to this on close
-      this.$activeSource = $(evt.currentTarget);
+      this.activeSource = evt.currentTarget;
     }
 
     if (this.drawerIsOpen && !externalCall) {
       return this.close();
     }
 
-    // Add is-transitioning class to moved elements on open so drawer can have
-    // transition for close animation
-    this.$drawer.prepareTransition();
-
-    this.nodes.$parent.addClass(
-      this.config.openClass + " " + this.config.dirOpenClass
-    );
+    theme.prepareTransition(this.drawer);
+    this._setParentClass(true);
     this.drawerIsOpen = true;
 
-    // Set focus on drawer
-    this.trapFocus({
-      $container: this.$drawer,
-      $elementToFocus: this.$drawer.find(".drawer__close-button"),
+    slate.a11y.trapFocus({
+      $container: this.drawer,
+      $elementToFocus: this.drawer.querySelector(".drawer__close-button"),
       namespace: "drawer_focus",
     });
 
-    // Run function when draw opens if set
     if (
       this.config.onDrawerOpen &&
       typeof this.config.onDrawerOpen === "function"
@@ -750,106 +775,51 @@ theme.Drawers = (function () {
       }
     }
 
-    if (this.$activeSource && this.$activeSource.attr("aria-expanded")) {
-      this.$activeSource.attr("aria-expanded", "true");
+    if (this.activeSource && this.activeSource.getAttribute("aria-expanded")) {
+      this.activeSource.setAttribute("aria-expanded", "true");
     }
 
-    this.nodes.$parent.on(
-      "keyup.drawer",
-      $.proxy(function (evt) {
-        // close on 'esc' keypress
-        if (evt.keyCode !== 27) return;
+    document.addEventListener("keyup", this._onKeyup);
+    if (this.page) {
+      this.page.addEventListener("touchmove", this._onPageTouch, {
+        passive: false,
+      });
+      this.page.addEventListener("click", this._onPageClick);
+    }
+  };
 
-        this.close();
-      }, this)
-    );
+  Drawer.prototype._onKeyup = function (evt) {
+    if (evt.keyCode !== 27) return; // esc
+    this.close();
+  };
 
-    // Lock scrolling on mobile
-    this.nodes.$page.on("touchmove.drawer", function () {
-      return false;
-    });
-
-    this.nodes.$page.on(
-      "click.drawer",
-      $.proxy(function () {
-        this.close();
-        return false;
-      }, this)
-    );
+  Drawer.prototype._onPageClick = function (evt) {
+    evt.preventDefault();
+    this.close();
   };
 
   Drawer.prototype.close = function () {
     if (!this.drawerIsOpen) return;
 
     // deselect any focused form elements
-    $(document.activeElement).trigger("blur");
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
 
-    // Ensure closing transition is applied to moved elements, like the nav
-    this.$drawer.prepareTransition();
-
-    this.nodes.$parent.removeClass(
-      this.config.dirOpenClass + " " + this.config.openClass
-    );
-
+    theme.prepareTransition(this.drawer);
+    this._setParentClass(false);
     this.drawerIsOpen = false;
 
-    // Remove focus on drawer
-    this.removeTrapFocus({
-      $container: this.$drawer,
+    slate.a11y.removeTrapFocus({
+      $container: this.drawer,
       namespace: "drawer_focus",
     });
 
-    this.nodes.$page.off(".drawer");
-    this.nodes.$parent.off(".drawer");
-  };
-
-  /**
-   * Traps the focus in a particular container
-   *
-   * @param {object} options - Options to be used
-   * @param {jQuery} options.$container - Container to trap focus within
-   * @param {jQuery} options.$elementToFocus - Element to be focused when focus leaves container
-   * @param {string} options.namespace - Namespace used for new focus event handler
-   */
-  Drawer.prototype.trapFocus = function (options) {
-    var eventName = options.namespace
-      ? "focusin." + options.namespace
-      : "focusin";
-
-    if (!options.$elementToFocus) {
-      options.$elementToFocus = options.$container;
+    document.removeEventListener("keyup", this._onKeyup);
+    if (this.page) {
+      this.page.removeEventListener("touchmove", this._onPageTouch);
+      this.page.removeEventListener("click", this._onPageClick);
     }
-
-    options.$container.attr("tabindex", "-1");
-    options.$elementToFocus.focus();
-
-    $(document).on(eventName, function (evt) {
-      if (
-        options.$container[0] !== evt.target &&
-        !options.$container.has(evt.target).length
-      ) {
-        options.$container.focus();
-      }
-    });
-  };
-
-  /**
-   * Removes the trap of focus in a particular container
-   *
-   * @param {object} options - Options to be used
-   * @param {jQuery} options.$container - Container to trap focus within
-   * @param {string} options.namespace - Namespace used for new focus event handler
-   */
-  Drawer.prototype.removeTrapFocus = function (options) {
-    var eventName = options.namespace
-      ? "focusin." + options.namespace
-      : "focusin";
-
-    if (options.$container && options.$container.length) {
-      options.$container.removeAttr("tabindex");
-    }
-
-    $(document).off(eventName);
   };
 
   return Drawer;
@@ -863,123 +833,116 @@ window.Modals = (function () {
       openClass: "modal--is-active",
     };
 
-    this.$modal = $("#" + id);
-
-    if (!this.$modal.length) {
+    this.modal = document.getElementById(id);
+    if (!this.modal) {
       return false;
     }
+    // Compat bridge: theme.Product (still jQuery) uses this.ProductModal.$modal
+    // .on()/.off(). Remove once theme.Product is migrated (cart block).
+    this.$modal = window.jQuery ? window.jQuery(this.modal) : null;
 
-    this.nodes = {
-      $body: $("body"),
-    };
-
-    this.config = $.extend(defaults, options);
+    this.config = Object.assign(defaults, options);
 
     this.modalIsOpen = false;
-    this.$focusOnOpen = this.config.focusOnOpen
-      ? $(this.config.focusOnOpen)
-      : this.$modal;
+    this.focusOnOpen = this.config.focusOnOpen
+      ? document.querySelector(this.config.focusOnOpen)
+      : this.modal;
+    this._onKeyup = this._onKeyup.bind(this);
     this.init();
   };
 
   Modal.prototype.init = function () {
-    var $openBtn = $(this.config.open);
-
-    // Add aria controls
-    $openBtn.attr("aria-expanded", "false");
-
-    $(this.config.open).on("click", $.proxy(this.open, this));
-    this.$modal.find(this.config.close).on("click", $.proxy(this.close, this));
+    var self = this;
+    document.querySelectorAll(this.config.open).forEach(function (btn) {
+      btn.setAttribute("aria-expanded", "false");
+      btn.addEventListener("click", self.open.bind(self));
+    });
+    this.modal.querySelectorAll(this.config.close).forEach(function (btn) {
+      btn.addEventListener("click", self.close.bind(self));
+    });
   };
 
   Modal.prototype.open = function (evt) {
-    // Keep track if modal was opened from a click, or called by another function
     var externalCall = false;
 
-    // don't open an opened modal
     if (this.modalIsOpen) {
       return;
     }
 
-    // Prevent following href if link is clicked
     if (evt) {
       evt.preventDefault();
     } else {
       externalCall = true;
     }
 
-    // Without this, the modal opens, the click event bubbles up to $nodes.page
-    // which closes the modal.
     if (evt && evt.stopPropagation) {
       evt.stopPropagation();
-      // save the source of the click, we'll focus to this on close
-      this.$activeSource = $(evt.currentTarget);
+      this.activeSource = evt.currentTarget;
     }
 
     if (this.modalIsOpen && !externalCall) {
       return this.close();
     }
 
-    this.$modal.prepareTransition().addClass(this.config.openClass);
-    this.nodes.$body.addClass(this.config.openClass);
+    theme.prepareTransition(this.modal);
+    this.modal.classList.add(this.config.openClass);
+    document.body.classList.add(this.config.openClass);
 
     this.modalIsOpen = true;
 
-    // Set focus on modal
     slate.a11y.trapFocus({
-      $container: this.$modal,
+      $container: this.modal,
       namespace: "modal_focus",
-      $elementToFocus: this.$focusOnOpen,
+      $elementToFocus: this.focusOnOpen,
     });
 
-    if (this.$activeSource && this.$activeSource.attr("aria-expanded")) {
-      this.$activeSource.attr("aria-expanded", "true");
+    if (this.activeSource && this.activeSource.getAttribute("aria-expanded")) {
+      this.activeSource.setAttribute("aria-expanded", "true");
     }
 
     this.bindEvents();
   };
 
   Modal.prototype.close = function () {
-    // don't close a closed modal
     if (!this.modalIsOpen) {
       return;
     }
 
-    // deselect any focused form elements
-    $(document.activeElement).trigger("blur");
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
 
-    this.$modal.prepareTransition().removeClass(this.config.openClass);
-    this.nodes.$body.removeClass(this.config.openClass);
+    theme.prepareTransition(this.modal);
+    this.modal.classList.remove(this.config.openClass);
+    document.body.classList.remove(this.config.openClass);
 
     this.modalIsOpen = false;
 
-    // Remove focus on modal
     slate.a11y.removeTrapFocus({
-      $container: this.$modal,
+      $container: this.modal,
       namespace: "modal_focus",
     });
 
-    if (this.$activeSource && this.$activeSource.attr("aria-expanded")) {
-      this.$activeSource.attr("aria-expanded", "false").focus();
+    if (this.activeSource && this.activeSource.getAttribute("aria-expanded")) {
+      this.activeSource.setAttribute("aria-expanded", "false");
+      this.activeSource.focus();
     }
 
     this.unbindEvents();
   };
 
+  Modal.prototype._onKeyup = function (evt) {
+    if (evt.keyCode === 27) {
+      this.close();
+    }
+  };
+
   Modal.prototype.bindEvents = function () {
-    // Pressing escape closes modal
-    this.nodes.$body.on(
-      "keyup.modal",
-      $.proxy(function (evt) {
-        if (evt.keyCode === 27) {
-          this.close();
-        }
-      }, this)
-    );
+    document.body.addEventListener("keyup", this._onKeyup);
   };
 
   Modal.prototype.unbindEvents = function () {
-    this.nodes.$body.off(".modal");
+    document.body.removeEventListener("keyup", this._onKeyup);
   };
 
   return Modal;
@@ -5178,8 +5141,8 @@ theme.popupNewletter = (function () {
 
 theme.BeforeAfter = (function () {
   function BeforeAfter(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr("data-section-id");
+    this.container = container;
+    var sectionId = container.getAttribute("data-section-id");
     this.selectors = {
       bablockSection: "#beer-slider-" + sectionId,
     };
@@ -5190,14 +5153,11 @@ theme.BeforeAfter = (function () {
       this.showBeforeAfter();
     },
     showBeforeAfter: function () {
-      var $baBlock = $(this.selectors.bablockSection);
-      $.fn.BeerSlider = function (options) {
-        options = options || {};
-        return this.each(function () {
-          new BeerSlider(this, options);
-        });
-      };
-      $($baBlock).BeerSlider({ start: 50 });
+      var el = document.querySelector(this.selectors.bablockSection);
+      // BeerSlider is a global class (no jQuery wrapper needed).
+      if (el && typeof BeerSlider !== "undefined") {
+        new BeerSlider(el, { start: 50 });
+      }
     },
   });
 
