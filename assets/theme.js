@@ -4175,54 +4175,81 @@ theme.addCartButton = (function () {
 
 theme.GiftWrap = (function () {
   var openBox = ".open-gift",
-    giftWrap = ".giftwrap";
-  (addGift = ".add-gift"),
-    (boxGift = ".boxgift"),
-    (closeBtn = ".close-gift__btn"),
-    (idGift = $(addGift).data("id")),
-    (cartDraw = $(".mini-cart-content"));
-  $(document).on("click", openBox, function () {
-    $(this).next().addClass("active");
-    $(this).closest(cartDraw).addClass("overlay");
-  });
-  $(document).on("click", closeBtn, function () {
-    $(this).closest(boxGift).removeClass("active");
-    $(this).closest(cartDraw).removeClass("overlay");
-  });
-  function addGiftInCart() {
-    $(document).on("click", addGift, function (e) {
-      e.preventDefault();
-      $(this).addClass("is-loading");
+    giftWrap = ".giftwrap",
+    addGift = ".add-gift",
+    boxGift = ".boxgift",
+    closeBtn = ".close-gift__btn",
+    cartDrawSel = ".mini-cart-content";
+  var addGiftEl = document.querySelector(addGift);
+  var rawId = addGiftEl ? addGiftEl.getAttribute("data-id") : null;
+  var idGift = rawId !== null ? parseInt(rawId, 10) : null;
 
-      Shopify.addItem(idGift, 1, function (item) {
-        //console.log(item);
-        theme.miniCart.generateCart();
-        theme.miniCart.updateElements();
+  function toggleAll(sel, cls, add) {
+    document.querySelectorAll(sel).forEach(function (el) {
+      el.classList[add ? "add" : "remove"](cls);
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest(openBox);
+    if (!t) return;
+    if (t.nextElementSibling) t.nextElementSibling.classList.add("active");
+    var cd = t.closest(cartDrawSel);
+    if (cd) cd.classList.add("overlay");
+  });
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest(closeBtn);
+    if (!t) return;
+    var box = t.closest(boxGift);
+    if (box) box.classList.remove("active");
+    var cd = t.closest(cartDrawSel);
+    if (cd) cd.classList.remove("overlay");
+  });
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest(addGift);
+    if (!t) return;
+    e.preventDefault();
+    t.classList.add("is-loading");
+    fetch(window.Shopify.routes.root + "cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ id: idGift, quantity: 1 }),
+    })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function () {
+        if (theme.miniCart) {
+          theme.miniCart.generateCart();
+          theme.miniCart.updateElements();
+        }
         setTimeout(function () {
-          $(this).removeClass("is-loading");
+          t.classList.remove("is-loading");
         }, 300);
         if (theme.cartpage) {
           location.reload();
-          $("html, body").animate({ scrollTop: 0 }, "normal");
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }
       });
-    });
-  }
-  addGiftInCart();
+  });
+
   function hideGift(id) {
     if (id === idGift) {
-      $(giftWrap).addClass("hide");
-      $(boxGift).removeClass("active");
-      $(addGift).removeClass("is-loading");
-      $(cartDraw).removeClass("overlay");
+      toggleAll(giftWrap, "hide", true);
+      toggleAll(boxGift, "active", false);
+      toggleAll(addGift, "is-loading", false);
+      toggleAll(cartDrawSel, "overlay", false);
     }
   }
   function checkGift(id) {
     if (id === idGift) {
-      $(giftWrap).removeClass("hide");
-      $(boxGift).removeClass("active");
-      $(addGift).removeClass("is-loading");
-      $(cartDraw).removeClass("overlay");
+      toggleAll(giftWrap, "hide", false);
+      toggleAll(boxGift, "active", false);
+      toggleAll(addGift, "is-loading", false);
+      toggleAll(cartDrawSel, "overlay", false);
     }
   }
   return {
@@ -4234,15 +4261,22 @@ theme.GiftWrap = (function () {
 theme.openAddon = (function () {
   var openBlock = ".js-open-addon",
     closeBlock = ".btn-close-addon",
-    addonBlock = ".block-addon__box--wrap";
-  cartDraw = $(".mini-cart-content");
-  $(document).on("click", openBlock, function () {
-    $(this).next().addClass("active");
-    $(this).closest(cartDraw).addClass("overlay");
+    addonBlock = ".block-addon__box--wrap",
+    cartDrawSel = ".mini-cart-content";
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest(openBlock);
+    if (!t) return;
+    if (t.nextElementSibling) t.nextElementSibling.classList.add("active");
+    var cd = t.closest(cartDrawSel);
+    if (cd) cd.classList.add("overlay");
   });
-  $(document).on("click", closeBlock, function () {
-    $(this).closest(addonBlock).removeClass("active");
-    $(this).closest(cartDraw).removeClass("overlay");
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest(closeBlock);
+    if (!t) return;
+    var box = t.closest(addonBlock);
+    if (box) box.classList.remove("active");
+    var cd = t.closest(cartDrawSel);
+    if (cd) cd.classList.remove("overlay");
   });
 })();
 
