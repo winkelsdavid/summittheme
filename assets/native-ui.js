@@ -132,8 +132,7 @@
       pane.classList.add('active');
       void pane.offsetWidth; // reflow so the .fade transition runs
       pane.classList.add('show');
-      // Compat event: theme.js re-inits Slick carousels inside the panel on tab change.
-      if (window.jQuery) { try { window.jQuery(trigger).trigger('shown.bs.tab'); } catch (e) {} }
+      // theme.js (Producttabs) re-inits sliders inside the panel on tab change.
       trigger.dispatchEvent(new CustomEvent('shown.tab', { bubbles: true, detail: { relatedTarget: pane } }));
     }
   }
@@ -162,34 +161,4 @@
   window.NativeUI.openModal = openModal;
   window.NativeUI.closeModal = closeModal;
   window.NativeUI.activateTab = activateTab;
-
-  // ---- jQuery / Bootstrap compatibility bridge ----
-  // While vendor.js (jQuery + Bootstrap) is still loaded, route the legacy
-  // $.fn.modal('show'|'hide') plugin calls (theme.js) AND Bootstrap's
-  // [data-toggle="modal"] data-api through the native controller, and re-emit
-  // the Bootstrap 'hidden.bs.modal' jQuery event on close so existing listeners
-  // keep working. Falls away cleanly once vendor.js is removed.
-  (function bridge() {
-    var seen = [];
-    [window.jQuery, window.$].forEach(function (jq) {
-      if (!jq || !jq.fn || seen.indexOf(jq) !== -1) return;
-      seen.push(jq);
-      jq.fn.modal = function (action) {
-        this.each(function () {
-          if (action === 'hide') closeModal(this);
-          else openModal(this);
-        });
-        return this;
-      };
-      jq.fn.tab = function (action) {
-        this.each(function () { if (action === 'show') activateTab(this); });
-        return this;
-      };
-    });
-    document.addEventListener('close', function (e) {
-      if (e.target && e.target.tagName === 'DIALOG' && window.jQuery) {
-        try { window.jQuery(e.target).trigger('hidden.bs.modal'); } catch (err) {}
-      }
-    }, true);
-  })();
 })();
