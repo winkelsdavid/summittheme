@@ -61,7 +61,7 @@
   endcase
 -%}
 
-<div class="main-collection section-{{ section.id }}-padding {{ section.settings.collection_width }} collection-{{ section.settings.filter_type }} {% if section.settings.filter_type == 'drawer-collapse-right' %} collection-drawer-collapse-left collection-drawer-collapse-right {% endif %}" data-aos="fade">
+<div class="main-collection section-{{ section.id }}-padding {{ section.settings.collection_width }} collection-{{ section.settings.filter_type }} {% if section.settings.filter_type == 'drawer-collapse-right' %} collection-drawer-collapse-left collection-drawer-collapse-right {% endif %}">
   {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
   {%- if section.settings.enable_sorting and filter_type == 'vertical' -%}
    
