@@ -17,30 +17,39 @@
   <div class="section-block">
     {%- render 'section-heading' -%}
     <div class="productlist-wrapper dots-negative" data-aos="{{ section.settings.animation }}">
-      <div class="productlist-slider row" id="Productlist-{{ section.id }}"
+      <div class="productlist-slider row swiper" id="Productlist-{{ section.id }}"
            style="opacity:0"
            data-rows="{{ section.settings.rows }}"
            data-slidesToShow="{{ section.settings.show }}"
            data-arrows="{{ section.settings.arrows }}"
-           data-dots="{{ section.settings.dots }}" 
-           data-draggable="{{ section.settings.draggable }}" 
-           data-infinite="{{ section.settings.infinite }}" 
-           data-section-id="{{ section.id }}" 
+           data-dots="{{ section.settings.dots }}"
+           data-draggable="{{ section.settings.draggable }}"
+           data-infinite="{{ section.settings.infinite }}"
+           data-section-id="{{ section.id }}"
            data-section-type="productlist">
         {%- assign collection = collections[section.settings.collection] -%}
         {%- assign limit = section.settings.limit -%}
+        <div class="swiper-wrapper">
         {%- if collection != blank -%}
         {%- for product in collection.products limit: limit -%}
-        <div class="productlist-item col">
+        <div class="productlist-item col swiper-slide">
           {%- render 'product-card', product: product -%}
         </div>
         {%- endfor -%}
         {%- else -%}
         {%- for i in (1..limit) -%}
-        <div class="productlist-item col">
+        <div class="productlist-item col swiper-slide">
           {%- render 'product-grid-blank' -%}
         </div>
         {%- endfor -%}
+        {%- endif -%}
+        </div>
+        {%- if section.settings.arrows -%}
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        {%- endif -%}
+        {%- if section.settings.dots -%}
+        <div class="swiper-pagination"></div>
         {%- endif -%}
       </div>
     </div>

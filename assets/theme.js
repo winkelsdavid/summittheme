@@ -2897,8 +2897,7 @@ theme.attributeToString = function (attribute) {
 // Instagrams
 theme.Instagrams = (function () {
   function Instagrams(container) {
-    this.$container = $(container).on("init", this._a11y.bind(this));
-    //console.log(this.$container);
+    this.$container = $(container);
     this.settings = {
       style: this.$container.data("style"),
       accesstoken: this.$container.data("accesstoken"),
@@ -2914,13 +2913,6 @@ theme.Instagrams = (function () {
       draggable: this.$container.data("draggable") || false,
       dots: this.$container.data("dots") || false,
     };
-    this.settings.slidesToShow1200 =
-      this.settings.slidesToShow - 1 > 1 ? this.settings.slidesToShow - 1 : 1;
-    this.settings.slidesToShow992 =
-      this.settings.slidesToShow - 2 > 1 ? this.settings.slidesToShow - 2 : 1;
-    this.settings.slidesToShow768 =
-      this.settings.slidesToShow - 3 > 1 ? this.settings.slidesToShow - 3 : 1;
-    this.settings.slidesToShow480 = 2;
 
     var _self = this;
     var $instagramSelector = $("#" + this.settings.target);
@@ -2928,46 +2920,49 @@ theme.Instagrams = (function () {
       var afterInstagram = function () {}; // blank function
     } else if (this.settings.style === "carousel") {
       var afterInstagram = function () {
-        $instagramSelector.slick({
-          slidesToShow: _self.settings.slidesToShow,
-          slidesToScroll: _self.settings.slidesToShow,
-          arrows: _self.settings.arrows,
-          dots: _self.settings.dots,
-          draggable: _self.settings.draggable,
-          infinite: _self.settings.infinite,
-          rows: _self.settings.rows,
-          accessibility: false,
-          responsive: [
-            {
-              breakpoint: 1200,
-              settings: {
-                slidesToShow: _self.settings.slidesToShow1200,
-                slidesToScroll: _self.settings.slidesToShow1200,
-              },
-            },
-            {
-              breakpoint: 992,
-              settings: {
-                slidesToShow: _self.settings.slidesToShow992,
-                slidesToScroll: _self.settings.slidesToShow992,
-              },
-            },
-            {
-              breakpoint: 768,
-              settings: {
-                slidesToShow: _self.settings.slidesToShow768,
-                slidesToScroll: _self.settings.slidesToShow768,
-              },
-            },
-            {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: _self.settings.slidesToShow480,
-                slidesToScroll: _self.settings.slidesToShow480,
-              },
-            },
-          ],
+        // Instafeed appends the generated <div class="col"> items straight into
+        // the container. Wrap them in a .swiper-wrapper, tag each .swiper-slide,
+        // append nav/pagination, then init Swiper (replaces Slick). Done in JS
+        // because the slides are generated at runtime (no Liquid markup to edit).
+        var s = _self.settings;
+        var cont = $instagramSelector[0];
+        if (!cont) return;
+        var clamp = function (n) { return n > 1 ? n : 1; };
+        var wrapper = document.createElement("div");
+        wrapper.className = "swiper-wrapper";
+        Array.prototype.slice.call(cont.children).forEach(function (item) {
+          if (item.nodeType === 1) item.classList.add("swiper-slide");
+          wrapper.appendChild(item);
         });
+        cont.appendChild(wrapper);
+        cont.classList.remove("row", "mx-n2");
+        cont.classList.add("swiper");
+        var opts = {
+          slidesPerView: 2,
+          slidesPerGroup: 2,
+          loop: !!s.infinite,
+          grabCursor: !!s.draggable,
+          autoHeight: true,
+          a11y: { enabled: false },
+          breakpoints: {
+            481: { slidesPerView: clamp(s.slidesToShow - 3), slidesPerGroup: clamp(s.slidesToShow - 3) },
+            769: { slidesPerView: clamp(s.slidesToShow - 2), slidesPerGroup: clamp(s.slidesToShow - 2) },
+            993: { slidesPerView: clamp(s.slidesToShow - 1), slidesPerGroup: clamp(s.slidesToShow - 1) },
+            1201: { slidesPerView: s.slidesToShow, slidesPerGroup: s.slidesToShow },
+          },
+        };
+        if (s.arrows) {
+          var prev = document.createElement("div"); prev.className = "swiper-button-prev";
+          var next = document.createElement("div"); next.className = "swiper-button-next";
+          cont.appendChild(prev); cont.appendChild(next);
+          opts.navigation = { nextEl: next, prevEl: prev };
+        }
+        if (s.dots) {
+          var pg = document.createElement("div"); pg.className = "swiper-pagination";
+          cont.appendChild(pg);
+          opts.pagination = { el: pg, clickable: true };
+        }
+        _self.swiper = window.Swiper ? new Swiper(cont, opts) : null;
       };
     }
 
@@ -2987,26 +2982,10 @@ theme.Instagrams = (function () {
   }
 
   Instagrams.prototype = _.assignIn({}, Instagrams.prototype, {
-    _a11y: function (event, obj) {
-      var $list = obj.$list;
-      var $wrapper = this.$container.parent();
-
-      // Remove default Slick aria-live attr until slider is focused
-      $list.removeAttr("aria-live");
-
-      // When an element in the slider is focused set aria-live
-      $wrapper.on("focusin", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.attr("aria-live", "polite");
-        }
-      });
-
-      // Remove aria-live
-      $wrapper.on("focusout", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.removeAttr("aria-live");
-        }
-      });
+    onUnload: function () {
+      if (this.swiper) this.swiper.destroy(true, true);
+      delete this.swiper;
+      delete this.$container;
     },
   });
 
@@ -3199,7 +3178,7 @@ theme.slickPress = (function () {
 // Productlists
 theme.Productlists = (function () {
   function Productlists(container) {
-    this.$container = $(container).on("init", this._a11y.bind(this));
+    this.$container = $(container);
     this.settings = {
       slidesToShow: this.$container.data("slidestoshow") || 1,
       rows: this.$container.data("rows") || 1,
@@ -3208,86 +3187,39 @@ theme.Productlists = (function () {
       draggable: this.$container.data("draggable") || false,
       infinite: this.$container.data("infinite") || false,
     };
-    this.settings.slidesToShow1200 =
-      this.settings.slidesToShow - 1 > 1 ? this.settings.slidesToShow - 1 : 1;
-    this.settings.slidesToShow992 =
-      this.settings.slidesToShow - 2 > 1 ? this.settings.slidesToShow - 2 : 1;
-    this.settings.slidesToShow768 =
-      this.settings.slidesToShow - 3 > 1 ? this.settings.slidesToShow - 3 : 1;
-    this.settings.slidesToShow480 = 2;
-    this.$container
-      .slick({
-        rtl: theme.rtl,
-        accessibility: false,
-        slidesToShow: this.settings.slidesToShow,
-        slidesToScroll: this.settings.slidesToShow,
-        rows: this.settings.rows,
-        arrows: this.settings.arrows,
-        dots: this.settings.dots,
-        infinite: this.settings.infinite,
-        draggable: this.settings.draggable,
-        responsive: [
-          {
-            breakpoint: 1200,
-            settings: {
-              slidesToShow: this.settings.slidesToShow1200,
-              slidesToScroll: this.settings.slidesToShow1200,
-            },
-          },
-          {
-            breakpoint: 992,
-            settings: {
-              slidesToShow: this.settings.slidesToShow992,
-              slidesToScroll: this.settings.slidesToShow992,
-            },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: this.settings.slidesToShow768,
-              slidesToScroll: this.settings.slidesToShow768,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: this.settings.slidesToShow480,
-              slidesToScroll: this.settings.slidesToShow480,
-            },
-          },
-        ],
-      })
-      .css("opacity", "1");
+    // --- Swiper init (replaces Slick). Mobile-first breakpoints invert
+    //     Slick's max-width responsive (mobile base = 2 slides). ---
+    var el = this.$container[0];
+    var s = this.settings;
+    var clamp = function (n) { return n > 1 ? n : 1; };
+    var opts = {
+      slidesPerView: 2,
+      slidesPerGroup: 2,
+      loop: !!s.infinite,
+      grabCursor: !!s.draggable,
+      autoHeight: true,
+      a11y: { enabled: false },
+      breakpoints: {
+        481: { slidesPerView: clamp(s.slidesToShow - 3), slidesPerGroup: clamp(s.slidesToShow - 3) },
+        769: { slidesPerView: clamp(s.slidesToShow - 2), slidesPerGroup: clamp(s.slidesToShow - 2) },
+        993: { slidesPerView: clamp(s.slidesToShow - 1), slidesPerGroup: clamp(s.slidesToShow - 1) },
+        1201: { slidesPerView: s.slidesToShow, slidesPerGroup: s.slidesToShow },
+      },
+    };
+    if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
+    if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
+    el.style.opacity = "1";
+    this.swiper = window.Swiper ? new Swiper(el, opts) : null;
   }
 
   Productlists.prototype = _.assignIn({}, Productlists.prototype, {
-    _a11y: function (event, obj) {
-      var $list = obj.$list;
-      var $wrapper = this.$container.parent();
-
-      // Remove default Slick aria-live attr until slider is focused
-      $list.removeAttr("aria-live");
-
-      // When an element in the slider is focused set aria-live
-      $wrapper.on("focusin", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.attr("aria-live", "polite");
-        }
-      });
-
-      // Remove aria-live
-      $wrapper.on("focusout", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.removeAttr("aria-live");
-        }
-      });
-    },
-
     _goToSlide: function (slideIndex) {
-      this.$container.slick("slickGoTo", slideIndex);
+      if (this.swiper) (this.swiper.slideToLoop ? this.swiper.slideToLoop(slideIndex) : this.swiper.slideTo(slideIndex));
     },
 
     onUnload: function () {
+      if (this.swiper) this.swiper.destroy(true, true);
+      delete this.swiper;
       delete this.$container;
     },
   });
@@ -3299,8 +3231,9 @@ theme.Productlists = (function () {
 theme.Producttabs = (function () {
   function Producttabs(container) {
     var _self = this; // avoid conflict
-    this.$container = $(container).on("init", this._a11y.bind(this));
+    this.$container = $(container);
     this.slickWrap = ".prdtab-content";
+    this.swipers = [];
     this.settings = {
       slidesToShow: this.$container.data("slidestoshow") || 1,
       arrows: this.$container.data("arrows") || false,
@@ -3309,15 +3242,10 @@ theme.Producttabs = (function () {
       draggable: this.$container.data("draggable") || false,
       infinite: this.$container.data("infinite") || false,
     };
-    this.settings.slidesToShow1200 =
-      this.settings.slidesToShow - 1 > 1 ? this.settings.slidesToShow - 1 : 1;
-    this.settings.slidesToShow992 =
-      this.settings.slidesToShow - 2 > 1 ? this.settings.slidesToShow - 2 : 1;
-    this.settings.slidesToShow768 =
-      this.settings.slidesToShow - 3 > 1 ? this.settings.slidesToShow - 3 : 1;
-    this.settings.slidesToShow480 = 2;
 
     this._initSlick();
+    // shown.bs.tab is re-emitted by native-ui's tab controller; the now-visible
+    // panel's slider must (re)initialise so Swiper can measure its real width.
     this.$container
       .find('a[data-toggle="tab"]')
       .on("shown.bs.tab", function (e) {
@@ -3328,84 +3256,47 @@ theme.Producttabs = (function () {
   }
 
   Producttabs.prototype = _.assignIn({}, Producttabs.prototype, {
-    _a11y: function (event, obj) {
-      var $list = obj.$list;
-      var $wrapper = this.$container.parent();
-
-      // Remove default Slick aria-live attr until slider is focused
-      $list.removeAttr("aria-live");
-
-      // When an element in the slider is focused set aria-live
-      $wrapper.on("focusin", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.attr("aria-live", "polite");
-        }
-      });
-
-      // Remove aria-live
-      $wrapper.on("focusout", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.removeAttr("aria-live");
-        }
-      });
-    },
-
-    _getSliderSettings: function () {
+    _getSwiperOpts: function () {
+      var s = this.settings;
+      var clamp = function (n) { return n > 1 ? n : 1; };
       return {
-        rtl: theme.rtl,
-        accessibility: true,
-        slidesToShow: this.settings.slidesToShow,
-        slidesToScroll: this.settings.slidesToShow,
-        arrows: this.settings.arrows,
-        rows: this.settings.rows,
-        dots: this.settings.dots,
-        infinite: this.settings.infinite,
-        draggable: this.settings.draggable,
-        responsive: [
-          {
-            breakpoint: 1200,
-            settings: {
-              slidesToShow: this.settings.slidesToShow1200,
-              slidesToScroll: this.settings.slidesToShow1200,
-            },
-          },
-          {
-            breakpoint: 992,
-            settings: {
-              slidesToShow: this.settings.slidesToShow992,
-              slidesToScroll: this.settings.slidesToShow992,
-            },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: this.settings.slidesToShow768,
-              slidesToScroll: this.settings.slidesToShow768,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: this.settings.slidesToShow480,
-              slidesToScroll: this.settings.slidesToShow480,
-            },
-          },
-        ],
+        slidesPerView: 2,
+        slidesPerGroup: 2,
+        loop: !!s.infinite,
+        grabCursor: !!s.draggable,
+        autoHeight: true,
+        observer: true,
+        observeParents: true,
+        a11y: { enabled: true },
+        breakpoints: {
+          481: { slidesPerView: clamp(s.slidesToShow - 3), slidesPerGroup: clamp(s.slidesToShow - 3) },
+          769: { slidesPerView: clamp(s.slidesToShow - 2), slidesPerGroup: clamp(s.slidesToShow - 2) },
+          993: { slidesPerView: clamp(s.slidesToShow - 1), slidesPerGroup: clamp(s.slidesToShow - 1) },
+          1201: { slidesPerView: s.slidesToShow, slidesPerGroup: s.slidesToShow },
+        },
       };
     },
 
     _initSlick: function () {
-      this.$container
-        .find(this.slickWrap)
-        .slick(this._getSliderSettings())
-        .css("opacity", "1");
+      var s = this.settings;
+      var _self = this;
+      this.$container.find(this.slickWrap).each(function () {
+        var el = this;
+        var opts = _self._getSwiperOpts();
+        if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
+        if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
+        el.style.opacity = "1";
+        if (window.Swiper) _self.swipers.push(new Swiper(el, opts));
+      });
     },
 
     _unSlick: function () {
-      this.$container.find(this.slickWrap).slick("unslick");
+      this.swipers.forEach(function (sw) { try { sw.destroy(true, true); } catch (e) {} });
+      this.swipers = [];
     },
 
     onUnload: function () {
+      this._unSlick();
       delete this.$container;
     },
 
