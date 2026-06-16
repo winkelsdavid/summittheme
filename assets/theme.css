@@ -6103,11 +6103,7 @@ p a:not(.button):focus,
   visibility: visible !important;
 }
 .page-container {
-  /* Clip horizontal overflow: swiper "peek" sections set overflow:visible and
-     would otherwise let the whole page scroll sideways. overflow-x:clip clips
-     only the x-axis WITHOUT creating a scroll container, so position:sticky and
-     vertical overflow stay intact (safer than the old commented overflow:hidden). */
-  overflow-x: clip;
+ /* overflow: hidden;*/
   transition: none !important;
 }
 .js-drawer-open .page-container:after {

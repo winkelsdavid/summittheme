@@ -42,6 +42,10 @@
   endcase
   -%}
 <style>
+  /* Contain the swiper "peek" bleed (the .swiper-container uses overflow:visible
+     so the next card peeks); without this the off-viewport bleed scrolls the
+     whole page sideways. Same containment pattern as .swipercollection. */
+  .section-wrbanner{ overflow-x: hidden; }
   .customstyle{{ section.id }}{
     {% if text_color != 'transparent' and text_color != 'rgba(0,0,0,0)' %}
       --g-font-color-subtop: {{ text_color }};
