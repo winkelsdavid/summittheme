@@ -102,18 +102,19 @@
       {%- render 'section-heading' -%}
       {%- if section.blocks.size > 0 -%}
       <div class="quotes-wrapper dots-negative quotes-2" > 
-        <div class="quotes-slider" id="Quotes-{{ section.id }}" 
+        <div class="quotes-slider swiper" id="Quotes-{{ section.id }}"
              data-rows="{{ section.settings.rows }}"
              data-slidesToShow="1"
              data-slidestoscroll="1"
              data-arrows="{{ section.settings.arrows }}"
-             data-dots="{{ section.settings.dots }}" 
-             data-draggable="{{ section.settings.draggable }}" 
-             data-infinite="{{ section.settings.infinite }}" 
-             data-section-id="{{ section.id }}" 
+             data-dots="{{ section.settings.dots }}"
+             data-draggable="{{ section.settings.draggable }}"
+             data-infinite="{{ section.settings.infinite }}"
+             data-section-id="{{ section.id }}"
              data-section-type="slickCarousels">
+          <div class="swiper-wrapper">
           {%- for block in section.blocks -%}
-          <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="quote__slide-wrapper swiper-slide carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
             <div class="quote__slide">
               <div class="quote-wrap row">
                 <div class="col-12 col-md-6" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
@@ -205,6 +206,14 @@
             </div>
           </div>
           {%- endfor -%}
+          </div>
+          {%- if section.settings.arrows -%}
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          {%- endif -%}
+          {%- if section.settings.dots -%}
+          <div class="swiper-pagination"></div>
+          {%- endif -%}
         </div>
       </div>
       {%- endif -%}

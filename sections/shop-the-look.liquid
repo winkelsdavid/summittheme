@@ -82,18 +82,19 @@
                     </div>
                   {%- endif -%}
                 <div class="shopthelook-wrapper " data-aos="{{ section.settings.animation }}">
-                    <div class="shopthelook-slider row mb-0" id="Shopthelook-{{ section.id }}"
+                    <div class="shopthelook-slider swiper row mb-0" id="Shopthelook-{{ section.id }}"
                         style="opacity:0"
                         data-rows="1"
                         data-slidesToShow="1"
                         data-arrows="{{ section.settings.arrows }}"
-                        data-dots="{{ section.settings.dots }}" 
-                        data-draggable="{{ section.settings.draggable }}" 
-                        data-infinite="{{ section.settings.infinite }}" 
-                        data-section-id="{{ section.id }}" 
+                        data-dots="{{ section.settings.dots }}"
+                        data-draggable="{{ section.settings.draggable }}"
+                        data-infinite="{{ section.settings.infinite }}"
+                        data-section-id="{{ section.id }}"
                         data-section-type="slickCarousels">
+                      <div class="swiper-wrapper">
                     {%- for block in section.blocks -%}
-                        <div class="productlist-item col carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+                        <div class="productlist-item col carousel__slide-wrapper--{{ block.id }} swiper-slide" {{ block.shopify_attributes }}>
                             {%- if block.settings.product_item != blank -%}
                                 {%- render 'product-card', product: block.settings.product_item -%}
                             {%- else -%}
@@ -101,6 +102,14 @@
                             {%- endif -%}
                         </div>
                     {%- endfor -%}
+                      </div>
+                      {%- if section.settings.arrows -%}
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                      {%- endif -%}
+                      {%- if section.settings.dots -%}
+                        <div class="swiper-pagination"></div>
+                      {%- endif -%}
                     </div>
                 </div>
                 </div>

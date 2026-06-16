@@ -73,7 +73,7 @@
   <div class="section-block">
     {%- render 'section-heading' -%}
     <div class="bloglist-wrapper dots-negative " data-aos="{{ section.settings.animation }}">
-      <div class="bloglist-slider row" id="Bloglist-{{ section.id }}"
+      <div class="bloglist-slider swiper row" id="Bloglist-{{ section.id }}"
            data-rows="{{ section.settings.rows }}"
            data-slidesToShow="{{ section.settings.show }}"
            data-arrows="{{ section.settings.arrows }}"
@@ -82,11 +82,12 @@
            data-infinite="{{ section.settings.infinite }}" 
            data-section-id="{{ section.id }}" 
            data-section-type="slickCarousels">
+        <div class="swiper-wrapper">
         {%- assign blog = blogs[section.settings.blog] -%}
         {%- assign limit = section.settings.limit -%}
         {%- if blog != blank -%}
         {%- for article in blog.articles limit: limit -%}
-        <div class="bloglist-item col">
+        <div class="bloglist-item swiper-slide col">
           <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
             {%- liquid
               case section.settings.item_style
@@ -109,12 +110,20 @@
         {%- endfor -%}
         {%- else -%}
         {%- for i in (1..limit) -%}
-        <div class="bloglist-item col">
+        <div class="bloglist-item swiper-slide col">
           <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
           {%- render 'blog-grid-blank' -%}
         </div>
         </div>
         {%- endfor -%}
+        {%- endif -%}
+        </div>
+        {%- if section.settings.arrows -%}
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        {%- endif -%}
+        {%- if section.settings.dots -%}
+          <div class="swiper-pagination"></div>
         {%- endif -%}
       </div>
     </div>

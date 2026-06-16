@@ -3016,7 +3016,7 @@ theme.Instagrams = (function () {
 // Slick carousel
 theme.slickCarousel = (function () {
   function Carousels(container) {
-    this.$container = $(container).on("init", this._a11y.bind(this));
+    this.$container = $(container);
     this.settings = {
       rows: this.$container.data("rows") || 1,
       slidesToShow: this.$container.data("slidestoshow") || 1,
@@ -3032,150 +3032,76 @@ theme.slickCarousel = (function () {
       autoplaySpeed : this.$container.data("autoplayspeed") || 0,
       cssEase : this.$container.data("css-ease") || "ease"
     };
-    this.settings.slidesToShow1200 =
-      this.settings.slidesToShow - 1 > 1 ? this.settings.slidesToShow - 1 : 1;
-    this.settings.slidesToShow992 =
-      this.settings.slidesToShow - 2 > 1 ? this.settings.slidesToShow - 2 : 1;
-    this.settings.slidesToShow768 =
-      this.settings.slidesToShow - 3 > 1 ? this.settings.slidesToShow - 3 : 1;
-    this.settings.slidesToShow480 =
-      this.settings.slidesToShow - 4 > 1 ? this.settings.slidesToShow - 4 : 1;
-    this.settings.slidesToScroll1200 =
-      this.settings.slidesToScroll - 1 > 1
-        ? this.settings.slidesToScroll - 1
-        : 1;
-    this.settings.slidesToScroll992 =
-      this.settings.slidesToScroll - 2 > 1
-        ? this.settings.slidesToScroll - 2
-        : 1;
-    this.settings.slidesToScroll768 =
-      this.settings.slidesToScroll - 3 > 1
-        ? this.settings.slidesToScroll - 3
-        : 1;
-    this.settings.slidesToScroll480 =
-      this.settings.slidesToScroll - 4 > 1
-        ? this.settings.slidesToScroll - 4
-        : 1;
-    this.$container
-      .slick({
-        rtl: theme.rtl,
-        rows: this.settings.rows,
-        slidesToShow: this.settings.slidesToShow,
-        slidesToScroll: this.settings.slidesToScroll,
-        arrows: this.settings.arrows,
-        dots: this.settings.dots,
-        autoplay: this.settings.autoplay,
-        accessibility: this.settings.accessibility,
-        draggable: this.settings.draggable,
-        autoplaySpeed: this.settings.autoplaySpeed, 
-        speed: this.settings.speed,                
-        cssEase: this.settings.cssEase,
-        infinite: this.settings.infinite,
-        adaptiveHeight: true,
-        responsive: [
-          {
-            breakpoint: 1200,
-            settings: {
-              slidesToShow: this.settings.slidesToShow1200,
-              slidesToScroll: this.settings.slidesToScroll1200,
-            },
-          },
-          {
-            breakpoint: 992,
-            settings: {
-              slidesToShow: this.settings.slidesToShow992,
-              slidesToScroll: this.settings.slidesToScroll992,
-            },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: this.settings.slidesToShow768,
-              slidesToScroll: this.settings.slidesToScroll768,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: this.settings.slidesToShowMobile,
-              slidesToScroll: this.settings.slidesToShowMobile,
-            },
-          },
-        ],
-      })
-      .css("opacity", "1");
+    // --- Swiper init (replaces Slick). Slick uses max-width responsive,
+    //     Swiper is mobile-first (min-width) -> breakpoints are inverted. ---
+    var el = this.$container[0];
+    var s = this.settings;
+    var clamp = function (n) { return n > 1 ? n : 1; };
+    var opts = {
+      slidesPerView: s.slidesToShowMobile,
+      slidesPerGroup: clamp(s.slidesToShowMobile),
+      loop: !!s.infinite,
+      speed: s.speed || 500,
+      grabCursor: !!s.draggable,
+      autoHeight: true,
+      autoplay: s.autoplay ? { delay: s.autoplaySpeed || 4000, disableOnInteraction: false } : false,
+      a11y: { enabled: !!s.accessibility },
+      breakpoints: {
+        481: { slidesPerView: clamp(s.slidesToShow - 3), slidesPerGroup: clamp(s.slidesToScroll - 3) },
+        769: { slidesPerView: clamp(s.slidesToShow - 2), slidesPerGroup: clamp(s.slidesToScroll - 2) },
+        993: { slidesPerView: clamp(s.slidesToShow - 1), slidesPerGroup: clamp(s.slidesToScroll - 1) },
+        1201: { slidesPerView: s.slidesToShow, slidesPerGroup: s.slidesToScroll },
+      },
+    };
+    if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
+    if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
+    el.style.opacity = "1";
+    this.swiper = window.Swiper ? new Swiper(el, opts) : null;
 
-    if ($(".shopthelook").length) {
-      var $container = (this.$container = $(container)),
-        sectionId = $container.attr("data-section-id"),
-        $dotID = $container
-          .closest(".shopthelook")
-          .find(`#dot-${sectionId}`)
-          .find("li");
-      $dotID.click(function () {
-        var pos = $(this).data("pos");
-        $dotID.removeClass("active");
-        $(this).addClass("active");
-        $container.slick("slickGoTo", pos);
+    var stl = el.closest(".shopthelook");
+    if (stl && this.swiper) {
+      var swiper = this.swiper;
+      var sectionId = el.getAttribute("data-section-id");
+      var dots = stl.querySelectorAll("#dot-" + sectionId + " li");
+      Array.prototype.forEach.call(dots, function (dot) {
+        dot.addEventListener("click", function () {
+          var pos = parseInt(dot.getAttribute("data-pos")) || 0;
+          Array.prototype.forEach.call(dots, function (d) { d.classList.remove("active"); });
+          dot.classList.add("active");
+          swiper.slideToLoop ? swiper.slideToLoop(pos) : swiper.slideTo(pos);
+        });
       });
-      $container.on(
-        "afterChange",
-        function (event, slick, currentSlide, nextSlide) {
-          var $dotPos = $container
-            .closest(".shopthelook")
-            .find(`#dot-${sectionId}`)
-            .find(`li[data-pos=${currentSlide}]`);
-          $dotID.removeClass("active");
-          $dotPos.addClass("active");
-        }
-      );
+      swiper.on("slideChange", function () {
+        var cur = swiper.realIndex;
+        Array.prototype.forEach.call(dots, function (d) { d.classList.remove("active"); });
+        var active = stl.querySelector("#dot-" + sectionId + ' li[data-pos="' + cur + '"]');
+        if (active) active.classList.add("active");
+      });
     }
   }
 
-  Carousels.prototype = _.assignIn({}, Carousels.prototype, {
-    _a11y: function (event, obj) {
-      var $list = obj.$list;
-      var $wrapper = this.$container.parent();
-
-      // Remove default Slick aria-live attr until slider is focused
-      $list.removeAttr("aria-live");
-
-      // When an element in the slider is focused set aria-live
-      $wrapper.on("focusin", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.attr("aria-live", "polite");
-        }
-      });
-
-      // Remove aria-live
-      $wrapper.on("focusout", function (evt) {
-        if ($wrapper.has(evt.target).length) {
-          $list.removeAttr("aria-live");
-        }
-      });
-    },
-
+  Carousels.prototype = {
     _goToSlide: function (slideIndex) {
-      this.$container.slick("slickGoTo", slideIndex);
+      if (this.swiper) (this.swiper.slideToLoop ? this.swiper.slideToLoop(slideIndex) : this.swiper.slideTo(slideIndex));
     },
 
     onUnload: function () {
+      if (this.swiper) this.swiper.destroy(true, true);
+      delete this.swiper;
       delete this.$container;
     },
 
     onBlockSelect: function (evt) {
-      // Ignore the cloned version
-      var $slide = $(
-        ".carousel__slide-wrapper--" +
-          evt.detail.blockId +
-          ":not(.slick-cloned)"
-      );
-      var slideIndex = $slide.data("slick-index");
-
-      // Go to selected slide, pause autoplay
-      this._goToSlide(slideIndex);
+      var slide = document.querySelector(".carousel__slide-wrapper--" + evt.detail.blockId);
+      if (!slide || !this.swiper) return;
+      var idx = parseInt(slide.getAttribute("data-swiper-slide-index"));
+      if (isNaN(idx)) {
+        var wrap = slide.closest(".swiper-wrapper");
+        idx = wrap ? Array.prototype.indexOf.call(wrap.children, slide) : 0;
+      }
+      this._goToSlide(idx);
     },
-  });
+  };
 
   return Carousels;
 })();

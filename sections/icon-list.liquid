@@ -42,7 +42,7 @@
   <div class="section-block sv-bgsub-{{ section.id }}" style="padding:{{ section.settings.paddingbox }}">
     {%- render 'section-heading' -%}
     <div class="services-wrapper dots-negative">
-      <div class="services-slider row mb-0" id="service-list-{{ section.id }}"
+      <div class="services-slider row mb-0{% if carousel %} swiper{% endif %}" id="service-list-{{ section.id }}"
            data-rows="{{ section.settings.rows }}"
            data-slidesToShow="{{ section.blocks.size }}"
            data-slidestoscroll="{{ section.blocks.size }}"
@@ -54,11 +54,12 @@
            {% if carousel %}
            data-section-type="slickCarousels"
            {% endif %}>
+        {%- if carousel -%}<div class="swiper-wrapper">{%- endif -%}
         {%- for block in section.blocks -%}
           {%- liquid
             assign type_icon = block.settings.type_icon
            -%}
-        <div class="{% if carousel %}  col {% else %} {% if layout == 'style-1' %} col-12 {% else %} col-6 {% endif %} col-lg  mb-4 mb-lg-0  {% endif %} services-item carousel__slide-wrapper--{{ block.id }}" 
+        <div class="{% if carousel %}  col swiper-slide {% else %} {% if layout == 'style-1' %} col-12 {% else %} col-6 {% endif %} col-lg  mb-4 mb-lg-0  {% endif %} services-item carousel__slide-wrapper--{{ block.id }}"
         {{ block.shopify_attributes }} >
         <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
           {%- case layout -%}
@@ -124,6 +125,13 @@
         </div>
         </div>
         {%- endfor -%}
+        {%- if carousel -%}</div>{%- endif -%}
+        {%- if carousel and section.settings.arrows -%}
+        <div class="swiper-button-prev"></div><div class="swiper-button-next"></div>
+        {%- endif -%}
+        {%- if carousel and section.settings.dots -%}
+        <div class="swiper-pagination"></div>
+        {%- endif -%}
       </div>
     </div>
     {%- if section.blocks.size == 0 -%}

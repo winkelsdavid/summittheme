@@ -64,7 +64,7 @@ display:none!important;
       {%- render 'section-heading' -%}
       <div class="brand-wrapper dots-negative">
         <div class="opacity_item_brand opacity_left"></div>
-        <div class="brand-slider row mb-0" id="collection-list-{{ section.id }}"
+        <div class="brand-slider swiper row mb-0" id="collection-list-{{ section.id }}"
             data-rows="{{ section.settings.rows }}"
             data-slidesToShow="{{ section.settings.slidestoshow }}"
             data-slidestoscroll="{{ speed_multiplier }}"
@@ -84,8 +84,9 @@ display:none!important;
               data-speed="500"
             {% endif %}
             data-slidesToShow-mobile = "2">
+          <div class="swiper-wrapper">
           {%- for block in section.blocks -%}
-          <div class="col brand-item carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="col brand-item swiper-slide carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
             <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
               <div class="image-content__image-container overflow-hidden mx-auto" style="width: {{ section.settings.width_image }}%;">
                 <a href="{{ block.settings.link | default: '#' }}" 
@@ -116,7 +117,7 @@ display:none!important;
           {%- endfor -%}
           {% if section.blocks.size < section.settings.slidestoshow %}
             {%- for block in section.blocks -%}
-          <div class="col brand-item carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="col brand-item swiper-slide carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
             <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
               <div class="image-content__image-container overflow-hidden mx-auto" style="width: {{ section.settings.width_image }}%;">
                 <a href="{{ block.settings.link | default: '#' }}" 
@@ -145,6 +146,14 @@ display:none!important;
             </div>
           </div>
           {%- endfor -%}
+          {% endif %}
+          </div>
+          {% if section.settings.arrows %}
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          {% endif %}
+          {% if section.settings.dots %}
+          <div class="swiper-pagination"></div>
           {% endif %}
         </div>
         <div class="opacity_item_brand opacity_right"></div>

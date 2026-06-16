@@ -46,7 +46,7 @@
   <div class="section-block">
     {%- render 'section-heading' -%}
     <div class="instagramoff-wrapper dots-negative">
-      <div class="instagramoff-slider mb-0 {% if enable_carousel == false %} instagramoff-grid {% endif %} {% if section.settings.padding == false %} row mx-0 {% else %} row{% endif %}" id="service-list-{{ section.id }}"
+      <div class="instagramoff-slider mb-0 {% if enable_carousel %} swiper {% else %} instagramoff-grid {% endif %} {% if section.settings.padding == false %} row mx-0 {% else %} row{% endif %}" id="service-list-{{ section.id }}"
            data-rows=""
            data-slidesToShow="{{ section.settings.column }}"
            data-slidestoscroll="1"
@@ -61,10 +61,11 @@
             data-section-type="slickCarousels"
            {%- endif -%}
            >
+        {%- if enable_carousel -%}<div class="swiper-wrapper">{%- endif -%}
         {%- for block in section.blocks limit: section.settings.show -%}
           {% case block.type %}
             {% when 'image' %}
-            <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+            <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }} {% if enable_carousel %} swiper-slide {% endif %}" {{ block.shopify_attributes }}>
               <div class="position-relative hv-image-brightness instagramoff-item"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
                 {%- if block.settings.image != blank -%}
                 <a  href="{{ block.settings.image_link }}" title="{{ block.settings.image.alt | escape }}" class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
@@ -84,7 +85,7 @@
               </div>
             </div>
            {% when 'video' %}
-           <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+           <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }} {% if enable_carousel %} swiper-slide {% endif %}" {{ block.shopify_attributes }}>
             <div class="position-relative hv-image-brightness instagramoff-item instagramoff-itemvideo"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
               {%- if block.settings.video != blank -%}
                  <a  href="{{ block.settings.image_link }}" class="d-block">
@@ -106,6 +107,14 @@
           {% endcase %}
         
         {%- endfor -%}
+        {%- if enable_carousel -%}</div>{%- endif -%}
+        {%- if enable_carousel and section.settings.arrows -%}
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        {%- endif -%}
+        {%- if enable_carousel and section.settings.dots -%}
+        <div class="swiper-pagination"></div>
+        {%- endif -%}
       </div>
     </div>
     {%- if section.blocks.size == 0 -%}

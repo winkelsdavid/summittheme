@@ -18,10 +18,12 @@
     padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
   }
   }
-  .quotes-wrapper-square .slick-prev{
+  .quotes-wrapper-square .slick-prev,
+  .quotes-wrapper-square .swiper-button-prev{
     left:-5px;
   }
-  .quotes-wrapper-square .slick-next{
+  .quotes-wrapper-square .slick-next,
+  .quotes-wrapper-square .swiper-button-next{
     right:-5px;
   }
 </style>
@@ -35,7 +37,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {%- render 'section-heading' -%}
     {%- if section.blocks.size > 0 -%}
     <div class="quotes-wrapper dots-negative quotes-wrapper-square" > 
-      <div class="quotes-slider row" id="Quotes-{{ section.id }}" 
+      <div class="quotes-slider swiper row" id="Quotes-{{ section.id }}"
            data-rows="1"
            data-slidesToShow="{{ section.settings.show }}"
            data-slidestoscroll="{{ section.settings.show }}"
@@ -45,7 +47,8 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
            data-infinite="{{ section.settings.infinite }}" 
            data-section-id="{{ section.id }}" 
            data-section-type="slickCarousels">
-           <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }} quote__slide-wrapper-first" {{ block.shopify_attributes }}  
+           <div class="swiper-wrapper">
+           <div class="quote__slide-wrapper swiper-slide carousel__slide-wrapper--{{ block.id }} quote__slide-wrapper-first" {{ block.shopify_attributes }}
             style="
             {% if section.settings.f_bg != blank %}
             --f-bg:{{ section.settings.f_bg }};
@@ -67,7 +70,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
             </div>
            </div>
         {%- for block in section.blocks -%}
-        <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }} 
+        <div class="quote__slide-wrapper swiper-slide carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}
             style="
             --g-quote-square:{{ section.settings.border_item }}; 
             --g-rate:{{ section.settings.color_rated }};
@@ -91,6 +94,14 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
           
         </div>
         {%- endfor -%}
+        </div>
+        {%- if section.settings.arrows -%}
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        {%- endif -%}
+        {%- if section.settings.dots -%}
+        <div class="swiper-pagination"></div>
+        {%- endif -%}
       </div>
     </div>
     {%- endif -%}

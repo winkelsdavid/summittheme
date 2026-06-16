@@ -52,18 +52,19 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     {%- render 'section-heading' -%}
     {%- if section.blocks.size > 0 -%}
     <div class="quotes-wrapper dots-negative " > 
-      <div class="quotes-slider row" id="Quotes-{{ section.id }}" 
+      <div class="quotes-slider row swiper" id="Quotes-{{ section.id }}"
            data-rows="1"
            data-slidesToShow="{{ section.settings.show }}"
            data-slidestoscroll="{{ section.settings.show }}"
            data-arrows="{{ section.settings.arrows }}"
-           data-dots="{{ section.settings.dots }}" 
-           data-draggable="{{ section.settings.draggable }}" 
-           data-infinite="{{ section.settings.infinite }}" 
-           data-section-id="{{ section.id }}" 
+           data-dots="{{ section.settings.dots }}"
+           data-draggable="{{ section.settings.draggable }}"
+           data-infinite="{{ section.settings.infinite }}"
+           data-section-id="{{ section.id }}"
            data-section-type="slickCarousels">
+        <div class="swiper-wrapper">
         {%- for block in section.blocks -%}
-        <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
+        <div class="quote__slide-wrapper carousel__slide-wrapper--{{ block.id }} swiper-slide" {{ block.shopify_attributes }}>
           {%- liquid
             assign style = section.settings.style
             assign title = block.settings.title
@@ -83,9 +84,16 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
             render 'quote-style-2', title: title, quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext
             endcase
           -%}
-          
+
         </div>
         {%- endfor -%}
+        </div>
+        {%- if section.settings.arrows -%}
+        <div class="swiper-button-prev"></div><div class="swiper-button-next"></div>
+        {%- endif -%}
+        {%- if section.settings.dots -%}
+        <div class="swiper-pagination"></div>
+        {%- endif -%}
       </div>
     </div>
     {%- endif -%}
