@@ -1006,6 +1006,56 @@
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
+    },
+    "product_list_swiper_H4MV7T": {
+      "type": "product-list-swiper",
+      "name": "Product List (Swiper)",
+      "settings": {
+        "animation": "",
+        "setwidth": "container",
+        "e_size": "auto",
+        "e_repeat": "no-repeat",
+        "e_position": "center center",
+        "background_section": "",
+        "title_color": "transparent",
+        "subtitle_top": "Sub Title Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Product list",
+        "description": "",
+        "align_heading": "center",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
+        "collection": "shop",
+        "limit": 10,
+        "perviewDesktop": 3,
+        "spaceBetween": 30,
+        "nowrap": true,
+        "arrows": true,
+        "scrollbar": true,
+        "enable_same_height": false,
+        "buttonall": "",
+        "buttonall_link": "",
+        "style_btn": "btn-theme",
+        "enable_first_banner": false,
+        "width_banner": 30,
+        "subtitle_banner": "Sub Title",
+        "title_banner": "Title Banner",
+        "size_text": "h2",
+        "banner_description": "Protection from the",
+        "pos_banner": "mid-center",
+        "button_banner": "discover now",
+        "link_banner": "",
+        "style_btn_banner": "btn-underline btn-underline-white",
+        "text_banner_color": "#ffffff",
+        "overlay_banner": "#000000",
+        "opacity_banner": 0.2,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -1024,6 +1074,7 @@
     "scrolling_text_GQdNeM",
     "new_faq_QMnMAp",
     "grid_banner_KRbnDp",
-    "faq_accordion_CFpARn"
+    "faq_accordion_CFpARn",
+    "product_list_swiper_H4MV7T"
   ]
 }
