@@ -131,27 +131,33 @@ window.slate = window.slate || {};
 
 slate.rte = {
   wrapTable: function () {
-    $(".rte table").wrap('<div class="rte__table-wrapper"></div>');
+    document.querySelectorAll(".rte table").forEach(function (table) {
+      var wrapper = document.createElement("div");
+      wrapper.className = "rte__table-wrapper";
+      table.parentNode.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    });
   },
 
   iframeReset: function () {
-    var $iframeVideo = $(
-      '.rte iframe[src*="youtube.com/embed"], .rte iframe[src*="player.vimeo"]'
-    );
-    var $iframeReset = $iframeVideo.add(".rte iframe#admin_bar_iframe");
-
-    $iframeVideo.each(function () {
+    var videoSel =
+      '.rte iframe[src*="youtube.com/embed"], .rte iframe[src*="player.vimeo"]';
+    document.querySelectorAll(videoSel).forEach(function (iframe) {
       // Add wrapper to make video responsive
-      $(this).wrap('<div class="video-wrapper"></div>');
+      var wrapper = document.createElement("div");
+      wrapper.className = "video-wrapper";
+      iframe.parentNode.insertBefore(wrapper, iframe);
+      wrapper.appendChild(iframe);
     });
 
-    $iframeReset.each(function () {
-      // Re-set the src attribute on each iframe after page load
-      // for Chrome's "incorrect iFrame content on 'back'" bug.
-      // https://code.google.com/p/chromium/issues/detail?id=395791
-      // Need to specifically target video and admin bar
-      this.src = this.src;
-    });
+    document
+      .querySelectorAll(videoSel + ', .rte iframe#admin_bar_iframe')
+      .forEach(function (iframe) {
+        // Re-set the src attribute on each iframe after page load
+        // for Chrome's "incorrect iFrame content on 'back'" bug.
+        // https://code.google.com/p/chromium/issues/detail?id=395791
+        iframe.src = iframe.src;
+      });
   },
 };
 
@@ -168,26 +174,31 @@ window.slate = window.slate || {};
  */
 
 slate.a11y = {
+  // Normalize a jQuery object / DOM element / selector to a DOM element so the
+  // helpers work whether the (still jQuery-based) callers pass $obj or a node.
+  _el: function (x) {
+    if (!x) return null;
+    if (x instanceof Element) return x;
+    if (typeof x === "string") return document.querySelector(x);
+    if (x.jquery || typeof x.length === "number") return x[0] || null;
+    return null;
+  },
+
   /**
-   * For use when focus shifts to a container rather than a link
-   * eg for In-page links, after scroll, focus shifts to content area so that
-   * next `tab` is where user expects if focusing a link, just $link.focus();
-   *
-   * @param {JQuery} $element - The element to be acted upon
+   * For use when focus shifts to a container rather than a link.
    */
-  pageLinkFocus: function ($element) {
+  pageLinkFocus: function (element) {
+    var el = this._el(element);
+    if (!el) return;
     var focusClass = "js-focus-hidden";
-
-    $element
-      .first()
-      .attr("tabIndex", "-1")
-      .focus()
-      .addClass(focusClass)
-      .one("blur", callback);
-
-    function callback() {
-      $element.first().removeClass(focusClass).removeAttr("tabindex");
-    }
+    el.setAttribute("tabIndex", "-1");
+    el.focus();
+    el.classList.add(focusClass);
+    el.addEventListener("blur", function callback() {
+      el.classList.remove(focusClass);
+      el.removeAttribute("tabindex");
+      el.removeEventListener("blur", callback);
+    });
   },
 
   /**
@@ -195,10 +206,8 @@ slate.a11y = {
    */
   focusHash: function () {
     var hash = window.location.hash;
-
-    // is there a hash in the url? is it an element on the page?
     if (hash && document.getElementById(hash.slice(1))) {
-      this.pageLinkFocus($(hash));
+      this.pageLinkFocus(document.getElementById(hash.slice(1)));
     }
   },
 
@@ -206,61 +215,55 @@ slate.a11y = {
    * When an in-page (url w/hash) link is clicked, focus the appropriate element
    */
   bindInPageLinks: function () {
-    $("a[href*=#]").on(
-      "click",
-      function (evt) {
-        this.pageLinkFocus($(evt.currentTarget.hash));
-      }.bind(this)
-    );
-  },
-
-  /**
-   * Traps the focus in a particular container
-   *
-   * @param {object} options - Options to be used
-   * @param {jQuery} options.$container - Container to trap focus within
-   * @param {jQuery} options.$elementToFocus - Element to be focused when focus leaves container
-   * @param {string} options.namespace - Namespace used for new focus event handler
-   */
-  trapFocus: function (options) {
-    var eventName = options.namespace
-      ? "focusin." + options.namespace
-      : "focusin";
-
-    if (!options.$elementToFocus) {
-      options.$elementToFocus = options.$container;
-    }
-
-    options.$container.attr("tabindex", "-1");
-    options.$elementToFocus.focus();
-
-    $(document).on(eventName, function (evt) {
-      if (
-        options.$container[0] !== evt.target &&
-        !options.$container.has(evt.target).length
-      ) {
-        options.$container.focus();
-      }
+    var self = this;
+    document.querySelectorAll('a[href*="#"]').forEach(function (a) {
+      a.addEventListener("click", function (evt) {
+        var hash = evt.currentTarget.hash;
+        if (hash) self.pageLinkFocus(document.querySelector(hash));
+      });
     });
   },
 
   /**
-   * Removes the trap of focus in a particular container
-   *
-   * @param {object} options - Options to be used
-   * @param {jQuery} options.$container - Container to trap focus within
-   * @param {string} options.namespace - Namespace used for new focus event handler
+   * Traps the focus in a particular container.
+   * options.$container / $elementToFocus may be jQuery objects or DOM nodes.
+   */
+  trapFocus: function (options) {
+    var container = this._el(options.$container);
+    if (!container) return;
+    var toFocus = options.$elementToFocus
+      ? this._el(options.$elementToFocus)
+      : container;
+    container.setAttribute("tabindex", "-1");
+    if (toFocus) toFocus.focus();
+
+    this._traps = this._traps || {};
+    var key = options.namespace || "_default";
+    if (this._traps[key]) {
+      document.removeEventListener("focusin", this._traps[key]);
+    }
+    var handler = function (evt) {
+      if (container !== evt.target && !container.contains(evt.target)) {
+        container.focus();
+      }
+    };
+    this._traps[key] = handler;
+    document.addEventListener("focusin", handler);
+  },
+
+  /**
+   * Removes the trap of focus in a particular container.
    */
   removeTrapFocus: function (options) {
-    var eventName = options.namespace
-      ? "focusin." + options.namespace
-      : "focusin";
-
-    if (options.$container && options.$container.length) {
-      options.$container.removeAttr("tabindex");
+    options = options || {};
+    var container = this._el(options.$container);
+    if (container) container.removeAttribute("tabindex");
+    this._traps = this._traps || {};
+    var key = options.namespace || "_default";
+    if (this._traps[key]) {
+      document.removeEventListener("focusin", this._traps[key]);
+      delete this._traps[key];
     }
-
-    $(document).off(eventName);
   },
 };
 
