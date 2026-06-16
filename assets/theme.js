@@ -696,13 +696,17 @@ theme.fadeIn = function (el, display) {
     el.style.opacity = 1;
   });
 };
-theme.fadeOut = function (el) {
-  if (!el) return;
+theme.fadeOut = function (el, cb) {
+  if (!el) {
+    if (cb) cb();
+    return;
+  }
   el.style.transition = "opacity .35s";
   el.style.opacity = 0;
   el.addEventListener("transitionend", function handler() {
     el.style.display = "none";
     el.removeEventListener("transitionend", handler);
+    if (cb) cb();
   });
 };
 theme.slideToggle = function (el) {
@@ -4838,23 +4842,30 @@ theme.shippingTime = (function () {
 // Wishlist
 theme.wishlist = (function () {
   const btnWishlist = ".js-btn-wishlist",
-    btnRemoveWishlist = ".js-remove-wishlist",
-    $wishlistCount = $(".js-wishlist-count"),
-    $wishlistContainer = $(".js-wishlist-content"),
-    wishlist = JSON.parse(localStorage.getItem("localWishlist")) || [],
-    wishlistPageUrl = $(".js-wishlist-link").attr("href");
+    btnRemoveWishlist = ".js-remove-wishlist";
+  let wishlist = JSON.parse(localStorage.getItem("localWishlist")) || [];
+  const wishlistLink = document.querySelector(".js-wishlist-link");
+  const wishlistPageUrl = wishlistLink ? wishlistLink.getAttribute("href") : "";
+
+  function setCount() {
+    document.querySelectorAll(".js-wishlist-count").forEach(function (el) {
+      el.textContent = wishlist.length;
+    });
+  }
 
   function showNoResult() {
-    $wishlistContainer.html(`
+    const container = document.querySelector(".js-wishlist-content");
+    if (!container) return;
+    container.innerHTML = `
       <div class="col text-center">
         <div class="alert alert-warning d-inline-block">${theme.strings.wishlistNoResult}</div>
       </div>
-    `);
+    `;
   }
 
   function updateWishlist(self) {
-    const productHandle = $(self).data("handle");
-    const allSimilarProducts = $(
+    const productHandle = self.getAttribute("data-handle");
+    const allSimilar = document.querySelectorAll(
       `${btnWishlist}[data-handle="${productHandle}"]`
     );
     const isAdded = wishlist.includes(productHandle);
@@ -4863,31 +4874,27 @@ theme.wishlist = (function () {
       window.location.href = wishlistPageUrl;
     } else {
       wishlist.push(productHandle);
-      allSimilarProducts
-        .fadeOut("slow")
-        .fadeIn("fast")
-        .html(
-          `${theme.strings.wishlistIconAdded}${theme.strings.wishlistTextAdded}`
-        );
-      allSimilarProducts.attr(
-        "data-original-title",
-        theme.strings.wishlistTextAdded
-      );
-      $(".tooltip-inner").text(theme.strings.wishlistTextAdded);
+      allSimilar.forEach(function (btn) {
+        btn.innerHTML = `${theme.strings.wishlistIconAdded}${theme.strings.wishlistTextAdded}`;
+        btn.setAttribute("data-original-title", theme.strings.wishlistTextAdded);
+      });
+      const tip = document.querySelector(".tooltip-inner");
+      if (tip) tip.textContent = theme.strings.wishlistTextAdded;
     }
 
     localStorage.setItem("localWishlist", JSON.stringify(wishlist));
-    $wishlistCount.text(wishlist.length);
+    setCount();
   }
 
   function loadWishlist() {
-    $wishlistContainer.empty();
+    const container = document.querySelector(".js-wishlist-content");
+    if (container) container.innerHTML = "";
 
-    if (wishlist.length > 0) {
+    if (wishlist.length > 0 && container) {
       wishlist.forEach((productHandle) => {
-        jQuery.getJSON(
-          window.Shopify.routes.root + `products/${productHandle}.js`,
-          function (product) {
+        fetch(window.Shopify.routes.root + `products/${productHandle}.js`)
+          .then((r) => r.json())
+          .then((product) => {
             const productPrice = product.price_varies
               ? `from ${theme.Currency.formatMoney(
                   product.price_min,
@@ -4921,18 +4928,18 @@ theme.wishlist = (function () {
             </div>
           `;
 
-            $wishlistContainer.append(htmlProduct);
-          }
-        );
+            container.insertAdjacentHTML("beforeend", htmlProduct);
+          })
+          .catch(function () {});
       });
-    } else {
+    } else if (container) {
       showNoResult();
     }
 
-    $wishlistCount.text(wishlist.length);
+    setCount();
 
-    $(btnWishlist).each(function () {
-      const productHandle = $(this).data("handle");
+    document.querySelectorAll(btnWishlist).forEach(function (btn) {
+      const productHandle = btn.getAttribute("data-handle");
       const isProductAdded = wishlist.includes(productHandle);
       const iconWishlist = isProductAdded
         ? theme.strings.wishlistIconAdded
@@ -4941,27 +4948,29 @@ theme.wishlist = (function () {
         ? theme.strings.wishlistTextAdded
         : theme.strings.wishlistText;
 
-      $(this)
-        .html(`${iconWishlist}${textWishlist}`)
-        .attr("title", textWishlist);
+      btn.innerHTML = `${iconWishlist}${textWishlist}`;
+      btn.setAttribute("title", textWishlist);
     });
   }
 
-  $(document).on("click", btnWishlist, function (event) {
+  document.addEventListener("click", function (event) {
+    const btn = event.target.closest(btnWishlist);
+    if (!btn) return;
     event.preventDefault();
-    updateWishlist(this);
+    updateWishlist(btn);
   });
 
-  $(document).on("click", btnRemoveWishlist, function () {
-    const productHandle = $(this).data("handle");
-    const allSimilarProducts = $(
-      `${btnWishlist}[data-handle="${productHandle}"]`
-    );
+  document.addEventListener("click", function (event) {
+    const removeBtn = event.target.closest(btnRemoveWishlist);
+    if (!removeBtn) return;
+    const productHandle = removeBtn.getAttribute("data-handle");
 
-    allSimilarProducts.html(
-      `${theme.strings.wishlistIcon}${theme.strings.wishlistText}`
-    );
-    allSimilarProducts.attr("data-original-title", theme.strings.wishlistText);
+    document
+      .querySelectorAll(`${btnWishlist}[data-handle="${productHandle}"]`)
+      .forEach(function (btn) {
+        btn.innerHTML = `${theme.strings.wishlistIcon}${theme.strings.wishlistText}`;
+        btn.setAttribute("data-original-title", theme.strings.wishlistText);
+      });
 
     const productIndex = wishlist.indexOf(productHandle);
     if (productIndex !== -1) {
@@ -4969,20 +4978,21 @@ theme.wishlist = (function () {
       localStorage.setItem("localWishlist", JSON.stringify(wishlist));
     }
 
-    $(this)
-      .closest(".js-wishlist-item")
-      .fadeOut(() => {
-        $(this).remove();
+    const item = removeBtn.closest(".js-wishlist-item");
+    if (item) {
+      theme.fadeOut(item, function () {
+        item.remove();
         if (wishlist.length === 0) {
           showNoResult();
         }
       });
+    }
 
-    $wishlistCount.text(wishlist.length);
+    setCount();
   });
 
   loadWishlist();
-  $(document).on("shopify:section:load", loadWishlist);
+  document.addEventListener("shopify:section:load", loadWishlist);
 
   return {
     load: loadWishlist,
