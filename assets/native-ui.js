@@ -157,6 +157,57 @@
     if (next) { e.preventDefault(); next.focus(); activateTab(next); }
   });
 
+  // =========================================================================
+  // Smooth <details> open/close — restores the Bootstrap-collapse height slide
+  // that native <details> (instant toggle) loses. Cross-browser, honours
+  // prefers-reduced-motion, opt-out via class "no-anim".
+  // =========================================================================
+  var REDUCE_MOTION = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('click', function (e) {
+    if (REDUCE_MOTION) return;
+    var summary = e.target.closest('summary');
+    if (!summary) return;
+    var details = summary.parentElement;
+    if (!details || details.tagName !== 'DETAILS' || details.classList.contains('no-anim')) return;
+    var content = summary.nextElementSibling;
+    if (!content || details.dataset.animating) return;
+    e.preventDefault();
+    details.dataset.animating = '1';
+    var clear = function () {
+      content.style.height = '';
+      content.style.overflow = '';
+      content.style.transition = '';
+      delete details.dataset.animating;
+    };
+    var onEnd = function (after) {
+      content.addEventListener('transitionend', function te(ev) {
+        if (ev.propertyName !== 'height') return;
+        content.removeEventListener('transitionend', te);
+        if (after) after();
+        clear();
+      });
+    };
+    if (details.open) { // closing
+      content.style.overflow = 'hidden';
+      content.style.height = content.getBoundingClientRect().height + 'px';
+      requestAnimationFrame(function () {
+        content.style.transition = 'height .28s ease';
+        content.style.height = '0px';
+      });
+      onEnd(function () { details.open = false; });
+    } else { // opening
+      details.open = true; // also closes name-group siblings (instant, by spec)
+      var target = content.getBoundingClientRect().height;
+      content.style.overflow = 'hidden';
+      content.style.height = '0px';
+      requestAnimationFrame(function () {
+        content.style.transition = 'height .28s ease';
+        content.style.height = target + 'px';
+      });
+      onEnd(null);
+    }
+  });
+
   // ---- Public API ----
   window.NativeUI = window.NativeUI || {};
   window.NativeUI.openModal = openModal;
