@@ -2615,62 +2615,61 @@ theme.Cart = (function () {
   };
 
   function Cart(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr("data-section-id");
+    this.container = container;
+    var sectionId = container.getAttribute("data-section-id");
 
-    theme.cartObject = JSON.parse($("#CartJson-" + sectionId).html());
+    var jsonEl = document.getElementById("CartJson-" + sectionId);
+    theme.cartObject = jsonEl ? JSON.parse(jsonEl.innerHTML) : {};
 
-    this.init($container);
+    this.init(container);
   }
 
   Cart.prototype = Object.assign({}, Cart.prototype, {
-    init: function ($container) {
+    init: function (container) {
       this._initQtySelector();
       this._initCartNote();
 
       if (!this._cookiesEnabled()) {
-        $container.addClass(selectors.cartNoCookiesClass);
+        container.classList.add(selectors.cartNoCookiesClass);
       }
     },
 
     _initQtySelector: function () {
-      $(selectors.cartQtyInput).each(function (i, el) {
+      document.querySelectorAll(selectors.cartQtyInput).forEach(function (el) {
         // eslint-disable-next-line no-new
-        new QtySelector($(el));
+        new QtySelector(el);
       });
     },
 
     _initCartNote: function () {
-      if (!$(selectors.cartNote).length) {
+      var el = document.querySelector(selectors.cartNote);
+      if (!el) {
         return;
       }
 
-      var $el = $(selectors.cartNote);
-      var noteText;
-      var params;
-      var noteOffset = $el[0].offsetHeight - $el[0].clientHeight;
+      var self = this;
+      var noteOffset = el.offsetHeight - el.clientHeight;
 
       // Auto grow the cart note if text fills it up
-      $el.on("keyup input", function () {
-        $(this)
-          .css("height", "auto")
-          .css("height", $el[0].scrollHeight + noteOffset);
-      });
+      var grow = function () {
+        el.style.height = "auto";
+        el.style.height = el.scrollHeight + noteOffset + "px";
+      };
+      el.addEventListener("keyup", grow);
+      el.addEventListener("input", grow);
       // Save the cart note via ajax. A safeguard in case
       // a user decides to leave the page before clicking 'Update Cart'
-      $el.on(
-        "change",
-        $.proxy(function () {
-          noteText = $el.val();
-          params = {
-            type: "POST",
-            url: "/cart/update.js",
-            data: "note=" + this._attributeToString(noteText),
-            dataType: "json",
-          };
-          $.ajax(params);
-        }, this)
-      );
+      el.addEventListener("change", function () {
+        var noteText = el.value;
+        fetch(window.Shopify.routes.root + "cart/update.js", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ note: self._attributeToString(noteText) }),
+        });
+      });
     },
 
     _attributeToString: function (attr) {
@@ -2680,7 +2679,7 @@ theme.Cart = (function () {
           attr = "";
         }
       }
-      return $.trim(attr);
+      return attr.trim();
     },
 
     _cookiesEnabled: function () {
