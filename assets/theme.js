@@ -3600,58 +3600,115 @@ theme.quickview = (function () {
     quickviewPrice = ".qv-product-price",
     quickviewComparePrice = ".qv-product-compare-price";
   var qvSwiper = null;
-  quickLoad = "#loading_qv";
-  quickQty = ".popup-quantity";
+  var quickLoad = "#loading_qv";
+  var quickQty = ".popup-quantity";
+
+  // Local DOM helpers (replace jQuery set-wise ops within this module).
+  function qAll(sel, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(sel));
+  }
+  function setHtml(sel, html) {
+    qAll(sel).forEach(function (e) {
+      e.innerHTML = html;
+    });
+  }
+  function setText(sel, txt) {
+    qAll(sel).forEach(function (e) {
+      e.textContent = txt;
+    });
+  }
+  function setVal(sel, value) {
+    qAll(sel).forEach(function (e) {
+      e.value = value;
+    });
+  }
+  function showEl(sel) {
+    qAll(sel).forEach(function (e) {
+      e.style.display = "";
+    });
+  }
+  function hideEl(sel) {
+    qAll(sel).forEach(function (e) {
+      e.style.display = "none";
+    });
+  }
+
   // 1. Show quickview
-  $(quickLoad).removeClass("activeload");
-  $(quickviewId).removeClass("loadqvpopup");
+  qAll(quickLoad).forEach(function (e) {
+    e.classList.remove("activeload");
+  });
+  qAll(quickviewId).forEach(function (e) {
+    e.classList.remove("loadqvpopup");
+  });
 
   //quanity quickview
 
-  $(".qv-qtity").on("click", function () {
-    var $button = $(this);
-    var oldValue = $button.closest(quickQty).find("input.qv-quantity").val();
-    if ($button.text() == "+") {
-      var newVal = parseFloat(oldValue) + 1;
+  document.addEventListener("click", function (e) {
+    var button = e.target.closest(".qv-qtity");
+    if (!button) return;
+    var wrap = button.closest(quickQty);
+    if (!wrap) return;
+    var input = wrap.querySelector("input.qv-quantity");
+    if (!input) return;
+    var oldValue = input.value;
+    var newVal;
+    if (button.textContent == "+") {
+      newVal = parseFloat(oldValue) + 1;
     } else {
       // Don't allow decrementing below zero
       if (oldValue > 1) {
-        var newVal = parseFloat(oldValue) - 1;
+        newVal = parseFloat(oldValue) - 1;
       } else {
         newVal = 1;
       }
     }
-    $button.closest(quickQty).find("input.qv-quantity").val(newVal);
+    input.value = newVal;
   });
   //click
-  $(document).on("click", quickviewButtonClass, function () {
-    $(quickQty).find("input.qv-quantity").val(1);
+  document.addEventListener("click", function (ev) {
+    var clickBtn = ev.target.closest(quickviewButtonClass);
+    if (!clickBtn) return;
+    var qvEl = document.querySelector(quickviewId);
+    setVal(quickQty + " input.qv-quantity", 1);
     //ResetQuickview
-    $(quickLoad).addClass("activeload");
-    var qv_color = $(quickviewId).data("color");
-    var quickviewAvaible = $(this).attr("data-pavailable");
-    var jdmgReview = $(this).attr("data-viewjdmg");
-    product_handle = $(this).data("handle");
+    qAll(quickLoad).forEach(function (e) {
+      e.classList.add("activeload");
+    });
+    var qv_color = theme.dataAttr(qvEl, "color");
+    var quickviewAvaible = clickBtn.getAttribute("data-pavailable");
+    var jdmgReview = clickBtn.getAttribute("data-viewjdmg");
+    product_handle = clickBtn.getAttribute("data-handle");
     if (qvSwiper) {
       try { qvSwiper.destroy(true, true); } catch (e) {}
       qvSwiper = null;
     }
-    $(quickviewThumb).removeClass().empty();
-    $(".qv-product-options").empty().removeClass("pb-3");
-    var desc = $(this).find(".txt-short").text();
+    qAll(quickviewThumb).forEach(function (e) {
+      e.className = "";
+      e.innerHTML = "";
+    });
+    qAll(".qv-product-options").forEach(function (e) {
+      e.innerHTML = "";
+      e.classList.remove("pb-3");
+    });
+    var shortEl = clickBtn.querySelector(".txt-short");
+    var desc = shortEl ? shortEl.textContent : "";
 
     //Pushdata
-    $(quickviewId).addClass(product_handle).data("handle", product_handle);
-    $.getJSON({
-      url: "/products/" + product_handle + ".js?" + new Date().getTime(),
-      beforeSend: function () {
-        $(quickviewButtonClass + `[data-handle=${product_handle}]`).addClass(
-          "qv-loading"
-        );
-      },
-    })
-      .done(function (product) {
-        $(quickviewId).removeClass().addClass("modal loadqvpopup");
+    if (qvEl) {
+      qvEl.classList.add(product_handle);
+      qvEl.setAttribute("data-handle", product_handle);
+    }
+    qAll(quickviewButtonClass + '[data-handle="' + product_handle + '"]').forEach(
+      function (b) {
+        b.classList.add("qv-loading");
+      }
+    );
+    fetch("/products/" + product_handle + ".js?" + new Date().getTime())
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (product) {
+        if (qvEl) qvEl.className = "modal loadqvpopup";
         if (window.NativeUI) NativeUI.openModal(quickviewId);
         var title = product.title;
         var type = product.type;
@@ -3663,11 +3720,14 @@ theme.quickview = (function () {
         var options = product.options;
         var url = "/products/" + product_handle;
 
-        $(".qv-product-title").text(title);
+        setText(".qv-product-title", title);
         function renderReview() {
           if (window.SPR && theme.review) {
-            $(".qv-product-rv").html(
-              `<span class="shopify-product-reviews-badge" data-id="${product.id}"></span>`
+            setHtml(
+              ".qv-product-rv",
+              '<span class="shopify-product-reviews-badge" data-id="' +
+                product.id +
+                '"></span>'
             );
             return (
               window.SPR.registerCallbacks(),
@@ -3678,46 +3738,53 @@ theme.quickview = (function () {
             );
           }
           if (theme.review && typeof jdgm !== "undefined") {
-            $(".qv-product-rv").html(
-              `<div class='pt-1 small' >${jdmgReview}</div>`
-            );
+            setHtml(".qv-product-rv", "<div class='pt-1 small' >" + jdmgReview + "</div>");
             return jdgm.customizeBadges();
           }
         }
         renderReview();
-        $(".qv-product-type").text(type);
-        $(".qv-product-description").html(desc);
-        $(".qv-view-product").attr("href", url);
-        $(".qv-view-product").click(function () {
-          window.location.href = url;
+        setText(".qv-product-type", type);
+        setHtml(".qv-product-description", desc);
+        qAll(".qv-view-product").forEach(function (el) {
+          el.setAttribute("href", url);
+          el.onclick = function () {
+            window.location.href = url;
+          };
         });
-        $(".qv-view-type").text(type);
-        $(".qv-view-vendor").text(vendor);
-        if ($(".qv-product-description").is(":empty")) {
-          $(".qv-product-description").removeClass("mb-1");
-        } else {
-          $(".qv-product-description").addClass("mb-1");
-        }
+        setText(".qv-view-type", type);
+        setText(".qv-view-vendor", vendor);
+        qAll(".qv-product-description").forEach(function (el) {
+          if (el.childNodes.length === 0) el.classList.remove("mb-1");
+          else el.classList.add("mb-1");
+        });
         if (quickviewAvaible == "true") {
-          $(quickviewAddCartButton)
-            .prop("disabled", false)
-            .html(theme.strings.addToCart);
+          qAll(quickviewAddCartButton).forEach(function (b) {
+            b.disabled = false;
+            b.innerHTML = theme.strings.addToCart;
+          });
         } else {
-          $(quickviewAddCartButton)
-            .prop("disabled", true)
-            .html(theme.strings.soldOut);
+          qAll(quickviewAddCartButton).forEach(function (b) {
+            b.disabled = true;
+            b.innerHTML = theme.strings.soldOut;
+          });
         }
-        $(product.variants).each(function (i, variants) {
-          if (variants.sku != null) {
-            $(".qv-sku").addClass("show").removeClass("hide");
-            $(".qv-view-sku").text(product.variants[0].sku);
+        product.variants.forEach(function (variantItem) {
+          if (variantItem.sku != null) {
+            qAll(".qv-sku").forEach(function (e) {
+              e.classList.add("show");
+              e.classList.remove("hide");
+            });
+            setText(".qv-view-sku", product.variants[0].sku);
           } else {
-            $(".qv-sku").addClass("hide").removeClass("show");
+            qAll(".qv-sku").forEach(function (e) {
+              e.classList.add("hide");
+              e.classList.remove("show");
+            });
           }
         });
-        var imageCount = $(images).length;
-        $(images).each(function (i, image) {
-          image_embed =
+        var imageCount = images.length;
+        images.forEach(function (image) {
+          var image_embed =
             '<div><img class="lazyload " role="presentation"  data-src="' +
             image +
             "&width=800" +
@@ -3728,7 +3795,8 @@ theme.quickview = (function () {
             image +
             "&width=800" +
             '" ></div>';
-          $(quickviewThumb).append(image_embed);
+          var thumbEl = document.querySelector(quickviewThumb);
+          if (thumbEl) thumbEl.insertAdjacentHTML("beforeend", image_embed);
         });
         (function () {
           // Wrap the runtime-built <div><img></div> slides into Swiper structure
@@ -3769,12 +3837,12 @@ theme.quickview = (function () {
         })();
 
         if (product.variants[0].option1 !== "Default Title") {
-          $(options).each(function (i, option) {
+          options.forEach(function (option, i) {
             var name = option.name;
             var opt = name.replace(/ /g, "-").toLowerCase();
-            var selectClass = ".option." + opt;
-            $(".qv-product-options")
-              .append(
+            qAll(".qv-product-options").forEach(function (e) {
+              e.insertAdjacentHTML(
+                "beforeend",
                 `
               <div class="option-selection ${opt}">
                 <span class="option text-body">
@@ -3786,17 +3854,21 @@ theme.quickview = (function () {
                 <select class="option-${i} option_qv ${opt}"></select>
               </div>
             `
-              )
-              .addClass("pb-3");
-
-            $(option.values).each((i, value) => {
-              $(`.option_qv.${opt}`).append(
-                `<option value="${value}">${value}</option>`
               );
+              e.classList.add("pb-3");
+            });
+
+            option.values.forEach(function (value) {
+              qAll(".option_qv." + opt).forEach(function (selEl) {
+                selEl.insertAdjacentHTML(
+                  "beforeend",
+                  `<option value="${value}">${value}</option>`
+                );
+              });
             });
 
             //list
-            if ($("#jsQuickview").data("type") == "list") {
+            if (theme.dataAttr(document.querySelector("#jsQuickview"), "type") == "list") {
               var str =
                 '<div class="single-option-radio js-option-' + i + ' ">';
               if (
@@ -3807,9 +3879,9 @@ theme.quickview = (function () {
               }
 
               //option.values = option.values.sort();
-              $(option.values).each(function (i, value) {
+              option.values.forEach(function (value, vi) {
                 var cl = "";
-                if (i == 0) {
+                if (vi == 0) {
                   cl = "active";
                 }
                 if (
@@ -3817,7 +3889,7 @@ theme.quickview = (function () {
                   option.name.includes(theme.strings.colorVariant2)
                 ) {
                   var variant_img = "";
-                  for (cc = 0; cc < variants.length; cc++) {
+                  for (var cc = 0; cc < variants.length; cc++) {
                     if (variants[cc]["option" + k] == value) {
                       if (
                         variants[cc]["featured_image"] &&
@@ -3873,128 +3945,142 @@ theme.quickview = (function () {
                 }
               });
               str += "</div>";
-              $(`.option-selection.${opt}`).append(str);
+              qAll(".option-selection." + opt).forEach(function (e) {
+                e.insertAdjacentHTML("beforeend", str);
+              });
             }
           });
-          if ($("#jsQuickview").data("type") == "list") {
-            $("#jsQuickview .option-selection label").click(function () {
-              $(this)
-                .closest(".option-selection")
-                .find("select")
-                .val($(this).data("value"));
-              $(this)
-                .closest(".option-selection")
-                .find("label")
-                .removeClass("active");
-              $(this).addClass("active");
-
-              var arr_option = [];
-              $("#jsQuickview")
-                .find("select.option")
-                .each(function () {
-                  arr_option.push($(this).val());
-                });
-              var status = true;
-              var variant = "";
-              for (i = 0; i < variants.length; i++) {
-                var status = true;
-                for (j = 0; j < arr_option.length; j++) {
-                  if (arr_option[j] != variants[i]["options"][j]) {
-                    status = false;
-                  }
-                }
-                if (variants[i]["available"] == false) {
-                  status = false;
-                }
-                if (status == true) {
-                  variant = variants[i];
-                }
-              }
-              //console.log(variant);
-              //console.log(variant['available']);
-              if (variant != "" || variant["available"]) {
-                $(".qv-add-button").prop("disabled", false);
-              } else {
-                $(".qv-add-button")
-                  .prop("disabled", true)
-                  .html(theme.strings.unavailable);
-              }
-
-              var selectedOptions = "";
-              $(quickviewOption).each(function (i) {
-                if (selectedOptions == "") {
-                  selectedOptions = $(this).val();
-                } else {
-                  selectedOptions = selectedOptions + " / " + $(this).val();
-                }
-              });
-              var targetVl = $(this).data("value");
-              for (i = 0; i < variants.length; i++) {
-                $(this)
-                  .closest(".option-selection")
-                  .find(".js-option-label-" + i + "")
-                  .text(targetVl);
-              }
-
-              jQuery.getJSON(
-                `/products/${product_handle}.js`,
-                function (product) {
-                  $(product.variants).each(function (i, v) {
-                    if (v.title == selectedOptions) {
-                      if (v.featured_image !== null) {
-                        var iSlick = v.featured_image.position - 1;
-                        if (qvSwiper) qvSwiper.slideTo(iSlick);
-                      }
-                      var price = theme.Currency.formatMoney(
-                        v.price,
-                        theme.moneyFormat
-                      );
-                      var compare_price = theme.Currency.formatMoney(
-                        v.compare_at_price,
-                        theme.moneyFormat
-                      );
-                      $(quickviewPrice).html(price);
-                      $(quickviewComparePrice).html(compare_price);
-                      if (v.compare_at_price !== null) {
-                        $(quickviewComparePrice).html(compare_price).show();
-                      } else {
-                        $(quickviewComparePrice).hide();
-                      }
-                      //theme.updateCurrencies();
-
-                      if (v) {
-                        if (v.available == true) {
-                          $(quickviewAddCartButton)
-                            .prop("disabled", false)
-                            .html(theme.strings.addToCart);
-                        } else {
-                          $(quickviewAddCartButton)
-                            .prop("disabled", true)
-                            .html(theme.strings.soldOut);
-                        }
-                      } else {
-                        $(quickviewAddCartButton)
-                          .prop("disabled", false)
-                          .html(theme.strings.unavailable);
-                      }
-                    }
+          if (theme.dataAttr(document.querySelector("#jsQuickview"), "type") == "list") {
+            qAll("#jsQuickview .option-selection label").forEach(function (label) {
+              label.addEventListener("click", function () {
+                var selection = label.closest(".option-selection");
+                if (selection) {
+                  var selEl = selection.querySelector("select");
+                  if (selEl) selEl.value = label.getAttribute("data-value");
+                  selection.querySelectorAll("label").forEach(function (l) {
+                    l.classList.remove("active");
                   });
                 }
-              );
+                label.classList.add("active");
+
+                var arr_option = [];
+                document
+                  .querySelectorAll("#jsQuickview select.option")
+                  .forEach(function (s) {
+                    arr_option.push(s.value);
+                  });
+                var variant = "";
+                for (var i = 0; i < variants.length; i++) {
+                  var status = true;
+                  for (var j = 0; j < arr_option.length; j++) {
+                    if (arr_option[j] != variants[i]["options"][j]) {
+                      status = false;
+                    }
+                  }
+                  if (variants[i]["available"] == false) {
+                    status = false;
+                  }
+                  if (status == true) {
+                    variant = variants[i];
+                  }
+                }
+                if (variant != "" || variant["available"]) {
+                  qAll(".qv-add-button").forEach(function (b) {
+                    b.disabled = false;
+                  });
+                } else {
+                  qAll(".qv-add-button").forEach(function (b) {
+                    b.disabled = true;
+                    b.innerHTML = theme.strings.unavailable;
+                  });
+                }
+
+                var selectedOptions = "";
+                qAll(quickviewOption).forEach(function (s) {
+                  if (selectedOptions == "") {
+                    selectedOptions = s.value;
+                  } else {
+                    selectedOptions = selectedOptions + " / " + s.value;
+                  }
+                });
+                var targetVl = label.getAttribute("data-value");
+                for (var li = 0; li < variants.length; li++) {
+                  if (selection) {
+                    selection
+                      .querySelectorAll(".js-option-label-" + li + "")
+                      .forEach(function (lbl) {
+                        lbl.textContent = targetVl;
+                      });
+                  }
+                }
+
+                fetch("/products/" + product_handle + ".js")
+                  .then(function (r) {
+                    return r.json();
+                  })
+                  .then(function (product) {
+                    product.variants.forEach(function (v) {
+                      if (v.title == selectedOptions) {
+                        if (v.featured_image !== null) {
+                          var iSlick = v.featured_image.position - 1;
+                          if (qvSwiper) qvSwiper.slideTo(iSlick);
+                        }
+                        var price = theme.Currency.formatMoney(
+                          v.price,
+                          theme.moneyFormat
+                        );
+                        var compare_price = theme.Currency.formatMoney(
+                          v.compare_at_price,
+                          theme.moneyFormat
+                        );
+                        setHtml(quickviewPrice, price);
+                        setHtml(quickviewComparePrice, compare_price);
+                        if (v.compare_at_price !== null) {
+                          setHtml(quickviewComparePrice, compare_price);
+                          showEl(quickviewComparePrice);
+                        } else {
+                          hideEl(quickviewComparePrice);
+                        }
+                        //theme.updateCurrencies();
+
+                        if (v) {
+                          if (v.available == true) {
+                            qAll(quickviewAddCartButton).forEach(function (b) {
+                              b.disabled = false;
+                              b.innerHTML = theme.strings.addToCart;
+                            });
+                          } else {
+                            qAll(quickviewAddCartButton).forEach(function (b) {
+                              b.disabled = true;
+                              b.innerHTML = theme.strings.soldOut;
+                            });
+                          }
+                        } else {
+                          qAll(quickviewAddCartButton).forEach(function (b) {
+                            b.disabled = false;
+                            b.innerHTML = theme.strings.unavailable;
+                          });
+                        }
+                      }
+                    });
+                  });
+              });
             });
           }
         }
-        $(product.variants).each(function (i, v) {
+        for (var pi = 0; pi < product.variants.length; pi++) {
+          var v = product.variants[pi];
           price = theme.Currency.formatMoney(v.price, theme.moneyFormat);
           compare_price = theme.Currency.formatMoney(
             v.compare_at_price,
             theme.moneyFormat
           );
-          $(quickviewPrice).html(price);
+          setHtml(quickviewPrice, price);
           if (v.compare_at_price !== null) {
-            $(quickviewComparePrice).html(compare_price).show();
+            setHtml(quickviewComparePrice, compare_price);
+            showEl(quickviewComparePrice);
           } else {
-            $(quickviewComparePrice).hide();
+            hideEl(quickviewComparePrice);
           }
           //theme.updateCurrencies();
           //v.inventory_quantity == 0 && v.inventory_management == 'shopify'
@@ -4002,59 +4088,85 @@ theme.quickview = (function () {
             v.inventory_quantity == 0 &&
             v.inventory_management == "shopify"
           ) {
-            $(quickviewAddCartButton)
-              .prop("disabled", true)
-              .val(theme.strings.soldOut);
-            return true;
+            qAll(quickviewAddCartButton).forEach(function (b) {
+              b.disabled = true;
+              b.value = theme.strings.soldOut;
+            });
+            continue;
           } else {
-            $("select.option-0").val(v.option1);
-            $("select.option-1").val(v.option2);
-            $("select.option-2").val(v.option3);
-            return false;
+            setVal("select.option-0", v.option1);
+            setVal("select.option-1", v.option2);
+            setVal("select.option-2", v.option3);
+            break;
           }
-        });
+        }
       })
-      .fail(function () {
+      .catch(function () {
         console.log("error");
       })
-      .always(function () {
-        $(quickviewButtonClass + `[data-handle=${product_handle}]`).removeClass(
-          "qv-loading"
-        );
-        $(quickLoad).removeClass("activeload");
+      .then(function () {
+        qAll(
+          quickviewButtonClass + '[data-handle="' + product_handle + '"]'
+        ).forEach(function (b) {
+          b.classList.remove("qv-loading");
+        });
+        qAll(quickLoad).forEach(function (e) {
+          e.classList.remove("activeload");
+        });
       });
     //addCartQuickview
   });
-  $(quickviewId).on("hidden.bs.modal", function () {
-    $(quickviewId).removeClass("loadqvpopup");
-    $(quickLoad).removeClass("activeload");
+  document.addEventListener("modal:hidden", function (e) {
+    if (e.target && e.target.id === "jsQuickview") {
+      e.target.classList.remove("loadqvpopup");
+      qAll(quickLoad).forEach(function (x) {
+        x.classList.remove("activeload");
+      });
+    }
   });
   // 2. Add to cart
-  $(document).on("click", quickviewAddCartButton, function () {
-    product_handle = $(quickviewId).data("handle");
+  document.addEventListener("click", function (ev) {
+    var addBtn = ev.target.closest(quickviewAddCartButton);
+    if (!addBtn) return;
+    var qvEl = document.querySelector(quickviewId);
+    if (qvEl) product_handle = qvEl.getAttribute("data-handle");
     var spinner =
       '<div class="product-card__loading spinner-border d-block" role="status"></div>';
-    var qty = $(".qv-quantity").val(),
-      selectedOptions = "",
-      var_id = "";
+    var qtyEl = document.querySelector(".qv-quantity");
+    var qty = qtyEl ? qtyEl.value : 1;
+    var selectedOptions = "";
+    var var_id = "";
     function processCart() {
-      $.post({
-        url: "/cart/add.js",
-        data: {
-          quantity: qty,
-          id: var_id,
+      qAll(quickviewAddCartButton).forEach(function (b) {
+        b.innerHTML = spinner;
+      });
+      fetch("/cart/add.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        dataType: "json",
-        beforeSend: function () {
-          $(quickviewAddCartButton).html(spinner);
-        },
+        body: JSON.stringify({ quantity: qty, id: var_id }),
       })
-        .done(function (item) {
+        .then(function (r) {
+          return r.json().then(function (data) {
+            if (!r.ok) {
+              var err = new Error("cart");
+              err.data = data;
+              throw err;
+            }
+            return data;
+          });
+        })
+        .then(function (item) {
           var htmlVariant =
             item.variant_title !== null
               ? "<i>(" + item.variant_title + ")</i>"
               : "";
-          var styleCart = $(".js-mini-cart").attr("data-cartmini");
+          var miniCartEl = document.querySelector(".js-mini-cart");
+          var styleCart = miniCartEl
+            ? miniCartEl.getAttribute("data-cartmini")
+            : null;
 
           if (styleCart != "true") {
             var htmlAlert =
@@ -4080,94 +4192,113 @@ theme.quickview = (function () {
 
           if (theme.cartpage) {
             location.reload();
-            $("html, body").animate({ scrollTop: 0 }, "slow");
           }
         })
-        .fail(function ($xhr) {
-          var data = $xhr.responseJSON;
+        .catch(function (err) {
+          var data = err && err.data ? err.data : {};
           theme.alert.new("", data.description, 3000, "warning");
         })
-        .always(function () {
-          $(quickviewAddCartButton)
-            .prop("disabled", false)
-            .html(theme.strings.addToCart);
-          $(quickviewId).modal("hide");
+        .then(function () {
+          qAll(quickviewAddCartButton).forEach(function (b) {
+            b.disabled = false;
+            b.innerHTML = theme.strings.addToCart;
+          });
+          if (window.NativeUI) NativeUI.closeModal(quickviewId);
         });
     }
-    $(quickviewOption).each(function (i) {
+    qAll(quickviewOption).forEach(function (s) {
       if (selectedOptions == "") {
-        selectedOptions = $(this).val();
+        selectedOptions = s.value;
       } else {
-        selectedOptions = selectedOptions + " / " + $(this).val();
+        selectedOptions = selectedOptions + " / " + s.value;
       }
     });
-    jQuery.getJSON("/products/" + product_handle + ".js", function (product) {
-      if (product.variants.length === 1) {
-        var_id = product.variants[0].id;
-      } else {
-        $(product.variants).each(function (i, v) {
-          if (v.title == selectedOptions) {
-            var_id = v.id;
-          }
-        });
-      }
-      processCart();
-    });
+    fetch("/products/" + product_handle + ".js")
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (product) {
+        if (product.variants.length === 1) {
+          var_id = product.variants[0].id;
+        } else {
+          product.variants.forEach(function (v) {
+            if (v.title == selectedOptions) {
+              var_id = v.id;
+            }
+          });
+        }
+        processCart();
+      });
   });
   // 3. Select variants
-  $(document).on("change", quickviewOption, function () {
+  document.addEventListener("change", function (ev) {
+    if (!ev.target.matches(quickviewOption)) return;
     var selectedOptions = "";
-    $(quickviewOption).each(function (i) {
+    qAll(quickviewOption).forEach(function (s) {
       if (selectedOptions == "") {
-        selectedOptions = $(this).val();
+        selectedOptions = s.value;
       } else {
-        selectedOptions = selectedOptions + " / " + $(this).val();
+        selectedOptions = selectedOptions + " / " + s.value;
       }
     });
-    jQuery.getJSON("/products/" + product_handle + ".js", function (product) {
-      $(product.variants).each(function (i, v) {
-        if (v.title == selectedOptions) {
-          if (v.featured_image !== null) {
-            var iSlick = v.featured_image.position - 1;
-            if (qvSwiper) qvSwiper.slideTo(iSlick);
-          }
-          var price = theme.Currency.formatMoney(v.price, theme.moneyFormat);
-          var compare_price = theme.Currency.formatMoney(
-            v.compare_at_price,
-            theme.moneyFormat
-          );
-          $(quickviewPrice).html(price);
-          $(quickviewComparePrice).html(compare_price);
-          if (v.sku != null) {
-            $(".qv-sku").addClass("show").removeClass("hide");
-            $(".qv-view-sku").text(v.sku);
-          } else {
-            $(".qv-sku").addClass("hide").removeClass("show");
-          }
-          if (v.compare_at_price !== null) {
-            $(quickviewComparePrice).html(compare_price).show();
-          } else {
-            $(quickviewComparePrice).hide();
-          }
-          //theme.updateCurrencies();
-          if (v.inventory_management === null) {
-            $(quickviewAddCartButton)
-              .prop("disabled", false)
-              .val(theme.strings.addToCart);
-          } else {
-            if (v.inventory_quantity < 1) {
-              $(quickviewAddCartButton)
-                .prop("disabled", true)
-                .val(theme.strings.soldOut);
+    fetch("/products/" + product_handle + ".js")
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (product) {
+        product.variants.forEach(function (v) {
+          if (v.title == selectedOptions) {
+            if (v.featured_image !== null) {
+              var iSlick = v.featured_image.position - 1;
+              if (qvSwiper) qvSwiper.slideTo(iSlick);
+            }
+            var price = theme.Currency.formatMoney(v.price, theme.moneyFormat);
+            var compare_price = theme.Currency.formatMoney(
+              v.compare_at_price,
+              theme.moneyFormat
+            );
+            setHtml(quickviewPrice, price);
+            setHtml(quickviewComparePrice, compare_price);
+            if (v.sku != null) {
+              qAll(".qv-sku").forEach(function (e) {
+                e.classList.add("show");
+                e.classList.remove("hide");
+              });
+              setText(".qv-view-sku", v.sku);
             } else {
-              $(quickviewAddCartButton)
-                .prop("disabled", false)
-                .val(theme.strings.addToCart);
+              qAll(".qv-sku").forEach(function (e) {
+                e.classList.add("hide");
+                e.classList.remove("show");
+              });
+            }
+            if (v.compare_at_price !== null) {
+              setHtml(quickviewComparePrice, compare_price);
+              showEl(quickviewComparePrice);
+            } else {
+              hideEl(quickviewComparePrice);
+            }
+            //theme.updateCurrencies();
+            if (v.inventory_management === null) {
+              qAll(quickviewAddCartButton).forEach(function (b) {
+                b.disabled = false;
+                b.value = theme.strings.addToCart;
+              });
+            } else {
+              if (v.inventory_quantity < 1) {
+                qAll(quickviewAddCartButton).forEach(function (b) {
+                  b.disabled = true;
+                  b.value = theme.strings.soldOut;
+                });
+              } else {
+                qAll(quickviewAddCartButton).forEach(function (b) {
+                  b.disabled = false;
+                  b.value = theme.strings.addToCart;
+                });
+              }
             }
           }
-        }
+        });
       });
-    });
   });
 })();
 
