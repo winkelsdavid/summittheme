@@ -5003,14 +5003,19 @@ theme.wishlist = (function () {
 theme.compare = (function () {
   var compareButtonClass = ".js-btn-compare",
     compareRemoveButtonClass = ".js-remove-compare",
-    $compareCount = $(".js-compare-count"),
-    $compareContainer = $(".js-compare-content"),
     compareObject = JSON.parse(localStorage.getItem("localCompare")) || [],
     alertClass = "notice";
+
+  function setCount() {
+    document.querySelectorAll(".js-compare-count").forEach(function (el) {
+      el.textContent = compareObject.length;
+    });
+  }
+
   function updateCompare(self) {
-    var productHandle = $(self).data("handle"),
+    var productHandle = self.getAttribute("data-handle"),
       alertText = "";
-    var isAdded = $.inArray(productHandle, compareObject) !== -1 ? true : false;
+    var isAdded = compareObject.indexOf(productHandle) !== -1;
     if (isAdded) {
       compareObject.splice(compareObject.indexOf(productHandle), 1);
       alertText = theme.strings.compareNotifyRemoved;
@@ -5027,117 +5032,129 @@ theme.compare = (function () {
     }
     localStorage.setItem("localCompare", JSON.stringify(compareObject));
     theme.alert.new(theme.strings.compareText, alertText, 2000, alertClass);
-    $compareCount.text(compareObject.length);
+    setCount();
   }
+
   function loadCompare() {
+    var container = document.querySelector(".js-compare-content");
     var compareGrid;
-    $compareContainer.html("");
-    //popup compare
-    if (compareObject.length > 0) {
+    if (container) container.innerHTML = "";
+
+    if (compareObject.length > 0 && container) {
       compareGrid = compareObject.length === 1 ? "col-md-12 col-sm-6" : "col";
-      for (var i = 0; i < compareObject.length; i++) {
-        var productHandle = compareObject[i];
-        Shopify.getProduct(productHandle, function (product) {
-          var htmlProduct = "",
-            productPrice = product.price_varies
-              ? "from " +
-                theme.Currency.formatMoney(product.price_min, theme.moneyFormat)
-              : theme.Currency.formatMoney(product.price, theme.moneyFormat),
-            productComparePrice =
-              product.compare_at_price_min !== 0
-                ? theme.Currency.formatMoney(
-                    product.compare_at_price_min,
+      compareObject.forEach(function (productHandle) {
+        fetch(window.Shopify.routes.root + "products/" + productHandle + ".js")
+          .then(function (r) {
+            return r.json();
+          })
+          .then(function (product) {
+            var htmlProduct = "",
+              productPrice = product.price_varies
+                ? "from " +
+                  theme.Currency.formatMoney(
+                    product.price_min,
                     theme.moneyFormat
                   )
-                : "",
-            productAvailable = product.available
-              ? theme.strings.available
-              : theme.strings.unavailable,
-            productAvailableClass = product.available
-              ? "alert-success"
-              : "alert-danger",
-            productTypeHTML =
-              product.type !== ""
-                ? '<a class="link" href="/collections/types?q=' +
-                  product.type +
-                  '">' +
-                  product.type +
-                  "</a>"
-                : "<span>" + theme.strings.none + "</span>",
-            productVendorHTML =
-              product.vendor !== ""
-                ? '<a class="link" href="/collections/vendors?q=' +
-                  product.vendor +
-                  '">' +
-                  product.vendor +
-                  "</a>"
-                : "<span>" + theme.strings.none + "</span>";
-          htmlProduct +=
-            '<div class="compare-item ' + compareGrid + ' col-xs-6 px-0">';
-          htmlProduct +=
-            '  <p class="py-3"><button class="js-remove-compare link " data-handle="' +
-            product.handle +
-            '">' +
-            theme.strings.compareTextRemove +
-            "</button></p>";
-          htmlProduct +=
-            '	<a class="d-block mb-4 px-4" href="' + product.url + '">';
-          htmlProduct +=
-            '		<img src="' +
-            Shopify.resizeImage(product.featured_image, "x230") +
-            '"/>';
-          htmlProduct += "	</a>";
-          htmlProduct += "	<hr /><h5 >" + product.title + "</h5>";
-          htmlProduct +=
-            '	<hr /><s class="small">' + productComparePrice + "</s>";
-          htmlProduct += "	<span> " + productPrice + "</span>";
-          htmlProduct +=
-            '	<hr /><span class="px-2 py-1 rounded ' +
-            productAvailableClass +
-            '"> ' +
-            productAvailable +
-            "</span>";
-          htmlProduct += "	<hr />" + productTypeHTML;
-          htmlProduct +=
-            '	<hr /><div class="pb-3">' + productVendorHTML + "</div>";
-          htmlProduct += "</div>";
-          $compareContainer.append(htmlProduct);
-          //theme.updateCurrencies();
-        });
-      }
-    } else {
-      $compareContainer.html(
+                : theme.Currency.formatMoney(product.price, theme.moneyFormat),
+              productComparePrice =
+                product.compare_at_price_min !== 0
+                  ? theme.Currency.formatMoney(
+                      product.compare_at_price_min,
+                      theme.moneyFormat
+                    )
+                  : "",
+              productAvailable = product.available
+                ? theme.strings.available
+                : theme.strings.unavailable,
+              productAvailableClass = product.available
+                ? "alert-success"
+                : "alert-danger",
+              productTypeHTML =
+                product.type !== ""
+                  ? '<a class="link" href="/collections/types?q=' +
+                    product.type +
+                    '">' +
+                    product.type +
+                    "</a>"
+                  : "<span>" + theme.strings.none + "</span>",
+              productVendorHTML =
+                product.vendor !== ""
+                  ? '<a class="link" href="/collections/vendors?q=' +
+                    product.vendor +
+                    '">' +
+                    product.vendor +
+                    "</a>"
+                  : "<span>" + theme.strings.none + "</span>";
+            htmlProduct +=
+              '<div class="compare-item ' + compareGrid + ' col-xs-6 px-0">';
+            htmlProduct +=
+              '  <p class="py-3"><button class="js-remove-compare link " data-handle="' +
+              product.handle +
+              '">' +
+              theme.strings.compareTextRemove +
+              "</button></p>";
+            htmlProduct +=
+              '	<a class="d-block mb-4 px-4" href="' + product.url + '">';
+            htmlProduct +=
+              '		<img src="' +
+              theme.Images.getSizedImageUrl(product.featured_image, "x230") +
+              '"/>';
+            htmlProduct += "	</a>";
+            htmlProduct += "	<hr /><h5 >" + product.title + "</h5>";
+            htmlProduct +=
+              '	<hr /><s class="small">' + productComparePrice + "</s>";
+            htmlProduct += "	<span> " + productPrice + "</span>";
+            htmlProduct +=
+              '	<hr /><span class="px-2 py-1 rounded ' +
+              productAvailableClass +
+              '"> ' +
+              productAvailable +
+              "</span>";
+            htmlProduct += "	<hr />" + productTypeHTML;
+            htmlProduct +=
+              '	<hr /><div class="pb-3">' + productVendorHTML + "</div>";
+            htmlProduct += "</div>";
+            container.insertAdjacentHTML("beforeend", htmlProduct);
+          })
+          .catch(function () {});
+      });
+    } else if (container) {
+      container.innerHTML =
         '<div class="alert alert-warning d-inline-block mb-0">' +
-          theme.strings.compareNoResult +
-          "</div>"
-      );
+        theme.strings.compareNoResult +
+        "</div>";
     }
 
     //button text
-    $(compareButtonClass).each(function () {
-      var productHandle = $(this).data("handle");
-      var status =
-        $.inArray(productHandle, compareObject) !== -1 ? "added" : "";
-      $(this).removeClass("added").addClass(status);
+    document.querySelectorAll(compareButtonClass).forEach(function (btn) {
+      var productHandle = btn.getAttribute("data-handle");
+      btn.classList.remove("added");
+      if (compareObject.indexOf(productHandle) !== -1) {
+        btn.classList.add("added");
+      }
     });
 
-    //count items
-    $compareCount.text(compareObject.length);
+    setCount();
   }
-  $(document).on("click", compareButtonClass, function (event) {
+
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest(compareButtonClass);
+    if (!btn) return;
     event.preventDefault();
-    updateCompare(this);
+    updateCompare(btn);
     loadCompare();
   });
-  $(document).on("click", compareRemoveButtonClass, function () {
-    var productHandle = $(this).data("handle");
+  document.addEventListener("click", function (event) {
+    var btn = event.target.closest(compareRemoveButtonClass);
+    if (!btn) return;
+    var productHandle = btn.getAttribute("data-handle");
     compareObject.splice(compareObject.indexOf(productHandle), 1);
     localStorage.setItem("localCompare", JSON.stringify(compareObject));
     loadCompare();
   });
 
   loadCompare();
-  $(document).on("shopify:section:load", loadCompare);
+  document.addEventListener("shopify:section:load", loadCompare);
   return {
     load: loadCompare,
   };
