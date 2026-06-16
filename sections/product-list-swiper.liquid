@@ -140,10 +140,10 @@
     {%- render 'style-section' -%}
   <div >
     <div class="section-block">
-      <div class="{{ section.settings.setwidth }}">
+      <div class="{{ section.settings.section_width }}">
         {%- render 'section-heading' -%}
       </div>
-      <div class="{{ section.settings.setwidth }} container-p">
+      <div class="{{ section.settings.section_width }} container-p">
       <div class="productlist-wrapper dots-negative swiper-wrapper-{{ section.id }} position-relative">
         <div class="productlist-swiper swiper-container swipercol-{{ section.id }} {% if section.settings.scrollbar %} pb-5 {% endif %}" id="Productlist-{{ section.id }}"
           data-section-id="{{ section.id }}"  
@@ -380,7 +380,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

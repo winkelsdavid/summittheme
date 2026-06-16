@@ -129,7 +129,7 @@
       ],
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "",
         "subtitle_top": "",
         "title": "Featured Brands",

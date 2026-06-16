@@ -17,7 +17,7 @@
       "type": "rich-text",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",

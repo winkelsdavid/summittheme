@@ -81,7 +81,7 @@
   data-aos="{{ section.settings.animation }}"
   data-section-type="newletter-section"  >
   {%- render 'style-section' -%}
-  <div class="{{ section.settings.setwidth }} text-center">
+  <div class="{{ section.settings.section_width }} text-center">
     {%- assign e_left = false -%}
     <div class="row d-flex justify-content-center">
       <div class="{% if e_left %} col-lg-11 {% else %} col-lg-6 {% endif %}">
@@ -241,7 +241,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

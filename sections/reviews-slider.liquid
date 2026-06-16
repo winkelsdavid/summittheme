@@ -334,7 +334,7 @@ color:{{ section.settings.text_color }};
     <div class="subtop text-{{ section.settings.align_heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
     {% endif %}
   </div>
-  <div class="slider_items-i swiper slider_items-i-{{ section.id }} {{ section.settings.setwidth }}">
+  <div class="slider_items-i swiper slider_items-i-{{ section.id }} {{ section.settings.section_width }}">
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
           {% case block.type %}
@@ -641,7 +641,7 @@ window.addEventListener('resize', () => {
       },
            {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

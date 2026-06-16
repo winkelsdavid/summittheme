@@ -20,7 +20,7 @@
         "mobile_padding_top": 0,
         "mobile_padding_bottom": 0,
         "background_section": "#ffffff",
-        "setwidth": "container",
+        "section_width": "container",
         "bgborder": "#237ee9",
         "wborder": "1px"
       }
@@ -78,7 +78,7 @@
       "name": "Icons",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "rgba(0,0,0,0)",
         "subtitle_top": "Firmness You Can Feel",
         "replace_reviews": false,
@@ -188,7 +188,7 @@
       "name": "Testimonials Slider",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "animated": true,
         "show_stars": true,
@@ -273,7 +273,7 @@
       "name": "Image with Bullets",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "image_layout": "image_left",
         "heading": "Your Daily Glow Boost.",
@@ -294,7 +294,7 @@
       "name": "Dividers Advanced",
       "settings": {
         "animation": "",
-        "setwidth": "full",
+        "section_width": "full",
         "background_section": "#f6d4d9",
         "bg_wave": "#fff2f4",
         "flip_pos": "up",
@@ -380,7 +380,7 @@
       "name": "Before After Stats",
       "settings": {
         "animation": "",
-        "setwidth": "container_small",
+        "section_width": "container_small",
         "background": "#f6d4d9",
         "subtitle": "",
         "replace_reviews": false,
@@ -419,7 +419,7 @@
       "name": "Dividers Advanced",
       "settings": {
         "animation": "",
-        "setwidth": "full",
+        "section_width": "full",
         "background_section": "#f6d4d9",
         "bg_wave": "rgba(0,0,0,0)",
         "flip_pos": "down",
@@ -468,7 +468,7 @@
       "name": "Image with text",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "rgba(0,0,0,0)",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
@@ -487,7 +487,7 @@
       "name": "Blog posts",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "rgba(0,0,0,0)",
         "title_color": "rgba(0,0,0,0)",
         "subtitle_top": "Sub Title Top",
@@ -681,7 +681,7 @@
       "name": "Instagram Slider",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "text": "@ORELLA",
         "h_sub_color": "",
@@ -713,7 +713,7 @@
       "name": "Blog posts",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#200e10",
         "title_color": "#fff2f4",
         "subtitle_top": "OUR BLOG",
@@ -843,7 +843,7 @@
       "name": "FAQ Advanced",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "heading": "Have a question ? We are here to help.",
         "subheading": "Check out the most common questions our customers asked. Still have questions ? Contact our customer support.",
         "team_image_width": 179,
@@ -925,7 +925,7 @@
       "name": "Grid banner",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "",
         "subtitle_top": "Sub Title Top",
         "replace_reviews": false,
@@ -981,7 +981,7 @@
       "name": "Faqs Accordion",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "",
         "e_size": "auto",
         "e_repeat": "no-repeat",
@@ -1012,7 +1012,7 @@
       "name": "Product List (Swiper)",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "e_size": "auto",
         "e_repeat": "no-repeat",
         "e_position": "center center",

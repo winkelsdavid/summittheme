@@ -27,7 +27,7 @@
   {%- endif -%}
 {%- endstyle -%}
 <div class="section-{{ section.id }}-padding" data-aos="{{ section.settings.animation }}" >
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
     <product-recommendations class="product-recommendations   isolate product-recommendations--loaded" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
       {% if recommendations.performed and recommendations.products_count > 0 %}
         <h2 class="product-recommendations__heading mb-5 text-{{ section.settings.heading_align }} {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
@@ -286,7 +286,7 @@ class ProductRecommendations extends HTMLElement {
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

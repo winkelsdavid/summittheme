@@ -82,7 +82,7 @@
       ],
       "settings": {
         "animation": "fade",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "Top Team",
         "title": "Team Of Highly",

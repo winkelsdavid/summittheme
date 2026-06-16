@@ -105,7 +105,7 @@
     }
   </style>
     
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
   <div class="section-block">
     <div class="row {% unless section.settings.enable_padding %}no-gutters {% endunless %}">
       {%- liquid
@@ -522,7 +522,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

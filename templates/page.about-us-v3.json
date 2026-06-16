@@ -48,7 +48,7 @@
       ],
       "settings": {
         "animation": "fade",
-        "setwidth": "full",
+        "section_width": "full",
         "background_section": "#e7e8e3",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
@@ -80,7 +80,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",
@@ -126,7 +126,7 @@
       ],
       "settings": {
         "animation": "fade",
-        "setwidth": "full",
+        "section_width": "full",
         "background_section": "#51553c",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
@@ -175,7 +175,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "title": "Find us in a store near you",
@@ -232,7 +232,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "title": "",
@@ -273,7 +273,7 @@
       "disabled": true,
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",
@@ -327,7 +327,7 @@
       ],
       "settings": {
         "animation": "fade",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#f3efe9",
         "size": "50-50",
         "enable_padding": true,
@@ -368,7 +368,7 @@
       "disabled": true,
       "settings": {
         "animation": "fade",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
@@ -412,7 +412,7 @@
       ],
       "settings": {
         "animation": "fade",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#222f25",
         "title_color": "#ffffff",
         "subtitle_top": "",
@@ -494,7 +494,7 @@
       ],
       "settings": {
         "animation": "fade",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "",
         "subtitle_top": "",
         "title": "Team Of Highly Skilled",
@@ -586,7 +586,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "title": "",

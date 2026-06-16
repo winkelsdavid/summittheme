@@ -124,7 +124,7 @@
 
 </style>
 <div class="c-{{ section.id }}" data-aos="{{ section.settings.animation }}">
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
       <div class="image-tabs-c {{ section.settings.layout }}">
         {% capture images %}
         <div class="image-tabs-images">
@@ -325,7 +325,7 @@ document.addEventListener('shopify:section:load', (event) => {
     },  
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

@@ -120,7 +120,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "replace_reviews": false,

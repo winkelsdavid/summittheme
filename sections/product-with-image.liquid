@@ -65,7 +65,7 @@
 </style>
 <div class="customstyle{{ section.id }}"  data-aos="{{ section.settings.animation }} " style="--width-banner:{{ section.settings.width_banner | append: '%' }};">
   {%- render 'style-section' -%}
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
     <div class="section-block">
         {%- render 'section-heading' -%}
 <div class="product-image {% if section.settings.pos_image == 'left_small' %} image_left_small {% elsif section.settings.pos_image == 'right_small' %} image_right_small  {% endif %}" data-aos="{{ section.settings.animation }}"  data-aos-delay="100">
@@ -332,7 +332,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

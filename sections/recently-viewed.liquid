@@ -34,7 +34,7 @@
 {%- render 'style-section' -%}  
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
   <recently-productsviewed section-id="{{ section.id }}" products-count="{{ section.settings.limit }}" class="d-block section-productsviewed" style="--g-view-limit:{{ section.settings.limit }}">
-    <div class="{{ section.settings.setwidth }}">
+    <div class="{{ section.settings.section_width }}">
       {%- render 'section-heading' -%}
               <div class="productsviewed-grid">
                 {%- for product in predictive_search.resources.products -%}
@@ -240,7 +240,7 @@ window.customElements.define("recently-productsviewed", RecentlyViewedProducts);
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

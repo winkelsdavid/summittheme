@@ -46,7 +46,7 @@
 </style>
 <div class="customstyle{{ section.id }} position-relative" >
   {%- render 'style-section' -%}
-<div class="{{ section.settings.setwidth }}">
+<div class="{{ section.settings.section_width }}">
   <div class="section-block">
     <div class="row {% unless section.settings.enable_padding %}no-gutters {% endunless %}">
       {%- liquid
@@ -297,7 +297,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

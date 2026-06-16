@@ -331,7 +331,7 @@
           }}
   {%- endif -%}
   <div class="site-footer--head">
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
     <div class="row">
       {%- for block in section.blocks -%}
       {%- liquid
@@ -534,7 +534,7 @@
     </div>
   </div>
   <div class="site-footer__copyright" >
-    <div class="{{ section.settings.setwidth }}">
+    <div class="{{ section.settings.section_width }}">
       <div class="d-flex flex-lg-row flex--sm-column flex-column-reverse">
         <div class="flex-lg-grow-1">
             <div class="d-flex flex-column text-lg-left text-center pt-lg-0 pt-3">
@@ -661,7 +661,7 @@
   "settings": [
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

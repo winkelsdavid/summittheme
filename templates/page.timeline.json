@@ -70,7 +70,7 @@
       ],
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "rgba(0,0,0,0)",
         "subtitle_top": "",
         "title": "Our history",
@@ -128,7 +128,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "text_color": "rgba(0,0,0,0)",
         "background_section": "rgba(0,0,0,0)",
         "rangebg": 0,

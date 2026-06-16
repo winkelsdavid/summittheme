@@ -1,6 +1,6 @@
 {%- if section.settings.enable -%}
   {%- liquid
-    assign type = section.settings.announ_type
+    assign type = section.settings.announcement_type
     assign scroll_type = section.settings.scroll_type
     assign reverse_speed = 31 | minus : section.settings.speed
     assign speed = reverse_speed
@@ -322,7 +322,7 @@
     },
     {
       "type": "select",
-      "id": "announ_type",
+      "id": "announcement_type",
       "options": [
         {
           "value": "carousel",
@@ -339,7 +339,7 @@
       "type": "checkbox",
       "id": "auto_rotate",
       "label": "Auto Rotate",
-      "visible_if":"{{ section.settings.announ_type == 'carousel' }}"
+      "visible_if":"{{ section.settings.announcement_type == 'carousel' }}"
     },
      {
       "type": "range",
@@ -348,7 +348,7 @@
       "min":3,
       "max":7,
       "default":3,
-      "visible_if":"{{ section.settings.announ_type == 'carousel' }}"
+      "visible_if":"{{ section.settings.announcement_type == 'carousel' }}"
     },
     {
       "type": "header",

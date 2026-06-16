@@ -290,7 +290,7 @@ display:none;
 }
 </style>
 <div class="c-{{ section.id }}" data-aos="{{ section.settings.animation }}">
-    <div class="{{ section.settings.setwidth }}">
+    <div class="{{ section.settings.section_width }}">
         <div class="custom_reviews_marquee">
             <div class="review_marquee_info">
                 <div class="reviews_count">
@@ -619,7 +619,7 @@ document.addEventListener("DOMContentLoaded", function() {
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

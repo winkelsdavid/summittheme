@@ -12,7 +12,7 @@
 </style>
  <div class="customstyle{{ section.id }}">
    {%- render 'style-section' -%}
-<div class="steam-member__wrap {{ section.settings.setwidth }}">
+<div class="steam-member__wrap {{ section.settings.section_width }}">
   <div class="steam-member__content">
    {%- render 'section-heading' -%}
     <div class="smembers row">
@@ -235,7 +235,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

@@ -92,7 +92,7 @@ gap:10px;
   }
 </style>
 <div class="c_progress_ticker-{{ section.id }}" data-aos="{{ section.settings.animation }}">
-  <div class="{{ section.settings.setwidth }} mb-4">
+  <div class="{{ section.settings.section_width }} mb-4">
       {% if section.settings.replace_reviews %}
             {%  render 'rating-custom', align : section.settings.align_heading %}
       {% else %}
@@ -106,7 +106,7 @@ gap:10px;
         </h3>
       {% endif %}
   </div>
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
     <div class="row gap-desktop">
     <div class="col-md-6">
         {% for block in section.blocks %}
@@ -307,7 +307,7 @@ document.addEventListener("shopify:section:load", (event) => {
     },
         {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

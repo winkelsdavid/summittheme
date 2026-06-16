@@ -17,7 +17,7 @@
 </style>
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}">
     {%- render 'style-section' -%}
-    <div class="{{ section.settings.setwidth }}">
+    <div class="{{ section.settings.section_width }}">
       <div class="border-top border-custom">
       </div>
     </div>
@@ -197,7 +197,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

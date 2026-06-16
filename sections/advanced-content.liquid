@@ -39,7 +39,7 @@
     data-parent-fit="cover" 
    data-section-id="{{ section.id }}" >
   {%- render 'style-section' -%}
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
     <div class="section-block">
       {%- render 'section-heading' -%}
       <div class="row {% unless section.settings.padding %} m-0{% endunless %} {% if section.settings.col_center %} justify-content-center {% endif %}">
@@ -563,7 +563,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

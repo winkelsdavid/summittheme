@@ -717,7 +717,7 @@
           "setwidthout": "full",
           "slideshow_height_adapt": "full",
           "slideshow_height_mobile": "600",
-          "setwidth": "container-fluid",
+          "section_width": "container-fluid",
           "slideshow_mobile": true,
           "autorotate": true,
           "autorotate_speed": 5,
@@ -937,7 +937,7 @@
           "enable_slideshow": true,
           "slideshow_height_adapt": "full",
           "slideshow_height_mobile": "500",
-          "setwidth": "container-fluid",
+          "section_width": "container-fluid",
           "slideshow_mobile": true,
           "autorotate": true,
           "autorotate_speed": 5,
@@ -1012,7 +1012,7 @@
         ],
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#ffffff",
           "subtitle_top": "Sub Title Top",
           "title": "",
@@ -1047,7 +1047,7 @@
         ],
         "settings": {
           "animation": "",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#ffffff",
           "subtitle_top": "",
           "title": "",
@@ -1059,7 +1059,7 @@
         "type": "video",
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "video_url": "https://vimeo.com/262234800",
           "cover_image": "shopify://shop_images/s3.jpg",
           "show_overlay": true,
@@ -1071,7 +1071,7 @@
         "type": "newsletter",
         "settings": {
           "animation": "fade",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#f4f1eb",
           "colorborder": "#222222",
           "subtitle_top": "",
@@ -1156,7 +1156,7 @@
         ],
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#f5f5f5",
           "subtitle_top": "",
           "title": "",
@@ -1206,7 +1206,7 @@
         ],
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#ffffff",
           "subtitle_top": "",
           "title": "Trendy Products",
@@ -1225,7 +1225,7 @@
         "type": "featured-articles",
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#ffffff",
           "subtitle_top": "",
           "title": "Latest From Blog",
@@ -1296,7 +1296,7 @@
         ],
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#f5f5f5",
           "subtitle_top": "",
           "title": "",
@@ -1316,7 +1316,7 @@
         "type": "product-list-swiper",
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#ffffff",
           "subtitle_top": "",
           "title": "New Arrivals",
@@ -1335,7 +1335,7 @@
         "disabled": true,
         "settings": {
           "animation": "",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#ffffff",
           "subtitle_top": "Sub Title Top",
           "title": "Product list",
@@ -1353,7 +1353,7 @@
         "settings": {
           "animation": "fade",
           "background_section": "#ffffff",
-          "setwidth": "full",
+          "section_width": "full",
           "bgborder": "#e1e1e1",
           "wborder": "1px"
         }
@@ -1362,7 +1362,7 @@
         "type": "newsletter",
         "settings": {
           "animation": "fade-up",
-          "setwidth": "container",
+          "section_width": "container",
           "background_section": "#ffffff",
           "colorborder": "#e1e1e1",
           "e_size": "auto",
@@ -1429,7 +1429,7 @@
         ],
         "settings": {
           "animation": "fade-up",
-          "setwidth": "full",
+          "section_width": "full",
           "background_section": "#ffffff",
           "subtitle_top": "",
           "title": "",
@@ -1582,7 +1582,7 @@
           "enable_transparent": false,
           "hover_transparent": false,
           "enable_white": false,
-          "setwidth": "container-fluid",
+          "section_width": "container-fluid",
           "layout_header": "logo-center-navigation-left",
           "type_sticky": "sticky",
           "height_header": "small",
@@ -1693,7 +1693,7 @@
           "ec49d85b-17bb-4b65-a49f-3086aa5430cd"
         ],
         "settings": {
-          "setwidth": "container-fluid",
+          "section_width": "container-fluid",
           "background": "#f4efe9",
           "border_headfooter": "#e9e3dd",
           "border-copryright": "#e7ded6",

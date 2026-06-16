@@ -380,7 +380,7 @@ display:none;
     }
 </style>
 <div
-  class="{{ section.settings.setwidth }} js-recently-view"
+  class="{{ section.settings.section_width }} js-recently-view"
   itemscope
   itemtype="http://schema.org/Product"
   id="ProductSection-{{ section.id }}"
@@ -3216,7 +3216,7 @@ function formatPrice(value) {
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Container",
       "default": "container",
       "options": [

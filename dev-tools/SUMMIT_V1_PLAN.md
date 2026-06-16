@@ -113,14 +113,12 @@ Anwendung **tier-weise** nach Risiko/Kopplung: **T0** JSON-Fixes + Label-Typos (
 - [ ] **T5 deferred** — Resource-Typing (`video`→`video_url`, R8): fragiler Type-Change
   (MP4-CDN-URLs werden abgelehnt, manche Felder rendern via `video_tag`), moderater Mapping-Wert.
   Non-destruktiv genug für später.
-- [ ] ⚠️ **2 RENAME_MAP-Misses gefunden (2026-06-16, Grep-Verifikation)** — Layer-1/destruktiv, **vor
-  Operator-Mapping** zu klären (sonst lockt das Mapping die alten IDs ein):
-  - `announ_type`→`announcement_type` (`announcement-bar-slide.liquid:325`, + Z.3/342/351) — sauberer
-    Section-lokaler Miss; auf RENAME_MAP:175 stehen `code→content` ✓ und `Item→slide` ✓ derselben Zeile,
-    nur dieser eine wurde übersehen. **Anwenden** oder Ledger bewusst auf „kept" setzen.
-  - `setwidth`→`section_width` (`faq-advanced.liquid:391`, RENAME_MAP:211) — ABER `setwidth` ist **shared
-    über ~57 Sections** (Label global gefixt in T3a, ID nicht). **Entscheidung:** ID global behalten
-    (Ledger korrigieren) **oder** global umbenennen (57-Section-Pass). Nicht nur in faq-advanced umbenennen → Inkonsistenz.
+- [x] ✅ **2 RENAME_MAP-Misses geschlossen (2026-06-16, „Patch 1 komplett")** — beide global angewandt
+  (Wort-Grenzen, separates Setting `setwidthout` geschützt; 93 Dateien; 0 Alt-Tokens; alle JSON-Bodies re-validiert):
+  - `announ_type`→`announcement_type` — 5× (`announcement-bar-slide.liquid` Z.3/325/342/351 inkl. beider `visible_if` + `header-group.json`)
+  - `setwidth`→`section_width` — **248× über alle Sections mit dem Width-Regler + alle Templates +
+    `settings_data.json` + Section-Groups**; lokale Liquid-Var in `product-content` konsistent mitgezogen.
+  Damit ist **Phase 1 (Identifier) wirklich vollständig** (nur das bewusst deferred **T5** offen).
 
 *Warum hier:* nach Launch destruktiv; Labels und Mapping keyen auf stabile IDs. **In der DB
 verifiziert** (Phase 3): Paths = Contract R1, keine Alt-IDs.

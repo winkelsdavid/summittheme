@@ -45,7 +45,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "e_size": "auto",
         "e_repeat": "no-repeat",
@@ -102,7 +102,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "e_size": "auto",
         "e_repeat": "no-repeat",
@@ -151,7 +151,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",

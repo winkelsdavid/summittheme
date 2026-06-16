@@ -85,7 +85,7 @@
       "settings": {
         "animation": "",
         "background_section": "#ffffff",
-        "setwidth": "full",
+        "section_width": "full",
         "bgborder": "#dddddd",
         "wborder": "1px"
       }

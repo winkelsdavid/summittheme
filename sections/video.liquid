@@ -35,7 +35,7 @@
   </style>
 
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
-<div class="{{ section.settings.setwidth }}" >
+<div class="{{ section.settings.section_width }}" >
   {%- render 'style-section' -%}
   <div id="VideoSection--{{ section.id }}" class="video-section video-section--{{ section.settings.cover_image_height }}" data-section-id="{{ section.id }}" data-section-type="video" data-video-id="{{ section.settings.video_url.id }}" data-video-type="{{ section.settings.video_url.type }}">
     <div class="video-section__body-overlay"></div>
@@ -240,7 +240,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

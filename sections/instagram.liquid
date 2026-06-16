@@ -18,7 +18,7 @@
 </style>
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}">
   {%- render 'style-section' -%}
-<div class="{{ section.settings.setwidth }}">
+<div class="{{ section.settings.section_width }}">
   <div class="section-block">
     {%- render 'section-heading' -%}
     <div class="instagram row mx-n2 mb-0 dots-negative" id="Instagram-{{ section.id }}"
@@ -165,7 +165,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

@@ -15,7 +15,7 @@
 </style>
 <section class="customstyle{{ section.id }} " data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
     <tab-info class="section-block">
         <div class="row">
             <div class="col-lg-6 col-12 pr-lg-5">
@@ -216,7 +216,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

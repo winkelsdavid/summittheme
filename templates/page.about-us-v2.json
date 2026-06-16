@@ -43,7 +43,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "full",
+        "section_width": "full",
         "height_section": "650px",
         "height_section_mobile": "450px",
         "align": "center",
@@ -110,7 +110,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "gradient_bg": "linear-gradient(180deg, rgba(247, 241, 231, 1), rgba(255, 255, 255, 1) 100%)",
         "title_color": "rgba(0,0,0,0)",
@@ -218,7 +218,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "text_color": "rgba(0,0,0,0)",
         "background_section": "#ffffff",
         "rangebg": 0,
@@ -282,7 +282,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "text_color": "rgba(0,0,0,0)",
         "background_section": "#ffffff",
         "rangebg": 0,
@@ -381,7 +381,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "text_color": "#000000",
         "background_section": "#f2ebe3",
         "rangebg": 0,
@@ -454,7 +454,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "replace_reviews": false,
@@ -514,7 +514,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#f5f2ea",
         "rangebg": 100,
         "bgbefore": "#344a52",
@@ -566,7 +566,7 @@
       "disabled": true,
       "settings": {
         "animation": "fade-up",
-        "setwidth": "full",
+        "section_width": "full",
         "text_color": "rgba(0,0,0,0)",
         "background_section": "#f7f7f7",
         "rangebg": 0,
@@ -678,7 +678,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "replace_reviews": false,
@@ -766,7 +766,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container-fluid",
+        "section_width": "container-fluid",
         "background_section": "#f5ede3",
         "subtitle_top": "",
         "replace_reviews": false,

@@ -229,7 +229,7 @@ margin-top:50px;
   id="bas-{{ section.id }}"
   data-aos="{{ section.settings.animation }}"
 >
-    <div class="{{ section.settings.setwidth }}">
+    <div class="{{ section.settings.section_width }}">
       {% if section.settings.replace_reviews %}
             {%  render 'rating-custom', align : section.settings.align_heading %}
       {% else %}
@@ -243,7 +243,7 @@ margin-top:50px;
         </h3>
       {% endif %}
   </div>
-  <div class="{{ section.settings.setwidth }} c_progress_circles">
+  <div class="{{ section.settings.section_width }} c_progress_circles">
     <div class="bas-cards">
 
       {%- comment -%} ── BEFORE CARD ── {%- endcomment -%}
@@ -490,7 +490,7 @@ margin-top:50px;
     },
         {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

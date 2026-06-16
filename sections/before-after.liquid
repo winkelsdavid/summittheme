@@ -17,7 +17,7 @@
 data-aos="{{ section.settings.animation }}"
  data-section-id="{{ section.id }}" 
 data-section-type="beforeafter">
-    <div class="{{ section.settings.setwidth }}">
+    <div class="{{ section.settings.section_width }}">
         <div class="section-block">
             {%- render 'section-heading' -%}
             <div class="before-after-block">
@@ -182,7 +182,7 @@ data-section-type="beforeafter">
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

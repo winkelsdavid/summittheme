@@ -128,7 +128,7 @@
       ],
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container-fluid",
+        "section_width": "container-fluid",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "title": "",

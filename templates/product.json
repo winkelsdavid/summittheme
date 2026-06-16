@@ -579,7 +579,7 @@
         "custom_review_F9cTcD"
       ],
       "settings": {
-        "setwidth": "container",
+        "section_width": "container",
         "media_style": "media-bottom",
         "media_size": "normal",
         "image_size": "auto",
@@ -698,7 +698,7 @@
       "name": "Icons",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "rgba(0,0,0,0)",
         "subtitle_top": "Firmness You Can Feel",
         "replace_reviews": false,
@@ -795,7 +795,7 @@
       "disabled": true,
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "tab_size": "large",
         "tabs_size_desktop": 18,
         "tabs_size_mobile": 16,
@@ -860,7 +860,7 @@
       "settings": {
         "animation": "",
         "background": "",
-        "setwidth": "container",
+        "section_width": "container",
         "gutter_padding": 30,
         "section_image": "shopify://shop_images/Main9_a8ae4ea7-8d1f-4366-9bbb-56b575ef4d21.jpg",
         "video_pick": "",
@@ -953,7 +953,7 @@
       "name": "Testimonials Slider",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "animated": true,
         "show_stars": true,
@@ -1034,7 +1034,7 @@
       "name": "Image with Bullets",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "image_layout": "image_left",
         "heading": "Your Daily Glow Boost.",
@@ -1124,7 +1124,7 @@
       "name": "Before After Stats",
       "settings": {
         "animation": "",
-        "setwidth": "container_small",
+        "section_width": "container_small",
         "background": "#f6d4d9",
         "subtitle": "",
         "replace_reviews": false,
@@ -1163,7 +1163,7 @@
       "name": "Before/After Image",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#f6d4d9",
         "subtitle_top": "Visible Skin Transformation",
         "replace_reviews": false,
@@ -1229,7 +1229,7 @@
       "name": "Images tabs",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "layout": "left",
         "image_height": 700,
@@ -1309,7 +1309,7 @@
       "name": "Progress Bars",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "subtitle": "",
         "replace_reviews": false,
@@ -1411,7 +1411,7 @@
       "name": "Comparison Table",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background": "",
         "h_s_color": "",
         "subtitle": "Subtitle",
@@ -1451,7 +1451,7 @@
       "disabled": true,
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "heading": "You may also like",
         "heading_size": "h3",
         "heading_align": "center",
@@ -1472,7 +1472,7 @@
       "settings": {
         "enable": true,
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "subtitle_top": "Sub Title Top",
         "replace_reviews": false,
         "reviews_type": "t_1",
@@ -1554,7 +1554,7 @@
       "name": "Faqs Accordion",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "rgba(0,0,0,0)",
         "e_size": "cover",
         "e_repeat": "no-repeat",
@@ -1642,7 +1642,7 @@
       "name": "Image with Auto Slider",
       "settings": {
         "animation": "",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "linear-gradient(228deg, rgba(32, 14, 16, 1) 14%, rgba(32, 14, 16, 1) 83%)",
         "bg_pos": "left",
         "mobile_pos": "bottom",

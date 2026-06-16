@@ -36,7 +36,7 @@
 
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}
-<div class="{{ section.settings.setwidth }}">
+<div class="{{ section.settings.section_width }}">
   <div class="section-block">
     {%- render 'section-heading' -%}
     <div class="row gap-desktop {% if section.settings.no_gutter %}no-gutters{% endif %}">
@@ -269,7 +269,7 @@
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

@@ -39,7 +39,7 @@
         "animation": "",
         "size_text": "small",
         "space_between": 10,
-        "announ_type": "carousel",
+        "announcement_type": "carousel",
         "auto_rotate": true,
         "auto_rotate_speed": 3,
         "scroll_dot": "dot",
@@ -56,7 +56,7 @@
       "settings": {
         "enable": true,
         "animation": "",
-        "setwidth": "container-fluid",
+        "section_width": "container-fluid",
         "background": "#f6d4d9",
         "gradient_bg": "linear-gradient(54deg, rgba(246, 212, 217, 1) 14%, rgba(246, 212, 217, 1) 85%)",
         "text_color": "#35191d",
@@ -93,7 +93,7 @@
         "padding_bottom": 80,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40,
-        "setwidth": "full",
+        "section_width": "full",
         "bgborder": "#5a715b",
         "wborder": "1px"
       }
@@ -237,7 +237,7 @@
         "enable_transparent": false,
         "hover_transparent": false,
         "enable_white": false,
-        "setwidth": "container-fluid",
+        "section_width": "container-fluid",
         "layout_header": "logo-center-navigation-left",
         "type_sticky": "sticky",
         "height_header": "small",

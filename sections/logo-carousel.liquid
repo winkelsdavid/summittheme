@@ -59,7 +59,7 @@ display:none!important;
 {%- assign speed_multiplier = 51 | minus : section.settings.slidescroll -%}
 <div class="customstyle{{ section.id }} " data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}
-  <div class="{{ section.settings.setwidth }}">
+  <div class="{{ section.settings.section_width }}">
     <div class="section-block">
       {%- render 'section-heading' -%}
       <div class="brand-wrapper dots-negative">
@@ -292,7 +292,7 @@ display:none!important;
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

@@ -848,7 +848,7 @@ margin-right:auto;
 
         <div class="slideshow__text-wrap slideshow__text-wrap--desktop mobile-align-{{ block.settings.text_alignment_mobile }}">
           <div class="slideshow__text-content slideshow__text-content--vertical-{{ text_vertical_alignment }} text-{{ text_horizontal_alignment }} mob-text-center">
-            <div class="{{ section.settings.setwidth }}" data-aos="fade" data-aos-anchor-placement="top-bottom"  data-aos-once="true">
+            <div class="{{ section.settings.section_width }}" data-aos="fade" data-aos-anchor-placement="top-bottom"  data-aos-once="true">
               
               <div class="d-inline-block text-{% if text_horizontal_alignment == 'left' %}left{% else %}{{text_horizontal_alignment}}{% endif %} ">
               <ul class="list-unstyled"  >
@@ -1449,7 +1449,7 @@ margin-right:auto;
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Width Inner Slideshow",
       "default": "container",
       "options": [

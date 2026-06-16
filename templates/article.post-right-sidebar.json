@@ -34,7 +34,7 @@
       "settings": {
         "animation": "",
         "background_section": "#ffffff",
-        "setwidth": "full",
+        "section_width": "full",
         "bgborder": "#dddddd",
         "wborder": "1px"
       }
@@ -43,7 +43,7 @@
       "type": "featured-articles",
       "settings": {
         "animation": "fade",
-        "setwidth": "container",
+        "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "",
         "title": "You may so like",

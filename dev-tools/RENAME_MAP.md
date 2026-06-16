@@ -116,6 +116,9 @@ Strategie), jede Section zieht ihre Konsumenten mit (Liquid-Refs, `settings_data
 ## Tier 0b — Label-Klarheit (global)
 
 - `setwidth`-Label `"Full Width"` → `"Section Width"` (Optionen sind Box/Fluid/Full) — ~25 Sections.
+  ✅ **2026-06-16: auch die ID `setwidth`→`section_width` global angewandt** (248× über alle Sections mit dem
+  Width-Regler + Templates + `settings_data.json` + Section-Groups; lokale Var in `product-content` mitgezogen;
+  separates Setting `setwidthout` bewusst unberührt). Ebenso `announ_type`→`announcement_type` (announcement-bar-slide).
 - `"Dot,Line"` → `"Separator style"` (announcement-bar-slide `scroll_dot`).
 - `"HTML / Description"` → `"Description"` (überall wo `des`-Label).
 - Doppeldeutige Labels eindeutig machen: „Style Button"×2 (cookie-policy) → „Accept …"/„Decline …"; „Color"×n → rollenbenennend.

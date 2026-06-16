@@ -196,7 +196,7 @@ flex:0 0 calc(50% - 10px);
 }
 </style>
 <div class="c-{{ section.id }}" data-aos="{{ section.settings.animation }}">
-    <div class="{{ section.settings.setwidth }}">
+    <div class="{{ section.settings.section_width }}">
         <div class="container">
           {% if section.settings.text != blank %}
             <div {% if section.settings.h_sub_color != "rgba(0,0,0,0)" and section.settings.h_sub_color != blank %}style="--g-font-color-subtop:{{ section.settings.h_sub_color }}"{% endif %} class="subtop text-{{ section.settings.align_heading }} text-top mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-duration="{{ forloop.index | times : 200 }}" >{{ section.settings.text }}</div>
@@ -467,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function() {
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

@@ -47,7 +47,7 @@ data-aos="{{ section.settings.animation }}"
 style="{% if section.settings.image_bg != blank %}background-image:url({{ section.settings.image_bg | image_url: width: 1, height: 1 }}){% endif %}"
 data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="lazy">
   {%- render 'style-section' -%}
-<div class="{{ section.settings.setwidth }}">
+<div class="{{ section.settings.section_width }}">
   <div class="section-block">
     {%- render 'section-heading' -%}
     {%- if section.blocks.size > 0 -%}
@@ -232,7 +232,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
     },
     {
       "type": "select",
-      "id": "setwidth",
+      "id": "section_width",
       "label": "Section Width",
       "default": "container",
       "options": [

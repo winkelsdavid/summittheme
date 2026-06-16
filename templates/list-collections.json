@@ -34,7 +34,7 @@
       "settings": {
         "animation": "fade",
         "background_section": "#ffffff",
-        "setwidth": "container",
+        "section_width": "container",
         "bgborder": "#dddddd",
         "wborder": "1px"
       }
@@ -43,7 +43,7 @@
       "type": "product-list-swiper",
       "settings": {
         "animation": "fade-up",
-        "setwidth": "container",
+        "section_width": "container",
         "e_size": "auto",
         "e_repeat": "no-repeat",
         "e_position": "center center",
