@@ -211,7 +211,7 @@ class FacetFiltersForm extends HTMLElement {
   }
   static renderReview() {
     if (window.SPR && theme.review ) {
-      if ($('.shopify-product-reviews-badge').length > 0) {
+      if (document.querySelectorAll('.shopify-product-reviews-badge').length > 0) {
         return window.SPR.registerCallbacks(), window.SPR.initRatingHandler(), window.SPR.initDomEls(), window.SPR.loadProducts(), window.SPR.loadBadges();
       };
     }
