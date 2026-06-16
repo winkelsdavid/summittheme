@@ -6,28 +6,26 @@ theme.Sections = function Sections() {
   this.constructors = {};
   this.instances = [];
 
-  $(document)
-    .on("shopify:section:unload", this._onSectionUnload.bind(this))
-    .on("shopify:section:load", this._onSectionLoad.bind(this))
-    .on("shopify:section:select", this._onSelect.bind(this))
-    .on("shopify:section:deselect", this._onDeselect.bind(this))
-    .on("shopify:block:select", this._onBlockSelect.bind(this))
-    .on("shopify:block:deselect", this._onBlockDeselect.bind(this));
+  document.addEventListener("shopify:section:unload", this._onSectionUnload.bind(this));
+  document.addEventListener("shopify:section:load", this._onSectionLoad.bind(this));
+  document.addEventListener("shopify:section:select", this._onSelect.bind(this));
+  document.addEventListener("shopify:section:deselect", this._onDeselect.bind(this));
+  document.addEventListener("shopify:block:select", this._onBlockSelect.bind(this));
+  document.addEventListener("shopify:block:deselect", this._onBlockDeselect.bind(this));
 };
 
-theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
+theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
   _createInstance: function (container, constructor) {
-    var $container = $(container);
-    var id = $container.attr("data-section-id");
-    var type = $container.attr("data-section-type");
+    var id = container.getAttribute("data-section-id");
+    var type = container.getAttribute("data-section-type");
 
     constructor = constructor || this.constructors[type];
 
-    if (_.isUndefined(constructor)) {
+    if (constructor === undefined) {
       return;
     }
 
-    var instance = _.assignIn(new constructor(container), {
+    var instance = Object.assign(new constructor(container), {
       id: id,
       type: type,
       container: container,
@@ -37,25 +35,25 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   },
 
   _onSectionLoad: function (evt) {
-    var container = $("[data-section-id]", evt.target)[0];
+    var container = evt.target.querySelector("[data-section-id]");
     if (container) {
       this._createInstance(container);
     }
-    if (AOS) {
+    if (typeof AOS !== "undefined" && AOS) {
       AOS.refreshHard();
     }
   },
   _loadSubSections: function () {
-    if (AOS) {
+    if (typeof AOS !== "undefined" && AOS) {
       AOS.refreshHard();
     }
   },
   _onSectionUnload: function (evt) {
-    this.instances = _.filter(this.instances, function (instance) {
+    this.instances = this.instances.filter(function (instance) {
       var isEventInstance = instance.id === evt.detail.sectionId;
 
       if (isEventInstance) {
-        if (_.isFunction(instance.onUnload)) {
+        if (typeof instance.onUnload === "function") {
           instance.onUnload(evt);
         }
       }
@@ -65,45 +63,41 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   },
 
   _onSelect: function (evt) {
-    // eslint-disable-next-line no-shadow
-    var instance = _.find(this.instances, function (instance) {
+    var instance = this.instances.find(function (instance) {
       return instance.id === evt.detail.sectionId;
     });
 
-    if (!_.isUndefined(instance) && _.isFunction(instance.onSelect)) {
+    if (instance && typeof instance.onSelect === "function") {
       instance.onSelect(evt);
     }
   },
 
   _onDeselect: function (evt) {
-    // eslint-disable-next-line no-shadow
-    var instance = _.find(this.instances, function (instance) {
+    var instance = this.instances.find(function (instance) {
       return instance.id === evt.detail.sectionId;
     });
 
-    if (!_.isUndefined(instance) && _.isFunction(instance.onDeselect)) {
+    if (instance && typeof instance.onDeselect === "function") {
       instance.onDeselect(evt);
     }
   },
 
   _onBlockSelect: function (evt) {
-    // eslint-disable-next-line no-shadow
-    var instance = _.find(this.instances, function (instance) {
+    var instance = this.instances.find(function (instance) {
       return instance.id === evt.detail.sectionId;
     });
 
-    if (!_.isUndefined(instance) && _.isFunction(instance.onBlockSelect)) {
+    if (instance && typeof instance.onBlockSelect === "function") {
       instance.onBlockSelect(evt);
     }
   },
 
   _onBlockDeselect: function (evt) {
-    // eslint-disable-next-line no-shadow
-    var instance = _.find(this.instances, function (instance) {
+    var instance = this.instances.find(function (instance) {
       return instance.id === evt.detail.sectionId;
     });
 
-    if (!_.isUndefined(instance) && _.isFunction(instance.onBlockDeselect)) {
+    if (instance && typeof instance.onBlockDeselect === "function") {
       instance.onBlockDeselect(evt);
     }
   },
@@ -111,11 +105,13 @@ theme.Sections.prototype = _.assignIn({}, theme.Sections.prototype, {
   register: function (type, constructor) {
     this.constructors[type] = constructor;
 
-    $("[data-section-type=" + type + "]").each(
-      function (index, container) {
-        this._createInstance(container, constructor);
-      }.bind(this)
-    );
+    document
+      .querySelectorAll('[data-section-type="' + type + '"]')
+      .forEach(
+        function (container) {
+          this._createInstance(container, constructor);
+        }.bind(this)
+      );
   },
 });
 
@@ -487,7 +483,7 @@ slate.Variants = (function () {
     );
   }
 
-  Variants.prototype = _.assignIn({}, Variants.prototype, {
+  Variants.prototype = Object.assign({}, Variants.prototype, {
     /**
      * Get the currently selected options from add-to-cart form. Works with all
      * form input elements.
@@ -1513,7 +1509,7 @@ theme.HeaderSection = (function () {
     };
     this.init();
   }
-  HeaderSection.prototype = _.assignIn({}, HeaderSection.prototype, {
+  HeaderSection.prototype = Object.assign({}, HeaderSection.prototype, {
     init: function () {
       this.stickyHeader();
       this.headerSearch();
@@ -1738,7 +1734,7 @@ theme.Product = (function () {
     this.init();
   }
 
-  Product.prototype = _.assignIn({}, Product.prototype, {
+  Product.prototype = Object.assign({}, Product.prototype, {
     init: function () {
       this._stringOverrides();
       this._initVariants();
@@ -2560,7 +2556,7 @@ theme.SlideshowSection = (function () {
   return SlideshowSection;
 })();
 
-theme.SlideshowSection.prototype = _.assignIn(
+theme.SlideshowSection.prototype = Object.assign(
   {},
   theme.SlideshowSection.prototype,
   {
@@ -2617,7 +2613,7 @@ theme.Cart = (function () {
     this.init($container);
   }
 
-  Cart.prototype = _.assignIn({}, Cart.prototype, {
+  Cart.prototype = Object.assign({}, Cart.prototype, {
     init: function ($container) {
       this._initQtySelector();
       this._initCartNote();
@@ -2819,7 +2815,7 @@ theme.Instagrams = (function () {
     feed.run();
   }
 
-  Instagrams.prototype = _.assignIn({}, Instagrams.prototype, {
+  Instagrams.prototype = Object.assign({}, Instagrams.prototype, {
     onUnload: function () {
       if (this.swiper) this.swiper.destroy(true, true);
       delete this.swiper;
@@ -2960,7 +2956,7 @@ theme.Productlists = (function () {
     this.swiper = window.Swiper ? new Swiper(el, opts) : null;
   }
 
-  Productlists.prototype = _.assignIn({}, Productlists.prototype, {
+  Productlists.prototype = Object.assign({}, Productlists.prototype, {
     _goToSlide: function (slideIndex) {
       if (this.swiper) (this.swiper.slideToLoop ? this.swiper.slideToLoop(slideIndex) : this.swiper.slideTo(slideIndex));
     },
@@ -3003,7 +2999,7 @@ theme.Producttabs = (function () {
       });
   }
 
-  Producttabs.prototype = _.assignIn({}, Producttabs.prototype, {
+  Producttabs.prototype = Object.assign({}, Producttabs.prototype, {
     _getSwiperOpts: function () {
       var s = this.settings;
       var clamp = function (n) { return n > 1 ? n : 1; };
@@ -3186,7 +3182,7 @@ theme.Video = (function () {
     this.onLoad();
   }
 
-  Video.prototype = _.assignIn({}, Video.prototype, {
+  Video.prototype = Object.assign({}, Video.prototype, {
     onLoad: function () {
       this.$container
         .on("click", selectors.loadPlayerButton, this._loadPlayer.bind(this))
@@ -5138,7 +5134,7 @@ theme.popupNewletter = (function () {
     };
     this.init();
   }
-  popupNewletter.prototype = _.assignIn({}, popupNewletter.prototype, {
+  popupNewletter.prototype = Object.assign({}, popupNewletter.prototype, {
     init: function () {
       this.showPopup();
     },
@@ -5189,7 +5185,7 @@ theme.BeforeAfter = (function () {
     };
     this.init();
   }
-  BeforeAfter.prototype = _.assignIn({}, BeforeAfter.prototype, {
+  BeforeAfter.prototype = Object.assign({}, BeforeAfter.prototype, {
     init: function () {
       this.showBeforeAfter();
     },
@@ -5274,7 +5270,7 @@ theme.FooterSection = (function () {
     };
     this.init();
   }
-  FooterSection.prototype = _.assignIn({}, FooterSection.prototype, {
+  FooterSection.prototype = Object.assign({}, FooterSection.prototype, {
     init: function () {
       this.accordionResponsive();
     },
@@ -5460,7 +5456,7 @@ theme.bundleProduct = (function () {
     };
     this.init();
   }
-  bundleProduct.prototype = _.assignIn({}, bundleProduct.prototype, {
+  bundleProduct.prototype = Object.assign({}, bundleProduct.prototype, {
     init: function () {
       this.bundleList();
     },
