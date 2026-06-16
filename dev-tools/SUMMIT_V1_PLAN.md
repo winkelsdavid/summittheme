@@ -110,9 +110,14 @@ Anwendung **tier-weise** nach Risiko/Kopplung: **T0** JSON-Fixes + Label-Typos (
 - [x] **product-template-1 + header** — verbleibende statische Content-IDs keyword-tragend (`dcd1e66`,`4df8156`,`64c9160`)
 - [x] **Konsumenten mitgezogen:** Liquid-Refs (`{% when %}`, `section/block.settings.x`),
   `settings_data.json`, `templates/*.json`, Section-Groups — alles reconciled, JSON strict-valid
-- [ ] **T5 deferred** — Resource-Typing (`video`→`video_url`, R8): fragiler Type-Change
-  (MP4-CDN-URLs werden abgelehnt, manche Felder rendern via `video_tag`), moderater Mapping-Wert.
-  Non-destruktiv genug für später.
+- [x] **T5 / R8 Video-Typing — geklärt + additiv erledigt (2026-06-16).** Befund (Grep-Verifikation):
+  Video ist theme-weit ein **Doppel-Eingabe-Muster** — ~10 Sektionen haben schon ein natives `video`-Feld
+  **+** Text-MP4-Fallback (bewusstes Feature, kein Bug). Nur 3 Sektionen waren „nur Text"
+  (`background-video`/`link_video`, `grid-banner`/`video_hosted`, `tab-vertical`/`id_video`). Diesen 3 wurde
+  **additiv** ein natives `video`-Feld + bevorzugte `video_tag`-Verzweigung spendiert (Text bleibt Fallback)
+  → **nicht-destruktiv**, kein Pre-Kunde-Zwang. Das alte `video`→`video_url`-Umtypen bleibt **bewusst
+  ungemacht** (bräche selbst-gehostete MP4-Fallbacks). → Video ist sauber typisiert, wo es zählt;
+  **theme-seitig nichts Destruktives mehr offen.**
 - [x] ✅ **2 RENAME_MAP-Misses geschlossen (2026-06-16, „Patch 1 komplett")** — beide global angewandt
   (Wort-Grenzen, separates Setting `setwidthout` geschützt; 93 Dateien; 0 Alt-Tokens; alle JSON-Bodies re-validiert):
   - `announ_type`→`announcement_type` — 5× (`announcement-bar-slide.liquid` Z.3/325/342/351 inkl. beider `visible_if` + `header-group.json`)

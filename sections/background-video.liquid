@@ -87,11 +87,15 @@
   <div class="{{ section.settings.section_width }}">
   <div class="section-block"  >
     <div class="d-flex bgvideo-{{ section.id }} {{ positiontxt }} bg-herovideo" data-section-id="{{ section.id }}" data-section-type="background-video" >
-      {% if section.settings.link_video != blank %}
+      {% if section.settings.video != blank %}
+        <div class="hero-video" >
+          {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: "lazyload" }}
+        </div>
+      {% elsif section.settings.link_video != blank %}
         <div class="hero-video" >
          <video id="Mp4{{ section.id }}" class="lazyload" src="{{ section.settings.link_video }}" loop="" muted="" playsinline="" autoplay="" ></video>
         </div>
-        {% else if %}
+        {% else %}
         <div class="hero-video">
                 {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
         </div>
@@ -431,6 +435,11 @@
     {
       "type": "header",
       "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
     },
     {
       "type": "text",

@@ -81,10 +81,13 @@
                     assign autoplay = true
                   -%}
                   <div class="video-banner" data-provider="hosted" >
-                    {% comment %} {{ video | video_tag: autoplay: autoplay, loop: true, controls: false, muted: true }} {% endcomment %}
+                    {%- if block.settings.video != blank -%}
+                      {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+                    {%- elsif video != blank -%}
                     <video playsinline="playsinline" autoplay="{{ autoplay }}" loop="loop" muted="muted" preload="metadata" poster="{{ block.settings.image | image_url: width: 1066 }}">
                       <source src="{{ video }}" type="video/mp4">
                     </video>
+                    {%- endif -%}
                   </div>
                 {% endif %}
             </div>
@@ -573,6 +576,11 @@
           "id": "enable_video",
           "label": "Enable Video",
           "default": false
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video Banner (Library)"
         },
         {
           "type": "text",

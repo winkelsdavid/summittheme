@@ -146,13 +146,17 @@
                         {%- if section.settings.style_tab == "style_row" -%}
                             <div class="d-flex align-items-center style_row__right">
                         {%- endif -%}
-                        {%- if block.settings.id_video != blank -%}
+                        {%- if block.settings.video != blank or block.settings.id_video != blank -%}
                             <div class="tab-image__big">
                                 <div class="image-content__image-container tab-image__video overflow-hidden">
                                     <a class="image-content__image-wrapper" href="{{ block.settings.link }}">
+                                      {%- if block.settings.video != blank -%}
+                                        {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: "lazyload scale-in product-video__banner position-absolute" }}
+                                      {%- else -%}
                                       <video class="lazyload scale-in product-video__banner  position-absolute" id="Mp4{{ section.id }}"  loop="" muted="" playsinline="" autoplay="" >
                                         <source src="{{ block.settings.id_video }}" type="video/mp4">
                                     </video>
+                                      {%- endif -%}
                                        
                                     </a>
                                 </div>
@@ -712,6 +716,11 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
         },
         {
           "type": "text",
