@@ -490,17 +490,12 @@ slate.Variants = (function () {
   }
 
   Variants.prototype = Object.assign({}, Variants.prototype, {
-    // Dispatch a native CustomEvent (variant on .detail AND directly on the event
-    // for handler compatibility), and also fire the jQuery event so listeners that
-    // are not yet migrated keep working. The jQuery compat is removed once all
-    // listeners (theme.Product / swatchCard2 / bundleProduct) are vanilla.
+    // Dispatch a native CustomEvent with the variant on .detail AND directly on
+    // the event object (so handlers can read evt.variant or evt.detail.variant).
     _trigger: function (type, variant) {
       var ev = new CustomEvent(type, { bubbles: false, detail: { variant: variant } });
       ev.variant = variant;
       this.container.dispatchEvent(ev);
-      if (window.jQuery) {
-        window.jQuery(this.container).trigger({ type: type, variant: variant });
-      }
     },
 
     _getCurrentOptions: function () {
@@ -647,6 +642,19 @@ theme.dataAttr = function (el, name) {
     }
   }
   return data;
+};
+
+// Vanilla debounce (replaces the jQuery throttle/debounce $.debounce plugin).
+theme.debounce = function (fn, wait) {
+  var t;
+  return function () {
+    var ctx = this,
+      args = arguments;
+    clearTimeout(t);
+    t = setTimeout(function () {
+      fn.apply(ctx, args);
+    }, wait);
+  };
 };
 
 // Vanilla replacement for the $.fn.prepareTransition (Snook) plugin: add an
@@ -909,9 +917,6 @@ window.Modals = (function () {
     if (!this.modal) {
       return false;
     }
-    // Compat bridge: theme.Product (still jQuery) uses this.ProductModal.$modal
-    // .on()/.off(). Remove once theme.Product is migrated (cart block).
-    this.$modal = window.jQuery ? window.jQuery(this.modal) : null;
 
     this.config = Object.assign(defaults, options);
 
@@ -2355,7 +2360,7 @@ theme.Product = (function () {
         .querySelectorAll(".product-form__quantity")
         .forEach(function (el) {
           // eslint-disable-next-line no-new
-          new QtySelector(window.jQuery ? window.jQuery(el) : el);
+          new QtySelector(el);
         });
     },
 
@@ -2402,25 +2407,27 @@ theme.Slideshow = (function () {
     var self = this;
     var node = (this.node = document.querySelector(el));
     if (!node) return;
-    var $slideshow = (this.$slideshow = $(node));
+    var d = theme.dataAttr;
 
     this.sectionId = sectionId;
-    this.adaptHeight = $slideshow.data("adapt-height");
-    this.$section = $slideshow.closest(selectors.section);
-    this.$textWrapperMobile = this.$section.find(selectors.textWrapperMobile);
-    this.autorotate = $slideshow.data("autorotate");
-    this.navArrow = $slideshow.data("arrow");
-    this.navDot = $slideshow.data("dot");
-    this.transit = $slideshow.data("transit");
-    var autoplaySpeed = $slideshow.data("speed") || 5000;
+    this.adaptHeight = d(node, "adapt-height");
+    this.section = node.closest(selectors.section);
+    this.textWrapperMobile = this.section
+      ? this.section.querySelector(selectors.textWrapperMobile)
+      : null;
+    this.autorotate = d(node, "autorotate");
+    this.navArrow = d(node, "arrow");
+    this.navDot = d(node, "dot");
+    this.transit = d(node, "transit");
+    var autoplaySpeed = d(node, "speed") || 5000;
 
-    var $wrapper = $slideshow.closest(selectors.wrapper + sectionId);
-    this.$wrapper = $wrapper.length ? $wrapper : this.$section;
+    var wrapper = node.closest(selectors.wrapper + sectionId);
+    this.wrapper = wrapper || this.section;
 
     if (this.adaptHeight) {
       this.setSlideshowHeight();
-      this._onResize = $.debounce(50, this.setSlideshowHeight.bind(this));
-      $(window).on("resize", this._onResize);
+      this._onResize = theme.debounce(this.setSlideshowHeight.bind(this), 50);
+      window.addEventListener("resize", this._onResize);
     }
 
     // --- Build Swiper DOM at runtime (Slick wrapped the slides at init time;
@@ -2518,14 +2525,18 @@ theme.Slideshow = (function () {
       this._focusOut = function () {
         if (self.swiper && self.swiper.autoplay) self.swiper.autoplay.start();
       };
-      this.$wrapper.on("focusin", this._focusIn).on("focusout", this._focusOut);
+      if (this.wrapper) {
+        this.wrapper.addEventListener("focusin", this._focusIn);
+        this.wrapper.addEventListener("focusout", this._focusOut);
+      }
     }
   }
 
   slideshow.prototype.setSlideshowHeight = function () {
-    var minAspectRatio = this.$slideshow.data("min-aspect-ratio");
+    var minAspectRatio = theme.dataAttr(this.node, "min-aspect-ratio");
     if (minAspectRatio) {
-      this.$slideshow.height($(document).width() / minAspectRatio);
+      this.node.style.height =
+        document.documentElement.clientWidth / minAspectRatio + "px";
     }
   };
 
@@ -2543,29 +2554,35 @@ theme.Slideshow = (function () {
   };
 
   slideshow.prototype.showMobileText = function (slideIndex) {
-    if (!this.$textWrapperMobile || !this.$textWrapperMobile.length) return;
-    var $allTextContent = this.$textWrapperMobile.find(
+    if (!this.textWrapperMobile) return;
+    var allTextContent = this.textWrapperMobile.querySelectorAll(
       selectors.textContentMobile
     );
-    var $currentTextContent = this.$textWrapperMobile.find(
+    var currentTextContent = this.textWrapperMobile.querySelectorAll(
       selectors.textContentMobile + "-" + slideIndex
     );
     if (
-      !$currentTextContent.length &&
-      this.$slideshow.find(selectors.slides).length === 1
+      !currentTextContent.length &&
+      this.node.querySelectorAll(selectors.slides).length === 1
     ) {
-      this.$textWrapperMobile.hide();
+      this.textWrapperMobile.style.display = "none";
     } else {
-      this.$textWrapperMobile.show();
+      this.textWrapperMobile.style.display = "";
     }
-    $allTextContent.hide();
-    $currentTextContent.show();
+    allTextContent.forEach(function (e) {
+      e.style.display = "none";
+    });
+    currentTextContent.forEach(function (e) {
+      e.style.display = "";
+    });
   };
 
   slideshow.prototype.onDestroy = function () {
-    if (this._onResize) $(window).off("resize", this._onResize);
-    if (this._focusIn) this.$wrapper.off("focusin", this._focusIn);
-    if (this._focusOut) this.$wrapper.off("focusout", this._focusOut);
+    if (this._onResize) window.removeEventListener("resize", this._onResize);
+    if (this._focusIn && this.wrapper)
+      this.wrapper.removeEventListener("focusin", this._focusIn);
+    if (this._focusOut && this.wrapper)
+      this.wrapper.removeEventListener("focusout", this._focusOut);
     if (this.swiper) {
       try {
         this.swiper.destroy(true, true);
@@ -2580,8 +2597,8 @@ theme.slideshows = {};
 
 theme.SlideshowSection = (function () {
   function SlideshowSection(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr("data-section-id");
+    this.container = container;
+    var sectionId = container.getAttribute("data-section-id");
     var slideshow = (this.slideshow = "#Slideshow-" + sectionId);
 
     theme.slideshows[slideshow] = new theme.Slideshow(slideshow, sectionId);
@@ -4305,46 +4322,61 @@ theme.quickview = (function () {
 // Button add to cart (in grid item)
 theme.addCartButton = (function () {
   var buttonClass = ".js-grid-cart";
-  $(document).on("click", buttonClass, function () {
-    var $this = $(this);
-    var id = $this.data("id");
-    $this.addClass("is-loading");
-    Shopify.addItem(id, 1, function (item) {
-      var htmlVariant =
-        item.variant_title !== null
-          ? "<i>(" + item.variant_title + ")</i>"
-          : "";
-      var styleCart = $(".js-mini-cart").attr("data-cartmini");
-      if (styleCart != "true") {
-        var htmlAlert =
-          '<div class="media mt-2 alert--cart"><a class="mr-3" href="/cart"><img class="lazyload" data-src="' +
-          item.image +
-          '"></a><div class="media-body align-self-center"><p class="m-0 font-weight-bold">' +
-          item.product_title +
-          " x " +
-          item.quantity +
-          "</p>" +
-          htmlVariant +
-          "<div><div>";
-      }
-      theme.miniCart.generateCart();
-      theme.miniCart.updateElements();
-      setTimeout(function () {
-        styleCart != "true"
-          ? theme.alert.new(
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(buttonClass);
+    if (!btn) return;
+    var id = btn.getAttribute("data-id");
+    btn.classList.add("is-loading");
+    fetch("/cart/add.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({ id: id, quantity: 1 }),
+    })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (item) {
+        var htmlVariant =
+          item.variant_title !== null
+            ? "<i>(" + item.variant_title + ")</i>"
+            : "";
+        var miniCartEl = document.querySelector(".js-mini-cart");
+        var styleCart = miniCartEl
+          ? miniCartEl.getAttribute("data-cartmini")
+          : null;
+        var htmlAlert;
+        if (styleCart != "true") {
+          htmlAlert =
+            '<div class="media mt-2 alert--cart"><a class="mr-3" href="/cart"><img class="lazyload" data-src="' +
+            item.image +
+            '"></a><div class="media-body align-self-center"><p class="m-0 font-weight-bold">' +
+            item.product_title +
+            " x " +
+            item.quantity +
+            "</p>" +
+            htmlVariant +
+            "<div><div>";
+        }
+        theme.miniCart.generateCart();
+        theme.miniCart.updateElements();
+        setTimeout(function () {
+          if (styleCart != "true") {
+            theme.alert.new(
               theme.strings.addToCartSuccess,
               htmlAlert,
               3000,
               "notice"
-            )
-          : "";
-        $this.removeClass("is-loading");
-      }, 300);
-      if (theme.cartpage) {
-        location.reload();
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-      }
-    });
+            );
+          }
+          btn.classList.remove("is-loading");
+        }, 300);
+        if (theme.cartpage) {
+          location.reload();
+        }
+      });
   });
 })();
 
@@ -6078,15 +6110,6 @@ theme.upsell = (function () {
     acceptButton.addEventListener("click", handleAcceptButtonClick);
   }
 })();
-
-// Overwrite Shopify.onError in Shopify API
-Shopify.onError = function (t, r) {
-  var e = eval("(" + t.responseText + ")");
-  var mess = e.message
-    ? e.message + "(" + e.status + "): " + e.description
-    : "Error : " + Shopify.fullMessagesFromErrors(e).join("; ") + ".";
-  theme.alert.new("Alert", mess, 3000, "warning");
-};
 
 // Fake-viewers
 theme.fakeViewer = (function () {
