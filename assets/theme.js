@@ -625,6 +625,30 @@ slate.Variants = (function () {
 })();
 
 /*================ MODULES ================*/
+// Vanilla replacement for jQuery's $(el).data(name) attribute read, faithfully
+// reproducing its type coercion ("true"/"false"->bool, "null"->null, numeric
+// strings that round-trip->Number, {..}/[..]->JSON), so data-* booleans like
+// data-infinite="false" don't become the truthy string "false". Accepts a DOM
+// element or a jQuery object.
+theme.dataAttr = function (el, name) {
+  el = el && el.jquery ? el[0] : el;
+  if (!el || !el.getAttribute) return undefined;
+  var data = el.getAttribute("data-" + name);
+  if (data === null) return undefined;
+  if (data === "true") return true;
+  if (data === "false") return false;
+  if (data === "null") return null;
+  if (data === +data + "") return +data;
+  if (/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/.test(data)) {
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      return data;
+    }
+  }
+  return data;
+};
+
 // Vanilla replacement for the $.fn.prepareTransition (Snook) plugin: add an
 // 'is-transitioning' class for the duration of the element's CSS transition.
 theme.prepareTransition = function (el) {
@@ -2746,25 +2770,26 @@ theme.attributeToString = function (attribute) {
 // Instagrams
 theme.Instagrams = (function () {
   function Instagrams(container) {
-    this.$container = $(container);
+    this.container = container;
+    var d = theme.dataAttr;
     this.settings = {
-      style: this.$container.data("style"),
-      accesstoken: this.$container.data("accesstoken"),
-      userid: this.$container.data("userid"),
-      limit: this.$container.data("limit"),
-      resolution: this.$container.data("resolution"),
-      target: this.$container.attr("id"),
-      rows: this.$container.data("rows"),
+      style: d(container, "style"),
+      accesstoken: d(container, "accesstoken"),
+      userid: d(container, "userid"),
+      limit: d(container, "limit"),
+      resolution: d(container, "resolution"),
+      target: container.id,
+      rows: d(container, "rows"),
 
-      slidesToShow: this.$container.data("slidestoshow") || 1,
-      infinite: this.$container.data("infinite") || false,
-      arrows: this.$container.data("arrows") || false,
-      draggable: this.$container.data("draggable") || false,
-      dots: this.$container.data("dots") || false,
+      slidesToShow: d(container, "slidestoshow") || 1,
+      infinite: d(container, "infinite") || false,
+      arrows: d(container, "arrows") || false,
+      draggable: d(container, "draggable") || false,
+      dots: d(container, "dots") || false,
     };
 
     var _self = this;
-    var $instagramSelector = $("#" + this.settings.target);
+    var instagramSelector = document.getElementById(this.settings.target);
     if (this.settings.style === "grid") {
       var afterInstagram = function () {}; // blank function
     } else if (this.settings.style === "carousel") {
@@ -2774,7 +2799,7 @@ theme.Instagrams = (function () {
         // append nav/pagination, then init Swiper (replaces Slick). Done in JS
         // because the slides are generated at runtime (no Liquid markup to edit).
         var s = _self.settings;
-        var cont = $instagramSelector[0];
+        var cont = instagramSelector;
         if (!cont) return;
         var clamp = function (n) { return n > 1 ? n : 1; };
         var wrapper = document.createElement("div");
@@ -2834,7 +2859,7 @@ theme.Instagrams = (function () {
     onUnload: function () {
       if (this.swiper) this.swiper.destroy(true, true);
       delete this.swiper;
-      delete this.$container;
+      delete this.container;
     },
   });
 
@@ -2844,25 +2869,26 @@ theme.Instagrams = (function () {
 // Slick carousel
 theme.slickCarousel = (function () {
   function Carousels(container) {
-    this.$container = $(container);
+    this.container = container;
+    var d = theme.dataAttr;
     this.settings = {
-      rows: this.$container.data("rows") || 1,
-      slidesToShow: this.$container.data("slidestoshow") || 1,
-      slidesToScroll: this.$container.data("slidestoscroll") || 1,
-      infinite: this.$container.data("infinite") || false,
-      arrows: this.$container.data("arrows") || false,
-      dots: this.$container.data("dots") || false,
-      autoplay: this.$container.data("autoplay") || false,
-      draggable: this.$container.data("draggable") || false,
-      accessibility: this.$container.data("accessibility") || false,
-      slidesToShowMobile: this.$container.data("slidestoshow-mobile") || 1,
-      speed : this.$container.data("speed") || 500,
-      autoplaySpeed : this.$container.data("autoplayspeed") || 0,
-      cssEase : this.$container.data("css-ease") || "ease"
+      rows: d(container, "rows") || 1,
+      slidesToShow: d(container, "slidestoshow") || 1,
+      slidesToScroll: d(container, "slidestoscroll") || 1,
+      infinite: d(container, "infinite") || false,
+      arrows: d(container, "arrows") || false,
+      dots: d(container, "dots") || false,
+      autoplay: d(container, "autoplay") || false,
+      draggable: d(container, "draggable") || false,
+      accessibility: d(container, "accessibility") || false,
+      slidesToShowMobile: d(container, "slidestoshow-mobile") || 1,
+      speed: d(container, "speed") || 500,
+      autoplaySpeed: d(container, "autoplayspeed") || 0,
+      cssEase: d(container, "css-ease") || "ease",
     };
     // --- Swiper init (replaces Slick). Slick uses max-width responsive,
     //     Swiper is mobile-first (min-width) -> breakpoints are inverted. ---
-    var el = this.$container[0];
+    var el = container;
     var s = this.settings;
     var clamp = function (n) { return n > 1 ? n : 1; };
     var opts = {
@@ -2916,7 +2942,7 @@ theme.slickCarousel = (function () {
     onUnload: function () {
       if (this.swiper) this.swiper.destroy(true, true);
       delete this.swiper;
-      delete this.$container;
+      delete this.container;
     },
 
     onBlockSelect: function (evt) {
@@ -2937,18 +2963,19 @@ theme.slickCarousel = (function () {
 // Productlists
 theme.Productlists = (function () {
   function Productlists(container) {
-    this.$container = $(container);
+    this.container = container;
+    var d = theme.dataAttr;
     this.settings = {
-      slidesToShow: this.$container.data("slidestoshow") || 1,
-      rows: this.$container.data("rows") || 1,
-      arrows: this.$container.data("arrows") || false,
-      dots: this.$container.data("dots") || false,
-      draggable: this.$container.data("draggable") || false,
-      infinite: this.$container.data("infinite") || false,
+      slidesToShow: d(container, "slidestoshow") || 1,
+      rows: d(container, "rows") || 1,
+      arrows: d(container, "arrows") || false,
+      dots: d(container, "dots") || false,
+      draggable: d(container, "draggable") || false,
+      infinite: d(container, "infinite") || false,
     };
     // --- Swiper init (replaces Slick). Mobile-first breakpoints invert
     //     Slick's max-width responsive (mobile base = 2 slides). ---
-    var el = this.$container[0];
+    var el = container;
     var s = this.settings;
     var clamp = function (n) { return n > 1 ? n : 1; };
     var opts = {
@@ -2979,7 +3006,7 @@ theme.Productlists = (function () {
     onUnload: function () {
       if (this.swiper) this.swiper.destroy(true, true);
       delete this.swiper;
-      delete this.$container;
+      delete this.container;
     },
   });
 
@@ -2990,28 +3017,30 @@ theme.Productlists = (function () {
 theme.Producttabs = (function () {
   function Producttabs(container) {
     var _self = this; // avoid conflict
-    this.$container = $(container);
+    this.container = container;
     this.slickWrap = ".prdtab-content";
     this.swipers = [];
+    var d = theme.dataAttr;
     this.settings = {
-      slidesToShow: this.$container.data("slidestoshow") || 1,
-      arrows: this.$container.data("arrows") || false,
-      rows: this.$container.data("rows") || 1,
-      dots: this.$container.data("dots") || false,
-      draggable: this.$container.data("draggable") || false,
-      infinite: this.$container.data("infinite") || false,
+      slidesToShow: d(container, "slidestoshow") || 1,
+      arrows: d(container, "arrows") || false,
+      rows: d(container, "rows") || 1,
+      dots: d(container, "dots") || false,
+      draggable: d(container, "draggable") || false,
+      infinite: d(container, "infinite") || false,
     };
 
     this._initSlick();
-    // shown.bs.tab is re-emitted by native-ui's tab controller; the now-visible
-    // panel's slider must (re)initialise so Swiper can measure its real width.
-    this.$container
-      .find('a[data-toggle="tab"]')
-      .on("shown.bs.tab", function (e) {
+    // native-ui's tab controller dispatches the native "shown.tab" event (bubbling)
+    // on the activated tab link; the now-visible panel's slider must (re)initialise
+    // so Swiper can measure its real width.
+    container.querySelectorAll('a[data-toggle="tab"]').forEach(function (a) {
+      a.addEventListener("shown.tab", function () {
         _self._unSlick();
         _self._initSlick();
         theme.tooltip.load();
       });
+    });
   }
 
   Producttabs.prototype = Object.assign({}, Producttabs.prototype, {
@@ -3039,8 +3068,7 @@ theme.Producttabs = (function () {
     _initSlick: function () {
       var s = this.settings;
       var _self = this;
-      this.$container.find(this.slickWrap).each(function () {
-        var el = this;
+      this.container.querySelectorAll(this.slickWrap).forEach(function (el) {
         var opts = _self._getSwiperOpts();
         if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
         if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
@@ -3056,7 +3084,7 @@ theme.Producttabs = (function () {
 
     onUnload: function () {
       this._unSlick();
-      delete this.$container;
+      delete this.container;
     },
 
     onSelect: function () {
@@ -3065,8 +3093,8 @@ theme.Producttabs = (function () {
     },
 
     onBlockSelect: function (evt) {
-      var navItem = $(".nav-link-" + evt.detail.blockId);
-      navItem.tab("show");
+      var navItem = document.querySelector(".nav-link-" + evt.detail.blockId);
+      if (navItem && window.NativeUI) window.NativeUI.activateTab(navItem);
       this._unSlick();
       this._initSlick();
     },
@@ -3088,11 +3116,11 @@ theme.Video = (function () {
         var firstScriptTag = document.getElementsByTagName("script")[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        promiseYoutubeAPI = $.Deferred(function (defer) {
-          window.onYouTubeIframeAPIReady = defer.resolve;
+        promiseYoutubeAPI = new Promise(function (resolve, reject) {
+          window.onYouTubeIframeAPIReady = resolve;
 
           setTimeout(function () {
-            defer.reject("Request for YouTube API timed out after 30 seconds.");
+            reject("Request for YouTube API timed out after 30 seconds.");
           }, 30000);
         });
       }
@@ -3101,9 +3129,9 @@ theme.Video = (function () {
     },
     promisePlayer: function (id, options) {
       return this.promiseAPI().then(function () {
-        return $.Deferred(function (defer) {
+        return new Promise(function (resolve, reject) {
           if (typeof window.YT === "undefined") {
-            defer.reject(
+            reject(
               "We're sorry, something went wrong. The YouTube API has not loaded correctly."
             );
           }
@@ -3112,11 +3140,11 @@ theme.Video = (function () {
           var player = new YT.Player(id, options); // global YT variable injected by YouTube API
 
           player.addEventListener("onReady", function () {
-            defer.resolve(player);
+            resolve(player);
           });
 
           setTimeout(function () {
-            defer.reject(
+            reject(
               "Request for YouTube player has timed out after 30 seconds."
             );
           }, 30000);
@@ -3128,12 +3156,12 @@ theme.Video = (function () {
   var vimeo = {
     promiseAPI: function () {
       if (!promiseVimeoAPI) {
-        promiseVimeoAPI = $.Deferred(function (defer) {
+        promiseVimeoAPI = new Promise(function (resolve, reject) {
           var tag = document.createElement("script");
           tag.src = "https://player.vimeo.com/api/player.js";
           tag.onload = tag.onreadystatechange = function () {
             if (!this.readyState || this.readyState === "complete") {
-              defer.resolve();
+              resolve();
             }
           };
 
@@ -3141,7 +3169,7 @@ theme.Video = (function () {
           firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
           setTimeout(function () {
-            defer.reject("Request for Vimeo API timed out after 30 seconds.");
+            reject("Request for Vimeo API timed out after 30 seconds.");
           }, 30000);
         });
       }
@@ -3151,9 +3179,9 @@ theme.Video = (function () {
 
     promisePlayer: function (id, options) {
       return this.promiseAPI().then(function () {
-        return $.Deferred(function (defer) {
+        return new Promise(function (resolve, reject) {
           if (typeof window.Vimeo === "undefined") {
-            defer.reject(
+            reject(
               "We're sorry, something went wrong. The Vimeo API has not loaded correctly."
             );
           }
@@ -3161,13 +3189,13 @@ theme.Video = (function () {
           var player = new window.Vimeo.Player(id, options);
 
           setTimeout(function () {
-            defer.reject(
+            reject(
               "Request for Vimeo player has timed out after 30 seconds."
             );
           }, 30000);
 
           player.ready().then(function () {
-            defer.resolve(player);
+            resolve(player);
           });
         });
       });
@@ -3191,42 +3219,50 @@ theme.Video = (function () {
   };
 
   function Video(container) {
-    this.$container = $(container);
-    var sectionId = this.$container.attr("data-section-id");
+    this.container = container;
+    var sectionId = container.getAttribute("data-section-id");
     this.namespace = "." + sectionId;
     this.onLoad();
   }
 
   Video.prototype = Object.assign({}, Video.prototype, {
     onLoad: function () {
-      this.$container
-        .on("click", selectors.loadPlayerButton, this._loadPlayer.bind(this))
-        .on("click", selectors.closePlayerButton, this._closePlayer.bind(this))
-        .on("click", selectors.bodyOverlay, this._closePlayer.bind(this));
+      var self = this;
+      this.container.addEventListener("click", function (e) {
+        if (e.target.closest(selectors.loadPlayerButton)) {
+          self._loadPlayer();
+        } else if (
+          e.target.closest(selectors.closePlayerButton) ||
+          e.target.closest(selectors.bodyOverlay)
+        ) {
+          self._closePlayer();
+        }
+      });
     },
 
     _loadPlayer: function () {
-      var $container = this.$container;
-      var $playerContainer = $(selectors.playerContainer, $container);
-      var playerType = this.$container.attr("data-video-type");
+      var playerContainer = this.container.querySelector(
+        selectors.playerContainer
+      );
+      var playerType = this.container.getAttribute("data-video-type");
 
       var promiseVideoPlayer;
 
       if (playerType === "youtube") {
-        promiseVideoPlayer = this._loadYoutubePlayer($playerContainer[0]);
+        promiseVideoPlayer = this._loadYoutubePlayer(playerContainer);
       } else if (playerType === "vimeo") {
-        promiseVideoPlayer = this._loadVimeoPlayer($playerContainer[0]);
+        promiseVideoPlayer = this._loadVimeoPlayer(playerContainer);
       }
 
       return promiseVideoPlayer
         .then(this._onPlayerLoadReady.bind(this))
-        .fail(this._onPlayerLoadError.bind(this));
+        .catch(this._onPlayerLoadError.bind(this));
     },
 
     _loadYoutubePlayer: function (container) {
       return youtube
         .promisePlayer(container, {
-          videoId: this.$container.attr("data-video-id"),
+          videoId: this.container.getAttribute("data-video-id"),
           ratio: 16 / 9,
           playerVars: {
             modestbranding: 1,
@@ -3245,7 +3281,7 @@ theme.Video = (function () {
     _loadVimeoPlayer: function (container) {
       return vimeo
         .promisePlayer(container, {
-          id: this.$container.attr("data-video-id"),
+          id: this.container.getAttribute("data-video-id"),
         })
         .then(
           function (player) {
@@ -3256,28 +3292,33 @@ theme.Video = (function () {
     },
 
     _onPlayerLoadReady: function () {
-      $(selectors.closePlayerButton, this.$container).show().focus();
-      $(selectors.cover, this.$container).addClass(classes.playerLoaded);
-      this.$container.addClass(classes.playerLoaded);
+      var closeBtn = this.container.querySelector(selectors.closePlayerButton);
+      if (closeBtn) {
+        closeBtn.style.display = "";
+        closeBtn.focus();
+      }
+      var cover = this.container.querySelector(selectors.cover);
+      if (cover) cover.classList.add(classes.playerLoaded);
+      this.container.classList.add(classes.playerLoaded);
 
       this._setScrollPositionValues();
 
-      $(selectors.body).addClass(classes.videoPlaying);
+      document.body.classList.add(classes.videoPlaying);
 
-      $(document).on("keyup" + this.namespace, this._closeOnEscape.bind(this));
-      $(window).on(
-        "resize" + this.namespace,
-        this._setScrollPositionValues.bind(this)
-      );
+      this._onKeyup = this._closeOnEscape.bind(this);
+      this._onResize = this._setScrollPositionValues.bind(this);
+      document.addEventListener("keyup", this._onKeyup);
+      window.addEventListener("resize", this._onResize);
       slate.a11y.trapFocus({
-        $container: this.$container,
+        $container: this.container,
         namespace: this.namespace,
       });
     },
 
     _onPlayerLoadError: function (err) {
-      this.$container.addClass(classes.playerError);
-      $(selectors.errorMessage, this.$container).text(err);
+      this.container.classList.add(classes.playerError);
+      var errEl = this.container.querySelector(selectors.errorMessage);
+      if (errEl) errEl.textContent = err;
     },
 
     _closeOnEscape: function (evt) {
@@ -3286,11 +3327,12 @@ theme.Video = (function () {
       }
 
       this._closePlayer();
-      $(selectors.loadPlayerButton, this.$container).focus();
+      var loadBtn = this.container.querySelector(selectors.loadPlayerButton);
+      if (loadBtn) loadBtn.focus();
     },
 
     _onScroll: function () {
-      var scrollTop = $(window).scrollTop();
+      var scrollTop = window.pageYOffset;
 
       if (
         scrollTop > this.videoTop + 0.25 * this.videoHeight ||
@@ -3303,31 +3345,40 @@ theme.Video = (function () {
     },
 
     _setScrollPositionValues: function () {
-      this.videoHeight = this.$container.outerHeight(true);
-      this.videoTop = this.$container.offset().top;
+      var rect = this.container.getBoundingClientRect();
+      this.videoHeight = this.container.offsetHeight;
+      this.videoTop = rect.top + window.pageYOffset;
       this.videoBottom = this.videoTop + this.videoHeight;
-      this.windowHeight = $(window).innerHeight();
+      this.windowHeight = window.innerHeight;
     },
 
     _closePlayer: function () {
-      $(selectors.body).removeClass(classes.videoPlaying);
-      $(selectors.cover, this.$container).removeClass(classes.playerLoaded);
-      this.$container.removeClass(classes.playerLoaded);
-      $(selectors.closePlayerButton, this.$container).hide();
+      document.body.classList.remove(classes.videoPlaying);
+      var cover = this.container.querySelector(selectors.cover);
+      if (cover) cover.classList.remove(classes.playerLoaded);
+      this.container.classList.remove(classes.playerLoaded);
+      var closeBtn = this.container.querySelector(selectors.closePlayerButton);
+      if (closeBtn) closeBtn.style.display = "none";
 
       slate.a11y.removeTrapFocus({
-        $container: this.$container,
+        $container: this.container,
         namespace: this.namespace,
       });
 
-      if (typeof this.player.destroy === "function") {
+      if (this.player && typeof this.player.destroy === "function") {
         this.player.destroy();
-      } else if (typeof this.player.unload === "function") {
+      } else if (this.player && typeof this.player.unload === "function") {
         this.player.unload();
       }
 
-      $(document).off(this.namespace);
-      $(window).off(this.namespace);
+      if (this._onKeyup) {
+        document.removeEventListener("keyup", this._onKeyup);
+        this._onKeyup = null;
+      }
+      if (this._onResize) {
+        window.removeEventListener("resize", this._onResize);
+        this._onResize = null;
+      }
     },
   });
 
@@ -3337,12 +3388,12 @@ theme.Video = (function () {
 theme.SwiperCustom = (function () {
   function SwiperCustom(container) {
     this.container = container;
-    this.sectionId = $(container).attr("data-section-id");
+    this.sectionId = container.getAttribute("data-section-id");
     this.nav = ".swiper-wrapper-" + this.sectionId;
     this.namespace = ".swipercol-" + this.sectionId;
-    var perviewDesktop = $(container).data("perview-desktop");
-    var perviewMobile = $(container).data("perview-mobile") || 2.2;
-    var spaceBetween = $(container).data("space-between");
+    var perviewDesktop = theme.dataAttr(container, "perview-desktop");
+    var perviewMobile = theme.dataAttr(container, "perview-mobile") || 2.2;
+    var spaceBetween = theme.dataAttr(container, "space-between");
     var swiper = new Swiper(this.namespace, {
       slidesPerView: "auto",
       freeMode: false,
@@ -3379,11 +3430,11 @@ theme.SwiperCustom = (function () {
         },
       },
       scrollbar: {
-        el: $(this.namespace).find(".swiper-scrollbar")[0],
+        el: document.querySelector(this.namespace + " .swiper-scrollbar"),
       },
       navigation: {
-        nextEl: $(this.nav).find(".swiper-button-next")[0],
-        prevEl: $(this.nav).find(".swiper-button-prev")[0],
+        nextEl: document.querySelector(this.nav + " .swiper-button-next"),
+        prevEl: document.querySelector(this.nav + " .swiper-button-prev"),
       },
     });
   }
@@ -3393,7 +3444,7 @@ theme.SwiperCustom = (function () {
 theme.AnnouncementSwiper = (function () {
   function AnnouncementSwiper(container) {
     this.container = container;
-    this.sectionId = $(container).attr("data-section-id");
+    this.sectionId = container.getAttribute("data-section-id");
     this.namespace = ".announswipercol-" + this.sectionId;
     var rootElement = document.querySelector(":root");
     var anNounBar = document.querySelector(".announcement-bar-carousel");
@@ -3405,23 +3456,28 @@ theme.AnnouncementSwiper = (function () {
     );
     var swiper = new Swiper(this.namespace, {
       slidesPerView: 1,
-      loop: $(this.namespace).find(".slider .slide").length == 1 ? true : false,
+      loop:
+        document.querySelectorAll(this.namespace + " .slider .slide").length == 1
+          ? true
+          : false,
       autoHeight: true,
-      autoplay:Nautoplay,
-      autoplaySpeed:Nautoplay_speed,
+      autoplay: Nautoplay,
+      autoplaySpeed: Nautoplay_speed,
       calculateHeight: true,
       observer: true,
       a11y: true,
       navigation: {
-        nextEl: $(this.namespace).find(".swiper-button-next")[0],
-        prevEl: $(this.namespace).find(".swiper-button-prev")[0],
+        nextEl: document.querySelector(this.namespace + " .swiper-button-next"),
+        prevEl: document.querySelector(this.namespace + " .swiper-button-prev"),
       },
     });
     document.addEventListener("shopify:block:select", function (event) {
-      var sectionId = event.detail.sectionId;
       var blockId = event.detail.blockId;
-      var load = event.detail.load;
-      var index = $(`#${blockId}`).index();
+      var blockEl = document.getElementById(blockId);
+      var index =
+        blockEl && blockEl.parentNode
+          ? Array.prototype.indexOf.call(blockEl.parentNode.children, blockEl)
+          : 0;
       swiper.slideTo(index);
     });
   }
@@ -3434,14 +3490,24 @@ theme.init = function () {
   slate.rte.iframeReset();
 
   // Common a11y fixes
-  slate.a11y.pageLinkFocus($(window.location.hash));
+  if (window.location.hash) {
+    try {
+      slate.a11y.pageLinkFocus(document.querySelector(window.location.hash));
+    } catch (e) {}
+  }
 
-  $(".in-page-link").on("click", function (evt) {
-    slate.a11y.pageLinkFocus($(evt.currentTarget.hash));
+  document.querySelectorAll(".in-page-link").forEach(function (link) {
+    link.addEventListener("click", function (evt) {
+      try {
+        slate.a11y.pageLinkFocus(document.querySelector(evt.currentTarget.hash));
+      } catch (e) {}
+    });
   });
 
-  $('a[href="#"]').on("click", function (evt) {
-    evt.preventDefault();
+  document.querySelectorAll('a[href="#"]').forEach(function (a) {
+    a.addEventListener("click", function (evt) {
+      evt.preventDefault();
+    });
   });
 
   //scroll animation
@@ -3482,33 +3548,33 @@ theme.init = function () {
   sections.register("footer", theme.FooterSection);
 
   // Standalone modules
-  $(window).on("load", theme.articleImages);
+  window.addEventListener("load", theme.articleImages);
   theme.passwordModalInit();
 };
 
 theme.articleImages = function () {
-  var $indentedRteImages = $(".rte--indented-images");
-  if (!$indentedRteImages.length) {
+  var indentedRteImages = document.querySelector(".rte--indented-images");
+  if (!indentedRteImages) {
     return;
   }
 
-  $indentedRteImages.find("img").each(function (i, el) {
-    var $el = $(el);
-    var attr = $el.attr("style");
+  indentedRteImages.querySelectorAll("img").forEach(function (el) {
+    var attr = el.getAttribute("style");
 
     // Check if undefined or float: none
     if (!attr || attr === "float: none;") {
       // Add class to parent paragraph tag if image is wider than container
-      if ($el.width() >= $indentedRteImages.width()) {
-        $el.parent("p").addClass("rte__image-indent");
+      if (el.offsetWidth >= indentedRteImages.offsetWidth) {
+        var p = el.parentElement;
+        if (p && p.tagName === "P") p.classList.add("rte__image-indent");
       }
     }
   });
 };
 
 theme.passwordModalInit = function () {
-  var $loginModal = $("#LoginModal");
-  if (!$loginModal.length) {
+  var loginModal = document.getElementById("LoginModal");
+  if (!loginModal) {
     return;
   }
 
@@ -3518,7 +3584,7 @@ theme.passwordModalInit = function () {
   });
 
   // Open modal if errors exist
-  if ($loginModal.find(".errors").length) {
+  if (loginModal.querySelector(".errors")) {
     theme.PasswordModal.open();
   }
 };
