@@ -33,7 +33,7 @@
       {
       "type": "checkbox",
       "id": "enable_smoothness",
-      "label": "Smooth Scrolling Animition"
+      "label": "Smooth Scrolling Animation"
     },
          {
         "type": "range",
@@ -47,7 +47,7 @@
       },
       {
         "type": "header",
-        "content": "Loading animation"
+        "content": "Loading Animation"
       },
       {
       "type": "checkbox",
@@ -220,7 +220,7 @@
     "settings": [
       {
         "type": "header",
-        "content": "Theme color"
+        "content": "Theme Color"
       },
       {
         "type": "color_background",
@@ -329,7 +329,7 @@
       },
       {
         "type": "header",
-        "content": "Alert & message"
+        "content": "Alert & Message"
       },
       {
         "type": "color",
@@ -351,7 +351,7 @@
       },
       {
         "type": "header",
-        "content": "Color Shipping bar"
+        "content": "Color Shipping Bar"
       },
       {
         "type": "color",
@@ -646,7 +646,7 @@
          {
           "type": "range",
           "id": "content_size",
-          "label": "Font Size Sub Title",
+          "label": "Font Size Subtitle",
           "default": 16,
           "min": 10,
           "max":24
@@ -654,7 +654,7 @@
         {
           "type": "range",
           "id": "content_size_mobile",
-          "label": "Font Size Sub Title Mobile",
+          "label": "Font Size Subtitle Mobile",
           "default": 16,
           "min": 10,
           "max":24
@@ -670,7 +670,7 @@
         "definition": [
           {
             "type": "header",
-            "content": "Primary colors"
+            "content": "Primary Colors"
           },
           {
             "type": "color",
@@ -813,7 +813,7 @@
       },
       {
         "type": "header",
-        "content": "Font main"
+        "content": "Font Main"
       },
       {
         "type": "font_picker",
@@ -855,7 +855,7 @@
       },
       {
         "type": "header",
-        "content": "------------- Title slideshow "
+        "content": "------------- Title Slideshow"
       },
       {
         "type": "range",
@@ -1848,7 +1848,7 @@
     "settings": [
       {   
         "type": "header",
-        "content": "Social sharing image"
+        "content": "Social Sharing Image"
       },
       {
         "type": "image_picker",
@@ -2058,7 +2058,7 @@
     "settings": [
       {
         "type": "header",
-        "content": "Product suggestions"
+        "content": "Product Suggestions"
       },
       {
         "type": "checkbox",
@@ -2236,7 +2236,7 @@
       },
       {
         "type": "header",
-        "content": "🏷️ Config label"
+        "content": "🏷️ Config Label"
       },
       {
         "type": "range",
@@ -2322,7 +2322,7 @@
       },
       {
         "type": "header",
-        "content": "🏷️ New label"
+        "content": "🏷️ New Label"
       },
       {
         "type": "checkbox",
@@ -2359,7 +2359,7 @@
       },
       {
         "type": "header",
-        "content": "🏷️ Sale label"
+        "content": "🏷️ Sale Label"
       },
       {
         "type": "checkbox",
@@ -2423,7 +2423,7 @@
       },
       {
         "type": "header",
-        "content": "🏷️ Custom label 1"
+        "content": "🏷️ Custom Label 1"
       },
       {
         "type": "checkbox",
@@ -2451,7 +2451,7 @@
       },
       {
         "type": "header",
-        "content": "🏷️ Custom label 2"
+        "content": "🏷️ Custom Label 2"
       },
       {
         "type": "checkbox",
@@ -2479,7 +2479,7 @@
       },
       {
         "type": "header",
-        "content": "🏷️ Custom label 3"
+        "content": "🏷️ Custom Label 3"
       },
       {
         "type": "checkbox",
@@ -2938,7 +2938,7 @@
       },
       {
         "type": "header",
-        "content": "🚚 Free shipping"
+        "content": "🚚 Free Shipping"
       },
       {
         "type": "checkbox",
@@ -2972,7 +2972,7 @@
       },
       {
         "type": "header",
-        "content": "Tax and Shipping Information"
+        "content": "Tax And Shipping Information"
       },
       {
         "type": "checkbox",
@@ -3180,12 +3180,12 @@
       },
       {
         "type": "header",
-        "content": "Cart countdown"
+        "content": "Cart Countdown"
       },
       {
       "type": "checkbox",
       "id": "enable_cart_countdown",
-      "label": "Enable Cart Coundtdown",
+      "label": "Enable Cart Countdown",
       "default": true
     },
       {
@@ -3263,7 +3263,7 @@
         },
       {
         "type": "header",
-        "content": "Below checkout icons"
+        "content": "Below Checkout Icons"
       },
       {
         "type": "checkbox",
@@ -3317,7 +3317,7 @@
             },
             {
               "value": "leaf",
-              "label": "Feaf"
+              "label": "Leaf"
             },
             {
               "value": "lock",
@@ -3411,7 +3411,7 @@
             },
             {
               "value": "leaf",
-              "label": "Feaf"
+              "label": "Leaf"
             },
             {
               "value": "lock",
@@ -3499,7 +3499,7 @@
       {
         "type": "text",
         "id": "whatsapp_msg",
-        "label": "Please Enter Your Msg"
+        "label": "Please Enter Your Message"
       }
     ]
   },

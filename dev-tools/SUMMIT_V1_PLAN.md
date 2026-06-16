@@ -153,8 +153,14 @@ Labels** erfüllt, nicht über den Key-Mechanismus.
   `sections/product-template-1.liquid`, `sections/quotes.liquid`. **490 `label`/`name` deterministisch
   auf Title Case normalisiert** (Akronyme HTML/SKU/CTA…, Eigennamen TikTok/WhatsApp/iOS, Einheiten `px`,
   reservierter `theme_info` geschützt); **idempotent verifiziert (0 Rest, unabhängiger Re-Scan).**
-  Casing damit theme-weit vollständig konsistent. Offen (semantisch, 2b): Tippfehler (`Comapre`/`Boxs`/
-  `Midle`/`Coundtdown`) + Terminologie (`Des`→`Description`, `Sub Title`→`Subtitle`).
+  Casing damit theme-weit vollständig konsistent.
+- [x] **2b-Nachzug / 8-Agenten-Audit (2026-06-17):** 131 Befunde → behoben: **80 Header-Gruppentitel**
+  deterministisch Title-Cased (waren in 2a übersprungen; inkl. all-caps `BACKGROUND`→`Background`,
+  `FILTER`→`Filter`), **18 Tippfehler** (`Comapre`→Compare, `Boxs`→Box, `Midle`→Middle, `Coundtdown`→Countdown,
+  `Botton`→Button, `Truspilot`→Trustpilot, `Feaf`→Leaf, `Addess`→Address …), **Terminologie** `Sub Title`→`Subtitle`
+  (42 Dateien) + `Des`→`Description`. Idempotent verifiziert, alle 97 Schema-JSON valide, 0 Rest-Tippfehler.
+  **Offen, bewusst vorgelegt:** `Title`→`Heading` (contact-booking, main-404) — Phase 2 hatte das global
+  aufgeschoben („Title" ist oft korrekt), daher User-Entscheid.
 - [ ] *Bewusst ausgelassen (targeted scope):* `Title`→`Heading` global (287, „Title" meist korrekt);
   exhaustives Durchwortern jedes Labels. Non-destruktiv, jederzeit nachholbar.
 
