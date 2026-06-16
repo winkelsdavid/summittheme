@@ -13,11 +13,31 @@ Rebuild** — die Ziel-Architektur (Web-Components, `global.js`) existiert schon
 (R1–R9). Performance/Cleanup → [`SUMMIT_PATCH_REQUIREMENTS.md`](SUMMIT_PATCH_REQUIREMENTS.md)
 (P1–P3). Gate → `node dev-tools/check-theme.mjs <zip>`.
 
-**Stand (2026-06-15).** **Track A abgeschlossen** — Phase 0 ✓, Phase 1 (Identifier T0–T4) ✓,
+**Stand (2026-06-16, verifiziert gegen Vanilla-Export via 7-Agenten-Grep-Fanout).**
+
+**Track A (Identität, Phasen 0–3) abgeschlossen** (2026-06-15) — Phase 0 ✓, Phase 1 (Identifier T0–T4) ✓,
 Phase 2 (Labeling 2a+2b) ✓, Phase 3 (Parse + DB-Verifikation) ✓. Offen in Track A nur:
 Operator-Mapping (Operator-Task, pre-launch) · **T5** Video-Resource-Typing (bewusst deferred)
-· optional `Title→Heading` global. **Track B (Phasen 4–7) noch nicht gestartet** = der gesamte
-verbleibende V1-Aufwand (Perf/a11y/CWV/jQuery-raus). HEAD: `bb15444`.
+· optional `Title→Heading` global.
+
+**Track B (Implementierung) angefangen (2026-06-16):** Der Performance-Hauptbrocken ist DURCH.
+- **Phase 5 Kern ✓** — `theme.js` 100 % Vanilla (0 Live-jQuery), `jquery.js` + `vendor.js` gelöscht,
+  `keep-libs.js` (26 KB) ersetzt vendor (−~440 KB initial JS).
+- **Phase 4 Mobile-Nav no-JS ✓** — Burger = versteckte Checkbox `#NavDrawer-toggle` + `<label>` +
+  CSS `html:has(#NavDrawer-toggle:checked) #NavDrawer`; `theme.Drawers`-Init für NavDrawer raus,
+  Vanilla-Enhancer (focus-trap + ESC) on-top; theme.css unberührt (`7631dba`). Drawer-Sub-Menüs nativ `<details>` ✓.
+- **Phase 6 angefangen** — Hero eager/fetchpriority ✓, Quickview Swiper→scroll-snap ✓.
+
+**Offen in Track B:** a11y-Baseline/Audit (Phase 4 — **jetzt rechtlich Launch-relevant, s. Phase 4**) ·
+lazysizes-raus + `img_url`→`image_url` (Phase 5) · restliche 25 Swiper-Sektionen / Photoswipe / Flatpickr /
+`theme.css.liquid` / Slate-Globals / Snippet-Renames (Phase 6) · Final-Messung + Gate (Phase 7).
+
+**Nächster Schritt (Empfehlung):** **a11y-Baseline-Audit (Phase 4)** — höchste Launch-Priorität, weil
+für EU-Kundenstores rechtlich (EAA/BFSG). Bounded Quick-Win parallel/alternativ: `img_url`→`image_url`
+(Phase 5, 37 Files). Operator-Mapping (Phase 3) läuft separat als Operator-Task.
+
+**Section-Count-Abgleich (2026-06-16):** 96 Section-`.liquid` (+ 2 Section-Group-JSONs = 98 Einträge);
+DB-Parse 92 (= 96 minus ~4 schemalose System-Sections). Deltas verstanden — vor Operator-Mapping final fixieren.
 
 ---
 
@@ -145,45 +165,46 @@ Mapping-Coverage offen.
 
 ---
 
-## Phase 4 — Gate-Pflicht: JS-off-Nav + a11y · *Track B, Kunde, binär* · P1.4 + Lücke
+## Phase 4 — JS-off-Nav + a11y · *Track B, Kunde* · P1.4 + Lücke
 
-- [ ] **Mobile-Burger** (`snippets/button-toggle-menu-mobile.liquid`) →
-  `<details>/<summary>` oder Checkbox-Hack (no-JS bedienbar)
-- [ ] **Drawer-Sub-Menüs** (`snippets/drawer-nav.liquid:17`, Bootstrap
-  `data-toggle="collapse"`) → `<details>/<summary>`
-- [ ] a11y-Web-Component (focus-trap, ESC, aria-expanded) on-top, ohne No-JS-Pfad zu brechen
-- [ ] **a11y-Audit → Score ≥ 90** (Kontrast, Labels, Fokus-Reihenfolge,
-  Alt-Texte) — zweite Gate-Achse, die das Patch-Doc nicht abdeckt
+- [x] **Mobile-Burger** (`snippets/button-toggle-menu-mobile.liquid`) → Checkbox `#NavDrawer-toggle`
+  + `<label>` + CSS `html:has(#NavDrawer-toggle:checked) #NavDrawer` (no-JS bedienbar); `theme.Drawers`-Init
+  für NavDrawer entfernt, Vanilla-Enhancer (focus-trap + ESC) on-top; theme.css unberührt (`7631dba`, 2026-06-16)
+- [x] **Drawer-Sub-Menüs** (`snippets/drawer-nav.liquid`, `snippets/menu-mobile.liquid`) → nativ `<details>/<summary>` (2. + 3. Ebene)
+- [~] a11y-Web-Component (focus-trap, ESC) — für den Nav-Drawer erledigt (`initNavDrawer`); allgemeines aria-expanded-Audit offen
+- [ ] **a11y-Baseline/Audit** (Kontrast, Labels, Fokus-Reihenfolge, Alt-Texte) — **NEU eingeordnet (2026-06-16):
+  nicht nur Theme-Store-Gate, sondern rechtliche LAUNCH-Pflicht für EU-Kundenstores** (European
+  Accessibility Act / BFSG, in Kraft seit 28.06.2025 für B2C-E-Commerce). Der exakte Score ≥ 90 bleibt
+  Theme-Store-Gate (Phase 7); die *Baseline* (WCAG-2.1-AA-Geist) gehört **vor** den Launch ausgelieferter Stores.
 
-*Warum hier:* binäres Theme-Store-Gate-Pass/Fail, kundenseitig, billig (Tage),
-unabhängig vom Perf-Brocken. Kann sofort nach Phase 0 parallel starten.
+*Warum hier:* No-JS-Nav = Resilienz (JS-Load-Fail / Crawler) + Gate — bereits **gebankt**, nicht nur Gate-Kosmetik.
+a11y-Baseline ist für EU-Stores Launch-rechtlich.
 
 ---
 
 ## Phase 5 — Performance-Kern · *Track B, Speed* · P1.1–1.3
 
-- [ ] **`theme.js` (203 KB, 558 `$(`) → Vanilla** migrieren (Web-Components /
-  `global.js` als Landeplatz)
-- [ ] **jQuery (85 KB) + vendor.js (348 KB) raus** (−~440 KB initial JS),
-  Tag `snippets/header-js.liquid:104` entfernen
-- [ ] **`lazysizes` (26 KB) raus** → native `loading="lazy"` + `decoding="async"`;
-  `bgset` via IntersectionObserver
-- [ ] **`img_url` → `image_url`** (129 Treffer / 50 Files)
+- [x] **`theme.js` → 100 % Vanilla** migriert — 0 Live-jQuery (nur noch `$(` in `/* */`-Dead-Code) (2026-06-16)
+- [x] **jQuery + vendor.js gelöscht** (−~440 KB initial JS); `keep-libs.js` (AOS+Instafeed+Handlebars, 26 KB)
+  ersetzt vendor.js; `api.jquery` aus dem Loader; `header-js.liquid`-Tag bereinigt
+- [ ] **`lazysizes` (27 KB) raus** → native `loading="lazy"` + `decoding="async"`; **`data-bgset` (12 Theme-Files)**
+  via IntersectionObserver; `data-sizes="auto"` (76×) → sinnvolles `sizes`; `.lazyloaded`-Fade-CSS (theme.css:1942) anpassen
+- [ ] **`img_url` → `image_url`** (verifiziert **99 Treffer / 37 Files**; größter: `product-template-1.liquid`)
 
-*Warum hier:* größter Speed-Hebel (~50 % Lighthouse-Gain), mapping-neutral.
-Hauptbrocken (3–4 Wo), aber bounded.
+*Warum hier:* größter Speed-Hebel — **Hauptbrocken (theme.js/jQuery) ist DURCH**; Rest ist bounded Cleanup.
 
 ---
 
 ## Phase 6 — CWV + Wartbarkeit · *Track B, Politur* · P2 + P3
 
-- [ ] Hero `loading="eager"` + `fetchpriority="high"` (LCP)
-- [ ] Swiper (142+22 KB) → CSS `scroll-snap` wo möglich (−~135 KB), Rest ggf. embla
-- [ ] Photoswipe (52 KB) / Flatpickr (49 KB) auf Native (`<dialog>` / `<input type=date>`) prüfen
-- [ ] `theme.css.liquid` (281 KB, pro Request kompiliert) → statisch + `:root`-Vars
-- [ ] Slate-Globals (`window.theme` / `window.slate`) raus
-- [ ] Inline-/auskommentiertes CSS im `<head>` (`theme.liquid:52-56, 69+`) weg
-- [ ] **Filename-Sweep** kebab-case (`blogSidebar` → `blog-sidebar`, …) — geteilt mit R5
+- [x] Hero `loading="eager"` + `fetchpriority="high"` — `slideshow-1` erster Slide (`forloop.first`) + `image_url` (verifiziert)
+- [~] Swiper → CSS `scroll-snap` — **Quickview ✓**; noch **25 Sektionen** mit Swiper-Refs (−~135 KB Potenzial)
+- [ ] Photoswipe (54 KB, `product-template-1.liquid`) / Flatpickr (50 KB, `contact-booking.liquid`) auf Native prüfen
+- [ ] `theme.css.liquid` (~270 KB, pro Request kompiliert) → statisch + `:root`-Vars
+- [ ] Slate-Globals (`window.theme`/`window.slate`, `theme.js:1-2` + `header-js.liquid:29`) raus
+- [ ] Inline-/auskommentiertes CSS im `<head>` weg + toter jQuery-`/* */`-Kommentarcode in `theme.js`
+- [ ] **Filename-Sweep** kebab-case — **10 Snippets** non-kebab: 7 camelCase (`blogSidebar` → `blog-sidebar`, …)
+  + 3 underscore (`ad_sticky-cart`, `aliexpress_reviews`, `loading_animation`). Nur `{% render %}`-Call-Sites → non-destruktiv. — geteilt mit R5
 
 ---
 
@@ -202,8 +223,8 @@ Hauptbrocken (3–4 Wo), aber bounded.
 - [~] Aktiver Satz **sauber gemappt** — IDs/Labels parse-verifiziert ✓; Operator-Mapping +
   finale ROI-Messung (vorsortierte Content-Fläche, minimaler AI-Pass) noch offen
 - [x] Alle Labels **klar** (2a Title Case + 2b Semantik) — i18n über `locales/*.json` (Storefront)
-- [ ] **Gate bestanden:** Perf ≥ 60 (Ziel 80+) · a11y ≥ 90 · JS-off ✓ — *Track B, offen*
-- [ ] **Kein jQuery / Legacy-Ballast** mehr im initialen Load — *Track B, offen*
+- [~] **Gate:** JS-off-Nav ✓ (Mobile-Burger + Drawer no-JS, 2026-06-16) · Perf ≥ 60 (Ziel 80+) + a11y ≥ 90 noch zu **messen** — *Track B, teils offen*
+- [x] **Kein jQuery / Legacy-Ballast** mehr im initialen Load — theme.js Vanilla, jQuery + vendor.js gelöscht (2026-06-16)
 
 ---
 

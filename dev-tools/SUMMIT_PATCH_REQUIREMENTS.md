@@ -16,6 +16,22 @@ Shops mit.
 
 ---
 
+## ⚠️ Status-Update (2026-06-16) — was inzwischen erledigt ist
+
+> Die Audit-/Befund-Tabellen unten beschreiben den **Ausgangszustand (2026-06-06)** und sind als
+> *Begründung* weiter gültig — aber der Code-Stand hat sich bewegt. Aktueller, gegen den
+> Vanilla-Export 2026-06-16 (7-Agenten-Grep-Fanout) verifizierter Stand:
+>
+> - **P1.1 theme.js → Vanilla + jQuery/vendor.js raus** ✅ erledigt (0 Live-jQuery; −~440 KB initial JS)
+> - **P1.4 Mobile-Nav + Drawer-Sub-Menüs no-JS** ✅ erledigt — Burger = Checkbox `#NavDrawer-toggle` + CSS `:has()` (`7631dba`); Sub-Menüs nativ `<details>`
+> - **P2.1 Hero eager/fetchpriority** ✅ erledigt · **P2.4 Preconnect-Typos** ✅ erledigt · **P2.2 Swiper** ⏳ Quickview ✅, noch 25 Sektionen
+> - **Offen:** P1.2 lazysizes (12 `data-bgset`-Files) · P1.3 `img_url`→`image_url` (**99 Treffer / 37 Files**) · P2.3 Photoswipe/Flatpickr · P3.1 `theme.css.liquid` · P3.2 Slate-Globals · P3.3 Inline-CSS · P3.4 Snippet-Renames (**10 Files**: 7 camelCase + 3 underscore)
+> - **NEU eingeordnet:** a11y-Baseline ist für EU-Kundenstores **rechtliche Launch-Pflicht** (EAA/BFSG seit 28.06.2025), nicht nur Theme-Store-Gate.
+>
+> **Kanonischer Live-Tracker:** [`SUMMIT_V1_PLAN.md`](SUMMIT_V1_PLAN.md) (Track A ✓ / Track B offen).
+
+---
+
 ## Theme-Store-Gate — warum dieser Cleanup Pflicht ist
 
 > Das Gate: Themes brauchen einen durchschnittlichen Lighthouse-
