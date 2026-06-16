@@ -686,6 +686,60 @@ theme.prepareTransition = function (el) {
   return el;
 };
 
+// Vanilla replacements for jQuery .fadeIn / .fadeOut / .slideToggle.
+theme.fadeIn = function (el, display) {
+  if (!el) return;
+  el.style.opacity = 0;
+  el.style.display = display || "block";
+  requestAnimationFrame(function () {
+    el.style.transition = "opacity .35s";
+    el.style.opacity = 1;
+  });
+};
+theme.fadeOut = function (el) {
+  if (!el) return;
+  el.style.transition = "opacity .35s";
+  el.style.opacity = 0;
+  el.addEventListener("transitionend", function handler() {
+    el.style.display = "none";
+    el.removeEventListener("transitionend", handler);
+  });
+};
+theme.slideToggle = function (el) {
+  if (!el) return;
+  var hidden = getComputedStyle(el).display === "none" || el.offsetHeight === 0;
+  el.style.overflow = "hidden";
+  el.style.transition = "height .3s ease";
+  var done = function () {
+    el.style.height = "";
+    el.style.overflow = "";
+    el.style.transition = "";
+  };
+  if (hidden) {
+    el.style.removeProperty("display");
+    if (getComputedStyle(el).display === "none") el.style.display = "block";
+    var target = el.scrollHeight;
+    el.style.height = "0px";
+    requestAnimationFrame(function () {
+      el.style.height = target + "px";
+    });
+    el.addEventListener("transitionend", function handler() {
+      done();
+      el.removeEventListener("transitionend", handler);
+    });
+  } else {
+    el.style.height = el.scrollHeight + "px";
+    requestAnimationFrame(function () {
+      el.style.height = "0px";
+    });
+    el.addEventListener("transitionend", function handler() {
+      el.style.display = "none";
+      done();
+      el.removeEventListener("transitionend", handler);
+    });
+  }
+};
+
 theme.Drawers = (function () {
   var Drawer = function (id, position, options) {
     var defaults = {
@@ -5152,8 +5206,8 @@ theme.BeforeAfter = (function () {
 theme.CookieSection = (function () {
   class CookieSection {
     constructor(container) {
-      this.$container = $(container);
-      this.sectionId = this.$container.attr("data-section-id");
+      this.container = container;
+      this.sectionId = container.getAttribute("data-section-id");
       this.cookieSelector = ".cookie-" + this.sectionId;
       this.closeButtonSelector = ".js-btn-ok";
       this.declineButton = ".js-btn-decline";
@@ -5165,34 +5219,37 @@ theme.CookieSection = (function () {
     }
 
     showCookie() {
-      const $cookiePolicy = $(this.cookieSelector);
-      const $closeButton = $(this.closeButtonSelector);
-      const $declineButton = $(this.declineButton);
+      const cookiePolicy = document.querySelector(this.cookieSelector);
+      const closeButton = document.querySelector(this.closeButtonSelector);
+      const declineButton = document.querySelector(this.declineButton);
       const isAccepted = localStorage.getItem("localCookie") || "";
 
       if (!isAccepted) {
-        $cookiePolicy.fadeIn("slow");
+        theme.fadeIn(cookiePolicy);
       }
 
-      $closeButton.on("click", () => {
-        localStorage.setItem("localCookie", "accept");
-        $cookiePolicy.fadeOut("slow");
-      });
-      $declineButton.on("click", () => {
-        $cookiePolicy.fadeOut("slow");
-      });
+      if (closeButton)
+        closeButton.addEventListener("click", () => {
+          localStorage.setItem("localCookie", "accept");
+          theme.fadeOut(cookiePolicy);
+        });
+      if (declineButton)
+        declineButton.addEventListener("click", () => {
+          theme.fadeOut(cookiePolicy);
+        });
 
-      if (Shopify.designMode) {
+      if (window.Shopify && Shopify.designMode) {
+        const sel = this.cookieSelector;
         document.addEventListener("shopify:section:load", () => {
-          $cookiePolicy.fadeOut("slow");
+          theme.fadeOut(cookiePolicy);
         });
-
         document.addEventListener("shopify:section:select", (event) => {
-          $(event.target).find($cookiePolicy).fadeIn("fast");
+          const el = event.target.querySelector(sel);
+          if (el) theme.fadeIn(el);
         });
-
         document.addEventListener("shopify:section:deselect", (event) => {
-          $(event.target).find($cookiePolicy).fadeOut("slow");
+          const el = event.target.querySelector(sel);
+          if (el) theme.fadeOut(el);
         });
       }
     }
@@ -5204,9 +5261,8 @@ theme.CookieSection = (function () {
 // Popup newsletter
 theme.FooterSection = (function () {
   function FooterSection(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr("data-section-id");
-    var enableAcc = Boolean($container.attr("data-acc"));
+    var sectionId = container.getAttribute("data-section-id");
+    var enableAcc = Boolean(container.getAttribute("data-acc"));
     this.selectors = {
       footerSection: ".footer-" + sectionId,
       enableAcc: enableAcc,
@@ -5221,11 +5277,16 @@ theme.FooterSection = (function () {
     accordionResponsive: function () {
       //var mqr = window.matchMedia('screen and (max-width: 749px)');
       if (this.selectors.enableAcc == true) {
-        $(".site-footer__section-title").click(function () {
-          $(this).toggleClass("active");
-          $(this).next().slideToggle("fast");
-          return false;
-        });
+        document.querySelectorAll(".site-footer__section-title").forEach(
+          function (title) {
+            title.addEventListener("click", function (e) {
+              e.preventDefault();
+              this.classList.toggle("active");
+              if (this.nextElementSibling)
+                theme.slideToggle(this.nextElementSibling);
+            });
+          }
+        );
       }
     },
   });
