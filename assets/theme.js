@@ -470,96 +470,87 @@ slate.Variants = (function () {
    * @param {object} options - Settings from `product.js`
    */
   function Variants(options) {
-    this.$container = options.$container;
+    // Accept a jQuery object OR a DOM element for $container.
+    this.container =
+      options.$container && options.$container.jquery
+        ? options.$container[0]
+        : options.$container;
     this.product = options.product;
     this.singleOptionSelector = options.singleOptionSelector;
     this.originalSelectorId = options.originalSelectorId;
     this.enableHistoryState = options.enableHistoryState;
     this.currentVariant = this._getVariantFromOptions();
 
-    $(this.singleOptionSelector, this.$container).on(
-      "change",
-      this._onSelectChange.bind(this)
-    );
+    var self = this;
+    this.container
+      .querySelectorAll(this.singleOptionSelector)
+      .forEach(function (el) {
+        el.addEventListener("change", self._onSelectChange.bind(self));
+      });
   }
 
   Variants.prototype = Object.assign({}, Variants.prototype, {
-    /**
-     * Get the currently selected options from add-to-cart form. Works with all
-     * form input elements.
-     *
-     * @return {array} options - Values of currently selected variants
-     */
+    // Dispatch a native CustomEvent (variant on .detail AND directly on the event
+    // for handler compatibility), and also fire the jQuery event so listeners that
+    // are not yet migrated keep working. The jQuery compat is removed once all
+    // listeners (theme.Product / swatchCard2 / bundleProduct) are vanilla.
+    _trigger: function (type, variant) {
+      var ev = new CustomEvent(type, { bubbles: false, detail: { variant: variant } });
+      ev.variant = variant;
+      this.container.dispatchEvent(ev);
+      if (window.jQuery) {
+        window.jQuery(this.container).trigger({ type: type, variant: variant });
+      }
+    },
+
     _getCurrentOptions: function () {
-      var currentOptions = _.map(
-        $(this.singleOptionSelector, this.$container),
+      var currentOptions = Array.prototype.map.call(
+        this.container.querySelectorAll(this.singleOptionSelector),
         function (element) {
-          var $element = $(element);
-          var type = $element.attr("type");
+          var type = element.getAttribute("type");
           var currentOption = {};
 
           if (type === "radio" || type === "checkbox") {
-            if ($element[0].checked) {
-              currentOption.value = $element.val();
-              currentOption.index = $element.data("index");
-
+            if (element.checked) {
+              currentOption.value = element.value;
+              currentOption.index = element.getAttribute("data-index");
               return currentOption;
             } else {
               return false;
             }
           } else {
-            currentOption.value = $element.val();
-            currentOption.index = $element.data("index");
-
+            currentOption.value = element.value;
+            currentOption.index = element.getAttribute("data-index");
             return currentOption;
           }
         }
       );
-
-      // remove any unchecked input values if using radio buttons or checkboxes
-      currentOptions = _.compact(currentOptions);
-
-      return currentOptions;
+      return currentOptions.filter(Boolean);
     },
 
-    /**
-     * Find variant based on selected values.
-     *
-     * @param  {array} selectedValues - Values of variant inputs
-     * @return {object || undefined} found - Variant object from product.variants
-     */
     _getVariantFromOptions: function () {
       var selectedValues = this._getCurrentOptions();
       var variants = this.product.variants;
-
-      for (
-        var e = selectedValues,
-          s = variants,
-          found = _.find(s, function (variant) {
-            return e.every(function (values) {
-              return _.isEqual(variant[values.index], values.value);
-            });
-          }),
-          r = 0;
-        r < e.length;
-        r++
-      ) {
+      var found = variants.find(function (variant) {
+        return selectedValues.every(function (values) {
+          return variant[values.index] === values.value;
+        });
+      });
+      for (var r = 0; r < selectedValues.length; r++) {
         var t = r + 1;
-        $(".js-swatch-display--" + t).text(e[r].value);
+        document
+          .querySelectorAll(".js-swatch-display--" + t)
+          .forEach(function (el) {
+            el.textContent = selectedValues[r].value;
+          });
       }
       return found;
     },
 
-    /**
-     * Event handler for when a variant input changes.
-     */
     _onSelectChange: function () {
       var variant = this._getVariantFromOptions();
 
-      this.$container.trigger({
-        type: "variantChange",
-        variant: variant,
-      });
+      this._trigger("variantChange", variant);
 
       if (!variant) {
         return;
@@ -576,12 +567,6 @@ slate.Variants = (function () {
       }
     },
 
-    /**
-     * Trigger event when variant image changes
-     *
-     * @param  {object} variant - Currently selected variant
-     * @return {event}  variantImageChange
-     */
     _updateImages: function (variant) {
       var variantImage = variant.featured_image || {};
       var currentVariantImage = this.currentVariant.featured_image || {};
@@ -593,18 +578,9 @@ slate.Variants = (function () {
         return;
       }
 
-      this.$container.trigger({
-        type: "variantImageChange",
-        variant: variant,
-      });
+      this._trigger("variantImageChange", variant);
     },
 
-    /**
-     * Trigger event when variant price changes.
-     *
-     * @param  {object} variant - Currently selected variant
-     * @return {event} variantPriceChange
-     */
     _updatePrice: function (variant) {
       if (
         variant.price === this.currentVariant.price &&
@@ -613,34 +589,17 @@ slate.Variants = (function () {
         return;
       }
 
-      this.$container.trigger({
-        type: "variantPriceChange",
-        variant: variant,
-      });
+      this._trigger("variantPriceChange", variant);
     },
 
-    /**
-     * Trigger event when variant sku changes.
-     *
-     * @param  {object} variant - Currently selected variant
-     * @return {event} variantSKUChange
-     */
     _updateSKU: function (variant) {
       if (variant.sku === this.currentVariant.sku) {
         return;
       }
 
-      this.$container.trigger({
-        type: "variantSKUChange",
-        variant: variant,
-      });
+      this._trigger("variantSKUChange", variant);
     },
-    /**
-     * Update history state for product deeplinking
-     *
-     * @param  {variant} variant - Currently selected variant
-     * @return {k}         [description]
-     */
+
     _updateHistoryState: function (variant) {
       if (!history.replaceState || !variant) {
         return;
@@ -656,13 +615,9 @@ slate.Variants = (function () {
       window.history.replaceState({ path: newurl }, "", newurl);
     },
 
-    /**
-     * Update hidden master select of variant change
-     *
-     * @param  {variant} variant - Currently selected variant
-     */
     _updateMasterSelect: function (variant) {
-      $(this.originalSelectorId, this.$container).val(variant.id);
+      var master = this.container.querySelector(this.originalSelectorId);
+      if (master) master.value = variant.id;
     },
   });
 
