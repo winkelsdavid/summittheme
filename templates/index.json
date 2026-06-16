@@ -270,7 +270,7 @@
         "bullet_TE49bP",
         "bullet_JN8b6n"
       ],
-      "name": "Image with Bullets",
+      "name": "Image With Bullets",
       "settings": {
         "animation": "",
         "section_width": "container",
@@ -465,7 +465,7 @@
         "image_block_gYrnTU",
         "text_block_7eGJY4"
       ],
-      "name": "Image with text",
+      "name": "Image With Text",
       "settings": {
         "animation": "",
         "section_width": "container",
@@ -484,7 +484,7 @@
     "featured_articles_q8YN3U": {
       "type": "featured-articles",
       "disabled": true,
-      "name": "Blog posts",
+      "name": "Blog Posts",
       "settings": {
         "animation": "",
         "section_width": "container",
@@ -710,7 +710,7 @@
     },
     "featured_articles_Br8tm4": {
       "type": "featured-articles",
-      "name": "Blog posts",
+      "name": "Blog Posts",
       "settings": {
         "animation": "",
         "section_width": "container",
@@ -922,7 +922,7 @@
         "banner_VGUjeA",
         "banner_nUiqkd"
       ],
-      "name": "Grid banner",
+      "name": "Grid Banner",
       "settings": {
         "animation": "",
         "section_width": "container",
