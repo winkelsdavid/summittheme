@@ -2357,233 +2357,165 @@ theme.Product = (function () {
 })();
 
 theme.Slideshow = (function () {
-  this.$slideshow = null;
-  var classes = {
-    slideshow: "slideshow",
-    slickActiveMobile: "slick-active-mobile",
-    controlsHover: "slideshow__controls--hover",
-    isPaused: "is-paused",
-  };
-
   var selectors = {
     section: ".shopify-section",
     wrapper: "#SlideshowWrapper-",
     slides: ".slideshow__slide",
     textWrapperMobile: ".slideshow__text-wrap--mobile",
     textContentMobile: ".slideshow__text-content--mobile",
-    controls: ".slideshow__controls",
-    dots: ".slick-dots",
-    arrowLeft: ".slideshow__arrow-left",
-    arrowRight: ".slideshow__arrow-right",
   };
 
+  // Inline chevrons so the arrows don't depend on the old Slick icon font.
+  var ARROW_PREV =
+    '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+  var ARROW_NEXT =
+    '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+
   function slideshow(el, sectionId) {
-    var $slideshow = (this.$slideshow = $(el));
-    this.adaptHeight = this.$slideshow.data("adapt-height");
-    this.$wrapper = this.$slideshow.closest(selectors.wrapper + sectionId);
-    this.$section = this.$wrapper.closest(selectors.section);
-    this.$controls = this.$wrapper.find(selectors.controls);
+    var self = this;
+    var node = (this.node = document.querySelector(el));
+    if (!node) return;
+    var $slideshow = (this.$slideshow = $(node));
+
+    this.sectionId = sectionId;
+    this.adaptHeight = $slideshow.data("adapt-height");
+    this.$section = $slideshow.closest(selectors.section);
     this.$textWrapperMobile = this.$section.find(selectors.textWrapperMobile);
-    this.autorotate = this.$slideshow.data("autorotate");
-    this.navArrow = this.$slideshow.data("arrow");
-    this.navDot = this.$slideshow.data("dot");
-    this.transit = this.$slideshow.data("transit");
-    var autoplaySpeed = this.$slideshow.data("speed");
-    var loadSlideA11yString = this.$slideshow.data("slide-nav-a11y");
-    this.settings = {
-      rtl: theme.rtl,
-      accessibility: false,
-      arrows: this.navArrow,
-      dots: this.navDot,
-      fade: this.transit === "slide" ? false : true,
-      draggable: true,
-      touchThreshold: 20,
-      autoplay: this.autorotate,
-      autoplaySpeed: autoplaySpeed,
-      pauseOnFocus: this.autorotate ? false : true,
-      pauseOnHover: this.autorotate ? false : true,
-      useTransform: true,
-      infinite: true,
-    };
+    this.autorotate = $slideshow.data("autorotate");
+    this.navArrow = $slideshow.data("arrow");
+    this.navDot = $slideshow.data("dot");
+    this.transit = $slideshow.data("transit");
+    var autoplaySpeed = $slideshow.data("speed") || 5000;
 
-    this.$slideshow.on("beforeChange", beforeChange.bind(this));
-    this.$slideshow.on("init", slideshowA11ySetup.bind(this));
-
-    // Add class to style mobile dots & show the correct text content for the
-    // first slide on mobile when the slideshow initialises
-    this.$slideshow.on(
-      "init",
-      function () {
-        this.$mobileDots
-          .find("li:first-of-type")
-          .addClass(classes.slickActiveMobile);
-        this.showMobileText(0);
-      }.bind(this)
-    );
+    var $wrapper = $slideshow.closest(selectors.wrapper + sectionId);
+    this.$wrapper = $wrapper.length ? $wrapper : this.$section;
 
     if (this.adaptHeight) {
       this.setSlideshowHeight();
-      $(window).resize($.debounce(50, this.setSlideshowHeight.bind(this)));
+      this._onResize = $.debounce(50, this.setSlideshowHeight.bind(this));
+      $(window).on("resize", this._onResize);
     }
 
-    this.$slideshow.slick(this.settings);
-    this.$slideshow.on(
-      "beforeChange",
-      function (event, slick, currentSlide, nextSlide) {
-        if ($(this).data("transit") === "slide-fade") {
-          var $outGoing = $(slick.$slides.get(currentSlide));
-          $outGoing.addClass("slick-going");
-        }
-      }
-    );
-    this.$slideshow.on(
-      "afterChange",
-      function (event, slick, currentSlide, nextSlide) {
-        $(slick.$slides).filter(".slick-going").removeClass("slick-going");
-      }
-    );
-    // This can't be called when the slick 'init' event fires due to how slick
-    // adds a11y features.
-    slideshowPostInitA11ySetup.bind(this)();
-  }
-
-  function slideshowA11ySetup(event, obj) {
-    var $slider = obj.$slider;
-    var $list = obj.$list;
-    this.$dots = this.$section.find(selectors.dots);
-    this.$mobileDots = this.$dots.eq(1);
-
-    // Remove default Slick aria-live attr until slider is focused
-    $list.removeAttr("aria-live");
-
-    //     this.$wrapper.on('keyup', keyboardNavigation.bind(this));
-    //     this.$controls.on('keyup', keyboardNavigation.bind(this));
-    //     this.$textWrapperMobile.on('keyup', keyboardNavigation.bind(this));
-
-    // When an element in the slider is focused
-    // pause slideshow and set aria-live.
-    this.$wrapper
-      .on(
-        "focusin",
-        function (evt) {
-          if (!this.$wrapper.has(evt.target).length) {
-            return;
-          }
-
-          $list.attr("aria-live", "polite");
-          if (this.autorotate) {
-            $slider.slick("slickPause");
-          }
-        }.bind(this)
-      )
-      .on(
-        "focusout",
-        function (evt) {
-          if (!this.$wrapper.has(evt.target).length) {
-            return;
-          }
-
-          $list.removeAttr("aria-live");
-        }.bind(this)
-      );
-
-    // Add arrow key support when focused
-    if (this.$dots) {
-      this.$dots
-        .find("a")
-        .each(function () {
-          var $dot = $(this);
-          $dot.on("click keyup", function (evt) {
-            if (
-              evt.type === "keyup" &&
-              evt.which !== slate.utils.keyboardKeys.ENTER
-            )
-              return;
-
-            evt.preventDefault();
-
-            var slideNumber = $(evt.target).data("slide-number");
-
-            $slider.attr("tabindex", -1).slick("slickGoTo", slideNumber);
-
-            if (evt.type === "keyup") {
-              $slider.focus();
-            }
-          });
-        })
-        .eq(0)
-        .attr("aria-current", "true");
-    }
-
-    this.$controls
-      .on("focusin", highlightControls.bind(this))
-      .on("focusout", unhighlightControls.bind(this));
-  }
-
-  function slideshowPostInitA11ySetup() {
-    var $slides = this.$slideshow.find(selectors.slides);
-
-    $slides.removeAttr("role").removeAttr("aria-labelledby");
-    this.$dots
-      .removeAttr("role")
-      .find("li")
-      .removeAttr("role")
-      .removeAttr("aria-selected")
-      .each(function () {
-        var $dot = $(this);
-        var ariaControls = $dot.attr("aria-controls");
-        $dot
-          .removeAttr("aria-controls")
-          .find("a")
-          .attr("aria-controls", ariaControls);
+    // --- Build Swiper DOM at runtime (Slick wrapped the slides at init time;
+    //     we keep the .liquid markup untouched and only restructure here). ---
+    var slides = Array.prototype.slice.call(node.children).filter(function (c) {
+      return c.nodeType === 1 && c.classList.contains("slideshow__slide");
+    });
+    if (!node.querySelector(":scope > .swiper-wrapper")) {
+      var swWrap = document.createElement("div");
+      swWrap.className = "swiper-wrapper";
+      slides.forEach(function (s) {
+        s.classList.add("swiper-slide");
+        swWrap.appendChild(s);
       });
-  }
+      node.appendChild(swWrap);
+      node.classList.add("swiper");
+    }
 
-  function beforeChange(event, slick, currentSlide, nextSlide) {
-    var $dotLinks = this.$dots.find("a");
-    var $mobileDotLinks = this.$mobileDots.find("li");
-    $dotLinks
-      .removeAttr("aria-current")
-      .eq(nextSlide)
-      .attr("aria-current", "true");
+    var prevEl = null,
+      nextEl = null;
+    if (this.navArrow) {
+      prevEl = document.createElement("button");
+      prevEl.type = "button";
+      prevEl.className = "slideshow__arrow slideshow__arrow--prev";
+      prevEl.setAttribute("aria-label", "Previous slide");
+      prevEl.innerHTML = ARROW_PREV;
+      nextEl = document.createElement("button");
+      nextEl.type = "button";
+      nextEl.className = "slideshow__arrow slideshow__arrow--next";
+      nextEl.setAttribute("aria-label", "Next slide");
+      nextEl.innerHTML = ARROW_NEXT;
+      node.appendChild(prevEl);
+      node.appendChild(nextEl);
+    }
+    var pagiEl = null;
+    if (this.navDot) {
+      pagiEl = document.createElement("div");
+      pagiEl.className = "swiper-pagination";
+      node.appendChild(pagiEl);
+    }
 
-    $mobileDotLinks
-      .removeClass(classes.slickActiveMobile)
-      .eq(nextSlide)
-      .addClass(classes.slickActiveMobile);
-    this.showMobileText(nextSlide);
-  }
+    // transit: 'slide' = real sliding; 'fade'/'zoom'/'slide-fade' all ran on
+    // Slick fade:true plus pure-CSS decoration on .swiper-slide-active/.slick-going.
+    var useFade = this.transit !== "slide";
+    var opts = {
+      effect: useFade ? "fade" : "slide",
+      fadeEffect: { crossFade: true },
+      loop: slides.length > 1,
+      speed: 800,
+      threshold: 20,
+      watchSlidesProgress: true,
+      a11y: { enabled: false }, // Slick had accessibility:false; aria-current handled manually below
+      autoplay: this.autorotate
+        ? { delay: autoplaySpeed, disableOnInteraction: false }
+        : false,
+      navigation: this.navArrow ? { nextEl: nextEl, prevEl: prevEl } : false,
+      pagination: this.navDot ? { el: pagiEl, clickable: true } : false,
+      on: {
+        init: function () {
+          self.showMobileText(0);
+          self._syncAria(0);
+        },
+        slideChange: function () {
+          self.showMobileText(this.realIndex);
+          self._syncAria(this.realIndex);
+        },
+        slideChangeTransitionStart: function () {
+          // slide-fade: mark the OUTGOING slide so its image animates out (CSS .slick-going).
+          if (self.transit !== "slide-fade") return;
+          var prev = this.slides[this.previousIndex];
+          if (prev && prev.classList) prev.classList.add("slick-going");
+        },
+        slideChangeTransitionEnd: function () {
+          var s = this.slides;
+          for (var i = 0; i < s.length; i++) {
+            if (s[i].classList) s[i].classList.remove("slick-going");
+          }
+        },
+      },
+    };
 
-  //   function keyboardNavigation() {
-  //     if (event.keyCode === slate.utils.keyboardKeys.LEFTARROW) {
-  //       this.$slideshow.slick('slickPrev');
-  //     }
-  //     if (event.keyCode === slate.utils.keyboardKeys.RIGHTARROW) {
-  //       this.$slideshow.slick('slickNext');
-  //     }
-  //   }
+    this.swiper = window.Swiper ? new Swiper(node, opts) : null;
 
-  function highlightControls() {
-    this.$controls.addClass(classes.controlsHover);
-  }
-
-  function unhighlightControls() {
-    this.$controls.removeClass(classes.controlsHover);
+    // Pause auto-rotate while the slideshow has keyboard focus (a11y), resume on blur.
+    if (this.swiper && this.autorotate) {
+      this._focusIn = function () {
+        if (self.swiper && self.swiper.autoplay) self.swiper.autoplay.stop();
+      };
+      this._focusOut = function () {
+        if (self.swiper && self.swiper.autoplay) self.swiper.autoplay.start();
+      };
+      this.$wrapper.on("focusin", this._focusIn).on("focusout", this._focusOut);
+    }
   }
 
   slideshow.prototype.setSlideshowHeight = function () {
     var minAspectRatio = this.$slideshow.data("min-aspect-ratio");
-    this.$slideshow.height($(document).width() / minAspectRatio);
+    if (minAspectRatio) {
+      this.$slideshow.height($(document).width() / minAspectRatio);
+    }
+  };
+
+  // Mirror the active slide onto the (single) pagination bullet via aria-current.
+  // The old theme's "mobile dots" ($dots.eq(1)) never actually rendered, so there
+  // is only one dot list to keep in sync.
+  slideshow.prototype._syncAria = function (index) {
+    if (!this.swiper || !this.swiper.pagination) return;
+    var bullets = this.swiper.pagination.bullets;
+    if (!bullets || !bullets.length) return;
+    Array.prototype.forEach.call(bullets, function (b) {
+      b.removeAttribute("aria-current");
+    });
+    if (bullets[index]) bullets[index].setAttribute("aria-current", "true");
   };
 
   slideshow.prototype.showMobileText = function (slideIndex) {
+    if (!this.$textWrapperMobile || !this.$textWrapperMobile.length) return;
     var $allTextContent = this.$textWrapperMobile.find(
       selectors.textContentMobile
     );
-    var currentTextContentSelector =
-      selectors.textContentMobile + "-" + slideIndex;
     var $currentTextContent = this.$textWrapperMobile.find(
-      currentTextContentSelector
+      selectors.textContentMobile + "-" + slideIndex
     );
     if (
       !$currentTextContent.length &&
@@ -2597,9 +2529,16 @@ theme.Slideshow = (function () {
     $currentTextContent.show();
   };
 
-  function getSlideshowId($el) {
-    return "#Slideshow-" + $el.data("id");
-  }
+  slideshow.prototype.onDestroy = function () {
+    if (this._onResize) $(window).off("resize", this._onResize);
+    if (this._focusIn) this.$wrapper.off("focusin", this._focusIn);
+    if (this._focusOut) this.$wrapper.off("focusout", this._focusOut);
+    if (this.swiper) {
+      try {
+        this.swiper.destroy(true, true);
+      } catch (e) {}
+    }
+  };
 
   return slideshow;
 })();
@@ -2623,30 +2562,36 @@ theme.SlideshowSection.prototype = _.assignIn(
   theme.SlideshowSection.prototype,
   {
     onUnload: function () {
+      var inst = theme.slideshows[this.slideshow];
+      if (inst && inst.onDestroy) inst.onDestroy();
       delete theme.slideshows[this.slideshow];
     },
 
     onBlockSelect: function (evt) {
-      var $slideshow = $(this.slideshow);
-      var adaptHeight = $slideshow.data("adapt-height");
+      var inst = theme.slideshows[this.slideshow];
+      if (!inst || !inst.swiper) return;
+      if (inst.adaptHeight) inst.setSlideshowHeight();
 
-      if (adaptHeight) {
-        theme.slideshows[this.slideshow].setSlideshowHeight();
-      }
-
-      // Ignore the cloned version
-      var $slide = $(
-        ".slideshow__slide--" + evt.detail.blockId + ":not(.slick-cloned)"
+      // Resolve the real slide (exclude Swiper loop duplicates), then go there.
+      var slide = document.querySelector(
+        ".slideshow__slide--" +
+          evt.detail.blockId +
+          ":not(.swiper-slide-duplicate)"
       );
-      var slideIndex = $slide.data("slick-index");
-
-      // Go to selected slide, pause auto-rotate
-      $slideshow.slick("slickGoTo", slideIndex).slick("slickPause");
+      var index = 0;
+      if (slide) {
+        var attr = slide.getAttribute("data-swiper-slide-index");
+        index = attr !== null ? parseInt(attr, 10) : 0;
+      }
+      inst.swiper.slideToLoop(index);
+      if (inst.swiper.autoplay) inst.swiper.autoplay.stop();
     },
 
     onBlockDeselect: function () {
-      // Resume auto-rotate
-      $(this.slideshow).slick("slickPlay");
+      var inst = theme.slideshows[this.slideshow];
+      if (inst && inst.swiper && inst.swiper.autoplay) {
+        inst.swiper.autoplay.start();
+      }
     },
   }
 );
