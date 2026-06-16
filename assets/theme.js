@@ -997,61 +997,57 @@ window.Modals = (function () {
 })();
 
 window.QtySelector = (function () {
-  var QtySelector = function ($el) {
-    this.cache = {
-      $body: $("body"),
-      $subtotal: $("#CartSubtotal"),
-      $discountTotal: $("#cartDiscountTotal"),
-      $cartTable: $(".cart-table"),
-      $cartTemplate: $("#CartProducts"),
-    };
+  var QtySelector = function (el) {
+    // accept a jQuery object or a DOM <input>
+    this.el = el && el.jquery ? el[0] : el;
 
     this.settings = {
       loadingClass: "js-qty--is-loading",
-      isCartTemplate: this.cache.$body.hasClass("template-cart"),
+      isCartTemplate: document.body.classList.contains("template-cart"),
       // On the cart template, minimum is 0. Elsewhere min is 1
-      minQty: this.cache.$body.hasClass("template-cart") ? 0 : 1,
+      minQty: document.body.classList.contains("template-cart") ? 0 : 1,
     };
 
-    this.$el = $el;
-    this.qtyUpdateTimeout;
+    this.qtyUpdateTimeout = null;
     this.createInputs();
     this.bindEvents();
   };
 
   QtySelector.prototype.createInputs = function () {
-    var $el = this.$el;
+    var el = this.el;
 
     var data = {
-      value: $el.val(),
-      key: $el.attr("id"),
-      name: $el.attr("name"),
-      line: $el.attr("data-line"),
+      value: el.value,
+      key: el.getAttribute("id"),
+      name: el.getAttribute("name"),
+      line: el.getAttribute("data-line"),
     };
-    var source = $("#QuantityTemplate").html();
+    var sourceEl = document.getElementById("QuantityTemplate");
+    var source = sourceEl ? sourceEl.innerHTML : "";
     var template = Handlebars.compile(source);
 
-    this.$wrapper = $(template(data)).insertBefore($el);
+    var temp = document.createElement("div");
+    temp.innerHTML = template(data).trim();
+    this.wrapper = temp.firstElementChild;
+    el.parentNode.insertBefore(this.wrapper, el);
 
     // Remove original number input
-    $el.remove();
+    el.remove();
   };
 
   QtySelector.prototype.validateAvailability = function (line, quantity) {
     var product = theme.cartObject.items[line - 1]; // 0-based index in API
-    var handle = product.handle; // needed for the ajax request
-    var id = product.id; // needed to find right variant from ajax results
+    var handle = product.handle;
+    var id = product.id;
+    var self = this;
 
-    var params = {
-      type: "GET",
-      url: "/products/" + handle + ".js",
-      dataType: "json",
-      success: $.proxy(function (cartProduct) {
-        this.validateAvailabilityCallback(line, quantity, id, cartProduct);
-      }, this),
-    };
-
-    $.ajax(params);
+    fetch(window.Shopify.routes.root + "products/" + handle + ".js")
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (cartProduct) {
+        self.validateAvailabilityCallback(line, quantity, id, cartProduct);
+      });
   };
 
   QtySelector.prototype.validateAvailabilityCallback = function (
@@ -1062,8 +1058,6 @@ window.QtySelector = (function () {
   ) {
     var quantityIsAvailable = true;
 
-    // This returns all variants of a product.
-    // Loop through them to get our desired one.
     for (var i = 0; i < product.variants.length; i++) {
       var variant = product.variants[i];
       if (variant.id === id) {
@@ -1071,18 +1065,16 @@ window.QtySelector = (function () {
       }
     }
 
-    // If the variant tracks inventory and does not sell when sold out
-    // we can compare the requested with available quantity
     if (
       variant.inventory_management !== null &&
       variant.inventory_policy === "deny"
     ) {
       if (variant.inventory_quantity < quantity) {
-        // Set quantity to max amount available
-        this.$wrapper.find(".js-qty__input").val(variant.inventory_quantity);
+        var input = this.wrapper.querySelector(".js-qty__input");
+        if (input) input.value = variant.inventory_quantity;
 
         quantityIsAvailable = false;
-        this.$wrapper.removeClass(this.settings.loadingClass);
+        this.wrapper.classList.remove(this.settings.loadingClass);
       }
     }
 
@@ -1095,19 +1087,18 @@ window.QtySelector = (function () {
     if (parseFloat(qty) === parseInt(qty, 10) && !isNaN(qty)) {
       // We have a valid number!
     } else {
-      // Not a number. Default to 1.
       qty = 1;
     }
     return parseInt(qty, 10);
   };
 
   QtySelector.prototype.adjustQty = function (evt) {
-    var $el = $(evt.currentTarget);
-    var $input = $el.siblings(".js-qty__input");
-    var qty = this.validateQty($input.val());
-    var line = $input.attr("data-line");
+    var btn = evt.currentTarget;
+    var input = btn.parentElement.querySelector(".js-qty__input");
+    var qty = this.validateQty(input.value);
+    var line = input.getAttribute("data-line");
 
-    if ($el.hasClass("js-qty__adjust--minus")) {
+    if (btn.classList.contains("js-qty__adjust--minus")) {
       qty -= 1;
       if (qty <= this.settings.minQty) {
         qty = this.settings.minQty;
@@ -1117,91 +1108,78 @@ window.QtySelector = (function () {
     }
 
     if (this.settings.isCartTemplate) {
-      $el.parent().addClass(this.settings.loadingClass);
+      btn.parentElement.classList.add(this.settings.loadingClass);
       this.updateCartItemPrice(line, qty);
     } else {
-      $input.val(qty);
+      input.value = qty;
     }
   };
 
   QtySelector.prototype.bindEvents = function () {
-    this.$wrapper
-      .find(".js-qty__adjust")
-      .on("click", $.proxy(this.adjustQty, this));
+    var self = this;
+    this.wrapper.querySelectorAll(".js-qty__adjust").forEach(function (btn) {
+      btn.addEventListener("click", self.adjustQty.bind(self));
+    });
 
     // Select input text on click
-    this.$wrapper.on("click", ".js-qty__input", function () {
-      this.setSelectionRange(0, this.value.length);
+    this.wrapper.addEventListener("click", function (evt) {
+      var input = evt.target.closest(".js-qty__input");
+      if (input) input.setSelectionRange(0, input.value.length);
     });
 
     // If the quantity changes on the cart template, update the price
     if (this.settings.isCartTemplate) {
-      this.$wrapper.on(
-        "change",
-        ".js-qty__input",
-        $.proxy(function (evt) {
-          var $input = $(evt.currentTarget);
-          var line = $input.attr("data-line");
-          var qty = this.validateQty($input.val());
-          $input.parent().addClass(this.settings.loadingClass);
-          this.updateCartItemPrice(line, qty);
-        }, this)
-      );
+      this.wrapper.addEventListener("change", function (evt) {
+        var input = evt.target.closest(".js-qty__input");
+        if (!input) return;
+        var line = input.getAttribute("data-line");
+        var qty = self.validateQty(input.value);
+        if (input.parentElement) {
+          input.parentElement.classList.add(self.settings.loadingClass);
+        }
+        self.updateCartItemPrice(line, qty);
+      });
     }
   };
 
   QtySelector.prototype.updateCartItemPrice = function (line, qty) {
-    // Update cart after short timeout so user doesn't create simultaneous ajax calls
+    var self = this;
     clearTimeout(this.qtyUpdateTimeout);
-    this.qtyUpdateTimeout = setTimeout(
-      $.proxy(function () {
-        this.validateAvailability(line, qty);
-      }, this),
-      200
-    );
+    this.qtyUpdateTimeout = setTimeout(function () {
+      self.validateAvailability(line, qty);
+    }, 200);
   };
 
   QtySelector.prototype.updateItemQuantity = function (line, quantity) {
-    var params = {
-      type: "POST",
-      url: "/cart/change.js",
-      data: "quantity=" + quantity + "&line=" + line,
-      dataType: "json",
-      success: $.proxy(function (cart) {
-        this.updateCartItemCallback(cart);
-      }, this),
-    };
-
-    $.ajax(params);
+    var self = this;
+    fetch(window.Shopify.routes.root + "cart/change.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ quantity: quantity, line: line }),
+    })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (cart) {
+        self.updateCartItemCallback(cart);
+      });
   };
 
   QtySelector.prototype.updateCartItemCallback = function (cart) {
-    // Reload the page to show the empty cart if no items
     if (cart.item_count === 0) {
       location.reload();
       return;
     }
 
-    // Update cart object
     theme.cartObject = cart;
 
-    // Handlebars.js cart layout
-    var data = {};
     var items = [];
-    var item = {};
-    var source = $("#CartProductTemplate").html();
+    var sourceEl = document.getElementById("CartProductTemplate");
+    var source = sourceEl ? sourceEl.innerHTML : "";
     var template = Handlebars.compile(source);
     var prodImg;
 
-    // Add each item to our handlebars.js data
-    $.each(cart.items, function (index, cartItem) {
-      /* Hack to get product image thumbnail
-       *   - If image is not null
-       *     - Remove file extension, add 240x240, and re-add extension
-       *     - Create server relative link
-       *   - A hard-coded url of no-image
-       */
-
+    cart.items.forEach(function (cartItem, index) {
       if (cartItem.image === null) {
         prodImg =
           "//cdn.shopify.com/s/assets/admin/no-image-medium-cc9732cb976dd349a0df1d39816fbcc7.gif";
@@ -1212,17 +1190,16 @@ window.QtySelector = (function () {
       }
 
       if (cartItem.properties !== null) {
-        $.each(cartItem.properties, function (key, value) {
-          if (key.charAt(0) === "_" || !value) {
+        Object.keys(cartItem.properties).forEach(function (key) {
+          if (key.charAt(0) === "_" || !cartItem.properties[key]) {
             delete cartItem.properties[key];
           }
         });
       }
 
-      // Create item's data object and add to 'items' array
-      item = {
+      items.push({
         key: cartItem.key,
-        line: index + 1, // Shopify uses a 1+ index in the API
+        line: index + 1,
         url: cartItem.url,
         img: prodImg,
         name: cartItem.product_title,
@@ -1242,44 +1219,47 @@ window.QtySelector = (function () {
         discounts: cartItem.discounts,
         discountsApplied:
           cartItem.line_price === cartItem.original_line_price ? false : true,
-      };
-
-      items.push(item);
-      //theme.updateCurrencies();
+      });
     });
 
-    // Gather all cart data and add to DOM
-    data = {
-      items: items,
-    };
-    this.cache.$cartTemplate.empty().append(template(data));
-
-    // Create new quantity selectors
-    this.cache.$cartTable.find('input[type="number"]').each(function (i, el) {
-      new QtySelector($(el));
-    });
-
-    // Update the cart subtotal
-    this.cache.$subtotal.html(
-      theme.Currency.formatMoney(cart.total_price, theme.moneyFormat)
-    );
-
-    // Update the cart total discounts
-    if (cart.total_discount > 0) {
-      this.cache.$discountTotal.html(
-        theme.strings.totalCartDiscount.replace(
-          "[savings]",
-          theme.Currency.formatMoney(cart.total_discount, theme.moneyFormat)
-        )
-      );
-    } else {
-      this.cache.$discountTotal.empty();
+    var cartTemplate = document.getElementById("CartProducts");
+    if (cartTemplate) {
+      cartTemplate.innerHTML = "";
+      cartTemplate.insertAdjacentHTML("beforeend", template({ items: items }));
     }
 
-    theme.miniCart.updateElements();
-    //theme.updateCurrencies();
-    // Set focus on cart table
-    slate.a11y.pageLinkFocus(this.cache.$cartTable);
+    // Create new quantity selectors
+    var cartTable = document.querySelector(".cart-table");
+    if (cartTable) {
+      cartTable.querySelectorAll('input[type="number"]').forEach(function (el) {
+        new QtySelector(el);
+      });
+    }
+
+    // Update the cart subtotal
+    var subtotal = document.querySelector("#CartSubtotal");
+    if (subtotal) {
+      subtotal.innerHTML = theme.Currency.formatMoney(
+        cart.total_price,
+        theme.moneyFormat
+      );
+    }
+
+    // Update the cart total discounts
+    var discountTotal = document.querySelector("#cartDiscountTotal");
+    if (discountTotal) {
+      if (cart.total_discount > 0) {
+        discountTotal.innerHTML = theme.strings.totalCartDiscount.replace(
+          "[savings]",
+          theme.Currency.formatMoney(cart.total_discount, theme.moneyFormat)
+        );
+      } else {
+        discountTotal.innerHTML = "";
+      }
+    }
+
+    if (theme.miniCart) theme.miniCart.updateElements();
+    if (cartTable) slate.a11y.pageLinkFocus(cartTable);
   };
 
   return QtySelector;
