@@ -9,11 +9,7 @@
   endcase
 -%}
 <style>
-  .qv-content{text-align:left}.rtl .qv-content{text-align:right}#qv-product-images{margin:0 0 24px;min-height: 400px;opacity: 0;transition: opacity 0.1s ease-in;}#jsQuickview .option-selection{margin-bottom:16px}#jsQuickview select.option{width: calc(100% - 120px);}#jsQuickview span.option{min-width:120px;display:inline-block;text-transform:capitalize;margin-bottom:6px;}#jsQuickview .slick-dots{bottom:20px}#jsQuickview .slick-dots li button:before{font-size:35px;color:#000;transition:all ease .3s}#jsQuickview .qv-product-price{display:inline-block;margin:0}#jsQuickview .qv-product-price .money{color:{{ settings.color_primary }}}#jsQuickview .qv-add-button{display: inline-block; float: left; margin-left: 20px; width: calc(100% - 120px);}#jsQuickview .qv-product-description{max-height:180px;overflow:hidden;position:relative;}#jsQuickview .qv-product-description:after{position:absolute;content:"";width:100%;left:0;bottom:0;background:#fff}.rtl #jsQuickview .qv-product-description:after{right:0;left:auto}.qv-add-to-cart .quantity{height:40px;display:inline-block;width:100px;float:left}.qv-add-to-cart .quantity span{display:none}.qv-quantity{height:50px;width:100%;text-align:center;}
-  #qv-product-images .swiper-button-prev{left: 20px;}#qv-product-images .swiper-button-next{right: 20px;}
-  #qv-product-images .swiper-button-prev,#qv-product-images .swiper-button-next{opacity: 0;transition: all 0.3s ease;}
-  #qv-product-images:hover .swiper-button-next{opacity: 1;}
-  #qv-product-images:hover .swiper-button-prev{opacity: 1;}
+  .qv-content{text-align:left}.rtl .qv-content{text-align:right}#qv-product-images{margin:0;opacity: 0;transition: opacity 0.1s ease-in;}#jsQuickview .option-selection{margin-bottom:16px}#jsQuickview select.option{width: calc(100% - 120px);}#jsQuickview span.option{min-width:120px;display:inline-block;text-transform:capitalize;margin-bottom:6px;}#jsQuickview .qv-product-price{display:inline-block;margin:0}#jsQuickview .qv-product-price .money{color:{{ settings.color_primary }}}#jsQuickview .qv-product-description{max-height:180px;overflow:hidden;position:relative;}#jsQuickview .qv-product-description:after{position:absolute;content:"";width:100%;left:0;bottom:0;background:#fff}.rtl #jsQuickview .qv-product-description:after{right:0;left:auto}.qv-add-to-cart .quantity{height:40px;width:100px}.qv-add-to-cart .quantity span{display:none}.qv-quantity{height:50px;width:100%;text-align:center;}
   #jsQuickview .option-selection.color .single-option-radio{
     padding-left:8px;
     padding-top:4px;
@@ -66,8 +62,13 @@
     font-size: 14px !important;
   }
   .qv-product-rv{
-    min-height:40px;
+    /* no fixed reserve -> price sits right under the title when there are no
+       reviews; the badge still expands naturally when reviews load. */
+    min-height:0;
   }
+  /* price closer to the title */
+  #jsQuickview .qv-product-title{ padding-bottom: 4px !important; }
+  #jsQuickview .qv-product-rv{ padding-bottom: 8px !important; }
   .qv-product-rv .spr-badge{
     display:flex;
     align-items:center;
@@ -180,49 +181,69 @@
   }
   dialog#jsQuickview .modal-dialog{
     width:100%;
-    max-width:800px;
+    max-width:900px;
     margin:auto;
   }
 
   /* ============ Quick View "Image Ratio" layout ({{ qv_ar }}) ============
-     The left image column takes the chosen aspect ratio and the image COVERS it
-     fully (no whitespace). The modal height follows that ratio. The right content
-     column matches that height and scrolls internally if its content is taller,
-     so it never stretches the modal past the image ratio. */
-  #qv-product-images{ min-height: 0; }
+     Pure CSS scroll-snap gallery (no jQuery, no Slick, no slider library). The
+     image COVERS its column (object-fit:cover) -> never any whitespace. The
+     aspect-ratio is the BASELINE shape of the image area; the modal height
+     follows the CONTENT so nothing has to be scrolled inside the modal: both
+     columns grow to the taller of (image ratio, content) and stay equal. */
+  #qv-product-images{ min-height: 0; position: relative; height: 100%; }
   #jsQuickview .left-qv{ background-color: var(--color-item-product); overflow: hidden; }
-  /* Image fills the column completely (Swiper autoHeight is off in theme.js). */
-  #jsQuickview .left-qv #qv-product-images,
-  #jsQuickview .left-qv .swiper,
-  #jsQuickview .left-qv .swiper-wrapper,
-  #jsQuickview .left-qv .swiper-slide{ width: 100%; height: 100% !important; }
-  #qv-product-images .swiper-slide img{ display: block; width: 100%; height: 100%; object-fit: cover; background-color: var(--color-item-product); }
 
-  /* Mobile (stacked): the image takes the ratio across the full width, content
-     flows below normally (no internal scroll, so hide the scroll fade cue). */
+  /* horizontal scroll-snap track + slides fill the column; image covers it */
+  #qv-product-images .qv-track{
+    display: flex;
+    width: 100%; height: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #qv-product-images .qv-track::-webkit-scrollbar{ display: none; }
+  #qv-product-images .qv-slide{ flex: 0 0 100%; height: 100%; scroll-snap-align: start; }
+  #qv-product-images .qv-slide img{ display: block; width: 100%; height: 100%; object-fit: cover; background-color: var(--color-item-product); }
+
+  /* vanilla arrows (hover-reveal) + dots */
+  #qv-product-images .qv-nav{
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+    width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%;
+    background: rgba(255,255,255,.85); color: #000; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s ease;
+  }
+  #qv-product-images:hover .qv-nav{ opacity: 1; }
+  #qv-product-images .qv-prev{ left: 12px; }
+  #qv-product-images .qv-next{ right: 12px; }
+  #qv-product-images .qv-dots{ position: absolute; left: 0; right: 0; bottom: 12px; z-index: 2; display: flex; gap: 6px; justify-content: center; }
+  #qv-product-images .qv-dot{ width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; background: rgba(0,0,0,.25); cursor: pointer; transition: background .2s; }
+  #qv-product-images .qv-dot.is-active{ background: rgba(0,0,0,.85); }
+
+  /* image area = the chosen ratio as a MINIMUM; the modal grows with content. */
   @media (max-width: 991px){
     #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; }
-    #jsQuickview .qv-content:after{ display: none; }
   }
-
-  /* Desktop (side-by-side, lg): the left column's aspect-ratio drives the modal
-     height; the right column matches it. The content holder is absolutely
-     positioned so it contributes no height (the row height = image ratio) and
-     scrolls internally when the content is taller than the image.
-     align-self:stretch !important overrides the Bootstrap .align-self-center on
-     the column (which would otherwise collapse it to 0 height). */
   @media (min-width: 992px){
-    #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; }
-    #jsQuickview .right-qv{ position: relative; overflow: hidden; align-self: stretch !important; }
-    #jsQuickview .right-qv .qv-content-holder{ position: absolute; inset: 0; overflow-y: auto; }
+    /* both columns equal height = max(image ratio, content); image covers it,
+       content is fully visible -> NO internal scrolling. */
+    #jsQuickview .modal-body > .row{ align-items: stretch; }
+    #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; align-self: stretch; }
+    /* override Bootstrap .align-self-center on the content column */
+    #jsQuickview .right-qv{ align-self: stretch !important; }
   }
 
-  /* Add-to-cart row: the old `float:left; width:calc(100% - 120px)` overflowed
-     the column inside the flex (.d-flex) wrapper (long DE label was cut off).
-     Proper flex row: natural-width qty, button fills the rest, label can wrap. */
-  #jsQuickview .qv-add-to-cart > .d-flex{ gap: 16px; align-items: center; }
+  /* no internal scroll anymore -> drop the bottom scroll-fade cue */
+  #jsQuickview .qv-content:after{ display: none; }
+
+  /* Add-to-cart row: qty (fixed) + button (fills the rest) on one flex line.
+     Label stays on one line; it only wraps if the window gets too narrow (it is
+     never cut off). */
+  #jsQuickview .qv-add-to-cart > .d-flex{ gap: 12px; align-items: center; }
   #jsQuickview .qv-add-to-cart .quantity{ float: none; flex: 0 0 auto; }
-  #jsQuickview .qv-add-button{ flex: 1 1 0; min-width: 0; width: auto; margin-left: 0; float: none; white-space: normal; }
+  #jsQuickview .qv-add-button{ flex: 1 1 auto; min-width: 0; width: auto; margin: 0; float: none; white-space: normal; padding-left: 1rem; padding-right: 1rem; }
 
 </style>
 <!-- quickview.liquid -->

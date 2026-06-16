@@ -3816,43 +3816,88 @@ theme.quickview = (function () {
           if (thumbEl) thumbEl.insertAdjacentHTML("beforeend", image_embed);
         });
         (function () {
-          // Wrap the runtime-built <div><img></div> slides into Swiper structure
-          // (replaces Slick; same pattern as the Instagram feed slider).
+          // Pure CSS scroll-snap gallery — NO jQuery, NO Slick, NO slider library.
+          // The runtime-built <div><img></div> items become horizontal snap slides;
+          // native scroll-snap handles swipe, vanilla arrows/dots drive it.
+          // qvSwiper is a tiny shim exposing slideTo()/destroy() so the variant
+          // image switching + reset elsewhere keep working unchanged.
           var cont = document.querySelector(quickviewThumb);
           if (!cont) return;
-          var wrapper = document.createElement("div");
-          wrapper.className = "swiper-wrapper";
+          var track = document.createElement("div");
+          track.className = "qv-track";
+          var items = [];
           Array.prototype.slice.call(cont.children).forEach(function (s) {
             if (s.nodeType === 1) {
-              s.classList.add("swiper-slide");
-              wrapper.appendChild(s);
+              s.classList.add("qv-slide");
+              track.appendChild(s);
+              items.push(s);
             }
           });
-          cont.appendChild(wrapper);
-          cont.classList.add("swiper");
-          var prev = document.createElement("div");
-          prev.className = "swiper-button-prev";
-          var next = document.createElement("div");
-          next.className = "swiper-button-next";
-          var pagi = document.createElement("div");
-          pagi.className = "swiper-pagination";
-          cont.appendChild(prev);
-          cont.appendChild(next);
-          cont.appendChild(pagi);
+          cont.appendChild(track);
+
+          function activeIndex() {
+            var w = track.clientWidth || 1;
+            return Math.round(track.scrollLeft / w);
+          }
+          function scrollToIndex(i) {
+            i = Math.max(0, Math.min(items.length - 1, i));
+            if (items[i]) {
+              track.scrollTo({
+                left: items[i].offsetLeft - track.offsetLeft,
+                behavior: "smooth",
+              });
+            }
+          }
+
+          if (items.length > 1) {
+            var prev = document.createElement("button");
+            prev.type = "button";
+            prev.className = "qv-nav qv-prev";
+            prev.setAttribute("aria-label", "Previous image");
+            prev.innerHTML =
+              '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>';
+            var next = document.createElement("button");
+            next.type = "button";
+            next.className = "qv-nav qv-next";
+            next.setAttribute("aria-label", "Next image");
+            next.innerHTML =
+              '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>';
+            prev.addEventListener("click", function () {
+              scrollToIndex(activeIndex() - 1);
+            });
+            next.addEventListener("click", function () {
+              scrollToIndex(activeIndex() + 1);
+            });
+            cont.appendChild(prev);
+            cont.appendChild(next);
+
+            var dots = document.createElement("div");
+            dots.className = "qv-dots";
+            items.forEach(function (s, i) {
+              var d = document.createElement("button");
+              d.type = "button";
+              d.className = "qv-dot" + (i === 0 ? " is-active" : "");
+              d.setAttribute("aria-label", "Go to image " + (i + 1));
+              d.addEventListener("click", function () {
+                scrollToIndex(i);
+              });
+              dots.appendChild(d);
+            });
+            cont.appendChild(dots);
+
+            track.addEventListener("scroll", function () {
+              window.requestAnimationFrame(function () {
+                var a = activeIndex();
+                dots.querySelectorAll(".qv-dot").forEach(function (d, i) {
+                  d.classList.toggle("is-active", i === a);
+                });
+              });
+            });
+          }
+
           cont.style.opacity = "1";
-          qvSwiper = window.Swiper
-            ? new Swiper(cont, {
-                slidesPerView: 1,
-                loop: false,
-                // autoHeight off: the gallery fills a fixed-ratio box (see
-                // quickview.liquid Image Ratio CSS), it must not size to the image.
-                autoHeight: false,
-                observer: true,
-                observeParents: true,
-                navigation: { nextEl: next, prevEl: prev },
-                pagination: { el: pagi, clickable: true },
-              })
-            : null;
+          // shim: keeps qvSwiper.slideTo(i) (variant change) + .destroy() (reset) working
+          qvSwiper = { slideTo: scrollToIndex, destroy: function () {} };
         })();
 
         if (product.variants[0].option1 !== "Default Title") {

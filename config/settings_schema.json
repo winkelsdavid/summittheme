@@ -2561,7 +2561,7 @@
         "id": "qv_image_ratio",
         "label": "Image Ratio",
         "info": "Image format inside the Quick View popup. The popup adapts to this ratio.",
-        "default": "1x1",
+        "default": "2x3",
         "options": [
           {
             "value": "1x1",
