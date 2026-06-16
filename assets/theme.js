@@ -4283,14 +4283,12 @@ theme.openAddon = (function () {
 // MiniCart
 theme.miniCart = (function () {
   var miniCart = ".js-mini-cart",
-    styleCart = $(miniCart).attr("data-cartmini"),
     cartToggle = ".js-toggle-cart",
     cartCount = ".js-cart-count",
     cartContent = ".js-mini-cart-content",
     cartTotal = ".js-cart-total",
     $crosellcart = ".drawer-crossell",
     $cartBottom = ".js-cart-bottom",
-    $btnCheckout = $(".js-cart-btn-checkout"),
     numberDisplayed = 5,
     buttonHtml =
       '<a class="btn btn-outline w-100 mt-5" href=' +
@@ -4304,45 +4302,84 @@ theme.miniCart = (function () {
       '</div><div class="txtcart-empty mt-4">' +
       theme.strings.cartEmpty +
       "</div>" +
-      //buttonHtml +
-      "</div></div>",
-    cartimgsize = $(cartContent).attr("data-sizeimg");
+      "</div></div>";
+  var _mcEl = document.querySelector(miniCart);
+  var styleCart = _mcEl ? _mcEl.getAttribute("data-cartmini") : null;
+  var _ccEl = document.querySelector(cartContent);
+  var cartimgsize = _ccEl ? _ccEl.getAttribute("data-sizeimg") : "";
+
+  // ---- vanilla helpers ----
+  function getCart(cb) {
+    fetch(window.Shopify.routes.root + "cart.js")
+      .then(function (r) {
+        return r.json();
+      })
+      .then(cb);
+  }
+  function changeCartLine(body) {
+    return fetch(window.Shopify.routes.root + "cart/change.js", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(body),
+    });
+  }
+  function setHtmlAll(sel, html) {
+    document.querySelectorAll(sel).forEach(function (el) {
+      el.innerHTML = html;
+    });
+  }
+  function setTextAll(sel, txt) {
+    document.querySelectorAll(sel).forEach(function (el) {
+      el.textContent = txt;
+    });
+  }
+  function setDisplayAll(sel, show) {
+    document.querySelectorAll(sel).forEach(function (el) {
+      el.style.display = show ? "" : "none";
+    });
+  }
+  function toggleClassAll(sel, cls, add) {
+    document.querySelectorAll(sel).forEach(function (el) {
+      el.classList[add ? "add" : "remove"](cls);
+    });
+  }
 
   function updateElements() {
-    Shopify.getCart(function (cart) {
+    getCart(function (cart) {
       if (cart.item_count === 0) {
-        $(cartContent).html(emptyCartHTML);
-        $(`${$cartBottom}, ${$crosellcart}`).hide(100);
+        setHtmlAll(cartContent, emptyCartHTML);
+        setDisplayAll($cartBottom + ", " + $crosellcart, false);
         if (styleCart === "true") {
-          $(miniCart).removeClass("active");
-          $("body").removeClass("overflow-hidden");
+          toggleClassAll(miniCart, "active", false);
+          document.body.classList.remove("overflow-hidden");
         }
       } else {
-        $(`${$cartBottom}, ${$crosellcart}`).show(100);
+        setDisplayAll($cartBottom + ", " + $crosellcart, true);
         if (styleCart === "true") {
-          $(miniCart).addClass("active");
-          $("body").addClass("overflow-hidden");
+          toggleClassAll(miniCart, "active", true);
+          document.body.classList.add("overflow-hidden");
         }
       }
-      $(cartCount).text(cart.item_count);
-      $(cartTotal).html(
+      setTextAll(cartCount, cart.item_count);
+      setHtmlAll(
+        cartTotal,
         theme.Currency.formatMoney(cart.total_price, theme.moneyFormat)
       );
       if (cart.items && cart.items.length > 0 && cart.items[0].product_id) {
-      observeProductRecommendations(cart.items[0].product_id);
+        observeProductRecommendations(cart.items[0].product_id);
       }
       theme.freeShipping.load(cart);
     });
   }
   function generateCart() {
-    Shopify.getCart(function (cart) {
+    getCart(function (cart) {
       var htmlCart = cart.item_count === 0 ? emptyCartHTML : "",
         itemCount = cart.items.length,
         forLoop = itemCount < numberDisplayed ? itemCount : numberDisplayed;
       if (cart.item_count === 0) {
-        $(`${$cartBottom}, ${$crosellcart}`).hide(100);
+        setDisplayAll($cartBottom + ", " + $crosellcart, false);
       } else {
-        $(`${$cartBottom}, ${$crosellcart}`).show(100);
+        setDisplayAll($cartBottom + ", " + $crosellcart, true);
       }
       //styleCart === 'true' ? cart.items.length ? $(miniCart).addClass('active'): $(miniCart).removeClass('active') :null;
 
@@ -4473,7 +4510,7 @@ theme.miniCart = (function () {
         }
         
         // add total price and cart button / checkout button
-        $(cartContent).html(htmlCart);
+        setHtmlAll(cartContent, htmlCart);
         
 
 
@@ -4574,7 +4611,7 @@ if (totalSavingsWithDiscount > 0) {
 
 
 
-$('.bottom-total').html(`
+setHtmlAll('.bottom-total', `
   Total:
   <span class="total-wrapper">
     ${savingsDisplay}
@@ -4613,103 +4650,99 @@ $('.bottom-total').html(`
 
             // Change the condition to check the combined total
             if (combinedTopSavings > 0) {
-              var discountInfo = $('.discount-information p.discount-information-text-display');
-              
-              if (discountInfo.length) {
+              var discountInfo = document.querySelector('.discount-information p.discount-information-text-display');
+
+              if (discountInfo) {
                 // Get the template from data attribute
-                var template = discountInfo.attr('data-template');
-                
+                var template = discountInfo.getAttribute('data-template');
+
                 if (template) {
                   // Format the combined savings amount
                   var formattedSavings = theme.Currency.formatMoney(combinedTopSavings, theme.moneyFormat);
-                  
+
                   // Replace {DISCOUNT} with the formatted value inside a bold span
                   var parts = template.split('{DISCOUNT}');
                   var newHtml = parts[0] + '<span style="font-weight: 600;">' + formattedSavings + '</span>' + (parts[1] || '');
-                  
-                  discountInfo.html(newHtml);
+
+                  discountInfo.innerHTML = newHtml;
                   // Ensure the container is visible if it was hidden when savings were 0
-                  $('.discount-information').show(); 
+                  setDisplayAll('.discount-information', true);
                 }
               }
             } else {
               // Optional: Hide the banner if there are no savings at all
-              $('.discount-information').hide();
+              setDisplayAll('.discount-information', false);
             }
         
-        $(".js-qty__plus").unbind("click");
-        $(".js-qty__minus").click(function () {
-          if ($(this).parent().find("input").val() < 1) {
-            $(this).parent().find("input").val(0);
-          } else {
-            $(this)
-              .parent()
-              .find("input")
-              .val(parseInt($(this).parent().find("input").val()) - 1);
-          }
-          var qty = $(this).parent().find("input").val();
-          var line = $(this).parent().find("input").data("line");
-          jQuery
-            .post(
-              "/cart/change.js",
-              {
-                quantity: qty,
-                line: line,
-              },
-              null,
-              "json"
-            )
-            .done(function (item) {
-              theme.miniCart.updateElements();
-              theme.miniCart.generateCart();
-              if (item.item_count === 0) {
-                $('.discount-information').hide();
-              }
-            });
-        });
-        $(".js-qty__plus").unbind("click");
-        $(".js-qty__plus").click(function () {
-          var $input = $(this).parent().find("input");
-          var currentQty = parseInt($input.val());
-          var newQty = currentQty + 1;
-          var line = $input.data("line");
+        // qty +/- handlers are delegated at module level (see below) so they
+        // survive each re-render without re-binding.
 
-          jQuery
-            .post(
-              "/cart/change.js",
-              {
-                quantity: newQty,
-                line: line,
-              },
-              null,
-              "json"
-            )
-            .done(function (item) {
-              $input.val(newQty); // Update input only if request succeeds
-              theme.miniCart.updateElements();
-              theme.miniCart.generateCart();
-            })
-            .fail(function (xhr, status, error) {
-              console.error("Cart update failed:", error);
-              const growls = document.querySelector(".cart_growl_default");
-              growls.querySelector(".cart_badge_icon span").innerHTML =
-                currentQty;
-              if (growls && growls.classList.contains("hide")) {
-                growls.classList.remove("hide");
-                setTimeout(() => {
-                  growls.classList.add("hide");
-                }, 2000);
-              }
-            });
-        });
-
-        $(cartTotal).html(
+        setHtmlAll(
+          cartTotal,
           theme.Currency.formatMoney(cart.total_price, theme.moneyFormat)
         );
         //theme.updateCurrencies();
       });
     });
   }
+
+  // ---- delegated mini-cart quantity steppers (bound once) ----
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".js-mini-cart-content .js-qty__minus");
+    if (!btn) return;
+    var input = btn.parentElement.querySelector("input");
+    if (!input) return;
+    if (parseInt(input.value, 10) < 1) {
+      input.value = 0;
+    } else {
+      input.value = parseInt(input.value, 10) - 1;
+    }
+    var qty = input.value;
+    var line = input.getAttribute("data-line");
+    changeCartLine({ quantity: qty, line: line })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (item) {
+        updateElements();
+        generateCart();
+        if (item.item_count === 0) {
+          setDisplayAll(".discount-information", false);
+        }
+      })
+      .catch(function () {});
+  });
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".js-mini-cart-content .js-qty__plus");
+    if (!btn) return;
+    var input = btn.parentElement.querySelector("input");
+    if (!input) return;
+    var currentQty = parseInt(input.value, 10);
+    var newQty = currentQty + 1;
+    var line = input.getAttribute("data-line");
+    changeCartLine({ quantity: newQty, line: line })
+      .then(function (r) {
+        if (!r.ok) throw r;
+        return r.json();
+      })
+      .then(function () {
+        input.value = newQty;
+        updateElements();
+        generateCart();
+      })
+      .catch(function () {
+        var growls = document.querySelector(".cart_growl_default");
+        if (!growls) return;
+        var badge = growls.querySelector(".cart_badge_icon span");
+        if (badge) badge.innerHTML = currentQty;
+        if (growls.classList.contains("hide")) {
+          growls.classList.remove("hide");
+          setTimeout(function () {
+            growls.classList.add("hide");
+          }, 2000);
+        }
+      });
+  });
   //observeProductRecommendations
   function observeProductRecommendations(customID) {
     const loadingIndicator = document.querySelector(".recommend-loading");
@@ -4761,7 +4794,7 @@ $('.bottom-total').html(`
     loadingIndicator.classList.add("loading");
   }
   function renderRecommendations() {
-    Shopify.getCart(function (cart) {
+    getCart(function (cart) {
       if (cart && cart.items && cart.items.length > 0) {
         const firstItem = cart.items[0];
         if (firstItem && firstItem.product_id) {
@@ -4790,36 +4823,51 @@ $('.bottom-total').html(`
       }
     });
   });*/
-  $(document).on("click", ".js-remove-mini-cart", function () {
-    const loadingIndicator = document.querySelector(".recommend-loading");
-    var itemId = $(this).data("id");
-    var isOuterMiniCart = $(this).closest(miniCart).length === 0 ? true : false;
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".js-remove-mini-cart");
+    if (!btn) return;
+    var loadingIndicator = document.querySelector(".recommend-loading");
+    var itemId = parseInt(btn.getAttribute("data-id"), 10);
+    var isOuterMiniCart = !btn.closest(miniCart);
 
-    $(this).parents(".mini-cart-item").fadeOut(100);
-    loadingIndicator.classList.add("loading");
+    var item = btn.closest(".mini-cart-item");
+    if (item) theme.fadeOut(item);
+    if (loadingIndicator) loadingIndicator.classList.add("loading");
     theme.GiftWrap.checkGift(itemId);
 
     // Remove from cart, then check inside the callback
-    Shopify.changeItem(itemId, 0, function (cart) {
-        updateElements(cart);
-        
+    changeCartLine({ id: itemId, quantity: 0 })
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (cart) {
+        updateElements();
         if (cart.item_count === 0) {
-            $('.discount-information').hide();
+          setDisplayAll(".discount-information", false);
         }
         if (cart.items.length > numberDisplayed || isOuterMiniCart) {
-            generateCart();
+          generateCart();
         }
-    });
-});
+      })
+      .catch(function () {});
+  });
 
   //Keep popup when click cart / UX
-  $(document).on("click", cartToggle, function () {
-    $(this).parent(miniCart).toggleClass("active");
-    $("body").toggleClass("overflow-hidden");
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(cartToggle);
+    if (!btn) return;
+    var parent = btn.parentElement;
+    if (parent && parent.matches && parent.matches(miniCart)) {
+      parent.classList.toggle("active");
+    }
+    document.body.classList.toggle("overflow-hidden");
   });
-  $(document).on("click", ".overlaycart, .close", function () {
-    $(this).parents(miniCart).removeClass("active");
-    $("body").removeClass("overflow-hidden");
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest(".overlaycart, .close");
+    if (!btn) return;
+    var mc = btn.closest(miniCart);
+    if (mc) mc.classList.remove("active");
+    document.body.classList.remove("overflow-hidden");
   });
 
   // renderRecommendations when load page
@@ -4834,40 +4882,63 @@ $('.bottom-total').html(`
 
 // Free shipping
 theme.freeShipping = (function () {
-  var $freeShippingClass = $(".js-free-shipping"),
-    $freeShippingTextClass = $(".js-free-shipping-text"),
-    $free_fisrt = $freeShippingClass.attr("data-start"),
-    $free_end = $freeShippingClass.attr("data-end");
-  (minOrderValue = parseInt($freeShippingClass.data("value")) || 0),
-    ($percentClass = $(".js-free-shipping .progress-bar"));
+  var freeShippingClass = ".js-free-shipping",
+    freeShippingTextClass = ".js-free-shipping-text",
+    percentSel = ".js-free-shipping .progress-bar";
+  var fsEl = document.querySelector(freeShippingClass);
+  var free_fisrt = fsEl ? fsEl.getAttribute("data-start") : "";
+  var free_end = fsEl ? fsEl.getAttribute("data-end") : "";
+  var minOrderValue = fsEl
+    ? parseInt(fsEl.getAttribute("data-value"), 10) || 0
+    : 0;
 
-  function generate(cart) {
-    var priceCart = cart.total_price;
-    priceCart == 0 ? $freeShippingClass.hide() : $freeShippingClass.show();
-    if (priceCart >= minOrderValue) {
-      $percentClass
-        .css("width", "100%")
-        .removeClass("progress-bar-striped bg-primary");
-      $freeShippingTextClass.text(theme.strings.freeShipping);
-      $freeShippingTextClass.prev("svg").removeClass("hide");
-    } else {
-      let percent = (priceCart / minOrderValue) * 100;
-      let left = Shopify.formatMoney(
-        minOrderValue - priceCart,
-        theme.moneyFormat
-      );
-      $percentClass
-        .css("width", percent + "%")
-        .addClass("progress-bar-striped primary");
-      $freeShippingTextClass.html($free_fisrt + " " + left + " " + $free_end);
-      $freeShippingTextClass.prev("svg").removeClass("hide");
-      //theme.updateCurrencies();
+  function revealSvg(el) {
+    var svg = el.previousElementSibling;
+    if (svg && svg.tagName && svg.tagName.toLowerCase() === "svg") {
+      svg.classList.remove("hide");
     }
   }
 
-  Shopify.getCart(function (cart) {
-    generate(cart);
-  });
+  function generate(cart) {
+    var priceCart = cart.total_price;
+    document.querySelectorAll(freeShippingClass).forEach(function (el) {
+      el.style.display = priceCart == 0 ? "none" : "";
+    });
+    var percentEls = document.querySelectorAll(percentSel);
+    var textEls = document.querySelectorAll(freeShippingTextClass);
+    if (priceCart >= minOrderValue) {
+      percentEls.forEach(function (el) {
+        el.style.width = "100%";
+        el.classList.remove("progress-bar-striped", "bg-primary");
+      });
+      textEls.forEach(function (el) {
+        el.textContent = theme.strings.freeShipping;
+        revealSvg(el);
+      });
+    } else {
+      var percent = (priceCart / minOrderValue) * 100;
+      var left = theme.Currency.formatMoney(
+        minOrderValue - priceCart,
+        theme.moneyFormat
+      );
+      percentEls.forEach(function (el) {
+        el.style.width = percent + "%";
+        el.classList.add("progress-bar-striped", "primary");
+      });
+      textEls.forEach(function (el) {
+        el.innerHTML = free_fisrt + " " + left + " " + free_end;
+        revealSvg(el);
+      });
+    }
+  }
+
+  fetch(window.Shopify.routes.root + "cart.js")
+    .then(function (r) {
+      return r.json();
+    })
+    .then(function (cart) {
+      generate(cart);
+    });
 
   return {
     load: generate,
@@ -4876,23 +4947,37 @@ theme.freeShipping = (function () {
 
 // Shipping time - https://github.com/phstc/jquery-dateFormat
 theme.shippingTime = (function () {
-  var $shippingTime = $(".js-shipping-time"),
-    shippingTime = $shippingTime.data("time") || "",
+  var el = document.querySelector(".js-shipping-time");
+  if (!el) return;
+  var shippingTime = el.getAttribute("data-time") || "",
     now = new Date(),
     restHour = 23 - now.getHours(),
     restMinute = 59 - now.getMinutes();
   if (shippingTime !== "") {
-    var nextTime = new Date(now.getTime() + shippingTime * 86400000),
-      formatTime = $.format.date(nextTime, "ddd, dd MMMM yyyy"),
-      htmlShipping =
-        "Order in the next <b>" +
-        restHour +
-        "</b> hours <b>" +
-        restMinute +
-        "</b> minutes to get it by <b>" +
-        formatTime +
-        "</b>. ";
-    $shippingTime.html(htmlShipping);
+    var nextTime = new Date(now.getTime() + shippingTime * 86400000);
+    var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    var months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December",
+    ];
+    var dd = ("0" + nextTime.getDate()).slice(-2);
+    var formatTime =
+      days[nextTime.getDay()] +
+      ", " +
+      dd +
+      " " +
+      months[nextTime.getMonth()] +
+      " " +
+      nextTime.getFullYear();
+    var htmlShipping =
+      "Order in the next <b>" +
+      restHour +
+      "</b> hours <b>" +
+      restMinute +
+      "</b> minutes to get it by <b>" +
+      formatTime +
+      "</b>. ";
+    el.innerHTML = htmlShipping;
   }
 })();
 
