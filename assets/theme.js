@@ -5503,69 +5503,85 @@ theme.collectionView = (function () {
 
 // Swath variant in card item
 theme.swatchCard = (function () {
-  const $swatches = ".js-swatch-card-item";
-  const $image = ".product-card__image img";
-  const $cart = ".js-grid-cart";
+  const swatchesSel = ".js-swatch-card-item";
+  const imageSel = ".product-card__image img";
+  const cartSel = ".js-grid-cart";
 
-  function handleSwatchClick() {
-    const $swatch = $(this);
-    const newImage = $swatch.data("image");
-    const id = $swatch.data("id");
-    const $card = $swatch.closest(".js-product-card");
+  function handleSwatchClick(swatch) {
+    const newImage = swatch.getAttribute("data-image");
+    const id = swatch.getAttribute("data-id");
+    const card = swatch.closest(".js-product-card");
+    if (!card) return;
 
-    $card.find($swatches).removeClass("active");
-    $swatch.addClass("active");
+    card.querySelectorAll(swatchesSel).forEach(function (s) {
+      s.classList.remove("active");
+    });
+    swatch.classList.add("active");
 
-    $card.find($image).attr("srcset", newImage);
-    $card.find($cart).data("id", id);
+    var img = card.querySelector(imageSel);
+    if (img) img.setAttribute("srcset", newImage);
+    var cart = card.querySelector(cartSel);
+    if (cart) cart.setAttribute("data-id", id);
   }
 
-  $(document).on("click", $swatches, handleSwatchClick);
+  document.addEventListener("click", function (e) {
+    var swatch = e.target.closest(swatchesSel);
+    if (swatch) handleSwatchClick(swatch);
+  });
 })();
 
 theme.swatchCard2 = (function () {
   function initVariant(id) {
-    var productJson = JSON.parse($(".customJson-" + id).html());
-    var $selectorForm = $(".customform-" + id);
-    var $button = $(".js-customform-addtocart-" + id);
-    var $buttontext = $button.find("span");
-    var $wrapObject = $selectorForm.closest(".js-product-card");
+    var jsonEl = document.querySelector(".customJson-" + id);
+    if (!jsonEl) return;
+    var productJson = JSON.parse(jsonEl.innerHTML);
+    var selectorForm = document.querySelector(".customform-" + id);
+    if (!selectorForm) return;
+    var button = document.querySelector(".js-customform-addtocart-" + id);
+    var buttontext = button ? button.querySelector("span") : null;
+    var wrapObject = selectorForm.closest(".js-product-card");
     var options = {
-      $container: $selectorForm,
+      $container: selectorForm,
       enableHistoryState: false,
       product: productJson,
       singleOptionSelector: ".single-option-selector-" + id,
       originalSelectorId: "#ProductSelect-" + id,
     };
     var variants = new slate.Variants(options);
-    var AjaxCart = new window.AjaxCart($selectorForm);
+    // eslint-disable-next-line no-unused-vars
+    var ajax = new window.AjaxCart(selectorForm);
     var _updateButton = function (evt) {
       var variant = evt.variant;
+      if (!button) return;
       if (variant === undefined) {
-        $button.prop("disabled", true).removeClass("btn--sold-out");
-        $buttontext.html(theme.strings.unavailable);
+        button.disabled = true;
+        button.classList.remove("btn--sold-out");
+        if (buttontext) buttontext.innerHTML = theme.strings.unavailable;
       } else {
         if (variant.available) {
-          $button.removeClass("btn--sold-out").prop("disabled", false);
-          $buttontext.html(theme.strings.addToCart);
+          button.classList.remove("btn--sold-out");
+          button.disabled = false;
+          if (buttontext) buttontext.innerHTML = theme.strings.addToCart;
         } else {
-          $button.prop("disabled", true).addClass("btn--sold-out");
-          $buttontext.html(theme.strings.soldOut);
+          button.disabled = true;
+          button.classList.add("btn--sold-out");
+          if (buttontext) buttontext.innerHTML = theme.strings.soldOut;
         }
       }
     };
     var _updateImage = function (evt) {
       var variant = evt.variant;
-      var $mainImage = $wrapObject.find(".product-card__image").find("img");
-      if (variant !== undefined && variant.featured_image !== null) {
-        var variantImage = variant.featured_image;
-        $mainImage.attr("srcset", variantImage.src);
+      if (!wrapObject) return;
+      var mainImage = wrapObject.querySelector(".product-card__image img");
+      if (mainImage && variant !== undefined && variant.featured_image !== null) {
+        mainImage.setAttribute("srcset", variant.featured_image.src);
       }
     };
     var _updatePrice = function (evt) {
-      var $price = $wrapObject.find(".product-card__price");
+      if (!wrapObject) return;
+      var price = wrapObject.querySelector(".product-card__price");
       var variant = evt.variant;
-      if (variant !== undefined) {
+      if (price && variant !== undefined) {
         var htmlComparePrice =
           variant.compare_at_price !== null
             ? '<s class="product-card__regular-price"><span class="money">' +
@@ -5574,18 +5590,16 @@ theme.swatchCard2 = (function () {
             : "";
         var htmlPrice =
           '<span class="money">' + variant.price + "</span>" + htmlComparePrice;
-        $price.html(htmlPrice);
-        //theme.updateCurrencies();
+        price.innerHTML = htmlPrice;
       }
     };
-    variants.$container.on("variantChange", _updateButton);
-    variants.$container.on("variantChange", _updateImage);
-    variants.$container.on("variantChange", _updatePrice);
+    variants.container.addEventListener("variantChange", _updateButton);
+    variants.container.addEventListener("variantChange", _updateImage);
+    variants.container.addEventListener("variantChange", _updatePrice);
   }
   function initForm() {
-    $(".js-customform").each(function () {
-      var id = $(this).data("id");
-      initVariant(id);
+    document.querySelectorAll(".js-customform").forEach(function (el) {
+      initVariant(el.getAttribute("data-id"));
     });
   }
 
@@ -5597,25 +5611,24 @@ theme.swatchCard2 = (function () {
 
 // Loading
 theme.loading = (function () {
-  var $loading = $("#js-loading"),
-    hasLoading = $("#js-loading").length === 0 ? false : true;
-  if (hasLoading) {
-    $(window).load(function () {
-      $loading.fadeOut();
+  var loading = document.getElementById("js-loading");
+  if (loading) {
+    window.addEventListener("load", function () {
+      theme.fadeOut(loading);
     });
   }
 })();
 
 theme.effectLeavingPage = (function () {
   window.onbeforeunload = function () {
-    $("body").css("opacity", "0");
+    document.body.style.opacity = "0";
   };
 })();
 
 theme.bundleProduct = (function () {
   function bundleProduct(container) {
-    var $container = (this.$container = $(container));
-    var sectionId = $container.attr("data-section-id");
+    this.container = container;
+    var sectionId = container.getAttribute("data-section-id");
     this.selectors = {
       bundleSection: "#bundle-" + sectionId,
     };
@@ -5626,164 +5639,181 @@ theme.bundleProduct = (function () {
       this.bundleList();
     },
     bundleList: function () {
-      let variantSelectClass = ".fbtproduct-form__variants",
+      var variantSelectClass = ".fbtproduct-form__variants",
         parentClass = ".fbt-item",
         totalPrice = ".fpt-total",
         totalPriceCompare = ".fpt-totalcompare",
         totalSave = ".fpt-save",
         checkBox = ".fbt-checkbox";
 
+      function setHtmlB(sel, html) {
+        document.querySelectorAll(sel).forEach(function (e) {
+          e.innerHTML = html;
+        });
+      }
+
       updateTotal();
       checkItem();
 
       // change update variant
-      $(document).on("change", variantSelectClass, function () {
-        var selectVariant = $(this).children(":selected"),
-          selectVariantId = selectVariant.data("id"),
-          newPrice = theme.Currency.formatMoney(
-            selectVariant.data("price"),
-            theme.moneyFormat
-          );
-        newPriceCompare = theme.Currency.formatMoney(
-          selectVariant.data("price-compare"),
+      document.addEventListener("change", function (e) {
+        var sel = e.target.closest(variantSelectClass);
+        if (!sel) return;
+        var opt = sel.options[sel.selectedIndex];
+        var selectVariantId = opt.getAttribute("data-id");
+        var newPrice = theme.Currency.formatMoney(
+          opt.getAttribute("data-price"),
           theme.moneyFormat
         );
+        var newPriceCompare = theme.Currency.formatMoney(
+          opt.getAttribute("data-price-compare"),
+          theme.moneyFormat
+        );
+        var parent = sel.closest(parentClass);
+        if (!parent) return;
 
-        if (selectVariant.data("image") !== "") {
-          $(this)
-            .closest(parentClass)
-            .find("img")
-            .attr({
-              src: selectVariant.data("image"),
-              "data-srcset": selectVariant.data("image"),
-              srcset: selectVariant.data("image"),
-            });
+        var imageVal = opt.getAttribute("data-image");
+        if (imageVal !== "" && imageVal !== null) {
+          var img = parent.querySelector("img");
+          if (img) {
+            img.setAttribute("src", imageVal);
+            img.setAttribute("data-srcset", imageVal);
+            img.setAttribute("srcset", imageVal);
+          }
         }
-        $(this).closest(parentClass).attr("data-item", selectVariantId);
-        $(this)
-          .closest(parentClass)
-          .find(".fbt-price")
-          .attr("data-fbtprice", selectVariant.data("price"));
-        $(this).closest(parentClass).find(".fbt-price").html(newPrice);
-        if (selectVariant.data("price-compare") !== undefined) {
-          $(this)
-            .closest(parentClass)
-            .find(".fbt-price-compare")
-            .html(newPriceCompare)
-            .removeClass("hide");
-          $(this)
-            .closest(parentClass)
-            .find(".fbt-price-compare")
-            .attr("data-price-at", selectVariant.data("price-compare"));
+        parent.setAttribute("data-item", selectVariantId);
+        var priceEl = parent.querySelector(".fbt-price");
+        if (priceEl) {
+          priceEl.setAttribute("data-fbtprice", opt.getAttribute("data-price"));
+          priceEl.innerHTML = newPrice;
+        }
+        var compareEl = parent.querySelector(".fbt-price-compare");
+        if (opt.getAttribute("data-price-compare") !== null) {
+          if (compareEl) {
+            compareEl.innerHTML = newPriceCompare;
+            compareEl.classList.remove("hide");
+            compareEl.setAttribute(
+              "data-price-at",
+              opt.getAttribute("data-price-compare")
+            );
+          }
         } else {
-          $(this)
-            .closest(parentClass)
-            .find(".fbt-price-compare")
-            .attr("data-price-at", "")
-            .addClass("hide");
+          if (compareEl) {
+            compareEl.setAttribute("data-price-at", "");
+            compareEl.classList.add("hide");
+          }
         }
         updateTotal();
       });
 
       // checkChecked
       function checkItem() {
-        $(checkBox).change(function () {
-          if (this.checked) {
-            $(this).closest(parentClass).attr("data-checked", true);
-          } else {
-            $(this).closest(parentClass).attr("data-checked", false);
+        document.addEventListener("change", function (e) {
+          var cb = e.target.closest(checkBox);
+          if (!cb) return;
+          var parent = cb.closest(parentClass);
+          if (parent) {
+            parent.setAttribute("data-checked", cb.checked ? "true" : "false");
           }
           updateTotal();
         });
       }
       function updateTotal() {
-        let total = 0;
-        let totalCompare = 0;
-        $(".fbt-item-price").each(function () {
-          let isChecked = $(this)
-            .closest(".fbt-item")
-            .find(".fbt-checkbox")
-            .is(":checked");
-          let isPriceCompare = $(this)
-            .find(".fbt-price-compare")
-            .attr("data-price-at");
+        var total = 0;
+        var totalCompare = 0;
+        document.querySelectorAll(".fbt-item-price").forEach(function (el) {
+          var item = el.closest(".fbt-item");
+          var cb = item ? item.querySelector(".fbt-checkbox") : null;
+          var isChecked = cb ? cb.checked : false;
+          var pc = el.querySelector(".fbt-price-compare");
+          var isPriceCompare = pc ? pc.getAttribute("data-price-at") : null;
           if (isChecked) {
-            let value = parseFloat(
-              $(this).find(".fbt-price").attr("data-fbtprice")
+            var priceEl = el.querySelector(".fbt-price");
+            var value = parseFloat(
+              priceEl ? priceEl.getAttribute("data-fbtprice") : 0
             );
-
             total += value;
-            if (isPriceCompare !== undefined && isPriceCompare !== "") {
-              let valueCompare = parseFloat(isPriceCompare);
+            if (
+              isPriceCompare !== undefined &&
+              isPriceCompare !== "" &&
+              isPriceCompare !== null
+            ) {
+              var valueCompare = parseFloat(isPriceCompare);
               totalCompare += valueCompare - value;
             }
           }
         });
-        //console.log(totalCompare);
-        $(totalPrice).html(
-          theme.Currency.formatMoney(total, theme.moneyFormat)
-        );
-        let totalSale = totalCompare + total;
+        setHtmlB(totalPrice, theme.Currency.formatMoney(total, theme.moneyFormat));
+        var totalSale = totalCompare + total;
         if (totalSale > total) {
-          $(totalPriceCompare).show();
-          $(totalSave)
-            .show()
-            .html(
-              `${$(totalSave).attr(
-                "data-txtsave"
-              )} <span class="text-theme">${theme.Currency.formatMoney(
-                totalSale - total,
-                theme.moneyFormat
-              )}</span>`
-            );
+          setDispB(totalPriceCompare, true);
+          document.querySelectorAll(totalSave).forEach(function (e) {
+            e.style.display = "";
+            e.innerHTML =
+              (e.getAttribute("data-txtsave") || "") +
+              ' <span class="text-theme">' +
+              theme.Currency.formatMoney(totalSale - total, theme.moneyFormat) +
+              "</span>";
+          });
         } else {
-          $(totalPriceCompare).hide();
-          $(totalSave).hide().html();
+          setDispB(totalPriceCompare, false);
+          document.querySelectorAll(totalSave).forEach(function (e) {
+            e.style.display = "none";
+            e.innerHTML = "";
+          });
         }
-        $(totalPriceCompare).html(
+        setHtmlB(
+          totalPriceCompare,
           theme.Currency.formatMoney(totalCompare + total, theme.moneyFormat)
         );
       }
+      function setDispB(sel, show) {
+        document.querySelectorAll(sel).forEach(function (e) {
+          e.style.display = show ? "" : "none";
+        });
+      }
       //click add product
-      $("#fbt-button").click(function (e) {
-        e.preventDefault();
-        function addMultipleItemsToCart(productsToAdd) {
-          var cartUrl = "/cart/add.js";
-          var cartData = {
-            items: productsToAdd,
-          };
-
-          $.ajax({
-            type: "POST",
-            url: cartUrl,
-            data: cartData,
-            dataType: "json",
-            beforeSend: function () {
-              $("#fbt-button").addClass("is-loading");
-            },
-            success: function (data) {
-              $("#fbt-button").removeClass("is-loading");
-              theme.miniCart.updateElements();
-              theme.miniCart.generateCart();
-            },
-            error: function (XMLHttpRequest, textStatus, err) {
-              $("#fbt-button").removeClass("is-loading");
-              console.log(err);
-            },
-          });
-        }
-        var productsToAdd = $(parentClass)
-          .map(function () {
-            if ($(this).attr("data-checked") === "true") {
-              return {
-                id: parseInt($(this).attr("data-item")),
+      var fbtButton = document.getElementById("fbt-button");
+      if (fbtButton) {
+        fbtButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          function addMultipleItemsToCart(productsToAdd) {
+            fbtButton.classList.add("is-loading");
+            fetch(window.Shopify.routes.root + "cart/add.js", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({ items: productsToAdd }),
+            })
+              .then(function (r) {
+                return r.json();
+              })
+              .then(function () {
+                fbtButton.classList.remove("is-loading");
+                if (theme.miniCart) {
+                  theme.miniCart.updateElements();
+                  theme.miniCart.generateCart();
+                }
+              })
+              .catch(function (err) {
+                fbtButton.classList.remove("is-loading");
+                console.log(err);
+              });
+          }
+          var productsToAdd = [];
+          document.querySelectorAll(parentClass).forEach(function (item) {
+            if (item.getAttribute("data-checked") === "true") {
+              productsToAdd.push({
+                id: parseInt(item.getAttribute("data-item")),
                 quantity: 1,
-              };
+              });
             }
-          })
-          .get();
-        addMultipleItemsToCart(productsToAdd);
-      });
+          });
+          addMultipleItemsToCart(productsToAdd);
+        });
+      }
     },
   });
   return bundleProduct;
