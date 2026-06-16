@@ -66,7 +66,7 @@
       dialog.modal::backdrop{ background:rgba(0,0,0,.5); }
     </style>
       <link rel="preload" href="{{ 'lazysizes.min.js' | asset_url }}" as="script">
-      <link rel="preload" href="{{ 'vendor.js' | asset_url }}" as="script">
+      <link rel="preload" href="{{ 'keep-libs.js' | asset_url }}" as="script">
        {{- 'swiper-bundle.min.css' | asset_url | stylesheet_tag: preload: true -}}
       <link rel="preload" href="{{ 'swiper-bundle.min.js' | asset_url }}" as="script">
       <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>

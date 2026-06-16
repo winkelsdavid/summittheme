@@ -156,6 +156,82 @@
     if (next) { e.preventDefault(); next.focus(); activateTab(next); }
   });
 
+  // =========================================================================
+  // Collapse controller — replaces the Bootstrap collapse plugin for the
+  // product-page description accordions ([data-toggle="collapse"] + a
+  // #target.collapse panel). The theme ships no `.collapse{display:none}` base
+  // rule, so we drive visibility with an inline height slide that works
+  // regardless of CSS, and keep Bootstrap's class model (.show on the panel,
+  // .collapsed + aria-expanded on the trigger) so the +/- icon CSS still works.
+  // =========================================================================
+  function collapseTarget(trigger) {
+    var sel =
+      trigger.getAttribute('data-target') ||
+      trigger.getAttribute('href') ||
+      trigger.getAttribute('data-bs-target');
+    if (!sel || sel === '#') return null;
+    try { return document.querySelector(sel); } catch (e) { return null; }
+  }
+  function slideDownCollapse(el) {
+    el.style.removeProperty('display');
+    el.classList.add('show');
+    var height = el.scrollHeight;
+    el.style.overflow = 'hidden';
+    el.style.height = '0px';
+    void el.offsetHeight; // reflow
+    el.style.transition = 'height .35s ease';
+    el.style.height = height + 'px';
+    window.setTimeout(function () {
+      el.style.height = '';
+      el.style.overflow = '';
+      el.style.transition = '';
+    }, 360);
+  }
+  function slideUpCollapse(el) {
+    el.style.overflow = 'hidden';
+    el.style.height = el.scrollHeight + 'px';
+    void el.offsetHeight; // reflow
+    el.style.transition = 'height .35s ease';
+    el.style.height = '0px';
+    window.setTimeout(function () {
+      el.style.display = 'none';
+      el.classList.remove('show');
+      el.style.height = '';
+      el.style.overflow = '';
+      el.style.transition = '';
+    }, 360);
+  }
+  function syncCollapseTrigger(trigger, shown) {
+    trigger.classList.toggle('collapsed', !shown);
+    trigger.setAttribute('aria-expanded', shown ? 'true' : 'false');
+  }
+  function initCollapse() {
+    document.querySelectorAll('[data-toggle="collapse"]').forEach(function (trigger) {
+      var target = collapseTarget(trigger);
+      if (!target) return;
+      var shown = target.classList.contains('show');
+      syncCollapseTrigger(trigger, shown);
+      if (!shown) target.style.display = 'none'; // closed panels hide without Bootstrap CSS
+    });
+  }
+  document.addEventListener('click', function (e) {
+    var trigger = e.target.closest('[data-toggle="collapse"]');
+    if (!trigger) return;
+    e.preventDefault();
+    var target = collapseTarget(trigger);
+    if (!target) return;
+    var shown = target.classList.contains('show');
+    if (shown) {
+      slideUpCollapse(target);
+      syncCollapseTrigger(trigger, false);
+    } else {
+      slideDownCollapse(target);
+      syncCollapseTrigger(trigger, true);
+    }
+  });
+  if (document.readyState !== 'loading') initCollapse();
+  else document.addEventListener('DOMContentLoaded', initCollapse);
+
   // ---- Public API ----
   window.NativeUI = window.NativeUI || {};
   window.NativeUI.openModal = openModal;

@@ -95,11 +95,10 @@
 {%- if template.directory == 'customers' -%}
 <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
 {%- endif -%}
-<script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'keep-libs.js' | asset_url }}" defer="defer"></script>
 {% if settings.shipping_calculator and template != 'password' %}
 <script src="{{ 'shipping_rate.js' | asset_url }}" defer="defer"></script>
 {% endif %}
-<script src="{{ 'api.jquery.js' | shopify_asset_url }}" defer="defer"></script>
 <script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'native-ui.js' | asset_url }}" defer="defer"></script>
