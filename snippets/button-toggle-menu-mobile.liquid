@@ -1,6 +1,13 @@
-<button type="button" class="text-link site-header__link js-drawer-open-left align-items-center d-inline-flex">
+{%- comment -%}
+  Mobile nav burger. A hidden checkbox (#NavDrawer-toggle) is the single source
+  of truth: this <label> toggles it and CSS `:has()` slides #NavDrawer in (see
+  snippets/menu-mobile.liquid), so the menu opens with JavaScript disabled.
+  theme.js adds focus-trap + ESC-to-close on top (progressive enhancement).
+{%- endcomment -%}
+<input type="checkbox" id="NavDrawer-toggle" class="nav-drawer-toggle visually-hidden">
+<label for="NavDrawer-toggle" class="text-link site-header__link align-items-center d-inline-flex" aria-controls="NavDrawer">
   <svg aria-hidden="true" fill="none" focusable="false" width="24" class="icon" viewBox="0 0 24 24">
     <path d="M1 19h22M1 12h22M1 5h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"></path>
   </svg>
   <span class="visually-hidden">Navigation</span>
-</button>
+</label>

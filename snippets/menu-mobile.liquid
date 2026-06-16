@@ -44,11 +44,60 @@
   .drawer__nav-disclosure[open] > summary .drawer__nav-toggle--close {
     display: block;
   }
+
+  /* ---------------------------------------------------------------------------
+     No-JS mobile nav: the burger <label> toggles the hidden checkbox
+     #NavDrawer-toggle and CSS :has() slides #NavDrawer in — works with
+     JavaScript disabled (replaces the JS-only theme.Drawers). theme.js layers
+     focus-trap + ESC on top. theme.css stays untouched.
+  --------------------------------------------------------------------------- */
+  /* keyboard focus ring (the checkbox itself is visually-hidden) */
+  #NavDrawer-toggle:focus-visible + label {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  /* OPEN — mirrors theme.css `.js-drawer-open-left .drawer--left`, id-scoped so
+     #testDrawer is unaffected (base left:-400px + translateX(400px) => 0). */
+  html:has(#NavDrawer-toggle:checked) #NavDrawer.drawer--left {
+    display: block;
+    -webkit-transform: translateX(400px);
+    transform: translateX(400px);
+    opacity: 1;
+    visibility: visible;
+  }
+  @media only screen and (max-width: 749px) {
+    html:has(#NavDrawer-toggle:checked) #NavDrawer.drawer--left {
+      -webkit-transform: translateX(350px);
+      transform: translateX(350px);
+    }
+  }
+  /* Dim backdrop — a clickable <label> that closes the drawer without JS. */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+  }
+  html:has(#NavDrawer-toggle:checked) .drawer-backdrop {
+    opacity: 1;
+    visibility: visible;
+  }
+  /* Lock page scroll while the drawer is open. */
+  html:has(#NavDrawer-toggle:checked),
+  html:has(#NavDrawer-toggle:checked) body {
+    overflow: hidden;
+  }
 </style>
+<label for="NavDrawer-toggle" class="drawer-backdrop" aria-hidden="true" tabindex="-1"></label>
 <div id="NavDrawer" class="drawer drawer--left">
   <div class="drawer__inner">
-    <div class="modal-header js-drawer-close py-4">
-        <button type="button" class="close" ></button>
+    <div class="modal-header py-4">
+        <label for="NavDrawer-toggle" class="close drawer__close-button" role="button" aria-label="{{ 'general.accessibility.close' | t | default: 'Close' }}"></label>
     </div>
     <ul class="drawer__nav menu-mobile-footer-content">
       {%- for link in linklists[settings.main_linklist].links -%}

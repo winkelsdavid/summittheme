@@ -1500,12 +1500,57 @@ theme.customerTemplates = (function () {
   };
 })();
 
+/* Progressive enhancement for the CSS-driven mobile nav drawer (see
+   snippets/menu-mobile.liquid + button-toggle-menu-mobile.liquid). The drawer
+   opens/closes with pure CSS (checkbox #NavDrawer-toggle + :has()); this only
+   adds focus-trap + ESC-to-close when JS is available. */
+(function () {
+  function initNavDrawer() {
+    var toggle = document.getElementById("NavDrawer-toggle");
+    var drawer = document.getElementById("NavDrawer");
+    if (!toggle || !drawer || toggle.dataset.navEnhanced) return;
+    toggle.dataset.navEnhanced = "1";
+
+    function onKeyup(evt) {
+      if (evt.keyCode === 27 && toggle.checked) {
+        toggle.checked = false;
+        toggle.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    }
+
+    toggle.addEventListener("change", function () {
+      if (toggle.checked) {
+        slate.a11y.trapFocus({
+          $container: drawer,
+          $elementToFocus: drawer.querySelector("a[href], button, summary"),
+          namespace: "nav_drawer_focus",
+        });
+        document.addEventListener("keyup", onKeyup);
+      } else {
+        slate.a11y.removeTrapFocus({
+          $container: drawer,
+          namespace: "nav_drawer_focus",
+        });
+        document.removeEventListener("keyup", onKeyup);
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initNavDrawer);
+  } else {
+    initNavDrawer();
+  }
+})();
+
 /*================ SECTIONS ================*/
 theme.HeaderSection = (function () {
   function HeaderSection(container) {
     var sectionId = container.getAttribute("data-section-id");
     var stickyId = container.getAttribute("data-sticky");
-    theme.NavDrawer = new theme.Drawers("NavDrawer", "left");
+    // NavDrawer is now CSS-driven (checkbox #NavDrawer-toggle + :has(), see
+    // snippets/menu-mobile.liquid) so it works without JS; focus-trap + ESC are
+    // added by the initNavDrawer enhancer above.
     this.selectors = {
       headerID: ".section-" + sectionId,
       typeHeader: stickyId,
