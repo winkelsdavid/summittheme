@@ -761,7 +761,7 @@ theme.Drawers = (function () {
     this.drawerIsOpen = false;
     // Bind handlers once so they can be detached on close.
     this._onKeyup = this._onKeyup.bind(this);
-    this._onPageClick = this._onPageClick.bind(this);
+    this._onOutsideClick = this._onOutsideClick.bind(this);
     this._onPageTouch = function (e) {
       e.preventDefault();
     };
@@ -834,11 +834,11 @@ theme.Drawers = (function () {
     }
 
     document.addEventListener("keyup", this._onKeyup);
+    document.addEventListener("click", this._onOutsideClick);
     if (this.page) {
       this.page.addEventListener("touchmove", this._onPageTouch, {
         passive: false,
       });
-      this.page.addEventListener("click", this._onPageClick);
     }
   };
 
@@ -847,8 +847,18 @@ theme.Drawers = (function () {
     this.close();
   };
 
-  Drawer.prototype._onPageClick = function (evt) {
-    evt.preventDefault();
+  Drawer.prototype._onOutsideClick = function (evt) {
+    // Close on any click outside the drawer. The darkened backdrop is a ::after
+    // pseudo-element on the (transformed) .page-container, so a document-level
+    // listener is more reliable than listening on .page-element.
+    if (this.drawer.contains(evt.target)) return; // inside drawer -> keep open
+    if (
+      this.activeSource &&
+      (evt.target === this.activeSource ||
+        (this.activeSource.contains && this.activeSource.contains(evt.target)))
+    ) {
+      return; // the open trigger toggles itself
+    }
     this.close();
   };
 
@@ -870,9 +880,9 @@ theme.Drawers = (function () {
     });
 
     document.removeEventListener("keyup", this._onKeyup);
+    document.removeEventListener("click", this._onOutsideClick);
     if (this.page) {
       this.page.removeEventListener("touchmove", this._onPageTouch);
-      this.page.removeEventListener("click", this._onPageClick);
     }
   };
 
