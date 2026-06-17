@@ -584,6 +584,7 @@
   "pagefly": {
     "products": {
       "product": {
+        "tax_disclaimer": "Impostos e portes calculados na finalização da compra.",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

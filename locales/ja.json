@@ -584,6 +584,7 @@
   "pagefly": {
     "products": {
       "product": {
+        "tax_disclaimer": "税金と送料はチェックアウト時に計算されます。",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

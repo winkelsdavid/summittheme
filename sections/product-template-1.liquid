@@ -1923,6 +1923,9 @@ display:none;
                   {%- if section.settings.stock_enable -%}
                     <li>{%- render 'productStock', current_variant: current_variant -%}</li>
                   {%- endif -%}
+                  {%- if block.settings.show_tax_disclaimer and current_variant.taxable -%}
+                    <li class="product-single__tax-disclaimer">{{ 'products.product.tax_disclaimer' | t }}</li>
+                  {%- endif -%}
                 </ul>
               {%- when 'salepoint' -%}
               <style>
@@ -4656,6 +4659,12 @@ function formatPrice(value) {
       "name": "Price",
       "limit": 1,
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_tax_disclaimer",
+          "label": "Show Tax Disclaimer",
+          "default": false
+        },
         {
           "type": "header",
           "content": "Badge Settings"

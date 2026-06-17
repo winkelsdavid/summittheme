@@ -584,6 +584,7 @@
   "pagefly": {
     "products": {
       "product": {
+        "tax_disclaimer": "Skatter og fragt beregnes ved kassen.",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

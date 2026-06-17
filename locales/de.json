@@ -584,6 +584,7 @@
   "pagefly": {
     "products": {
       "product": {
+        "tax_disclaimer": "inkl. MwSt. zzgl. Versandkosten",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",
