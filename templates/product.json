@@ -503,7 +503,7 @@
           "type": "trust-badge",
           "disabled": true,
           "settings": {
-            "trust-heading": "Guaranteed safe checkout",
+            "trust_heading": "Guaranteed safe checkout",
             "width_image": 66
           }
         },

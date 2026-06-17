@@ -2578,8 +2578,8 @@ display:none;
               {%- when 'trust-badge' -%}
                 <div class="ptrust-badge product-block" {{ block.shopify_attributes }}>
                   <div class="ptrust-badge-box border px-3 py-4 position-relative ">
-                    {%- if block.settings['trust-heading'] != blank -%}
-                      <h6 class="ptrust-badge-heading mb-0 text-center px-4">{{ block.settings['trust-heading'] }}</h6>
+                    {%- if block.settings.trust_heading != blank -%}
+                      <h6 class="ptrust-badge-heading mb-0 text-center px-4">{{ block.settings.trust_heading }}</h6>
                     {%- endif -%}
                     {%- if block.settings.image != blank -%}
                       <div
@@ -6686,7 +6686,7 @@ function formatPrice(value) {
       "settings": [
         {
           "type": "text",
-          "id": "trust-heading",
+          "id": "trust_heading",
           "label": "Heading",
           "default": "Guarantee safe checkout"
         },
