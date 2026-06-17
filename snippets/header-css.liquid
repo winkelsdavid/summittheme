@@ -36,6 +36,15 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:bl
   height: auto !important;
  } */
 
+  {%- comment -%} Global "Enable Radius Image": round all image containers/cards theme-wide, guarded so OFF = no effect {%- endcomment -%}
+  {%- if settings.enable_radius_allimg -%}
+  .image-content__image-container,
+  .collection-card__image,
+  .gallery-item__image{
+    border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+    overflow: hidden;
+  }
+  {%- endif -%}
 </style>
 
 {%- render 'font-icon' -%}
