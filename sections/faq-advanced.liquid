@@ -1,6 +1,8 @@
 <style>
    #custom-faq-{{ section.id }} {
+    {% if section.settings.bg_color != blank and section.settings.bg_color != "rgba(0,0,0,0)" %}
     --section-bg: {{ section.settings.bg_color }};
+    {% endif %}
     {% if section.settings.text_color != blank and section.settings.text_color != "rgba(0,0,0,0)" %}
     --text-main: {{ section.settings.text_color }};
     {% endif %}
@@ -22,7 +24,7 @@
     #custom-faq-{{ section.id }}{
     padding-top:{{ section.settings.padding_top }}px;
     padding-bottom:{{ section.settings.padding_bottom }}px;
-    background-color: var(--section-bg);
+    background-color: var(--section-bg, transparent);
   color: var(--text-main);
   }
   @media (max-width:768px){
@@ -460,10 +462,10 @@ max-width: {{  section.settings.team_image_width_mobile }}px;
       "content": "Color Customization"
     },
     {
-      "type": "color",
+      "type": "color_background",
       "id": "bg_color",
       "label": "Section Background",
-      "default": "#ffffff"
+      "default": "rgba(0,0,0,0)"
     },
     {
       "type": "color",
