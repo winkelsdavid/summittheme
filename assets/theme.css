@@ -8316,6 +8316,27 @@ body.video-playing {
 .mini-cart-content .js-free-shipping {
   margin-top: 12px;
 }
+/* Free-shipping progress bar styling (Bootstrap-era .progress classes revived after Track-B removal; used in cart drawer + quickshop + cross-sell) */
+.js-free-shipping{
+  overflow:hidden;
+  background-color:rgba(0,0,0,.08);
+}
+.js-free-shipping .progress-bar{
+  height:100%;
+  background-color:var(--color-accent, #fb2988);
+  -webkit-transition:width .6s ease;
+  transition:width .6s ease;
+}
+.js-free-shipping .progress-bar-striped{
+  background-image:linear-gradient(45deg,rgba(255,255,255,.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.2) 75%,transparent 75%,transparent);
+  background-size:1rem 1rem;
+}
+.js-free-shipping .progress-bar-animated{
+  -webkit-animation:progress-bar-stripes 1s linear infinite;
+  animation:progress-bar-stripes 1s linear infinite;
+}
+@-webkit-keyframes progress-bar-stripes{from{background-position:1rem 0}to{background-position:0 0}}
+@keyframes progress-bar-stripes{from{background-position:1rem 0}to{background-position:0 0}}
 
 .free-shipping-content svg,
 .free-shipping-content [class^="svg-"] {
