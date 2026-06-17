@@ -167,13 +167,15 @@
           ms_hr  = ms_min * 60,
           ms_day = ms_hr * 24;
 
-    const HERO_STORAGE_KEY = "kik_hero_timer_start_{{ section.id }}";
     const timerWrapper = document.querySelector(".kik_hero_timer_an.{{ section.id }}");
 
     if (!timerWrapper) return;
 
     const isEnabledSetTo = timerWrapper.getAttribute("data-enable-set-to") === "true";
     const hoursToSet     = parseInt(timerWrapper.getAttribute("data-set-hours")) || 24;
+    // Shared store-wide key derived from the hours value: every "Set to Nh" timer
+    // (count-down + announcement-bar) shares ONE start timestamp -> they stay in sync.
+    const HERO_STORAGE_KEY = "kik_sales_timer_start_" + hoursToSet + "h";
 
     let targetTimestamp;
 

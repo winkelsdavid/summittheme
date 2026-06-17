@@ -265,14 +265,15 @@
             ms_hr = ms_min * 60,
             ms_day = ms_hr * 24;
 
-      // Unique storage key per section to avoid conflicts
-      const STORAGE_KEY_UNIQUE = "kik_timer_start_{{ section.id }}";
       const timerWrapper = document.querySelector(".kik_banner_timer_an.{{ section.id }}");
       
       if (!timerWrapper) return;
 
       const isEnabledSetTo = timerWrapper.getAttribute("data-enable-set-to") === "true";
       const hoursToSet = parseInt(timerWrapper.getAttribute("data-set-hours")) || 24;
+      // Shared store-wide key derived from the hours value: every "Set to Nh" timer
+      // (announcement-bar + count-down) shares ONE start timestamp -> they stay in sync.
+      const STORAGE_KEY_UNIQUE = "kik_sales_timer_start_" + hoursToSet + "h";
       
       let targetTimestamp;
 
