@@ -123,7 +123,7 @@
   position: relative;
   width: calc(33.33% - 1rem*2/3);
   height:90px;
-  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   overflow: hidden;
   background: {{ section.settings.slot_empty_bg }};
   border: 1px dashed {{ section.settings.slot_empty_border }};
@@ -184,7 +184,7 @@
 /*.bns-add-btn {
   width: 100%;
   padding: 1.4rem 2rem;
-  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   border: none;
   cursor: pointer;
   font-size: 1.5rem;
@@ -242,7 +242,7 @@
 .bns-section-{{ section_id }} .bns-card {
   display: flex;
   flex-direction: column;
-  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   overflow: hidden;
   background: {{ section.settings.card_bg }};
   border: 1px solid {{ section.settings.card_border }};
@@ -331,7 +331,7 @@ content:unset!important;
 
 .bns-section-{{ section_id }} .bns-card__select {
   flex: 1;
-  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   border: 1px solid {{ section.settings.select_border }};
   background: {{ section.settings.select_bg }};
   color: {{ section.settings.select_color }};
@@ -349,7 +349,7 @@ content:unset!important;
 
 .bns-section-{{ section_id }} .bns-card__add-btn {
   padding: var(--g-padding-ver-btn) 16px;
-  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   border: none;
   cursor: pointer;
   white-space: nowrap;

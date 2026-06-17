@@ -54,7 +54,7 @@
   }
   .wt-video__movie{
   height:100%;
-  border-radius:calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius:calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   overflow:hidden;
   }
   .wt-video__movie svg{

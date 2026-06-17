@@ -74,7 +74,7 @@
 /* Accordion Wrapper styling using custom variable variables */
 #custom-faq-{{ section.id }} .accordion-box {
   background-color: var(--card-bg);
-  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   padding: 10px 24px;
 }
 

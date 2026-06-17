@@ -52,7 +52,7 @@
     gap: 12px;
     padding: 16px;
     background: {{ section.settings.card_bg_color }};
-    border-radius:calc(0.2rem * {{ settings.radius_allimg_range }}) !important;
+    {% if settings.enable_radius_allimg %}border-radius:calc(0.2rem * {{ settings.radius_allimg_range }}) !important;{% endif %}
     border: 1px solid {{ section.settings.card_border_color }};
     align-items: flex-start;
   }
@@ -112,7 +112,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    border-radius: calc(0.2rem * {{ settings.radius_allimg_range }}) !important;
+    {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }}) !important;{% endif %}
   }
   .iwb-parallax-img{
   height:100%;

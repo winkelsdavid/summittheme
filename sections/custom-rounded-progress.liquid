@@ -42,7 +42,7 @@ margin-top:50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+  {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   position: relative;
   padding: 85px 20px 85px;
   min-height: 385px;

@@ -65,7 +65,7 @@
       width: {{  section.settings.video_width }}px;
       z-index: 99;
       background: #ffffff;
-      border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
+      {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
       overflow: hidden;
       opacity: 0;
