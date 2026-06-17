@@ -80,7 +80,7 @@ background-color: white;
     left: 0;
     bottom: 0;
     width: 22rem;
-    background-color: white;
+    background-color: var(--color-drawer-bg, white);
     overflow-y: auto;
     overflow-x: hidden;
     z-index: -1;
