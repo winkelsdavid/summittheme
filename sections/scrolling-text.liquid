@@ -1,7 +1,7 @@
 
     {%- liquid
       assign scroll_type = section.settings.scroll_type
-      assign speed = section.settings.speed
+      assign speed = 40 | minus: section.settings.speed
       assign size = section.settings.size_text
       assign size_icon = section.settings.size_icon
       assign text_color = section.settings.text
@@ -274,8 +274,8 @@
       "min": 10,
       "max": 30,
       "step": 1,
-      "default": 10,
-      "info": "Auto - Scrolling"
+      "default": 20,
+      "info": "Higher = faster"
     },
     {
       "type": "select",

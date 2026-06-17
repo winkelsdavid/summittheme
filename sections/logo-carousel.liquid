@@ -56,7 +56,7 @@ display:none!important;
     align-items: center;
   }
 </style>
-{%- assign speed_multiplier = 51 | minus : section.settings.slidescroll -%}
+{%- assign anim_speed = 50 | minus: section.settings.slidescroll | times: 90 | plus: 400 -%}
 <div class="customstyle{{ section.id }} " data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}
   <div class="{{ section.settings.section_width }}">
@@ -67,7 +67,7 @@ display:none!important;
         <div class="brand-slider swiper row mb-0" id="collection-list-{{ section.id }}"
             data-rows="{{ section.settings.rows }}"
             data-slidesToShow="{{ section.settings.slidestoshow }}"
-            data-slidestoscroll="{{ speed_multiplier }}"
+            data-slidestoscroll="1"
             data-arrows="{{ section.settings.arrows }}"
             data-dots="{{ section.settings.dots }}" 
             data-draggable="{{ section.settings.draggable }}" 
@@ -77,7 +77,7 @@ display:none!important;
             
             {% if section.settings.automatic_sliding %}
             data-autoplay="true"
-            data-speed="5000"     {% comment %} This is the transition duration {% endcomment %}
+            data-speed="{{ anim_speed }}"     {% comment %} transition duration from 'Animation Speed' setting (higher = faster) {% endcomment %}
             data-autoplayspeed="0" {% comment %} No delay between transitions {% endcomment %}
             data-css-ease="linear" {% comment %} Critical for smooth motion {% endcomment %}
             {%  else %}
@@ -468,7 +468,7 @@ display:none!important;
       "min": 1,
       "step": 1,
       "unit": "ste",
-      "default": 1
+      "default": 30
     },
     {
       "type": "select",
