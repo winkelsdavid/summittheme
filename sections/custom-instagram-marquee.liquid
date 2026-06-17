@@ -63,7 +63,7 @@ gap:20px;
 will-change: transform;
 }
 .c-{{ section.id }}  .marquee-col-image{
-border-radius:{{  section.settings.boxes_radius }}px;
+{% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
 }
 .marquee-col-image{
     position:relative;
@@ -84,7 +84,7 @@ left:0;
 height:{{  section.settings.section_height_desktop }}px;
 }
 .c-{{ section.id }}  .marquee_main_image_c{
-border-radius:{{  section.settings.boxes_radius }}px;
+{% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
 }
 .marquee_main_image_c{
 flex:1;
@@ -672,16 +672,7 @@ document.addEventListener("DOMContentLoaded", function() {
       "min": 1,
       "step": 1,
       "default": 20
-    }, 
-      {
-      "type": "range",
-      "id": "boxes_radius",
-      "label": "Boxed Radius",
-      "max": 100,
-      "min": 1,
-      "step": 1,
-      "default": 20
-    }, 
+    },
       {
       "type": "range",
       "id": "button_radius",

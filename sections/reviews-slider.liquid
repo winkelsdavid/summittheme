@@ -213,7 +213,7 @@
     flex-wrap: wrap;
     border:1px solid var(--border-color);
     background:var(--background);
-    border-radius: {{ section.settings.radius }}px;
+    {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
     margin:0;
     margin-bottom:.5rem;
     width:fit-content;
@@ -662,15 +662,7 @@ window.addEventListener('resize', () => {
     {
     "type": "header",
     "content": "Review Stars Above Heading"
-    },  
-                 {
-          "type": "range",
-          "id": "radius",
-          "label": "Radius",
-          "default": 50,
-          "min":0,
-          "max":100
-        },
+    },
             {
           "type": "range",
           "id": "stars_height",
