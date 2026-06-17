@@ -1698,25 +1698,6 @@ theme.HeaderSection = (function () {
 
 theme.CartDraw = (function () {
   theme.testDrawer = new theme.Drawers("testDrawer", "left");
-  /*$('.drawer-crossell-product').slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    variableWidth: true,
-    dots: false,
-    arrows:true,
-    infinite:false,
-  });*/
-  /*$(document).ready(function() {
-    $('body').on('click', '[name="checkout"], [name="goto_pp"], [name="goto_gc"]', function() {
-      if ($('#agree_checkout').is(':checked')) {
-        $(this).submit();
-      }
-      else {
-        alert("You must agree with the terms and conditions of sales to check out.");
-        return false;
-      }
-    });
-  });*/
 })();
 
 theme.Product = (function () {
@@ -4680,7 +4661,6 @@ theme.miniCart = (function () {
       } else {
         setDisplayAll($cartBottom + ", " + $crosellcart, true);
       }
-      //styleCart === 'true' ? cart.items.length ? $(miniCart).addClass('active'): $(miniCart).removeClass('active') :null;
 
       // add list items
       let lastLine;
@@ -4815,20 +4795,6 @@ theme.miniCart = (function () {
 
 
         // Update the bottom-total section with savings
-       // var savingsDisplay = '';
-       // if (totalSavings > 0) {
-          // Add cart.total_discount if it exists
-      //    var totalSavingsWithDiscount = totalSavings + (cart.total_discount || 0);
-      //    savingsDisplay = `<span class="discount-badge-cart" style="padding: 2px 6px; font-size: 11px; font-weight: bold; border-radius: 3px; margin-left: 8px; vertical-align: middle;">You save ${theme.Currency.formatMoney(totalSavingsWithDiscount, theme.moneyFormat)}</span><s style="margin: 0 5px;">${theme.Currency.formatMoney(totalCompareAtPrice, theme.moneyFormat)}</s>`;
-      //  }
-        
-      //  $('.bottom-total').html(`
-      //    Total:
-      //    <span style="float: right;">
-      //      ${savingsDisplay}
-      //      <span class="js-cart-total">${theme.Currency.formatMoney(cart.total_price, theme.moneyFormat)}</span>
-      //    </span>
-      //  `);
 
 
 /*var savingsDisplay = '';
@@ -4920,24 +4886,6 @@ setHtmlAll('.bottom-total', `
 
         
         // Update the discount information at the top if it exists
-       /* if (totalSavings > 0) {
-          var topSavings = totalSavings + (cart.total_discount || 0);
-          var discountInfo = $('.discount-information p.discount-information-text-display');
-          if (discountInfo.length) {
-            // Get the template from data attribute
-            var template = discountInfo.attr('data-template');
-            
-            if (template) {
-              // Format the savings amount
-              var formattedSavings = theme.Currency.formatMoney(topSavings, theme.moneyFormat);
-              
-              // Replace {DISCOUNT} with the formatted value
-              var parts = template.split('{DISCOUNT}');
-              var newHtml = parts[0] + '<span style="font-weight: 600;">' + formattedSavings + '</span>' + (parts[1] || '');
-              discountInfo.html(newHtml);
-            }
-          }
-        }*/
                  // Calculate the combined savings first
             var combinedTopSavings = (totalSavings || 0) + (cart.total_discount || 0);
 
@@ -5098,24 +5046,6 @@ setHtmlAll('.bottom-total', `
   }
 
   // 2. Button remove items
-/*  $(document).on("click", ".js-remove-mini-cart", function () {
-    const loadingIndicator = document.querySelector(".recommend-loading");
-    var itemId = $(this).data("id");
-    var isOuterMiniCart = $(this).closest(miniCart).length === 0 ? true : false; // check element from mini cart or not
-
-    // hide items
-    $(this).parents(".mini-cart-item").fadeOut(100);
-    loadingIndicator.classList.add("loading");
-    console.log(loadingIndicator);
-    theme.GiftWrap.checkGift(itemId);
-    //remove from cart
-    Shopify.changeItem(itemId, 0, updateElements);
-    Shopify.getCart(function (cart) {
-      if (cart.items.length > numberDisplayed || isOuterMiniCart) {
-        generateCart();
-      }
-    });
-  });*/
   document.addEventListener("click", function (e) {
     var btn = e.target.closest(".js-remove-mini-cart");
     if (!btn) return;
