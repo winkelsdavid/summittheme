@@ -2338,7 +2338,7 @@ theme.Product = (function () {
 
       var thumbOpts = {
         slidesPerGroup: 1,
-        spaceBetween: 0,
+        spaceBetween: 8,
         watchSlidesProgress: true,
         slideToClickedSlide: true,
         navigation: thumbNav
