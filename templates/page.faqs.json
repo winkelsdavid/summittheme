@@ -13,159 +13,298 @@
       "type": "main-page",
       "settings": {}
     },
-    "9ad78513-f48a-4eed-affd-30f6d370be1c": {
+    "faq_accordion_aTzKqp": {
       "type": "faq-accordion",
       "blocks": {
-        "template--16736981942590__9ad78513-f48a-4eed-affd-30f6d370be1c-1666772143a4c26d1e-0": {
+        "faq_GVgLQK": {
           "type": "faq",
           "settings": {
             "faq_title": "How do I make a purchase?",
-            "faq_description": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "faq_description": "<p>Answer Description</p>"
           }
         },
-        "template--16736981942590__9ad78513-f48a-4eed-affd-30f6d370be1c-1666772143a4c26d1e-1": {
+        "faq_4y76Wq": {
           "type": "faq",
           "settings": {
             "faq_title": "How do I know if my order is confirmed?",
-            "faq_description": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "faq_description": "<p>Answer Description</p>"
           }
         },
-        "template--16736981942590__9ad78513-f48a-4eed-affd-30f6d370be1c-1666772143a4c26d1e-2": {
+        "faq_MbnjpE": {
           "type": "faq",
           "settings": {
             "faq_title": "Can I change my shipping address after my order is placed?",
-            "faq_description": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "faq_description": "<p>Answer Description</p>"
           }
         }
       },
       "block_order": [
-        "template--16736981942590__9ad78513-f48a-4eed-affd-30f6d370be1c-1666772143a4c26d1e-0",
-        "template--16736981942590__9ad78513-f48a-4eed-affd-30f6d370be1c-1666772143a4c26d1e-1",
-        "template--16736981942590__9ad78513-f48a-4eed-affd-30f6d370be1c-1666772143a4c26d1e-2"
+        "faq_GVgLQK",
+        "faq_4y76Wq",
+        "faq_MbnjpE"
       ],
       "settings": {
         "animation": "fade-up",
         "section_width": "container",
-        "background_section": "#ffffff",
+        "background_section": "",
         "e_size": "auto",
         "e_repeat": "no-repeat",
         "e_pos": "center center",
-        "subtitle_top": "",
-        "title": "Orders",
-        "description": "Below are some of are common questions about orders",
+        "subtitle_top": "Subtitle Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Frequently Asked Questions.",
+        "description": "",
         "align_heading": "center",
         "title_size": "h6",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
         "e_first_open": false,
         "e_reverse": true,
         "e_small": true,
         "faq_content": "",
-        "e_right": false
+        "e_right": false,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 0
       }
     },
-    "062df5dc-f552-45ec-89c4-08fb863777b7": {
-      "type": "faq-accordion",
+    "divider_advanced_KAMx6w": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#fff2f4",
+        "bg_wave": "#f6d4d9",
+        "flip_pos": "down",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "faq_advanced_gMdfCT": {
+      "type": "faq-advanced",
       "blocks": {
-        "template--16736981942590__062df5dc-f552-45ec-89c4-08fb863777b7-1666772143a4c26d1e-0": {
-          "type": "faq",
+        "faq_item_DmBjBP": {
+          "type": "faq_item",
           "settings": {
-            "faq_title": "Do you ship internationally?",
-            "faq_description": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
           }
         },
-        "template--16736981942590__062df5dc-f552-45ec-89c4-08fb863777b7-1666772143a4c26d1e-1": {
-          "type": "faq",
+        "faq_item_DHdHWy": {
+          "type": "faq_item",
           "settings": {
-            "faq_title": "When will my order be shipped?",
-            "faq_description": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
           }
         },
-        "template--16736981942590__062df5dc-f552-45ec-89c4-08fb863777b7-1666772143a4c26d1e-2": {
-          "type": "faq",
+        "faq_item_7LHqjy": {
+          "type": "faq_item",
           "settings": {
-            "faq_title": "What is your return policy?",
-            "faq_description": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
           }
         },
-        "c3fd023b-88d4-4be1-b635-a8d461da7f4c": {
-          "type": "faq",
+        "faq_item_6LdCnD": {
+          "type": "faq_item",
           "settings": {
-            "faq_title": "How long will it take until I receive my order?",
-            "faq_description": "<p>This is an example of a response that you might give. It's good to be as thorough as possible in responses as that has a tendency to improve trust overall.</p>"
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_VAyr3E": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_EpKe74": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_Jaf8xW": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_ydDxdy": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
           }
         }
       },
       "block_order": [
-        "template--16736981942590__062df5dc-f552-45ec-89c4-08fb863777b7-1666772143a4c26d1e-0",
-        "template--16736981942590__062df5dc-f552-45ec-89c4-08fb863777b7-1666772143a4c26d1e-1",
-        "template--16736981942590__062df5dc-f552-45ec-89c4-08fb863777b7-1666772143a4c26d1e-2",
-        "c3fd023b-88d4-4be1-b635-a8d461da7f4c"
+        "faq_item_DmBjBP",
+        "faq_item_DHdHWy",
+        "faq_item_7LHqjy",
+        "faq_item_6LdCnD",
+        "faq_item_VAyr3E",
+        "faq_item_EpKe74",
+        "faq_item_Jaf8xW",
+        "faq_item_ydDxdy"
       ],
+      "name": "FAQ Advanced",
       "settings": {
-        "animation": "fade-up",
+        "animation": "",
         "section_width": "container",
-        "background_section": "#ffffff",
-        "e_size": "auto",
-        "e_repeat": "no-repeat",
-        "e_pos": "center center",
-        "subtitle_top": "",
-        "title": "Shipping & Returns",
-        "description": "Below are some common questions about shipping, returns, and exchanges",
+        "heading": "Have a question ? We are here to help.",
+        "subheading": "Check out the most common questions our customers asked. Still have questions ? Contact our customer support.",
+        "team_image_width": 180,
+        "team_image_width_mobile": 180,
+        "availability_caption": "Our customer support is available monday to friday.",
+        "response_time_caption": "Average answer time: 24h",
+        "bg_color": "#F6D4D9",
+        "h_color": "",
+        "text_color": "",
+        "text_muted_color": "",
+        "card_bg_color": "#fff2f4",
+        "border_color": "#f6d4d9",
+        "chevron_bg_color": "",
+        "chevron_icon_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 80,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "slideshow_1_xEgi8n": {
+      "type": "slideshow-1",
+      "blocks": {
+        "slide_6FPpyM": {
+          "type": "slide",
+          "settings": {
+            "enable_video": false,
+            "video_hosted": "",
+            "alignment": "center center",
+            "text_alignment": "center center",
+            "text_alignment_mobile": "center",
+            "bgwrap": "#f8ede7",
+            "blurry_transition": false,
+            "blurry_color": "",
+            "show_overlay": true,
+            "gradient_overlay": false,
+            "bg_overlay": "#000000",
+            "opacity_overlay": 0.5,
+            "slide_toptitle": "Top Title",
+            "replace_reviews": false,
+            "reviews_type": "t_1",
+            "margin_title": 1.5,
+            "margin_title_mobile": 1,
+            "slide_toptitle_color": "#ffffff",
+            "slide_title": "Heading Text",
+            "slide_title_color": "#ffffff",
+            "subheading": "",
+            "subheading_color": "#ffffff",
+            "icon_1": "checkmark-2",
+            "icon_text_1": "Selling Point 1",
+            "icon_2": "checkmark-2",
+            "icon_text_2": "Selling Point 2",
+            "icon_3": "checkmark-2",
+            "icon_text_3": "Selling Point 3",
+            "spacing": 21,
+            "icon_color": "#ffffff",
+            "icons_text_color": "#ffffff",
+            "icons_size": 27,
+            "icon_background": "linear-gradient(54deg, rgba(231, 231, 231, 0.35) 14%, rgba(242, 242, 242, 0.15) 83%)",
+            "icon_padding": 3,
+            "icon_padding_left_right": 10,
+            "icon_radius": 50,
+            "text_size_desktop": 14,
+            "text_size_mobile": 12,
+            "button_label": "Get Yours Now",
+            "button_link": "",
+            "stylebtns": "btn-theme",
+            "bg_button": "",
+            "color_button": "#ffffff",
+            "bg_button_hover": "",
+            "color_button_hover": "#ffffff",
+            "button_label_2": "",
+            "button_link_2": "",
+            "stylebtns_2": "btn-theme",
+            "bg_button_2": "#000000",
+            "color_button_2": "#ffffff",
+            "bg_button_hover_2": "#FF6F2E",
+            "color_button_hover_2": "#ffffff",
+            "active_review": false,
+            "rating_count": "4.8",
+            "rating_text": "",
+            "note_background": "#ffffff",
+            "note_color": "#000000",
+            "note_size": 24,
+            "stars_color": "#34bf49",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "slide_6FPpyM"
+      ],
+      "name": "Slideshow 1",
+      "settings": {
+        "enable_slideshow": true,
+        "setwidthout": "full",
+        "slideshow_height_adapt": "750",
+        "slideshow_height_mobile": "500",
+        "section_width": "container",
+        "slideshow_mobile": true,
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "anim_slideshow": "fade",
+        "e_arrow": false,
+        "color_arrow": "#000",
+        "bg_arrow": "#fff",
+        "opacity_arrow": 1,
+        "e_dot": true,
+        "slide_dot": "square",
+        "color_dot_nav": "#000",
+        "color_dot_active": "#c99a5c"
+      }
+    },
+    "contact_form_wtnpXa": {
+      "type": "contact-form",
+      "name": "Contact Form",
+      "settings": {
+        "animation": "",
+        "background_section": "",
+        "subtitle_top": "Get in touch",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Didn't find your answer?",
+        "description": "",
         "align_heading": "center",
-        "title_size": "h6",
-        "e_first_open": false,
-        "e_reverse": true,
-        "e_small": true,
-        "faq_content": "",
-        "e_right": false
-      }
-    },
-    "e3f9b59b-307f-4380-8307-f05ffecaaef0": {
-      "type": "rich-text",
-      "blocks": {
-        "a48bdf20-667c-4450-8cfc-ab5ff5d1dd70": {
-          "type": "heading",
-          "settings": {
-            "title": "Didn't find your answer?",
-            "size_text": "h3"
-          }
-        },
-        "367e94fc-6596-45ac-a2ce-0ca3e3f4c096": {
-          "type": "paragraph",
-          "settings": {
-            "description_body": "Don't hestitate to contact us"
-          }
-        },
-        "9a37e0ea-8786-4c9d-8b46-47a4c56f625d": {
-          "type": "button",
-          "settings": {
-            "button": "Contact us",
-            "link": "#",
-            "style_btn": "btn-theme"
-          }
-        }
-      },
-      "block_order": [
-        "a48bdf20-667c-4450-8cfc-ab5ff5d1dd70",
-        "367e94fc-6596-45ac-a2ce-0ca3e3f4c096",
-        "9a37e0ea-8786-4c9d-8b46-47a4c56f625d"
-      ],
-      "settings": {
-        "animation": "fade-up",
-        "section_width": "container",
-        "background_section": "#ffffff",
-        "gradient_bg": "",
-        "title_color": "rgba(0,0,0,0)",
-        "subtitle_top": "",
-        "title": "",
-        "text": "",
-        "align_heading": "center"
+        "answer_content": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
       }
     }
   },
   "order": [
     "main",
-    "9ad78513-f48a-4eed-affd-30f6d370be1c",
-    "062df5dc-f552-45ec-89c4-08fb863777b7",
-    "e3f9b59b-307f-4380-8307-f05ffecaaef0"
+    "faq_accordion_aTzKqp",
+    "divider_advanced_KAMx6w",
+    "faq_advanced_gMdfCT",
+    "slideshow_1_xEgi8n",
+    "contact_form_wtnpXa"
   ]
 }

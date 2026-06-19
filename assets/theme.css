@@ -2515,7 +2515,7 @@ select {
   -moz-appearance: none;
   appearance: none;
   background-position: right center;
-  background-image: url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/61/assets/ico-select.svg?v=154426348940443489681779744000');
+  background-image: url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/96/assets/ico-select.svg?v=128370188988436898121781721801');
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-color: transparent;
@@ -4189,7 +4189,7 @@ p a:not(.button):focus,
   z-index: 1001;
 }
 .slick-loading .slick-list {
-  background: white url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/61/assets/ajax-loader.gif?v=41356863302472015721758992719') center center no-repeat;
+  background: white url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/96/assets/ajax-loader.gif?v=41356863302472015721781721766') center center no-repeat;
 }
 @keyframes animateIcon {
   0% {
@@ -5829,7 +5829,7 @@ p a:not(.button):focus,
   display: block;
   width: 100%;
   position: relative;
-  cursor: url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/61/assets/cursor-zoom.svg?v=84567924709338486941758992719'),auto;
+  cursor: url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/96/assets/cursor-zoom.svg?v=112480252220988712521781721766'),auto;
 }
 .product__photo-wrapper.square{
   padding-top:100% !important;

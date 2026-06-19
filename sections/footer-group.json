@@ -46,18 +46,22 @@
         },
         "e9eb7f2c-c446-4ab6-9c0c-636e713bb621": {
           "type": "menu",
+          "disabled": true,
           "settings": {
             "link_list": "footer",
             "title": "",
             "width": "auto"
           }
         },
-        "1595696762386": {
-          "type": "text",
+        "contact_VriNg6": {
+          "type": "contact",
           "settings": {
-            "widthlogofooter": 150,
-            "title": "Contact Us",
-            "width": "25%"
+            "title": "Get in touch",
+            "contact_description": "Got a question? Fill out the contact form or send us an E-Mail. We’d love to hear from you",
+            "contact_address": "",
+            "contact_phone": "+844 123 456 789",
+            "contact_mail": "info@domain.com",
+            "contact_web": "www.domain.com"
           }
         }
       },
@@ -66,7 +70,7 @@
         "1562342622030",
         "1567410176792",
         "e9eb7f2c-c446-4ab6-9c0c-636e713bb621",
-        "1595696762386"
+        "contact_VriNg6"
       ],
       "custom_css": [
         ".site-footer__copyright {border-top: none;}",
@@ -88,7 +92,7 @@
         "footer_font_weight": "700",
         "footer_spacing": 0.1,
         "footer_typetext": "uppercase",
-        "acc_mobile": true,
+        "acc_mobile": false,
         "e_ft_currency": true,
         "enable_image": true,
         "enable_name": true,
@@ -96,6 +100,7 @@
         "payment_info": "svg",
         "link_list_bottom": "",
         "copyright": true,
+        "copyright_content": "<p>© Powered with<a href=\"#\" title=\"#\"> <strong>Summit Theme</strong></a></p>",
         "padding_top": 64,
         "padding_bottom": 32,
         "m_padding_top": 32,

@@ -25,6 +25,7 @@
             "background": "linear-gradient(136deg, rgba(255, 255, 255, 0.75) 11%, rgba(255, 255, 255, 0.35) 81%)",
             "text_color": "#000000",
             "stars_rating": 4.4,
+            "text": "<p><strong>Excellent</strong> 4.8 out of 5</p>",
             "content": "<p>Trusted by thousands of customers.</p>",
             "roundness": 42,
             "images_size": 60,
@@ -43,6 +44,7 @@
             "radius": 10,
             "stars_height": 17,
             "stars_rating": 4.5,
+            "text": "<p><strong>Excellent</strong> 4.8 out of 5</p>",
             "show_truspilot": true,
             "trust_icon": "google",
             "font_size": 13,
@@ -56,9 +58,10 @@
           "type": "reviews_start_2",
           "disabled": true,
           "settings": {
-            "radius": 10,
+            "radius": 40,
             "stars_height": 21,
             "stars_rating": 4.5,
+            "text": "<p><strong>4.8/5</strong> based on 149+ Reviews</p>",
             "font_size": 12,
             "mobile_font_size": 12,
             "text_color": "#000000",
@@ -77,12 +80,21 @@
             "font_size_mobile": 30
           }
         },
+        "text_LcH9Vb": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Here can be an intro text or metafield for example.",
+            "text_style": "body"
+          }
+        },
         "icon_text_box_YaUezp": {
           "type": "icon_text_box",
           "settings": {
             "icon": "checkmark-2",
             "icon_color": "rgba(0,0,0,0)",
-            "icon_size": 25
+            "icon_size": 25,
+            "text": "<p>Icon and text block</p>"
           }
         },
         "icon_text_box_qcbbLt": {
@@ -90,13 +102,15 @@
           "settings": {
             "icon": "checkmark-2",
             "icon_color": "rgba(0,0,0,0)",
-            "icon_size": 24
+            "icon_size": 24,
+            "text": "<p>Icon and text block</p>"
           }
         },
         "10baeeb8-3d3b-4115-8375-8a90ab8f58e9": {
           "type": "text",
           "disabled": true,
           "settings": {
+            "text": "Text block",
             "text_style": "subtitle"
           }
         },
@@ -105,17 +119,24 @@
           "settings": {
             "icon": "checkmark-2",
             "icon_color": "rgba(0,0,0,0)",
-            "icon_size": 25
+            "icon_size": 25,
+            "text": "<p>Icon and text block</p>"
           }
         },
-        "31b79d7e-a35a-4a94-8cb5-8e518bf8fef6": {
-          "type": "review",
+        "1431e891-e819-4fa1-8416-0cb3956f0e39": {
+          "type": "description",
           "disabled": true,
-          "settings": {}
+          "settings": {
+            "enable_tab": true,
+            "open_default": false,
+            "no_border": false,
+            "title_tab": "Description"
+          }
         },
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc": {
           "type": "price",
           "settings": {
+            "show_tax_disclaimer": false,
             "enable_badge": true,
             "b_font_size": 12,
             "b_size": 10,
@@ -139,15 +160,11 @@
             "p_c_color": "#ff4d00"
           }
         },
-        "1affb493-1e14-4893-9876-be8d348ee475": {
-          "type": "shortdesc",
-          "disabled": true,
-          "settings": {}
-        },
         "2cf20ef7-ba29-4dd5-8c98-df0b96ba3c5b": {
           "type": "text",
           "disabled": true,
           "settings": {
+            "text": "Text block",
             "text_style": "body"
           }
         },
@@ -172,7 +189,7 @@
           "settings": {
             "open_by_default": true,
             "enable_clickable": true,
-            "bk": "linear-gradient(136deg, rgba(35, 126, 233, 0.25) 11%, rgba(54, 146, 255, 0.25) 81%)",
+            "bk": "#F6D4D9",
             "box_bk": "",
             "icon_width": 24,
             "title": "Popular upgrades",
@@ -185,13 +202,6 @@
             "spacing_bottom": 15,
             "mobile_spacing_top": 15,
             "mobile_spacing_bottom": 15
-          }
-        },
-        "ff32ea77-bcea-43d3-8e38-55894c9d938a": {
-          "type": "separator",
-          "disabled": true,
-          "settings": {
-            "background": "#fce4e8"
           }
         },
         "8288910a-1ad6-47df-b127-118bc1d2ce24": {
@@ -315,7 +325,7 @@
             "box_1_bk": "linear-gradient(136deg, rgba(246, 212, 217, 1) 11%, rgba(246, 212, 217, 1) 81%)",
             "box_1_color": "#000000",
             "delivery_label": "",
-            "delivery_in": 8,
+            "delivery_in": 5,
             "box_1_font_size": 12,
             "box_1_font_size_mobile": 12,
             "icon_1_svg": "shield",
@@ -339,20 +349,6 @@
             "mobile_spacing_bottom": 15
           }
         },
-        "ab3c624e-4b26-4bb4-b6bc-f283badc9347": {
-          "type": "separator",
-          "disabled": true,
-          "settings": {
-            "background": ""
-          }
-        },
-        "842b653e-7ccb-4f45-ad7c-8619b58f56ee": {
-          "type": "separator",
-          "disabled": true,
-          "settings": {
-            "background": ""
-          }
-        },
         "73a647c7-afc5-4d87-aaea-1438dd5ecb92": {
           "type": "icon_with_text",
           "disabled": true,
@@ -366,53 +362,6 @@
             "icon_text_3": "2 Year Warranty",
             "icon_4": "none",
             "icon_text_4": ""
-          }
-        },
-        "b7034bf2-48fd-492f-a089-3169873730db": {
-          "type": "salepoint",
-          "disabled": true,
-          "settings": {
-            "icon": "lock",
-            "icon_color": "#34bf49",
-            "icon_size": 24,
-            "free_word": "<p>Flexible and secure payment, pay on delivery</p>"
-          }
-        },
-        "salepoint_tjh4ej": {
-          "type": "salepoint",
-          "disabled": true,
-          "settings": {
-            "icon": "lock",
-            "icon_color": "#34bf49",
-            "icon_size": 23,
-            "free_word": "<p>Flexible and secure payment, pay on delivery</p>"
-          }
-        },
-        "13c388e5-8dd3-4462-9284-ec3f2c9aabc6": {
-          "type": "salepoint",
-          "disabled": true,
-          "settings": {
-            "icon": "shield",
-            "icon_color": "",
-            "icon_size": 24,
-            "free_word": "<p>2 Year Warranty</p>"
-          }
-        },
-        "salepoint_WxRA3W": {
-          "type": "salepoint",
-          "disabled": true,
-          "settings": {
-            "icon": "ribbon",
-            "icon_color": "",
-            "icon_size": 24,
-            "free_word": "<p>600,000 happy customers</p>"
-          }
-        },
-        "7120c076-9673-4f15-a579-5efa29fefb6f": {
-          "type": "separator",
-          "disabled": true,
-          "settings": {
-            "background": ""
           }
         },
         "11f6643a-6bb6-4db9-a512-9c0eefc8c3b8": {
@@ -436,28 +385,18 @@
             "mobile_padding_bottom": 0
           }
         },
-        "1431e891-e819-4fa1-8416-0cb3956f0e39": {
-          "type": "description",
-          "disabled": true,
-          "settings": {
-            "enable_tab": true,
-            "open_default": false,
-            "no_border": false,
-            "title_tab": "Description"
-          }
-        },
         "2830007b-b9f5-4f33-86cf-680e0a91ca8d": {
           "type": "tabcustom",
           "settings": {
             "open_default": false,
             "no_border": false,
-            "title_tab": "What Does Collagen Cream Actually Do?",
+            "title_tab": "Here will be a question.",
             "font_size": 13,
             "font_size_mobile": 13,
             "icon": "globe",
             "icon_color": "rgba(0,0,0,0)",
             "icon_size": 30,
-            "answer_content": "<p>ORELLA Collagen Jelly Cream deeply hydrates, nourishes, and helps improve skin texture, firmness, and radiance. The collagen-rich formula supports moisture retention while leaving skin smoother, softer, and healthier-looking with consistent daily use.</p>",
+            "answer_content": "<p>Here will be a question.</p>",
             "page": ""
           }
         },
@@ -466,13 +405,13 @@
           "settings": {
             "open_default": false,
             "no_border": false,
-            "title_tab": "Is This Cream Suitable For Sensitive Skin?",
+            "title_tab": "Here will be a question.",
             "font_size": 13,
             "font_size_mobile": 13,
             "icon": "heart",
             "icon_color": "",
             "icon_size": 30,
-            "answer_content": "<p>Yes, the lightweight and gentle formula is designed for all skin types, including sensitive skin. It hydrates without feeling heavy or irritating, helping soothe dryness while supporting a healthier skin barrier and balanced complexion.</p>",
+            "answer_content": "<p>Here will be a question.</p>",
             "page": ""
           }
         },
@@ -481,36 +420,23 @@
           "settings": {
             "open_default": false,
             "no_border": false,
-            "title_tab": "Can I Use It Every Day?",
+            "title_tab": "Here will be a question.",
             "font_size": 13,
             "font_size_mobile": 13,
             "icon": "shield",
             "icon_color": "",
             "icon_size": 30,
-            "answer_content": "<p>Absolutely. ORELLA Collagen Jelly Cream is suitable for both morning and nighttime skincare routines. Daily use helps maintain hydration, improve softness, and support smoother, more radiant skin over time without clogging pores.</p>",
+            "answer_content": "<p>Here will be an answer.</p>",
             "page": ""
-          }
-        },
-        "83a6f5b6-88e4-4eb3-9899-a085ea9c58bd": {
-          "type": "shippingtime",
-          "disabled": true,
-          "settings": {
-            "shipping_button": "",
-            "page_shipping": "delivery-service"
           }
         },
         "883720d7-3346-4495-85a0-add8b3d7a51f": {
           "type": "trust-badge",
           "disabled": true,
           "settings": {
-            "trust_heading": "Guaranteed safe checkout",
+            "trust_heading": "Guarantee safe checkout",
             "width_image": 66
           }
-        },
-        "2d534ed0-517d-48ca-8370-8659965f32c4": {
-          "type": "share",
-          "disabled": true,
-          "settings": {}
         },
         "51f9d856-95f4-4741-bf4d-afe15438ff29": {
           "type": "related-product",
@@ -518,7 +444,7 @@
           "settings": {
             "title_heading": "Related products",
             "size_text": "h5",
-            "product_1": "",
+            "product_1": "ashwagandha-gummies",
             "product_2": "",
             "product_3": ""
           }
@@ -529,6 +455,7 @@
             "image": "shopify://shop_images/REV4_4101be67-653b-445c-805d-8b6f69975705.jpg",
             "name": "Lauren J.",
             "name_color": "",
+            "text": "Here will be a review.",
             "text_color": "",
             "border_color": "rgba(0,0,0,0)",
             "stars_color": "#fe899a",
@@ -545,36 +472,25 @@
         "reviews_start_NzYq9g",
         "reviews_start_2_MzCp3G",
         "989bce2f-7961-4267-8e6c-40ff4bb0ed64",
+        "text_LcH9Vb",
         "icon_text_box_YaUezp",
         "icon_text_box_qcbbLt",
         "10baeeb8-3d3b-4115-8375-8a90ab8f58e9",
         "icon_text_box_KJDJa3",
-        "31b79d7e-a35a-4a94-8cb5-8e518bf8fef6",
+        "1431e891-e819-4fa1-8416-0cb3956f0e39",
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc",
-        "1affb493-1e14-4893-9876-be8d348ee475",
         "2cf20ef7-ba29-4dd5-8c98-df0b96ba3c5b",
         "promo_XefgPA",
         "bundle_WgkHYq",
-        "ff32ea77-bcea-43d3-8e38-55894c9d938a",
         "8288910a-1ad6-47df-b127-118bc1d2ce24",
         "delivery_date_7rkMeD",
-        "ab3c624e-4b26-4bb4-b6bc-f283badc9347",
-        "842b653e-7ccb-4f45-ad7c-8619b58f56ee",
         "73a647c7-afc5-4d87-aaea-1438dd5ecb92",
-        "b7034bf2-48fd-492f-a089-3169873730db",
-        "salepoint_tjh4ej",
-        "13c388e5-8dd3-4462-9284-ec3f2c9aabc6",
-        "salepoint_WxRA3W",
-        "7120c076-9673-4f15-a579-5efa29fefb6f",
         "11f6643a-6bb6-4db9-a512-9c0eefc8c3b8",
         "videos_bTJ9gX",
-        "1431e891-e819-4fa1-8416-0cb3956f0e39",
         "2830007b-b9f5-4f33-86cf-680e0a91ca8d",
         "tabcustom_DMyt9X",
         "tabcustom_9d6FDN",
-        "83a6f5b6-88e4-4eb3-9899-a085ea9c58bd",
         "883720d7-3346-4495-85a0-add8b3d7a51f",
-        "2d534ed0-517d-48ca-8370-8659965f32c4",
         "51f9d856-95f4-4741-bf4d-afe15438ff29",
         "custom_review_F9cTcD"
       ],
@@ -635,112 +551,10 @@
         "dot_color": "#34bf49",
         "enable_animation": true,
         "animation_delay": 3,
-        "delivery_in": 14,
+        "delivery_in": 5,
         "delivery_size": 14,
         "delivery_size_mobile": 12,
         "atc_text": ""
-      }
-    },
-    "service_9Mx9Ca": {
-      "type": "icon-list",
-      "blocks": {
-        "service_p6UCFB": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "",
-            "title": "Day Night Hydration",
-            "description": "Hydrates skin continuously from morning to night, keeping it fresh, dewy, and balanced daily.",
-            "type_icon": "img",
-            "icon": "",
-            "image_icon": "shopify://shop_images/Icon1_6ee687f0-046b-45d1-97b0-6f960eed3337.png"
-          }
-        },
-        "service_Hndrwj": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "",
-            "title": "Collagen Network",
-            "description": "Supports skin structure with collagen care, helping improve firmness, elasticity, and smoother texture visibly.",
-            "type_icon": "img",
-            "icon": "",
-            "image_icon": "shopify://shop_images/Icon2_e133a9dd-c06b-46c5-8a5a-b218cd3144e6.png"
-          }
-        },
-        "service_6Pf8iz": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "",
-            "title": "Night Repair",
-            "description": "Works overnight to refresh tired skin, revealing a smoother, brighter, well-rested morning glow.",
-            "type_icon": "img",
-            "icon": "",
-            "image_icon": "shopify://shop_images/Icon3_5bf00c5a-91c9-443c-b0ce-a80756e26f64.png"
-          }
-        },
-        "service_KP8FzR": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "",
-            "title": "Barrier Shield",
-            "description": "Protects moisture inside skin while strengthening the barrier against dryness, irritation, and daily stress.",
-            "type_icon": "img",
-            "icon": "",
-            "image_icon": "shopify://shop_images/Icon4_fda81cec-077c-4c2f-871a-450453c7acde.png"
-          }
-        }
-      },
-      "block_order": [
-        "service_p6UCFB",
-        "service_Hndrwj",
-        "service_6Pf8iz",
-        "service_KP8FzR"
-      ],
-      "name": "Icons",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background_section": "rgba(0,0,0,0)",
-        "subtitle_top": "Firmness You Can Feel",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "Hydrated Skin, Lasting Glow",
-        "description": "",
-        "align_heading": "center",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "paddingbox": "0px 0px 0px 0px",
-        "iconcolor": "rgba(0,0,0,0)",
-        "titlecolor": "rgba(0,0,0,0)",
-        "subcolor": "#640155",
-        "size": 90,
-        "service_heading": "h5",
-        "layout": "style-2",
-        "enable_carousel": false,
-        "arrows": true,
-        "draggable": true,
-        "dots": true,
-        "infinite": true,
-        "padding_top": 60,
-        "padding_bottom": 60,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 20
-      }
-    },
-    "product-requently": {
-      "type": "product-bundle",
-      "settings": {
-        "animation": "fade-up",
-        "background_section": "#ffffff",
-        "bundle_title": "Frequently Bought Together",
-        "size_text": "h4",
-        "limit_bundle": 3,
-        "enable_border": true,
-        "add_button": "Add selected items",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
       }
     },
     "product-content": {
@@ -755,8 +569,8 @@
         "b69a53cf-5bc1-4b18-add3-92af436f966c": {
           "type": "content",
           "settings": {
-            "title_tab": "Material",
-            "answer_content": "<p><strong>14k and 18k Solid Gold</strong></p><p>We recommend 14k or 18k solid recycled gold if you're looking for your jewelry to last generations to come. Solid gold is guaranteed to never tarnish, so you never have to take it off (bonus: you can wear it in water). It's 100% worry free. In addition to our quality standards, all our manufacturers certify where their gold comes from so we can proudly stand behind our ethical practices.</p>",
+            "title_tab": "Shipping & Returns",
+            "answer_content": "<p>Text for shipping & returns.</p>",
             "page": "material"
           }
         },
@@ -776,10 +590,10 @@
             "title_tab": "Reviews"
           }
         },
-        "2e69c5c0-ab83-4cda-9c38-1aaab6fdf1cc": {
+        "related_products_ptxrJP": {
           "type": "related_products",
           "settings": {
-            "title_heading": "Buy with",
+            "title_heading": "Frequently Bought Together.",
             "size_text": "h6",
             "product_limit": 2
           }
@@ -790,7 +604,7 @@
         "b69a53cf-5bc1-4b18-add3-92af436f966c",
         "450a0011-a13e-4bad-9fbb-454bc0a862b4",
         "147e9960-c5fe-44f4-8469-9583a9752a0a",
-        "2e69c5c0-ab83-4cda-9c38-1aaab6fdf1cc"
+        "related_products_ptxrJP"
       ],
       "disabled": true,
       "settings": {
@@ -806,136 +620,213 @@
         "mobile_padding_bottom": 0
       }
     },
-    "image_text_product_RM6Ykb": {
+    "icon_list_8fwrJ3": {
+      "type": "icon-list",
+      "blocks": {
+        "icon_item_Yn4JUj": {
+          "type": "icon_item",
+          "settings": {
+            "bgblock": "",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
+            "type_icon": "img",
+            "icon": ""
+          }
+        },
+        "icon_item_PDeGaf": {
+          "type": "icon_item",
+          "settings": {
+            "bgblock": "",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
+            "type_icon": "img",
+            "icon": ""
+          }
+        },
+        "icon_item_7X8Vhy": {
+          "type": "icon_item",
+          "settings": {
+            "bgblock": "",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
+            "type_icon": "img",
+            "icon": ""
+          }
+        },
+        "icon_item_bXae7j": {
+          "type": "icon_item",
+          "settings": {
+            "bgblock": "",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
+            "type_icon": "img",
+            "icon": ""
+          }
+        }
+      },
+      "block_order": [
+        "icon_item_Yn4JUj",
+        "icon_item_PDeGaf",
+        "icon_item_7X8Vhy",
+        "icon_item_bXae7j"
+      ],
+      "name": "Icons",
+      "settings": {
+        "animation": "fade-up",
+        "section_width": "container",
+        "background_section": "",
+        "subtitle_top": "Subtitle Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Title",
+        "description": "",
+        "align_heading": "center",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
+        "paddingbox": "0px 0px 0px 0px",
+        "iconcolor": "#200e10",
+        "titlecolor": "#200e10",
+        "subcolor": "#200e10",
+        "size": 90,
+        "service_heading": "h5",
+        "layout": "style-2",
+        "enable_carousel": false,
+        "arrows": true,
+        "draggable": true,
+        "dots": true,
+        "infinite": true,
+        "padding_top": 60,
+        "padding_bottom": 30,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "image_with_icons_ynjyXp": {
       "type": "image-with-icons",
       "blocks": {
-        "text_icon_mrwrHK": {
+        "text_icon_mXPYHF": {
           "type": "text_icon",
           "settings": {
-            "icon_image": "shopify://shop_images/Icon8.png",
             "icon_width": 80,
-            "block_title": "Natural Formula",
-            "block_description": "<p>Plant-inspired care gently nourishes skin with soothing ingredients for soft, healthy-looking daily radiance.</p>",
+            "block_title": "Heading",
+            "block_description": "<p>Made of flax, a natural material that won’t irritate sensitive skin</p>",
             "alignment": "center"
           }
         },
-        "text_icon_wxUxnw": {
+        "text_icon_UzH3gB": {
           "type": "text_icon",
           "settings": {
-            "icon_image": "shopify://shop_images/Icon9_6cc21df2-a02d-41c5-86b9-1e5c9f9e68d5.png",
             "icon_width": 80,
-            "block_title": "Skin Renewal",
-            "block_description": "<p>Encourages refreshed skin appearance by smoothing dullness, dryness, and uneven texture over time.</p>",
+            "block_title": "Heading",
+            "block_description": "<p>Made of flax, a natural material that won’t irritate sensitive skin</p>",
             "alignment": "center"
           }
         },
-        "text_icon_ahtwfR": {
+        "text_icon_tPmDmK": {
           "type": "text_icon",
           "settings": {
-            "icon_image": "shopify://shop_images/Icon10.png",
             "icon_width": 80,
-            "block_title": "Smooth Texture",
-            "block_description": "<p>Refines rough-looking skin texture, helping create a softer, clearer, more even complexion visibly.</p>",
+            "block_title": "Heading",
+            "block_description": "<p>Made of flax, a natural material that won’t irritate sensitive skin</p>",
             "alignment": "center"
           }
         },
-        "text_icon_9DeWHh": {
+        "text_icon_QXqTGC": {
           "type": "text_icon",
           "settings": {
-            "icon_image": "shopify://shop_images/Icon14.png",
             "icon_width": 80,
-            "block_title": "Youthful Complexion",
-            "block_description": "<p>Promotes a smoother, glowing complexion with visibly refreshed, softer, and more youthful-looking skin.</p>",
+            "block_title": "Heading",
+            "block_description": "<p>Made of flax, a natural material that won’t irritate sensitive skin</p>",
             "alignment": "center"
           }
         }
       },
       "block_order": [
-        "text_icon_mrwrHK",
-        "text_icon_wxUxnw",
-        "text_icon_ahtwfR",
-        "text_icon_9DeWHh"
+        "text_icon_mXPYHF",
+        "text_icon_UzH3gB",
+        "text_icon_tPmDmK",
+        "text_icon_QXqTGC"
       ],
       "name": "Image With 4 Icons",
       "settings": {
-        "animation": "",
+        "animation": "fade-up",
         "background": "",
         "section_width": "container",
         "gutter_padding": 30,
-        "section_image": "shopify://shop_images/Main9_a8ae4ea7-8d1f-4366-9bbb-56b575ef4d21.jpg",
         "video_pick": "",
         "block_text_color": "#000000",
         "block_text_bg": "#ffffff",
-        "padding_top": 20,
-        "padding_bottom": 80,
-        "mobile_padding_top": 20,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "custom_reviews_marquee_NecxRp": {
+    "custom_reviews_marquee_YfjRdr": {
       "type": "custom-reviews-marquee",
       "blocks": {
-        "first_row_8MYfRA": {
+        "review_left_dYyPdD": {
           "type": "review_left",
           "settings": {
-            "title": "Glow Upgrade!",
+            "title": "I absolutely love it!",
             "date": "March 10, 2026",
-            "content": "<p>I’ve tried countless moisturizers, but this collagen jelly cream actually keeps my skin hydrated all day. My face feels softer, looks brighter, and makeup sits beautifully afterward. Honestly, such a good surprise for my sensitive skin.</p><h3></h3>",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
             "name": "Amelie R.",
             "add_verified": true,
             "verified_color": "#34bf49"
           }
         },
-        "first_row_T8wUA4": {
+        "review_left_BbM7UT": {
           "type": "review_left",
           "settings": {
-            "title": "Lowkey Amazing",
+            "title": "I absolutely love it!",
             "date": "March 10, 2026",
-            "content": "<p>Lowkey obsessed with this cream already. The texture feels lightweight but deeply nourishing, and my dry patches disappeared within days. My skin looks smoother every morning, especially around my cheeks and forehead.</p>",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
             "name": "Amelie R.",
             "add_verified": true,
             "verified_color": "#34bf49"
           }
         },
-        "first_row_ai9aaJ": {
+        "review_left_gwmkMC": {
           "type": "review_left",
           "settings": {
-            "title": "Actually Works",
+            "title": "I absolutely love it!",
             "date": "March 10, 2026",
-            "content": "<p>After two weeks of using ORELLA Collagen Jelly Cream nightly, my skin feels firmer and noticeably healthier. I love the fresh glow it gives without feeling greasy or heavy. Definitely repurchasing because it genuinely works.</p>",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
             "name": "Amelie R.",
             "add_verified": true,
             "verified_color": "#34bf49"
           }
         },
-        "second_row_KpeBx6": {
+        "review_right_KktPch": {
           "type": "review_right",
           "settings": {
-            "title": "Super Hydrating",
+            "title": "I absolutely love it!",
             "date": "March 10, 2026",
-            "content": "<p>This moisturizer made my skin look hydrated and plump after only several applications, which honestly impressed me. The jar feels slightly smaller than expected, but the formula itself works beautifully and lasts throughout the night.</p>",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
             "name": "Amelie R.",
             "add_verified": true,
             "verified_color": "#34bf49"
           }
         },
-        "second_row_YKEV36": {
+        "review_right_Y3Fyp7": {
           "type": "review_right",
           "settings": {
-            "title": "Soothing Glow",
+            "title": "I absolutely love it!",
             "date": "March 10, 2026",
-            "content": "<p>My skin usually reacts badly to new products, yet this jelly cream felt soothing immediately. The hydration lasts for hours, and my complexion looks clearer, softer, and more radiant lately. Kinda feels like a luxury facial.</p>",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
             "name": "Amelie R.",
             "add_verified": true,
             "verified_color": "#34bf49"
           }
         },
-        "second_row_W8V7aB": {
+        "review_right_EXgkUE": {
           "type": "review_right",
           "settings": {
-            "title": "Fresh Radiance",
+            "title": "I absolutely love it!",
             "date": "March 10, 2026",
-            "content": "<p>This collagen cream gives my skin the smoothest glow ever without clogging pores or causing irritation. The jelly texture absorbs quickly, feels refreshing, and leaves my face looking healthy, bouncy, and naturally radiant every day.</p>",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
             "name": "Amelie R.",
             "add_verified": true,
             "verified_color": "#34bf49"
@@ -943,12 +834,12 @@
         }
       },
       "block_order": [
-        "first_row_8MYfRA",
-        "first_row_T8wUA4",
-        "first_row_ai9aaJ",
-        "second_row_KpeBx6",
-        "second_row_YKEV36",
-        "second_row_W8V7aB"
+        "review_left_dYyPdD",
+        "review_left_BbM7UT",
+        "review_left_gwmkMC",
+        "review_right_KktPch",
+        "review_right_Y3Fyp7",
+        "review_right_EXgkUE"
       ],
       "name": "Testimonials Slider",
       "settings": {
@@ -959,17 +850,17 @@
         "show_stars": true,
         "stars_color": "",
         "stars_rating": 4.5,
-        "reviews_count_caption": "Rated 4.8/5.0 on",
+        "reviews_count_caption": "Rated 4.9/5.0 on",
         "reviews_cout_color": "",
         "show_truspilot": true,
-        "trust_icon": "ebay",
-        "title": "Real Results, Real Reviews",
+        "trust_icon": "trustpilot",
+        "title": "Customer Reviews",
         "title_color": "",
-        "content": "<p>Thousands are loving ORELLA Collagen Jelly Cream for smoother, brighter, deeply hydrated skin with visible daily improvements.</p>",
+        "content": "<p>Our customers share honest feedback about their experiences, helping others make confident, informed decisions better.</p>",
         "content_color": "",
         "show_quotes": true,
         "quote_box_color": "#ffffff",
-        "quote_title_color": "#2e0128",
+        "quote_title_color": "#200e10",
         "quote_date_color": "",
         "quote_content_color": "",
         "quote_name_color": "",
@@ -980,151 +871,423 @@
         "animation_speed_mobile": 20,
         "boxes_radius": 20,
         "padding_top": 40,
-        "padding_bottom": 60,
-        "mobile_padding_top": 20,
+        "padding_bottom": 80,
+        "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "custom_image_bullets_F7wqRn": {
-      "type": "custom-image-bullets",
+    "custom_reviews_TbH4Ye": {
+      "type": "custom-reviews",
       "blocks": {
-        "bullet_DUVPxX": {
-          "type": "bullet",
+        "review_yXp8Pn": {
+          "type": "review",
           "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Deep Collagen Hydration",
-            "body": "Hydrolyzed collagen delivers intense moisture while helping skin appear softer, smoother, and visibly healthier throughout daily use."
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
           }
         },
-        "bullet_T4acfk": {
-          "type": "bullet",
+        "review_wqpn7e": {
+          "type": "review",
           "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Firmer Youthful Skin",
-            "body": "Supports elasticity and skin renewal, promoting firmer-looking skin with improved texture and natural radiant glow daily."
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
           }
         },
-        "bullet_hEb3Ch": {
-          "type": "bullet",
+        "review_NBb9Xp": {
+          "type": "review",
           "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Strengthens Skin Barrier",
-            "body": "Helps protect against dryness and moisture loss while supporting healthier, balanced, resilient-looking skin every single day."
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
           }
         },
-        "bullet_Ny4KjX": {
-          "type": "bullet",
+        "review_LeqfDX": {
+          "type": "review",
           "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Lightweight Jelly Texture.",
-            "body": "Fast-absorbing jelly formula feels refreshing, non-greasy, and comfortable for effortless daytime or overnight skincare application."
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
+          }
+        },
+        "review_MmRC6e": {
+          "type": "review",
+          "settings": {
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
+          }
+        },
+        "review_N9KxUB": {
+          "type": "review",
+          "settings": {
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
           }
         }
       },
       "block_order": [
-        "bullet_DUVPxX",
-        "bullet_T4acfk",
-        "bullet_hEb3Ch",
-        "bullet_Ny4KjX"
+        "review_yXp8Pn",
+        "review_wqpn7e",
+        "review_NBb9Xp",
+        "review_LeqfDX",
+        "review_MmRC6e",
+        "review_N9KxUB"
+      ],
+      "disabled": true,
+      "name": "Testimonials Trustpilot",
+      "settings": {
+        "animation": "",
+        "background": "",
+        "stars_caption": "Excellent – 4.92/5",
+        "stars_color": "",
+        "heading": "Customer Reviews",
+        "text": "WE ASKED, YOU ANSWERED",
+        "h_s_color": "",
+        "r_t_color": "",
+        "align_heading": "center",
+        "stars_rating": 4.5,
+        "color": "",
+        "verified_caption": "Verified Review",
+        "autoplay": true,
+        "speed": 2,
+        "link": "",
+        "label": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "reviews_slider_n3nVVD": {
+      "type": "reviews-slider",
+      "blocks": {
+        "review_riGHRk": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_MRixfm": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_fkddq4": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_7M7Vkj": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_aWnrMx": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        }
+      },
+      "block_order": [
+        "review_riGHRk",
+        "review_MRixfm",
+        "review_fkddq4",
+        "review_7M7Vkj",
+        "review_aWnrMx"
+      ],
+      "disabled": true,
+      "name": "Testimonial Slider Auto",
+      "settings": {
+        "animation": "",
+        "background": "",
+        "section_width": "container",
+        "stars_height": 15,
+        "stars_caption": "Excellent – 4.92/5",
+        "font_size": 12,
+        "mobile_font_size": 11,
+        "text_color": "",
+        "stars_border_color": "",
+        "stars_color": "",
+        "stars_background": "",
+        "heading": "Customer Reviews",
+        "text": "",
+        "h_s_color": "",
+        "align_heading": "center",
+        "arrows": true,
+        "dots": false,
+        "border_color": "",
+        "color": "",
+        "verified_caption": "Verified Review",
+        "columns": 3,
+        "autoplay": true,
+        "speed": 6,
+        "opacity_color": "#fff2f4",
+        "link": "",
+        "label": "",
+        "b_bk": "",
+        "b_color": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "custom_image_bullets_trKV7A": {
+      "type": "custom-image-bullets",
+      "blocks": {
+        "bullet_LJyzee": {
+          "type": "bullet",
+          "settings": {
+            "icon": "checkmark-2",
+            "icon_color": "",
+            "title": "Heading",
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
+            "hover_style": "auto"
+          }
+        },
+        "bullet_y878jt": {
+          "type": "bullet",
+          "settings": {
+            "icon": "checkmark-2",
+            "icon_color": "",
+            "title": "Heading",
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
+            "hover_style": "auto"
+          }
+        },
+        "bullet_kgNNtU": {
+          "type": "bullet",
+          "settings": {
+            "icon": "checkmark-2",
+            "icon_color": "",
+            "title": "Heading",
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
+            "hover_style": "auto"
+          }
+        },
+        "bullet_wNXTjk": {
+          "type": "bullet",
+          "settings": {
+            "icon": "checkmark-2",
+            "icon_color": "",
+            "title": "Heading",
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
+            "hover_style": "auto"
+          }
+        }
+      },
+      "block_order": [
+        "bullet_LJyzee",
+        "bullet_y878jt",
+        "bullet_kgNNtU",
+        "bullet_wNXTjk"
       ],
       "name": "Image With Bullets",
       "settings": {
-        "animation": "",
+        "animation": "fade-up",
         "section_width": "container",
         "background": "",
         "image_layout": "image_left",
-        "heading": "Your Daily Glow Boost.",
-        "description": "ORELLA Collagen Jelly Cream deeply hydrates, firms, and revitalizes skin, helping you achieve smoother texture, lasting moisture, radiant confidence, and healthier-looking skin daily.",
-        "image": "shopify://shop_images/Main8_afc6b5b7-4e12-45bb-ab76-4d7d8186de0f.jpg",
+        "heading": "The benefits",
+        "description": "Read more about the key benefits and features of this product. Here you can highlight important advantages, unique qualities, and valuable details that help customers better understand what makes it useful.",
         "box_align": "left",
-        "heading_color": "rgba(0,0,0,0)",
-        "text_color": "rgba(0,0,0,0)",
+        "heading_color": "",
+        "text_color": "",
         "card_bg_color": "#ffffff",
         "card_border_color": "#d3dbd9",
         "padding_top": 60,
-        "padding_bottom": 80,
-        "mobile_padding_top": 20,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "custom_rounded_progress_zDGxrH": {
+    "divider_advanced_ddgYPE": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#f6d4d9",
+        "bg_wave": "#fff2f4",
+        "flip_pos": "up",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "custom_rounded_progress_Pexj3T": {
       "type": "custom-rounded-progress",
       "blocks": {
-        "before_stat_ykQyrJ": {
+        "before_stat_mYTYp9": {
           "type": "before_stat",
           "settings": {
-            "label": "Dryness",
-            "value": 41
+            "label": "Brain Fog",
+            "value": 10
           }
         },
-        "before_stat_3eqA8x": {
+        "before_stat_LNfXYQ": {
           "type": "before_stat",
           "settings": {
-            "label": "Greasiness",
-            "value": 29
+            "label": "Productivity",
+            "value": 10
           }
         },
-        "before_stat_CafEYH": {
+        "before_stat_ze8qhH": {
           "type": "before_stat",
           "settings": {
-            "label": "Irritation",
-            "value": 21
+            "label": "Motivation",
+            "value": 10
           }
         },
-        "before_stat_NiCUaD": {
+        "before_stat_aEUi4h": {
           "type": "before_stat",
           "settings": {
-            "label": "Dullness",
-            "value": 21
+            "label": "Mood",
+            "value": 10
           }
         },
-        "after_stat_wQLQ3e": {
+        "after_stat_8naQdn": {
           "type": "after_stat",
           "settings": {
-            "label": "Hydration",
-            "value": 88
+            "label": "Brain Fog",
+            "value": 75
           }
         },
-        "after_stat_9EPatU": {
+        "after_stat_xRmqjU": {
           "type": "after_stat",
           "settings": {
-            "label": "Firmness",
-            "value": 96
+            "label": "Productivity",
+            "value": 75
           }
         },
-        "after_stat_GhpW3y": {
+        "after_stat_qcKMGU": {
           "type": "after_stat",
           "settings": {
-            "label": "Radiance",
-            "value": 94
+            "label": "Motivation",
+            "value": 75
           }
         },
-        "after_stat_GkTrW3": {
+        "after_stat_xdPqh9": {
           "type": "after_stat",
           "settings": {
-            "label": "Protection",
-            "value": 85
+            "label": "Mood",
+            "value": 75
           }
         }
       },
       "block_order": [
-        "before_stat_ykQyrJ",
-        "before_stat_3eqA8x",
-        "before_stat_CafEYH",
-        "before_stat_NiCUaD",
-        "after_stat_wQLQ3e",
-        "after_stat_9EPatU",
-        "after_stat_GhpW3y",
-        "after_stat_GkTrW3"
+        "before_stat_mYTYp9",
+        "before_stat_LNfXYQ",
+        "before_stat_ze8qhH",
+        "before_stat_aEUi4h",
+        "after_stat_8naQdn",
+        "after_stat_xRmqjU",
+        "after_stat_qcKMGU",
+        "after_stat_xdPqh9"
       ],
       "name": "Before After Stats",
       "settings": {
         "animation": "",
-        "section_width": "container_small",
+        "section_width": "container",
         "background": "#f6d4d9",
         "subtitle": "",
         "replace_reviews": false,
@@ -1132,101 +1295,121 @@
         "title": "",
         "align_heading": "center",
         "stat_label_color": "#ffffff",
-        "before_badge_caption": "Other Creams",
-        "before_card_bg": "#5e2830",
+        "before_badge_caption": "Before",
+        "before_card_bg": "#202f13",
         "before_card_border": "#202f13",
         "before_badge_bg": "#ffffff",
         "before_badge_color": "#13362b",
         "before_badge_border": "#dddddd",
         "before_circle_value": 32,
-        "before_circle_color": "#f9fff9",
+        "before_circle_color": "#e8937f",
         "before_bar_track": "#ffffff1a",
-        "before_bar_fill": "#f9fff9",
-        "after_badge_caption": "ORELLA Results",
-        "after_card_bg": "#200e10",
+        "before_bar_fill": "#e8937f",
+        "after_badge_caption": "After",
+        "after_card_bg": "#13362b",
         "after_card_border": "#13362b",
-        "after_badge_bg": "#f9fff9",
-        "after_badge_color": "#2e0128",
-        "after_badge_border": "#35022e",
+        "after_badge_bg": "#abfcb2",
+        "after_badge_color": "#055a47",
+        "after_badge_border": "#abfcb2",
         "after_circle_value": 95,
         "after_circle_color": "#abfcb2",
         "after_bar_track": "#055a47",
         "after_bar_fill": "#abfcb2",
-        "padding_top": 40,
-        "padding_bottom": 80,
-        "mobile_padding_top": 20,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "before_after_FBHAMH": {
+    "before_after_A4XrJM": {
       "type": "before-after",
       "name": "Before/After Image",
       "settings": {
         "animation": "",
         "section_width": "container",
         "background_section": "#f6d4d9",
-        "subtitle_top": "Visible Skin Transformation",
+        "subtitle_top": "Sub Heading",
         "replace_reviews": false,
         "reviews_type": "t_1",
-        "title": "Hydration You Can See",
-        "description": "See how ORELLA Collagen Jelly Cream transforms dry, dull skin into smoother, firmer, deeply hydrated, naturally radiant-looking confidence daily.",
+        "title": "Before/after",
+        "description": "Showcase your product benefit by using before/after image comparison.",
         "align_heading": "center",
         "subtitle_top_color": "",
         "heading_color": "",
         "description_color": "",
-        "image": "shopify://shop_images/BEFORE1.png",
-        "image2": "shopify://shop_images/AFTER1.png",
         "before_caption": "Before",
         "after_caption": "After",
-        "padding_top": 30,
-        "padding_bottom": 30,
-        "mobile_padding_top": 20,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "custom_images_tabs_UQJyGV": {
+    "divider_advanced_TMqiBQ": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#f6d4d9",
+        "bg_wave": "#fff2f4",
+        "flip_pos": "down",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "custom_images_tabs_JwkFEp": {
       "type": "custom-images-tabs",
       "blocks": {
-        "image_xYNdWX": {
+        "tab_4qYP3H": {
           "type": "tab",
           "settings": {
-            "image": "shopify://shop_images/Main8_afc6b5b7-4e12-45bb-ab76-4d7d8186de0f.jpg",
-            "icon": "shopify://shop_images/Icon14.png",
-            "icons_width": 59,
-            "icons_width_mobile": 42,
+            "icons_width": 32,
+            "icons_width_mobile": 24,
             "title": "Title",
             "content": "Show what makes your product valuable to your customers."
           }
         },
-        "image_jJzDjE": {
+        "tab_PMyeRJ": {
           "type": "tab",
           "settings": {
-            "image": "shopify://shop_images/Main12.jpg",
-            "icon": "shopify://shop_images/Icon14.png",
-            "icons_width": 59,
-            "icons_width_mobile": 42,
+            "icons_width": 32,
+            "icons_width_mobile": 24,
             "title": "Title",
             "content": "Show what makes your product valuable to your customers."
           }
         },
-        "image_DdbxYL": {
+        "tab_zFF9rj": {
           "type": "tab",
           "settings": {
-            "image": "shopify://shop_images/Mobile_Fin_a9efcec8-b4cb-4be1-8351-09f1b6764fb0.jpg",
-            "icon": "shopify://shop_images/Icon14.png",
-            "icons_width": 59,
-            "icons_width_mobile": 42,
+            "icons_width": 32,
+            "icons_width_mobile": 24,
+            "title": "Title",
+            "content": "Show what makes your product valuable to your customers."
+          }
+        },
+        "tab_TCcTAU": {
+          "type": "tab",
+          "settings": {
+            "icons_width": 32,
+            "icons_width_mobile": 24,
             "title": "Title",
             "content": "Show what makes your product valuable to your customers."
           }
         }
       },
       "block_order": [
-        "image_xYNdWX",
-        "image_jJzDjE",
-        "image_DdbxYL"
+        "tab_4qYP3H",
+        "tab_PMyeRJ",
+        "tab_zFF9rj",
+        "tab_TCcTAU"
       ],
-      "name": "Images Tabs",
+      "name": "Image With Tabs",
       "settings": {
         "animation": "",
         "section_width": "container",
@@ -1234,62 +1417,60 @@
         "layout": "left",
         "image_height": 700,
         "image_height_mobile": 500,
-        "heading_size": "h3",
+        "heading_size": "h1",
         "heading_color": "",
         "text_size": 16,
         "text_size_mobile": 14,
         "text_color": "",
-        "padding_top": 80,
-        "padding_bottom": 40,
+        "padding_top": 60,
+        "padding_bottom": 60,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "custom_progress_elements_aLW7yw": {
+    "custom_progress_bars_LinMgD": {
       "type": "custom-progress-bars",
       "blocks": {
-        "image_9cPtGz": {
+        "image_qHUMjg": {
           "type": "image",
-          "settings": {
-            "image": "shopify://shop_images/Main15.jpg"
-          }
+          "settings": {}
         },
-        "progress_mAxfph": {
+        "progress_qnVhiQ": {
           "type": "progress",
           "settings": {
             "title": "Increased Energy Levels",
             "progress": 50
           }
         },
-        "progress_n7Gc96": {
+        "progress_T4hffQ": {
           "type": "progress",
           "settings": {
             "title": "Increased Energy Levels",
             "progress": 50
           }
         },
-        "progress_CnyzcF": {
+        "progress_Mwzmbd": {
           "type": "progress",
           "settings": {
             "title": "Increased Energy Levels",
             "progress": 50
           }
         },
-        "progress_XAW6gr": {
+        "progress_jed6qq": {
           "type": "progress",
           "settings": {
             "title": "Increased Energy Levels",
             "progress": 50
           }
         },
-        "progress_XaLtp9": {
+        "progress_7nUeNU": {
           "type": "progress",
           "settings": {
             "title": "Increased Energy Levels",
             "progress": 50
           }
         },
-        "progress_XERBCA": {
+        "progress_nxBaVe": {
           "type": "progress",
           "settings": {
             "title": "Increased Energy Levels",
@@ -1298,13 +1479,13 @@
         }
       },
       "block_order": [
-        "image_9cPtGz",
-        "progress_mAxfph",
-        "progress_n7Gc96",
-        "progress_CnyzcF",
-        "progress_XAW6gr",
-        "progress_XaLtp9",
-        "progress_XERBCA"
+        "image_qHUMjg",
+        "progress_qnVhiQ",
+        "progress_T4hffQ",
+        "progress_Mwzmbd",
+        "progress_jed6qq",
+        "progress_7nUeNU",
+        "progress_nxBaVe"
       ],
       "name": "Progress Bars",
       "settings": {
@@ -1322,18 +1503,83 @@
         "progress_bars_size_mobile": 13,
         "box_background": "",
         "color": "",
-        "color_h": "#200e10",
-        "box_color": "#35191d",
+        "color_h": "#000000",
+        "box_color": "#000000",
         "padding_top": 40,
         "padding_bottom": 80,
-        "mobile_padding_top": 20,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 60
+      }
+    },
+    "custom_shoppable_video_XgDxqy": {
+      "type": "custom-shoppable-video",
+      "blocks": {
+        "product_HGDnkf": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "video_pick": ""
+          }
+        },
+        "product_q3gUwU": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "video_pick": ""
+          }
+        },
+        "product_DPGfiM": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "video_pick": ""
+          }
+        },
+        "product_7Dfjjn": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "video_pick": ""
+          }
+        },
+        "product_pUVwrh": {
+          "type": "product",
+          "settings": {
+            "product": "",
+            "video_pick": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_HGDnkf",
+        "product_q3gUwU",
+        "product_DPGfiM",
+        "product_7Dfjjn",
+        "product_pUVwrh"
+      ],
+      "name": "Shoppable Videos Slider",
+      "settings": {
+        "animation": "",
+        "subtitle": "Subtitle",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Heading",
+        "align_heading": "center",
+        "background": "#fe899a",
+        "color": "",
+        "cta_color": "",
+        "cta_text_color": "",
+        "hide_products": true,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "custom_comparaison_table_fD7bj8": {
+    "custom_comparison_table_MiPGiY": {
       "type": "custom-comparison-table",
       "blocks": {
-        "heading_QAq7jb": {
+        "heading_NmQTHn": {
           "type": "heading",
           "settings": {
             "heading_1": "Value 1",
@@ -1348,10 +1594,9 @@
             "heading_10": ""
           }
         },
-        "table_hxmBY3": {
+        "table_Cf6836": {
           "type": "table",
           "settings": {
-            "image": "shopify://shop_images/1_0859d9f2-2cb6-4a9e-b235-b21f5bb56a89.png",
             "heading": "Your Product",
             "value_1": "Text",
             "icon_1": "tick",
@@ -1375,10 +1620,9 @@
             "icon_10": "none"
           }
         },
-        "table_YwgVdw": {
+        "table_6LUB6X": {
           "type": "table",
           "settings": {
-            "image": "shopify://shop_images/Comparision_88fc17e3-8ce8-496b-83d7-9ac069a93ac0.png",
             "heading": "Other Product",
             "value_1": "Test",
             "icon_1": "cross",
@@ -1404,9 +1648,9 @@
         }
       },
       "block_order": [
-        "heading_QAq7jb",
-        "table_hxmBY3",
-        "table_YwgVdw"
+        "heading_NmQTHn",
+        "table_Cf6836",
+        "table_6LUB6X"
       ],
       "name": "Comparison Table",
       "settings": {
@@ -1436,14 +1680,189 @@
         "center_content": true,
         "column_bk": "#ffffff",
         "color": "",
-        "padding_top": 20,
+        "padding_top": 60,
         "padding_bottom": 60,
-        "mobile_padding_top": 0,
+        "mobile_padding_top": 40,
         "mobile_padding_bottom": 40,
         "table_h_font_size": 14,
         "table_h_font_size_mobile": 14,
         "table_c_font_size": 14,
-        "table_c_font_size_mobile": 9
+        "table_c_font_size_mobile": 10
+      }
+    },
+    "faq_advanced_wncQmc": {
+      "type": "faq-advanced",
+      "blocks": {
+        "faq_item_YT6dTJ": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_k8EBTU": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_XtJqxC": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_AxXYiP": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_ekG4fG": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_7LH7t7": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        },
+        "faq_item_BqtiHY": {
+          "type": "faq_item",
+          "settings": {
+            "question_heading": "Any question?",
+            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_item_YT6dTJ",
+        "faq_item_k8EBTU",
+        "faq_item_XtJqxC",
+        "faq_item_AxXYiP",
+        "faq_item_ekG4fG",
+        "faq_item_7LH7t7",
+        "faq_item_BqtiHY"
+      ],
+      "name": "FAQ Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "heading": "Have a question ? We are here to help.",
+        "subheading": "Check out the most common questions our customers asked. Still have questions ? Contact our customer support.",
+        "team_image_width": 180,
+        "team_image_width_mobile": 180,
+        "availability_caption": "Our customer support is available monday to friday.",
+        "response_time_caption": "Average answer time: 24h",
+        "bg_color": "#",
+        "h_color": "",
+        "text_color": "",
+        "text_muted_color": "",
+        "card_bg_color": "#FFFFFF",
+        "border_color": "#f6d4d9",
+        "chevron_bg_color": "",
+        "chevron_icon_color": "#ffffff",
+        "padding_top": 60,
+        "padding_bottom": 80,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "divider_advanced_THLBi7": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#000000",
+        "bg_wave": "#fff2f4",
+        "flip_pos": "up",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "image_auto_slider_JHhfbk": {
+      "type": "image-auto-slider",
+      "blocks": {
+        "text_block_MpPKP8": {
+          "type": "text_block",
+          "settings": {
+            "width": "100%",
+            "bgtext": "",
+            "title_color": "#FFF2F4",
+            "subtitle": "Subtitle",
+            "replace_reviews": false,
+            "reviews_type": "t_1",
+            "title": "Image with text",
+            "size_text": "h2",
+            "content": "",
+            "answer_content": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "style_btn": "btn-theme",
+            "button": "discover now",
+            "link": "#",
+            "block_align": "center",
+            "align": "left"
+          }
+        },
+        "video_ty4rng": {
+          "type": "video",
+          "settings": {
+            "video_pick": ""
+          }
+        },
+        "video_7FPaTx": {
+          "type": "video",
+          "settings": {
+            "video_pick": ""
+          }
+        },
+        "video_qgjgGx": {
+          "type": "video",
+          "settings": {
+            "video_pick": ""
+          }
+        },
+        "video_wkBFdg": {
+          "type": "video",
+          "settings": {
+            "video_pick": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_block_MpPKP8",
+        "video_ty4rng",
+        "video_7FPaTx",
+        "video_qgjgGx",
+        "video_wkBFdg"
+      ],
+      "name": "Image With Auto Slider",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background_section": "#200e10",
+        "bg_pos": "left",
+        "mobile_pos": "bottom",
+        "automatic_sliding": true,
+        "speed": 6,
+        "opacity_color": "#000000",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
       }
     },
     "product-recommendations": {
@@ -1464,6 +1883,23 @@
         "enable_same_height": true,
         "padding_top": 80,
         "padding_bottom": 32
+      }
+    },
+    "product-requently": {
+      "type": "product-bundle",
+      "disabled": true,
+      "settings": {
+        "animation": "fade-up",
+        "background_section": "#ffffff",
+        "bundle_title": "Frequently Bought Together",
+        "size_text": "h4",
+        "limit_bundle": 3,
+        "enable_border": true,
+        "add_button": "Add selected items",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
       }
     },
     "product-recent": {
@@ -1488,229 +1924,30 @@
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
-    },
-    "faq_accordion_QLFahx": {
-      "type": "faq-accordion",
-      "blocks": {
-        "faq_JjfJjR": {
-          "type": "faq",
-          "settings": {
-            "faq_title": "How Long Does Hydration Usually Last?",
-            "faq_description": "<p>The formula is designed to provide long-lasting moisture throughout the day and overnight. It helps lock hydration into the skin, preventing dryness while keeping your complexion soft, refreshed, comfortable, and naturally glowing longer.</p>"
-          }
-        },
-        "faq_eDQftN": {
-          "type": "faq",
-          "settings": {
-            "faq_title": "Does The Jelly Texture Feel Greasy?",
-            "faq_description": "<p>No, the lightweight jelly texture absorbs quickly into the skin without leaving a greasy or sticky feeling. It delivers deep hydration while feeling refreshing, breathable, and comfortable for everyday skincare use and layering.</p>"
-          }
-        },
-        "faq_HbVdct": {
-          "type": "faq",
-          "settings": {
-            "faq_title": "Can I Apply It Before Makeup?",
-            "faq_description": "<p>Yes, the smooth fast-absorbing formula works beautifully under makeup. It helps prep the skin with hydration, creating a softer and smoother base that allows makeup to apply more evenly and naturally throughout the day.</p>"
-          }
-        },
-        "faq_AATrbF": {
-          "type": "faq",
-          "settings": {
-            "faq_title": "Does It Help Improve Uneven Texture?",
-            "faq_description": "<p>Yes, the collagen-rich formula helps soften rough patches and improve overall skin texture with regular use. Skin appears smoother, healthier, and more refined while maintaining long-lasting hydration and a natural radiant-looking glow.</p>"
-          }
-        },
-        "faq_6RDcBp": {
-          "type": "faq",
-          "settings": {
-            "faq_title": "Is This Product Good For Dry Skin?",
-            "faq_description": "<p>Definitely. ORELLA Collagen Jelly Cream deeply moisturizes dry and dehydrated skin while helping strengthen the moisture barrier. It leaves skin feeling soft, nourished, comfortable, and visibly healthier without heavy residue or irritation afterward.</p>"
-          }
-        },
-        "faq_UYdF9V": {
-          "type": "faq",
-          "settings": {
-            "faq_title": "Can I Use It As Overnight Mask?",
-            "faq_description": "<p>Yes, applying a thicker layer before bedtime works as an intensive overnight moisture treatment. It helps replenish hydration while supporting smoother, softer, and more refreshed-looking skin by the next morning naturally.</p>"
-          }
-        },
-        "faq_nmFjac": {
-          "type": "faq",
-          "settings": {
-            "faq_title": "What Makes Hydrolyzed Collagen Beneficial?",
-            "faq_description": "<p>Hydrolyzed collagen is broken into smaller particles for easier skin absorption. It helps support hydration, elasticity, and smoother-looking skin while improving softness and promoting a firmer, healthier-looking complexion with continued regular use.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_JjfJjR",
-        "faq_eDQftN",
-        "faq_HbVdct",
-        "faq_AATrbF",
-        "faq_6RDcBp",
-        "faq_UYdF9V",
-        "faq_nmFjac"
-      ],
-      "name": "Faqs Accordion",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background_section": "rgba(0,0,0,0)",
-        "e_size": "cover",
-        "e_repeat": "no-repeat",
-        "e_pos": "center center",
-        "subtitle_top": "FAQ",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "Frequently Asked Questions",
-        "description": "",
-        "align_heading": "center",
-        "title_size": "h6",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "e_first_open": false,
-        "e_reverse": true,
-        "e_small": true,
-        "faq_content": "",
-        "e_right": false,
-        "padding_top": 40,
-        "padding_bottom": 80,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 20
-      }
-    },
-    "text_images_slider_hH6brh": {
-      "type": "image-auto-slider",
-      "blocks": {
-        "text_block_hKLU8E": {
-          "type": "text_block",
-          "settings": {
-            "width": "100%",
-            "bgtext": "rgba(0,0,0,0)",
-            "title_color": "#fff2f4",
-            "subtitle": "Community Glow",
-            "replace_reviews": true,
-            "reviews_type": "t_1",
-            "title": "Real Results Daily",
-            "size_text": "h2",
-            "content": "",
-            "answer_content": "<p>From daily skincare routines to glowing self-care moments, our growing community shares authentic results, radiant transformations, and renewed confidence through collagen-powered hydration and nourishment every single day.</p><p></p>",
-            "style_btn": "btn-theme",
-            "button": "GET YOURS",
-            "link": "#",
-            "block_align": "center",
-            "align": "left"
-          }
-        },
-        "video_jnjhBE": {
-          "type": "video",
-          "settings": {
-            "image": "shopify://shop_images/REV8.jpg",
-            "video_pick": ""
-          }
-        },
-        "video_jryd6M": {
-          "type": "video",
-          "settings": {
-            "image": "shopify://shop_images/REV5.jpg",
-            "video_pick": ""
-          }
-        },
-        "video_7q7rGW": {
-          "type": "video",
-          "settings": {
-            "image": "shopify://shop_images/REV1_f91644c9-b460-48a4-a523-82c0b9e2b386.jpg",
-            "video_pick": ""
-          }
-        },
-        "video_3xKdeQ": {
-          "type": "video",
-          "settings": {
-            "image": "shopify://shop_images/REV5.jpg",
-            "video_pick": ""
-          }
-        }
-      },
-      "block_order": [
-        "text_block_hKLU8E",
-        "video_jnjhBE",
-        "video_jryd6M",
-        "video_7q7rGW",
-        "video_3xKdeQ"
-      ],
-      "name": "Image With Auto Slider",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background_section": "linear-gradient(228deg, rgba(32, 14, 16, 1) 14%, rgba(32, 14, 16, 1) 83%)",
-        "bg_pos": "left",
-        "mobile_pos": "bottom",
-        "automatic_sliding": true,
-        "speed": 9,
-        "opacity_color": "#200e10",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "scrolling_text_JhX3cF": {
-      "type": "scrolling-text",
-      "blocks": {
-        "item_8bFw9i": {
-          "type": "scroll_item",
-          "settings": {
-            "content": "ORELLA",
-            "text_style": "solid"
-          }
-        },
-        "item_hjVnD8": {
-          "type": "scroll_item",
-          "settings": {
-            "content": "Save up to 20% today!",
-            "text_style": "solid"
-          }
-        }
-      },
-      "block_order": [
-        "item_8bFw9i",
-        "item_hjVnD8"
-      ],
-      "name": "Scrolling Text",
-      "settings": {
-        "animation": "",
-        "size_text": "h6",
-        "size_icon": 24,
-        "speed": 10,
-        "scroll_type": "from-left",
-        "background": "#fe899a",
-        "gradient_bg": "",
-        "text": "#35191d",
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 20
-      }
     }
   },
   "order": [
     "main",
-    "service_9Mx9Ca",
-    "product-requently",
     "product-content",
-    "image_text_product_RM6Ykb",
-    "custom_reviews_marquee_NecxRp",
-    "custom_image_bullets_F7wqRn",
-    "custom_rounded_progress_zDGxrH",
-    "before_after_FBHAMH",
-    "custom_images_tabs_UQJyGV",
-    "custom_progress_elements_aLW7yw",
-    "custom_comparaison_table_fD7bj8",
+    "icon_list_8fwrJ3",
+    "image_with_icons_ynjyXp",
+    "custom_reviews_marquee_YfjRdr",
+    "custom_reviews_TbH4Ye",
+    "reviews_slider_n3nVVD",
+    "custom_image_bullets_trKV7A",
+    "divider_advanced_ddgYPE",
+    "custom_rounded_progress_Pexj3T",
+    "before_after_A4XrJM",
+    "divider_advanced_TMqiBQ",
+    "custom_images_tabs_JwkFEp",
+    "custom_progress_bars_LinMgD",
+    "custom_shoppable_video_XgDxqy",
+    "custom_comparison_table_MiPGiY",
+    "faq_advanced_wncQmc",
+    "divider_advanced_THLBi7",
+    "image_auto_slider_JHhfbk",
     "product-recommendations",
-    "product-recent",
-    "faq_accordion_QLFahx",
-    "text_images_slider_hH6brh",
-    "scrolling_text_JhX3cF"
+    "product-requently",
+    "product-recent"
   ]
 }

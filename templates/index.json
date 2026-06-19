@@ -9,90 +9,74 @@
  */
 {
   "sections": {
-    "line_mFkqty": {
-      "type": "divider",
-      "disabled": true,
-      "name": "Divider",
-      "settings": {
-        "animation": "",
-        "padding_top": 30,
-        "padding_bottom": 36,
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 0,
-        "background_section": "#ffffff",
-        "section_width": "container",
-        "bgborder": "#237ee9",
-        "wborder": "1px"
-      }
-    },
-    "service_Tb6WNk": {
+    "icon_list_cAgmnb": {
       "type": "icon-list",
       "blocks": {
-        "service_Rc79Yx": {
+        "icon_item_qKCRga": {
           "type": "icon_item",
           "settings": {
             "bgblock": "",
-            "title": "Day Night Hydration",
-            "description": "Hydrates skin continuously from morning to night, keeping it fresh, dewy, and balanced daily.",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
             "type_icon": "img",
             "icon": ""
           }
         },
-        "service_AFECBL": {
+        "icon_item_YwnMGy": {
           "type": "icon_item",
           "settings": {
             "bgblock": "",
-            "title": "Collagen Network",
-            "description": "Supports skin structure with collagen care, helping improve firmness, elasticity, and smoother texture visibly.",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
             "type_icon": "img",
             "icon": ""
           }
         },
-        "service_Vk4Vkx": {
+        "icon_item_EmJ4GG": {
           "type": "icon_item",
           "settings": {
             "bgblock": "",
-            "title": "Night Repair",
-            "description": "Works overnight to refresh tired skin, revealing a smoother, brighter, well-rested morning glow.",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
             "type_icon": "img",
             "icon": ""
           }
         },
-        "service_7UwTgB": {
+        "icon_item_wUaCT4": {
           "type": "icon_item",
           "settings": {
             "bgblock": "",
-            "title": "Barrier Shield",
-            "description": "Protects moisture inside skin while strengthening the barrier against dryness, irritation, and daily stress.",
+            "title": "Heading",
+            "description": "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.",
             "type_icon": "img",
             "icon": ""
           }
         }
       },
       "block_order": [
-        "service_Rc79Yx",
-        "service_AFECBL",
-        "service_Vk4Vkx",
-        "service_7UwTgB"
+        "icon_item_qKCRga",
+        "icon_item_YwnMGy",
+        "icon_item_EmJ4GG",
+        "icon_item_wUaCT4"
       ],
       "name": "Icons",
       "settings": {
-        "animation": "",
+        "animation": "fade-up",
         "section_width": "container",
-        "background_section": "rgba(0,0,0,0)",
-        "subtitle_top": "Firmness You Can Feel",
+        "background_section": "",
+        "subtitle_top": "Subtitle Top",
         "replace_reviews": false,
         "reviews_type": "t_1",
-        "title": "Bring your skin to the next level!",
+        "title": "Title",
         "description": "",
         "align_heading": "center",
         "subtitle_top_color": "",
         "heading_color": "",
         "description_color": "",
         "paddingbox": "0px 0px 0px 0px",
-        "iconcolor": "rgba(0,0,0,0)",
-        "titlecolor": "rgba(0,0,0,0)",
-        "subcolor": "#35191d",
+        "iconcolor": "#200e10",
+        "titlecolor": "#200e10",
+        "subcolor": "#200e10",
         "size": 90,
         "service_heading": "h5",
         "layout": "style-2",
@@ -102,772 +86,15 @@
         "dots": true,
         "infinite": true,
         "padding_top": 60,
-        "padding_bottom": 60,
+        "padding_bottom": 30,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 20
       }
     },
-    "custom_reviews_marquee_DjeefV": {
-      "type": "custom-reviews-marquee",
-      "blocks": {
-        "first_row_8Wg8RX": {
-          "type": "review_left",
-          "settings": {
-            "title": "Glow Upgrade!",
-            "date": "March 10, 2026",
-            "content": "<p>I’ve tried countless moisturizers, but this collagen jelly cream actually keeps my skin hydrated all day. My face feels softer, looks brighter, and makeup sits beautifully afterward. Honestly, such a good surprise for my sensitive skin.</p><h3></h3>",
-            "name": "Amelie R.",
-            "add_verified": true,
-            "verified_color": "#34bf49"
-          }
-        },
-        "first_row_6H9hwd": {
-          "type": "review_left",
-          "settings": {
-            "title": "Lowkey Amazing",
-            "date": "March 10, 2026",
-            "content": "<p>Lowkey obsessed with this cream already. The texture feels lightweight but deeply nourishing, and my dry patches disappeared within days. My skin looks smoother every morning, especially around my cheeks and forehead.</p>",
-            "name": "Amelie R.",
-            "add_verified": true,
-            "verified_color": "#34bf49"
-          }
-        },
-        "first_row_jgeyWH": {
-          "type": "review_left",
-          "settings": {
-            "title": "Actually Works",
-            "date": "March 10, 2026",
-            "content": "<p>After two weeks of using ORELLA Collagen Jelly Cream nightly, my skin feels firmer and noticeably healthier. I love the fresh glow it gives without feeling greasy or heavy. Definitely repurchasing because it genuinely works.</p>",
-            "name": "Amelie R.",
-            "add_verified": true,
-            "verified_color": "#34bf49"
-          }
-        },
-        "second_row_BHtpF4": {
-          "type": "review_right",
-          "settings": {
-            "title": "Super Hydrating",
-            "date": "March 10, 2026",
-            "content": "<p>This moisturizer made my skin look hydrated and plump after only several applications, which honestly impressed me. The jar feels slightly smaller than expected, but the formula itself works beautifully and lasts throughout the night.</p>",
-            "name": "Amelie R.",
-            "add_verified": true,
-            "verified_color": "#34bf49"
-          }
-        },
-        "second_row_dGmjqh": {
-          "type": "review_right",
-          "settings": {
-            "title": "Soothing Glow",
-            "date": "March 10, 2026",
-            "content": "<p>My skin usually reacts badly to new products, yet this jelly cream felt soothing immediately. The hydration lasts for hours, and my complexion looks clearer, softer, and more radiant lately. Kinda feels like a luxury facial.</p>",
-            "name": "Amelie R.",
-            "add_verified": true,
-            "verified_color": "#34bf49"
-          }
-        },
-        "second_row_hwRJjC": {
-          "type": "review_right",
-          "settings": {
-            "title": "Fresh Radiance",
-            "date": "March 10, 2026",
-            "content": "<p>This collagen cream gives my skin the smoothest glow ever without clogging pores or causing irritation. The jelly texture absorbs quickly, feels refreshing, and leaves my face looking healthy, bouncy, and naturally radiant every day.</p>",
-            "name": "Amelie R.",
-            "add_verified": true,
-            "verified_color": "#34bf49"
-          }
-        }
-      },
-      "block_order": [
-        "first_row_8Wg8RX",
-        "first_row_6H9hwd",
-        "first_row_jgeyWH",
-        "second_row_BHtpF4",
-        "second_row_dGmjqh",
-        "second_row_hwRJjC"
-      ],
-      "name": "Testimonials Slider",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background": "",
-        "animated": true,
-        "show_stars": true,
-        "stars_color": "",
-        "stars_rating": 4.5,
-        "reviews_count_caption": "Rated 4.8/5.0 on",
-        "reviews_cout_color": "",
-        "show_truspilot": true,
-        "trust_icon": "trustpilot",
-        "title": "Real Results, Real Reviews",
-        "title_color": "",
-        "content": "<p>Thousands are loving ORELLA Collagen Jelly Cream for smoother, brighter, deeply hydrated skin with visible daily improvements.</p>",
-        "content_color": "",
-        "show_quotes": true,
-        "quote_box_color": "#ffffff",
-        "quote_title_color": "#2e0128",
-        "quote_date_color": "",
-        "quote_content_color": "",
-        "quote_name_color": "",
-        "enable_overlay_edges": true,
-        "overlay_color": "#fff2f4",
-        "section_height_desktop": 750,
-        "animation_speed": 1,
-        "animation_speed_mobile": 20,
-        "boxes_radius": 20,
-        "padding_top": 40,
-        "padding_bottom": 60,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "custom_image_bullets_TDH6yJ": {
-      "type": "custom-image-bullets",
-      "blocks": {
-        "bullet_aUEhBm": {
-          "type": "bullet",
-          "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Deep Collagen Hydration",
-            "body": "Hydrolyzed collagen delivers intense moisture while helping skin appear softer, smoother, and visibly healthier throughout daily use.",
-            "hover_style": "auto"
-          }
-        },
-        "bullet_7xmVEa": {
-          "type": "bullet",
-          "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Firmer Youthful Skin",
-            "body": "Supports elasticity and skin renewal, promoting firmer-looking skin with improved texture and natural radiant glow daily.",
-            "hover_style": "auto"
-          }
-        },
-        "bullet_TE49bP": {
-          "type": "bullet",
-          "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Strengthens Skin Barrier",
-            "body": "Helps protect against dryness and moisture loss while supporting healthier, balanced, resilient-looking skin every single day.",
-            "hover_style": "auto"
-          }
-        },
-        "bullet_JN8b6n": {
-          "type": "bullet",
-          "settings": {
-            "icon": "checkmark-2",
-            "icon_color": "",
-            "title": "Lightweight Jelly Texture.",
-            "body": "Fast-absorbing jelly formula feels refreshing, non-greasy, and comfortable for effortless daytime or overnight skincare application.",
-            "hover_style": "auto"
-          }
-        }
-      },
-      "block_order": [
-        "bullet_aUEhBm",
-        "bullet_7xmVEa",
-        "bullet_TE49bP",
-        "bullet_JN8b6n"
-      ],
-      "name": "Image With Bullets",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background": "",
-        "image_layout": "image_left",
-        "heading": "Your Daily Glow Boost.",
-        "description": "ORELLA Collagen Jelly Cream deeply hydrates, firms, and revitalizes skin, helping you achieve smoother texture, lasting moisture, radiant confidence, and healthier-looking skin daily.",
-        "box_align": "left",
-        "heading_color": "rgba(0,0,0,0)",
-        "text_color": "rgba(0,0,0,0)",
-        "card_bg_color": "#ffffff",
-        "card_border_color": "#d3dbd9",
-        "padding_top": 60,
-        "padding_bottom": 80,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "divider_advanced_UegiRg": {
-      "type": "divider-advanced",
-      "name": "Dividers Advanced",
-      "settings": {
-        "animation": "",
-        "section_width": "full",
-        "background_section": "#f6d4d9",
-        "bg_wave": "#fff2f4",
-        "flip_pos": "up",
-        "wave_style": "style8",
-        "animated": true,
-        "animation_speed": 17,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 0
-      }
-    },
-    "custom_rounded_progress_kyCRMb": {
-      "type": "custom-rounded-progress",
-      "blocks": {
-        "before_stat_t86bRL": {
-          "type": "before_stat",
-          "settings": {
-            "label": "Dryness",
-            "value": 41
-          }
-        },
-        "before_stat_Pnkq96": {
-          "type": "before_stat",
-          "settings": {
-            "label": "Greasiness",
-            "value": 29
-          }
-        },
-        "before_stat_NrUnCg": {
-          "type": "before_stat",
-          "settings": {
-            "label": "Irritation",
-            "value": 21
-          }
-        },
-        "before_stat_D4rqbJ": {
-          "type": "before_stat",
-          "settings": {
-            "label": "Dullness",
-            "value": 21
-          }
-        },
-        "after_stat_j9Kg8Q": {
-          "type": "after_stat",
-          "settings": {
-            "label": "Hydration",
-            "value": 88
-          }
-        },
-        "after_stat_UYgJQT": {
-          "type": "after_stat",
-          "settings": {
-            "label": "Firmness",
-            "value": 96
-          }
-        },
-        "after_stat_TttEJe": {
-          "type": "after_stat",
-          "settings": {
-            "label": "Radiance",
-            "value": 94
-          }
-        },
-        "after_stat_KrqrEn": {
-          "type": "after_stat",
-          "settings": {
-            "label": "Protection",
-            "value": 85
-          }
-        }
-      },
-      "block_order": [
-        "before_stat_t86bRL",
-        "before_stat_Pnkq96",
-        "before_stat_NrUnCg",
-        "before_stat_D4rqbJ",
-        "after_stat_j9Kg8Q",
-        "after_stat_UYgJQT",
-        "after_stat_TttEJe",
-        "after_stat_KrqrEn"
-      ],
-      "name": "Before After Stats",
-      "settings": {
-        "animation": "",
-        "section_width": "container_small",
-        "background": "#f6d4d9",
-        "subtitle": "",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "",
-        "align_heading": "center",
-        "stat_label_color": "#ffffff",
-        "before_badge_caption": "Other Creams",
-        "before_card_bg": "#5e2830",
-        "before_card_border": "#202f13",
-        "before_badge_bg": "#ffffff",
-        "before_badge_color": "#13362b",
-        "before_badge_border": "#dddddd",
-        "before_circle_value": 32,
-        "before_circle_color": "#f9fff9",
-        "before_bar_track": "#ffffff1a",
-        "before_bar_fill": "#f9fff9",
-        "after_badge_caption": "ORELLA Results",
-        "after_card_bg": "#200e10",
-        "after_card_border": "#13362b",
-        "after_badge_bg": "#f9fff9",
-        "after_badge_color": "#2e0128",
-        "after_badge_border": "#35022e",
-        "after_circle_value": 95,
-        "after_circle_color": "#abfcb2",
-        "after_bar_track": "#055a47",
-        "after_bar_fill": "#abfcb2",
-        "padding_top": 60,
-        "padding_bottom": 80,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "divider_advanced_x48mgM": {
-      "type": "divider-advanced",
-      "name": "Dividers Advanced",
-      "settings": {
-        "animation": "",
-        "section_width": "full",
-        "background_section": "#f6d4d9",
-        "bg_wave": "rgba(0,0,0,0)",
-        "flip_pos": "down",
-        "wave_style": "style1",
-        "animated": true,
-        "animation_speed": 15,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 0
-      }
-    },
-    "image_content_Mrr99g": {
-      "type": "image-with-text",
-      "blocks": {
-        "image_block_gYrnTU": {
-          "type": "image_block",
-          "settings": {}
-        },
-        "text_block_7eGJY4": {
-          "type": "text_block",
-          "settings": {
-            "width": "100%",
-            "bgtext": "rgba(0,0,0,0)",
-            "title_color": "rgba(0,0,0,0)",
-            "subtitle": "Reveal Your Natural Glow",
-            "replace_reviews": false,
-            "reviews_type": "t_1",
-            "title": "Deep Hydration Daily.",
-            "size_text": "h2",
-            "content": "",
-            "answer_content": "<p>ORELLA Collagen Jelly Cream deeply hydrates and firms skin, improving texture, boosting radiance, and helping you achieve smoother, healthier-looking confidence every single day.</p>",
-            "style_btn": "btn-theme",
-            "button": "Get Glowing Now",
-            "link": "shopify://products/orella",
-            "enable_padding": true,
-            "block_align": "center",
-            "align": "left"
-          }
-        }
-      },
-      "block_order": [
-        "image_block_gYrnTU",
-        "text_block_7eGJY4"
-      ],
-      "name": "Image With Text",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background_section": "rgba(0,0,0,0)",
-        "rangebg": 0,
-        "bgbefore": "rgba(0,0,0,0)",
-        "bg_pos": "left",
-        "enable_padding": false,
-        "align_center": true,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 20
-      }
-    },
-    "featured_articles_q8YN3U": {
-      "type": "featured-articles",
-      "disabled": true,
-      "name": "Blog Posts",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background_section": "rgba(0,0,0,0)",
-        "title_color": "rgba(0,0,0,0)",
-        "subtitle_top": "Sub Title Top",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "Blog posts",
-        "description": "",
-        "align_heading": "center",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "blog": "news",
-        "item_style": "blog-1",
-        "enable_btn_blog": true,
-        "style_btn": "btn-theme btn-sm",
-        "enable_date": true,
-        "enable_tag": true,
-        "enable_comment": true,
-        "enable_short": true,
-        "image_size": "wide",
-        "gutter_padding": 30,
-        "arrows": true,
-        "draggable": true,
-        "dots": true,
-        "infinite": true,
-        "rows": "1",
-        "limit": 5,
-        "show": 3,
-        "padding_top": 32,
-        "padding_bottom": 80,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "custom_reviews_Df9gnJ": {
-      "type": "custom-reviews",
-      "blocks": {
-        "review_9WRdeC": {
-          "type": "review",
-          "settings": {
-            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
-            "review_color": "",
-            "add_verified": true,
-            "verified_color": "#34bf49",
-            "name": "John Doe",
-            "name_color": ""
-          }
-        },
-        "review_i7fGGx": {
-          "type": "review",
-          "settings": {
-            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
-            "review_color": "",
-            "add_verified": true,
-            "verified_color": "#34bf49",
-            "name": "John Doe",
-            "name_color": ""
-          }
-        },
-        "review_iUiDBR": {
-          "type": "review",
-          "settings": {
-            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
-            "review_color": "",
-            "add_verified": true,
-            "verified_color": "#34bf49",
-            "name": "John Doe",
-            "name_color": ""
-          }
-        },
-        "review_RtgqNq": {
-          "type": "review",
-          "settings": {
-            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
-            "review_color": "",
-            "add_verified": true,
-            "verified_color": "#34bf49",
-            "name": "John Doe",
-            "name_color": ""
-          }
-        },
-        "review_QaNXnB": {
-          "type": "review",
-          "settings": {
-            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
-            "review_color": "",
-            "add_verified": true,
-            "verified_color": "#34bf49",
-            "name": "John Doe",
-            "name_color": ""
-          }
-        }
-      },
-      "block_order": [
-        "review_9WRdeC",
-        "review_i7fGGx",
-        "review_iUiDBR",
-        "review_RtgqNq",
-        "review_QaNXnB"
-      ],
-      "name": "Testimonials TrustPilot",
-      "settings": {
-        "animation": "",
-        "background": "",
-        "stars_caption": "Excellent – 4.92/5",
-        "stars_color": "",
-        "heading": "Customer Reviews",
-        "text": "WE ASKED, YOU ANSWERED",
-        "h_s_color": "",
-        "r_t_color": "",
-        "align_heading": "center",
-        "stars_rating": 4.7,
-        "color": "",
-        "verified_caption": "Verified Review",
-        "autoplay": true,
-        "speed": 2,
-        "link": "",
-        "label": "",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "custom_instagram_marquee_9EbDrw": {
-      "type": "custom-instagram-marquee",
-      "blocks": {
-        "first_row_Y8ReMF": {
-          "type": "column_1",
-          "settings": {}
-        },
-        "first_row_RNyeCm": {
-          "type": "column_1",
-          "settings": {}
-        },
-        "first_row_HgziH6": {
-          "type": "column_1",
-          "settings": {}
-        },
-        "second_row_km6T9A": {
-          "type": "column_2",
-          "settings": {}
-        },
-        "second_row_G8JVpQ": {
-          "type": "column_2",
-          "settings": {}
-        },
-        "second_row_cdDkgp": {
-          "type": "column_2",
-          "settings": {}
-        },
-        "third_row_tMcgyi": {
-          "type": "column_3",
-          "settings": {}
-        },
-        "third_row_pkyUBP": {
-          "type": "column_3",
-          "settings": {}
-        },
-        "third_row_bfaGci": {
-          "type": "column_3",
-          "settings": {}
-        },
-        "forth_row_kWTky4": {
-          "type": "column_4",
-          "settings": {}
-        },
-        "forth_row_QyjgFb": {
-          "type": "column_4",
-          "settings": {}
-        },
-        "forth_row_YfXkAG": {
-          "type": "column_4",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "first_row_Y8ReMF",
-        "first_row_RNyeCm",
-        "first_row_HgziH6",
-        "second_row_km6T9A",
-        "second_row_G8JVpQ",
-        "second_row_cdDkgp",
-        "third_row_tMcgyi",
-        "third_row_pkyUBP",
-        "third_row_bfaGci",
-        "forth_row_kWTky4",
-        "forth_row_QyjgFb",
-        "forth_row_YfXkAG"
-      ],
-      "name": "Instagram Slider",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background": "",
-        "text": "@ORELLA",
-        "h_sub_color": "",
-        "heading": "Stay up to date!",
-        "h_s_color": "",
-        "align_heading": "center",
-        "box_overlay_color": "#000000",
-        "box_overlay_opacity": 20,
-        "title": "",
-        "button_link": "shopify://products/orella",
-        "button_label": "TIKTOK",
-        "style_btn": "btn-theme",
-        "button_icon": "tiktok",
-        "enable_overlay_edges": true,
-        "overlay_color": "#fff4fe",
-        "section_height_desktop": 500,
-        "animation_speed": 20,
-        "animation_speed_mobile": 20,
-        "boxes_radius": 20,
-        "button_radius": 99,
-        "padding_top": 26,
-        "padding_bottom": 80,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "featured_articles_Br8tm4": {
-      "type": "featured-articles",
-      "name": "Blog Posts",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background_section": "#200e10",
-        "title_color": "#fff2f4",
-        "subtitle_top": "OUR BLOG",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "Secrets to Glowing Skin",
-        "description": "",
-        "align_heading": "center",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "blog": "news",
-        "item_style": "blog-1",
-        "enable_btn_blog": true,
-        "style_btn": "btn-underline",
-        "enable_date": true,
-        "enable_tag": true,
-        "enable_comment": true,
-        "enable_short": true,
-        "image_size": "auto",
-        "gutter_padding": 30,
-        "arrows": true,
-        "draggable": true,
-        "dots": true,
-        "infinite": true,
-        "rows": "1",
-        "limit": 5,
-        "show": 3,
-        "padding_top": 80,
-        "padding_bottom": 60,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "scrolling_text_GQdNeM": {
-      "type": "scrolling-text",
-      "blocks": {
-        "item_7VrDyE": {
-          "type": "scroll_item",
-          "settings": {
-            "content": "ORELLA",
-            "text_style": "solid"
-          }
-        },
-        "item_azQYyQ": {
-          "type": "scroll_item",
-          "settings": {
-            "content": "Save up to 20% today!",
-            "text_style": "solid"
-          }
-        }
-      },
-      "block_order": [
-        "item_7VrDyE",
-        "item_azQYyQ"
-      ],
-      "name": "Scrolling Text",
-      "settings": {
-        "animation": "",
-        "size_text": "h6",
-        "size_icon": 24,
-        "speed": 10,
-        "scroll_type": "from-right",
-        "background": "#fe899a",
-        "gradient_bg": "",
-        "text": "#35191d",
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 20
-      }
-    },
-    "new_faq_QMnMAp": {
-      "type": "faq-advanced",
-      "blocks": {
-        "faq_item_tgT7x6": {
-          "type": "faq_item",
-          "settings": {
-            "question_heading": "Any question?",
-            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
-          }
-        },
-        "faq_item_BnwRtU": {
-          "type": "faq_item",
-          "settings": {
-            "question_heading": "Any question?",
-            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
-          }
-        },
-        "faq_item_a3EacU": {
-          "type": "faq_item",
-          "settings": {
-            "question_heading": "Any question?",
-            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
-          }
-        },
-        "faq_item_yEVMeR": {
-          "type": "faq_item",
-          "settings": {
-            "question_heading": "Any question?",
-            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
-          }
-        },
-        "faq_item_a9bg3Y": {
-          "type": "faq_item",
-          "settings": {
-            "question_heading": "Any question?",
-            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
-          }
-        },
-        "faq_item_i8zBHR": {
-          "type": "faq_item",
-          "settings": {
-            "question_heading": "Any question?",
-            "answer_body": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "faq_item_tgT7x6",
-        "faq_item_BnwRtU",
-        "faq_item_a3EacU",
-        "faq_item_yEVMeR",
-        "faq_item_a9bg3Y",
-        "faq_item_i8zBHR"
-      ],
-      "name": "FAQ Advanced",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "heading": "Have a question ? We are here to help.",
-        "subheading": "Check out the most common questions our customers asked. Still have questions ? Contact our customer support.",
-        "team_image_width": 179,
-        "team_image_width_mobile": 130,
-        "availability_caption": "Our customer support is available monday to friday: 8am-8:30pm.",
-        "response_time_caption": "Average answer time: 24h",
-        "bg_color": "#ffffff",
-        "h_color": "",
-        "text_color": "",
-        "text_muted_color": "",
-        "card_bg_color": "#f3f4f6",
-        "border_color": "#e5e7eb",
-        "chevron_bg_color": "#34bf49",
-        "chevron_icon_color": "#000000",
-        "padding_top": 60,
-        "padding_bottom": 60,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "grid_banner_KRbnDp": {
+    "grid_banner_M3R7Xt": {
       "type": "grid-banner",
       "blocks": {
-        "banner_VGUjeA": {
+        "banner_9zqhmE": {
           "type": "banner",
           "settings": {
             "width": "6",
@@ -876,7 +103,7 @@
             "promo_banner_height_mobile": 400,
             "enable_video": false,
             "video_hosted": "",
-            "subtitle": "Sub Title",
+            "subtitle": "",
             "title": "Image with text",
             "size_text": "h3",
             "space_heading": "mb-2",
@@ -892,7 +119,7 @@
             "text_align": "center"
           }
         },
-        "banner_nUiqkd": {
+        "banner_7WWUbU": {
           "type": "banner",
           "settings": {
             "width": "6",
@@ -901,7 +128,7 @@
             "promo_banner_height_mobile": 400,
             "enable_video": false,
             "video_hosted": "",
-            "subtitle": "Sub Title",
+            "subtitle": "",
             "title": "Image with text",
             "size_text": "h3",
             "space_heading": "mb-2",
@@ -919,18 +146,18 @@
         }
       },
       "block_order": [
-        "banner_VGUjeA",
-        "banner_nUiqkd"
+        "banner_9zqhmE",
+        "banner_7WWUbU"
       ],
       "name": "Grid Banner",
       "settings": {
         "animation": "",
         "section_width": "container",
         "background_section": "",
-        "subtitle_top": "Sub Title Top",
+        "subtitle_top": "",
         "replace_reviews": false,
         "reviews_type": "t_1",
-        "title": "Grid banner",
+        "title": "",
         "description": "",
         "align_heading": "center",
         "subtitle_top_color": "",
@@ -942,139 +169,845 @@
         "gradient_overlay": true,
         "bg_overlay": "#000",
         "opacity_overlay": 0.4,
-        "padding_top": 60,
+        "padding_top": 30,
         "padding_bottom": 60,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "faq_accordion_CFpARn": {
-      "type": "faq-accordion",
+    "divider_advanced_kbLyCG": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#fff2f4",
+        "bg_wave": "#f6d4d9",
+        "flip_pos": "down",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "custom_rounded_progress_JwGQrj": {
+      "type": "custom-rounded-progress",
       "blocks": {
-        "faq_hEVJGV": {
-          "type": "faq",
+        "before_stat_UUefcM": {
+          "type": "before_stat",
           "settings": {
-            "faq_title": "Title",
-            "faq_description": "<p>Answer Description</p>"
+            "label": "Brain Fog",
+            "value": 10
           }
         },
-        "faq_myGqbJ": {
-          "type": "faq",
+        "before_stat_i4N6T9": {
+          "type": "before_stat",
           "settings": {
-            "faq_title": "Title",
-            "faq_description": "<p>Answer Description</p>"
+            "label": "Productivity",
+            "value": 10
           }
         },
-        "faq_BtJiec": {
-          "type": "faq",
+        "before_stat_iBxW9G": {
+          "type": "before_stat",
           "settings": {
-            "faq_title": "Title",
-            "faq_description": "<p>Answer Description</p>"
+            "label": "Motivation",
+            "value": 10
+          }
+        },
+        "before_stat_7PjdeQ": {
+          "type": "before_stat",
+          "settings": {
+            "label": "Mood",
+            "value": 10
+          }
+        },
+        "after_stat_qJjjnn": {
+          "type": "after_stat",
+          "settings": {
+            "label": "Productivity",
+            "value": 75
+          }
+        },
+        "after_stat_FnwKAC": {
+          "type": "after_stat",
+          "settings": {
+            "label": "Motivation",
+            "value": 75
+          }
+        },
+        "after_stat_X9hX6F": {
+          "type": "after_stat",
+          "settings": {
+            "label": "Mood",
+            "value": 75
+          }
+        },
+        "after_stat_cVkFM8": {
+          "type": "after_stat",
+          "settings": {
+            "label": "Mood",
+            "value": 75
           }
         }
       },
       "block_order": [
-        "faq_hEVJGV",
-        "faq_myGqbJ",
-        "faq_BtJiec"
+        "before_stat_UUefcM",
+        "before_stat_i4N6T9",
+        "before_stat_iBxW9G",
+        "before_stat_7PjdeQ",
+        "after_stat_qJjjnn",
+        "after_stat_FnwKAC",
+        "after_stat_X9hX6F",
+        "after_stat_cVkFM8"
       ],
-      "name": "Faqs Accordion",
+      "name": "Before After Stats",
       "settings": {
         "animation": "",
         "section_width": "container",
-        "background_section": "",
-        "e_size": "auto",
-        "e_repeat": "no-repeat",
-        "e_pos": "center center",
-        "subtitle_top": "Sub Title Top",
+        "background": "#f6d4d9",
+        "subtitle": "",
         "replace_reviews": false,
         "reviews_type": "t_1",
-        "title": "Title FAQ",
-        "description": "",
+        "title": "",
         "align_heading": "center",
-        "title_size": "h4",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "e_first_open": false,
-        "e_reverse": true,
-        "e_small": true,
-        "faq_content": "",
-        "e_right": false,
+        "stat_label_color": "#ffffff",
+        "before_badge_caption": "Before",
+        "before_card_bg": "#202f13",
+        "before_card_border": "#202f13",
+        "before_badge_bg": "#ffffff",
+        "before_badge_color": "#13362b",
+        "before_badge_border": "#dddddd",
+        "before_circle_value": 32,
+        "before_circle_color": "#e8937f",
+        "before_bar_track": "#ffffff1a",
+        "before_bar_fill": "#e8937f",
+        "after_badge_caption": "After",
+        "after_card_bg": "#13362b",
+        "after_card_border": "#13362b",
+        "after_badge_bg": "#abfcb2",
+        "after_badge_color": "#055a47",
+        "after_badge_border": "#abfcb2",
+        "after_circle_value": 95,
+        "after_circle_color": "#abfcb2",
+        "after_bar_track": "#055a47",
+        "after_bar_fill": "#abfcb2",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "divider_advanced_aUMFeD": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#fff2f4",
+        "bg_wave": "#f6d4d9",
+        "flip_pos": "up",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "image_with_text_jYUq9z": {
+      "type": "image-with-text",
+      "blocks": {
+        "image_block_6K8EDr": {
+          "type": "image_block",
+          "settings": {}
+        },
+        "text_block_VU9W98": {
+          "type": "text_block",
+          "settings": {
+            "width": "100%",
+            "bgtext": "#fff2f4",
+            "title_color": "rgba(0,0,0,0)",
+            "subtitle": "Subtitle",
+            "replace_reviews": true,
+            "reviews_type": "t_1",
+            "title": "Image with text",
+            "size_text": "h3",
+            "content": "",
+            "answer_content": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "style_btn": "btn-theme",
+            "button": "discover now",
+            "link": "",
+            "enable_padding": true,
+            "block_align": "center",
+            "align": "left"
+          }
+        }
+      },
+      "block_order": [
+        "image_block_6K8EDr",
+        "text_block_VU9W98"
+      ],
+      "name": "Image With Text",
+      "settings": {
+        "animation": "fade-up",
+        "section_width": "container",
+        "background_section": "",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "bg_pos": "left",
+        "enable_padding": true,
+        "align_center": true,
         "padding_top": 60,
         "padding_bottom": 60,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
     },
-    "product_list_swiper_H4MV7T": {
-      "type": "product-list-swiper",
-      "name": "Product List (Swiper)",
+    "custom_reviews_marquee_7Bx9yY": {
+      "type": "custom-reviews-marquee",
+      "blocks": {
+        "review_left_h7gyCC": {
+          "type": "review_left",
+          "settings": {
+            "title": "I absolutely love it!",
+            "date": "March 10, 2026",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
+            "name": "Amelie R.",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_left_ALGd7C": {
+          "type": "review_left",
+          "settings": {
+            "title": "I absolutely love it!",
+            "date": "March 10, 2026",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
+            "name": "Amelie R.",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_left_98fpXM": {
+          "type": "review_left",
+          "settings": {
+            "title": "I absolutely love it!",
+            "date": "March 10, 2026",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
+            "name": "Amelie R.",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_right_yiJh7m": {
+          "type": "review_right",
+          "settings": {
+            "title": "I absolutely love it!",
+            "date": "March 10, 2026",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
+            "name": "Amelie R.",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_right_i8TTWn": {
+          "type": "review_right",
+          "settings": {
+            "title": "I absolutely love it!",
+            "date": "March 10, 2026",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
+            "name": "Amelie R.",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_right_aCnkyV": {
+          "type": "review_right",
+          "settings": {
+            "title": "I absolutely love it!",
+            "date": "March 10, 2026",
+            "content": "<p>Explore Our Reviews to see genuine customer opinions, ratings, and experiences that highlight the quality of what we offer.</p>",
+            "name": "Amelie R.",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        }
+      },
+      "block_order": [
+        "review_left_h7gyCC",
+        "review_left_ALGd7C",
+        "review_left_98fpXM",
+        "review_right_yiJh7m",
+        "review_right_i8TTWn",
+        "review_right_aCnkyV"
+      ],
+      "name": "Testimonials Slider",
       "settings": {
         "animation": "",
         "section_width": "container",
-        "e_size": "auto",
-        "e_repeat": "no-repeat",
-        "e_position": "center center",
-        "background_section": "",
-        "title_color": "transparent",
-        "subtitle_top": "Sub Title Top",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "Product list",
-        "description": "",
+        "background": "",
+        "animated": true,
+        "show_stars": true,
+        "stars_color": "",
+        "stars_rating": 4.5,
+        "reviews_count_caption": "Rated 4.9/5.0 on",
+        "reviews_cout_color": "",
+        "show_truspilot": true,
+        "trust_icon": "trustpilot",
+        "title": "Customer Reviews",
+        "title_color": "",
+        "content": "<p>Our customers share honest feedback about their experiences, helping others make confident, informed decisions better.</p>",
+        "content_color": "",
+        "show_quotes": true,
+        "quote_box_color": "#ffffff",
+        "quote_title_color": "#200e10",
+        "quote_date_color": "",
+        "quote_content_color": "",
+        "quote_name_color": "",
+        "enable_overlay_edges": true,
+        "overlay_color": "#fff2f4",
+        "section_height_desktop": 750,
+        "animation_speed": 20,
+        "animation_speed_mobile": 20,
+        "boxes_radius": 20,
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "custom_reviews_NwQAXb": {
+      "type": "custom-reviews",
+      "blocks": {
+        "review_6XWjTc": {
+          "type": "review",
+          "settings": {
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
+          }
+        },
+        "review_xhVtgW": {
+          "type": "review",
+          "settings": {
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
+          }
+        },
+        "review_LttJ4n": {
+          "type": "review",
+          "settings": {
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
+          }
+        },
+        "review_KrEXy9": {
+          "type": "review",
+          "settings": {
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
+          }
+        },
+        "review_xXnQKj": {
+          "type": "review",
+          "settings": {
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "add_verified": true,
+            "verified_color": "#34bf49",
+            "name": "John Doe",
+            "name_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_6XWjTc",
+        "review_xhVtgW",
+        "review_LttJ4n",
+        "review_KrEXy9",
+        "review_xXnQKj"
+      ],
+      "name": "Testimonials Trustpilot",
+      "settings": {
+        "animation": "",
+        "background": "",
+        "stars_caption": "Excellent – 4.92/5",
+        "stars_color": "",
+        "heading": "Customer Reviews",
+        "text": "WE ASKED, YOU ANSWERED",
+        "h_s_color": "",
+        "r_t_color": "",
         "align_heading": "center",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "collection": "shop",
-        "limit": 10,
-        "perviewDesktop": 3,
-        "spaceBetween": 30,
-        "nowrap": true,
+        "stars_rating": 4.5,
+        "color": "",
+        "verified_caption": "Verified Review",
+        "autoplay": true,
+        "speed": 2,
+        "link": "",
+        "label": "",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 20
+      }
+    },
+    "reviews_slider_jCJwNw": {
+      "type": "reviews-slider",
+      "blocks": {
+        "review_TCeGrM": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_RWUFRK": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_dJMkbB": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_naWziB": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        },
+        "review_JjJkR4": {
+          "type": "review",
+          "settings": {
+            "name": "John Doe",
+            "name_color": "",
+            "rating_text": "5.0",
+            "stars_count": 5,
+            "stars_color": "#d7e478",
+            "heading": "Review Title",
+            "review_body": "<p>I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent.</p>",
+            "review_color": "",
+            "badge_1": "Value",
+            "badge_2": "Value",
+            "pdp_link": "",
+            "title": "title",
+            "content": "Purchased on April 2nd",
+            "add_verified": true,
+            "verified_color": "#34bf49"
+          }
+        }
+      },
+      "block_order": [
+        "review_TCeGrM",
+        "review_RWUFRK",
+        "review_dJMkbB",
+        "review_naWziB",
+        "review_JjJkR4"
+      ],
+      "name": "Testimonial Slider Auto",
+      "settings": {
+        "animation": "",
+        "background": "",
+        "section_width": "container",
+        "stars_height": 15,
+        "stars_caption": "Excellent – 4.92/5",
+        "font_size": 12,
+        "mobile_font_size": 11,
+        "text_color": "",
+        "stars_border_color": "",
+        "stars_color": "",
+        "stars_background": "",
+        "heading": "Customer Reviews",
+        "text": "",
+        "h_s_color": "",
+        "align_heading": "center",
         "arrows": true,
-        "scrollbar": true,
-        "enable_same_height": false,
-        "buttonall": "",
-        "buttonall_link": "",
-        "style_btn": "btn-theme",
-        "enable_first_banner": false,
-        "width_banner": 30,
-        "subtitle_banner": "Sub Title",
-        "title_banner": "Title Banner",
-        "size_text": "h2",
-        "banner_description": "Protection from the",
-        "pos_banner": "mid-center",
-        "button_banner": "discover now",
-        "link_banner": "",
-        "style_btn_banner": "btn-underline btn-underline-white",
-        "text_banner_color": "#ffffff",
-        "overlay_banner": "#000000",
-        "opacity_banner": 0.2,
+        "dots": false,
+        "border_color": "",
+        "color": "",
+        "verified_caption": "Verified Review",
+        "columns": 3,
+        "autoplay": true,
+        "speed": 6,
+        "opacity_color": "#fff2f4",
+        "link": "",
+        "label": "",
+        "b_bk": "",
+        "b_color": "",
         "padding_top": 60,
         "padding_bottom": 60,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
+    },
+    "slideshow_1_KMPmP8": {
+      "type": "slideshow-1",
+      "blocks": {
+        "slide_Nzqnet": {
+          "type": "slide",
+          "settings": {
+            "enable_video": false,
+            "video_hosted": "",
+            "alignment": "center center",
+            "text_alignment": "center center",
+            "text_alignment_mobile": "center",
+            "bgwrap": "#f8ede7",
+            "blurry_transition": false,
+            "blurry_color": "",
+            "show_overlay": true,
+            "gradient_overlay": false,
+            "bg_overlay": "#000000",
+            "opacity_overlay": 0.5,
+            "slide_toptitle": "Top Title",
+            "replace_reviews": false,
+            "reviews_type": "t_1",
+            "margin_title": 1.5,
+            "margin_title_mobile": 1,
+            "slide_toptitle_color": "#ffffff",
+            "slide_title": "Heading Text",
+            "slide_title_color": "#ffffff",
+            "subheading": "",
+            "subheading_color": "#ffffff",
+            "icon_1": "checkmark-2",
+            "icon_text_1": "Selling Point 1",
+            "icon_2": "checkmark-2",
+            "icon_text_2": "Selling Point 2",
+            "icon_3": "checkmark-2",
+            "icon_text_3": "Selling Point 3",
+            "spacing": 21,
+            "icon_color": "#ffffff",
+            "icons_text_color": "#ffffff",
+            "icons_size": 27,
+            "icon_background": "linear-gradient(54deg, rgba(231, 231, 231, 0.35) 14%, rgba(242, 242, 242, 0.15) 83%)",
+            "icon_padding": 3,
+            "icon_padding_left_right": 10,
+            "icon_radius": 50,
+            "text_size_desktop": 14,
+            "text_size_mobile": 12,
+            "button_label": "Get Yours Now",
+            "button_link": "",
+            "stylebtns": "btn-theme",
+            "bg_button": "",
+            "color_button": "#ffffff",
+            "bg_button_hover": "",
+            "color_button_hover": "#ffffff",
+            "button_label_2": "",
+            "button_link_2": "",
+            "stylebtns_2": "btn-theme",
+            "bg_button_2": "#000000",
+            "color_button_2": "#ffffff",
+            "bg_button_hover_2": "#FF6F2E",
+            "color_button_hover_2": "#ffffff",
+            "active_review": false,
+            "rating_count": "4.8",
+            "rating_text": "",
+            "note_background": "#ffffff",
+            "note_color": "#000000",
+            "note_size": 24,
+            "stars_color": "#34bf49",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Nzqnet"
+      ],
+      "name": "Slideshow 1",
+      "settings": {
+        "enable_slideshow": true,
+        "setwidthout": "full",
+        "slideshow_height_adapt": "750",
+        "slideshow_height_mobile": "500",
+        "section_width": "container",
+        "slideshow_mobile": true,
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "anim_slideshow": "fade",
+        "e_arrow": false,
+        "color_arrow": "#000",
+        "bg_arrow": "#fff",
+        "opacity_arrow": 1,
+        "e_dot": true,
+        "slide_dot": "square",
+        "color_dot_nav": "#000",
+        "color_dot_active": "#c99a5c"
+      }
+    },
+    "custom_instagram_marquee_bi87tf": {
+      "type": "custom-instagram-marquee",
+      "blocks": {
+        "column_1_PVXaCe": {
+          "type": "column_1",
+          "settings": {}
+        },
+        "column_1_KrCG73": {
+          "type": "column_1",
+          "settings": {}
+        },
+        "column_1_pVNzVD": {
+          "type": "column_1",
+          "settings": {}
+        },
+        "column_2_ahyeCY": {
+          "type": "column_2",
+          "settings": {}
+        },
+        "column_2_RhKXgH": {
+          "type": "column_2",
+          "settings": {}
+        },
+        "column_2_hDdFd9": {
+          "type": "column_2",
+          "settings": {}
+        },
+        "column_3_9p78Gw": {
+          "type": "column_3",
+          "settings": {}
+        },
+        "column_3_D8LXEB": {
+          "type": "column_3",
+          "settings": {}
+        },
+        "column_3_BK9GQb": {
+          "type": "column_3",
+          "settings": {}
+        },
+        "column_4_gtrjGr": {
+          "type": "column_4",
+          "settings": {}
+        },
+        "column_4_JEg3M7": {
+          "type": "column_4",
+          "settings": {}
+        },
+        "column_4_NBW9pH": {
+          "type": "column_4",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "column_1_PVXaCe",
+        "column_1_KrCG73",
+        "column_1_pVNzVD",
+        "column_2_ahyeCY",
+        "column_2_RhKXgH",
+        "column_2_hDdFd9",
+        "column_3_9p78Gw",
+        "column_3_D8LXEB",
+        "column_3_BK9GQb",
+        "column_4_gtrjGr",
+        "column_4_JEg3M7",
+        "column_4_NBW9pH"
+      ],
+      "name": "Instagram Slider",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background": "",
+        "text": "SOCIAL MEDIA",
+        "h_sub_color": "",
+        "heading": "Follow Us",
+        "h_s_color": "",
+        "align_heading": "center",
+        "box_overlay_color": "#000000",
+        "box_overlay_opacity": 20,
+        "title": "",
+        "button_link": "",
+        "button_label": "CLICK HERE",
+        "style_btn": "btn-outline btn-outline-white",
+        "button_icon": "tiktok",
+        "enable_overlay_edges": true,
+        "overlay_color": "#fff2f4",
+        "section_height_desktop": 500,
+        "animation_speed": 20,
+        "animation_speed_mobile": 20,
+        "button_radius": 99,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "divider_advanced_jqTA6R": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#fff2f4",
+        "bg_wave": "#200e10",
+        "flip_pos": "down",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
+      }
+    },
+    "featured_articles_AreczD": {
+      "type": "featured-articles",
+      "name": "Blog Posts",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background_section": "#200e10",
+        "title_color": "rgba(0,0,0,0)",
+        "subtitle_top": "Subtitle Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Blog posts",
+        "description": "",
+        "align_heading": "center",
+        "subtitle_top_color": "#fff2f4",
+        "heading_color": "#fff2f4",
+        "description_color": "#fff2f4",
+        "blog": "news",
+        "item_style": "blog-1",
+        "enable_btn_blog": true,
+        "style_btn": "btn-underline btn-underline-white",
+        "enable_date": true,
+        "enable_tag": true,
+        "enable_comment": true,
+        "enable_short": true,
+        "image_size": "auto",
+        "gutter_padding": 30,
+        "arrows": true,
+        "draggable": true,
+        "dots": false,
+        "infinite": true,
+        "rows": "1",
+        "limit": 5,
+        "show": 3,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "scrolling_text_JPmYzc": {
+      "type": "scrolling-text",
+      "blocks": {
+        "scroll_item_cNx8QW": {
+          "type": "scroll_item",
+          "settings": {
+            "content": "Promo Text",
+            "text_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "scroll_item_cNx8QW"
+      ],
+      "name": "Scrolling Text",
+      "settings": {
+        "animation": "",
+        "size_text": "h6",
+        "size_icon": 24,
+        "speed": 20,
+        "scroll_type": "from-right",
+        "background": "#fe899a",
+        "gradient_bg": "",
+        "text": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
     }
   },
   "order": [
-    "line_mFkqty",
-    "service_Tb6WNk",
-    "custom_reviews_marquee_DjeefV",
-    "custom_image_bullets_TDH6yJ",
-    "divider_advanced_UegiRg",
-    "custom_rounded_progress_kyCRMb",
-    "divider_advanced_x48mgM",
-    "image_content_Mrr99g",
-    "featured_articles_q8YN3U",
-    "custom_reviews_Df9gnJ",
-    "custom_instagram_marquee_9EbDrw",
-    "featured_articles_Br8tm4",
-    "scrolling_text_GQdNeM",
-    "new_faq_QMnMAp",
-    "grid_banner_KRbnDp",
-    "faq_accordion_CFpARn",
-    "product_list_swiper_H4MV7T"
+    "icon_list_cAgmnb",
+    "grid_banner_M3R7Xt",
+    "divider_advanced_kbLyCG",
+    "custom_rounded_progress_JwGQrj",
+    "divider_advanced_aUMFeD",
+    "image_with_text_jYUq9z",
+    "custom_reviews_marquee_7Bx9yY",
+    "custom_reviews_NwQAXb",
+    "reviews_slider_jCJwNw",
+    "slideshow_1_KMPmP8",
+    "custom_instagram_marquee_bi87tf",
+    "divider_advanced_jqTA6R",
+    "featured_articles_AreczD",
+    "scrolling_text_JPmYzc"
   ]
 }

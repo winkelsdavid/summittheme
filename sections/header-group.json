@@ -17,7 +17,7 @@
         "a00daf6f-fb1c-4351-80dc-24e405bf630e": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/x1_89ab2986-d7e8-4b7a-94bc-7491984b5756.jpg",
+            "content": "Use HTML to format your text so it can be easily read.",
             "button_text": "Shop now",
             "button_link": "shopify://products/orella"
           }
@@ -25,6 +25,7 @@
         "afb084a9-2a31-4207-9d23-694c0f6b1281": {
           "type": "slide",
           "settings": {
+            "content": "Use HTML to format your text so it can be easily read.",
             "button_text": "",
             "button_link": "shopify://collections/best-seller"
           }
@@ -43,8 +44,8 @@
         "auto_rotate": true,
         "auto_rotate_speed": 3,
         "scroll_dot": "dot",
-        "size_icon": 24,
-        "speed": 10,
+        "size_icon": 28,
+        "speed": 12,
         "scroll_type": "from-right",
         "background": "rgba(0,0,0,0)",
         "gradient_bg": "",
@@ -93,6 +94,7 @@
         "padding_bottom": 80,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40,
+        "background_section": "",
         "section_width": "full",
         "bgborder": "#5a715b",
         "wborder": "1px"
@@ -241,7 +243,7 @@
         "layout_header": "logo-center-navigation-left",
         "type_sticky": "sticky",
         "height_header": "small",
-        "background": "#fff2f4",
+        "background": "#FFF2F4",
         "textcolor": "rgba(0,0,0,0)",
         "linkcolor": "#200e10",
         "linkhover": "#fe899a",

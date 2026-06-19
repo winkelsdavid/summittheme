@@ -46,7 +46,7 @@
         "5b0f48ed-12f4-43e7-a7fd-3e3ea948966e": {
           "type": "paragraph",
           "settings": {
-            "description_body": "Born on the banks of the Restigouche River in 2012, Astro is a Quebec brand whose mission is to promote outdoor living, sustainable fishing and conscious hunting. Through our photos, videos and design, we share our vision that inspires a growing community of adventure enthusiasts to explore, protect and better understand nature and its fragility. Our products, manufactured in an ecological and responsible way, combine comfort, style and quality to meet the needs of this community that shares our passion for the outdoor and its way of life."
+            "description_body": "About Us Text"
           }
         }
       },
@@ -60,7 +60,7 @@
       "settings": {
         "animation": "fade-up",
         "section_width": "container",
-        "background_section": "#ffffff",
+        "background_section": "",
         "gradient_bg": "",
         "title_color": "rgba(0,0,0,0)",
         "subtitle_top": "",
@@ -74,6 +74,21 @@
         "padding_bottom": 80,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
+      }
+    },
+    "divider_betQMV": {
+      "type": "divider",
+      "name": "Divider",
+      "settings": {
+        "animation": "",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0,
+        "background_section": "",
+        "section_width": "container",
+        "bgborder": "#f6d4d9",
+        "wborder": "1px"
       }
     },
     "d72bcc8c-88fe-4415-96f0-06511b070083": {
@@ -96,14 +111,14 @@
         "template--16716887458110__d72bcc8c-88fe-4415-96f0-06511b070083-16666725974cf35e4d-1": {
           "type": "text_block",
           "settings": {
-            "bgtext": "#ffffff",
-            "subtitle": "PORTRAIT OF",
+            "bgtext": "#fff2f4",
+            "subtitle": "PORTRAIT",
             "color_subtitle": "",
-            "title": "The crew",
+            "title": "Our Story.",
             "color_title": "",
             "size_text": "h2",
             "content": "",
-            "answer_content": "<p>One thing in common: a true dedication to their passion. It all started with a bunch of friends hanging out by the river. It turned into a community. Fly fishers from around the world, connected by their passion for great fly fishing vibes, compose the Astro.</p>",
+            "answer_content": "<p>Describe your story.</p>",
             "color_answer": "",
             "button": "discover now",
             "link": "",
@@ -121,7 +136,7 @@
       "settings": {
         "animation": "fade",
         "section_width": "container",
-        "background_section": "#ffffff",
+        "background_section": "",
         "size": "50-50",
         "enable_padding": true,
         "align_center": true,
@@ -131,195 +146,64 @@
         "mobile_padding_bottom": 40
       }
     },
-    "895c09e5-5c6d-4c4d-8492-727381e40aa0": {
-      "type": "icon-list",
-      "blocks": {
-        "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-0": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "rgba(0,0,0,0)",
-            "title": "Our Story",
-            "description": "45 years makes for a whole lot of epic. Let's rewind back to 1971.",
-            "type_icon": "img",
-            "icon": "<svg aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" class=\"icon icon-package\" viewbox=\"0 0 64 64\"><path d=\"M32 54.52L10 41.95v-19.9L32 9.48l22 12.57v19.9L32 54.52z\"></path><path d=\"M32 54.52v-19.9l22-12.57M32 34.62L10 22.05M41.7 15.02L21 28.33v8.38\"></path></svg>"
-          }
-        },
-        "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-1": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "rgba(0,0,0,0)",
-            "title": "Sustainability",
-            "description": "Protecting our wild, wonderful, and awe-inducing Earth through a threefold philosophy.",
-            "type_icon": "img",
-            "icon": "<svg aria-hidden=\"true\" focusable=\"false\" role=\"presentation\" class=\"icon icon-truck\" viewbox=\"0 0 64 64\"><path d=\"M16.5 43.22H6.88V16.5h33.14v26.72H23.94M45.42 43.22h-5.4V30.4h17.1v12.82h-4.23M57.12 30.4l-6.41-8.56H40.02\"></path><circle cx=\"20.24\" cy=\"43.76\" r=\"3.74\"></circle><path d=\"M45.42 43.23a3.82 3.82 0 1 1 0 .37v-.37\"></path></svg>"
-          }
-        },
-        "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-2": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "rgba(0,0,0,0)",
-            "title": "Astro Technology",
-            "description": "Cutting-edge tech meets next-gen performance. Let's be real.",
-            "type_icon": "img",
-            "icon": "<svg width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M15.0039 10.2464C14.9149 10.2464 14.8326 10.2005 14.7855 10.1252L11.8344 5.3944C11.785 5.31515 11.7824 5.21532 11.8278 5.13339C11.8731 5.05167 11.9594 5.00082 12.0528 5.00082L17.9181 5C18.0113 5 18.0971 5.05043 18.1426 5.13195C18.1883 5.21346 18.1861 5.31289 18.1373 5.39235L15.2229 10.1242C15.1762 10.1999 15.0936 10.2464 15.0045 10.2466L15.0039 10.2464ZM12.5166 5.51565L15.0024 9.50065L17.4574 5.51483L12.5166 5.51565Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n<path d=\"M9.1197 10.2464C9.03098 10.2464 8.94884 10.2007 8.90171 10.1258L5.93524 5.39502C5.88542 5.31577 5.88274 5.21573 5.92803 5.1336C5.97332 5.05187 6.05957 5.00082 6.15323 5.00082L12.0528 5C12.1461 5 12.2321 5.05064 12.2776 5.13215C12.3231 5.21367 12.3208 5.31371 12.2716 5.39296L9.33831 10.1246C9.29138 10.2001 9.20904 10.2462 9.12011 10.2464H9.1197ZM6.61803 5.51565L9.11826 9.50292L11.5905 5.51483L6.61803 5.51565Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n<path d=\"M9.12361 10.2464C9.12258 10.2464 9.12093 10.2466 9.11949 10.2464H3.26271C3.16967 10.2464 3.08383 10.1962 3.03834 10.1149C2.99264 10.0336 2.99449 9.93438 3.04307 9.85492L5.93359 5.1233C5.98011 5.04714 6.06245 5.00062 6.15179 5C6.1522 5 6.15281 5 6.15323 5C6.24195 5 6.32408 5.0457 6.37122 5.12063L9.31669 9.81828C9.35683 9.86377 9.38112 9.92347 9.38112 9.98893C9.38092 10.1314 9.26585 10.2464 9.12361 10.2464ZM3.72134 9.73182H8.65469L6.1559 5.7464L3.72134 9.73182Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n<path d=\"M15.0077 10.2464C15.0067 10.2464 15.0053 10.2466 15.0036 10.2464H9.11968C9.02643 10.2464 8.94039 10.1958 8.8949 10.1143C8.8494 10.0328 8.85167 9.93273 8.90087 9.85348L11.834 5.12186C11.8809 5.04632 11.9635 5.00021 12.0524 5H12.0528C12.1417 5 12.2241 5.0459 12.2712 5.12124L15.201 9.81869C15.241 9.86418 15.2653 9.92367 15.2653 9.98893C15.2651 10.1314 15.15 10.2464 15.0077 10.2464ZM9.58181 9.73182H14.5401L12.0534 5.74476L9.58181 9.73182Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n<path d=\"M20.8129 10.2464C20.8119 10.2464 20.8102 10.2466 20.8088 10.2464H15.0039C14.9106 10.2464 14.8248 10.196 14.7791 10.1145C14.7336 10.033 14.7359 9.93355 14.7847 9.8541L17.6988 5.12248C17.7458 5.04632 17.8287 5 17.9179 5H17.9183C18.0078 5.00021 18.0908 5.04693 18.1373 5.1233L21.0072 9.82054C21.0463 9.86562 21.07 9.9245 21.07 9.98893C21.0702 10.1314 20.9551 10.2464 20.8129 10.2464ZM15.4646 9.73182H20.3502L17.9172 5.7497L15.4646 9.73182Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n<path d=\"M12.0856 19.3742C12.0158 19.3742 11.9491 19.3458 11.9007 19.2958L3.07233 10.1681C3.00049 10.094 2.98011 9.98362 3.02046 9.88873C3.0606 9.79363 3.15385 9.73187 3.25718 9.73187H20.809C20.9119 9.73187 21.005 9.79342 21.0455 9.88811C21.0859 9.9828 21.0661 10.0925 20.9949 10.1668L12.2715 19.2945C12.2233 19.3452 12.1562 19.374 12.0864 19.3742H12.0856ZM3.86402 10.2465L12.0843 18.7455L20.2071 10.2465H3.86402Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n<path d=\"M12.0856 19.3741C11.9771 19.3741 11.876 19.305 11.841 19.1965L8.87496 10.0688C8.83091 9.93356 8.90501 9.78843 9.04005 9.74459C9.17591 9.70054 9.32062 9.77464 9.36426 9.90968L12.3301 19.0374C12.3742 19.1726 12.3001 19.3177 12.165 19.3616C12.1387 19.3702 12.1119 19.3741 12.0856 19.3741Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n<path d=\"M12.0942 19.3741C12.0685 19.3741 12.0421 19.3702 12.016 19.362C11.8807 19.3188 11.8058 19.1741 11.8488 19.0386L14.7585 9.9109C14.8017 9.77587 14.945 9.70073 15.0819 9.74375C15.2171 9.78698 15.292 9.93169 15.249 10.0671L12.3393 19.195C12.3044 19.3044 12.2033 19.3741 12.0942 19.3741Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.1\"></path>\n</svg>"
-          }
-        },
-        "4273663e-a3ea-49a8-a7c1-c872309fc99c": {
-          "type": "icon_item",
-          "settings": {
-            "bgblock": "rgba(0,0,0,0)",
-            "title": "Warranty",
-            "description": "Limited Lifetime Warranty",
-            "type_icon": "img",
-            "icon": "<svg width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M13.2688 8.07846L15.103 6.33556C15.1932 6.24541 15.2232 6.09516 15.1631 5.97496L13.5093 3.15025C13.4492 3.0601 13.359 3 13.2387 3H9.96128C9.841 3 9.7508 3.0601 9.69066 3.15025L8.0369 5.97496C7.97677 6.09516 7.97677 6.24541 8.09704 6.33556L9.93121 8.07846C7.10478 8.82972 5 11.384 5 14.4491C5.03007 18.0551 7.97677 21 11.615 21C15.2533 21 18.2 18.0551 18.2 14.419C18.2 11.384 16.0952 8.79967 13.2688 8.07846ZM8.72847 6.06511L10.1718 3.57095H13.0884L14.5317 6.06511L12.5772 7.92821C12.2765 7.89816 11.9458 7.86811 11.6451 7.86811C11.3144 7.86811 11.0137 7.89816 10.713 7.92821L8.72847 6.06511ZM11.615 20.399C8.30752 20.399 5.63144 17.7245 5.63144 14.419C5.63144 11.1135 8.30752 8.46911 11.615 8.46911C14.9226 8.46911 17.5986 11.1436 17.5986 14.4491C17.5986 17.7546 14.9226 20.399 11.615 20.399Z\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"0.2\"></path>\n</svg>"
-          }
-        }
-      },
-      "block_order": [
-        "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-0",
-        "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-1",
-        "template--14684877652053__c5690cdb-c04d-45fd-9c6c-cfee011363ca-166585292003960893-2",
-        "4273663e-a3ea-49a8-a7c1-c872309fc99c"
-      ],
-      "settings": {
-        "animation": "fade-up",
-        "section_width": "container",
-        "background_section": "#ffffff",
-        "subtitle_top": "",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "",
-        "description": "",
-        "align_heading": "center",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "paddingbox": "0px 0px 0px 0px",
-        "iconcolor": "#202025",
-        "titlecolor": "#202025",
-        "subcolor": "#5f6c79",
-        "size": 44,
-        "service_heading": "h6",
-        "layout": "style-2",
-        "enable_carousel": false,
-        "arrows": false,
-        "draggable": true,
-        "dots": true,
-        "infinite": false,
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "24a28133-2e01-4361-8b00-ad164f72336f": {
-      "type": "image-with-text",
-      "blocks": {
-        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-1": {
-          "type": "text_block",
-          "settings": {
-            "width": "100%",
-            "bgtext": "#ffffff",
-            "title_color": "rgba(0,0,0,0)",
-            "subtitle": "PORTRAIT OF",
-            "replace_reviews": false,
-            "reviews_type": "t_1",
-            "title": "The makers",
-            "size_text": "h2",
-            "content": "<div class=\"pr-lg-5 mr-lg-4\">\n<p>Our filmmakers, DOPs, creation director, designers, photographs and copywriters are the one who work in the shadow to make the brand what it is. You don’t see them very often, but it’s their energy and inspiration you find in everything we do. </p>\n      <div class=\"mt-5 pt-4 px-lg-5\">\n        <img class=\"lazyload\" loading=\"lazy\" data-src=\"https://cdn.shopify.com/s/files/1/0871/4243/3081/files/f50375159232037_17.jpg?v=1711950162\">\n      </div>\n    \n</div>",
-            "answer_content": "",
-            "style_btn": "btn-underline btn-underline-white",
-            "button": "",
-            "link": "",
-            "enable_padding": false,
-            "block_align": "center",
-            "align": "left"
-          }
-        },
-        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-0": {
-          "type": "image_block",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-1",
-        "template--16716887458110__24a28133-2e01-4361-8b00-ad164f72336f-1666686767d1a98887-0"
-      ],
-      "settings": {
-        "animation": "fade",
-        "section_width": "container",
-        "background_section": "#ffffff",
-        "rangebg": 0,
-        "bgbefore": "rgba(0,0,0,0)",
-        "bg_pos": "left",
-        "enable_padding": true,
-        "align_center": false,
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
-    },
-    "559f6024-64db-446e-a9dc-976582972dce": {
+    "quotes_KQHqC3": {
       "type": "quotes",
       "blocks": {
-        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-0": {
+        "quote_CrDCdG": {
           "type": "quote",
           "settings": {
             "title": "Perfect !",
+            "author": "John Doe",
+            "info": "Verified Review",
             "rate": 5,
             "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
           }
         },
-        "quote_QLaLWN": {
+        "quote_RC3PpQ": {
           "type": "quote",
           "settings": {
             "title": "Amazing!",
+            "author": "John Doe",
+            "info": "Verified Review",
             "rate": 5,
             "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
           }
         },
-        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-1": {
+        "quote_RjHAnW": {
           "type": "quote",
           "settings": {
             "title": "Awesome !",
-            "rate": 5,
-            "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
-          }
-        },
-        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-2": {
-          "type": "quote",
-          "settings": {
-            "title": "Great!",
+            "author": "John Doe",
+            "info": "Verified Review",
             "rate": 5,
             "quote": "I love this product. It delivers excellent quality, reliable performance, and great value, exceeding expectations consistently while being easy to use and worth every cent."
           }
         }
       },
       "block_order": [
-        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-0",
-        "quote_QLaLWN",
-        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-1",
-        "template--16716887458110__559f6024-64db-446e-a9dc-976582972dce-16666891474b2efc36-2"
+        "quote_CrDCdG",
+        "quote_RC3PpQ",
+        "quote_RjHAnW"
       ],
+      "name": "Testimonials",
       "settings": {
-        "animation": "fade",
+        "animation": "",
         "section_width": "container",
-        "background_section": "rgba(0,0,0,0)",
+        "background_section": "#200e10",
         "title_color": "rgba(0,0,0,0)",
-        "subtitle_top": "",
+        "subtitle_top": "REVIEWS",
         "replace_reviews": false,
         "reviews_type": "t_1",
-        "title": "Customer Reviews",
-        "description": "We are very fortunate to have formed excellent \npartnerships with many of our clients.",
+        "title": "Customer reviews",
+        "description": "We are very furtunate to have formed excellent partnerships with many of our clients.",
         "align_heading": "center",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
+        "subtitle_top_color": "#fff2f4",
+        "heading_color": "#fff2f4",
+        "description_color": "#fff2f4",
         "aligntext": "text-left",
         "style": "style-1",
         "color_rate": "#f1f1f1",
-        "color_rated": "#ffe718",
+        "color_rated": "#ffd900",
         "size_text": "txt-body",
         "bg_item": "#ffffff",
         "widthcolumn": 100,
@@ -331,6 +215,194 @@
         "infinite": true,
         "padding_top": 80,
         "padding_bottom": 80,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "slideshow_1_gkCmR9": {
+      "type": "slideshow-1",
+      "blocks": {
+        "slide_Uzr7MX": {
+          "type": "slide",
+          "settings": {
+            "enable_video": false,
+            "video_hosted": "",
+            "alignment": "center center",
+            "text_alignment": "center center",
+            "text_alignment_mobile": "center",
+            "bgwrap": "#F8EDE7",
+            "blurry_transition": false,
+            "blurry_color": "",
+            "show_overlay": true,
+            "gradient_overlay": false,
+            "bg_overlay": "#000000",
+            "opacity_overlay": 0.5,
+            "slide_toptitle": "Top Title",
+            "replace_reviews": false,
+            "reviews_type": "t_1",
+            "margin_title": 1.5,
+            "margin_title_mobile": 1,
+            "slide_toptitle_color": "#ffffff",
+            "slide_title": "Heading Text",
+            "slide_title_color": "#ffffff",
+            "subheading": "",
+            "subheading_color": "#ffffff",
+            "icon_1": "checkmark-2",
+            "icon_text_1": "Selling Point 1",
+            "icon_2": "checkmark-2",
+            "icon_text_2": "Selling Point 2",
+            "icon_3": "checkmark-2",
+            "icon_text_3": "Selling Point 3",
+            "spacing": 21,
+            "icon_color": "#ffffff",
+            "icons_text_color": "#ffffff",
+            "icons_size": 27,
+            "icon_background": "linear-gradient(54deg, rgba(231, 231, 231, 0.35) 14%, rgba(242, 242, 242, 0.15) 83%)",
+            "icon_padding": 3,
+            "icon_padding_left_right": 10,
+            "icon_radius": 50,
+            "text_size_desktop": 14,
+            "text_size_mobile": 12,
+            "button_label": "Get Yours Now",
+            "button_link": "",
+            "stylebtns": "btn-theme",
+            "bg_button": "",
+            "color_button": "#ffffff",
+            "bg_button_hover": "",
+            "color_button_hover": "#ffffff",
+            "button_label_2": "",
+            "button_link_2": "",
+            "stylebtns_2": "btn-theme",
+            "bg_button_2": "#000000",
+            "color_button_2": "#ffffff",
+            "bg_button_hover_2": "#FF6F2E",
+            "color_button_hover_2": "#ffffff",
+            "active_review": false,
+            "rating_count": "4.8",
+            "rating_text": "",
+            "note_background": "#ffffff",
+            "note_color": "#000000",
+            "note_size": 24,
+            "stars_color": "#34bf49",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "slide_Uzr7MX"
+      ],
+      "name": "Slideshow 1",
+      "settings": {
+        "enable_slideshow": true,
+        "setwidthout": "full",
+        "slideshow_height_adapt": "750",
+        "slideshow_height_mobile": "500",
+        "section_width": "container",
+        "slideshow_mobile": true,
+        "autorotate": false,
+        "autorotate_speed": 5,
+        "anim_slideshow": "fade",
+        "e_arrow": false,
+        "color_arrow": "#000",
+        "bg_arrow": "#fff",
+        "opacity_arrow": 1,
+        "e_dot": true,
+        "slide_dot": "square",
+        "color_dot_nav": "#000",
+        "color_dot_active": "#C99A5C"
+      }
+    },
+    "custom_instagram_marquee_9nNhWw": {
+      "type": "custom-instagram-marquee",
+      "blocks": {
+        "column_1_XKzPkz": {
+          "type": "column_1",
+          "settings": {}
+        },
+        "column_1_Bnze8A": {
+          "type": "column_1",
+          "settings": {}
+        },
+        "column_1_QkFaBw": {
+          "type": "column_1",
+          "settings": {}
+        },
+        "column_2_dXXMaK": {
+          "type": "column_2",
+          "settings": {}
+        },
+        "column_2_6kptij": {
+          "type": "column_2",
+          "settings": {}
+        },
+        "column_2_gVctPF": {
+          "type": "column_2",
+          "settings": {}
+        },
+        "column_3_aQ8KFX": {
+          "type": "column_3",
+          "settings": {}
+        },
+        "column_3_eT3EQQ": {
+          "type": "column_3",
+          "settings": {}
+        },
+        "column_3_CP7gmH": {
+          "type": "column_3",
+          "settings": {}
+        },
+        "column_4_WbnDdz": {
+          "type": "column_4",
+          "settings": {}
+        },
+        "column_4_6xUaiC": {
+          "type": "column_4",
+          "settings": {}
+        },
+        "column_4_QjfMHg": {
+          "type": "column_4",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "column_1_XKzPkz",
+        "column_1_Bnze8A",
+        "column_1_QkFaBw",
+        "column_2_dXXMaK",
+        "column_2_6kptij",
+        "column_2_gVctPF",
+        "column_3_aQ8KFX",
+        "column_3_eT3EQQ",
+        "column_3_CP7gmH",
+        "column_4_WbnDdz",
+        "column_4_6xUaiC",
+        "column_4_QjfMHg"
+      ],
+      "name": "Instagram Slider",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background": "",
+        "text": "SOCIAL MEDIA",
+        "h_sub_color": "",
+        "heading": "Follow Us",
+        "h_s_color": "",
+        "align_heading": "center",
+        "box_overlay_color": "#000000",
+        "box_overlay_opacity": 20,
+        "title": "",
+        "button_link": "",
+        "button_label": "CLICK HERE",
+        "style_btn": "btn-outline btn-outline-white",
+        "button_icon": "tiktok",
+        "enable_overlay_edges": true,
+        "overlay_color": "#fff2f4",
+        "section_height_desktop": 500,
+        "animation_speed": 20,
+        "animation_speed_mobile": 20,
+        "button_radius": 99,
+        "padding_top": 60,
+        "padding_bottom": 60,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
@@ -390,6 +462,7 @@
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2",
         "da71da3f-22ff-40d5-be4f-f445f70629e5"
       ],
+      "disabled": true,
       "settings": {
         "animation": "fade",
         "section_width": "container",
@@ -413,6 +486,7 @@
     },
     "a035e328-7cfe-4cf0-81d0-e2f5f0188740": {
       "type": "map",
+      "disabled": true,
       "settings": {
         "heading": "Our store",
         "address": "<p>123 Fake St.<br/>Toronto, Canada</p><p>Mon - Fri, 10am - 9pm<br/>Saturday, 11am - 9pm<br/>Sunday, 11am - 5pm</p>",
@@ -424,23 +498,64 @@
         "background_image_position": "center center"
       }
     },
-    "e07a205a-2023-4ca5-b589-a46cd70b3237": {
+    "contact_form_c6XQpD": {
       "type": "contact-form",
+      "name": "Contact Form",
       "settings": {
         "animation": "",
-        "background_section": "#ffffff",
-        "subtitle_top": "Questions?",
+        "background_section": "",
+        "subtitle_top": "Subtitle Top",
         "replace_reviews": false,
         "reviews_type": "t_1",
-        "title": "Send us an email",
+        "title": "Questions? Send us an email",
         "description": "",
         "align_heading": "center",
-        "answer_content": "<p>This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\">Terms of Service</a> apply.</p>",
+        "answer_content": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
         "subtitle_top_color": "",
         "heading_color": "",
         "description_color": "",
-        "padding_top": 80,
-        "padding_bottom": 80,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
+    "featured_articles_EKa8d9": {
+      "type": "featured-articles",
+      "name": "Blog Posts",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background_section": "#200e10",
+        "title_color": "rgba(0,0,0,0)",
+        "subtitle_top": "Subtitle Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Blog posts",
+        "description": "",
+        "align_heading": "center",
+        "subtitle_top_color": "#fff2f4",
+        "heading_color": "#fff2f4",
+        "description_color": "#fff2f4",
+        "blog": "news",
+        "item_style": "blog-1",
+        "enable_btn_blog": true,
+        "style_btn": "btn-underline btn-underline-white",
+        "enable_date": true,
+        "enable_tag": true,
+        "enable_comment": true,
+        "enable_short": true,
+        "image_size": "auto",
+        "gutter_padding": 30,
+        "arrows": true,
+        "draggable": true,
+        "dots": false,
+        "infinite": true,
+        "rows": "1",
+        "limit": 5,
+        "show": 3,
+        "padding_top": 60,
+        "padding_bottom": 60,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
@@ -449,12 +564,14 @@
   "order": [
     "main",
     "f172e7b1-989c-4feb-a20b-ac2934933476",
+    "divider_betQMV",
     "d72bcc8c-88fe-4415-96f0-06511b070083",
-    "895c09e5-5c6d-4c4d-8492-727381e40aa0",
-    "24a28133-2e01-4361-8b00-ad164f72336f",
-    "559f6024-64db-446e-a9dc-976582972dce",
+    "quotes_KQHqC3",
+    "slideshow_1_gkCmR9",
+    "custom_instagram_marquee_9nNhWw",
     "abb14abe-2a33-4a6b-aaa1-d36d5422d78d",
     "a035e328-7cfe-4cf0-81d0-e2f5f0188740",
-    "e07a205a-2023-4ca5-b589-a46cd70b3237"
+    "contact_form_c6XQpD",
+    "featured_articles_EKa8d9"
   ]
 }

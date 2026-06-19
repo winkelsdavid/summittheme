@@ -15,11 +15,7 @@
         "enable_short": true,
         "limit": 6,
         "sidebar_enable": false,
-        "sidebar_position": "right",
-        "paddingsection": "0px 0px 20px 0px",
-        "paddingmobile": "0px 0px 0px 0px",
-        "marginsection": "0px 0px 0px 0px",
-        "marginmobile": "0px 0px 0px 0px"
+        "sidebar_position": "right"
       }
     }
   },
