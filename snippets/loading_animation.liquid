@@ -108,13 +108,21 @@ transition:1s;
   {% if settings.loading_animation == "1" %}
   <div class="loader loader--image">
     <div class="loader__image__holder">
+      {%- if settings.loading_image != blank -%}
       <img src="{{ settings.loading_image | image_url: width: 400 }}" width="{{ settings.loading_image_size}}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
+      {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
     </div>
   </div>
   {% elsif  settings.loading_animation == "2" %}
     <div class="loader loader--image loader-image-2">
     <div class="loader__image__holder_2">
+      {%- if settings.loading_image != blank -%}
       <img src="{{ settings.loading_image | image_url: width: 400 }}" width="{{ settings.loading_image_size }}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
+      {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
     </div>
     <div class="preloader-indicator">
       <div class="indicator-wrapper">
@@ -125,7 +133,11 @@ transition:1s;
   {% else %}
      <div class="loader loader--image loader--image_3">
     <div class="loader__image__holder_3">
+      {%- if settings.loading_image != blank -%}
       <img src="{{ settings.loading_image | image_url: width: 400 }}" width="{{ settings.loading_image_size}}" height="auto" loading="eager" sizes="150px" fetchpriority="high" class="loader__image">
+      {%- else -%}
+      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
       <div class="loader_hider" style="background:{{ settings.loading_background }}"></div>
     </div>
     

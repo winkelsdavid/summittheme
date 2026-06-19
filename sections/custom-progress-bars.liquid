@@ -113,7 +113,11 @@ gap:10px;
         {% case block.type %}
             {% when "image" %}
                 <div class="progress_media">
+                {%- if block.settings.image != blank -%}
                 <img src="{{ block.settings.image | image_url: width: 5760 }}" loading='lazy' width="auto" height="auto" alt="progress media">
+                {%- else -%}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
                 </div>
             {% endcase %}
         {% endfor %}

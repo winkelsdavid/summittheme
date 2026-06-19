@@ -221,6 +221,8 @@
                   <div class="c_testimonial-reviewbox-user-info">
                     {% if block.settings.image != blank %}
                     <img src="{{ block.settings.image | image_url: width: 300 }}" height="auto" width="45" loading="lazy" alt="{{ block.settings.name }}">
+                    {% else %}
+                    <span class="c_testimonial-reviewbox-user-avatar">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</span>
                     {% endif %}
                     <div class="c_testimonial-reviewbox-user-info-text">
                       <span class="c_testimonial-reviewbox-user-info-name" style="color:{{ block.settings.name_color }}">{{ block.settings.name }}</span>

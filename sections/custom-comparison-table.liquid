@@ -339,6 +339,12 @@ border-top-right-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
                     <img src="{{ block.settings.image | image_url: width: 1000 }}" loading="lazy">
                   </div>
                 </div>
+              {% else %}
+                <div class="table_media">
+                  <div class="media_image {{ section.settings.image_ratio }} {{ section.settings.image-fit }}">
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                </div>
               {% endif %}
               {% if block.settings.heading != blank %}
                   <p>{{ block.settings.heading }}</p>

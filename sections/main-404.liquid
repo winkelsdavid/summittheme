@@ -4,9 +4,13 @@
       <div class=" text-center">
         <div class="page-404 d-flex flex-column align-items-center justify-content-center">
           {%- if section.settings.image_404 != blank -%}
-          <img class="lazyload mb-5" src="{{ section.settings.image_404 | image_url: width: 1, height: 1 }}" loading="lazy" width="{{ section.settings.image_404.width }}" 
+          <img class="lazyload mb-5" src="{{ section.settings.image_404 | image_url: width: 1, height: 1 }}" loading="lazy" width="{{ section.settings.image_404.width }}"
             height="{{ section.settings.image_404.height }}"
              data-src="{{ section.settings.image_404 | image_url: width: 1920 }}" alt="404 Image" />
+          {%- else -%}
+          <div class="mb-5">
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
           {%- endif -%}
           {%- if section.settings.heading_404 != blank -%}
           <h4 class="page-404--title h3 mb-2">{{ section.settings.heading_404 }}</h4>

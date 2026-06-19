@@ -114,7 +114,9 @@
                                   loading="lazy"
                                   width="{{ block.settings.image.width }}"
                                   height="{{ block.settings.image.height }}">
-                              {% endif %}  
+                              {% else %}
+                                <span class="image-content__image mr-2">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</span>
+                              {% endif %}
                               <div class="py-1 my-1 {{ section.settings.size_text }}">
                               {{ block.settings.content }} 
                               {% if block.settings.button_text != blank %} 
@@ -144,7 +146,9 @@
                   loading="lazy"
                   width="{{ block.settings.image.width }}"
                   height="{{ block.settings.image.height }}">
-              {% endif %}  
+              {% else %}
+                <span class="image-content__image mr-2">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</span>
+              {% endif %}
               {{ block.settings.content }} 
                 {% if block.settings.button_text != blank %} 
                 <a class="d-inline-block px-2 link" href="{{ block.settings.button_link }}">
