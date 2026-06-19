@@ -561,6 +561,43 @@ padding-top:4px!important;
           z-index:2;
         }
       }
+
+    /* === Split-Layout deterministisch (engine-unabhaengig) ===
+       Frueher: Bild position:absolute + Text float:right, Sichtbarkeit ueber
+       Swipers Init-Klasse — ein Slick-Erbe. Unter Swiper konnte das Bild ueber
+       die volle Breite laufen und die "Background Slide"-Farbe verdecken.
+       Stattdessen eine explizite Flex-Reihe: das Bild behaelt seine Breite,
+       der Text sitzt auf der bgwrap-Farbe. Auf {{ section.id }} gescoped, damit
+       Slideshow 1 unberuehrt bleibt.
+       Mobile (<750px) unveraendert: Bild fuellt den Slide oben, der mobile
+       Text-Wrap rendert darunter. */
+    @media only screen and (min-width: 750px) {
+      #Slideshow-{{ section.id }} .slideshow__slide {
+        display: flex;
+        align-items: stretch;
+      }
+      #Slideshow-{{ section.id }} .slideshow__slide.rightimage {
+        flex-direction: row-reverse;
+      }
+      #Slideshow-{{ section.id }} .slideshow__slide .slideshow__image {
+        position: relative;
+        left: auto;
+        right: auto;
+        flex: 0 0 var(--slideshow-width-image);
+        width: var(--slideshow-width-image);
+        max-width: var(--slideshow-width-image);
+        height: 100%;
+        opacity: 1;
+      }
+      #Slideshow-{{ section.id }} .slideshow__slide .slideshow__text-wrap--desktop {
+        position: relative;
+        float: none;
+        flex: 0 0 var(--slideshow-width-txt);
+        width: var(--slideshow-width-txt);
+        max-width: var(--slideshow-width-txt);
+        height: 100%;
+      }
+    }
     </style>
     <!-- slideshow-1.liquid -->
     {%- if section.settings.slideshow_height == 'adapt' -%}

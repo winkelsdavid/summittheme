@@ -2593,7 +2593,10 @@ theme.Slideshow = (function () {
     ) {
       this.textWrapperMobile.style.display = "none";
     } else {
-      this.textWrapperMobile.style.display = "";
+      // jQuery .show() forced an inline display:block. The vanilla port used
+      // "" here, which only reverts to the CSS rule (display:none) — so the
+      // mobile text panel below the image never reappeared. Force block.
+      this.textWrapperMobile.style.display = "block";
     }
     allTextContent.forEach(function (e) {
       e.style.display = "none";
