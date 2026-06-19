@@ -142,9 +142,6 @@
                     {%- if block.settings.title != blank -%}
                     <h3 class="mb-3 {{ block.settings.size_text }} ">{{ block.settings.title }}</h3>
                     {%- endif -%}
-                    {%- if block.settings.content -%}
-                      <div class="rte-setting">{{ block.settings.content }}</div>
-                    {%- endif -%}
                     {%- if block.settings.answer_content != blank -%}
                     {{ block.settings.answer_content }}
                     {%- endif -%}
@@ -560,11 +557,6 @@
             }
           ],
           "label": "Heading Size"
-        },
-        {
-          "type": "html",
-          "id": "content",
-          "label": "Description"
         },
         {
           "type": "richtext",
