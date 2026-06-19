@@ -632,18 +632,12 @@ display:none;
                     <div class="reviews_images_r">
                       {% if block.settings.image_1 != blank %}
                         <img src="{{ block.settings.image_1 | img_url:"100x" }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
-                      {% else %}
-                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                       {% endif  %}
                       {% if block.settings.image_2 != blank %}
                         <img src="{{ block.settings.image_2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
-                      {% else %}
-                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                       {% endif  %}
                       {% if block.settings.image_3 != blank %}
                         <img src="{{ block.settings.image_3 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
-                      {% else %}
-                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                       {% endif  %}
                     </div>
                     <div class="reviews_text">
