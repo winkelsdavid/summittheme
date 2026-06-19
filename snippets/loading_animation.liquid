@@ -72,7 +72,7 @@ gap:36px;
 .indicator-fill {
     width: 0%;
     height: 100%;
-    background-color: #b1e4e3; 
+    background-color: {{ settings.color_primary }};
     transition:.5s;
 }
 .loading-overlay_x.fading-out .indicator-fill{
@@ -104,7 +104,7 @@ transition:1s;
   transform-style: preserve-3d;
 }
 </style>
-<div class="loading-overlay_x" style="background:{% if settings.loading_animation == '2' %}{{ settings.color_primary }}{% else %}{{ settings.loading_background }}{% endif %}">
+<div class="loading-overlay_x" style="background:{{ settings.loading_background }}">
   {% if settings.loading_animation == "1" %}
   <div class="loader loader--image">
     <div class="loader__image__holder">
