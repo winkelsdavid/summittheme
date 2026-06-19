@@ -940,7 +940,7 @@
         "subtitle_top_color": "#fff2f4",
         "heading_color": "#fff2f4",
         "description_color": "#fff2f4",
-        "blog": "news",
+        "blog": "journal",
         "item_style": "blog-1",
         "enable_btn_blog": true,
         "style_btn": "btn-underline btn-underline-white",
