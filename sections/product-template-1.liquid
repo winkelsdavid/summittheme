@@ -1066,8 +1066,24 @@ display:none;
                       }
                 </style>
                 <div class="c_promo_c" id="choose_options" {{ block.shopify_attributes }}>
+                  {%- liquid
+                    assign cd_source = block.settings.countdown_source | default: 'global'
+                    if cd_source == 'global'
+                      assign cd_date = settings.gcd_date
+                      assign cd_set = settings.gcd_enable_set_to
+                      assign cd_hours = settings.gcd_set_to | default: '24'
+                      assign cd_action = settings.gcd_action_timer
+                      assign cd_key = 'kik_global_sale_start'
+                    else
+                      assign cd_date = block.settings.time
+                      assign cd_set = block.settings.set_to
+                      assign cd_hours = '24'
+                      assign cd_action = block.settings.action_timer
+                      assign cd_key = 'countdown_start_time'
+                    endif
+                  -%}
                   <div
-                    class="c_promo_code {% if block.settings.action_timer == "invisible" %} hide{% endif %}"
+                    class="c_promo_code {% if cd_action == "invisible" %} hide{% endif %}"
                     style="background:{% if block.settings.background != blank %}{{ block.settings.background }}{% else %} {{ settings.branding_color }} {% endif %}"
                   >
                     <div class="promo_c">
@@ -1091,11 +1107,13 @@ display:none;
                         </div>
                       </div>
                       <div class="promo_time">
-                        {% if block.settings.time != blank %}
+                        {% if cd_date != blank or cd_set %}
                           <div
                             class="kik_banner_timer {{ block.id}}"
-                            data-time="{{ block.settings.time | default: '2025-12-31T00:00:00Z' }}"
-                            data-set-to="{{ block.settings.set_to }}"
+                            data-time="{{ cd_date | default: '2025-12-31T00:00:00Z' }}"
+                            data-enable-set-to="{{ cd_set }}"
+                            data-set-hours="{{ cd_hours }}"
+                            data-storage-key="{{ cd_key }}"
                           >
                             <div id="countdown">
                               <ul>
@@ -1113,7 +1131,7 @@ display:none;
                       </div>
                     </div>
                   </div>
-                  {% if block.settings.time != blank %}
+                  {% if cd_date != blank or cd_set %}
                     <script>
                       document.addEventListener("DOMContentLoaded", function () {
                         initCountdown();
@@ -1123,70 +1141,76 @@ display:none;
                         });
 
                         function initCountdown() {
-                          const second_1 = 1000,
-                                minute_1 = second_1 * 60,
-                                hour_1 = minute_1 * 60,
-                                day_1 = hour_1 * 24;
+                          const ms_sec = 1000,
+                                ms_min = ms_sec * 60,
+                                ms_hr  = ms_min * 60,
+                                ms_day = ms_hr * 24;
 
-                          const STORAGE_KEY = "countdown_start_time";
                           const timerElement = document.querySelector(".kik_banner_timer.{{ block.id }}");
                           if (!timerElement) return;
 
-                          const setTo = timerElement.getAttribute("data-set-to") === "true";
-                          let birthday_1;
+                          const isEnabledSetTo = timerElement.getAttribute("data-enable-set-to") === "true";
+                          const hoursToSet     = parseInt(timerElement.getAttribute("data-set-hours")) || 24;
+                          // Shared key when following the global Sale Countdown -> stays in sync with the
+                          // top bar & Count Down section. Custom mode keeps its own ("countdown_start_time").
+                          const STORAGE_KEY    = timerElement.getAttribute("data-storage-key") || "countdown_start_time";
+
                           let countDown_1;
-
-                          if (setTo) {
+                          if (isEnabledSetTo) {
                             const storedTime = localStorage.getItem(STORAGE_KEY);
-
+                            let startTime;
                             if (storedTime) {
-                              birthday_1 = new Date(parseInt(storedTime)).toISOString();
+                              startTime = parseInt(storedTime);
                             } else {
-                              const now = new Date().getTime();
-                              localStorage.setItem(STORAGE_KEY, now);
-                              birthday_1 = new Date(now).toISOString();
+                              startTime = new Date().getTime();
+                              localStorage.setItem(STORAGE_KEY, startTime);
                             }
-
-                            countDown_1 = new Date(birthday_1).getTime() + day_1;
+                            countDown_1 = startTime + (hoursToSet * ms_hr);
                           } else {
-                            birthday_1 = timerElement.getAttribute("data-time") || "2025-12-31T00:00:00Z";
-                            countDown_1 = new Date(birthday_1).getTime();
+                            const rawDate = timerElement.getAttribute("data-time") || "2025-12-31T00:00:00Z";
+                            countDown_1 = new Date(rawDate).getTime();
                           }
 
-                          if (window.countdownInterval_1) {
-                            clearInterval(window.countdownInterval_1);
+                          if (window.countdownInterval_{{ block.id | replace: '-', '_' }}) {
+                            clearInterval(window.countdownInterval_{{ block.id | replace: '-', '_' }});
                           }
-
-                          window.countdownInterval_1 = setInterval(updateCountdown, 1000);
 
                           function updateCountdown() {
                             const now_1 = new Date().getTime();
                             let distance_1 = countDown_1 - now_1;
 
                             if (distance_1 < 1) {
-                              {% if block.settings.action_timer == "resets_itself" %}
+                              {% if cd_action == "resets_itself" %}
                                 const nowReset = new Date().getTime();
                                 localStorage.setItem(STORAGE_KEY, nowReset);
-                                countDown_1 = nowReset + day_1;
+                                countDown_1 = nowReset + (hoursToSet * ms_hr);
                                 distance_1 = countDown_1 - nowReset;
+                              {% else %}
+                                timerElement.style.display = "none";
+                                document.querySelector(".c_promo_code")?.classList.add("hide");
+                                clearInterval(window.countdownInterval_{{ block.id | replace: '-', '_' }});
+                                return;
                               {% endif %}
                             } else {
                               document.querySelector(".c_promo_code")?.classList.remove("hide");
                             }
 
                             timerElement.querySelectorAll(".days").forEach(item => {
-                              item.innerText = Math.floor(distance_1 / day_1);
+                              item.innerText = Math.floor(distance_1 / ms_day);
                             });
                             timerElement.querySelectorAll(".hours").forEach(item => {
-                              item.innerText = Math.floor((distance_1 % day_1) / hour_1);
+                              item.innerText = Math.floor((distance_1 % ms_day) / ms_hr);
                             });
                             timerElement.querySelectorAll(".minutes").forEach(item => {
-                              item.innerText = Math.floor((distance_1 % hour_1) / minute_1);
+                              item.innerText = Math.floor((distance_1 % ms_hr) / ms_min);
                             });
                             timerElement.querySelectorAll(".seconds").forEach(item => {
-                              item.innerText = Math.floor((distance_1 % minute_1) / second_1);
+                              item.innerText = Math.floor((distance_1 % ms_min) / ms_sec);
                             });
                           }
+
+                          window.countdownInterval_{{ block.id | replace: '-', '_' }} = setInterval(updateCountdown, 1000);
+                          updateCountdown();
                         }
                       });
                     </script>
@@ -4427,6 +4451,17 @@ function formatPrice(value) {
           "type": "text",
           "id": "subtitle",
           "label": "Content"
+        },
+        {
+          "type": "select",
+          "id": "countdown_source",
+          "label": "Countdown Source",
+          "default": "global",
+          "info": "Global = store-wide Sale Countdown (Theme Settings → Sale Countdown). Custom = use the fields below.",
+          "options": [
+            { "value": "global", "label": "Global (Theme Settings)" },
+            { "value": "custom", "label": "Custom (this block)" }
+          ]
         },
         {
           "type": "text",

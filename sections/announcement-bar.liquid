@@ -200,6 +200,22 @@
                 </div>
                 </div>
                 {%- endif -%}
+                {%- liquid
+                  assign cd_source = section.settings.countdown_source | default: 'global'
+                  if cd_source == 'global'
+                    assign cd_date = settings.gcd_date
+                    assign cd_set = settings.gcd_enable_set_to
+                    assign cd_hours = settings.gcd_set_to | default: '24'
+                    assign cd_action = settings.gcd_action_timer
+                    assign cd_key = 'kik_global_sale_start'
+                  else
+                    assign cd_date = section.settings.data_countdown
+                    assign cd_set = section.settings.enable_set_to
+                    assign cd_hours = section.settings.set_to | default: '24'
+                    assign cd_action = section.settings.action_timer
+                    assign cd_key = 'kik_sales_timer_start_' | append: cd_hours | append: 'h'
+                  endif
+                -%}
                 <div class="col-4 col-right text-right d-none d-lg-flex justify-content-end">
                   {%- if enable_countdown -%}
                   <div class="topbar-block d-flex">
@@ -210,12 +226,13 @@
                     <countdown-timer class="countdown-timer countdown-item" data-time="{{ section.settings.data_countdown }}"></countdown-timer> 
                     {% endcomment %}
                     <div class="promo_announcement">
-                        {% if section.settings.data_countdown != blank %}
+                        {% if cd_date != blank or cd_set %}
                           <div
                             class="kik_banner_timer_an {{ section.id }}"
-                            data-time="{{ section.settings.data_countdown }}"
-                            data-enable-set-to="{{ section.settings.enable_set_to }}"
-                            data-set-hours="{{ section.settings.set_to | default: '24' }}"
+                            data-time="{{ cd_date }}"
+                            data-enable-set-to="{{ cd_set }}"
+                            data-set-hours="{{ cd_hours }}"
+                            data-storage-key="{{ cd_key }}"
                           >
                             <div id="countdown">
                               <ul>
@@ -250,7 +267,7 @@
     </div>
   </div>
 </announcement-bar>
-{% if section.settings.data_countdown != blank %}
+{% if cd_date != blank or cd_set %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     kik_lp_init_timer();
@@ -273,7 +290,7 @@
       const hoursToSet = parseInt(timerWrapper.getAttribute("data-set-hours")) || 24;
       // Shared store-wide key derived from the hours value: every "Set to Nh" timer
       // (announcement-bar + count-down) shares ONE start timestamp -> they stay in sync.
-      const STORAGE_KEY_UNIQUE = "kik_sales_timer_start_" + hoursToSet + "h";
+      const STORAGE_KEY_UNIQUE = timerWrapper.getAttribute("data-storage-key") || ("kik_sales_timer_start_" + hoursToSet + "h");
       
       let targetTimestamp;
 
@@ -304,7 +321,7 @@
         let gap = targetTimestamp - currentTime;
 
         if (gap < 0) {
-          {% if section.settings.action_timer == "resets_itself" %}
+          {% if cd_action == "resets_itself" %}
             const newNow = new Date().getTime();
             localStorage.setItem(STORAGE_KEY_UNIQUE, newNow);
             targetTimestamp = newNow + (hoursToSet * ms_hr);
@@ -644,6 +661,17 @@
           "id": "enable_countdown",
           "label": "Enable Countdown",
           "default": false
+        },
+        {
+          "type": "select",
+          "id": "countdown_source",
+          "label": "Countdown Source",
+          "default": "global",
+          "info": "Global = store-wide Sale Countdown (Theme Settings → Sale Countdown). Custom = use the fields below.",
+          "options": [
+            { "value": "global", "label": "Global (Theme Settings)" },
+            { "value": "custom", "label": "Custom (this section)" }
+          ]
         },
         {
           "type": "text",

@@ -126,13 +126,30 @@
                   {% comment %}
                   <countdown-timer class="countdown-timer countdown-item" data-time="{{ section.settings.data_countdown }}"></countdown-timer>
                   {% endcomment %}
+                  {%- liquid
+                    assign cd_source = section.settings.countdown_source | default: 'global'
+                    if cd_source == 'global'
+                      assign cd_date = settings.gcd_date
+                      assign cd_set = settings.gcd_enable_set_to
+                      assign cd_hours = settings.gcd_set_to | default: '24'
+                      assign cd_action = settings.gcd_action_timer
+                      assign cd_key = 'kik_global_sale_start'
+                    else
+                      assign cd_date = section.settings.data_countdown
+                      assign cd_set = section.settings.enable_set_to
+                      assign cd_hours = section.settings.set_to | default: '24'
+                      assign cd_action = section.settings.action_timer
+                      assign cd_key = 'kik_sales_timer_start_' | append: cd_hours | append: 'h'
+                    endif
+                  -%}
                   <div class="countdown_announcement">
-                    {% if section.settings.data_countdown != blank %}
+                    {% if cd_date != blank or cd_set %}
                       <div
                         class="kik_hero_timer_an {{ section.id }}"
-                        data-time="{{ section.settings.data_countdown }}"
-                        data-enable-set-to="{{ section.settings.enable_set_to }}"
-                        data-set-hours="{{ section.settings.set_to | default: '24' }}"
+                        data-time="{{ cd_date }}"
+                        data-enable-set-to="{{ cd_set }}"
+                        data-set-hours="{{ cd_hours }}"
+                        data-storage-key="{{ cd_key }}"
                       >
                         <div id="hero_countdown" class="countdown-item">
                           <ul class=list--inline>
@@ -158,7 +175,7 @@
 {%- if bg_full -%}
   </div>
 {%- endif -%}
-{% if section.settings.data_countdown != blank %}
+{% if cd_date != blank or cd_set %}
 <script>
   // 1. Core initialization function
   function kik_hero_init_timer() {
@@ -175,7 +192,7 @@
     const hoursToSet     = parseInt(timerWrapper.getAttribute("data-set-hours")) || 24;
     // Shared store-wide key derived from the hours value: every "Set to Nh" timer
     // (count-down + announcement-bar) shares ONE start timestamp -> they stay in sync.
-    const HERO_STORAGE_KEY = "kik_sales_timer_start_" + hoursToSet + "h";
+    const HERO_STORAGE_KEY = timerWrapper.getAttribute("data-storage-key") || ("kik_sales_timer_start_" + hoursToSet + "h");
 
     let targetTimestamp;
 
@@ -204,7 +221,7 @@
       let gap = targetTimestamp - currentTime;
 
       if (gap < 0) {
-        {% if section.settings.action_timer == "resets_itself" %}
+        {% if cd_action == "resets_itself" %}
           const newNow = new Date().getTime();
           localStorage.setItem(HERO_STORAGE_KEY, newNow);
           targetTimestamp = newNow + (hoursToSet * ms_hr);
@@ -487,6 +504,17 @@
       "type": "textarea",
       "id": "description",
       "label": "Description"
+    },
+    {
+      "type": "select",
+      "id": "countdown_source",
+      "label": "Countdown Source",
+      "default": "global",
+      "info": "Global = store-wide Sale Countdown (Theme Settings → Sale Countdown). Custom = use the fields below.",
+      "options": [
+        { "value": "global", "label": "Global (Theme Settings)" },
+        { "value": "custom", "label": "Custom (this section)" }
+      ]
     },
     {
       "type": "text",

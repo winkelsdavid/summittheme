@@ -3483,6 +3483,51 @@
     ]
   },
   {
+    "name": "Sale Countdown ⏳",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Store-wide countdown timing. Sections set to 'Global' (Top Bar, Count Down section, Product Promo Sale) all read these values, so they stay in sync. Switch a section to 'Custom' to override it locally."
+      },
+      {
+        "type": "text",
+        "id": "gcd_date",
+        "label": "End Date / Time",
+        "default": "2026-12-11T00:00:00",
+        "info": "Format: 2026-12-11T00:00:00 (used when 'Evergreen' is off)"
+      },
+      {
+        "type": "checkbox",
+        "id": "gcd_enable_set_to",
+        "label": "Evergreen (rolling per visitor)",
+        "default": true,
+        "info": "Each visitor gets a fresh window counting down from the duration below, instead of a fixed end date."
+      },
+      {
+        "type": "select",
+        "id": "gcd_set_to",
+        "label": "Set To",
+        "default": "24",
+        "options": [
+          { "value": "24", "label": "24 Hours" },
+          { "value": "48", "label": "48 Hours" },
+          { "value": "72", "label": "3 Days" },
+          { "value": "168", "label": "7 Days" }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "gcd_action_timer",
+        "label": "Action After Timer",
+        "default": "resets_itself",
+        "options": [
+          { "value": "invisible", "label": "Turns Invisible" },
+          { "value": "resets_itself", "label": "Resets Itself" }
+        ]
+      }
+    ]
+  },
+  {
     "name": "WhatsApp",
     "settings": [
       {
