@@ -10,6 +10,9 @@
   assign enable_short = section.settings.enable_short
   assign text_color = section.settings.title_color
   assign style_btn = section.settings.style_btn
+  assign blog_gap = section.settings.gutter_padding | default: 30
+  assign per_lg = section.settings.show | plus: 0 | at_least: 1
+  assign per_md = per_lg | minus: 1 | at_least: 1
   
 -%}
 <style>
@@ -65,6 +68,37 @@
       padding-top: 100% !important;
     }
   }
+  /* --- Native scroll-snap Slider (Swiper-frei, P6) --- */
+  .blogscroll-wrap-{{ section.id }}{ position: relative; }
+  .blogscroll-{{ section.id }}{
+    display: flex; gap: {{ blog_gap }}px;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; -ms-overflow-style: none;
+    --per: 1;
+  }
+  .blogscroll-{{ section.id }}::-webkit-scrollbar{ display: none; }
+  @media (min-width: 768px){ .blogscroll-{{ section.id }}{ --per: {{ per_md }}; } }
+  @media (min-width: 1200px){ .blogscroll-{{ section.id }}{ --per: {{ per_lg }}; } }
+  .blogscroll-{{ section.id }} > .blogscroll-slide{
+    flex: 0 0 calc((100% - (var(--per) - 1) * {{ blog_gap }}px) / var(--per));
+    max-width: calc((100% - (var(--per) - 1) * {{ blog_gap }}px) / var(--per));
+    scroll-snap-align: start; min-width: 0;
+  }
+  .blogscroll-wrap-{{ section.id }} .blogscroll-arrow{
+    position: absolute; top: 28%; transform: translateY(-50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; color: #111; border: 0; cursor: pointer;
+    box-shadow: 0 2px 14px rgba(0,0,0,.18); z-index: 6;
+  }
+  .blogscroll-prev-{{ section.id }}{ left: -10px; }
+  .blogscroll-next-{{ section.id }}{ right: -10px; }
+  .blogscroll-wrap-{{ section.id }} .blogscroll-arrow svg{ width: 16px; height: 16px; }
+  .blogscroll-dots-{{ section.id }}{ display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+  .blogscroll-dots-{{ section.id }} button{ width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: currentColor; opacity: .25; cursor: pointer; }
+  .blogscroll-dots-{{ section.id }} button.is-active{ opacity: 1; }
 </style>
 
 <div class="customstyle{{ section.id }} blog-section{{section.id}}" data-aos="{{ section.settings.animation }}">
@@ -72,65 +106,81 @@
 <div class="{{ section.settings.section_width }}">
   <div class="section-block">
     {%- render 'section-heading' -%}
-    <div class="bloglist-wrapper dots-negative " data-aos="{{ section.settings.animation }}">
-      <div class="bloglist-slider swiper row" id="Bloglist-{{ section.id }}"
-           data-rows="{{ section.settings.rows }}"
-           data-slidesToShow="{{ section.settings.show }}"
-           data-arrows="{{ section.settings.arrows }}"
-           data-dots="{{ section.settings.dots }}" 
-           data-draggable="{{ section.settings.draggable }}" 
-           data-infinite="{{ section.settings.infinite }}" 
-           data-section-id="{{ section.id }}" 
-           data-section-type="slickCarousels">
-        <div class="swiper-wrapper">
+    <div class="bloglist-wrapper dots-negative blogscroll-wrap-{{ section.id }}">
+      <div class="bloglist-slider blogscroll-{{ section.id }}" id="Bloglist-{{ section.id }}" data-section-id="{{ section.id }}">
         {%- assign blog = blogs[section.settings.blog] -%}
         {%- assign limit = section.settings.limit -%}
         {%- if blog != blank -%}
-        {%- for article in blog.articles limit: limit -%}
-        <div class="bloglist-item swiper-slide col">
-          <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
-            {%- liquid
-              case section.settings.item_style
-              when 'blog-1'
-                render 'blog-grid-1', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short, style_btn: style_btn, text_color: text_color
-              when 'blog-3'
-                render 'blog-grid-3', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short
-              when 'blog-5'
-                render 'blog-grid-5', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short, style_btn: style_btn
-              when 'blog-6'
-                render 'blog-grid-6', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short, enable_short, style_btn: style_btn
-              when 'blog-7'
-                render 'blog-grid-7', article : article, image_size : image_size, enable_btn_blog : enable_btn_blog, enable_btn_line: enable_btn_line, enable_date : enable_date, enable_tag : enable_tag, enable_comment: enable_comment, enable_short : enable_short, enable_short, style_btn: style_btn
-              else
-                render 'blog-grid-blank'
-              endcase
-            -%}
-          </div>
-        </div>
-        {%- endfor -%}
+          {%- for article in blog.articles limit: limit -%}
+            <div class="bloglist-item blogscroll-slide"><div>
+              {%- liquid
+                case section.settings.item_style
+                when 'blog-1'
+                  render 'blog-grid-1', article: article, image_size: image_size, enable_btn_blog: enable_btn_blog, enable_btn_line: enable_btn_line, enable_date: enable_date, enable_tag: enable_tag, enable_comment: enable_comment, enable_short: enable_short, style_btn: style_btn, text_color: text_color
+                when 'blog-3'
+                  render 'blog-grid-3', article: article, image_size: image_size, enable_btn_blog: enable_btn_blog, enable_btn_line: enable_btn_line, enable_date: enable_date, enable_tag: enable_tag, enable_comment: enable_comment, enable_short: enable_short
+                when 'blog-5'
+                  render 'blog-grid-5', article: article, image_size: image_size, enable_btn_blog: enable_btn_blog, enable_btn_line: enable_btn_line, enable_date: enable_date, enable_tag: enable_tag, enable_comment: enable_comment, enable_short: enable_short, style_btn: style_btn
+                when 'blog-6'
+                  render 'blog-grid-6', article: article, image_size: image_size, enable_btn_blog: enable_btn_blog, enable_btn_line: enable_btn_line, enable_date: enable_date, enable_tag: enable_tag, enable_comment: enable_comment, enable_short: enable_short, style_btn: style_btn
+                when 'blog-7'
+                  render 'blog-grid-7', article: article, image_size: image_size, enable_btn_blog: enable_btn_blog, enable_btn_line: enable_btn_line, enable_date: enable_date, enable_tag: enable_tag, enable_comment: enable_comment, enable_short: enable_short, style_btn: style_btn
+                else
+                  render 'blog-grid-blank'
+                endcase
+              -%}
+            </div></div>
+          {%- endfor -%}
         {%- else -%}
-        {%- for i in (1..limit) -%}
-        <div class="bloglist-item swiper-slide col">
-          <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
-          {%- render 'blog-grid-blank' -%}
-        </div>
-        </div>
-        {%- endfor -%}
-        {%- endif -%}
-        </div>
-        {%- if section.settings.arrows -%}
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        {%- endif -%}
-        {%- if section.settings.dots -%}
-          <div class="swiper-pagination"></div>
+          {%- for i in (1..limit) -%}
+            <div class="bloglist-item blogscroll-slide"><div>{%- render 'blog-grid-blank' -%}</div></div>
+          {%- endfor -%}
         {%- endif -%}
       </div>
+      {%- if section.settings.arrows -%}
+        <button type="button" class="blogscroll-arrow blogscroll-prev-{{ section.id }}" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+        <button type="button" class="blogscroll-arrow blogscroll-next-{{ section.id }}" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+      {%- endif -%}
+      {%- if section.settings.dots -%}
+        <div class="blogscroll-dots-{{ section.id }}"></div>
+      {%- endif -%}
     </div>
   </div>
 </div>
 </div>
 
+<script>
+(function(){
+  var sc = document.getElementById('Bloglist-{{ section.id }}');
+  if(!sc || sc.dataset.snapInit) return;
+  sc.dataset.snapInit = '1';
+  var wrap = sc.closest('.blogscroll-wrap-{{ section.id }}') || sc.parentNode;
+  function step(){ var s = sc.querySelector('.blogscroll-slide'); var g = parseFloat(getComputedStyle(sc).columnGap) || 0; return s ? s.getBoundingClientRect().width + g : sc.clientWidth; }
+  var prev = wrap.querySelector('.blogscroll-prev-{{ section.id }}');
+  var next = wrap.querySelector('.blogscroll-next-{{ section.id }}');
+  if(prev){ prev.addEventListener('click', function(){ sc.scrollBy({ left: -step(), behavior: 'smooth' }); }); }
+  if(next){ next.addEventListener('click', function(){ sc.scrollBy({ left: step(), behavior: 'smooth' }); }); }
+  var dotsWrap = wrap.querySelector('.blogscroll-dots-{{ section.id }}');
+  if(dotsWrap){
+    dotsWrap.innerHTML = '';
+    var slides = [].slice.call(sc.querySelectorAll('.blogscroll-slide'));
+    slides.forEach(function(sl, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'Slide ' + (i + 1));
+      b.addEventListener('click', function(){ sc.scrollTo({ left: sl.offsetLeft - sc.offsetLeft, behavior: 'smooth' }); });
+      dotsWrap.appendChild(b);
+    });
+    var dots = [].slice.call(dotsWrap.querySelectorAll('button'));
+    var sync = function(){
+      var x = sc.scrollLeft, best = 0, bd = Infinity;
+      slides.forEach(function(sl, i){ var d = Math.abs((sl.offsetLeft - sc.offsetLeft) - x); if(d < bd){ bd = d; best = i; } });
+      dots.forEach(function(d, i){ d.classList.toggle('is-active', i === best); });
+    };
+    sc.addEventListener('scroll', function(){ requestAnimationFrame(sync); });
+    sync();
+  }
+})();
+</script>
 {% schema %}
 {
   "name": "Blog Posts",
