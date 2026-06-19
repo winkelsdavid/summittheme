@@ -2940,7 +2940,9 @@ theme.slickCarousel = (function () {
       loop: !!s.infinite,
       speed: s.speed || 500,
       grabCursor: !!s.draggable,
-      autoHeight: true,
+      // autoHeight: false fuer Multi-Slide-Grids - true clippte die Karten auf
+      // die Bildhoehe des aktiven Slides (Titel/Excerpt/Button unter dem Bild weg).
+      autoHeight: false,
       autoplay: s.autoplay ? { delay: s.autoplaySpeed || 4000, disableOnInteraction: false } : false,
       a11y: { enabled: !!s.accessibility },
       breakpoints: {
