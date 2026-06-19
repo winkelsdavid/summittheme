@@ -2952,6 +2952,10 @@ theme.slickCarousel = (function () {
     };
     if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
     if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
+    // Swiper-6-Loop braucht >= 2x slidesPerView Slides, sonst vergibt es 0px-Slide-Breiten -> Karten kollabieren.
+    // Bei zu wenigen Slides Loop deaktivieren statt kaputtem Layout. Greift generisch fuer alle 9 migrierten Carousels.
+    var slideCount = el.querySelectorAll(".swiper-slide").length;
+    opts.loop = !!s.infinite && slideCount >= s.slidesToShow * 2;
     el.style.opacity = "1";
     this.swiper = window.Swiper ? new Swiper(el, opts) : null;
 
