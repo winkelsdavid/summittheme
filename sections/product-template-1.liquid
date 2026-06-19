@@ -1067,20 +1067,11 @@ display:none;
                 </style>
                 <div class="c_promo_c" id="choose_options" {{ block.shopify_attributes }}>
                   {%- liquid
-                    assign cd_source = block.settings.countdown_source | default: 'global'
-                    if cd_source == 'global'
-                      assign cd_date = settings.gcd_date
-                      assign cd_set = settings.gcd_enable_set_to
-                      assign cd_hours = settings.gcd_set_to | default: '24'
-                      assign cd_action = settings.gcd_action_timer
-                      assign cd_key = 'kik_global_sale_start'
-                    else
-                      assign cd_date = block.settings.time
-                      assign cd_set = block.settings.set_to
-                      assign cd_hours = '24'
-                      assign cd_action = block.settings.action_timer
-                      assign cd_key = 'countdown_start_time'
-                    endif
+                    assign cd_date = settings.gcd_date
+                    assign cd_set = settings.gcd_enable_set_to
+                    assign cd_hours = settings.gcd_set_to | default: '24'
+                    assign cd_action = settings.gcd_action_timer
+                    assign cd_key = 'kik_global_sale_start'
                   -%}
                   <div
                     class="c_promo_code {% if cd_action == "invisible" %} hide{% endif %}"
@@ -4453,42 +4444,8 @@ function formatPrice(value) {
           "label": "Content"
         },
         {
-          "type": "select",
-          "id": "countdown_source",
-          "label": "Countdown Source",
-          "default": "global",
-          "info": "Global = store-wide Sale Countdown (Theme Settings → Sale Countdown). Custom = use the fields below.",
-          "options": [
-            { "value": "global", "label": "Global (Theme Settings)" },
-            { "value": "custom", "label": "Custom (this block)" }
-          ]
-        },
-        {
-          "type": "text",
-          "id": "time",
-          "label": "Promo End Date",
-          "info": "January 1, 2000 00:00:00"
-        },
-        {
-          "type": "checkbox",
-          "id": "set_to",
-          "label": "Set To 24 Hours"
-        },
-        {
-          "type": "select",
-          "id": "action_timer",
-          "label": "Action After Timer",
-          "default": "invisible",
-          "options": [
-            {
-              "value": "invisible",
-              "label": "Turns Invisible"
-            },
-            {
-              "value": "resets_itself",
-              "label": "Resets Itself"
-            }
-          ]
+          "type": "paragraph",
+          "content": "⏱ Countdown timing (date / duration / action) is configured globally in Theme Settings → Sale Countdown — shared with the Top Bar and the Count Down section."
         },
         {
           "type": "range",

@@ -3512,7 +3512,8 @@
           { "value": "24", "label": "24 Hours" },
           { "value": "48", "label": "48 Hours" },
           { "value": "72", "label": "3 Days" },
-          { "value": "168", "label": "7 Days" }
+          { "value": "168", "label": "7 Days" },
+          { "value": "720", "label": "30 Days" }
         ]
       },
       {

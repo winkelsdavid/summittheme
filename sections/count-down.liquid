@@ -123,24 +123,12 @@
                     {%- endif -%}
                 </div>
                 <div class="col-lg-7 col-12 d-flex align-items-center {% if section.settings.e_button %} justify-content-between {% else %} justify-content-center {% endif %} mt-lg-0 mt-4 flex-lg-row flex-column">
-                  {% comment %}
-                  <countdown-timer class="countdown-timer countdown-item" data-time="{{ section.settings.data_countdown }}"></countdown-timer>
-                  {% endcomment %}
                   {%- liquid
-                    assign cd_source = section.settings.countdown_source | default: 'global'
-                    if cd_source == 'global'
-                      assign cd_date = settings.gcd_date
-                      assign cd_set = settings.gcd_enable_set_to
-                      assign cd_hours = settings.gcd_set_to | default: '24'
-                      assign cd_action = settings.gcd_action_timer
-                      assign cd_key = 'kik_global_sale_start'
-                    else
-                      assign cd_date = section.settings.data_countdown
-                      assign cd_set = section.settings.enable_set_to
-                      assign cd_hours = section.settings.set_to | default: '24'
-                      assign cd_action = section.settings.action_timer
-                      assign cd_key = 'kik_sales_timer_start_' | append: cd_hours | append: 'h'
-                    endif
+                    assign cd_date = settings.gcd_date
+                    assign cd_set = settings.gcd_enable_set_to
+                    assign cd_hours = settings.gcd_set_to | default: '24'
+                    assign cd_action = settings.gcd_action_timer
+                    assign cd_key = 'kik_global_sale_start'
                   -%}
                   <div class="countdown_announcement">
                     {% if cd_date != blank or cd_set %}
@@ -506,68 +494,9 @@
       "label": "Description"
     },
     {
-      "type": "select",
-      "id": "countdown_source",
-      "label": "Countdown Source",
-      "default": "global",
-      "info": "Global = store-wide Sale Countdown (Theme Settings → Sale Countdown). Custom = use the fields below.",
-      "options": [
-        { "value": "global", "label": "Global (Theme Settings)" },
-        { "value": "custom", "label": "Custom (this section)" }
-      ]
+      "type": "paragraph",
+      "content": "⏱ Countdown timing (date / duration / action) is configured globally in Theme Settings → Sale Countdown — shared with the Top Bar and the product Promo Sale."
     },
-    {
-      "type": "text",
-      "id": "data_countdown",
-      "label": "Time Count Down",
-      "default": "2026-12-11T00:00:00",
-      "info": "2025-05-11T00:00:00"
-    },
-    {
-          "type": "checkbox",
-          "id": "enable_set_to",
-          "label": "Enable Set To"
-        },
-        {
-          "type": "select",
-          "id": "set_to",
-          "label": "Set To",
-          "default": "24",
-          "options": [
-            {
-              "value": "24",
-              "label": "24 Hours"
-            },
-            {
-              "value": "48",
-              "label": "48 Hours"
-            },
-            {
-              "value": "72",
-              "label": "3 Days"
-            },
-             {
-              "value": "168",
-              "label": "7 Days"
-            }
-          ]
-        },
-        {
-          "type": "select",
-          "id": "action_timer",
-          "label": "Action After Timer",
-          "default": "invisible",
-          "options": [
-            {
-              "value": "invisible",
-              "label": "Turns Invisible"
-            },
-            {
-              "value": "resets_itself",
-              "label": "Resets Itself"
-            }
-          ]
-        },
     {
       "type": "checkbox",
       "id": "e_button",
