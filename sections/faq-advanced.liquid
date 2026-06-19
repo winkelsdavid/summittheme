@@ -135,6 +135,12 @@ stroke:currentColor;
 .accordion[open] .accordion__content-wrapper {
   grid-template-rows: 1fr;
 }
+/* grid child must be allowed to shrink below its content size so the
+   grid-template-rows 0fr<->1fr animation actually collapses/expands */
+.accordion__content {
+  min-height: 0;
+  overflow: hidden;
+}
 
 .accordion__content .prose {
   padding-bottom: 20px;
@@ -264,6 +270,68 @@ max-width: {{  section.settings.team_image_width_mobile }}px;
   </div>
   </div>
 </div>
+
+<script>
+  (function () {
+    var root = document.getElementById('custom-faq-{{ section.id }}');
+    if (!root || root.dataset.faqInit) return;
+    root.dataset.faqInit = '1';
+
+    // Native <details> removes its content from rendering the instant it closes,
+    // so a pure-CSS grid-template-rows transition can only ever fire once and
+    // snaps afterwards. We drive the toggle ourselves: keep the element open
+    // while the close animation runs, then commit the state at transition end.
+    function onRowsEnd(wrapper, cb) {
+      var done = false;
+      function finish() {
+        if (done) return;
+        done = true;
+        wrapper.removeEventListener('transitionend', te);
+        clearTimeout(timer);
+        cb();
+      }
+      function te(ev) {
+        if (ev.target === wrapper && ev.propertyName === 'grid-template-rows') finish();
+      }
+      wrapper.addEventListener('transitionend', te);
+      var timer = setTimeout(finish, 450); // fallback if transitionend never fires
+    }
+
+    root.querySelectorAll('details.accordion').forEach(function (details) {
+      var summary = details.querySelector('summary.accordion__summary');
+      var wrapper = details.querySelector('.accordion__content-wrapper');
+      if (!summary || !wrapper) return;
+
+      summary.addEventListener('click', function (e) {
+        e.preventDefault(); // stop the native instant open/close
+        if (details.dataset.animating) return;
+        details.dataset.animating = '1';
+
+        if (details.open) {
+          // CLOSE: content is still rendered (open stays true) -> 1fr animates to 0fr
+          wrapper.style.gridTemplateRows = '1fr';
+          requestAnimationFrame(function () { wrapper.style.gridTemplateRows = '0fr'; });
+          onRowsEnd(wrapper, function () {
+            details.open = false;
+            wrapper.style.gridTemplateRows = '';
+            delete details.dataset.animating;
+          });
+        } else {
+          // OPEN: render first, then animate 0fr -> 1fr
+          details.open = true;
+          wrapper.style.gridTemplateRows = '0fr';
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () { wrapper.style.gridTemplateRows = '1fr'; });
+          });
+          onRowsEnd(wrapper, function () {
+            wrapper.style.gridTemplateRows = '';
+            delete details.dataset.animating;
+          });
+        }
+      });
+    });
+  })();
+</script>
 
 {% schema %}
 {
