@@ -60,6 +60,18 @@
   .wt-video__movie svg{
     aspect-ratio: 3/4;
   }
+  /* Media fills its (Swiper-equalised) slide box without distortion -> fixes the
+     squish, and gives the placeholder svg a definite size so it shows. No forced
+     container aspect-ratio, so slide height/shape stays exactly as before.
+     Direct-child (>) keeps the inline video control-icon svgs untouched. */
+  .customstyle{{ section.id }} .wt-video__movie > img,
+  .customstyle{{ section.id }} .wt-video__movie > video,
+  .customstyle{{ section.id }} .wt-video__movie > svg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
   .kik_video_item,
   .c_video_content,
   .video_item_image_text,
