@@ -19,7 +19,21 @@
     padding-bottom:{{ section.settings.padding_bottom }}px;
   }
   .customstyle{{ section.id }} .wt-video__movie{
-    height:100%;
+    height:auto;
+    aspect-ratio: 3/4;
+  }
+  /* Every slide medium (image / video / placeholder svg) fills the fixed-ratio
+     box identically -> images crop with object-fit:cover instead of squishing,
+     and the placeholder svg gets a definite size so it actually shows.
+     Direct-child (>) so the inline video control-icon svgs are untouched. */
+  .customstyle{{ section.id }} .wt-video__movie > img,
+  .customstyle{{ section.id }} .wt-video__movie > video,
+  .customstyle{{ section.id }} .wt-video__movie > svg{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
   }
   /*.custom_shoppable_video video,
   .custom_shoppable_video img,
@@ -53,13 +67,8 @@
     
   }
   .wt-video__movie{
-  height:100%;
   {% if settings.enable_radius_allimg %}border-radius:calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
   overflow:hidden;
-  }
-  .wt-video__movie svg{
-    width: 100%;
-    aspect-ratio: 3/4;
   }
   .kik_video_item,
   .c_video_content,
