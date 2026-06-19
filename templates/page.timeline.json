@@ -1,0 +1,154 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {}
+    },
+    "c96b8168-4d48-43d1-aeea-c7ab9ce67cb9": {
+      "type": "timeline",
+      "blocks": {
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-1": {
+          "type": "milestone",
+          "settings": {
+            "bg": "#e4ffdf",
+            "title": "A small business in Aarhus",
+            "description": "What began in 1997 as an independent retail business in Aarhus, Denmark, has since developed into an international fashion brand. Minimum arose from the common desire to design clothes that are accessible and yet fashionable, that impress down to the last detail and that are of the right quality and fit.",
+            "time": "Jan 04",
+            "year": "1920",
+            "link": "shopify://collections/all"
+          }
+        },
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-2": {
+          "type": "milestone",
+          "settings": {
+            "bg": "#ffd7db",
+            "title": "The vision of Peder Tang",
+            "description": "Not backed by any big corporation we are still a proud and independent business spearheaded by our founder and owner Peder Tang",
+            "time": "Jan 17",
+            "year": "1930",
+            "link": "shopify://collections/all"
+          }
+        },
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-3": {
+          "type": "milestone",
+          "settings": {
+            "bg": "#fff5d2",
+            "title": "At the heart of the creation",
+            "description": "Some call Aarhus the world’s largest provincial town – we just call it home. At our spacious and industrial head quarter on the harbor we currently employ 50+ ambitious doers on a mission to form a healthy workspace, create excellent products, and maintain and develop a strong business.",
+            "time": "Feb 10",
+            "year": "1940",
+            "link": "shopify://collections/all"
+          }
+        },
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-4": {
+          "type": "milestone",
+          "settings": {
+            "bg": "#cdedfc",
+            "title": "Industry completely",
+            "description": "It rewrote horologic history with its remarkable accuracy, smaller size, while at the same time making wristwatches affordable.",
+            "time": "Feb 28",
+            "year": "1970",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-1",
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-2",
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-3",
+        "template--21227282268440__c96b8168-4d48-43d1-aeea-c7ab9ce67cb9-time-4"
+      ],
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background_section": "rgba(0,0,0,0)",
+        "subtitle_top": "",
+        "title": "Our history",
+        "description": "ineteenth century America idealized white woman’s modesty",
+        "align_heading": "center",
+        "border": "#202025",
+        "caption_bg": "#fff6ed",
+        "title_color": "#202025",
+        "button_text": "",
+        "style_btn": "btn-underline"
+      }
+    },
+    "41ecad90-81ec-4319-8539-f0829f7b6230": {
+      "type": "advanced-content",
+      "blocks": {
+        "55609591-6e67-4809-8f1b-94a81376f04c": {
+          "type": "promo",
+          "settings": {
+            "width": "50%",
+            "align": "auto",
+            "sub_title_block": "",
+            "title_block": "",
+            "promo_banner_height": 400,
+            "promo_banner_height_mobile": 400,
+            "image": "shopify://shop_images/Desktop-50-50-1.webp",
+            "promo_subheading": "Hurry up",
+            "promo_heading": "Special Collection",
+            "promo_size_title": "h3",
+            "space_heading": "mb-4",
+            "promo_paragraph": "",
+            "promo_button": "Shop now",
+            "promo_link": "shopify://collections/camping",
+            "style_btn": "btn-theme btn-white",
+            "promo_color": "#ffffff",
+            "promo_overlay": "#000000",
+            "promo_opacity": 16,
+            "promo_position": "mid-center",
+            "padding-left": false,
+            "padding-right": false
+          }
+        },
+        "5c8df68d-1a05-40ff-9f80-9d3eac300afe": {
+          "type": "bgvideo",
+          "settings": {
+            "width": "50%",
+            "link_video": "https://cdn.shopify.com/videos/c/vp/89c53e87d60a493592c9b2bc28f6e98c/89c53e87d60a493592c9b2bc28f6e98c.HD-720p-4.5Mbps-24776396.mp4",
+            "height_video": 400,
+            "height_video_mobile": 400
+          }
+        }
+      },
+      "block_order": [
+        "55609591-6e67-4809-8f1b-94a81376f04c",
+        "5c8df68d-1a05-40ff-9f80-9d3eac300afe"
+      ],
+      "settings": {
+        "animation": "fade-up",
+        "section_width": "container",
+        "text_color": "rgba(0,0,0,0)",
+        "background_section": "rgba(0,0,0,0)",
+        "rangebg": 0,
+        "bgbefore": "rgba(0,0,0,0)",
+        "e_size": "auto",
+        "e_repeat": "no-repeat",
+        "e_position": "center center",
+        "subtitle_top": "",
+        "title": "",
+        "description": "",
+        "align_heading": "center",
+        "padding": true,
+        "gutter_padding": 30,
+        "col_center": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "c96b8168-4d48-43d1-aeea-c7ab9ce67cb9",
+    "41ecad90-81ec-4319-8539-f0829f7b6230"
+  ]
+}
