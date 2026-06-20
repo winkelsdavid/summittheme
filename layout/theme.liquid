@@ -97,9 +97,10 @@
 </style>
 <style>
   html.lenis { height: auto; }
-  .lenis.lenis-smooth { scroll-behavior: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
   .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
   .lenis.lenis-stopped { overflow: hidden; }
+  .lenis.lenis-smooth iframe { pointer-events: none; }
   .rating-custom{
         display: flex;
         align-items: center;
@@ -347,21 +348,52 @@ padding-right:5px;
   });
 </script>
 {% if settings.enable_smoothness %}
-<script src="https://unpkg.com/lenis@1.3.23/dist/lenis.min.js"></script>
+{%- liquid
+  # Smoothness Intensity (1-5) -> Lenis lerp (per-frame interpolation factor).
+  # In Lenis, LOWER lerp = MORE glide/smoothness, HIGHER lerp = snappier.
+  # So higher intensity must map to a LOWER lerp. (The old code did
+  # lerp = "0." concatenated with intensity, which was inverted: 5 -> 0.5 = least smooth.)
+  case settings.smoothness_intensity
+    when 1
+      assign lenis_lerp = 0.14
+    when 2
+      assign lenis_lerp = 0.115
+    when 3
+      assign lenis_lerp = 0.09
+    when 4
+      assign lenis_lerp = 0.065
+    when 5
+      assign lenis_lerp = 0.04
+    else
+      assign lenis_lerp = 0.09
+  endcase
+-%}
+<script src="{{ 'lenis.min.js' | asset_url }}" defer></script>
 <script>
-  const lenis = new Lenis({
-    lerp: 0.{{ settings.smoothness_intensity }},              // smoothness (0 = instant, 1 = very slow)
-    wheelMultiplier: 0.7,   // scroll speed
-    gestureOrientation: "vertical",
-    normalizeWheel: false,
-    smoothTouch: false      // keep native touch on mobile
-  });
-
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-  requestAnimationFrame(raf);
+  (function () {
+    function initLenis() {
+      if (!window.Lenis) return; // asset failed/blocked -> graceful no-op, no error
+      var lenis = new Lenis({
+        lerp: {{ lenis_lerp }},          // higher Smoothness Intensity -> lower lerp -> smoother
+        wheelMultiplier: 0.7,            // scroll speed
+        gestureOrientation: "vertical",
+        normalizeWheel: false,
+        syncTouch: false                 // native touch on mobile (Lenis 1.x default)
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    }
+    // The Lenis asset is deferred (runs before DOMContentLoaded, in order), so
+    // init on DOMContentLoaded to guarantee window.Lenis is defined.
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initLenis);
+    } else {
+      initLenis();
+    }
+  })();
 </script>
 {% endif %}
 <script>
