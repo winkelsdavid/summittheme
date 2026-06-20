@@ -72,6 +72,9 @@
     margin: 0; --per: {{ per_sm }};
   }
   .instascroll-{{ section.id }}::-webkit-scrollbar{ display: none; }
+  .instascroll-{{ section.id }}, .instascroll-{{ section.id }} a{ cursor: grab; }
+  .instascroll-{{ section.id }}.is-grabbing, .instascroll-{{ section.id }}.is-grabbing *{ cursor: grabbing !important; }
+  .instascroll-{{ section.id }}.is-grabbing{ scroll-snap-type: none; }
   @media (min-width: 768px){ .instascroll-{{ section.id }}{ --per: {{ per_md }}; } }
   @media (min-width: 1200px){ .instascroll-{{ section.id }}{ --per: {{ per_lg }}; } }
   .instascroll-{{ section.id }} > .instascroll-slide{
@@ -220,6 +223,27 @@
     });
     window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(anchor, 150); });
   }
+
+  /* Desktop mouse drag-to-scroll ("swipe" mit der Maus, wie Swipers grabCursor).
+     Touch scrollt ohnehin nativ. Klick wird nach echtem Drag unterdrueckt, damit
+     Links beim Ziehen nicht navigieren. */
+  var dDown=false, dMoved=false, dX=0, dL=0;
+  sc.addEventListener('pointerdown', function(e){
+    if(e.pointerType !== 'mouse') return;
+    dDown=true; dMoved=false; dX=e.clientX; dL=sc.scrollLeft;
+    sc.classList.add('is-grabbing');
+    try{ sc.setPointerCapture(e.pointerId); }catch(_){}
+  });
+  sc.addEventListener('pointermove', function(e){
+    if(!dDown) return;
+    var dx = e.clientX - dX;
+    if(Math.abs(dx) > 4) dMoved=true;
+    sc.scrollLeft = dL - dx;
+  });
+  function endDrag(){ if(!dDown) return; dDown=false; sc.classList.remove('is-grabbing'); }
+  sc.addEventListener('pointerup', endDrag);
+  sc.addEventListener('pointercancel', endDrag);
+  sc.addEventListener('click', function(e){ if(dMoved){ e.preventDefault(); e.stopPropagation(); dMoved=false; } }, true);
 
   var prev = wrap.querySelector('.instascroll-prev-{{ section.id }}');
   var next = wrap.querySelector('.instascroll-next-{{ section.id }}');
