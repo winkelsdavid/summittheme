@@ -1,161 +1,129 @@
 <!-- brand-carousel.liquid -->
+{%- liquid
+  assign enable_auto = section.settings.automatic_sliding
+  assign n_logos = section.blocks.size
+  assign per = section.settings.slidestoshow | at_least: 1
+  # "Animation Speed" (1–50, higher = faster) → ms per logo-slot, then total marquee cycle.
+  assign per_logo_ms = 50 | minus: section.settings.slidescroll | times: 90 | plus: 400
+  assign marquee_ms = per_logo_ms | times: n_logos | at_least: 1000
+  # Marquee fills the row: never fewer slots than logos.
+  assign marquee_per = per | at_most: n_logos | at_least: 1
+  # Manual (scroll-snap) responsive visible counts.
+  assign per_lg = per
+  assign per_sm = 2 | at_most: per_lg
+  assign per_md = per_lg | minus: 1 | at_least: per_sm
+-%}
 <style>
-    .customstyle{{ section.id }}{
+  .customstyle{{ section.id }}{
     padding-top:{{ section.settings.padding_top }}px;
     padding-bottom:{{ section.settings.padding_bottom }}px;
   }
   @media (max-width:768px){
-     .customstyle{{ section.id }}{
-    padding-top:{{ section.settings.mobile_padding_top }}px;
-    padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
+    .customstyle{{ section.id }}{
+      padding-top:{{ section.settings.mobile_padding_top }}px;
+      padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
+    }
   }
+  .customstyle{{ section.id }} .brand-wrapper{ position:relative; }
+
+  /* Blurry edge fades */
+  {% if section.settings.enable_overlay_edges %}
+  .customstyle{{ section.id }} .opacity_item_brand{ position:absolute; height:100%; width:80px; z-index:3; top:0; pointer-events:none; }
+  {% else %}
+  .customstyle{{ section.id }} .opacity_item_brand{ display:none !important; }
+  {% endif %}
+  .customstyle{{ section.id }} .opacity_item_brand.opacity_left{ left:0; background:linear-gradient(90deg, {{ section.settings.overlay_color }}, transparent); }
+  .customstyle{{ section.id }} .opacity_item_brand.opacity_right{ right:0; background:linear-gradient(270deg, {{ section.settings.overlay_color }}, transparent); }
+
+  .customstyle{{ section.id }} .brand-item{ text-align:center; box-sizing:border-box; }
+  .customstyle{{ section.id }} .brand-item a{ display:block; }
+  .customstyle{{ section.id }} .brand-item img{ margin:0 auto; }
+
+  /* === Auto-Scroll: native CSS marquee (Swiper-free, truly continuous) === */
+  .logomarquee-wrap-{{ section.id }}{ position:relative; overflow:hidden; }
+  .logomarquee-{{ section.id }}{
+    display:flex; align-items:center;
+    width:calc((2 * {{ n_logos }} / {{ marquee_per }}) * 100%);
+    animation:logomarquee-{{ section.id }} {{ marquee_ms }}ms linear infinite;
+    will-change:transform;
   }
-  .customstyle{{ section.id }} .brand-wrapper{
-    position:relative;
+  .logomarquee-wrap-{{ section.id }}:hover .logomarquee-{{ section.id }}{ animation-play-state:paused; }
+  .logomarquee-{{ section.id }} > .brand-item{ flex:0 0 calc(100% / (2 * {{ n_logos }})); }
+  @keyframes logomarquee-{{ section.id }}{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce){ .logomarquee-{{ section.id }}{ animation:none; } }
+
+  /* === Manual: native scroll-snap (same engine as Instagram/Blog) === */
+  .logoscroll-wrap-{{ section.id }}{ position:relative; }
+  .logoscroll-{{ section.id }}{
+    display:flex; align-items:center;
+    overflow-x:auto; overflow-y:hidden;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none; -ms-overflow-style:none;
+    --per:{{ per_sm }}; cursor:grab;
   }
-  {%  if section.settings.enable_overlay_edges %}
-.customstyle{{ section.id }} .opacity_item_brand{
-    position: absolute;
-    height: 100%;
-    width: 100px;
-    z-index: 2;
-    top:0;
-}
-{%  else %}
-.customstyle{{ section.id }} .opacity_item_brand{
-   display:none!important;
-}
-{% endif %}
-.customstyle{{ section.id }} .slick-prev,.customstyle{{ section.id }} .slick-next{
-z-index:4
-}
-{% if section.settings.automatic_sliding %}
-.customstyle{{ section.id }} .slick-prev,.customstyle{{ section.id }} .slick-next{
-display:none!important;
-}
-{% endif %}
-.customstyle{{ section.id }} .opacity_item_brand.opacity_left{
-    left: -15px;
-    background: linear-gradient(90deg, {{ section.settings.overlay_color }}, transparent);
-}
-.customstyle{{ section.id }} .opacity_item_brand.opacity_right{
-    right: -15px;
-    background: linear-gradient(270deg, {{ section.settings.overlay_color }}, transparent);
-}
-  .brand-item{
-    text-align: center;
+  .logoscroll-{{ section.id }} a{ cursor:grab; }
+  .logoscroll-{{ section.id }}.is-grabbing, .logoscroll-{{ section.id }}.is-grabbing *{ cursor:grabbing !important; }
+  .logoscroll-{{ section.id }}.is-grabbing{ scroll-snap-type:none; }
+  .logoscroll-{{ section.id }}::-webkit-scrollbar{ display:none; }
+  @media (min-width:768px){ .logoscroll-{{ section.id }}{ --per:{{ per_md }}; } }
+  @media (min-width:1200px){ .logoscroll-{{ section.id }}{ --per:{{ per_lg }}; } }
+  .logoscroll-{{ section.id }} > .brand-item{ flex:0 0 calc(100% / var(--per)); scroll-snap-align:start; min-width:0; }
+
+  /* Arrows (identical to standard swiper arrows) + dots — manual mode only */
+  .logoscroll-wrap-{{ section.id }} .logoscroll-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:#fff; color:var(--g-color-carousel); border:0; cursor:pointer;
+    box-shadow:0 2px 6px #36363626; z-index:6; transition:all .3s ease;
   }
-  .brand-item a{
-    display: inline-block;
+  .logoscroll-prev-{{ section.id }}{ left:-10px; }
+  .logoscroll-next-{{ section.id }}{ right:-10px; }
+  .logoscroll-wrap-{{ section.id }} .logoscroll-arrow:after{
+    font-family:swiper-icons; font-size:16px; line-height:1; letter-spacing:0; text-transform:none; font-variant:initial; display:inline-block;
   }
-  .brand-item a img{
-    margin: 0 auto;
-  }
-  .brand-slider .slick-track{
-    display: flex !important;
-    align-items: center;
-  }
+  .logoscroll-prev-{{ section.id }}:after{ content:'prev'; }
+  .logoscroll-next-{{ section.id }}:after{ content:'next'; }
+  .logoscroll-prev-{{ section.id }}:hover:after{ animation:.4s ease-in-out reverse forwards animateIcon; }
+  .logoscroll-next-{{ section.id }}:hover:after{ animation:.4s ease-in-out forwards animateIcon; }
+  .logoscroll-dots-{{ section.id }}{ display:flex; justify-content:center; gap:8px; margin-top:24px; }
+  .logoscroll-dots-{{ section.id }} button{ width:8px; height:8px; padding:0; border:0; border-radius:50%; background:currentColor; opacity:.25; cursor:pointer; transition:opacity .2s ease; }
+  .logoscroll-dots-{{ section.id }} button.is-active{ opacity:1; }
 </style>
-{%- assign anim_speed = 50 | minus: section.settings.slidescroll | times: 90 | plus: 400 -%}
 <div class="customstyle{{ section.id }} " data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}
   <div class="{{ section.settings.section_width }}">
     <div class="section-block">
       {%- render 'section-heading' -%}
-      <div class="brand-wrapper dots-negative">
+      <div class="brand-wrapper dots-negative {% if enable_auto %}logomarquee-wrap-{{ section.id }}{% else %}logoscroll-wrap-{{ section.id }}{% endif %}">
         <div class="opacity_item_brand opacity_left"></div>
-        <div class="brand-slider swiper row mb-0" id="collection-list-{{ section.id }}"
-            data-rows="{{ section.settings.rows }}"
-            data-slidesToShow="{{ section.settings.slidestoshow }}"
-            data-slidestoscroll="1"
-            data-arrows="{{ section.settings.arrows }}"
-            data-dots="{{ section.settings.dots }}" 
-            data-draggable="{{ section.settings.draggable }}" 
-            data-infinite="{{ section.settings.infinite }}" 
-            data-section-id="{{ section.id }}" 
-            data-section-type="slickCarousels"
-            
-            {% if section.settings.automatic_sliding %}
-            data-autoplay="true"
-            data-speed="{{ anim_speed }}"     {% comment %} transition duration from 'Animation Speed' setting (higher = faster) {% endcomment %}
-            data-autoplayspeed="0" {% comment %} No delay between transitions {% endcomment %}
-            data-css-ease="linear" {% comment %} Critical for smooth motion {% endcomment %}
-            {%  else %}
-              data-speed="500"
-            {% endif %}
-            data-slidesToShow-mobile = "2">
-          <div class="swiper-wrapper">
-          {%- for block in section.blocks -%}
-          <div class="col brand-item swiper-slide carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
-            <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
-              <div class="image-content__image-container overflow-hidden mx-auto" style="width: {{ section.settings.width_image }}%;">
-                <a href="{{ block.settings.link | default: '#' }}" 
-                  class="image-content__image-wrapper d-block {% if section.settings.grayscale -%} hv-image-grayscale {% endif %}"
-                  title="{{ block.settings.image.alt }}"
-                  style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
-                  {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
-                  {%- if block.settings.image != blank -%}
-                  <img class="lazyload scale-in"
-                    src="{{ block.settings.image | image_url: width: 1, height: 1 }}" 
-                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
-                    data-src="{{ img_url }}" 
-                    data-aspectratio="{{ block.settings.image.aspect_ratio }}"
-                    data-sizes="auto"
-                    alt="{{ block.settings.image.alt }}" 
-                    loading="lazy"
-                    width="{{ block.settings.image.width }}"
-                    height="{{ block.settings.image.height }}">
-                  {%- else -%}
-                  <div class="image-block__image">
-                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                  </div>
-                  {%- endif -%}
-                </a>
-              </div>
-            </div>
+
+        {%- if enable_auto -%}
+          {%- comment -%} Continuous CSS marquee: render the set twice for a seamless -50% loop. {%- endcomment -%}
+          <div class="logomarquee-{{ section.id }}">
+            {%- for i in (1..2) -%}
+              {%- for block in section.blocks -%}
+                {%- render 'logo-carousel-item', block: block, section: section, clone: forloop.parentloop.last -%}
+              {%- endfor -%}
+            {%- endfor -%}
           </div>
-          {%- endfor -%}
-          {% if section.blocks.size < section.settings.slidestoshow %}
+        {%- else -%}
+          {%- comment -%} Manual mode: native scroll-snap with drag, arrows, dots, optional infinite. {%- endcomment -%}
+          <div class="logoscroll-{{ section.id }}" id="logoscroll-{{ section.id }}">
             {%- for block in section.blocks -%}
-          <div class="col brand-item swiper-slide carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
-            <div data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
-              <div class="image-content__image-container overflow-hidden mx-auto" style="width: {{ section.settings.width_image }}%;">
-                <a href="{{ block.settings.link | default: '#' }}" 
-                  class="image-content__image-wrapper d-block {% if section.settings.grayscale -%} hv-image-grayscale {% endif %}"
-                  title="{{ block.settings.image.alt }}"
-                  style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
-                  {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
-                  {%- if block.settings.image != blank -%}
-                  <img class="lazyload scale-in"
-                    src="{{ block.settings.image | image_url: width: 1, height: 1 }}" 
-                    data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
-                    data-src="{{ img_url }}" 
-                    data-aspectratio="{{ block.settings.image.aspect_ratio }}"
-                    data-sizes="auto"
-                    alt="{{ block.settings.image.alt }}" 
-                    loading="lazy"
-                    width="{{ block.settings.image.width }}"
-                    height="{{ block.settings.image.height }}">
-                  {%- else -%}
-                  <div class="image-block__image">
-                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-                  </div>
-                  {%- endif -%}
-                </a>
-              </div>
-            </div>
+              {%- render 'logo-carousel-item', block: block, section: section -%}
+            {%- endfor -%}
           </div>
-          {%- endfor -%}
-          {% endif %}
-          </div>
-          {% if section.settings.arrows %}
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-          {% endif %}
-          {% if section.settings.dots %}
-          <div class="swiper-pagination"></div>
-          {% endif %}
-        </div>
+          {%- if section.settings.arrows -%}
+            <button type="button" class="logoscroll-arrow logoscroll-prev-{{ section.id }}" aria-label="Previous"></button>
+            <button type="button" class="logoscroll-arrow logoscroll-next-{{ section.id }}" aria-label="Next"></button>
+          {%- endif -%}
+          {%- if section.settings.dots -%}
+            <div class="logoscroll-dots-{{ section.id }}"></div>
+          {%- endif -%}
+        {%- endif -%}
+
         <div class="opacity_item_brand opacity_right"></div>
       </div>
       {%- if section.blocks.size == 0 -%}
@@ -164,6 +132,88 @@ display:none!important;
     </div>
   </div>
 </div>
+
+{%- unless enable_auto -%}
+<script>
+(function(){
+  var sc = document.getElementById('logoscroll-{{ section.id }}');
+  if(!sc || sc.dataset.snapInit) return;
+  sc.dataset.snapInit = '1';
+  var wrap = sc.closest('.logoscroll-wrap-{{ section.id }}') || sc.parentNode;
+  var infinite = {% if section.settings.infinite %}true{% else %}false{% endif %};
+  var real = [].slice.call(sc.querySelectorAll('.brand-item'));
+  var n = real.length;
+  var all = real;
+  function step(){ var s = sc.querySelector('.brand-item'); return s ? s.getBoundingClientRect().width : sc.clientWidth; }
+  function jump(x){ var b = sc.style.scrollBehavior; sc.style.scrollBehavior='auto'; sc.scrollLeft = x; sc.style.scrollBehavior = b; }
+
+  if(infinite && n > 1){
+    var before = document.createDocumentFragment(), after = document.createDocumentFragment();
+    real.forEach(function(sl){
+      var a = sl.cloneNode(true); a.classList.add('is-clone'); a.setAttribute('aria-hidden','true'); after.appendChild(a);
+      var b = sl.cloneNode(true); b.classList.add('is-clone'); b.setAttribute('aria-hidden','true'); before.appendChild(b);
+    });
+    sc.appendChild(after);
+    sc.insertBefore(before, sc.firstChild);
+    all = [].slice.call(sc.querySelectorAll('.brand-item'));
+    var anchor = function(){ jump(all[n].offsetLeft - sc.offsetLeft); };
+    requestAnimationFrame(anchor);
+    var t;
+    sc.addEventListener('scroll', function(){
+      clearTimeout(t);
+      t = setTimeout(function(){
+        var rs = all[n].offsetLeft - sc.offsetLeft;
+        var period = all[2*n].offsetLeft - all[n].offsetLeft;
+        var x = sc.scrollLeft;
+        if(x < rs - 1) jump(x + period);
+        else if(x >= rs + period - 1) jump(x - period);
+      }, 90);
+    });
+    window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(anchor, 150); });
+  }
+
+  /* desktop mouse drag-to-scroll ("Draggable" setting) */
+  var allowDrag = {% if section.settings.draggable %}true{% else %}false{% endif %};
+  if(allowDrag){
+    var dDown=false, dMoved=false, dX=0, dL=0;
+    sc.addEventListener('pointerdown', function(e){ if(e.pointerType!=='mouse') return; dDown=true; dMoved=false; dX=e.clientX; dL=sc.scrollLeft; sc.classList.add('is-grabbing'); try{ sc.setPointerCapture(e.pointerId); }catch(_){} });
+    sc.addEventListener('pointermove', function(e){ if(!dDown) return; var dx=e.clientX-dX; if(Math.abs(dx)>4) dMoved=true; sc.scrollLeft = dL-dx; });
+    var endDrag = function(){ if(!dDown) return; dDown=false; sc.classList.remove('is-grabbing'); };
+    sc.addEventListener('pointerup', endDrag);
+    sc.addEventListener('pointercancel', endDrag);
+    sc.addEventListener('click', function(e){ if(dMoved){ e.preventDefault(); e.stopPropagation(); dMoved=false; } }, true);
+  } else {
+    sc.style.cursor = 'default';
+  }
+
+  /* arrows */
+  var prev = wrap.querySelector('.logoscroll-prev-{{ section.id }}');
+  var next = wrap.querySelector('.logoscroll-next-{{ section.id }}');
+  if(prev) prev.addEventListener('click', function(){ sc.scrollBy({left:-step(), behavior:'smooth'}); });
+  if(next) next.addEventListener('click', function(){ sc.scrollBy({left:step(), behavior:'smooth'}); });
+
+  /* dots (one per real slide) */
+  var dotsWrap = wrap.querySelector('.logoscroll-dots-{{ section.id }}');
+  if(dotsWrap){
+    dotsWrap.innerHTML='';
+    real.forEach(function(sl, i){
+      var b = document.createElement('button'); b.type='button'; b.setAttribute('aria-label','Slide '+(i+1));
+      b.addEventListener('click', function(){ sc.scrollTo({left: sl.offsetLeft - sc.offsetLeft, behavior:'smooth'}); });
+      dotsWrap.appendChild(b);
+    });
+    var dots = [].slice.call(dotsWrap.querySelectorAll('button'));
+    var sync = function(){
+      var x = sc.scrollLeft, best=0, bd=Infinity;
+      all.forEach(function(sl, i){ var d = Math.abs((sl.offsetLeft - sc.offsetLeft) - x); if(d<bd){ bd=d; best=i; } });
+      var ri = best % n;
+      dots.forEach(function(d, i){ d.classList.toggle('is-active', i===ri); });
+    };
+    sc.addEventListener('scroll', function(){ requestAnimationFrame(sync); });
+    sync();
+  }
+})();
+</script>
+{%- endunless -%}
 
 {% schema %}
 {
@@ -471,24 +521,8 @@ display:none!important;
       "default": 30
     },
     {
-      "type": "select",
-      "id": "rows",
-      "label": "Rows",
-      "default": "1",
-      "options": [
-        {
-          "value": "1",
-          "label": "1 Row"
-        },
-        {
-          "value": "2",
-          "label": "2 Rows"
-        },
-        {
-          "value": "3",
-          "label": "3 Rows"
-        }
-      ]
+      "type": "paragraph",
+      "content": "“Animation Speed” steuert das Tempo des Automatic Sliders (höher = schneller). Pfeile / Dots / Infinite / Draggable gelten für den manuellen Modus (Automatic Slider aus)."
     },
          {
         "type":"checkbox",
