@@ -72,6 +72,13 @@
     object-fit: cover;
     object-position: center center;
   }
+  /* The global .placeholder-svg colour is dark + semi-transparent, so on this
+     section's (often dark) background the empty-slide placeholder was invisible.
+     Force a visible light-grey example box, like the placeholders elsewhere. */
+  .customstyle{{ section.id }} .wt-video__movie .placeholder-svg {
+    background: #e8e8e8;
+    fill: #c0c0c0;
+  }
   .kik_video_item,
   .c_video_content,
   .video_item_image_text,
@@ -261,7 +268,7 @@
                                 {%  else %}
                                   <div class="kik_video_item"> 
                                       <div class="wt-video__movie">
-                                        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                                       </div>
                                       {%  comment %}
                                           <button class="shoppable-video_control-button" aria-label="Play/pause button">
