@@ -96,11 +96,18 @@
   }
   .blogscroll-prev-{{ section.id }}{ left: -10px; }
   .blogscroll-next-{{ section.id }}{ right: -10px; }
-  .blogscroll-wrap-{{ section.id }} .blogscroll-arrow svg{ width: 16px; height: 16px; }
-  /* Identical hover to the standard carousel arrows: same animateIcon keyframe
-     as .swiper-button-prev/next (theme.css), prev reversed like the original. */
-  .blogscroll-prev-{{ section.id }}:hover svg{ animation: 0.4s ease-in-out reverse forwards animateIcon; }
-  .blogscroll-next-{{ section.id }}:hover svg{ animation: 0.4s ease-in-out forwards animateIcon; }
+  /* Exact same icon as the standard arrows: the swiper-icons font glyph via
+     :after (content 'prev'/'next') — same size/colour — plus the same
+     animateIcon hover (prev reversed), identical to .swiper-button-prev/next. */
+  .blogscroll-wrap-{{ section.id }} .blogscroll-arrow:after{
+    font-family: swiper-icons; font-size: 16px; line-height: 1;
+    letter-spacing: 0; text-transform: none; font-variant: initial;
+    display: inline-block;
+  }
+  .blogscroll-prev-{{ section.id }}:after{ content: 'prev'; }
+  .blogscroll-next-{{ section.id }}:after{ content: 'next'; }
+  .blogscroll-prev-{{ section.id }}:hover:after{ animation: 0.4s ease-in-out reverse forwards animateIcon; }
+  .blogscroll-next-{{ section.id }}:hover:after{ animation: 0.4s ease-in-out forwards animateIcon; }
   .blogscroll-dots-{{ section.id }}{ display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
   .blogscroll-dots-{{ section.id }} button{ width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: currentColor; opacity: .25; cursor: pointer; }
   .blogscroll-dots-{{ section.id }} button.is-active{ opacity: 1; }
@@ -141,8 +148,8 @@
         {%- endif -%}
       </div>
       {%- if section.settings.arrows -%}
-        <button type="button" class="blogscroll-arrow blogscroll-prev-{{ section.id }}" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-        <button type="button" class="blogscroll-arrow blogscroll-next-{{ section.id }}" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+        <button type="button" class="blogscroll-arrow blogscroll-prev-{{ section.id }}" aria-label="Previous"></button>
+        <button type="button" class="blogscroll-arrow blogscroll-next-{{ section.id }}" aria-label="Next"></button>
       {%- endif -%}
       {%- if section.settings.dots -%}
         <div class="blogscroll-dots-{{ section.id }}"></div>
