@@ -66,7 +66,7 @@
   .instascroll-{{ section.id }}{
     display: flex; gap: {{ section.settings.gutter_padding }}px;
     overflow-x: auto; overflow-y: hidden;
-    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; -ms-overflow-style: none;
     margin: 0; --per: {{ per_sm }};
@@ -182,16 +182,54 @@
   if(!sc || sc.dataset.snapInit) return;
   sc.dataset.snapInit = '1';
   var wrap = sc.closest('.instascroll-wrap-{{ section.id }}') || sc.parentNode;
-  function step(){ var s = sc.querySelector('.instascroll-slide'); var g = parseFloat(getComputedStyle(sc).columnGap) || 0; return s ? s.getBoundingClientRect().width + g : sc.clientWidth; }
+  var infinite = {{ section.settings.infinite | default: true }};
+  var real = [].slice.call(sc.querySelectorAll('.instascroll-slide'));
+  var n = real.length;
+  var all = real;
+
+  function gap(){ return parseFloat(getComputedStyle(sc).columnGap) || 0; }
+  function step(){ var s = sc.querySelector('.instascroll-slide'); return s ? s.getBoundingClientRect().width + gap() : sc.clientWidth; }
+  function jump(x){ var b = sc.style.scrollBehavior; sc.style.scrollBehavior = 'auto'; sc.scrollLeft = x; sc.style.scrollBehavior = b; }
+
+  /* Infinite: clone all slides before & after. When the user lands in a clone
+     region (after the scroll settles), silently jump scrollLeft by one block
+     width -> seamless wrap. Native scroll-snap, no Swiper, no 0px-collapse. */
+  if(infinite && n > 1){
+    var before = document.createDocumentFragment(), after = document.createDocumentFragment();
+    real.forEach(function(sl){
+      var a = sl.cloneNode(true); a.classList.add('is-clone'); a.setAttribute('aria-hidden','true'); after.appendChild(a);
+      var b = sl.cloneNode(true); b.classList.add('is-clone'); b.setAttribute('aria-hidden','true'); before.appendChild(b);
+    });
+    sc.appendChild(after);
+    sc.insertBefore(before, sc.firstChild);
+    all = [].slice.call(sc.querySelectorAll('.instascroll-slide'));
+    var anchor = function(){ jump(all[n].offsetLeft - sc.offsetLeft); };
+    requestAnimationFrame(anchor);
+    var t, busy = false;
+    sc.addEventListener('scroll', function(){
+      clearTimeout(t);
+      t = setTimeout(function(){
+        if(busy) return; busy = true;
+        var rs = all[n].offsetLeft - sc.offsetLeft;
+        var period = all[2*n].offsetLeft - all[n].offsetLeft;
+        var x = sc.scrollLeft;
+        if(x < rs - 1) jump(x + period);
+        else if(x >= rs + period - 1) jump(x - period);
+        busy = false;
+      }, 90);
+    });
+    window.addEventListener('resize', function(){ clearTimeout(t); t = setTimeout(anchor, 150); });
+  }
+
   var prev = wrap.querySelector('.instascroll-prev-{{ section.id }}');
   var next = wrap.querySelector('.instascroll-next-{{ section.id }}');
   if(prev){ prev.addEventListener('click', function(){ sc.scrollBy({ left: -step(), behavior: 'smooth' }); }); }
   if(next){ next.addEventListener('click', function(){ sc.scrollBy({ left: step(), behavior: 'smooth' }); }); }
+
   var dotsWrap = wrap.querySelector('.instascroll-dots-{{ section.id }}');
   if(dotsWrap){
     dotsWrap.innerHTML = '';
-    var slides = [].slice.call(sc.querySelectorAll('.instascroll-slide'));
-    slides.forEach(function(sl, i){
+    real.forEach(function(sl, i){
       var b = document.createElement('button');
       b.type = 'button'; b.setAttribute('aria-label', 'Slide ' + (i + 1));
       b.addEventListener('click', function(){ sc.scrollTo({ left: sl.offsetLeft - sc.offsetLeft, behavior: 'smooth' }); });
@@ -200,8 +238,9 @@
     var dots = [].slice.call(dotsWrap.querySelectorAll('button'));
     var sync = function(){
       var x = sc.scrollLeft, best = 0, bd = Infinity;
-      slides.forEach(function(sl, i){ var d = Math.abs((sl.offsetLeft - sc.offsetLeft) - x); if(d < bd){ bd = d; best = i; } });
-      dots.forEach(function(d, i){ d.classList.toggle('is-active', i === best); });
+      all.forEach(function(sl, i){ var d = Math.abs((sl.offsetLeft - sc.offsetLeft) - x); if(d < bd){ bd = d; best = i; } });
+      var ri = best % n;
+      dots.forEach(function(d, i){ d.classList.toggle('is-active', i === ri); });
     };
     sc.addEventListener('scroll', function(){ requestAnimationFrame(sync); });
     sync();
@@ -491,6 +530,12 @@
       "type": "checkbox",
       "id": "dots",
       "label": "Dots",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "infinite",
+      "label": "Infinite",
       "default": true
     },
     {
