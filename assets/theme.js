@@ -2931,6 +2931,7 @@ theme.slickCarousel = (function () {
       speed: d(container, "speed") || 500,
       autoplaySpeed: d(container, "autoplayspeed") || 0,
       cssEase: d(container, "css-ease") || "ease",
+      spaceBetween: d(container, "space-between") || 0,
     };
     // --- Swiper init (replaces Slick). Slick uses max-width responsive,
     //     Swiper is mobile-first (min-width) -> breakpoints are inverted. ---
@@ -2940,6 +2941,7 @@ theme.slickCarousel = (function () {
     var opts = {
       slidesPerView: s.slidesToShowMobile,
       slidesPerGroup: clamp(s.slidesToShowMobile),
+      spaceBetween: s.spaceBetween,
       loop: !!s.infinite,
       speed: s.speed || 500,
       grabCursor: !!s.draggable,

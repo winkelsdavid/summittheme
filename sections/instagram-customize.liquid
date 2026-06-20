@@ -1,18 +1,23 @@
 <!-- instagram-customize.liquid -->
 {%-  liquid 
   assign enable_carousel = section.settings.enable_carousel
-  case section.settings.image_size 
-  when 'square' 
-    assign himg = '100%' 
-    when 'portrait' 
-      assign himg = '120%' 
-    when 'wide' 
-      assign himg = '56%' 
-    when 'landscape' 
-      assign himg = '75%' 
+  case section.settings.image_size
+  when 'square'
+    assign himg = '100%'
+    when 'portrait'
+      assign himg = '150%'
+    when 'wide'
+      assign himg = '56%'
+    when 'landscape'
+      assign himg = '75%'
   else
-    assign himg = '100%' 
-  endcase 
+    assign himg = '100%'
+  endcase
+  # Carousel scrolls through ALL blocks; only the grid is capped to "Show".
+  assign loop_limit = section.settings.show
+  if enable_carousel
+    assign loop_limit = section.blocks.size
+  endif
 -%}
 <style>
   .instagramoff-grid{
@@ -33,11 +38,24 @@
     padding-top:{{ section.settings.padding_top }}px;
     padding-bottom:{{ section.settings.padding_bottom }}px;
   }
-  @media (max-width:768px){
+  @media (max-width:749px){
      .customstyle{{ section.id }}{
     padding-top:{{ section.settings.mobile_padding_top }}px;
     padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
   }
+  }
+  /* Empty image/video blocks: give the placeholder the same aspect box (Image
+     Ratio) so it shows instead of collapsing to 0 height. */
+  .customstyle{{ section.id }} .instagramoff-placeholder{
+    position: relative;
+    padding-top: var(--h-image-insta);
+  }
+  .customstyle{{ section.id }} .instagramoff-placeholder .placeholder-svg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 </style>
 {%- render 'style-section' -%}
@@ -47,28 +65,28 @@
     {%- render 'section-heading' -%}
     <div class="instagramoff-wrapper dots-negative">
       <div class="instagramoff-slider mb-0 {% if enable_carousel %} swiper {% else %} instagramoff-grid {% endif %} {% if section.settings.padding == false %} row mx-0 {% else %} row{% endif %}" id="service-list-{{ section.id }}"
-           data-rows=""
-           data-slidesToShow="{{ section.settings.column }}"
+           data-slidestoshow="{{ section.settings.column }}"
            data-slidestoscroll="1"
+           data-space-between="{{ section.settings.gutter_padding }}"
            data-arrows="{{ section.settings.arrows }}"
-           data-dots="{{ section.settings.dots }}" 
-           data-draggable="{{ section.settings.draggable }}" 
-           data-infinite="{{ section.settings.infinite }}" 
-           data-section-id="{{ section.id }}" 
-           data-slidesToShow-mobile="2"
+           data-dots="{{ section.settings.dots }}"
+           data-draggable="{{ section.settings.draggable }}"
+           data-infinite="{{ section.settings.infinite }}"
+           data-section-id="{{ section.id }}"
+           data-slidestoshow-mobile="2"
            data-speed="500"
            {%- if enable_carousel -%}
             data-section-type="slickCarousels"
            {%- endif -%}
            >
         {%- if enable_carousel -%}<div class="swiper-wrapper">{%- endif -%}
-        {%- for block in section.blocks limit: section.settings.show -%}
+        {%- for block in section.blocks limit: loop_limit -%}
           {% case block.type %}
             {% when 'image' %}
             <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }} {% if enable_carousel %} swiper-slide {% endif %}" {{ block.shopify_attributes }}>
               <div class="position-relative hv-image-brightness instagramoff-item"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
                 {%- if block.settings.image != blank -%}
-                <a  href="{{ block.settings.image_link }}" title="{{ block.settings.image.alt | escape }}" class="image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
+                <a {% if block.settings.image_link != blank %}href="{{ block.settings.image_link }}"{% endif %} title="{{ block.settings.image.alt | escape }}" class="image-content__image-wrapper">
                   {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
                   {%- capture sizes -%}
                   (min-width: {{ settings.container }}px) {{ settings.container | minus: 100 | divided_by: 2 }}px,(min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
@@ -80,7 +98,7 @@
                     }}
                 </a>
                 {%- else -%}
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                <div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
                 {%- endif -%}
               </div>
             </div>
@@ -88,18 +106,24 @@
            <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }} {% if enable_carousel %} swiper-slide {% endif %}" {{ block.shopify_attributes }}>
             <div class="position-relative hv-image-brightness instagramoff-item instagramoff-itemvideo"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
               {%- if block.settings.video != blank -%}
-                 <a  href="{{ block.settings.image_link }}" class="d-block">
+                 <a {% if block.settings.image_link != blank %}href="{{ block.settings.image_link }}"{% endif %} class="d-block">
+                {%- if block.settings.image_poster != blank -%}
+                <video loop muted playsinline {% if block.settings.enable_play_video %}autoplay{% else %}preload="none"{% endif %} disablepictureinpicture controlslist="nodownload noplaybackrate" poster="{{ block.settings.image_poster | image_url: width: 1920 }}">
+                  {%- for source in block.settings.video.sources -%}{%- if source.format == 'mp4' -%}<source src="{{ source.url }}" type="video/mp4">{%- endif -%}{%- endfor -%}
+                </video>
+                {%- else -%}
                 {{   block.settings.video | video_tag: autoplay: block.settings.enable_play_video , loop: true, muted: true, controls: false, playsinline: true }}
+                {%- endif -%}
                 </a>
               {%- elsif block.settings.video_url != blank -%}
-              <a  href="{{ block.settings.image_link }}" class="d-block">
-                <video id="video-insta{{ section.id }}"  loop="" muted="" playsinline="" {% if block.settings.enable_play_video %} autoplay {% else %} preload="none" {% endif %} disablepictureinpicture controlslist="nodownload noplaybackrate"
+              <a {% if block.settings.image_link != blank %}href="{{ block.settings.image_link }}"{% endif %} class="d-block">
+                <video id="video-insta-{{ block.id }}"  loop="" muted="" playsinline="" {% if block.settings.enable_play_video %} autoplay {% else %} preload="none" {% endif %} disablepictureinpicture controlslist="nodownload noplaybackrate"
                 {% if block.settings.image_poster != blank %} poster="{{ block.settings.image_poster | image_url: width: 1920 }}" {% endif %}>
                   <source src="{{ block.settings.video_url }}" type="video/mp4">
               </video>
               </a>
               {%- else -%}
-              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              <div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
               {%- endif -%}
             </div>
           </div>
@@ -428,7 +452,7 @@
       "max": 12,
       "step": 1,
       "label": "Column",
-      "default": 6
+      "default": 4
     },
     {
       "type": "range",
