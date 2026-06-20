@@ -16,9 +16,6 @@
           "type": "review_images",
           "disabled": true,
           "settings": {
-            "image_1": "shopify://shop_images/x3.png",
-            "image_2": "shopify://shop_images/x1.png",
-            "image_3": "shopify://shop_images/2_a548a5a2-0d86-4a91-992b-f6b269f168ca.png",
             "add_stars": true,
             "stars_color": "#ffd900",
             "border_color": "#b1b1b1",
@@ -176,9 +173,6 @@
             "icon_size": 52,
             "title": "Summer Sale!",
             "subtitle": "Special offer ends in",
-            "time": "September 14, 2026",
-            "set_to": true,
-            "action_timer": "resets_itself",
             "spacing_top": 0,
             "spacing_bottom": 20
           }
@@ -452,7 +446,6 @@
         "custom_review_F9cTcD": {
           "type": "custom_review",
           "settings": {
-            "image": "shopify://shop_images/REV4_4101be67-653b-445c-805d-8b6f69975705.jpg",
             "name": "Lauren J.",
             "name_color": "",
             "text": "Here will be a review.",
@@ -509,13 +502,9 @@
         "text_color": "#35022e",
         "icon_size": 62,
         "mobile_width": 30,
-        "icon_1": "shopify://shop_images/Icon5_a62d8304-1bd2-47d1-9c76-5fc6a34d9156.png",
         "text_1": "Firming Lift",
-        "icon_2": "shopify://shop_images/Icon6_82bb5fb4-44bc-4db9-865b-ce1706e0587e.png",
         "text_2": "Radiant Glow",
-        "icon_3": "shopify://shop_images/Icon7_7c7091e3-8643-45ac-891b-20cb347460f9.png",
         "text_3": "Deep Absorption",
-        "icon_4": "shopify://shop_images/Icon15.png",
         "text_4": "Day  & Night Cream",
         "stock_enable": false,
         "sizeguide_enable": false,
@@ -1668,8 +1657,6 @@
         "icon_style": "heart",
         "enable_animation": true,
         "animation_delay": 3,
-        "badge_font_size": 10,
-        "mobile_badge_font_size": 8,
         "badge_round": 25,
         "badge_color": "#ffffff",
         "badge_background": "#000000",
@@ -1677,17 +1664,19 @@
         "highlights_color": "#000000",
         "check_color": "#000000",
         "cross_color": "#000000",
+        "badge_font_size": 10,
+        "mobile_badge_font_size": 8,
+        "table_h_font_size": 14,
+        "table_h_font_size_mobile": 14,
+        "table_c_font_size": 14,
+        "table_c_font_size_mobile": 10,
         "center_content": true,
         "column_bk": "#ffffff",
         "color": "",
         "padding_top": 60,
         "padding_bottom": 60,
         "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40,
-        "table_h_font_size": 14,
-        "table_h_font_size_mobile": 14,
-        "table_c_font_size": 14,
-        "table_c_font_size_mobile": 10
+        "mobile_padding_bottom": 40
       }
     },
     "faq_advanced_wncQmc": {
@@ -1766,7 +1755,7 @@
         "h_color": "",
         "text_color": "",
         "text_muted_color": "",
-        "card_bg_color": "#FFFFFF",
+        "card_bg_color": "#ffffff",
         "border_color": "#f6d4d9",
         "chevron_bg_color": "",
         "chevron_icon_color": "#ffffff",
@@ -1802,7 +1791,7 @@
           "settings": {
             "width": "100%",
             "bgtext": "",
-            "title_color": "#FFF2F4",
+            "title_color": "#fff2f4",
             "subtitle": "Subtitle",
             "replace_reviews": false,
             "reviews_type": "t_1",
@@ -1820,12 +1809,14 @@
         "video_ty4rng": {
           "type": "video",
           "settings": {
+            "image": "shopify://shop_images/1781391650204-0_rmbg_1ca5e152-fe5c-4a90-b333-29e100ee5bf6.png",
             "video_pick": ""
           }
         },
         "video_7FPaTx": {
           "type": "video",
           "settings": {
+            "image": "shopify://shop_images/1781391772888-1.png",
             "video_pick": ""
           }
         },
