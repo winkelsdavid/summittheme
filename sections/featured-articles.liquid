@@ -88,14 +88,19 @@
   }
   .blogscroll-wrap-{{ section.id }} .blogscroll-arrow{
     position: absolute; top: 28%; transform: translateY(-50%);
-    width: 46px; height: 46px; border-radius: 50%;
+    width: 44px; height: 44px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    background: #fff; color: #111; border: 0; cursor: pointer;
-    box-shadow: 0 2px 14px rgba(0,0,0,.18); z-index: 6;
+    background: #fff; color: var(--g-color-carousel); border: 0; cursor: pointer;
+    box-shadow: 0 2px 6px #36363626; z-index: 6;
+    transition: all 0.3s ease;
   }
   .blogscroll-prev-{{ section.id }}{ left: -10px; }
   .blogscroll-next-{{ section.id }}{ right: -10px; }
   .blogscroll-wrap-{{ section.id }} .blogscroll-arrow svg{ width: 16px; height: 16px; }
+  /* Identical hover to the standard carousel arrows: same animateIcon keyframe
+     as .swiper-button-prev/next (theme.css), prev reversed like the original. */
+  .blogscroll-prev-{{ section.id }}:hover svg{ animation: 0.4s ease-in-out reverse forwards animateIcon; }
+  .blogscroll-next-{{ section.id }}:hover svg{ animation: 0.4s ease-in-out forwards animateIcon; }
   .blogscroll-dots-{{ section.id }}{ display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
   .blogscroll-dots-{{ section.id }} button{ width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: currentColor; opacity: .25; cursor: pointer; }
   .blogscroll-dots-{{ section.id }} button.is-active{ opacity: 1; }
