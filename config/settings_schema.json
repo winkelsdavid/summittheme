@@ -3210,57 +3210,9 @@
       "label": "Boxes Text Color"
     },
       {
-      "type": "text",
-      "id": "data_countdown",
-      "label": "Time Count Down",
-      "default": "2025-05-11T00:00:00",
-      "info": "2025-05-11T00:00:00"
-    },
-    {
-          "type": "checkbox",
-          "id": "enable_set_to",
-          "label": "Enable Set To"
-        },
-        {
-          "type": "select",
-          "id": "set_to",
-          "label": "Set To",
-          "default": "24",
-          "options": [
-            {
-              "value": "24",
-              "label": "24 Hours"
-            },
-            {
-              "value": "48",
-              "label": "48 Hours"
-            },
-            {
-              "value": "72",
-              "label": "3 Days"
-            },
-             {
-              "value": "168",
-              "label": "7 Days"
-            }
-          ]
-        },
-        {
-          "type": "select",
-          "id": "action_timer",
-          "label": "Action After Timer",
-          "default": "invisible",
-          "options": [
-            {
-              "value": "invisible",
-              "label": "Turns Invisible"
-            },
-            {
-              "value": "resets_itself",
-              "label": "Resets Itself"
-            }
-          ]
-        },
+        "type": "paragraph",
+        "content": "⏱ Countdown timing (date / duration / action) is configured globally in Theme Settings → Sale Countdown — shared with the Top Bar, Count Down section and product Promo Sale. Only the title and box colours above are cart-specific."
+      },
       {
         "type": "header",
         "content": "Below Checkout Icons"

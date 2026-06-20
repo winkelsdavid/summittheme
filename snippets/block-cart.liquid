@@ -142,7 +142,7 @@ width:42px;
               <span>{{ 'layout.cart.title' | t }}</span>
               <span class="js-cart-count site-header__cart-indicator ml-2">{{ cart.item_count }}</span>
             </div>
-              {% if settings.data_countdown != blank and settings.enable_cart_countdown != false %}
+              {% if settings.enable_cart_countdown != false and settings.gcd_date != blank or settings.gcd_enable_set_to %}
                 <div class="kik_cart_timer_c">
                 {% if settings.data_countdown_title != blank %}
                   <p id="cart_drawer_countdown">{{ settings.data_countdown_title }}</p>
@@ -151,9 +151,10 @@ width:42px;
                 {% endif %}
                 <div
                   class="kik_cart_timer_an {{ section.id }}"
-                  data-time="{{ settings.data_countdown }}"
-                  data-enable-set-to="{{ settings.enable_set_to }}"
-                  data-set-hours="{{ settings.set_to | default: '24' }}"
+                  data-time="{{ settings.gcd_date }}"
+                  data-enable-set-to="{{ settings.gcd_enable_set_to }}"
+                  data-set-hours="{{ settings.gcd_set_to | default: '24' }}"
+                  data-storage-key="kik_global_sale_start"
                 >
                   <div id="cart_drawer_countdown" class="cart-drawer-countdown-item">
                     <ul class="list--inline">
@@ -808,7 +809,7 @@ width:42px;
     color: black;
   }
 {% endstylesheet %}
-{% if settings.data_countdown != blank and settings.enable_cart_countdown != false %}
+{% if settings.enable_cart_countdown != false and settings.gcd_date != blank or settings.gcd_enable_set_to %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     kik_cart_init_timer();
@@ -821,9 +822,11 @@ width:42px;
             ms_hr  = ms_min * 60,
             ms_day = ms_hr * 24;
 
-      const CART_STORAGE_KEY = "kik_cart_timer_start_{{ section.id }}";
       const timerWrapper = document.querySelector(".kik_cart_timer_an.{{ section.id }}");
       if (!timerWrapper) return;
+      // Shared key with the global Sale Countdown -> the cart stays in sync with
+      // the Top Bar / Count Down section / product Promo Sale.
+      const CART_STORAGE_KEY = timerWrapper.getAttribute("data-storage-key") || "kik_global_sale_start";
 
       const isEnabledSetTo = timerWrapper.getAttribute("data-enable-set-to") === "true";
       const hoursToSet     = parseInt(timerWrapper.getAttribute("data-set-hours")) || 24;
@@ -854,7 +857,7 @@ width:42px;
         let gap = targetTimestamp - currentTime;
 
         if (gap < 0) {
-          {% if settings.action_timer == "resets_itself" %}
+          {% if settings.gcd_action_timer == "resets_itself" %}
             const newNow = new Date().getTime();
             localStorage.setItem(CART_STORAGE_KEY, newNow);
             targetTimestamp = newNow + (hoursToSet * ms_hr);
