@@ -18,6 +18,10 @@
   if enable_carousel
     assign loop_limit = section.blocks.size
   endif
+  # Native scroll-snap: visible items per view (Column), responsive down to 2 on mobile.
+  assign per_lg = section.settings.column | at_least: 1
+  assign per_sm = 2 | at_most: per_lg
+  assign per_md = per_lg | minus: 1 | at_least: per_sm
 -%}
 <style>
   .instagramoff-grid{
@@ -57,33 +61,58 @@
     width: 100%;
     height: 100%;
   }
+  /* --- Native scroll-snap slider (Swiper-frei, wie Blog Posts) --- */
+  .instascroll-wrap-{{ section.id }}{ position: relative; }
+  .instascroll-{{ section.id }}{
+    display: flex; gap: {{ section.settings.gutter_padding }}px;
+    overflow-x: auto; overflow-y: hidden;
+    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; -ms-overflow-style: none;
+    margin: 0; --per: {{ per_sm }};
+  }
+  .instascroll-{{ section.id }}::-webkit-scrollbar{ display: none; }
+  @media (min-width: 768px){ .instascroll-{{ section.id }}{ --per: {{ per_md }}; } }
+  @media (min-width: 1200px){ .instascroll-{{ section.id }}{ --per: {{ per_lg }}; } }
+  .instascroll-{{ section.id }} > .instascroll-slide{
+    flex: 0 0 calc((100% - (var(--per) - 1) * {{ section.settings.gutter_padding }}px) / var(--per));
+    max-width: calc((100% - (var(--per) - 1) * {{ section.settings.gutter_padding }}px) / var(--per));
+    scroll-snap-align: start; min-width: 0;
+  }
+  .instascroll-wrap-{{ section.id }} .instascroll-arrow{
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff; color: var(--g-color-carousel); border: 0; cursor: pointer;
+    box-shadow: 0 2px 6px #36363626; z-index: 6;
+    transition: all 0.3s ease;
+  }
+  .instascroll-prev-{{ section.id }}{ left: -10px; }
+  .instascroll-next-{{ section.id }}{ right: -10px; }
+  .instascroll-wrap-{{ section.id }} .instascroll-arrow:after{
+    font-family: swiper-icons; font-size: 16px; line-height: 1;
+    letter-spacing: 0; text-transform: none; font-variant: initial; display: inline-block;
+  }
+  .instascroll-prev-{{ section.id }}:after{ content: 'prev'; }
+  .instascroll-next-{{ section.id }}:after{ content: 'next'; }
+  .instascroll-prev-{{ section.id }}:hover:after{ animation: 0.4s ease-in-out reverse forwards animateIcon; }
+  .instascroll-next-{{ section.id }}:hover:after{ animation: 0.4s ease-in-out forwards animateIcon; }
+  .instascroll-dots-{{ section.id }}{ display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+  .instascroll-dots-{{ section.id }} button{ width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: currentColor; opacity: .25; cursor: pointer; }
+  .instascroll-dots-{{ section.id }} button.is-active{ opacity: 1; }
 </style>
 {%- render 'style-section' -%}
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}" style="--h-image-insta:{{ himg }};">
   <div class="{{ section.settings.section_width }}">
   <div class="section-block">
     {%- render 'section-heading' -%}
-    <div class="instagramoff-wrapper dots-negative">
-      <div class="instagramoff-slider mb-0 {% if enable_carousel %} swiper {% else %} instagramoff-grid {% endif %} {% if section.settings.padding == false %} row mx-0 {% else %} row{% endif %}" id="service-list-{{ section.id }}"
-           data-slidestoshow="{{ section.settings.column }}"
-           data-slidestoscroll="1"
-           data-space-between="{{ section.settings.gutter_padding }}"
-           data-arrows="{{ section.settings.arrows }}"
-           data-dots="{{ section.settings.dots }}"
-           data-draggable="{{ section.settings.draggable }}"
-           data-infinite="{{ section.settings.infinite }}"
-           data-section-id="{{ section.id }}"
-           data-slidestoshow-mobile="2"
-           data-speed="500"
-           {%- if enable_carousel -%}
-            data-section-type="slickCarousels"
-           {%- endif -%}
-           >
-        {%- if enable_carousel -%}<div class="swiper-wrapper">{%- endif -%}
+    <div class="instagramoff-wrapper dots-negative instascroll-wrap-{{ section.id }}">
+      <div class="instagramoff-slider mb-0 {% if enable_carousel %}instascroll-{{ section.id }}{% else %}instagramoff-grid {% if section.settings.padding == false %}row mx-0{% else %}row{% endif %}{% endif %}" id="instascroll-{{ section.id }}" data-section-id="{{ section.id }}">
+
         {%- for block in section.blocks limit: loop_limit -%}
           {% case block.type %}
             {% when 'image' %}
-            <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }} {% if enable_carousel %} swiper-slide {% endif %}" {{ block.shopify_attributes }}>
+            <div class="{% if enable_carousel %}instascroll-slide{% else %}{% if section.settings.padding == false %}col px-0{% else %}col{% endif %}{% endif %} carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
               <div class="position-relative hv-image-brightness instagramoff-item"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
                 {%- if block.settings.image != blank -%}
                 <a {% if block.settings.image_link != blank %}href="{{ block.settings.image_link }}"{% endif %} title="{{ block.settings.image.alt | escape }}" class="image-content__image-wrapper">
@@ -103,7 +132,7 @@
               </div>
             </div>
            {% when 'video' %}
-           <div class="{% if section.settings.padding == false %} col px-0 {% else %} col {% endif %}  carousel__slide-wrapper--{{ block.id }} {% if enable_carousel %} swiper-slide {% endif %}" {{ block.shopify_attributes }}>
+           <div class="{% if enable_carousel %}instascroll-slide{% else %}{% if section.settings.padding == false %}col px-0{% else %}col{% endif %}{% endif %} carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
             <div class="position-relative hv-image-brightness instagramoff-item instagramoff-itemvideo"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
               {%- if block.settings.video != blank -%}
                  <a {% if block.settings.image_link != blank %}href="{{ block.settings.image_link }}"{% endif %} class="d-block">
@@ -131,15 +160,14 @@
           {% endcase %}
         
         {%- endfor -%}
-        {%- if enable_carousel -%}</div>{%- endif -%}
-        {%- if enable_carousel and section.settings.arrows -%}
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-        {%- endif -%}
-        {%- if enable_carousel and section.settings.dots -%}
-        <div class="swiper-pagination"></div>
-        {%- endif -%}
       </div>
+      {%- if enable_carousel and section.settings.arrows -%}
+        <button type="button" class="instascroll-arrow instascroll-prev-{{ section.id }}" aria-label="Previous"></button>
+        <button type="button" class="instascroll-arrow instascroll-next-{{ section.id }}" aria-label="Next"></button>
+      {%- endif -%}
+      {%- if enable_carousel and section.settings.dots -%}
+        <div class="instascroll-dots-{{ section.id }}"></div>
+      {%- endif -%}
     </div>
     {%- if section.blocks.size == 0 -%}
     {%- render 'no-blocks' -%}
@@ -148,6 +176,38 @@
 </div>
 </div>
 
+<script>
+(function(){
+  var sc = document.getElementById('instascroll-{{ section.id }}');
+  if(!sc || sc.dataset.snapInit) return;
+  sc.dataset.snapInit = '1';
+  var wrap = sc.closest('.instascroll-wrap-{{ section.id }}') || sc.parentNode;
+  function step(){ var s = sc.querySelector('.instascroll-slide'); var g = parseFloat(getComputedStyle(sc).columnGap) || 0; return s ? s.getBoundingClientRect().width + g : sc.clientWidth; }
+  var prev = wrap.querySelector('.instascroll-prev-{{ section.id }}');
+  var next = wrap.querySelector('.instascroll-next-{{ section.id }}');
+  if(prev){ prev.addEventListener('click', function(){ sc.scrollBy({ left: -step(), behavior: 'smooth' }); }); }
+  if(next){ next.addEventListener('click', function(){ sc.scrollBy({ left: step(), behavior: 'smooth' }); }); }
+  var dotsWrap = wrap.querySelector('.instascroll-dots-{{ section.id }}');
+  if(dotsWrap){
+    dotsWrap.innerHTML = '';
+    var slides = [].slice.call(sc.querySelectorAll('.instascroll-slide'));
+    slides.forEach(function(sl, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'Slide ' + (i + 1));
+      b.addEventListener('click', function(){ sc.scrollTo({ left: sl.offsetLeft - sc.offsetLeft, behavior: 'smooth' }); });
+      dotsWrap.appendChild(b);
+    });
+    var dots = [].slice.call(dotsWrap.querySelectorAll('button'));
+    var sync = function(){
+      var x = sc.scrollLeft, best = 0, bd = Infinity;
+      slides.forEach(function(sl, i){ var d = Math.abs((sl.offsetLeft - sc.offsetLeft) - x); if(d < bd){ bd = d; best = i; } });
+      dots.forEach(function(d, i){ d.classList.toggle('is-active', i === best); });
+    };
+    sc.addEventListener('scroll', function(){ requestAnimationFrame(sync); });
+    sync();
+  }
+})();
+</script>
 {% schema %}
 {
   "name": "Instagram Customize",
@@ -429,20 +489,8 @@
     },
     {
       "type": "checkbox",
-      "id": "draggable",
-      "label": "Draggable",
-      "default": true
-    },
-    {
-      "type": "checkbox",
       "id": "dots",
       "label": "Dots",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "infinite",
-      "label": "Infinite",
       "default": true
     },
     {
