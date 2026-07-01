@@ -1813,7 +1813,8 @@ display:none;
                             font-size:{{ block.settings.b_font_size }}px;
                             padding:{{ block.settings.b_size }}px;
                             border-radius:{{ block.settings.b_roundness }}px;
-                            background:{{ block.settings.b_bk }};
+                            {% if block.settings.b_bk != blank and block.settings.b_bk != "rgba(0,0,0,0)" %}--badge-bg:{{ block.settings.b_bk }};{% endif %}
+                            background:var(--badge-bg, {{ settings.branding_color | default: 'var(--g-label-hot)' }});
                             color:{{ block.settings.b_color }}!important;
                             position:relative;
                             overflow:hidden;
@@ -1827,7 +1828,8 @@ display:none;
                            font-size:{{ block.settings.b2_font_size }}px;
                             padding:{{ block.settings.b2_size }}px;
                             border-radius:{{ block.settings.b2_roundness }}px;
-                            background:{{ block.settings.b2_bk }};
+                            {% if block.settings.b2_bk != blank and block.settings.b2_bk != "rgba(0,0,0,0)" %}--badge2-bg:{{ block.settings.b2_bk }};{% endif %}
+                            background:var(--badge2-bg, {{ settings.branding_color | default: 'var(--g-label-hot)' }});
                             color:{{ block.settings.b2_color }}!important;
                           }
                           {% if block.settings.enable_animation %}
@@ -1905,7 +1907,7 @@ display:none;
                       <div
                         class="d-inline-block hide product-tag product-tag-sale product-tag--absolute {{ txtupper }} {{ settings.tagsale }}"
                         aria-hidden="true"
-                        style="background-color: {{ settings.sale_label_bg_product }};color:{{ settings.sale_label_cl_product }};"
+                        style="color:{{ settings.sale_label_cl_product }};"
                       >
                         {%- liquid
                           if product.first_available_variant.compare_at_price
@@ -1933,7 +1935,7 @@ display:none;
                       <div
                         class="d-inline-block product-tag product-tag-2"
                         aria-hidden="true"
-                        style="background-color: {{ settings.sale_label_bg_product }};color:{{ settings.sale_label_cl_product }}"
+                        style="color:{{ settings.sale_label_cl_product }}"
                       >
                             {{ block.settings.custom_badge }}
                       </div>
