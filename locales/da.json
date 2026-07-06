@@ -403,6 +403,7 @@
   },
   "products": {
     "product": {
+      "tax_disclaimer": "Skatter og fragt beregnes ved kassen.",
       "hurrify": "Skynd dig, {{ number }} vare(r) tilbage på lager!",
       "sold_out": "Udsolgt",
       "waitlist": "Tilmeld dig venteliste",
@@ -584,7 +585,6 @@
   "pagefly": {
     "products": {
       "product": {
-        "tax_disclaimer": "Skatter og fragt beregnes ved kassen.",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

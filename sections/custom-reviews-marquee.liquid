@@ -423,7 +423,7 @@ display:none;
                                     </svg>
                                     {% endif %}
                                     {% if block.settings.title != blank %}
-                                        <h5 {% if section.settings.quote_title_color != "rgba(0,0,0,0)" %}style="--g-color-heading:{{ section.settings.quote_title_color }}"{% else %}style="--g-color-heading:{{ settings.color_body_headings }}"{% else %}style="--g-color-heading:{{ settings.color_body_headings }}"{% endif %}>{{  block.settings.title }}</h5>
+                                        <h5 {% if section.settings.quote_title_color != "rgba(0,0,0,0)" %}style="--g-color-heading:{{ section.settings.quote_title_color }}"{% else %}style="--g-color-heading:{{ settings.color_body_headings }}"{% endif %}>{{  block.settings.title }}</h5>
                                     {% endif %}
                                     {% if block.settings.date != blank %}
                                         <div class="date" {% if section.settings.quote_date_color != "rgba(0,0,0,0)" %} style="color:{{ section.settings.quote_date_color }}"{% endif %}>

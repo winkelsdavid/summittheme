@@ -403,6 +403,7 @@
   },
   "products": {
     "product": {
+      "tax_disclaimer": "Taxes and shipping calculated at checkout.",
       "hurrify": "Hurrify, {{ number }} item(s) left in stock!",
       "sold_out": "Sold Out",
       "waitlist": "Join Waitlist",
@@ -584,7 +585,6 @@
   "pagefly": {
     "products": {
       "product": {
-        "tax_disclaimer": "Taxes and shipping calculated at checkout.",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

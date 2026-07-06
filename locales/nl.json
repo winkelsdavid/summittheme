@@ -403,6 +403,7 @@
   },
   "products": {
     "product": {
+      "tax_disclaimer": "Belastingen en verzendkosten worden berekend bij het afrekenen.",
       "hurrify": "Schrik, {{ number }} artikel(en) nog op voorraad!",
       "sold_out": "Uitverkocht",
       "waitlist": "Sluit je aan bij de wachtlijst",
@@ -584,7 +585,6 @@
   "pagefly": {
     "products": {
       "product": {
-        "tax_disclaimer": "Belastingen en verzendkosten worden berekend bij het afrekenen.",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

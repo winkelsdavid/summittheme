@@ -403,6 +403,7 @@
   },
   "products": {
     "product": {
+      "tax_disclaimer": "Tasse e spese di spedizione calcolate al momento del pagamento.",
       "hurrify": "inorridire, {{ number }} articoli rimasti in magazzino!",
       "sold_out": "Esaurito",
       "waitlist": "Iscriviti alla lista d'attesa",
@@ -584,7 +585,6 @@
   "pagefly": {
     "products": {
       "product": {
-        "tax_disclaimer": "Tasse e spese di spedizione calcolate al momento del pagamento.",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

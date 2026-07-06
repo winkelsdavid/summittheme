@@ -859,7 +859,7 @@ margin-right:auto;
               {% else %}
                 {%- unless block.settings.slide_toptitle == blank -%}
                 <li class="mb-3">
-                  <p class="slideshow__toptitle subtop" style="{% if block.settings.slide_toptitle_color != "rgba(0,0,0,0)" %}color:{{ block.settings.slide_toptitle_color }}"{% endif %}>
+                  <p class="slideshow__toptitle subtop" style="{% if block.settings.slide_toptitle_color != "rgba(0,0,0,0)" %}color:{{ block.settings.slide_toptitle_color }}{% endif %}">
                     {{ block.settings.slide_toptitle }}
                   </p>
                 </li>

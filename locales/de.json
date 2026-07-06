@@ -403,6 +403,7 @@
   },
   "products": {
     "product": {
+      "tax_disclaimer": "inkl. MwSt. zzgl. Versandkosten",
       "hurrify": "Beeil dich, {{ number }} Artikel noch auf Lager!",
       "sold_out": "Ausverkauft",
       "waitlist": "Treten Sie der Warteliste bei",
@@ -584,7 +585,6 @@
   "pagefly": {
     "products": {
       "product": {
-        "tax_disclaimer": "inkl. MwSt. zzgl. Versandkosten",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",

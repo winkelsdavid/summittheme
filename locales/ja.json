@@ -403,6 +403,7 @@
   },
   "products": {
     "product": {
+      "tax_disclaimer": "税金と送料はチェックアウト時に計算されます。",
       "hurrify": "急いで、 {{ number }} 在庫に残っている商品があります!",
       "sold_out": "完売",
       "waitlist": "ウェイティングリストに参加する",
@@ -584,7 +585,6 @@
   "pagefly": {
     "products": {
       "product": {
-        "tax_disclaimer": "税金と送料はチェックアウト時に計算されます。",
         "regular_price": "Regular price",
         "sold_out": "Sold out",
         "unavailable": "Unavailable",
