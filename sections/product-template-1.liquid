@@ -377,6 +377,12 @@ display:none;
       .product-form__quantity-submit .product-form__item--submit {
       margin: 0 0 0px 0px !important;
   }
+      /* Quantity-Picker fuellt im gestapelten Layout die volle Breite
+         (stand sonst links gebunden auf Inhaltsbreite). */
+      .product-form__quantity-submit .product-form__item--quantity{
+        flex: 0 0 100%;
+        width: 100%;
+      }
     }
 </style>
 <div
