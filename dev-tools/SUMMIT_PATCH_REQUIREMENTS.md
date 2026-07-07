@@ -249,6 +249,16 @@ Alle anderen Bilder bleiben lazy.
 **Warum.** LCP ist die teuerste CWV-Metrik. Eager + High-Prio aufs Hero
 bringt LCP um 500–1500 ms runter.
 
+> **P2.2-Reststand (2026-07-07):** Quickview, instagram-customize und
+> logo-carousel laufen bereits Swiper-frei (scroll-snap/CSS-Marquee). Der
+> **letzte große Swiper-Konsument ist die Produkt-Galerie** (product-template-1
+> main+thumbs): Crossfade + Zwei-Wege-Thumb-Sync + Variant-slideTo + vertikale
+> Thumb-Leiste — 2026-07-07 als Swiper repariert (verwaiste .slick-CSS remappt
+> + Höhen-Sync), NICHT umgebaut. Vor dem Löschen von swiper-bundle (−145 KB)
+> braucht sie einen libfreien Umbau mit Design-Entscheidung: (a) Fade aufgeben
+> → scroll-snap wie Quickview, oder (b) Fade behalten → kleiner Vanilla-
+> Crossfade-Controller. Danach verbleibende Swiper-Sektionen sweepen.
+
 ### P2.2 Swiper minimieren
 
 **Was.** `swiper-bundle.min.js` (145 KB) + `swiper-bundle.min.css`
