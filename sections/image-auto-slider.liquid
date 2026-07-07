@@ -202,6 +202,7 @@
                     {% for block in section.blocks %}
                         {% case block.type %}
                           {% when "video" %}
+                          {%- assign b1_pos = b1_pos | plus: 1 -%}
                           <div class="swiper-slide custom_shoppable_video custom_review-{{ block.id }}" {{ block.shopify_attributes }}>
                               <div class="c_video_content">
                                       {% if block.settings.video_pick != blank %}
@@ -266,7 +267,7 @@
 
 
                                 {%  else %}
-                                  {%- capture b1_fb -%}{% render 'brand-image', handle: 'image-auto-slider--video', position: forloop.index, width: 1920 %}{%- endcapture -%}
+                                  {%- capture b1_fb -%}{% render 'brand-image', handle: 'image-auto-slider--video', position: b1_pos, width: 1920 %}{%- endcapture -%}
                                   <div class="kik_video_item">
                                       <div class="wt-video__movie">
                                         {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}

@@ -72,6 +72,7 @@
             {%- for block in section.blocks -%}
                 {%- case block.type -%}
                     {%- when 'banner' -%}
+                        {%- assign b1_pos = b1_pos | plus: 1 -%}
                     <div class="product-image__item ">
                          {%- liquid 
                             assign text_color = block.settings.colortabimage 
@@ -116,7 +117,7 @@
                                   height="{{ block.settings.image.height }}"> 
                           </div>
                           {%- else -%}
-                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-with-image--banner', position: forloop.index, width: 1080, class: 'image-content__image scale-in' %}{%- endcapture -%}
+                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-with-image--banner', position: b1_pos, width: 1080, class: 'image-content__image scale-in' %}{%- endcapture -%}
                             <div class="image-content__image h-100 ">
                                 {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                             </div>
