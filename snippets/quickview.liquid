@@ -227,14 +227,27 @@
     #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; }
   }
   @media (min-width: 992px){
-    /* both columns equal height = max(image ratio, content); the GALLERY keeps
-       the exact chosen ratio (vertically centered) instead of stretching with
-       the content column -> "square" is really square. */
-    #jsQuickview .modal-body > .row{ align-items: stretch; }
-    #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; align-self: stretch; display: flex; align-items: center; }
-    #qv-product-images{ width: 100%; height: auto; aspect-ratio: {{ qv_ar }}; }
-    /* override Bootstrap .align-self-center on the content column */
-    #jsQuickview .right-qv{ align-self: stretch !important; }
+    /* Die BILDSPALTE bestimmt die Modal-Hoehe: links exakt die gewaehlte Ratio
+       (1:1 = wirklich quadratisch), das Bild fuellt das Feld komplett (cover).
+       Die Inhalts-Spalte liegt absolut daneben und scrollt bei Bedarf intern. */
+    #jsQuickview .modal-body > .row{ position: relative; }
+    #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; }
+    #qv-product-images{ height: 100%; }
+    #jsQuickview .right-qv{
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 50%;
+      width: 50%;
+      align-self: auto !important;
+    }
+    #jsQuickview .right-qv .qv-content-holder{
+      overflow-y: auto;
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    /* zentriert bei kurzem Inhalt, oben erreichbar bei langem (auto-margin-Trick) */
+    #jsQuickview .right-qv .qv-content-holder > :first-child{ margin-top: auto; }
+    #jsQuickview .right-qv .qv-content-holder > :last-child{ margin-bottom: auto; }
   }
 
   /* no internal scroll anymore -> drop the bottom scroll-fade cue */
