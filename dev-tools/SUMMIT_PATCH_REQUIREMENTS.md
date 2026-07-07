@@ -32,6 +32,43 @@ Shops mit.
 
 ---
 
+## B1 — Brand-Asset-Fallback via Metaobject (Stand 2026-07-07, Theme-Hälfte umgesetzt)
+
+- **Metaobject-Kontrakt:** `section_fallback` mit `image_1..12` (file_reference),
+  `video_1` (file_reference), `pool_size` (number_integer); Storefront PUBLIC_READ,
+  Einträge ACTIVE. **Handles:** `<section.type>` (Section-Level) bzw.
+  `<section.type>--<block.type>` (Block-Level). Definition + Einträge legt der
+  Nitro-Push an; das Theme LIEST nur (Snippets `brand-image`, `brand-image-src`,
+  `brand-video`; `b1-probe` ist temporär bis zum E2E-GO-Swap).
+- **Section-Bild-Slots binden per Schema-Reihenfolge** an `image_1..K` — die
+  Reihenfolge der `image_picker`-Settings im Schema ist damit VERTRAG:
+  Umsortieren/Einfügen davor verschiebt die Fallback-Zuordnung.
+- **Block-Fallback** deckt nur das **erste** `image_picker` je Block-Typ (v1);
+  Position = Zählung **pro Block-Typ** (Zähler `b1_pos*` in gemischten Sections);
+  Überlauf = wrap modulo `pool_size`.
+- **Neuer `image_picker` / neuer bildtragender Block-Typ** → Snippet-Aufruf nach
+  Muster A–C ergänzen (sonst kein Fallback für den Slot). `if blank`-Guard lebt
+  IM Snippet; Instanz-Renderpfade bleiben unangetastet (Fallback = additiver
+  else-Ast, Placeholder bleibt Letzt-Fallback).
+- **`video_url`-Settings bleiben ohne Fallback** (nur `video`-Datei-Settings:
+  background-video, custom-instagram-marquee, image-with-icons,
+  product-wrap-banner, sticky-video-product — Video-Fallback greift VOR dem
+  Bild-Fallback).
+- **Bewusst OHNE Fallback (Entscheid 2026-07-07):** alle Deko-/Icon-Slots
+  (`image_bg`-Texturen, Icon-Settings, Payment-Badges, footer `imgpayment`,
+  logo-carousel/logo-list = Dritt-Logos, timeline--milestone = Icon-Label);
+  **v2-Kandidaten (zurückgestellt):** featured-collections-1/3/4/5 +
+  product-tab-split `collection`-Blöcke (nativer `collection.image`-Fallback
+  existiert bereits), header Menü-Banner/level/sidebar-Blöcke (verschachtelte
+  `slide-menu`-Logik), pt1 `custom_review`/`videos` (keine Liquid-Bild-Render-
+  Stelle), header `logo_white` (nur sinnvoll mit gesetztem Dark-Logo).
+- **Akzeptierter Quirk:** der image_picker im Customizer zeigt „leer", obwohl
+  das Fallback-Bild rendert (Setting IST leer; Shopify-Grenze).
+- **Neue Preset-VARIANTEN (`presets[1+]`) bitte ansagen** — der Lane-A-Injector
+  füllt aktuell nur `presets[0]`.
+
+---
+
 ## Theme-Store-Gate — warum dieser Cleanup Pflicht ist
 
 > Das Gate: Themes brauchen einen durchschnittlichen Lighthouse-
