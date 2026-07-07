@@ -5133,13 +5133,16 @@ p a:not(.button):focus,
   border-radius: var(--g-font-radius-btn);
   margin: 0;
   box-shadow: 0 4px 6px rgb(0 0 0 / 8%);
-  /* Solider Theme-Button "Button Box" (analog Style 9); die Basis-Regel
-     .product-card__overlay-btn faerbt sonst weiss. */
-  background: var(--g-cta-button);
-  color: var(--g-cta-text);
 }
-.product-card--style5 .product-card__overlaybottom .btn:hover {
-  color: var(--g-cta-text);
+/* Solider Theme-Button "Button Box" (analog Style 9). Die Basis-Regel
+   .product-card__overlay-btn setzt background:white; die Karte traegt zudem
+   .product-card--style1 -> hier hart per !important + hoher Spezifitaet
+   erzwungen, damit keine Basis-/Style1-Regel den Button weiss faerbt. */
+.product-card--style5 .product-card__overlaybottom .btn.product-card__overlay-btn,
+.product-card--style5 .product-card__overlaybottom .btn.product-card__overlay-btn:hover,
+.product-card--style5 .product-card__overlaybottom .btn.product-card__overlay-btn:focus {
+  background: var(--g-cta-button) !important;
+  color: var(--g-cta-text) !important;
 }
 .product-card--style5 .product-card__overlaybottom .btn > span {
   display: inline-block;
