@@ -268,9 +268,6 @@
     "data_countdown_title": "",
     "countdown_box_border": "#fe899aff",
     "countdown_box_text_color": "#000000",
-    "data_countdown": "2026-07-11T00:00:00",
-    "enable_set_to": true,
-    "action_timer": "resets_itself",
     "icons_size": 23,
     "checkout_icon_color": "rgba(0,0,0,0)",
     "checkout_icon_1_svg": "checkmark-1",
@@ -279,6 +276,9 @@
     "show_whatsapp": false,
     "whatsapp_number": "0988164483",
     "whatsapp_msg": "Hello",
+    "data_countdown": "2026-07-11T00:00:00",
+    "enable_set_to": true,
+    "action_timer": "resets_itself",
     "shipping_calculator": false,
     "safe_checkout_cart": "",
     "enable_cart_message": true,
@@ -1170,8 +1170,7 @@
           "infinite": true,
           "width_image": 56,
           "slidestoshow": 6,
-          "slidescroll": 1,
-          "rows": "1"
+          "slidescroll": 1
         }
       },
       "16601928830ceb6d9f": {
@@ -1297,7 +1296,6 @@
           "title": "",
           "description": "",
           "arrows": false,
-          "draggable": true,
           "dots": true,
           "infinite": true,
           "show": 6,

@@ -78,11 +78,7 @@
         "topbar_appointment": "",
         "topbar_page_appointment": "",
         "enable_countdown": true,
-        "text_countdown": "",
-        "data_countdown": "2026-05-11T00:00:00",
-        "enable_set_to": true,
-        "set_to": "24",
-        "action_timer": "resets_itself"
+        "text_countdown": ""
       }
     },
     "line_dtU8Mh": {
