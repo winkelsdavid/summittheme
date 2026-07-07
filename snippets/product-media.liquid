@@ -147,6 +147,25 @@
       .product-single__thumbnails.swiper .swiper-slide-thumb-active .product-single__thumbnail:after {
         opacity: 1; visibility: visible; transform: scale(1);
       }
+      /* Vertikale Leiste (Thumbnails Left/Right, Desktop): kein Top-Versatz,
+         Pfeile mittig oben/unten + 90° rotiert (wie Original-Slick). */
+      .product-single__thumbnails.swiper.swiper-container-vertical,
+      .product-single__thumbnails.swiper.swiper-vertical { margin: 0; }
+      .product-single__thumbnails.swiper.swiper-container-vertical .swiper-button-prev,
+      .product-single__thumbnails.swiper.swiper-container-vertical .swiper-button-next,
+      .product-single__thumbnails.swiper.swiper-vertical .swiper-button-prev,
+      .product-single__thumbnails.swiper.swiper-vertical .swiper-button-next {
+        left: 50%; right: auto; transform: translateX(-50%) rotate(90deg);
+      }
+      .product-single__thumbnails.swiper.swiper-container-vertical .swiper-button-prev,
+      .product-single__thumbnails.swiper.swiper-vertical .swiper-button-prev { top: 4px; bottom: auto; }
+      .product-single__thumbnails.swiper.swiper-container-vertical .swiper-button-next,
+      .product-single__thumbnails.swiper.swiper-vertical .swiper-button-next { top: auto; bottom: 4px; }
+      /* >=5 Bilder: Thumbs fuellen die Spaltenhoehe, damit erstes/letztes Thumb
+         kantenbuendig mit dem Hauptbild abschliesst (JS setzt .thumbs-fill-vertical;
+         img ist global absolute + object-fit:cover, nur die Ratio-Box aufheben). */
+      .product-single__thumbnails.thumbs-fill-vertical .product-single__thumbnail { height: 100%; }
+      .product-single__thumbnails.thumbs-fill-vertical .image-wrap { height: 100%; padding-top: 0 !important; }
     </style>
 <div class="photos {{ layout_style }}">
     <div class="photos__item photos__item--main" data-aos="fade">

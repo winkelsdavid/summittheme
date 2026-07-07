@@ -2375,6 +2375,10 @@ theme.Product = (function () {
       // the main gallery height; re-sync on autoHeight slide changes + load.
       if (vertical) {
         var tSw = this.thumbsSwiper;
+        // >=5 Thumbs: Slides fuellen die Spalte -> erstes/letztes Thumb buendig
+        // mit Ober-/Unterkante des Hauptbilds (CSS hebt die Ratio-Box auf).
+        var slideCount = thumbsEl.querySelectorAll(".swiper-slide").length;
+        thumbsEl.classList.toggle("thumbs-fill-vertical", slideCount >= 5);
         var syncThumbHeight = function () {
           var h = mainEl.offsetHeight;
           if (h > 40) {
@@ -2386,7 +2390,17 @@ theme.Product = (function () {
         this.mainSwiper.on("slideChangeTransitionEnd", syncThumbHeight);
         window.addEventListener("load", syncThumbHeight, { once: true });
         setTimeout(syncThumbHeight, 400); // late image loads before window.load
+        if (window.ResizeObserver) {
+          if (this._thumbResizeObs) this._thumbResizeObs.disconnect();
+          this._thumbResizeObs = new ResizeObserver(syncThumbHeight);
+          this._thumbResizeObs.observe(mainEl);
+        }
       } else {
+        thumbsEl.classList.remove("thumbs-fill-vertical");
+        if (this._thumbResizeObs) {
+          this._thumbResizeObs.disconnect();
+          this._thumbResizeObs = null;
+        }
         thumbsEl.style.height = "";
       }
 
@@ -2421,6 +2435,10 @@ theme.Product = (function () {
       }
       if (this._galleryResize) {
         window.removeEventListener("resize", this._galleryResize);
+      }
+      if (this._thumbResizeObs) {
+        this._thumbResizeObs.disconnect();
+        this._thumbResizeObs = null;
       }
       if (this.mainSwiper) {
         try { this.mainSwiper.destroy(true, true); } catch (e) {}
