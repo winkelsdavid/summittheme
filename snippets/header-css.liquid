@@ -44,6 +44,14 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:bl
     border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
     overflow: hidden;
   }
+  /* Grid Banner: bei Section Width = Full randlos -> keine Rundungen
+     (hoehere Spezifitaet schlaegt auch das generische .full img/video !important) */
+  .full .img-grid-banner,
+  .full .img-grid-banner .image-content__image-wrapper,
+  .full .img-grid-banner img,
+  .full .img-grid-banner video{
+    border-radius: 0 !important;
+  }
   {%- endif -%}
 </style>
 
