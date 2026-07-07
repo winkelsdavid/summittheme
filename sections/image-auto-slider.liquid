@@ -176,12 +176,11 @@
                     {%- if block.settings.title != blank -%}
                     <h3 class="mb-3 {{ block.settings.size_text }} ">{{ block.settings.title }}</h3>
                     {%- endif -%}
-                    {%- if block.settings.content -%}
-                      <div class="rte-setting">{{ block.settings.content }}</div>
+                    {%- comment -%} Nur noch answer_content rendert (Kundenwunsch); das
+                        html-Feld 'content' wurde ersatzlos entfernt. {%- endcomment -%}
+                    {%- if block.settings.answer_content != blank -%}
+                    {{ block.settings.answer_content }}
                     {%- endif -%}
-                    {%- comment -%} answer_content (Richtext-Duplikat mit Default-Text) wird
-                        nicht mehr gerendert — nur die HTML-Description (content) zaehlt.
-                        Schema-ID bleibt wegen Nitro-Mappability erhalten. {%- endcomment -%}
                     {%- if block.settings.button != blank -%}
                       <div class="mt-4">
                         <a href="{{ block.settings.link }}" class="btn {{ block.settings.style_btn }} ">
@@ -788,14 +787,9 @@ function handleSlideChange_2(swiper) {
           "label": "Heading Size"
         },
         {
-          "type": "html",
-          "id": "content",
-          "label": "Description"
-        },
-        {
           "type": "richtext",
           "id": "answer_content",
-          "label": "Description (Legacy — Not Displayed)",
+          "label": "Description",
           "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
         },
         {
