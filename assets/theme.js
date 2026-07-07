@@ -2262,15 +2262,13 @@ theme.Product = (function () {
       }
 
       var mode = this.settings.sectionTem;
-      if (
+      // List/grid/collage keep their static desktop layout, but on mobile
+      // every style shares the media-bottom gallery (fade slider + thumbs).
+      var staticDesktop =
         mode === "media-list" ||
         mode === "media-grid" ||
         mode === "media-collage-1" ||
-        mode === "media-collage-2"
-      ) {
-        mainEl.style.opacity = "1";
-        return;
-      }
+        mode === "media-collage-2";
 
       this._galleryVertical = mode === "media-left" || mode === "media-right";
 
@@ -2296,8 +2294,74 @@ theme.Product = (function () {
         return { prev: prev, next: next };
       }
 
+      // Undo wrapOnce (leaving the static desktop markup untouched).
+      function unwrap(containerEl) {
+        var w = containerEl.querySelector(":scope > .swiper-wrapper");
+        if (w) {
+          while (w.firstChild) {
+            var c = w.firstChild;
+            if (c.nodeType === 1) {
+              c.className = c.className
+                .replace(/(^|\s)swiper-slide\S*/g, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+            }
+            containerEl.insertBefore(c, w);
+          }
+          containerEl.removeChild(w);
+        }
+        containerEl.classList.remove("swiper");
+        containerEl
+          .querySelectorAll(":scope > .swiper-button-prev, :scope > .swiper-button-next")
+          .forEach(function (b) {
+            b.parentNode.removeChild(b);
+          });
+      }
+
       this._galleryThumbsEl = thumbsEl;
       this._galleryMainEl = mainEl;
+
+      if (staticDesktop) {
+        var applyStatic = function () {
+          if (window.innerWidth < 768) {
+            if (!self._thumbNav) self._thumbNav = wrapOnce(thumbsEl, "gallery-thumb");
+            if (!self._mainNav) self._mainNav = wrapOnce(mainEl, "gallery-main");
+            self._initGallerySwipers();
+          } else {
+            if (self.thumbsSwiper) {
+              try { self.thumbsSwiper.destroy(true, true); } catch (e) {}
+              self.thumbsSwiper = null;
+            }
+            if (self.mainSwiper) {
+              try { self.mainSwiper.destroy(true, true); } catch (e) {}
+              self.mainSwiper = null;
+            }
+            unwrap(thumbsEl);
+            unwrap(mainEl);
+            self._thumbNav = null;
+            self._mainNav = null;
+            thumbsEl.style.height = "";
+            mainEl.style.opacity = "1";
+          }
+        };
+        applyStatic();
+        var wasMobileS = window.innerWidth < 768;
+        var onResizeS = function () {
+          var isMobile = window.innerWidth < 768;
+          if (isMobile !== wasMobileS) {
+            wasMobileS = isMobile;
+            applyStatic();
+          }
+        };
+        var _rts;
+        this._galleryResize = function () {
+          clearTimeout(_rts);
+          _rts = setTimeout(onResizeS, 150);
+        };
+        window.addEventListener("resize", this._galleryResize);
+        return;
+      }
+
       this._thumbNav = wrapOnce(thumbsEl, "gallery-thumb");
       this._mainNav = wrapOnce(mainEl, "gallery-main");
 

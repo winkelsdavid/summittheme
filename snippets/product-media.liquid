@@ -185,7 +185,7 @@
             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" 
               class="photo-image {% if image == featured_image %}  slick-current {% endif %} product-single__photo product__photo-container product__photo-container-{{ section.id }}"
                 id="ProductPhoto{{ section.id }}"
-                {% if section.settings.activate_side_icons %}data-items="first-slide"{% endif %}
+                {% if section.settings.activate_side_icons and media_style != 'media-grid' %}data-items="first-slide"{% endif %}
                 data-image-id="{{ image.id }}">
                 <a href="{{ image | image_url: width: 1200 }}" data-pswp-src="{{ image | image_url: width: 1400 }}" itemprop="contentUrl"  
                 data-cropped="true" 
@@ -218,7 +218,8 @@
 
                     >
               </a>
-              {% if section.settings.activate_side_icons %}
+              {% comment %} List-Grid: Side Icons komplett raus (Kundenwunsch) {% endcomment %}
+              {% if section.settings.activate_side_icons and media_style != 'media-grid' %}
                   <div class="custom_images_icons {% if section.settings.hide_mobile %} mobile_hidden {% endif %}">
                     {% for ii in (1..4) %}
                       {% assign icon = 'icon_' | append: forloop.index %}
