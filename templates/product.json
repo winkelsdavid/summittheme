@@ -1313,6 +1313,7 @@
     },
     "before_after_A4XrJM": {
       "type": "before-after",
+      "disabled": true,
       "name": "Before/After Image",
       "settings": {
         "animation": "",
@@ -1577,7 +1578,7 @@
         "table_Cf6836": {
           "type": "table",
           "settings": {
-            "heading": "Your Product",
+            "heading": "",
             "value_1": "Text",
             "icon_1": "tick",
             "value_2": "Text",
@@ -1603,7 +1604,7 @@
         "table_6LUB6X": {
           "type": "table",
           "settings": {
-            "heading": "Other Product",
+            "heading": "",
             "value_1": "Test",
             "icon_1": "cross",
             "value_2": "No",
