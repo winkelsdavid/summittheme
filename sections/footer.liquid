@@ -392,20 +392,26 @@
                   {%- if block.settings.contact_phone != blank -%}
                     <li>
                       {%- render 'icon-mobile-phone' -%}
-                      <a href="tel:{{ block.settings.contact_phone | escape | replace: " ", "" }}">{{ block.settings.contact_phone }}</a>
+                      {%- assign tel_href = block.settings.contact_phone | strip | replace: ' ', '' | replace: '/', '' -%}
+                      <a href="tel:{{ tel_href | escape }}">{{ block.settings.contact_phone }}</a>
                     </li>
                   {%- endif -%}
                   {%- if block.settings.contact_mail != blank -%}
                     <li>
                       {%- render 'icon-envelope' -%}
-                      <a href="mailto:{{ block.settings.contact_mail }}"> {{ block.settings.contact_mail }} </a>
-                      
+                      <a href="mailto:{{ block.settings.contact_mail | strip }}"> {{ block.settings.contact_mail }} </a>
+
                     </li>
                   {%- endif -%}
                   {%- if block.settings.contact_web != blank -%}
                     <li>
                       <svg aria-hidden="true" focusable="false" role="presentation" viewBox="0 0 64 64" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:4px;stroke-linecap:miter;stroke-linejoin:miter;vertical-align:middle;margin-right:0.5rem;flex:none;"><circle cx="32" cy="32" r="22"/><path d="M13 21h38M10 32h44M13 43h38M32 10c-12 8-12 37 0 44M32 10c12 8 12 37 0 44"/></svg>
-                      <a href="{{ block.settings.contact_web }}">{{ block.settings.contact_web }}</a>
+                      {%- comment -%} Ohne Protokoll wird die URL sonst relativ zum Shop aufgeloest (404). {%- endcomment -%}
+                      {%- assign web_href = block.settings.contact_web | strip -%}
+                      {%- unless web_href contains '://' -%}
+                        {%- assign web_href = 'https://' | append: web_href -%}
+                      {%- endunless -%}
+                      <a href="{{ web_href }}" target="_blank" rel="noopener">{{ block.settings.contact_web }}</a>
                     </li>
                   {%- endif -%}
                 </ul>
