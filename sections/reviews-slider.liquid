@@ -393,7 +393,7 @@ color:{{ section.settings.text_color }};
                           {% endif %}
                     </a>
                     {% else %}
-                    {% render 'brand-image', handle: 'reviews-slider--review', position: forloop.index, width: 300, alt: block.settings.name %}
+                    {% render 'brand-image', handle: 'reviews-slider--review', position: forloop.index, width: 300, alt: block.settings.name, attr_width: 45 %}
                     {% endif %}
                     <div class="review_footer_content">
                         <p><strong>{{ block.settings.title }}</strong></p>

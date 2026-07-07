@@ -639,7 +639,8 @@ display:none;
                       {% if block.settings.image_1 != blank %}
                         <img src="{{ block.settings.image_1 | img_url:"100x" }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% else %}
-                        {% render 'brand-image', handle: 'product-template-1--review_images', position: 1, width: 100 %}
+                        {%- assign b1_rv_style = '--width:' | append: block.settings.images_size | append: 'px;--width-mobile:' | append: block.settings.images_size_mobile | append: 'px' -%}
+                        {% render 'brand-image', handle: 'product-template-1--review_images', position: 1, width: 100, style: b1_rv_style %}
                       {% endif  %}
                       {% if block.settings.image_2 != blank %}
                         <img src="{{ block.settings.image_2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>

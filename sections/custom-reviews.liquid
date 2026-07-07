@@ -222,7 +222,7 @@
                     {% if block.settings.image != blank %}
                     <img src="{{ block.settings.image | image_url: width: 300 }}" height="auto" width="45" loading="lazy" alt="{{ block.settings.name }}">
                     {% else %}
-                    {% render 'brand-image', handle: 'custom-reviews--review', position: forloop.index, width: 300, alt: block.settings.name %}
+                    {% render 'brand-image', handle: 'custom-reviews--review', position: forloop.index, width: 300, alt: block.settings.name, attr_width: 45 %}
                     {% endif %}
                     <div class="c_testimonial-reviewbox-user-info-text">
                       <span class="c_testimonial-reviewbox-user-info-name" style="color:{{ block.settings.name_color }}">{{ block.settings.name }}</span>

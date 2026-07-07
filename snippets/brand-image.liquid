@@ -7,6 +7,11 @@
     position  (Block-Level)   Positions-Nr. des Blocks GLEICHEN Typs (1-basiert)
     logo_fallback (optional)  true → shop.brand.logo als Letzt-Fallback
     class / sizes / width / alt (optional; width default 1600)
+    attr_width (optional)  HTML-width-Attribut fuers <img> — Pflicht, wenn der
+                           Instanz-Pfad attribut-dimensioniert ist (z.B. width="45");
+                           ohne CSS-Sizing waechst das Fallback sonst auf
+                           Containerbreite (img{max-width:100%} global)
+    style (optional)       Inline-Style-Passthrough (z.B. --width-CSS-Vars)
 {%- endcomment -%}
 {%- liquid
   assign img = instance
@@ -29,5 +34,13 @@
   assign w = width | default: 1600
 -%}
 {%- if img != blank -%}
-  {{ img | image_url: width: w | image_tag: loading: 'lazy', class: class, sizes: sizes, alt: alt }}
+  {%- if attr_width != blank and style != blank -%}
+    {{ img | image_url: width: w | image_tag: loading: 'lazy', class: class, sizes: sizes, alt: alt, width: attr_width, style: style }}
+  {%- elsif attr_width != blank -%}
+    {{ img | image_url: width: w | image_tag: loading: 'lazy', class: class, sizes: sizes, alt: alt, width: attr_width }}
+  {%- elsif style != blank -%}
+    {{ img | image_url: width: w | image_tag: loading: 'lazy', class: class, sizes: sizes, alt: alt, style: style }}
+  {%- else -%}
+    {{ img | image_url: width: w | image_tag: loading: 'lazy', class: class, sizes: sizes, alt: alt }}
+  {%- endif -%}
 {%- endif -%}
