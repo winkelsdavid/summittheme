@@ -1501,7 +1501,13 @@ display:none;
                       font-size:{{ block.settings.box_1_font_size }}px;
                     }
                     .c_order-date svg:not(.checkmark) path{
+                      {%- comment -%} Icon Color hat Vorrang - die harte box_1_color-
+                          Regel machte das Setting vorher wirkungslos. {%- endcomment -%}
+                      {% if block.settings.icon_color != blank and block.settings.icon_color != 'rgba(0,0,0,0)' %}
+                      stroke:{{ block.settings.icon_color }}!important
+                      {% else %}
                       stroke:{{ block.settings.box_1_color }}!important
+                      {% endif %}
                     }
                     .c_order-date img{
                       margin-right:12px;
@@ -1875,6 +1881,16 @@ display:none;
                             font-size:{{ block.settings.mobile_p_c_size }}px;
                           }
                           }
+                          /* Tax Disclaimer: eigene Zeile, klein/gedimmt - stand
+                             sonst unstyled inline neben dem Preis (list--inline). */
+                          .price-{{ section.id }} .product-single__tax-disclaimer{
+                            display:block;
+                            width:100%;
+                            font-size:12px;
+                            line-height:1.4;
+                            opacity:.75;
+                            margin-top:2px;
+                          }
                 </style>
                 <ul
                   class="price-{{ section.id }}  product-block product-single__meta-list product-single__meta-price list--inline{% if shop.taxes_included or shop.shipping_policy.body != blank %} product-single__price-container{% endif %}"
@@ -1954,7 +1970,10 @@ display:none;
                   {%- if section.settings.stock_enable -%}
                     <li>{%- render 'productStock', current_variant: current_variant -%}</li>
                   {%- endif -%}
-                  {%- if block.settings.show_tax_disclaimer and current_variant.taxable -%}
+                  {%- comment -%} Nur der Merchant-Toggle entscheidet - das fruehere
+                      current_variant.taxable-Gate liess den Schalter bei Produkten
+                      ohne "Steuer berechnen" stumm wirken. {%- endcomment -%}
+                  {%- if block.settings.show_tax_disclaimer -%}
                     <li class="product-single__tax-disclaimer">{{ 'products.product.tax_disclaimer' | t }}</li>
                   {%- endif -%}
                 </ul>
