@@ -5,8 +5,8 @@
        assign layout_style = ' photos-thumb-bottom '
     when 'media-left' 
         assign layout_style = 'photos-thumb-left d-flex flex-lg-row flex-column'
-    when 'media-right' 
-        assign layout_style = ' photos-thumb-right d-flex '
+    when 'media-right'
+        assign layout_style = ' photos-thumb-right d-flex flex-lg-row flex-column '
     when 'media-nothumb' 
         assign layout_style = ' photos-nothumb '
     when 'media-list' 
@@ -49,11 +49,13 @@
             position: relative;
             flex: 1 1 auto;
         }
-        .photos-thumb-right .photos__item--thumbs{
-            flex: 0 0 80px;
-            max-width: 80px;
-            order: 1;
-            margin-left: 15px;
+        @media(min-width:750px){
+          .photos-thumb-right .photos__item--thumbs{
+              flex: 0 0 80px;
+              max-width: 80px;
+              order: 1;
+              margin-left: 15px;
+          }
         }
         .photos-thumb-right .product-single__thumbnails{
             margin: -8px 0;
