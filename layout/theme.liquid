@@ -130,6 +130,25 @@
           margin: 0 8px 0 0;
           vertical-align: middle;
       }
+  @media (max-width: 768px){
+    /* Mobil einzeilig: Sterne + Text + Trust-Logo duerfen nicht umbrechen;
+       bei Platznot schrumpft nur der Text (Ellipsis), nie das Layout. */
+    .trustpilot-block-rating-text{
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+    .trustpilot-block-rating-text .trustpilot-star-five,
+    .trustpilot-block-rating-text .trustpilot_container{
+      flex: none;
+    }
+    .trustpilot-block-rating-text .rating-excellent{
+      flex: 0 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
 
   .rating-custom-2{
       display: flex;
