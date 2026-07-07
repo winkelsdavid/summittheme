@@ -39,12 +39,12 @@
           "type": "reviews_start",
           "settings": {
             "radius": 10,
-            "stars_height": 17,
+            "stars_height": 15,
             "stars_rating": 4.5,
             "text": "",
             "show_truspilot": true,
-            "trust_icon": "google",
-            "font_size": 13,
+            "trust_icon": "trustpilot",
+            "font_size": 12,
             "text_color": "",
             "border_color": "#b1b1b1",
             "stars_color": "#34bf49",
@@ -1382,22 +1382,12 @@
             "title": "Title",
             "content": "Show what makes your product valuable to your customers."
           }
-        },
-        "tab_TCcTAU": {
-          "type": "tab",
-          "settings": {
-            "icons_width": 32,
-            "icons_width_mobile": 24,
-            "title": "Title",
-            "content": "Show what makes your product valuable to your customers."
-          }
         }
       },
       "block_order": [
         "tab_4qYP3H",
         "tab_PMyeRJ",
-        "tab_zFF9rj",
-        "tab_TCcTAU"
+        "tab_zFF9rj"
       ],
       "name": "Image With Tabs",
       "settings": {
@@ -1407,7 +1397,7 @@
         "layout": "left",
         "image_height": 700,
         "image_height_mobile": 500,
-        "heading_size": "h1",
+        "heading_size": "h3",
         "heading_color": "",
         "text_size": 16,
         "text_size_mobile": 14,
@@ -1488,7 +1478,7 @@
         "title": "",
         "align_heading": "center",
         "heading": "Transformative Benefits",
-        "h_size": "h4",
+        "h_size": "h3",
         "progress_bars_size": 13,
         "progress_bars_size_mobile": 13,
         "box_background": "",
