@@ -683,6 +683,7 @@ display:none;
                     </div>
                 </div>
               {% when 'custom_review' %}
+                {%- assign b1_pos_cr = b1_pos_cr | plus: 1 -%}
                 <style>
                       .customer-review-cont{
                         padding-top:{{ block.settings.padding_top }}px;
@@ -869,7 +870,8 @@ display:none;
                           loading="lazy"
                         >
                         {%- else -%}
-                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--custom_review', position: b1_pos_cr, width: 200, alt: block.settings.name %}{%- endcapture -%}
+                          {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                         {%- endif -%}
                       </div>
                     </div>
@@ -1400,9 +1402,10 @@ display:none;
                         {% else %}
                         {% if videos_found == false %}
                         {% if forloop.index < 4 %}
+                        {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--videos', position: forloop.index, width: 500 %}{%- endcapture -%}
                         <div class="video_item">
                           <div class="video_item_c">
-                              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                              {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                           </div>
                         </div>
                       {% endif %}

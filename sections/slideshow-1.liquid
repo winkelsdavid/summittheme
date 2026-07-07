@@ -1,5 +1,3 @@
-{%- comment -%} B1 E2E-Probe (TEMPORÄR, wird nach GO/NOGO entfernt — §5) {%- endcomment -%}
-{% render 'b1-probe', handle: 'slideshow-1--slide' %}
 {%- if section.settings.enable_slideshow -%}
 {%- liquid
   assign rotate = section.settings.autorotate
@@ -734,12 +732,17 @@ margin-right:auto;
           </div>
           {% endif %}
         {%- elsif block.settings.image == blank and block.settings.image_mobile == blank -%}
+        {%- capture b1_fb -%}{% render 'brand-image', handle: 'slideshow-1--slide', position: forloop.index, width: 1920, class: 'scale-in' %}{%- endcapture -%}
+        {%- if b1_fb != blank -%}
+        <div class="slideshow__image box ratio-container js">{{ b1_fb }}</div>
+        {%- else -%}
         <div class="slideshow__image js">
           <div class="placeholder-background">
             {%- capture current -%}{%- cycle 1, 2 -%}{%- endcapture -%}
             {{ 'lifestyle-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
           </div>
         </div>
+        {%- endif -%}
         {%- else -%}
         <div class="{% if block.settings.image_mobile != blank %} d-none d-lg-block {% endif %} {% if block.settings.image2 != blank %} w-50 slide_img_left {% endif %} slideshow__image box ratio-container">
              {%- liquid

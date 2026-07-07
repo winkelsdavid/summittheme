@@ -97,6 +97,7 @@
                   </div>
 
                 {%- when 'video' -%}
+                  {%- assign b1_pos_vid = b1_pos_vid | plus: 1 -%}
 
 
                   {%- if block.settings.show_overlay -%}
@@ -140,7 +141,8 @@
                     <div class="video-section__cover">
                       <div class="video-section__cover-background">
                         {%- if block.settings.cover_image == blank -%}
-                          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                          {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--video', position: b1_pos_vid, width: 1920, class: 'image-content__image' %}{%- endcapture -%}
+                          {%- if b1_fb != blank -%}<div class="position-relative image-content__image-wrapper">{{ b1_fb }}</div>{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                         {%- else -%}
                           <div class="position-relative image-content__image-wrapper " style="padding-top:{{ 1 | divided_by: block.settings.cover_image.aspect_ratio | times: 100 }}%;">
                             {%- liquid
@@ -339,6 +341,7 @@
                     </div>
                   {% endif %}
                   {%- when 'promo' -%}
+                    {%- assign b1_pos_promo = b1_pos_promo | plus: 1 -%}
                     {%- liquid
                       assign promo_banner_height = block.settings.promo_banner_height
                       assign promo_banner_height_mobile = block.settings.promo_banner_height_mobile
@@ -403,11 +406,12 @@
                               width="{{ image.width }}"
                               height="{{ image.height }}">
                         {%- else -%}
+                          {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--promo', position: b1_pos_promo, width: 1066, class: 'image-content__image scale-in' %}{%- endcapture -%}
                           <div class="image-content__image">
-                            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                            {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                           </div>
                         {%- endif -%}
-                          
+
                       </div>
                       <div class="position-absolute promo_advance-content d-flex {{ positiontxt }}" style="--g-font-color-subtop:{{ promo_color }}; --g-color-heading:{{ promo_color }}; --color-body-text: {{ promo_color }}">
                           <a class="promo_advance--link position-absolute promo-overlay" href="{{ promo_link }}" 

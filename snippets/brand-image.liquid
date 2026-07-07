@@ -20,32 +20,8 @@
     else
       assign idx = slot | default: 1 | times: 1
     endif
-    case idx
-      when 1
-        assign img = metaobjects.section_fallback[handle]['image_1'].value
-      when 2
-        assign img = metaobjects.section_fallback[handle]['image_2'].value
-      when 3
-        assign img = metaobjects.section_fallback[handle]['image_3'].value
-      when 4
-        assign img = metaobjects.section_fallback[handle]['image_4'].value
-      when 5
-        assign img = metaobjects.section_fallback[handle]['image_5'].value
-      when 6
-        assign img = metaobjects.section_fallback[handle]['image_6'].value
-      when 7
-        assign img = metaobjects.section_fallback[handle]['image_7'].value
-      when 8
-        assign img = metaobjects.section_fallback[handle]['image_8'].value
-      when 9
-        assign img = metaobjects.section_fallback[handle]['image_9'].value
-      when 10
-        assign img = metaobjects.section_fallback[handle]['image_10'].value
-      when 11
-        assign img = metaobjects.section_fallback[handle]['image_11'].value
-      when 12
-        assign img = metaobjects.section_fallback[handle]['image_12'].value
-    endcase
+    assign fname = 'image_' | append: idx
+    assign img = metaobjects.section_fallback[handle][fname].value
   endif
   if img == blank and logo_fallback == true
     assign img = shop.brand.logo
