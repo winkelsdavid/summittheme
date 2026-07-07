@@ -330,8 +330,12 @@ display:none;
       font-size:10px;
       width:100%;
     }
+      /* Badge-Geometrie "1b Ausgewogen" (Claude-Design-Mock): Icon 36px,
+         gap 7px, padding 12px 4px, alle vier Badges gleich hoch. */
       .custom_media_icons {
       position: relative;
+      padding: 12px 4px;
+      gap: 7px;
   }
      .custom_media_icon_item {
       flex: 0 0 calc(25% - 10px*3/4);
@@ -340,8 +344,8 @@ display:none;
     padding-top:0;
   }
       .custom_media_icon_item img{
-    width:var(--mobile-width);
-    height:var(--mobile-width);
+    width:var(--mobile-width, 36px);
+    height:var(--mobile-width, 36px);
   }
   }
     @media (max-width:768px){
@@ -3449,9 +3453,9 @@ function formatPrice(value) {
       "id": "mobile_width",
       "label": "Icons Size Mobile",
       "min": 10,
-      "max": 30,
+      "max": 60,
       "step": 1,
-      "default": 30
+      "default": 36
     },
     {
       "type": "image_picker",
