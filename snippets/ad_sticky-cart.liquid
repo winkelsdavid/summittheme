@@ -313,6 +313,31 @@ color:var(--sticky-cart-cl_2);
     margin:0!important;
     }
     }
+    /* --- Responsive-Haertung: alle Breiten --- */
+    .cart_items{ width:100%; }
+    .sticky-cart-selectors{ flex-wrap:wrap; justify-content:center; row-gap:6px; }
+    /* Tablet-Band 769-991: Bild/Titel sind (d-lg) verborgen - Reihe kompakt zentrieren */
+    @media (min-width:768.1px) and (max-width:991.98px){
+      #js-sticky-prd{ justify-content:center; column-gap:16px; }
+      .c_button_text_sticky{ justify-content:center; }
+    }
+    @media (max-width:768px){
+      #js-sticky-prd{ padding:0 16px; flex-wrap:wrap; row-gap:6px; }
+      /* Close-Button lag mit left:-50px ausserhalb des Viewports */
+      #js-sticky-close{
+        left:auto; right:10px; top:-48px; margin-top:0;
+        width:36px; height:36px;
+        background:var(--sticky-cart-mix);
+      }
+      .active.disable #js-sticky-close{ top:-48px; }
+      #js-sticky-btn{ flex:1 1 100%; width:100%; margin:4px 0!important; }
+    }
+    @media (max-width:380px){
+      #js-sticky-prd{ padding:0 10px; }
+      .sticky-cart-select select{ min-width:60px; padding:18px 10px 4px 10px; }
+      .sticky-cart-select label{ left:10px; }
+      .sticky-add-to-cart__shipping{ font-size:11px; }
+    }
   </style>
 <div id="js-anchor-sticky-cart"></div>
   <div class="sticky-cart-wr shadow d-flex {% if product.has_only_default_variant %} sticky-unvariant {% endif %} {{ section.settings.enable_2_on }}" >
