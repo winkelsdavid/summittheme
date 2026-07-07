@@ -1,0 +1,828 @@
+<!-- scratch-newsletter.liquid — Scratch Newsletter Popup (Claude-Design-Port, 1:1) -->
+{%- if section.settings.enable_popup -%}
+{%- liquid
+  assign s = section.settings
+  assign is_regular = false
+  if s.popup_mode == 'regular'
+    assign is_regular = true
+  endif
+-%}
+<style>
+  /* ===== Scratch Newsletter Popup (scnl) — Design-Port 1:1 ===== */
+  @keyframes scnlFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes scnlFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scnlPopIn { from { opacity: 0; transform: scale(0.965) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+  @keyframes scnlShine { from { left: -45%; } to { left: 115%; } }
+
+  dialog.scnl {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: clamp(10px, 3vw, 28px);
+    border: 0;
+    background: transparent;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1060;
+    color: #14120F;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  dialog.scnl[open] { display: flex; animation: scnlFadeIn 0.35s ease both; }
+  dialog.scnl::backdrop { background: rgba(252, 251, 247, 0.82); }
+
+  .scnl__box {
+    position: relative;
+    width: min(1020px, 96vw);
+    max-height: min(92vh, 780px);
+    overflow: auto;
+    background: #F5F2EB;
+    box-shadow: 0 40px 90px rgba(20, 18, 15, 0.22);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+    animation: scnlPopIn 0.5s cubic-bezier(0.22, 0.8, 0.3, 1) both;
+  }
+  dialog.scnl--full { padding: 0; }
+  dialog.scnl--full .scnl__box { width: 100%; height: 100%; max-height: none; }
+
+  .scnl__close {
+    position: absolute;
+    top: 8px; right: 10px;
+    z-index: 6;
+    background: none; border: none;
+    font-size: 24px; line-height: 1;
+    color: #14120F; cursor: pointer;
+    padding: 8px;
+  }
+  .scnl__close:hover { color: #6E6759; }
+
+  .scnl__media { position: relative; min-height: 280px; background: #E9E4D8; }
+  .scnl__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  .scnl__content {
+    position: relative;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: clamp(34px, 5vw, 54px) clamp(22px, 4vw, 46px);
+    min-height: min(560px, 80vh);
+    box-sizing: border-box;
+  }
+  .scnl__logo {
+    position: absolute;
+    top: clamp(14px, 2.5vw, 22px); left: 50%; transform: translateX(-50%);
+    font-family: Marcellus, Georgia, serif;
+    font-size: 15px; letter-spacing: 6px; padding-left: 6px;
+    color: #14120F;
+  }
+
+  .scnl__step { display: none; flex-direction: column; align-items: center; width: 100%; }
+  .scnl__step.is-active { display: flex; animation: scnlFadeUp 0.5s ease both; }
+
+  .scnl__serif { font-family: Marcellus, Georgia, serif; font-weight: 400; }
+  .scnl__h-top { font-size: 20px; letter-spacing: 4px; padding-left: 4px; color: #8A8375; }
+  .scnl__h-main { font-size: 30px; letter-spacing: 2px; padding-left: 2px; margin: 6px 0 26px; line-height: 1.25; }
+  .scnl__sub { font-size: 12px; letter-spacing: 1px; color: #6E6759; }
+  .scnl__legal { max-width: 330px; font-size: 10px; line-height: 1.7; color: #8A8375; margin: 16px 0 0; }
+  .scnl__legal a { color: inherit; }
+  .scnl__hint { margin-top: 16px; font-size: 10px; letter-spacing: 1.5px; color: #8A8375; }
+
+  .scnl__btn {
+    position: relative; overflow: hidden;
+    background: #14120F; color: #FAF8F4;
+    border: none; padding: 14px 10px;
+    font-size: 11px; letter-spacing: 3px;
+    cursor: pointer; font-family: inherit;
+    width: 100%;
+    transition: background 0.2s ease;
+  }
+  .scnl__btn:hover { background: #2B2721; }
+  .scnl__btn .scnl__shine {
+    position: absolute; top: 0; bottom: 0; left: -45%; width: 38%;
+    background: linear-gradient(105deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+    animation: scnlShine 1.15s ease 0.2s 2 both;
+    pointer-events: none;
+    display: none;
+  }
+  .scnl.is-revealed .scnl__btn--claim .scnl__shine { display: block; }
+
+  .scnl__form { width: min(320px, 100%); display: flex; flex-direction: column; }
+  .scnl__input {
+    width: 100%; box-sizing: border-box;
+    background: #FFFFFF; border: 1px solid #14120F; border-radius: 0;
+    padding: 13px 14px; font-size: 13px; text-align: center;
+    outline: none; font-family: inherit; color: #14120F;
+  }
+  .scnl__input:focus { box-shadow: 0 0 0 1px #14120F; }
+  .scnl__form .scnl__btn { margin-top: 10px; }
+  .scnl__error {
+    display: none;
+    background: #F6E2E0; color: #B3423B;
+    font-size: 10.5px; letter-spacing: 0.5px;
+    padding: 7px 10px; text-align: left;
+  }
+  .scnl__form.has-error .scnl__error { display: block; }
+
+  .scnl__phone-row { display: flex; align-items: stretch; background: #FFFFFF; border: 1px solid #14120F; }
+  .scnl__phone-row select {
+    border: none; outline: none; background: transparent;
+    font-size: 13px; padding: 12px 4px 12px 10px;
+    border-right: 1px solid #E2DCCE; cursor: pointer;
+    font-family: inherit; color: #14120F;
+    width: auto; min-width: 0; height: auto;
+  }
+  .scnl__phone-row input {
+    flex: 1; min-width: 0; border: none; outline: none; background: transparent;
+    padding: 13px 12px; font-size: 13px; text-align: center;
+    font-family: inherit; color: #14120F;
+  }
+
+  /* Schritt 1 — Rubbelkarte */
+  .scnl__scratch-h { font-size: 21px; letter-spacing: 5px; padding-left: 5px; }
+  .scnl__scratch-sub { margin: 9px 0 26px; }
+  .scnl__card-wrap { position: relative; width: min(330px, 100%); }
+  .scnl__card {
+    border: 1px solid #DCD5C6; background: #FBFAF6;
+    padding: 26px 22px 22px;
+    display: flex; flex-direction: column; align-items: center; gap: 13px;
+  }
+  .scnl__card-kicker { font-size: 11px; letter-spacing: 3px; color: #6E6759; }
+  .scnl__card-prize { font-size: 29px; line-height: 1.12; letter-spacing: 1px; }
+  .scnl__btn--claim { margin-top: 5px; padding: 13px 10px; font-size: 11px; }
+  .scnl__foil { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; touch-action: none; }
+  .scnl__fx { position: absolute; inset: -34px; z-index: 3; pointer-events: none; }
+
+  /* Schritt 4 — Erfolg */
+  .scnl__done-kicker { font-size: 11px; letter-spacing: 3px; color: #6E6759; }
+  .scnl__done-value { font-size: 46px; letter-spacing: 2px; margin: 10px 0 22px; }
+  .scnl__code-row { display: flex; align-items: stretch; gap: 10px; }
+  .scnl__code {
+    border: 1px dashed #14120F; padding: 13px 20px;
+    font-size: 14px; font-weight: 600; letter-spacing: 4px;
+    display: flex; align-items: center;
+  }
+  .scnl__copy {
+    background: #14120F; color: #FAF8F4; border: none;
+    padding: 0 18px; font-size: 10px; letter-spacing: 2px;
+    cursor: pointer; font-family: inherit;
+  }
+  .scnl__copy:hover { background: #2B2721; }
+  .scnl__done-note { margin-top: 16px; font-size: 11px; color: #8A8375; letter-spacing: 0.5px; }
+  .scnl__btn--done { margin-top: 24px; width: min(320px, 100%); }
+
+  @media (max-width: 719px) {
+    .scnl__media { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    dialog.scnl[open], .scnl__box, .scnl__step.is-active, .scnl__btn .scnl__shine { animation: none; }
+  }
+</style>
+
+<dialog
+  class="scnl scnl--{{ s.popup_size }}"
+  id="scnl-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  aria-label="{{ 'general.newsletter_form.newsletter_placeholder' | t | escape }}"
+>
+  <div class="scnl__box">
+    <button type="button" class="scnl__close" data-scnl-close aria-label="{{ 'general.accessibility.close_modal' | t | default: 'Close' }}">&times;</button>
+
+    <div class="scnl__media" aria-hidden="true">
+      {%- if s.popup_image != blank -%}
+        {{ s.popup_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '400, 600, 800, 1000', sizes: '(max-width: 719px) 0px, 510px', alt: '' }}
+      {%- else -%}
+        {%- capture b1_fb -%}{% render 'brand-image', handle: 'scratch-newsletter', slot: 1, width: 1000 %}{%- endcapture -%}
+        {%- if b1_fb != blank -%}{{ b1_fb }}{%- endif -%}
+      {%- endif -%}
+    </div>
+
+    <div class="scnl__content">
+      {%- if s.logo_text != blank -%}
+        <div class="scnl__logo">{{ s.logo_text }}</div>
+      {%- endif -%}
+
+      {%- unless is_regular -%}
+      {%- comment -%} Schritt 1 — Rubbelkarte {%- endcomment -%}
+      <div class="scnl__step is-active" data-scnl-step="scratch">
+        <div class="scnl__serif scnl__scratch-h">{{ s.scratch_heading }}</div>
+        <div class="scnl__sub scnl__scratch-sub">{{ s.scratch_subheading }}</div>
+        <div class="scnl__card-wrap">
+          <div class="scnl__card">
+            <div class="scnl__card-kicker">{{ s.card_kicker }}</div>
+            <div class="scnl__serif scnl__card-prize">{{ s.card_prize }}</div>
+            <button type="button" class="scnl__btn scnl__btn--claim" data-scnl-claim>
+              {{ s.claim_button }}
+              <span class="scnl__shine"></span>
+            </button>
+          </div>
+          <canvas class="scnl__foil" data-scnl-foil></canvas>
+          <canvas class="scnl__fx" data-scnl-fx></canvas>
+        </div>
+        <div class="scnl__hint" data-scnl-hint>{{ s.hint_scratch }}</div>
+      </div>
+      {%- else -%}
+      {%- comment -%} Regular-Intro (ersetzt Schritt 1) {%- endcomment -%}
+      <div class="scnl__step is-active" data-scnl-step="intro">
+        <div class="scnl__serif scnl__h-top">{{ s.regular_heading_top }}</div>
+        <div class="scnl__serif scnl__h-main" style="margin-bottom:0; max-width:360px;">{{ s.regular_heading }}</div>
+        <div class="scnl__sub" style="letter-spacing:0.5px; margin:14px 0 26px; max-width:330px; line-height:1.7;">{{ s.regular_subheading }}</div>
+        <form class="scnl__form" data-scnl-email-form novalidate>
+          <input class="scnl__input" data-scnl-email type="email" inputmode="email" autocomplete="email" placeholder="{{ s.email_placeholder | escape }}" aria-label="{{ s.email_placeholder | escape }}">
+          <div class="scnl__error" role="alert">{{ s.email_error }}</div>
+          <button type="submit" class="scnl__btn">{{ s.regular_button }}</button>
+        </form>
+        <p class="scnl__legal">{{ s.email_legal }}</p>
+      </div>
+      {%- endunless -%}
+
+      {%- comment -%} Schritt 2 — E-Mail (Scratch-Flow) {%- endcomment -%}
+      {%- unless is_regular -%}
+      <div class="scnl__step" data-scnl-step="email">
+        <div class="scnl__serif scnl__h-top">{{ s.email_heading_top }}</div>
+        <div class="scnl__serif scnl__h-main">{{ s.email_heading }}</div>
+        <form class="scnl__form" data-scnl-email-form novalidate>
+          <input class="scnl__input" data-scnl-email type="email" inputmode="email" autocomplete="email" placeholder="{{ s.email_placeholder | escape }}" aria-label="{{ s.email_placeholder | escape }}">
+          <div class="scnl__error" role="alert">{{ s.email_error }}</div>
+          <button type="submit" class="scnl__btn">{{ s.email_button }}</button>
+        </form>
+        <p class="scnl__legal">{{ s.email_legal }}</p>
+      </div>
+      {%- endunless -%}
+
+      {%- comment -%} Schritt 3 — Telefon (optional) {%- endcomment -%}
+      {%- if s.enable_phone_step -%}
+      <div class="scnl__step" data-scnl-step="phone">
+        <div class="scnl__serif" style="font-size:28px; letter-spacing:2.5px; padding-left:2px;">{{ s.phone_heading }}</div>
+        <div class="scnl__sub" style="margin:8px 0 18px;">{{ s.phone_subheading }}</div>
+        <p class="scnl__legal" style="margin:0 0 16px;">{{ s.phone_legal }}</p>
+        <form class="scnl__form" data-scnl-phone-form novalidate>
+          <div class="scnl__phone-row">
+            <select data-scnl-country aria-label="Country"></select>
+            <input data-scnl-phone type="tel" autocomplete="tel" placeholder="{{ s.phone_placeholder | escape }}" aria-label="{{ s.phone_placeholder | escape }}">
+          </div>
+          <div class="scnl__error" role="alert">{{ s.phone_error }}</div>
+          <button type="submit" class="scnl__btn">{{ s.phone_button }}</button>
+        </form>
+      </div>
+      {%- endif -%}
+
+      {%- comment -%} Schritt 4 — Erfolg {%- endcomment -%}
+      <div class="scnl__step" data-scnl-step="done">
+        <div class="scnl__done-kicker">{% if is_regular %}{{ s.regular_success_kicker }}{% else %}{{ s.success_kicker }}{% endif %}</div>
+        <div class="scnl__serif scnl__done-value">{{ s.discount_value }}</div>
+        <div class="scnl__code-row">
+          <div class="scnl__code" data-scnl-code>{{ s.discount_code }}</div>
+          <button type="button" class="scnl__copy" data-scnl-copy data-label="{{ s.copy_label | escape }}" data-copied="{{ s.copied_label | escape }}">{{ s.copy_label }}</button>
+        </div>
+        <div class="scnl__done-note">{{ s.success_note }}</div>
+        <button type="button" class="scnl__btn scnl__btn--done" data-scnl-close>{{ s.success_button }}</button>
+      </div>
+
+      {%- comment -%} Echtes Shopify-Customer-Form (per fetch abgeschickt, kein Reload) {%- endcomment -%}
+      <div hidden aria-hidden="true">
+        {% form 'customer', id: 'scnl-form-real' %}
+          <input type="hidden" name="contact[tags]" value="newsletter,popup">
+          <input type="hidden" name="contact[email]" data-scnl-real-email value="">
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script type="application/json" data-scnl-config="{{ section.id }}">
+{
+  "mode": {{ s.popup_mode | json }},
+  "testMode": {{ s.test_mode | json }},
+  "designMode": {% if request.design_mode %}true{% else %}false{% endif %},
+  "delay": {{ s.popup_delay | json }},
+  "cookieDaysClosed": {{ s.cookie_days_closed | json }},
+  "cookieDaysSubscribed": {{ s.cookie_days_subscribed | json }},
+  "scratchStyle": {{ s.scratch_style | json }},
+  "revealThreshold": {{ s.reveal_threshold | json }},
+  "foilText": {{ s.foil_text | json }},
+  "phoneStep": {{ s.enable_phone_step | json }},
+  "hintScratch": {{ s.hint_scratch | json }},
+  "hintRevealed": {{ s.hint_revealed | json }},
+  "discountCode": {{ s.discount_code | json }}
+}
+</script>
+
+<script>
+/* Scratch Newsletter Popup — Vanilla-Port der Claude-Design-Logik (keine Libs). */
+(function () {
+  "use strict";
+  var sectionId = {{ section.id | json }};
+  var dialog = document.getElementById("scnl-" + sectionId);
+  var cfgEl = document.querySelector('[data-scnl-config="' + sectionId + '"]');
+  if (!dialog || !cfgEl) return;
+  var cfg = JSON.parse(cfgEl.textContent);
+
+  var COOKIE_CLOSED = "scnl_closed";
+  var COOKIE_DONE = "scnl_done";
+  var COUNTRIES = [
+    { code: "US", flag: "🇺🇸", dial: "+1", min: 10, max: 10 },
+    { code: "CA", flag: "🇨🇦", dial: "+1", min: 10, max: 10 },
+    { code: "GB", flag: "🇬🇧", dial: "+44", min: 9, max: 11 },
+    { code: "DE", flag: "🇩🇪", dial: "+49", min: 8, max: 12 },
+    { code: "FR", flag: "🇫🇷", dial: "+33", min: 9, max: 9 },
+    { code: "IT", flag: "🇮🇹", dial: "+39", min: 9, max: 11 },
+    { code: "ES", flag: "🇪🇸", dial: "+34", min: 9, max: 9 },
+    { code: "NL", flag: "🇳🇱", dial: "+31", min: 9, max: 9 },
+    { code: "AT", flag: "🇦🇹", dial: "+43", min: 8, max: 12 },
+    { code: "CH", flag: "🇨🇭", dial: "+41", min: 9, max: 9 },
+    { code: "AU", flag: "🇦🇺", dial: "+61", min: 9, max: 9 }
+  ];
+  var PALETTES = {
+    silver: ["#DAD6CD", "#C7C2B6", "#F1EEE7", "#B5AFA1"],
+    gold: ["#E3C57E", "#CBA352", "#F4E3B2", "#B98F3E"],
+    black: ["#4A463C", "#2E2B24", "#6E6759", "#57534A"]
+  };
+
+  var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var foil = null, fx = null, fxRaf = 0, revealed = false, copyT = 0;
+
+  function getCookie(name) {
+    var m = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+    return m ? m[1] : null;
+  }
+  function setCookie(name, value, days) {
+    if (cfg.designMode || cfg.testMode) return;
+    var d = new Date();
+    d.setTime(d.getTime() + days * 864e5);
+    document.cookie = name + "=" + value + "; expires=" + d.toUTCString() + "; path=/; SameSite=Lax";
+  }
+
+  function styleKey() {
+    return PALETTES[cfg.scratchStyle] ? cfg.scratchStyle : "silver";
+  }
+
+  /* ---------- Steps ---------- */
+  function showStep(name) {
+    dialog.querySelectorAll(".scnl__step").forEach(function (el) {
+      var active = el.getAttribute("data-scnl-step") === name;
+      el.classList.remove("is-active");
+      if (active) {
+        void el.offsetWidth; /* Animation neu triggern */
+        el.classList.add("is-active");
+      }
+    });
+    var first = dialog.querySelector('[data-scnl-step="' + name + '"] input, [data-scnl-step="' + name + '"] button');
+    if (first && name !== "scratch") first.focus({ preventScroll: true });
+  }
+
+  /* ---------- Open/Close ---------- */
+  function openPopup() {
+    if (dialog.open) return;
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+    var foilEl = dialog.querySelector("[data-scnl-foil]");
+    if (foilEl && !revealed) requestAnimationFrame(function () { setupFoil(foilEl); });
+    var fxEl = dialog.querySelector("[data-scnl-fx]");
+    if (fxEl) requestAnimationFrame(function () { setupFx(fxEl); });
+  }
+  function closePopup(subscribed) {
+    if (dialog.open) dialog.close();
+    document.body.style.overflow = "";
+    cancelAnimationFrame(fxRaf);
+    if (subscribed) setCookie(COOKIE_DONE, "1", cfg.cookieDaysSubscribed);
+    else if (!getCookie(COOKIE_DONE)) setCookie(COOKIE_CLOSED, "1", cfg.cookieDaysClosed);
+  }
+  dialog.addEventListener("cancel", function () { closePopup(false); }); /* Esc */
+  dialog.addEventListener("click", function (e) {
+    if (e.target === dialog) closePopup(false); /* Klick auf Backdrop */
+  });
+  dialog.querySelectorAll("[data-scnl-close]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      closePopup(btn.classList.contains("scnl__btn--done"));
+    });
+  });
+
+  /* ---------- Foil (Rubbelfolie) ---------- */
+  function paintFoil() {
+    if (!foil) return;
+    var ctx = foil.ctx, w = foil.w, h = foil.h, key = styleKey(), i, x, y;
+    ctx.save();
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = 1;
+    ctx.clearRect(0, 0, w, h);
+    if (key === "black") {
+      ctx.fillStyle = "#17150F";
+      ctx.fillRect(0, 0, w, h);
+      ctx.save();
+      ctx.translate(w / 2, h / 2); ctx.rotate(-0.32);
+      ctx.fillStyle = "rgba(250,248,244,0.08)";
+      ctx.font = "500 10px Helvetica, Arial, sans-serif";
+      for (y = -h; y < h; y += 24) {
+        for (x = -w; x < w; x += 78) {
+          ctx.fillText("M Y S T E R Y", x + (Math.abs(y / 24) % 2) * 39, y);
+        }
+      }
+      ctx.restore();
+    } else {
+      var g = ctx.createLinearGradient(0, 0, w, h);
+      if (key === "gold") {
+        g.addColorStop(0, "#D9B972"); g.addColorStop(0.28, "#F0DFAC"); g.addColorStop(0.52, "#C29A4B"); g.addColorStop(0.78, "#EBD59B"); g.addColorStop(1, "#D9B972");
+      } else {
+        g.addColorStop(0, "#E9E6DF"); g.addColorStop(0.28, "#CFCBC0"); g.addColorStop(0.52, "#F3F1EA"); g.addColorStop(0.78, "#C4BFB2"); g.addColorStop(1, "#E9E6DF");
+      }
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+      ctx.save();
+      ctx.translate(w / 2, h / 2); ctx.rotate(-0.32);
+      for (i = -12; i <= 12; i++) {
+        var yy = i * (h / 10);
+        ctx.fillStyle = i % 2 ? "rgba(255,255,255,0.10)" : "rgba(70,64,52,0.05)";
+        ctx.fillRect(-w, yy, w * 2, 1 + Math.abs(i % 3));
+      }
+      ctx.restore();
+      for (i = 0; i < 24; i++) {
+        var sx = 10 + Math.random() * (w - 20), sy = 10 + Math.random() * (h - 20);
+        ctx.save();
+        ctx.translate(sx, sy);
+        ctx.fillStyle = key === "gold" ? "rgba(255,246,220,0.8)" : "rgba(255,255,255,0.7)";
+        ctx.fillRect(-3.5, -0.5, 7, 1);
+        ctx.fillRect(-0.5, -3.5, 1, 7);
+        ctx.restore();
+      }
+    }
+    ctx.strokeStyle = key === "black" ? "rgba(244,241,234,0.35)" : "rgba(40,36,28,0.3)";
+    ctx.setLineDash([3, 5]); ctx.lineWidth = 1;
+    ctx.strokeRect(9.5, 9.5, w - 19, h - 19);
+    ctx.setLineDash([]);
+    var ink = key === "black" ? "rgba(244,241,234,0.92)" : (key === "gold" ? "#5F4712" : "#5D584D");
+    ctx.fillStyle = ink;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    try { ctx.letterSpacing = "3px"; } catch (err) {}
+    ctx.font = "600 11px Helvetica, Arial, sans-serif";
+    ctx.fillText(cfg.foilText || "SCRATCH TO REVEAL", w / 2 + 1.5, h / 2);
+    try { ctx.letterSpacing = "0px"; } catch (err) {}
+    ctx.globalAlpha = 0.55;
+    ctx.fillRect(w / 2 - 26, h / 2 - 17, 52, 1);
+    ctx.fillRect(w / 2 - 26, h / 2 + 16, 52, 1);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  }
+
+  function resetMask() {
+    if (!foil) return;
+    var m = foil.mctx;
+    m.globalCompositeOperation = "source-over";
+    m.fillStyle = "#000";
+    m.fillRect(0, 0, foil.mask.width, foil.mask.height);
+    m.globalCompositeOperation = "destination-out";
+    m.lineCap = "round"; m.lineJoin = "round"; m.strokeStyle = "rgba(0,0,0,1)";
+  }
+
+  function pt(e) {
+    var r = foil.el.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+
+  function stroke(a, b) {
+    if (!foil) return;
+    var ctx = foil.ctx, bw = 42;
+    ctx.globalCompositeOperation = "destination-out";
+    ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "rgba(0,0,0,1)";
+    ctx.lineWidth = bw;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    ctx.globalAlpha = 0.32; ctx.lineWidth = bw + 18;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    ctx.globalAlpha = 1;
+    var m = foil.mctx, s = foil.ms;
+    m.lineWidth = (bw + 10) / s;
+    m.beginPath(); m.moveTo(a.x / s, a.y / s); m.lineTo(b.x / s, b.y / s); m.stroke();
+    var len = Math.hypot(b.x - a.x, b.y - a.y);
+    foil.strokeAcc += len + 1.5;
+    if (len > 1) spawn(b.x, b.y, Math.min(3, 1 + len / 14));
+    if (foil.strokeAcc > 130 && !foil.queued) {
+      foil.queued = true;
+      requestAnimationFrame(function () {
+        if (!foil) return;
+        foil.queued = false; foil.strokeAcc = 0; check();
+      });
+    }
+  }
+
+  function check() {
+    if (!foil || foil.done) return;
+    var img = foil.mctx.getImageData(0, 0, foil.mask.width, foil.mask.height).data;
+    var clear = 0, tot = foil.mask.width * foil.mask.height;
+    for (var i = 3; i < img.length; i += 4) { if (img[i] < 40) clear++; }
+    if (clear / tot >= (cfg.revealThreshold || 55) / 100) reveal();
+  }
+
+  function reveal() {
+    if (!foil || foil.done) return;
+    foil.done = true; foil.active = false;
+    foil.el.style.transition = "opacity 0.8s ease 0.05s";
+    foil.el.style.opacity = "0";
+    foil.el.style.pointerEvents = "none";
+    burst();
+    setTimeout(function () {
+      revealed = true;
+      dialog.classList.add("is-revealed");
+      var hint = dialog.querySelector("[data-scnl-hint]");
+      if (hint) hint.textContent = cfg.hintRevealed;
+    }, 480);
+  }
+
+  function setupFoil(el) {
+    if (!el.isConnected) return;
+    var r = el.getBoundingClientRect();
+    if (r.width < 10) { requestAnimationFrame(function () { setupFoil(el); }); return; }
+    var d = Math.min(window.devicePixelRatio || 1, 2);
+    el.width = Math.round(r.width * d); el.height = Math.round(r.height * d);
+    var ctx = el.getContext("2d"); ctx.scale(d, d);
+    var ms = 6;
+    var mask = document.createElement("canvas");
+    mask.width = Math.max(2, Math.round(r.width / ms));
+    mask.height = Math.max(2, Math.round(r.height / ms));
+    var mctx = mask.getContext("2d", { willReadFrequently: true });
+    foil = { el: el, ctx: ctx, w: r.width, h: r.height, mask: mask, mctx: mctx, ms: ms, active: false, last: null, strokeAcc: 0, queued: false, done: false };
+    resetMask();
+    paintFoil();
+    el.style.cursor = 'url("data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"><circle cx="13" cy="13" r="10.5" fill="rgba(255,255,255,0.3)" stroke="#14120F" stroke-width="1.5"/></svg>') + '") 13 13, pointer';
+    el.onpointerdown = function (e) {
+      if (!foil || foil.done) return;
+      e.preventDefault();
+      try { el.setPointerCapture(e.pointerId); } catch (err) {}
+      foil.active = true;
+      var p = pt(e);
+      stroke(p, p);
+      foil.last = p;
+    };
+    el.onpointermove = function (e) {
+      if (!foil || !foil.active || foil.done) return;
+      var evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+      var last = foil.last || pt(e);
+      for (var i = 0; i < evs.length; i++) { var p = pt(evs[i]); stroke(last, p); last = p; }
+      foil.last = last;
+    };
+    var up = function () {
+      if (!foil) return;
+      foil.active = false; foil.last = null; check();
+    };
+    el.onpointerup = up;
+    el.onpointercancel = up;
+  }
+
+  /* ---------- Partikel ---------- */
+  function setupFx(el) {
+    if (!el.isConnected) return;
+    var r = el.getBoundingClientRect();
+    if (!r.width) return;
+    var d = Math.min(window.devicePixelRatio || 1, 2);
+    el.width = Math.round(r.width * d); el.height = Math.round(r.height * d);
+    var ctx = el.getContext("2d"); ctx.scale(d, d);
+    fx = { el: el, ctx: ctx, w: r.width, h: r.height, parts: [], running: false, pad: 34 };
+  }
+  function spawn(x, y, n) {
+    if (!fx || reducedMotion) return;
+    var pal = PALETTES[styleKey()];
+    for (var i = 0; i < n; i++) {
+      if (fx.parts.length > 240) fx.parts.shift();
+      fx.parts.push({
+        x: x + fx.pad, y: y + fx.pad,
+        vx: (Math.random() - 0.5) * 2.6, vy: -(0.6 + Math.random() * 2.4), g: 0.14,
+        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3,
+        life: 1, decay: 0.02 + Math.random() * 0.02,
+        size: 2.5 + Math.random() * 3,
+        color: pal[(Math.random() * pal.length) | 0]
+      });
+    }
+    runFx();
+  }
+  function burst() {
+    if (!fx || !foil || reducedMotion) return;
+    var pal = PALETTES[styleKey()];
+    for (var i = 0; i < 56; i++) {
+      fx.parts.push({
+        x: Math.random() * foil.w + fx.pad, y: Math.random() * foil.h + fx.pad,
+        vx: (Math.random() - 0.5) * 4.5, vy: -(1 + Math.random() * 3.4), g: 0.16,
+        rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.4,
+        life: 1, decay: 0.012 + Math.random() * 0.015,
+        size: 3 + Math.random() * 3.5,
+        color: pal[(Math.random() * pal.length) | 0]
+      });
+    }
+    runFx();
+  }
+  function runFx() {
+    if (!fx || fx.running) return;
+    fx.running = true;
+    var tick = function () {
+      if (!fx) return;
+      var ctx = fx.ctx, parts = fx.parts;
+      ctx.clearRect(0, 0, fx.w, fx.h);
+      for (var i = parts.length - 1; i >= 0; i--) {
+        var p = parts[i];
+        p.x += p.vx; p.y += p.vy; p.vy += p.g; p.rot += p.vr; p.life -= p.decay;
+        if (p.life <= 0 || p.y > fx.h + 10) { parts.splice(i, 1); continue; }
+        ctx.save();
+        ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.62);
+        ctx.restore();
+      }
+      if (parts.length) { fxRaf = requestAnimationFrame(tick); }
+      else { fx.running = false; ctx.clearRect(0, 0, fx.w, fx.h); }
+    };
+    fxRaf = requestAnimationFrame(tick);
+  }
+
+  /* ---------- Claim ---------- */
+  var claimBtn = dialog.querySelector("[data-scnl-claim]");
+  if (claimBtn) {
+    claimBtn.addEventListener("click", function () {
+      if (revealed) showStep("email");
+    });
+  }
+
+  /* ---------- E-Mail ---------- */
+  var emailValue = "";
+  function submitCustomerForm(email, phone) {
+    var form = dialog.querySelector("#scnl-form-real");
+    if (!form) return;
+    var real = form.querySelector("[data-scnl-real-email]");
+    if (real) real.value = email;
+    var data = new FormData(form);
+    if (phone) data.append("contact[phone]", phone);
+    fetch(form.getAttribute("action") || "/contact", {
+      method: "POST",
+      body: data,
+      headers: { Accept: "text/html" }
+    }).catch(function () {});
+  }
+  dialog.querySelectorAll("[data-scnl-email-form]").forEach(function (form) {
+    var input = form.querySelector("[data-scnl-email]");
+    input.addEventListener("input", function () { form.classList.remove("has-error"); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var v = (input.value || "").trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { form.classList.add("has-error"); return; }
+      form.classList.remove("has-error");
+      emailValue = v;
+      submitCustomerForm(v, "");
+      if (cfg.phoneStep && dialog.querySelector('[data-scnl-step="phone"]')) showStep("phone");
+      else { setCookie(COOKIE_DONE, "1", cfg.cookieDaysSubscribed); showStep("done"); }
+    });
+  });
+
+  /* ---------- Telefon ---------- */
+  var phoneForm = dialog.querySelector("[data-scnl-phone-form]");
+  if (phoneForm) {
+    var countrySel = phoneForm.querySelector("[data-scnl-country]");
+    var phoneInput = phoneForm.querySelector("[data-scnl-phone]");
+    COUNTRIES.forEach(function (c) {
+      var o = document.createElement("option");
+      o.value = c.code;
+      o.textContent = c.flag + " " + c.dial;
+      countrySel.appendChild(o);
+    });
+    countrySel.addEventListener("change", function () { phoneForm.classList.remove("has-error"); });
+    phoneInput.addEventListener("input", function () { phoneForm.classList.remove("has-error"); });
+    phoneForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var digits = (phoneInput.value || "").replace(/\D/g, "").replace(/^0+/, "");
+      var c = null;
+      for (var i = 0; i < COUNTRIES.length; i++) { if (COUNTRIES[i].code === countrySel.value) { c = COUNTRIES[i]; break; } }
+      if (!c) c = COUNTRIES[0];
+      if (digits.length < c.min || digits.length > c.max) { phoneForm.classList.add("has-error"); return; }
+      phoneForm.classList.remove("has-error");
+      submitCustomerForm(emailValue, c.dial + digits);
+      setCookie(COOKIE_DONE, "1", cfg.cookieDaysSubscribed);
+      showStep("done");
+    });
+  }
+
+  /* ---------- Copy ---------- */
+  var copyBtn = dialog.querySelector("[data-scnl-copy]");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", function () {
+      var code = cfg.discountCode || "";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).catch(function () {});
+      }
+      copyBtn.textContent = copyBtn.getAttribute("data-copied");
+      clearTimeout(copyT);
+      copyT = setTimeout(function () {
+        copyBtn.textContent = copyBtn.getAttribute("data-label");
+      }, 1800);
+    });
+  }
+
+  /* ---------- Startlogik (Cookies / Delay / Editor) ---------- */
+  function shouldShow() {
+    if (cfg.testMode) return true;
+    if (cfg.designMode) return false; /* im Editor nur via section:select */
+    if (getCookie(COOKIE_DONE) || getCookie(COOKIE_CLOSED)) return false;
+    return true;
+  }
+  if (cfg.designMode) {
+    document.addEventListener("shopify:section:select", function (e) {
+      if (e.detail && e.detail.sectionId === sectionId) openPopup();
+    });
+    document.addEventListener("shopify:section:deselect", function (e) {
+      if (e.detail && e.detail.sectionId === sectionId && dialog.open) { dialog.close(); document.body.style.overflow = ""; }
+    });
+    if (cfg.testMode) setTimeout(openPopup, (cfg.delay || 0) * 1000);
+  } else if (shouldShow()) {
+    setTimeout(openPopup, (cfg.delay || 0) * 1000);
+  }
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Scratch Newsletter Popup",
+  "settings": [
+    { "type": "header", "content": "General" },
+    { "type": "checkbox", "id": "enable_popup", "label": "Enable newsletter popup", "default": false },
+    {
+      "type": "select", "id": "popup_mode", "label": "Popup type",
+      "options": [
+        { "value": "scratch", "label": "Scratch design" },
+        { "value": "regular", "label": "Regular newsletter" }
+      ],
+      "default": "scratch"
+    },
+    { "type": "checkbox", "id": "test_mode", "label": "Test mode", "info": "Always show the popup and ignore cookies. Disable before publishing.", "default": false },
+    { "type": "range", "id": "popup_delay", "label": "Popup delay", "min": 0, "max": 15, "step": 1, "unit": "s", "default": 3 },
+    { "type": "range", "id": "cookie_days_closed", "label": "Show again after closing", "info": "Days before the popup is shown again after being dismissed.", "min": 1, "max": 90, "step": 1, "unit": "d", "default": 7 },
+    { "type": "range", "id": "cookie_days_subscribed", "label": "Show again after signup", "info": "Days before the popup is shown again after a successful signup.", "min": 30, "max": 365, "step": 5, "unit": "d", "default": 180 },
+
+    { "type": "header", "content": "Appearance" },
+    {
+      "type": "select", "id": "popup_size", "label": "Newsletter size",
+      "options": [
+        { "value": "box", "label": "Box" },
+        { "value": "full", "label": "Full size" }
+      ],
+      "default": "box"
+    },
+    {
+      "type": "select", "id": "scratch_style", "label": "Scratch style",
+      "options": [
+        { "value": "silver", "label": "Silver foil" },
+        { "value": "gold", "label": "Gold foil" },
+        { "value": "black", "label": "Black" }
+      ],
+      "default": "silver"
+    },
+    { "type": "range", "id": "reveal_threshold", "label": "Auto-reveal threshold", "info": "Scratched area at which the remaining foil fades away.", "min": 30, "max": 85, "step": 5, "unit": "%", "default": 55 },
+    { "type": "image_picker", "id": "popup_image", "label": "Popup image" },
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "JIMMY" },
+
+    { "type": "header", "content": "Step 1 — Scratch card" },
+    { "type": "text", "id": "scratch_heading", "label": "Heading", "default": "TRY YOUR LUCK" },
+    { "type": "text", "id": "scratch_subheading", "label": "Subheading", "default": "Scratch below to see what you win" },
+    { "type": "text", "id": "card_kicker", "label": "Card kicker", "default": "YOU'VE GOT A" },
+    { "type": "text", "id": "card_prize", "label": "Card prize text", "default": "MYSTERY DISCOUNT" },
+    { "type": "text", "id": "foil_text", "label": "Text on foil", "default": "SCRATCH TO REVEAL" },
+    { "type": "text", "id": "claim_button", "label": "Claim button", "default": "CLAIM" },
+    { "type": "text", "id": "hint_scratch", "label": "Hint (before reveal)", "default": "USE YOUR CURSOR TO SCRATCH THE CARD" },
+    { "type": "text", "id": "hint_revealed", "label": "Hint (after reveal)", "default": "LUCKY YOU — CLAIM YOUR PRIZE" },
+
+    { "type": "header", "content": "Regular newsletter — Intro" },
+    { "type": "paragraph", "content": "Shown instead of the scratch card when popup type is 'Regular newsletter'. Reuses the email placeholder, error and legal text from Step 2; phone and success steps are shared." },
+    { "type": "text", "id": "regular_heading_top", "label": "Heading line 1", "default": "SIGN UP AND GET" },
+    { "type": "text", "id": "regular_heading", "label": "Heading line 2", "default": "15% OFF YOUR FIRST ORDER" },
+    { "type": "text", "id": "regular_subheading", "label": "Subheading", "default": "Be the first to know about new arrivals, exclusive offers and stories." },
+    { "type": "text", "id": "regular_button", "label": "Submit button", "default": "SIGN UP" },
+    { "type": "text", "id": "regular_success_kicker", "label": "Success kicker", "default": "YOUR DISCOUNT" },
+
+    { "type": "header", "content": "Step 2 — Email" },
+    { "type": "text", "id": "email_heading_top", "label": "Heading line 1", "default": "WANT YOUR" },
+    { "type": "text", "id": "email_heading", "label": "Heading line 2", "default": "MYSTERY DISCOUNT?" },
+    { "type": "text", "id": "email_placeholder", "label": "Input placeholder", "default": "Your email address" },
+    { "type": "text", "id": "email_button", "label": "Submit button", "default": "CONTINUE" },
+    { "type": "text", "id": "email_error", "label": "Error message", "default": "Invalid email" },
+    { "type": "textarea", "id": "email_legal", "label": "Legal text", "default": "By submitting your email address, you agree to receive marketing emails from us. You also agree to our Terms and Privacy Policy. We may use information collected about you to suggest other products and offers. You can unsubscribe at any time." },
+
+    { "type": "header", "content": "Step 3 — Phone (optional)" },
+    { "type": "checkbox", "id": "enable_phone_step", "label": "Enable phone number step", "info": "When disabled, email signup leads directly to the discount.", "default": true },
+    { "type": "text", "id": "phone_heading", "label": "Heading", "default": "FINISH SIGNING UP" },
+    { "type": "text", "id": "phone_subheading", "label": "Subheading", "default": "for texts to activate your discount" },
+    { "type": "textarea", "id": "phone_legal", "label": "Legal text", "default": "By providing your number and clicking the button, you agree to receive recurring automated marketing texts (including cart reminders) from us and to our Terms of Service. Consent is not a condition of purchase. Msg & data rates may apply. Msg frequency varies. Reply HELP for help, STOP to opt out. View Privacy Policy." },
+    { "type": "text", "id": "phone_placeholder", "label": "Input placeholder", "default": "Your phone number" },
+    { "type": "text", "id": "phone_button", "label": "Submit button", "default": "ACTIVATE NOW" },
+    { "type": "text", "id": "phone_error", "label": "Error message", "default": "Invalid phone" },
+
+    { "type": "header", "content": "Step 4 — Success" },
+    { "type": "text", "id": "success_kicker", "label": "Kicker", "default": "YOUR MYSTERY DISCOUNT" },
+    { "type": "text", "id": "discount_value", "label": "Discount value", "default": "15% OFF" },
+    { "type": "text", "id": "discount_code", "label": "Discount code", "info": "Must match a discount code created in Shopify admin.", "default": "JIMMY15" },
+    { "type": "text", "id": "copy_label", "label": "Copy button", "default": "COPY" },
+    { "type": "text", "id": "copied_label", "label": "Copy button (copied)", "default": "COPIED ✓" },
+    { "type": "text", "id": "success_note", "label": "Note under code", "default": "Applied at checkout — and on its way to your inbox." },
+    { "type": "text", "id": "success_button", "label": "Close button", "default": "START SHOPPING" }
+  ]
+}
+{% endschema %}
