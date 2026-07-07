@@ -5098,6 +5098,7 @@ setHtmlAll('.bottom-total', `
       });
   });
   //observeProductRecommendations
+  var lastRecoProductId = null;
   function observeProductRecommendations(customID) {
     const loadingIndicator = document.querySelector(".recommend-loading");
     const productRecommendationsSection = document.querySelector(
@@ -5108,6 +5109,9 @@ setHtmlAll('.bottom-total', `
       console.error("Product recommendations section not found.");
       return;
     }
+    // Same source product -> the list is already right; skip the refetch
+    // (and the visible flash it caused on every add/remove).
+    if (customID === lastRecoProductId) return;
 
     const handleIntersection = (entries, observer) => {
       if (!entries[0].isIntersecting) return;
@@ -5129,6 +5133,7 @@ setHtmlAll('.bottom-total', `
             const newContent = recommendations.innerHTML;
             setTimeout(() => {
               productRecommendationsSection.innerHTML = newContent;
+              lastRecoProductId = customID;
               loadingIndicator.classList.remove("loading");
             }, 0);
           } else {
@@ -5145,7 +5150,8 @@ setHtmlAll('.bottom-total', `
       rootMargin: "0px 0px 200px 0px",
     });
     observer.observe(productRecommendationsSection);
-    loadingIndicator.classList.add("loading");
+    // Kein .loading-Overlay mehr: alte Liste bleibt sichtbar, Austausch
+    // erfolgt lautlos in-place (weisser Kasten-Flash im Drawer entfernt).
   }
   function renderRecommendations() {
     getCart(function (cart) {
@@ -5162,7 +5168,6 @@ setHtmlAll('.bottom-total', `
   document.addEventListener("click", function (e) {
     var btn = e.target.closest(".js-remove-mini-cart");
     if (!btn) return;
-    var loadingIndicator = document.querySelector(".recommend-loading");
     var itemId = parseInt(btn.getAttribute("data-id"), 10);
     // Use the line-item KEY for /cart/change.js — the bare numeric variant id
     // returned HTTP 400. Fall back to the variant id for items rendered before
@@ -5172,7 +5177,6 @@ setHtmlAll('.bottom-total', `
 
     var item = btn.closest(".mini-cart-item");
     if (item) theme.fadeOut(item);
-    if (loadingIndicator) loadingIndicator.classList.add("loading");
     theme.GiftWrap.checkGift(itemId);
 
     // Remove from cart, then check inside the callback
