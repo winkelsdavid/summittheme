@@ -1,5 +1,7 @@
+{%- comment -%} B1 E2E-Probe (TEMPORÄR, wird nach GO/NOGO entfernt — §5) {%- endcomment -%}
+{% render 'b1-probe', handle: 'slideshow-1--slide' %}
 {%- if section.settings.enable_slideshow -%}
-{%- liquid 
+{%- liquid
   assign rotate = section.settings.autorotate
   assign dot = section.settings.slide_dot
 -%} 
