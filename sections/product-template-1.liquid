@@ -126,7 +126,11 @@
       display: block!important;
       height: 100%;
       width: 100%;
-
+      /* Variant Image Round/Square: das Variantenbild (Inline --swatch-bg)
+         auf den sichtbaren Span malen — vorher hatte er keine background-Regel. */
+      background: var(--swatch-bg);
+      background-size: cover;
+      background-position: center;
     }
     .round-color .st-color{
        border-radius: 50%;

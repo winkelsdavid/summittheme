@@ -36,6 +36,14 @@
         endif
       endfor
       assign v_image = currenVariant.featured_image | default: currenVariant.image
+      comment
+        Variant Image Round/Square: hat die Variante kein eigenes Bild
+        (z.B. Groessen-Varianten), aufs Produkt-Hauptbild zurueckfallen,
+        damit der Swatch nie leer bleibt.
+      endcomment
+      if force_image and v_image == blank
+        assign v_image = product.featured_image
+      endif
       assign hasImage = false
       if v_image
         if isColor or force_image
