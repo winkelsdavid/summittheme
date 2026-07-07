@@ -179,9 +179,9 @@
                     {%- if block.settings.content -%}
                       <div class="rte-setting">{{ block.settings.content }}</div>
                     {%- endif -%}
-                    {%- if block.settings.answer_content != blank -%}
-                    {{ block.settings.answer_content }}
-                    {%- endif -%}
+                    {%- comment -%} answer_content (Richtext-Duplikat mit Default-Text) wird
+                        nicht mehr gerendert — nur die HTML-Description (content) zaehlt.
+                        Schema-ID bleibt wegen Nitro-Mappability erhalten. {%- endcomment -%}
                     {%- if block.settings.button != blank -%}
                       <div class="mt-4">
                         <a href="{{ block.settings.link }}" class="btn {{ block.settings.style_btn }} ">
@@ -333,9 +333,6 @@ function initCustomVideoSlider_2(sectionId) {
   const container_2 = document.querySelector(`.custom_video_items-${sectionId}`);
   if (!container_2) return;
 
-  const videos_2 = container_2.querySelectorAll('.custom_video_items_x video');
-  const playButtons_2 = container_2.querySelectorAll('.custom_video_items_x .shoppable-video_control-button');
-  const muteButtons_2 = container_2.querySelectorAll('.custom_video_items_x .video__sound-toggle');
   let globalMuted_2 = true;
 
   // Read autoplay setting from data attribute
@@ -361,55 +358,61 @@ const swiper_2 = new Swiper(`.custom_video_items-${sectionId}`, {
   },
   on: {
     slideChange: function () {
-      handleSlideChange_2(this, videos_2, playButtons_2);
+      handleSlideChange_2(this);
     }
   }
 });
 
 
-  videos_2.forEach(v => v.muted = globalMuted_2);
-  handleSlideChange_2(swiper_2, videos_2, playButtons_2);
+  // Nach Swiper-Init erneut abfragen: loop:true erzeugt Duplikat-Slides,
+  // deren Videos sonst nie gesteuert wuerden.
+  container_2.querySelectorAll('video').forEach(v => (v.muted = globalMuted_2));
+  handleSlideChange_2(swiper_2);
 
-  playButtons_2.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      const vid = videos_2[index];
-      if (vid.paused) {
-        videos_2.forEach((v, i) => {
-          if (i !== index) {
-            v.pause();
-            playButtons_2[i].classList.remove('playing');
-          }
-        });
-        vid.play();
-        btn.classList.add('playing');
-      } else {
-        vid.pause();
-        btn.classList.remove('playing');
+  // Delegation statt Index-Zuordnung (funktioniert auch in Duplikat-Slides).
+  container_2.addEventListener('click', (e) => {
+    const btn = e.target.closest('.shoppable-video_control-button');
+    if (btn) {
+      const slide = btn.closest('.swiper-slide');
+      const vid = slide && slide.querySelector('video');
+      if (vid) {
+        if (vid.paused) {
+          const p = vid.play();
+          if (p && p.catch) p.catch(() => {});
+          btn.classList.add('playing');
+        } else {
+          vid.pause();
+          btn.classList.remove('playing');
+        }
       }
-    });
-  });
-
-  muteButtons_2.forEach(btn => {
-    btn.addEventListener('click', () => {
+      return;
+    }
+    const mbtn = e.target.closest('.video__sound-toggle');
+    if (mbtn) {
       globalMuted_2 = !globalMuted_2;
-      videos_2.forEach(v => v.muted = globalMuted_2);
-      muteButtons_2.forEach(b => b.classList.toggle('unmuted', !globalMuted_2));
-    });
+      container_2.querySelectorAll('video').forEach(v => (v.muted = globalMuted_2));
+      container_2
+        .querySelectorAll('.video__sound-toggle')
+        .forEach(b => b.classList.toggle('unmuted', !globalMuted_2));
+    }
   });
 }
 
 
-function handleSlideChange_2(swiper, videos, playButtons) {
-  videos.forEach((vid, index) => {
-    const slide = vid.closest('.swiper-slide');
-    const slideIndex = swiper.slides.indexOf(slide);
-
-    if (slideIndex === swiper.activeIndex) {
-      vid.play();
-      playButtons[index]?.classList.add('playing');
+function handleSlideChange_2(swiper) {
+  // Swiper 6: swiper.slides ist eine Dom7-Collection (kein Array.indexOf) und
+  // loop dupliziert Slides — daher ueber swiper-slide-active steuern statt Index.
+  swiper.el.querySelectorAll('.swiper-slide').forEach((slide) => {
+    const vid = slide.querySelector('video');
+    if (!vid) return;
+    const btn = slide.querySelector('.shoppable-video_control-button');
+    if (slide.classList.contains('swiper-slide-active') || slide.classList.contains('swiper-slide-duplicate-active')) {
+      const p = vid.play();
+      if (p && p.catch) p.catch(() => {});
+      if (btn) btn.classList.add('playing');
     } else {
       vid.pause();
-      playButtons[index]?.classList.remove('playing');
+      if (btn) btn.classList.remove('playing');
     }
   });
 }
@@ -792,7 +795,7 @@ function handleSlideChange_2(swiper, videos, playButtons) {
         {
           "type": "richtext",
           "id": "answer_content",
-          "label": "Description",
+          "label": "Description (Legacy — Not Displayed)",
           "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
         },
         {
