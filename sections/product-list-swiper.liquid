@@ -133,6 +133,8 @@
       } 
     }
 </style>
+{%- comment -%} B1 E2E-Probe (TEMPORÄR, wird nach GO/NOGO entfernt — §5) {%- endcomment -%}
+{% render 'b1-probe', handle: section.type %}
 <div class="customstyle{{ section.id }} productswiper lazyload" data-aos="{{ section.settings.animation }}"
   data-bgset="{% render 'bgset', image: section.settings.image_bg %}"
   {%- if section.settings.image_bg == blank -%}{%- capture b1_bg -%}{% render 'brand-image-src', handle: 'product-list-swiper', slot: 1, width: 1920 %}{%- endcapture -%}{%- if b1_bg != blank %} style="background-image:url('{{ b1_bg }}');background-size:cover;background-position:center"{% endif -%}{%- endif -%}
