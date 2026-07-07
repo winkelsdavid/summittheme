@@ -75,6 +75,7 @@
 
 <section class="customstyle{{ section.id }} lazyload newsletter-section-{{ section.id }}" 
   data-bgset="{% render 'bgset', image: bg_image %}"
+  {%- if bg_image == blank -%}{%- capture b1_bg -%}{% render 'brand-image-src', handle: 'newsletter', slot: 1, width: 1920 %}{%- endcapture -%}{%- if b1_bg != blank %} style="background-image:url('{{ b1_bg }}');background-size:cover;background-position:center"{% endif -%}{%- endif -%}
   data-sizes="auto"
   data-parent-fit="cover" 
   data-section-id="{{ section.id }}"  

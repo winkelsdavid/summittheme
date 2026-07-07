@@ -72,6 +72,9 @@
   .bg-newsletter{
     {% if section.settings.pnewletter_bgimage != blank %}
     background-image:url({{ section.settings.pnewletter_bgimage | image_url: width: 1000 }});
+    {% else %}
+    {%- capture b1_bg -%}{% render 'brand-image-src', handle: 'newsletter-popup', slot: 1, width: 1000 %}{%- endcapture -%}
+    {%- if b1_bg != blank %}background-image:url({{ b1_bg }});{% endif -%}
     {% endif %}
     background-color:{{ section.settings.pnewletter_background }};
     background-repeat: no-repeat;

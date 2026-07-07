@@ -249,7 +249,8 @@ flex:0 0 calc(50% - 10px);
                   {% elsif section.settings.main_image != blank %}
                     <img src="{{ section.settings.main_image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                     {% else %}
-                    {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'custom-instagram-marquee', slot: 1, width: 1920 %}{%- endcapture -%}
+                    {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}{%- endif -%}
                     {% endif %}
                 </div>
                 <div class="marquee_content-overlay"></div>

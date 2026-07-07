@@ -40,8 +40,9 @@
                       >
                 </div>
                 {%- else -%}
+                {%- capture b1_fb -%}{% render 'brand-image', handle: 'shop-the-look', slot: 1, width: 1500, class: 'image-content__image' %}{%- endcapture -%}
                 <div class="image-content__image">
-                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                   </div>
                 {%- endif -%}
                 <ul id="dot-{{ section.id }}" class="list-unstyled position-static">

@@ -35,8 +35,13 @@
 
     </a>
     {%- else -%}
+    {%- capture b1_logo -%}{% render 'brand-image', handle: 'header', slot: 1, logo_fallback: true, width: 400, class: 'logo-dark', alt: shop.name %}{%- endcapture -%}
+    {%- if b1_logo != blank -%}
+    <a href="{{ routes.root_url }}" itemprop="url" class="site-header__logo-link">{{ b1_logo }}</a>
+    {%- else -%}
     {%- assign shop_name_length = shop.name.size -%}
     <a href="/" itemprop="url" {% if shop_name_length > 10 %} class="site-header__shop-name--small"{% endif %}>{{ shop.name }}</a>
+    {%- endif -%}
     {%- endif -%}
     {%- if template.name != 'index' -%}
   </div>
