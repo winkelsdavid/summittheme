@@ -10101,7 +10101,10 @@ a.text-primary:active {
   text-transform: var(--g-text-transform-btn);
   position: relative;
 }
-.btn-underline.btn-underline-white{
+.btn-underline.btn-underline-white,
+.btn-underline.btn-underline-white:hover{
+  /* Line White bleibt auch im Hover weiss (generisches .btn-underline:hover
+     setzt sonst var(--g-main-2)). */
   color:white!important;
 }
 .btn-underline:before{
