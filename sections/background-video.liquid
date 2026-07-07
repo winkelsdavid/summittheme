@@ -146,7 +146,7 @@
                           </a >
                       </div>
                     {%- else -%}
-                      {%- capture b1_fb -%}{% render 'brand-image', handle: 'background-video--image', position: b1_pos, width: 1500, class: 'image-content__image scale-in' %}{%- endcapture -%}
+                      {%- capture b1_fb -%}{% render 'brand-image', handle: 'background-video--image', position: b1_pos, width: 1500, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
                       <div class="image-content__image hero-video__wrap" style="--img-in-hero:{{ block.settings.img-in-hero }}px">
                         {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                       </div>

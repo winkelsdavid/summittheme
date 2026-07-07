@@ -217,7 +217,7 @@
                         height="{{ block.settings.image.height }}" />
                     </a>
                     {%- else -%}
-                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--image', position: b1_pos_img, width: 1500, class: 'scale-in w-100' %}{%- endcapture -%}
+                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--image', position: b1_pos_img, width: 1500, class: 'scale-in lazyloaded w-100' %}{%- endcapture -%}
                     {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                   {%- endif -%}
                     {%- if block.settings.enable_top == false -%}
@@ -406,7 +406,7 @@
                               width="{{ image.width }}"
                               height="{{ image.height }}">
                         {%- else -%}
-                          {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--promo', position: b1_pos_promo, width: 1066, class: 'image-content__image scale-in' %}{%- endcapture -%}
+                          {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--promo', position: b1_pos_promo, width: 1066, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
                           <div class="image-content__image">
                             {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                           </div>

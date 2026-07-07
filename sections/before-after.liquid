@@ -33,7 +33,7 @@ data-section-type="beforeafter">
                             | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500', class: 'lazyload scale-in'
                         }}
                         {%- else -%}
-                        {%- capture b1_fb -%}{% render 'brand-image', handle: 'before-after', slot: 2, width: 1500, class: 'scale-in' %}{%- endcapture -%}
+                        {%- capture b1_fb -%}{% render 'brand-image', handle: 'before-after', slot: 2, width: 1500, class: 'scale-in lazyloaded' %}{%- endcapture -%}
                         {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg svg-1' }}{%- endif -%}
                     {%- endif -%}
                 <div class="beer-reveal" data-beer-label="{%- if section.settings.before_caption != blank -%}{{ section.settings.before_caption }}{%- endif -%}">
@@ -48,7 +48,7 @@ data-section-type="beforeafter">
                         | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500', class: 'lazyload scale-in'
                     }}
                     {%- else -%}
-                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'before-after', slot: 1, width: 1500, class: 'scale-in' %}{%- endcapture -%}
+                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'before-after', slot: 1, width: 1500, class: 'scale-in lazyloaded' %}{%- endcapture -%}
                     {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg svg-2' }}{%- endif -%}
                     {%- endif -%}
                 </div>

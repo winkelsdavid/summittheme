@@ -170,7 +170,7 @@
               | image_tag: height: height, width:collectionImage.width, sizes: sizes, widths: widths, fetchpriority: fetch_priority, class:'image-content__image lazyload scale-in'
             }}
     {%- elsif checkImg -%}
-      {% render 'brand-image', handle: 'main-collection-banner', slot: 1, width: 1920, class: 'image-content__image scale-in' %}
+      {% render 'brand-image', handle: 'main-collection-banner', slot: 1, width: 1920, class: 'image-content__image scale-in lazyloaded' %}
     {%- endif -%}
     <div class=" py-5 collection-hero-container d-flex align-items-center justify-content-center">
       <div class="container text-center">
