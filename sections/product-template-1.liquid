@@ -1668,20 +1668,12 @@ display:none;
                       const deliveryDate = new Date();
                       deliveryDate.setDate(deliveryDate.getDate() + daysToAdd);
 
-                      // Month names in multiple languages
-                      const monthNames = {
-                        en: ['{{ 'general.months.january' | t  }}', '{{ 'general.months.february' | t  }}', '{{ 'general.months.march' | t  }}', '{{ 'general.months.april' | t  }}', '{{ 'general.months.may' | t  }}', '{{ 'general.months.june' | t  }}',
-                            '{{ 'general.months.july' | t  }}', '{{ 'general.months.august' | t  }}', '{{ 'general.months.september' | t  }}', '{{ 'general.months.october' | t  }}', '{{ 'general.months.november' | t  }}', '{{ 'general.months.december' | t  }}']
-                      };
-
-                      // Choose language (default to English)
-                      const lang = deliveryElement.dataset.lang || 'en';
-                      const months = monthNames[lang] || monthNames['en'];
-
-                      const month = months[deliveryDate.getMonth()];
-                      const day = deliveryDate.getDate();
-
-                      deliveryElement.innerText = `${month} ${day}`;
+                      // Shop-Locale statt Monats-Tabelle: lokalisiert Monatsname UND
+                      // Format/Reihenfolge (de: "8. Juli", en: "July 8").
+                      deliveryElement.innerText = deliveryDate.toLocaleDateString(
+                        '{{ request.locale.iso_code }}',
+                        { month: 'long', day: 'numeric' }
+                      );
                     }
 
                     // Run on initial load

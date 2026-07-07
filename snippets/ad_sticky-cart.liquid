@@ -513,7 +513,8 @@ color:var(--sticky-cart-cl_2);
   deliveryDate2.setDate(deliveryDate2.getDate() + daysToAdd2);
 
   const options2 = { month: 'long', day: 'numeric' };
-  const formattedDate2 = deliveryDate2.toLocaleDateString('en-EN', options2);
+  // Shop-Locale statt hartem 'en-EN' -> Sprache + Datumsformat des Shops.
+  const formattedDate2 = deliveryDate2.toLocaleDateString('{{ request.locale.iso_code }}', options2);
 
   deliveryElement2.innerText = `${formattedDate2}`;
 }
