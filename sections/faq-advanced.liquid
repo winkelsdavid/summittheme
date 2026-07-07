@@ -211,8 +211,8 @@ max-width: {{  section.settings.team_image_width_mobile }}px;
                      loading="lazy" >
               {%- endif -%}
               <div class="v-stack">
-                <span class="availability-text">{{ section.settings.availability_caption }}</span>
-                <span class="text-subdued">{{ section.settings.response_time_caption }}</span>
+                <span class="availability-text">{% if section.settings.availability_caption != blank %}{{ section.settings.availability_caption }}{% else %}{{ 'general.defaults.faq_availability' | t }}{% endif %}</span>
+                <span class="text-subdued">{% if section.settings.response_time_caption != blank %}{{ section.settings.response_time_caption }}{% else %}{{ 'general.defaults.faq_response_time' | t }}{% endif %}</span>
               </div>
             </div>
           </div>
@@ -260,8 +260,8 @@ max-width: {{  section.settings.team_image_width_mobile }}px;
                  loading="lazy">
           {%- endif -%}
           <div class="v-stack">
-            <span class="availability-text">{{ section.settings.availability_caption }}</span>
-            <span class="text-subdued">{{ section.settings.response_time_caption }}</span>
+            <span class="availability-text">{% if section.settings.availability_caption != blank %}{{ section.settings.availability_caption }}{% else %}{{ 'general.defaults.faq_availability' | t }}{% endif %}</span>
+            <span class="text-subdued">{% if section.settings.response_time_caption != blank %}{{ section.settings.response_time_caption }}{% else %}{{ 'general.defaults.faq_response_time' | t }}{% endif %}</span>
           </div>
         </div>
       </div>
@@ -516,14 +516,12 @@ max-width: {{  section.settings.team_image_width_mobile }}px;
     {
       "type": "inline_richtext",
       "id": "availability_caption",
-      "label": "Availability Hours",
-      "default": "Our customer support is available monday to friday: 8am-8:30pm."
+      "label": "Availability Hours"
     },
     {
       "type": "text",
       "id": "response_time_caption",
-      "label": "Average Answer Time",
-      "default": "Average answer time: 24h"
+      "label": "Average Answer Time"
     },
     {
       "type": "header",

@@ -546,7 +546,7 @@ display:none;
                         </defs>
                       <g fill="none"><g fill="url(#grad-1-{{ ii }}-{{ section.id }})"><path d="M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96z"></path></g><path d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z" fill="url(#grad-stars-{{ ii }}-{{ section.id }})"></path></g>
                     </svg>
-                    <span class="rating-excellent" style="--color:{{ block.settings.text_color }}">{{ block.settings.text }}</span>
+                    <span class="rating-excellent" style="--color:{{ block.settings.text_color }}">{% if block.settings.text != blank %}{{ block.settings.text }}{% else %}{{ 'products.product.reviews_start_text_html' | t }}{% endif %}</span>
                     {% if block.settings.show_truspilot  %}
                     
                     <div class="trustpilot_container">
@@ -624,7 +624,7 @@ display:none;
                         </svg>
                       {% endfor %}
                     </div>
-                    <span class="rating-excellent-2" style="--color:{{ block.settings.text_color }}">{{ block.settings.text }}</span>
+                    <span class="rating-excellent-2" style="--color:{{ block.settings.text_color }}">{% if block.settings.text != blank %}{{ block.settings.text }}{% else %}{{ 'products.product.reviews_start_2_text_html' | t }}{% endif %}</span>
                   </div>
                 </div>
               {% when 'review_images' %}
@@ -673,10 +673,10 @@ display:none;
                           {% endfor %}
                         </div>
                       {% endif %}
-                        <span class="review-excellent-2" style="color:{{ block.settings.text_color }};--size:{{ block.settings.stars_text_size }}px;--size-mobile:{{ block.settings.stars_text_size_mobile }}px">{{ block.settings.text }}</span>
+                        <span class="review-excellent-2" style="color:{{ block.settings.text_color }};--size:{{ block.settings.stars_text_size }}px;--size-mobile:{{ block.settings.stars_text_size_mobile }}px">{% if block.settings.text != blank %}{{ block.settings.text }}{% else %}{{ 'products.product.review_images_text_html' | t }}{% endif %}</span>
                         </div>
                         <div class="review_images_content" style="color:{{ block.settings.text_color }};--size:{{ block.settings.content_size }}px;--size-mobile:{{ block.settings.content_size_mobile }}px">
-                          {{ block.settings.content }}
+                          {% if block.settings.content != blank %}{{ block.settings.content }}{% else %}{{ 'products.product.review_images_content' | t }}{% endif %}
                         </div>
                     </div>
                 </div>
@@ -1093,8 +1093,8 @@ display:none;
                           </svg>
                         {% endif %}
                         <div class="promo_copy">
-                          <h5 class="h6">{{ block.settings.title }}</h5>
-                          <p>{{ block.settings.subtitle }}</p>
+                          <h5 class="h6">{% if block.settings.title != blank %}{{ block.settings.title }}{% else %}{{ 'products.product.promo_title' | t }}{% endif %}</h5>
+                          <p>{% if block.settings.subtitle != blank %}{{ block.settings.subtitle }}{% else %}{{ 'products.product.promo_subtitle' | t }}{% endif %}</p>
                         </div>
                       </div>
                       <div class="promo_time">
@@ -1695,6 +1695,10 @@ display:none;
                         assign text = 'icon_text_' | append: i
                         assign iconShow = block.settings[icon]
                         assign textShow = block.settings[text]
+                        if textShow == blank and i < 4
+                          assign iwt_key = 'products.product.' | append: text
+                          assign textShow = iwt_key | t
+                        endif
                       -%}
                       {%- if textShow != blank -%}
                         <div class="iwt-item text-center {% if block_style == 'hoz' %} d-flex flex-row gap-2 align-items-center {% endif %}">
@@ -1929,7 +1933,9 @@ display:none;
                       </div>
                     </li>
                   {%- endif -%}
-                  {% if block.settings.custom_badge != blank and block.settings.enable_custom %}
+                  {% assign pt_badge = block.settings.custom_badge %}
+                  {% if pt_badge == blank %}{% assign pt_badge = 'products.product.custom_badge' | t %}{% endif %}
+                  {% if pt_badge != blank and block.settings.enable_custom %}
                   <li>
                       {% capture txtupper %}{% if settings.txtuppercase %}text-uppercase {% endif %}{% endcapture %}
                       <div
@@ -1937,7 +1943,7 @@ display:none;
                         aria-hidden="true"
                         style="color:{{ settings.sale_label_cl_product }}"
                       >
-                            {{ block.settings.custom_badge }}
+                            {{ pt_badge }}
                       </div>
                     </li>
                   {% endif %}
@@ -2152,7 +2158,7 @@ display:none;
                               class="text-danger mb-2 cus-txt-hurrify"
                               style="color:{{ block.settings.text_color }}!important"
                             >
-                              {{ block.settings.hurrify_text }}
+                              {% if block.settings.hurrify_text != blank %}{{ block.settings.hurrify_text }}{% else %}{{ 'products.product.hurrify_text' | t }}{% endif %}
                             </p>
                             <div class="progress">
                               <div
@@ -2442,7 +2448,7 @@ display:none;
                           height="auto"
                         >
                       {% endif %}
-                      <h5 class="h6" {% if block.settings.h_color != "rgba(0,0,0,0)" and block.settings.h_color != blank %} style="--g-color-heading:{{ block.settings.h_color  }};"{% endif %}>{{ block.settings.title }}</h5>
+                      <h5 class="h6" {% if block.settings.h_color != "rgba(0,0,0,0)" and block.settings.h_color != blank %} style="--g-color-heading:{{ block.settings.h_color  }};"{% endif %}>{% if block.settings.title != blank %}{{ block.settings.title }}{% else %}{{ 'products.product.bundle_heading' | t }}{% endif %}</h5>
                     </div>
                     {% if block.settings.open_by_default == false %}
                       <div class="tabcustom active collapsed"></div>
@@ -2608,6 +2614,8 @@ display:none;
                   <div class="ptrust-badge-box border px-3 py-4 position-relative ">
                     {%- if block.settings.trust_heading != blank -%}
                       <h6 class="ptrust-badge-heading mb-0 text-center px-4">{{ block.settings.trust_heading }}</h6>
+                    {%- else -%}
+                      <h6 class="ptrust-badge-heading mb-0 text-center px-4">{{ 'products.product.trust_heading' | t }}</h6>
                     {%- endif -%}
                     {%- if block.settings.image != blank -%}
                       <div
@@ -3684,8 +3692,7 @@ function formatPrice(value) {
     {
       "type": "text",
       "id": "stars_caption",
-      "label": "Stars Text",
-      "default": "Excellent 4.8 | 1319 reviews"
+      "label": "Stars Text"
     },
      {
       "type": "header",
@@ -4860,8 +4867,7 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "hurrify_text",
-          "label": "Hurrify Text",
-          "default": "Hurrify, 8 item(s) left in stock!"
+          "label": "Hurrify Text"
         },
         {
           "type": "color",
@@ -6503,8 +6509,7 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "title",
-          "label": "Heading",
-          "default": "Popular upgrades"
+          "label": "Heading"
         },
         {
           "type": "color",
@@ -6698,8 +6703,7 @@ function formatPrice(value) {
         {
           "type": "text",
           "id": "trust_heading",
-          "label": "Heading",
-          "default": "Guarantee safe checkout"
+          "label": "Heading"
         },
         {
           "type": "image_picker",

@@ -16,6 +16,9 @@
 
     assign enable_countdown = section.settings.enable_countdown
     assign text_countdown = section.settings.text_countdown
+    if text_countdown == blank
+      assign text_countdown = 'general.defaults.sale_ends_in' | t
+    endif
 
     assign topbar_phone = section.settings.topbar_phone
     assign topbar_email = section.settings.topbar_email
@@ -657,8 +660,7 @@
         {
           "type": "text",
           "id": "text_countdown",
-          "label": "Text Countdown",
-          "default": "Ends in"
+          "label": "Text Countdown"
         }
   ]
   

@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "Sale Ends In",
+      "verified_review": "Verified Review",
+      "rated_on": "Rated 4.8/5.0 on",
+      "footer_menu_title": "Information",
+      "footer_contact_heading": "Contact",
+      "faq_availability": "Our customer support is available Monday to Friday.",
+      "faq_response_time": "Average Answer Time: 24h",
+      "suggest_pretext": "Someone recently bought",
+      "suggest_verified": "Verified"
+    },
     "404": {
       "title": "Page Not Found",
       "subtext_html": "The page you requested does not exist.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "Taxes and shipping calculated at checkout.",
+      "stars_caption": "Excellent 4.8 | 149+ reviews",
+      "review_images_text_html": "<strong>Excellent</strong> 4.8/5.0",
+      "review_images_content": "Trusted by thousands of customers.",
+      "reviews_start_text_html": "<strong>Excellent</strong> 4.8 out of 5",
+      "reviews_start_2_text_html": "<strong>4.8/5</strong> based on 149+ Reviews",
+      "custom_badge": "Ending soon!",
+      "promo_title": "Limited Deal!",
+      "promo_subtitle": "Claim your discount while it lasts:",
+      "hurrify_text": "Hurry — selling out quickly!",
+      "icon_text_1": "Free Shipping",
+      "icon_text_2": "Secure Checkout",
+      "icon_text_3": "Return Guarantee",
+      "trust_heading": "Guaranteed Safe Checkout",
+      "bundle_heading": "Looking for an upgrade?",
+      "content_description_heading": "Description",
+      "content_shipping_heading": "Shipping & Returns",
+      "content_featured_heading": "Frequently Bought Together",
+      "recommendations_heading": "You may also like",
+      "recently_viewed_title": "Recently Viewed",
+      "recently_viewed_subtitle": "Don't Forget",
       "hurrify": "Hurrify, {{ number }} item(s) left in stock!",
       "sold_out": "Sold Out",
       "waitlist": "Join Waitlist",

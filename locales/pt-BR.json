@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "A promoção termina em",
+      "verified_review": "Avaliação verificada",
+      "rated_on": "Avaliado em 4,8/5,0 no",
+      "footer_menu_title": "Informações",
+      "footer_contact_heading": "Contato",
+      "faq_availability": "Nosso atendimento está disponível de segunda a sexta-feira.",
+      "faq_response_time": "Tempo médio de resposta: 24h",
+      "suggest_pretext": "Alguém comprou recentemente",
+      "suggest_verified": "Verificado"
+    },
     "404": {
       "title": "Página não encontrada",
       "subtext_html": "A página que você solicitou não existe.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "Impostos e frete calculados no checkout.",
+      "stars_caption": "Excelente 4,8 | 149+ avaliações",
+      "review_images_text_html": "<strong>Excelente</strong> 4,8/5,0",
+      "review_images_content": "Milhares de clientes confiam em nós.",
+      "reviews_start_text_html": "<strong>Excelente</strong> 4,8 de 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> com base em 149+ avaliações",
+      "custom_badge": "Termina em breve!",
+      "promo_title": "Oferta limitada!",
+      "promo_subtitle": "Garanta seu desconto enquanto durar:",
+      "hurrify_text": "Corra — está acabando!",
+      "icon_text_1": "Frete grátis",
+      "icon_text_2": "Checkout seguro",
+      "icon_text_3": "Garantia de devolução",
+      "trust_heading": "Checkout seguro garantido",
+      "bundle_heading": "Procurando um upgrade?",
+      "content_description_heading": "Descrição",
+      "content_shipping_heading": "Envio e devoluções",
+      "content_featured_heading": "Frequentemente comprados juntos",
+      "recommendations_heading": "Você também pode gostar",
+      "recently_viewed_title": "Vistos recentemente",
+      "recently_viewed_subtitle": "Não esqueça",
       "hurrify": "Apresse-se, {{ number }} item(s) restante(s) em estoque!",
       "sold_out": "Vendido",
       "waitlist": "Junte-se à lista de espera",

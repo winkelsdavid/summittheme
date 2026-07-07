@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "Udsalget slutter om",
+      "verified_review": "Verificeret anmeldelse",
+      "rated_on": "Bedømt 4,8/5,0 på",
+      "footer_menu_title": "Information",
+      "footer_contact_heading": "Kontakt",
+      "faq_availability": "Vores kundeservice er tilgængelig mandag til fredag.",
+      "faq_response_time": "Gennemsnitlig svartid: 24 timer",
+      "suggest_pretext": "Nogen har lige købt",
+      "suggest_verified": "Verificeret"
+    },
     "404": {
       "title": "Siden blev ikke fundet",
       "subtext_html": "Den side, du anmodede om, findes ikke.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "Skatter og fragt beregnes ved kassen.",
+      "stars_caption": "Fremragende 4,8 | 149+ anmeldelser",
+      "review_images_text_html": "<strong>Fremragende</strong> 4,8/5,0",
+      "review_images_content": "Tusindvis af kunder stoler på os.",
+      "reviews_start_text_html": "<strong>Fremragende</strong> 4,8 ud af 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> baseret på 149+ anmeldelser",
+      "custom_badge": "Slutter snart!",
+      "promo_title": "Begrænset tilbud!",
+      "promo_subtitle": "Få din rabat, mens den gælder:",
+      "hurrify_text": "Skynd dig — næsten udsolgt!",
+      "icon_text_1": "Gratis fragt",
+      "icon_text_2": "Sikker betaling",
+      "icon_text_3": "Returgaranti",
+      "trust_heading": "Garanteret sikker betaling",
+      "bundle_heading": "Klar til en opgradering?",
+      "content_description_heading": "Beskrivelse",
+      "content_shipping_heading": "Fragt & retur",
+      "content_featured_heading": "Købes ofte sammen",
+      "recommendations_heading": "Du vil måske også synes om",
+      "recently_viewed_title": "Senest sete",
+      "recently_viewed_subtitle": "Glem ikke",
       "hurrify": "Skynd dig, {{ number }} vare(r) tilbage på lager!",
       "sold_out": "Udsolgt",
       "waitlist": "Tilmeld dig venteliste",

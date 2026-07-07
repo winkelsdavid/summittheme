@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "Sale endet in",
+      "verified_review": "Verifizierte Bewertung",
+      "rated_on": "Bewertet mit 4,8/5,0 auf",
+      "footer_menu_title": "Informationen",
+      "footer_contact_heading": "Kontakt",
+      "faq_availability": "Unser Kundenservice ist Montag bis Freitag erreichbar.",
+      "faq_response_time": "Durchschnittliche Antwortzeit: 24h",
+      "suggest_pretext": "Jemand hat kürzlich gekauft",
+      "suggest_verified": "Verifiziert"
+    },
     "404": {
       "title": "Seite nicht gefunden",
       "subtext_html": "Die von Ihnen angeforderte Seite existiert nicht.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "inkl. MwSt. zzgl. Versandkosten",
+      "stars_caption": "Ausgezeichnet 4,8 | 149+ Bewertungen",
+      "review_images_text_html": "<strong>Ausgezeichnet</strong> 4,8/5,0",
+      "review_images_content": "Tausende Kunden vertrauen uns.",
+      "reviews_start_text_html": "<strong>Ausgezeichnet</strong> 4,8 von 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> basierend auf 149+ Bewertungen",
+      "custom_badge": "Endet bald!",
+      "promo_title": "Limitiertes Angebot!",
+      "promo_subtitle": "Sichere dir deinen Rabatt, solange er gilt:",
+      "hurrify_text": "Beeil dich — fast ausverkauft!",
+      "icon_text_1": "Kostenloser Versand",
+      "icon_text_2": "Sicherer Checkout",
+      "icon_text_3": "Rückgabegarantie",
+      "trust_heading": "Garantiert sicherer Checkout",
+      "bundle_heading": "Lust auf ein Upgrade?",
+      "content_description_heading": "Beschreibung",
+      "content_shipping_heading": "Versand & Rückgabe",
+      "content_featured_heading": "Wird oft zusammen gekauft",
+      "recommendations_heading": "Das könnte dir auch gefallen",
+      "recently_viewed_title": "Zuletzt angesehen",
+      "recently_viewed_subtitle": "Nicht vergessen",
       "hurrify": "Beeil dich, {{ number }} Artikel noch auf Lager!",
       "sold_out": "Ausverkauft",
       "waitlist": "Treten Sie der Warteliste bei",

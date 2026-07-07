@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "La promo se termine dans",
+      "verified_review": "Avis vérifié",
+      "rated_on": "Noté 4,8/5,0 sur",
+      "footer_menu_title": "Informations",
+      "footer_contact_heading": "Contact",
+      "faq_availability": "Notre service client est disponible du lundi au vendredi.",
+      "faq_response_time": "Temps de réponse moyen : 24h",
+      "suggest_pretext": "Quelqu'un vient d'acheter",
+      "suggest_verified": "Vérifié"
+    },
     "404": {
       "title": "Page non trouvée",
       "subtext_html": "La page que vous avez demandée n'existe pas.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "Taxes et frais de livraison calculés au moment du paiement.",
+      "stars_caption": "Excellent 4,8 | 149+ avis",
+      "review_images_text_html": "<strong>Excellent</strong> 4,8/5,0",
+      "review_images_content": "Des milliers de clients nous font confiance.",
+      "reviews_start_text_html": "<strong>Excellent</strong> 4,8 sur 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> basé sur 149+ avis",
+      "custom_badge": "Se termine bientôt !",
+      "promo_title": "Offre limitée !",
+      "promo_subtitle": "Profitez de votre réduction tant qu'elle dure :",
+      "hurrify_text": "Dépêchez-vous — bientôt épuisé !",
+      "icon_text_1": "Livraison gratuite",
+      "icon_text_2": "Paiement sécurisé",
+      "icon_text_3": "Garantie de retour",
+      "trust_heading": "Paiement sécurisé garanti",
+      "bundle_heading": "À la recherche d'une amélioration ?",
+      "content_description_heading": "Description",
+      "content_shipping_heading": "Livraison & retours",
+      "content_featured_heading": "Souvent achetés ensemble",
+      "recommendations_heading": "Vous aimerez peut-être aussi",
+      "recently_viewed_title": "Vus récemment",
+      "recently_viewed_subtitle": "N'oubliez pas",
       "hurrify": "Dépêchez-vous, {{ number }} article(s) restant en stock !",
       "sold_out": "Épuisé",
       "waitlist": "Rejoindre la liste d'attente",

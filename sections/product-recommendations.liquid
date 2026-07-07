@@ -30,7 +30,7 @@
   <div class="{{ section.settings.section_width }}">
     <product-recommendations class="product-recommendations   isolate product-recommendations--loaded" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}">
       {% if recommendations.performed and recommendations.products_count > 0 %}
-        <h2 class="product-recommendations__heading mb-5 text-{{ section.settings.heading_align }} {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+        <h2 class="product-recommendations__heading mb-5 text-{{ section.settings.heading_align }} {{ section.settings.heading_size }}">{% if section.settings.heading != blank %}{{ section.settings.heading | escape }}{% else %}{{ 'products.product.recommendations_heading' | t }}{% endif %}</h2>
         <div class="swiper-container swipercol-{{ section.id }} product-grid" 
           data-id="{{ section.id }}"  
           data-perview-desktop="{{ section.settings.perviewDesktop }}"
@@ -307,7 +307,6 @@ class ProductRecommendations extends HTMLElement {
     {
       "type": "text",
       "id": "heading",
-      "default": "You may also like",
       "label": "Heading"
     },
     {

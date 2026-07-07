@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "La oferta termina en",
+      "verified_review": "Reseña verificada",
+      "rated_on": "Valorado 4,8/5,0 en",
+      "footer_menu_title": "Información",
+      "footer_contact_heading": "Contacto",
+      "faq_availability": "Nuestro servicio de atención al cliente está disponible de lunes a viernes.",
+      "faq_response_time": "Tiempo medio de respuesta: 24h",
+      "suggest_pretext": "Alguien acaba de comprar",
+      "suggest_verified": "Verificado"
+    },
     "404": {
       "title": "Página no encontrada",
       "subtext_html": "La página solicitada no existe.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "Impuestos y gastos de envío calculados al finalizar la compra.",
+      "stars_caption": "Excelente 4,8 | 149+ reseñas",
+      "review_images_text_html": "<strong>Excelente</strong> 4,8/5,0",
+      "review_images_content": "Miles de clientes confían en nosotros.",
+      "reviews_start_text_html": "<strong>Excelente</strong> 4,8 de 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> basado en 149+ reseñas",
+      "custom_badge": "¡Termina pronto!",
+      "promo_title": "¡Oferta limitada!",
+      "promo_subtitle": "Aprovecha tu descuento mientras dure:",
+      "hurrify_text": "¡Date prisa — se está agotando!",
+      "icon_text_1": "Envío gratis",
+      "icon_text_2": "Pago seguro",
+      "icon_text_3": "Garantía de devolución",
+      "trust_heading": "Pago seguro garantizado",
+      "bundle_heading": "¿Buscas una mejora?",
+      "content_description_heading": "Descripción",
+      "content_shipping_heading": "Envíos y devoluciones",
+      "content_featured_heading": "Comprados juntos habitualmente",
+      "recommendations_heading": "También te podría gustar",
+      "recently_viewed_title": "Vistos recientemente",
+      "recently_viewed_subtitle": "No lo olvides",
       "hurrify": "Date prisa, {{ number }} ¡Artículo(s) restantes en stock!",
       "sold_out": "Agotado",
       "waitlist": "Unirse a la lista de espera",

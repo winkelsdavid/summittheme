@@ -1,0 +1,8 @@
+# Theme-check config: ignore local backup folders (not synced to Shopify)
+# and dev tooling — they contain stale theme copies (incl. old locale files)
+# that otherwise poison checks like MatchingTranslations/TranslationKeyExists.
+ignore:
+  - _livetheme/*
+  - _old/*
+  - dev-tools/*
+  - node_modules/*

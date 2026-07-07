@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "Sale eindigt over",
+      "verified_review": "Geverifieerde beoordeling",
+      "rated_on": "Beoordeeld met 4,8/5,0 op",
+      "footer_menu_title": "Informatie",
+      "footer_contact_heading": "Contact",
+      "faq_availability": "Onze klantenservice is bereikbaar van maandag tot en met vrijdag.",
+      "faq_response_time": "Gemiddelde reactietijd: 24 uur",
+      "suggest_pretext": "Iemand kocht zojuist",
+      "suggest_verified": "Geverifieerd"
+    },
     "404": {
       "title": "Pagina niet gevonden",
       "subtext_html": "De door u opgevraagde pagina bestaat niet.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "Belastingen en verzendkosten worden berekend bij het afrekenen.",
+      "stars_caption": "Uitstekend 4,8 | 149+ beoordelingen",
+      "review_images_text_html": "<strong>Uitstekend</strong> 4,8/5,0",
+      "review_images_content": "Vertrouwd door duizenden klanten.",
+      "reviews_start_text_html": "<strong>Uitstekend</strong> 4,8 van 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> op basis van 149+ beoordelingen",
+      "custom_badge": "Eindigt binnenkort!",
+      "promo_title": "Beperkte aanbieding!",
+      "promo_subtitle": "Profiteer van je korting zolang het duurt:",
+      "hurrify_text": "Snel — bijna uitverkocht!",
+      "icon_text_1": "Gratis verzending",
+      "icon_text_2": "Veilig afrekenen",
+      "icon_text_3": "Retourgarantie",
+      "trust_heading": "Gegarandeerd veilig afrekenen",
+      "bundle_heading": "Op zoek naar een upgrade?",
+      "content_description_heading": "Beschrijving",
+      "content_shipping_heading": "Verzending & retouren",
+      "content_featured_heading": "Vaak samen gekocht",
+      "recommendations_heading": "Dit vind je misschien ook leuk",
+      "recently_viewed_title": "Recent bekeken",
+      "recently_viewed_subtitle": "Niet vergeten",
       "hurrify": "Schrik, {{ number }} artikel(en) nog op voorraad!",
       "sold_out": "Uitverkocht",
       "waitlist": "Sluit je aan bij de wachtlijst",

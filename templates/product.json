@@ -22,8 +22,8 @@
             "background": "linear-gradient(136deg, rgba(255, 255, 255, 0.75) 11%, rgba(255, 255, 255, 0.35) 81%)",
             "text_color": "#000000",
             "stars_rating": 4.4,
-            "text": "<p><strong>Excellent</strong> 4.8 out of 5</p>",
-            "content": "<p>Trusted by thousands of customers.</p>",
+            "text": "",
+            "content": "",
             "roundness": 42,
             "images_size": 60,
             "images_size_mobile": 45,
@@ -41,7 +41,7 @@
             "radius": 10,
             "stars_height": 17,
             "stars_rating": 4.5,
-            "text": "<p><strong>Excellent</strong> 4.8 out of 5</p>",
+            "text": "",
             "show_truspilot": true,
             "trust_icon": "google",
             "font_size": 13,
@@ -58,7 +58,7 @@
             "radius": 40,
             "stars_height": 21,
             "stars_rating": 4.5,
-            "text": "<p><strong>4.8/5</strong> based on 149+ Reviews</p>",
+            "text": "",
             "font_size": 12,
             "mobile_font_size": 12,
             "text_color": "#000000",
@@ -127,7 +127,7 @@
             "enable_tab": true,
             "open_default": false,
             "no_border": false,
-            "title_tab": "Description"
+            "title_tab": ""
           }
         },
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc": {
@@ -143,7 +143,7 @@
             "enable_animation": true,
             "animation_delay": 3,
             "enable_custom": true,
-            "custom_badge": "Ending soon!",
+            "custom_badge": "",
             "b2_font_size": 12,
             "b2_size": 10,
             "b2_roundness": 100,
@@ -186,7 +186,7 @@
             "bk": "#F6D4D9",
             "box_bk": "",
             "icon_width": 24,
-            "title": "Popular upgrades",
+            "title": "",
             "h_color": "#000000",
             "products": [
               "test-bag"
@@ -204,7 +204,7 @@
             "enable_local_pickup": false,
             "enable_hurrify": true,
             "manual_hurrify": true,
-            "hurrify_text": "Hurry — selling out quickly!",
+            "hurrify_text": "",
             "text_color": "#000000",
             "hurrify_progress": 36,
             "hurrify_background": "linear-gradient(57deg, rgba(254, 137, 154, 1) 8%, rgba(246, 212, 217, 1) 47%, rgba(254, 137, 154, 0.25) 83%)",
@@ -428,7 +428,7 @@
           "type": "trust-badge",
           "disabled": true,
           "settings": {
-            "trust_heading": "Guarantee safe checkout",
+            "trust_heading": "",
             "width_image": 66
           }
         },
@@ -531,7 +531,7 @@
         "cart_cl_2": "#ffffff",
         "cart_cl_hover_2": "#fff2f4",
         "add_stars_text": true,
-        "stars_caption": "Excellent 4.8 | 1319 reviews",
+        "stars_caption": "",
         "add_shipping_timer": true,
         "icon_svg": "globe",
         "shipping_icon_width": 28,
@@ -558,7 +558,7 @@
         "b69a53cf-5bc1-4b18-add3-92af436f966c": {
           "type": "content",
           "settings": {
-            "title_tab": "Shipping & Returns",
+            "title_tab": "",
             "answer_content": "<p>Text for shipping & returns.</p>",
             "page": "material"
           }
@@ -839,7 +839,7 @@
         "show_stars": true,
         "stars_color": "",
         "stars_rating": 4.5,
-        "reviews_count_caption": "Rated 4.9/5.0 on",
+        "reviews_count_caption": "",
         "reviews_cout_color": "",
         "show_truspilot": true,
         "trust_icon": "trustpilot",
@@ -957,7 +957,7 @@
         "align_heading": "center",
         "stars_rating": 4.5,
         "color": "",
-        "verified_caption": "Verified Review",
+        "verified_caption": "",
         "autoplay": true,
         "speed": 2,
         "link": "",
@@ -1749,8 +1749,8 @@
         "subheading": "Check out the most common questions our customers asked. Still have questions ? Contact our customer support.",
         "team_image_width": 180,
         "team_image_width_mobile": 180,
-        "availability_caption": "Our customer support is available monday to friday.",
-        "response_time_caption": "Average answer time: 24h",
+        "availability_caption": "",
+        "response_time_caption": "",
         "bg_color": "#",
         "h_color": "",
         "text_color": "",
@@ -1860,7 +1860,7 @@
       "settings": {
         "animation": "fade-up",
         "section_width": "container",
-        "heading": "You may also like",
+        "heading": "",
         "heading_size": "h3",
         "heading_align": "center",
         "products_to_show": 10,
@@ -1901,7 +1901,7 @@
         "subtitle_top": "Sub Title Top",
         "replace_reviews": false,
         "reviews_type": "t_1",
-        "title": "Recently viewed",
+        "title": "",
         "description": "",
         "align_heading": "center",
         "subtitle_top_color": "",

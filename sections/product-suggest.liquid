@@ -35,7 +35,7 @@
       </span>
     </a>
     <div class="column-right">
-      <label class="pr-2 mb-1">{{ section.settings.text }} <a class="product-name" href="/"></a></label>
+      <label class="pr-2 mb-1">{% if section.settings.text != blank %}{{ section.settings.text }}{% else %}{{ 'general.defaults.suggest_pretext' | t }}{% endif %} <a class="product-name" href="/"></a></label>
       <div class="from-ago"></div>
       <div class="d-flex gap-3">
         <div class="d-flex gap-1 align-items-center">
@@ -45,12 +45,14 @@
           </svg>
           <div class="time-ago small txt-body-70"></div>
         </div>
-        {% if section.settings.verified_label != blank %}
+        {% assign ps_verified = section.settings.verified_label %}
+        {% if ps_verified == blank %}{% assign ps_verified = 'general.defaults.suggest_verified' | t %}{% endif %}
+        {% if ps_verified != blank %}
         <div class="d-flex gap-1 align-items-center">
           <svg class="svg-verified" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M19.5 6L9 18L4.5 13.5" stroke="#108043" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span class="small txt-verified"> {{ section.settings.verified_label }} </span>
+          <span class="small txt-verified"> {{ ps_verified }} </span>
         </div>
         {% endif %}
       </div>
@@ -99,14 +101,12 @@
     {
       "type": "text",
       "id": "text",
-      "label": "Pretext",
-      "default": "Someone recently bought "
+      "label": "Pretext"
     },
     {
           "type": "text",
           "id": "verified_label",
-          "label": "Verify",
-          "default": "Verified"
+          "label": "Verify"
         }
   ],
   "blocks": [

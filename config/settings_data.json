@@ -530,15 +530,15 @@
         "settings": {
           "enable": false,
           "duration": 8,
-          "text": "Someone recently bought",
-          "verified_label": "Verified"
+          "text": "",
+          "verified_label": ""
         }
       },
       "recently-viewed": {
         "type": "recently-viewed",
         "settings": {
           "enable": true,
-          "title": "Recently viewed",
+          "title": "",
           "limit": 6
         }
       },

@@ -80,7 +80,7 @@
                         {%- case block.type -%}
                             {%- when 'description' -%}
                                 <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
-                                    {{ block.settings.title_tab | default: 'Description' }}
+                                    {% assign pc_fb = 'products.product.content_description_heading' | t %}{{ block.settings.title_tab | default: pc_fb }}
                                 </a>
                             {%- when 'custom_liquid' -%}
                                 <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
@@ -88,7 +88,7 @@
                                 </a>
                             {%- when 'content' -%}
                                 <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
-                                    {{ block.settings.title_tab | default: 'Title Content' }}
+                                    {% assign pc_fb = 'products.product.content_shipping_heading' | t %}{{ block.settings.title_tab | default: pc_fb }}
                                 </a>
                             {%- when 'review' -%}
                                     <a class="nav-item nav-link {{ active }} disabled-anchor" href="#gtab{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true">
@@ -138,6 +138,8 @@
                               {% if recommendations.performed and recommendations.products_count > 0 %}
                                 {%- if block.settings.title_heading != blank -%}
                                   <h5 class="mb-4 {{ block.settings.size_text }}">{{ block.settings.title_heading }}</h5>
+                                {%- else -%}
+                                  <h5 class="mb-4 {{ block.settings.size_text }}">{{ 'products.product.content_featured_heading' | t }}</h5>
                                 {%- endif -%}
                                 <div class="row">
                                   {% for recommendation in recommendations.products %}
@@ -427,8 +429,7 @@
         {
           "type": "text",
           "id": "title_tab",
-          "label": "Heading",
-          "default": "Description"
+          "label": "Heading"
         }
       ]
     },
@@ -457,8 +458,7 @@
         {
           "type": "text",
           "id": "title_tab",
-          "label": "Heading",
-          "default": "Title Content"
+          "label": "Heading"
         },
         {
           "type": "richtext",
@@ -481,8 +481,7 @@
         {
           "type": "text",
           "id": "title_heading",
-          "label": "Heading",
-          "default": "Related products"
+          "label": "Heading"
         },
         {
           "type": "select",

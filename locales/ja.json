@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "セール終了まで",
+      "verified_review": "認証済みレビュー",
+      "rated_on": "評価 4.8/5.0",
+      "footer_menu_title": "インフォメーション",
+      "footer_contact_heading": "お問い合わせ",
+      "faq_availability": "カスタマーサポートは月曜日から金曜日まで対応しています。",
+      "faq_response_time": "平均返信時間:24時間",
+      "suggest_pretext": "誰かが最近購入しました",
+      "suggest_verified": "認証済み"
+    },
     "404": {
       "title": "ページが見つかりません",
       "subtext_html": "要求したページは存在しません。",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "税金と送料はチェックアウト時に計算されます。",
+      "stars_caption": "高評価 4.8 | 149件以上のレビュー",
+      "review_images_text_html": "<strong>高評価</strong> 4.8/5.0",
+      "review_images_content": "何千人ものお客様に信頼されています。",
+      "reviews_start_text_html": "<strong>高評価</strong> 5点中4.8",
+      "reviews_start_2_text_html": "<strong>4.8/5</strong>(149件以上のレビュー)",
+      "custom_badge": "まもなく終了!",
+      "promo_title": "期間限定セール!",
+      "promo_subtitle": "今だけの割引をお見逃しなく:",
+      "hurrify_text": "お急ぎください — 売り切れ間近!",
+      "icon_text_1": "送料無料",
+      "icon_text_2": "安全なチェックアウト",
+      "icon_text_3": "返品保証",
+      "trust_heading": "安全なチェックアウト保証",
+      "bundle_heading": "アップグレードしませんか?",
+      "content_description_heading": "商品説明",
+      "content_shipping_heading": "配送と返品",
+      "content_featured_heading": "よく一緒に購入されている商品",
+      "recommendations_heading": "こちらもおすすめです",
+      "recently_viewed_title": "最近チェックした商品",
+      "recently_viewed_subtitle": "お忘れなく",
       "hurrify": "急いで、 {{ number }} 在庫に残っている商品があります!",
       "sold_out": "完売",
       "waitlist": "ウェイティングリストに参加する",

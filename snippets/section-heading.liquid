@@ -4,17 +4,29 @@
 {% if r_alignement != blank %}
 {% assign r_class = "text-" | append: r_alignement %}
 {% endif %}
+{%- liquid
+  # Optional translated fallbacks (passed via render params); without them
+  # behaviour is byte-identical to reading section.settings directly.
+  assign sh_title = section.settings.title
+  if sh_title == blank and fallback_title != blank
+    assign sh_title = fallback_title
+  endif
+  assign sh_subtop = section.settings.subtitle_top
+  if sh_subtop == blank and fallback_subtitle_top != blank
+    assign sh_subtop = fallback_subtitle_top
+  endif
+-%}
 {%- if settings.sectionheading == 'heading-1' -%}
   {% if section.settings.replace_reviews %}
     {%  render 'rating-custom', align : section.settings.align_heading %}
   {% else %}
-  {%- if section.settings.subtitle_top != blank -%}
-    <div {% if section.settings.subtitle_top_color != blank and  section.settings.subtitle_top_color != "rgba(0,0,0,0)"  %} style="--g-font-color-subtop:{{ section.settings.subtitle_top_color }}" {% endif %} class="subtop {{ r_class }} text-top {% if section.settings.title != blank %} mb-2 {% else %} mb-4 {% endif %}"  data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.subtitle_top }}</div>
+  {%- if sh_subtop != blank -%}
+    <div {% if section.settings.subtitle_top_color != blank and  section.settings.subtitle_top_color != "rgba(0,0,0,0)"  %} style="--g-font-color-subtop:{{ section.settings.subtitle_top_color }}" {% endif %} class="subtop {{ r_class }} text-top {% if sh_title != blank %} mb-2 {% else %} mb-4 {% endif %}"  data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ sh_subtop }}</div>
   {%- endif -%}
   {% endif %}
-  {%- if section.settings.title != blank -%}
+  {%- if sh_title != blank -%}
   <h3 {% if section.settings.heading_color != blank and  section.settings.heading_color != "rgba(0,0,0,0)"  %} style="--g-color-heading:{{ section.settings.heading_color }}"{% endif %} class="{{ settings.size_text_heading }} {{ r_class }}  {% if section.settings.description != blank %} mb-2 {% else %} mb-5 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
-    <span>{{ section.settings.title }}</span>
+    <span>{{ sh_title }}</span>
   </h3>
   {%- endif -%}
   {%- if section.settings.description != blank -%}
@@ -24,13 +36,13 @@
     {% if section.settings.replace_reviews %}
           {%  render 'rating-custom', align : section.settings.align_heading %}
   {% else %}
-  {%- if section.settings.subtitle_top != blank -%}
-    <div class="subtop text-center text-top" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ section.settings.subtitle_top }}</div>
+  {%- if sh_subtop != blank -%}
+    <div class="subtop text-center text-top" data-aos="{{ section.settings.animation }}" data-aos-duration="300">{{ sh_subtop }}</div>
   {%- endif -%}
 {% endif %}
-  {%- if section.settings.title != blank -%}
+  {%- if sh_title != blank -%}
   <h3 class="section-title-2 {% if section.settings.description != blank %} mb-2 {% else %} mb-5 {% endif %}">
-    <span>{{ section.settings.title }}</span>
+    <span>{{ sh_title }}</span>
   </h3>
   {%- endif -%}
   {%- if section.settings.description != blank -%}

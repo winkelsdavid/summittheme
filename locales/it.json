@@ -9,6 +9,17 @@
  */
 {
   "general": {
+    "defaults": {
+      "sale_ends_in": "L'offerta termina tra",
+      "verified_review": "Recensione verificata",
+      "rated_on": "Valutato 4,8/5,0 su",
+      "footer_menu_title": "Informazioni",
+      "footer_contact_heading": "Contatti",
+      "faq_availability": "Il nostro servizio clienti è disponibile dal lunedì al venerdì.",
+      "faq_response_time": "Tempo medio di risposta: 24h",
+      "suggest_pretext": "Qualcuno ha appena acquistato",
+      "suggest_verified": "Verificato"
+    },
     "404": {
       "title": "Pagina non trovata",
       "subtext_html": "La pagina richiesta non esiste.",
@@ -404,6 +415,26 @@
   "products": {
     "product": {
       "tax_disclaimer": "Tasse e spese di spedizione calcolate al momento del pagamento.",
+      "stars_caption": "Eccellente 4,8 | 149+ recensioni",
+      "review_images_text_html": "<strong>Eccellente</strong> 4,8/5,0",
+      "review_images_content": "Migliaia di clienti si fidano di noi.",
+      "reviews_start_text_html": "<strong>Eccellente</strong> 4,8 su 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> basato su 149+ recensioni",
+      "custom_badge": "Termina presto!",
+      "promo_title": "Offerta limitata!",
+      "promo_subtitle": "Approfitta dello sconto finché dura:",
+      "hurrify_text": "Affrettati — sta andando a ruba!",
+      "icon_text_1": "Spedizione gratuita",
+      "icon_text_2": "Pagamento sicuro",
+      "icon_text_3": "Garanzia di reso",
+      "trust_heading": "Pagamento sicuro garantito",
+      "bundle_heading": "Cerchi un upgrade?",
+      "content_description_heading": "Descrizione",
+      "content_shipping_heading": "Spedizione e resi",
+      "content_featured_heading": "Spesso acquistati insieme",
+      "recommendations_heading": "Ti potrebbe piacere anche",
+      "recently_viewed_title": "Visti di recente",
+      "recently_viewed_subtitle": "Non dimenticare",
       "hurrify": "inorridire, {{ number }} articoli rimasti in magazzino!",
       "sold_out": "Esaurito",
       "waitlist": "Iscriviti alla lista d'attesa",
