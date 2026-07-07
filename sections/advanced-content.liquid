@@ -142,7 +142,7 @@
                       <div class="video-section__cover-background">
                         {%- if block.settings.cover_image == blank -%}
                           {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--video', position: b1_pos_vid, width: 1920, class: 'image-content__image' %}{%- endcapture -%}
-                          {%- if b1_fb != blank -%}<div class="position-relative image-content__image-wrapper">{{ b1_fb }}</div>{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
+                          {%- if b1_fb != blank -%}<div class="position-relative image-content__image-wrapper" style="padding-top:56.25%;">{{ b1_fb }}</div>{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                         {%- else -%}
                           <div class="position-relative image-content__image-wrapper " style="padding-top:{{ 1 | divided_by: block.settings.cover_image.aspect_ratio | times: 100 }}%;">
                             {%- liquid
