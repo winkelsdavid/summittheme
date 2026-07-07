@@ -106,6 +106,7 @@
                       {%- for block in section.blocks -%}
                           {%- case block.type -%}
                           {%- when 'slide' -%}
+                          {%- assign b1_pos = b1_pos | plus: 1 -%}
                           <div id="{{ block.id }}" class="swiper-slide announcement-item__in_c rte m-0 d-flex align-items-center justify-content-center"  {{ block.shopify_attributes }} >
                             {% if block.settings.image != blank %}
                                 <img class="image-content__image mr-2"
@@ -114,7 +115,9 @@
                                   loading="lazy"
                                   width="{{ block.settings.image.width }}"
                                   height="{{ block.settings.image.height }}">
-                              {% endif %}  
+                              {% else %}
+                                {% render 'brand-image', handle: 'announcement-bar-slide--slide', position: b1_pos, width: 240, class: 'image-content__image mr-2' %}
+                              {% endif %}
                               <div class="py-1 my-1 {{ section.settings.size_text }}">
                               {{ block.settings.content }} 
                               {% if block.settings.button_text != blank %} 

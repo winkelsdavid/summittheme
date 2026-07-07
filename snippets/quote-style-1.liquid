@@ -23,6 +23,10 @@
       {%- endif -%}
       <div class=" py-2 "><div class="{{ size_text }}">{{ quote }}</div></div>
       <div class="d-flex align-items-center {% if aligntext == 'text-center' %} justify-content-center {% endif %}">
+        {%- if avatar == blank and b1_handle != blank -%}
+          {%- capture b1_av -%}{% render 'brand-image', handle: b1_handle, position: b1_position, width: 200 %}{%- endcapture -%}
+          {%- if b1_av != blank -%}<div class="author-avatar mr-3">{{ b1_av }}</div>{%- endif -%}
+        {%- endif -%}
         {%- if avatar != blank -%}
           {%- assign widths = '165, 360' -%}
           {%- capture sizes -%}

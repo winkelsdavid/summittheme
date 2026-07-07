@@ -8,6 +8,9 @@
 
 {%- liquid
   assign sticky_video = section.settings.video
+  if sticky_video == blank
+    assign sticky_video = metaobjects.section_fallback['sticky-video-product']['video_1'].value
+  endif
   assign sticky_product = section.settings.product
   assign delay_seconds = section.settings.delay | default: 5
   assign show_widget = true

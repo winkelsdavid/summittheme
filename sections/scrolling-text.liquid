@@ -77,6 +77,8 @@
                 fetchpriority="auto"
                 width="{{ block.settings.image.width }}"
                 height="{{ block.settings.image.height }}">
+            {% else %}
+              {% render 'brand-image', handle: 'scrolling-text--scroll_item', position: forloop.index, width: 240, class: 'image-content__image mr-2 scale-in' %}
             {% endif %}
             {{ block.settings.content }}
            </span>

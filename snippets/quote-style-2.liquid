@@ -1,6 +1,10 @@
 <div class=" d-flex {% if aligntext == 'text-center' %} justify-content-center {% endif %} quote__slide quote__style_2 {{ aligntext }} ">
     <div class="quote-wrap" style="background-color:{{ bg_item }}">
         <div class="media mb-3 ">
+            {%- if avatar == blank and b1_handle != blank -%}
+              {%- capture b1_av -%}{% render 'brand-image', handle: b1_handle, position: b1_position, width: 300 %}{%- endcapture -%}
+              {%- if b1_av != blank -%}<div class="author-avatar mr-4 mt-0">{{ b1_av }}</div>{%- endif -%}
+            {%- endif -%}
             {%- if avatar != blank -%}
                 <div class="author-avatar mr-4 mt-0">
                   <img class="lazyload" src="{{ avatar | image_url: width: 1 , height: 1 }}" data-src="{{ avatar | image_url: width: 300 }}" 

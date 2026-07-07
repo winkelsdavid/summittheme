@@ -47,8 +47,8 @@
                   height="{{ block.settings.image.height }}"/>
               </div>
             {% else %}
-            {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-            {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- capture b1_fb -%}{% render 'brand-image', handle: 'team-member--member', position: forloop.index, width: 900, alt: block.settings.name %}{%- endcapture -%}
+            {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
             {% endif %}
             <div class="smember-icons py-3">
               {% if block.settings.twitter != blank %}

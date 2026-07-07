@@ -90,7 +90,7 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
             assign size_text = section.settings.size_text
             assign aligntext = section.settings.aligntext
           -%}
-          {% render 'quote-style-3', quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext %}
+          {% render 'quote-style-3', quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext, b1_handle: 'quotes-square--quote', b1_position: forloop.index %}
           
         </div>
         {%- endfor -%}

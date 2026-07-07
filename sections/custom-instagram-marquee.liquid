@@ -213,11 +213,13 @@ flex:0 0 calc(50% - 10px);
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
                     {% if block.type == "column_1" %}
+                        {%- assign b1_c1 = b1_c1 | plus: 1 -%}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
-                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'custom-instagram-marquee--column_1', position: b1_c1, width: 1080 %}{%- endcapture -%}
+                            {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}{%- endif -%}
                             {% endif %}
                         </div>
                     {% endif %}
@@ -230,11 +232,13 @@ flex:0 0 calc(50% - 10px);
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
                     {% if block.type == "column_2" %}
+                        {%- assign b1_c2 = b1_c2 | plus: 1 -%}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
-                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'custom-instagram-marquee--column_2', position: b1_c2, width: 1080 %}{%- endcapture -%}
+                            {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}{%- endif -%}
                             {% endif %}
                         </div>
                     {% endif %}
@@ -249,8 +253,11 @@ flex:0 0 calc(50% - 10px);
                   {% elsif section.settings.main_image != blank %}
                     <img src="{{ section.settings.main_image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                     {% else %}
+                    {%- capture b1_vid -%}{% render 'brand-video', handle: 'custom-instagram-marquee', autoplay: true, loop: true, muted: true, controls: false %}{%- endcapture -%}
+                    {%- if b1_vid != blank -%}{{ b1_vid }}{%- else -%}
                     {%- capture b1_fb -%}{% render 'brand-image', handle: 'custom-instagram-marquee', slot: 1, width: 1920 %}{%- endcapture -%}
                     {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}{%- endif -%}
+                    {%- endif -%}
                     {% endif %}
                 </div>
                 <div class="marquee_content-overlay"></div>
@@ -277,11 +284,13 @@ flex:0 0 calc(50% - 10px);
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
                     {% if block.type == "column_3" %}
+                        {%- assign b1_c3 = b1_c3 | plus: 1 -%}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
-                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'custom-instagram-marquee--column_3', position: b1_c3, width: 1080 %}{%- endcapture -%}
+                            {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}{%- endif -%}
                             {% endif %}
                         </div>
                     {% endif %}
@@ -294,11 +303,13 @@ flex:0 0 calc(50% - 10px);
               <div class="marquee-col-c">
                 {%  for block in section.blocks %}
                     {% if block.type == "column_4" %}
+                        {%- assign b1_c4 = b1_c4 | plus: 1 -%}
                         <div class="marquee-col-image">
                             {% if block.settings.image != blank %}
                             <img src="{{  block.settings.image | image_url: width: 5760 }}" alt="instagram image" loading="lazy">
                             {% else %}
-                            {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}
+                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'custom-instagram-marquee--column_4', position: b1_c4, width: 1080 %}{%- endcapture -%}
+                            {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg full-content' }}{%- endif -%}
                             {% endif %}
                         </div>
                     {% endif %}

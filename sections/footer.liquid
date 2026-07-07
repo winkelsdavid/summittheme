@@ -452,6 +452,13 @@
                   height="{{ logo.height }}"/>
                 </a>
               </div>
+            {%- else -%}
+              {%- capture b1_logo -%}{% render 'brand-image', handle: 'footer--text', position: 1, logo_fallback: true, width: 400, class: 'img-logo', alt: shop.name %}{%- endcapture -%}
+              {%- if b1_logo != blank -%}
+              <div class="image-content__image-container logofooter mb-4 overflow-hidden border-radius-0" style="width: {{ block.settings.widthlogofooter }}px;">
+                <a href="/">{{ b1_logo }}</a>
+              </div>
+              {%- endif -%}
             {%- endif -%}
             <div class="rte-setting">{{ block.settings.content }}</div>
           </div>

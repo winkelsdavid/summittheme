@@ -659,6 +659,12 @@ padding-top:4px!important;
                   </div>
                 </div>
             {%- elsif block.settings.image == blank and block.settings.image_mobile == blank -%}
+            {%- capture b1_src -%}{% render 'brand-image-src', handle: 'slideshow-2--slide', position: forloop.index, width: 1920 %}{%- endcapture -%}
+            {%- if b1_src != blank -%}
+            <div class="slideshow__image box ratio-container js" style="background-image:url('{{ b1_src }}');background-size:cover;background-position: {{ block.settings.alignment }};">
+              {%- if section.settings.show_overlay -%}<div class="slideshow__overlay"></div>{%- endif -%}
+            </div>
+            {%- else -%}
             <div class="slideshow__image js">
               <div class="placeholder-background">
                 {%- capture current -%}{%- cycle 1, 2 -%}{%- endcapture -%}
@@ -666,6 +672,7 @@ padding-top:4px!important;
               </div>
               {%- if section.settings.show_overlay -%}<div class="slideshow__overlay"></div>{%- endif -%}
             </div>
+            {%- endif -%}
             {%- else -%}
             <div class="slideshow__image box ratio-container lazyload js{%- unless forloop.first -%} lazypreload{%- endunless -%}"
                  data-bgset="{%- render 'bgset', image: block.settings.image -%}"

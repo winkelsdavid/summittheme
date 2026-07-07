@@ -115,6 +115,7 @@
         {%- for block in section.blocks limit: loop_limit -%}
           {% case block.type %}
             {% when 'image' %}
+            {%- assign b1_pos = b1_pos | plus: 1 -%}
             <div class="{% if enable_carousel %}instascroll-slide{% else %}{% if section.settings.padding == false %}col px-0{% else %}col{% endif %}{% endif %} carousel__slide-wrapper--{{ block.id }}" {{ block.shopify_attributes }}>
               <div class="position-relative hv-image-brightness instagramoff-item"  data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}" >
                 {%- if block.settings.image != blank -%}
@@ -130,7 +131,8 @@
                     }}
                 </a>
                 {%- else -%}
-                <div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+                {%- capture b1_fb -%}{% render 'brand-image', handle: 'instagram-customize--image', position: b1_pos, width: 600, class: 'image-content__image scale-in' %}{%- endcapture -%}
+                {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}<div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>{%- endif -%}
                 {%- endif -%}
               </div>
             </div>

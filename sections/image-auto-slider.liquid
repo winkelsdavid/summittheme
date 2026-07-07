@@ -266,9 +266,10 @@
 
 
                                 {%  else %}
-                                  <div class="kik_video_item"> 
+                                  {%- capture b1_fb -%}{% render 'brand-image', handle: 'image-auto-slider--video', position: forloop.index, width: 1920 %}{%- endcapture -%}
+                                  <div class="kik_video_item">
                                       <div class="wt-video__movie">
-                                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                        {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                                       </div>
                                       {%  comment %}
                                           <button class="shoppable-video_control-button" aria-label="Play/pause button">

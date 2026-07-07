@@ -77,6 +77,7 @@
         <div class="{% unless forloop.last %} mb-5 mb-lg-0 {% endunless %} flex__item flex {% if section.settings.align_center %}flex--center-vertical{% endif %} {{ flex_size }}" {{ block.shopify_attributes }}>
           {%- case block.type -%}
             {%- when 'image_block' -%}
+              {%- assign b1_pos = b1_pos | plus: 1 -%}
               <div class="flex__item" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">
                 {%- if block.settings.image != blank -%}
                   <div class="image-content__image-container overflow-hidden">
@@ -105,8 +106,9 @@
                     </div>
                   </div>
                 {%- else -%}
+                  {%- capture b1_fb -%}{% render 'brand-image', handle: 'image-with-text--image_block', position: b1_pos, width: 1066, class: 'image-content__image scale-in' %}{%- endcapture -%}
                   <div class="image-content__image">
-                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                   </div>
                 {%- endif -%}
               </div>

@@ -139,10 +139,15 @@
                 </div>
 
               {%- else -%}
+                {%- capture b1_vid -%}{% render 'brand-video', handle: 'image-with-icons', autoplay: true, loop: true, muted: true, controls: false %}{%- endcapture -%}
+                {%- if b1_vid != blank -%}
+                <div class="image-content__image-container overflow-hidden block-product-img h-100">{{ b1_vid }}</div>
+                {%- else -%}
                 {%- capture b1_fb -%}{% render 'brand-image', handle: 'image-with-icons', slot: 1, width: 1500, class: 'image-content__image' %}{%- endcapture -%}
                 <div class="image-content__image">
                   {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                 </div>
+                {%- endif -%}
               {%- endif -%}
         </div>
         <div class="col-lg-6 col-12">

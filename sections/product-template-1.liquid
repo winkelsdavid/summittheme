@@ -632,6 +632,8 @@ display:none;
                     <div class="reviews_images_r">
                       {% if block.settings.image_1 != blank %}
                         <img src="{{ block.settings.image_1 | img_url:"100x" }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                      {% else %}
+                        {% render 'brand-image', handle: 'product-template-1--review_images', position: 1, width: 100 %}
                       {% endif  %}
                       {% if block.settings.image_2 != blank %}
                         <img src="{{ block.settings.image_2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
@@ -2595,6 +2597,7 @@ display:none;
                   {% endif %}
                 </div>
               {%- when 'image' -%}
+                {%- assign b1_pos_img = b1_pos_img | plus: 1 -%}
                 <div class="safe-checkout-detail product-block">
                   {%- if block.settings.image != blank -%}
                   <img
@@ -2606,7 +2609,8 @@ display:none;
                     width="{{ block.settings.image.width }}"
                   >
                   {%- else -%}
-                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--image', position: b1_pos_img, width: 600, class: 'img-fluid w-100' %}{%- endcapture -%}
+                    {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                   {%- endif -%}
                 </div>
               {%- when 'trust-badge' -%}

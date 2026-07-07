@@ -79,9 +79,9 @@ data-bgset="{% render 'bgset', image: section.settings.image_bg %}" loading="laz
 
             case style
             when 'style-1'
-            render 'quote-style-1', title: title, quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext
+            render 'quote-style-1', title: title, quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext, b1_handle: 'quotes--quote', b1_position: forloop.index
             when 'style-2'
-            render 'quote-style-2', title: title, quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext
+            render 'quote-style-2', title: title, quote: quote, rate: rate, avatar: avatar, author: author, info: info, bg_item: bg_item, size_text: size_text, aligntext: aligntext, b1_handle: 'quotes--quote', b1_position: forloop.index
             endcase
           -%}
 

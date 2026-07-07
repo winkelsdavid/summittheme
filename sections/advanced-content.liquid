@@ -199,6 +199,7 @@
                         </div>
                       {%- endif -%}
                     {%- endif -%}
+                    {%- assign b1_pos_img = b1_pos_img | plus: 1 -%}
                     <div class="block-image image-content__image-container block-image-{{ block.id }}">
                       {%- if block.settings.image != blank -%}
                       <a href="{{ block.settings.image_link }}" class="d-block image-content__image-wrapper" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;" >
@@ -214,7 +215,8 @@
                         height="{{ block.settings.image.height }}" />
                     </a>
                     {%- else -%}
-                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'advanced-content--image', position: b1_pos_img, width: 1500, class: 'scale-in w-100' %}{%- endcapture -%}
+                    {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                   {%- endif -%}
                     {%- if block.settings.enable_top == false -%}
                     {%- if block.settings.content != blank -%}

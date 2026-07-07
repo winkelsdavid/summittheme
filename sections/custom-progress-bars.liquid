@@ -112,11 +112,13 @@ gap:10px;
         {% for block in section.blocks %}
         {% case block.type %}
             {% when "image" %}
+                {%- assign b1_pos = b1_pos | plus: 1 -%}
                 <div class="progress_media">
                 {%- if block.settings.image != blank -%}
                 <img src="{{ block.settings.image | image_url: width: 5760 }}" loading='lazy' width="auto" height="auto" alt="progress media">
                 {%- else -%}
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- capture b1_fb -%}{% render 'brand-image', handle: 'custom-progress-bars--image', position: b1_pos, width: 1920, alt: 'progress media' %}{%- endcapture -%}
+                {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                 {%- endif -%}
                 </div>
             {% endcase %}
