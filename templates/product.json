@@ -222,7 +222,7 @@
             "product_selector": "radio",
             "sw_color_product": true,
             "type_color": "square-text",
-            "size_color": "normal-48",
+            "size_color": "small-38",
             "enable_quantity_bundles": false,
             "headline": "",
             "preselected": "option_2",
