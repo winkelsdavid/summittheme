@@ -116,7 +116,7 @@
           {%- capture b1_fb -%}{% render 'brand-image', handle: 'grid-banner--banner', position: forloop.index, width: 1080, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
           {%- if b1_fb != blank -%}
           <div class="img-grid-banner image-content__image-container overflow-hidden">
-            <div class="image-content__image-wrapper"{% if enable_height_banner %} style="--or-height-banner:{{ banner_height }}px;--or-height-banner_mobile:{{ banner_height_mobile }}px;"{% endif %}>{{ b1_fb }}</div>
+            <div class="image-content__image-wrapper"{% if enable_height_banner %} style="--or-height-banner:{{ banner_height }}px;--or-height-banner_mobile:{{ banner_height_mobile }}px;"{% else %} style="padding-top:100%;"{% endif %}>{{ b1_fb }}</div>
           </div>
           <a class="banner-overlay" href="{{ block.settings.button_link | default: "#" }}"></a>
           {%- else -%}
