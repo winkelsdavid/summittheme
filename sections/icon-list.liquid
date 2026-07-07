@@ -81,7 +81,8 @@
                     | image_tag: sizes: sizes, widths: widths, fetchpriority: 'auto'
                   }}
                 {%- else -%}
-                {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- capture b1_fb -%}{% render 'brand-image', handle: 'icon-list--icon_item', position: forloop.index, width: 300, class: 'scale-in lazyloaded', alt: block.settings.title %}{%- endcapture -%}
+                {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
               {%- endif -%}
               {% endif %}
             </span>
@@ -111,7 +112,8 @@
                         | image_tag: sizes: sizes, widths: widths, fetchpriority: 'auto'
                       }}
                     {%- else -%}
-                    {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'icon-list--icon_item', position: forloop.index, width: 300, class: 'scale-in lazyloaded', alt: block.settings.title %}{%- endcapture -%}
+                    {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                   {%- endif -%}
                   {% endif %}
               </div>

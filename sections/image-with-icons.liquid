@@ -160,8 +160,12 @@
                     -%}
                         <div class="block-product-imgtxt__item flex-column c_align_{{ block.settings.alignment }}">
                             {%- if icon_image != blank -%}
-                            <img class="mb-3" src="{{ icon_image | image_url: width: 300 }}" style="width:{{ block.settings.icon_width }}px" 
+                            <img class="mb-3" src="{{ icon_image | image_url: width: 300 }}" style="width:{{ block.settings.icon_width }}px"
                                 loading="lazy" width="{{ icon_image.width }}" height="{{ icon_image.height }}" alt="{{ icon_image.alt }}">
+                            {%- else -%}
+                            {%- assign b1_icon_style = 'width:' | append: block.settings.icon_width | append: 'px' -%}
+                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'image-with-icons--text_icon', position: forloop.index, width: 300, class: 'mb-3 scale-in lazyloaded', style: b1_icon_style, alt: block_title %}{%- endcapture -%}
+                            {%- if b1_fb != blank -%}{{ b1_fb }}{%- endif -%}
                             {%- endif -%}
                             {%- if block_title != blank -%}
                                 <h6 class="mb-3"> {{ block_title }}</h6>

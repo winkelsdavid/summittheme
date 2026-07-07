@@ -59,6 +59,10 @@ Shops mit.
   logo-carousel/logo-list = Dritt-Logos, timeline--milestone = Icon-Label,
   custom-comparison-table--table = produktspezifisches Vergleichszeilen-
   Thumbnail — ein Brand-Pool-Bild wäre dort inhaltlich falsch);
+  **Strike-Revision 2026-07-07 (Praxistest):** `image-with-icons--text_icon`
+  (icon_image) und `icon-list--icon_item` (image_icon) sind DOCH verdrahtet —
+  ihre gemappten Pools bestehen aus generierten Icons, nicht Lifestyle-Fotos;
+  Größen-Parität via style-Param (icon_width) bzw. iconx8-Container;
   **v2-Kandidaten (zurückgestellt):** featured-collections-1/3/4/5 +
   product-tab-split `collection`-Blöcke (nativer `collection.image`-Fallback
   existiert bereits), header Menü-Banner/level/sidebar-Blöcke (verschachtelte
