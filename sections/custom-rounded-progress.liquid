@@ -161,8 +161,13 @@ margin-top:50px;
   line-height: 22px;
   min-width: 94px;
   padding-right: 5px;
-  color: {{ section.settings.stat_label_color }};
   max-width:94px;
+}
+.bas-before-card .bas-stat-label {
+  color: {{ section.settings.stat_label_color }};
+}
+.bas-after-card .bas-stat-label {
+  color: {{ section.settings.stat_label_color_after | default: section.settings.stat_label_color }};
 }
 
 .bas-stat-bar {
@@ -575,8 +580,14 @@ margin-top:50px;
     {
       "type": "color",
       "id": "stat_label_color",
-      "label": "Stat Label Color",
+      "label": "Stat Label Color Before",
       "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "stat_label_color_after",
+      "label": "Stat Label Color After",
+      "info": "Empty = same as Before"
     },
     {
       "type": "header",
