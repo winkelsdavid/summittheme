@@ -1644,7 +1644,7 @@ display:none;
                               style="width:{{ block.settings.icons_width }}px"
                             >
                           {% else %}
-                            {% render 'list-svg',block:block , icon: block.settings.icon_1_svg %}
+                            {% render 'list-svg', block: block, icon: block.settings.icon_1_svg, icon_color: block.settings.icon_color_2 %}
                           {% endif %}
                           {% if block.settings.label_1 != blank %}
                           {{ block.settings.label_1 }}
@@ -1662,7 +1662,7 @@ display:none;
                               style="width:{{ block.settings.icons_width }}px"
                             >
                           {% else %}
-                            {% render 'list-svg',block:block , icon: block.settings.icon_2_svg %}
+                            {% render 'list-svg', block: block, icon: block.settings.icon_2_svg, icon_color: block.settings.icon_color_3 %}
                           {% endif %}
                           {% if block.settings.label_2 != blank %}
                           {{ block.settings.label_2 }}
@@ -1894,10 +1894,18 @@ display:none;
                           .price-{{ section.id }} .product-single__tax-disclaimer{
                             display:block;
                             width:100%;
+                            flex:0 0 100%;
+                            padding-right:0;
+                            text-align:left;
                             font-size:12px;
                             line-height:1.4;
                             opacity:.75;
                             margin-top:2px;
+                          }
+                          @media (max-width:768px){
+                            .small--text-center .price-{{ section.id }} .product-single__tax-disclaimer{
+                              text-align:center;
+                            }
                           }
                 </style>
                 <ul
@@ -6192,6 +6200,26 @@ function formatPrice(value) {
           "step": 1,
           "default": 12
         },
+         {
+          "type":"header",
+          "content":"Box 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_box_2",
+          "label": "Activate Box 2",
+          "default":true
+        },
+          {
+          "type": "color_background",
+          "id": "box_2_bk",
+          "label": "Box 2 Background"
+        },
+        {
+          "type": "color",
+          "id": "box_2_color",
+          "label": "Box 2 Color"
+        },
         {
           "type": "image_picker",
           "id": "icon_1",
@@ -6284,27 +6312,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color_2",
-          "label": "Icon Color"
-        },
-         {
-          "type":"header",
-          "content":"Box 2"
-        },
-        {
-          "type": "checkbox",
-          "id": "enable_box_2",
-          "label": "Activate Box 2",
-          "default":true
-        },
-          {
-          "type": "color_background",
-          "id": "box_2_bk",
-          "label": "Box 2 Background"
-        },
-        {
-          "type": "color",
-          "id": "box_2_color",
-          "label": "Box 2 Color"
+          "label": "Icon 1 Color"
         },
         {
           "type": "text",
@@ -6404,7 +6412,7 @@ function formatPrice(value) {
         {
           "type": "color",
           "id": "icon_color_3",
-          "label": "Icon Color"
+          "label": "Icon 2 Color"
         },
         {
           "type": "text",
