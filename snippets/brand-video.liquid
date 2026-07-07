@@ -1,0 +1,12 @@
+{%- comment -%} B1 brand-video — Video-Fallback mit media_type-Guard.
+  NUR für Settings vom Typ `video` (Datei), NIE für `video_url`.
+  Params: handle, instance, class, autoplay/loop/muted/controls (optional) {%- endcomment -%}
+{%- liquid
+  assign v = instance
+  if v == blank
+    assign v = metaobjects.section_fallback[handle]['video_1'].value
+  endif
+-%}
+{%- if v != blank and v.media_type == 'video' -%}
+  {{ v | video_tag: autoplay: autoplay, loop: loop, muted: muted, controls: controls, class: class }}
+{%- endif -%}

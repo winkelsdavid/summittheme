@@ -1,0 +1,44 @@
+{%- comment -%} B1 brand-image-src — wie brand-image, gibt NUR die Bild-URL aus.
+  Params: handle, instance, slot|position, width (default 1600) {%- endcomment -%}
+{%- liquid
+  assign img = instance
+  if img == blank
+    if position != blank
+      assign n = metaobjects.section_fallback[handle]['pool_size'].value | times: 1
+      if n < 1
+        assign n = 1
+      endif
+      assign idx = position | minus: 1 | modulo: n | plus: 1
+    else
+      assign idx = slot | default: 1 | times: 1
+    endif
+    case idx
+      when 1
+        assign img = metaobjects.section_fallback[handle]['image_1'].value
+      when 2
+        assign img = metaobjects.section_fallback[handle]['image_2'].value
+      when 3
+        assign img = metaobjects.section_fallback[handle]['image_3'].value
+      when 4
+        assign img = metaobjects.section_fallback[handle]['image_4'].value
+      when 5
+        assign img = metaobjects.section_fallback[handle]['image_5'].value
+      when 6
+        assign img = metaobjects.section_fallback[handle]['image_6'].value
+      when 7
+        assign img = metaobjects.section_fallback[handle]['image_7'].value
+      when 8
+        assign img = metaobjects.section_fallback[handle]['image_8'].value
+      when 9
+        assign img = metaobjects.section_fallback[handle]['image_9'].value
+      when 10
+        assign img = metaobjects.section_fallback[handle]['image_10'].value
+      when 11
+        assign img = metaobjects.section_fallback[handle]['image_11'].value
+      when 12
+        assign img = metaobjects.section_fallback[handle]['image_12'].value
+    endcase
+  endif
+  assign w = width | default: 1600
+-%}
+{%- if img != blank -%}{{ img | image_url: width: w }}{%- endif -%}

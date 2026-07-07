@@ -1,0 +1,8 @@
+{%- comment -%} B1 E2E-Dynamik-Probe (TEMPORÄR — nach GO/NOGO-Entscheid löschen, §5).
+  Aufruf während E2E: {% render 'b1-probe', handle: section.type %} {%- endcomment -%}
+{%- liquid
+  assign fname = 'image_' | append: 2
+  assign ctrl = metaobjects.section_fallback[handle]['image_1'].value
+  assign dyn  = metaobjects.section_fallback[handle][fname].value
+-%}
+<div style="display:none">B1PROBE_T1={% if ctrl != blank %}PASS{% else %}FAIL{% endif %} B1PROBE_T2={% if dyn != blank %}GO{% else %}NOGO{% endif %}</div>

@@ -1,0 +1,57 @@
+{%- comment -%}
+  B1 brand-image — Bild mit Metaobject-Fallback.
+  Params:
+    handle    (Pflicht) section.type  ODER  section.type--block.type
+    instance  (Pflicht) das Instanz-Setting (section.settings.x / block.settings.x)
+    slot      (Section-Level) 1..12 — Position des Settings in Schema-Reihenfolge
+    position  (Block-Level)   Positions-Nr. des Blocks GLEICHEN Typs (1-basiert)
+    logo_fallback (optional)  true → shop.brand.logo als Letzt-Fallback
+    class / sizes / width / alt (optional; width default 1600)
+{%- endcomment -%}
+{%- liquid
+  assign img = instance
+  if img == blank
+    if position != blank
+      assign n = metaobjects.section_fallback[handle]['pool_size'].value | times: 1
+      if n < 1
+        assign n = 1
+      endif
+      assign idx = position | minus: 1 | modulo: n | plus: 1
+    else
+      assign idx = slot | default: 1 | times: 1
+    endif
+    case idx
+      when 1
+        assign img = metaobjects.section_fallback[handle]['image_1'].value
+      when 2
+        assign img = metaobjects.section_fallback[handle]['image_2'].value
+      when 3
+        assign img = metaobjects.section_fallback[handle]['image_3'].value
+      when 4
+        assign img = metaobjects.section_fallback[handle]['image_4'].value
+      when 5
+        assign img = metaobjects.section_fallback[handle]['image_5'].value
+      when 6
+        assign img = metaobjects.section_fallback[handle]['image_6'].value
+      when 7
+        assign img = metaobjects.section_fallback[handle]['image_7'].value
+      when 8
+        assign img = metaobjects.section_fallback[handle]['image_8'].value
+      when 9
+        assign img = metaobjects.section_fallback[handle]['image_9'].value
+      when 10
+        assign img = metaobjects.section_fallback[handle]['image_10'].value
+      when 11
+        assign img = metaobjects.section_fallback[handle]['image_11'].value
+      when 12
+        assign img = metaobjects.section_fallback[handle]['image_12'].value
+    endcase
+  endif
+  if img == blank and logo_fallback == true
+    assign img = shop.brand.logo
+  endif
+  assign w = width | default: 1600
+-%}
+{%- if img != blank -%}
+  {{ img | image_url: width: w | image_tag: loading: 'lazy', class: class, sizes: sizes, alt: alt }}
+{%- endif -%}
