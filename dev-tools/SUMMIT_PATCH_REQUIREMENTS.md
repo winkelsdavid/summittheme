@@ -56,7 +56,9 @@ Shops mit.
   Bild-Fallback).
 - **Bewusst OHNE Fallback (Entscheid 2026-07-07):** alle Deko-/Icon-Slots
   (`image_bg`-Texturen, Icon-Settings, Payment-Badges, footer `imgpayment`,
-  logo-carousel/logo-list = Dritt-Logos, timeline--milestone = Icon-Label);
+  logo-carousel/logo-list = Dritt-Logos, timeline--milestone = Icon-Label,
+  custom-comparison-table--table = produktspezifisches Vergleichszeilen-
+  Thumbnail — ein Brand-Pool-Bild wäre dort inhaltlich falsch);
   **v2-Kandidaten (zurückgestellt):** featured-collections-1/3/4/5 +
   product-tab-split `collection`-Blöcke (nativer `collection.image`-Fallback
   existiert bereits), header Menü-Banner/level/sidebar-Blöcke (verschachtelte
