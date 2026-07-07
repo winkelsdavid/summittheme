@@ -2370,6 +2370,26 @@ theme.Product = (function () {
       });
       mainEl.style.opacity = "1";
 
+      // Vertical thumbs (media-left/right): Swiper needs a definite container
+      // height (Slick set the list height itself). Sync the thumb column to
+      // the main gallery height; re-sync on autoHeight slide changes + load.
+      if (vertical) {
+        var tSw = this.thumbsSwiper;
+        var syncThumbHeight = function () {
+          var h = mainEl.offsetHeight;
+          if (h > 40) {
+            thumbsEl.style.height = h + "px";
+            if (tSw && !tSw.destroyed) tSw.update();
+          }
+        };
+        syncThumbHeight();
+        this.mainSwiper.on("slideChangeTransitionEnd", syncThumbHeight);
+        window.addEventListener("load", syncThumbHeight, { once: true });
+        setTimeout(syncThumbHeight, 400); // late image loads before window.load
+      } else {
+        thumbsEl.style.height = "";
+      }
+
       // Position on the active (featured/variant) image.
       var active = thumbsEl.querySelector(".swiper-slide.is-active");
       if (active && active.parentElement) {
