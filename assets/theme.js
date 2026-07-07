@@ -4341,6 +4341,9 @@ theme.quickview = (function () {
     var var_id = "";
     function processCart() {
       qAll(quickviewAddCartButton).forEach(function (b) {
+        // Hoehe sperren, bevor der Text durch den 16px-Spinner ersetzt wird
+        // (sonst schrumpft der Button beim Klick).
+        b.style.minHeight = b.offsetHeight + "px";
         b.innerHTML = spinner;
       });
       fetch("/cart/add.js", {

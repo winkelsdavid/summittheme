@@ -207,15 +207,15 @@
   #qv-product-images .qv-slide{ flex: 0 0 100%; height: 100%; scroll-snap-align: start; }
   #qv-product-images .qv-slide img{ display: block; width: 100%; height: 100%; object-fit: cover; background-color: var(--color-item-product); }
 
-  /* vanilla arrows (hover-reveal) + dots */
+  /* vanilla arrows + dots — Optik identisch zu den Theme-/Galerie-Pfeilen
+     (solide weisse Kreise mit Border, immer sichtbar statt Hover-Reveal) */
   #qv-product-images .qv-nav{
     position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
-    width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%;
-    background: rgba(255,255,255,.85); color: #000; cursor: pointer;
+    width: 36px; height: 36px; padding: 0; border-radius: 50%;
+    background: #fff; color: #000; cursor: pointer;
+    border: 1px solid rgba(var(--g-color-heading-rgb), 0.1);
     display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity .3s ease;
   }
-  #qv-product-images:hover .qv-nav{ opacity: 1; }
   #qv-product-images .qv-prev{ left: 12px; }
   #qv-product-images .qv-next{ right: 12px; }
   #qv-product-images .qv-dots{ position: absolute; left: 0; right: 0; bottom: 12px; z-index: 2; display: flex; gap: 6px; justify-content: center; }
@@ -227,10 +227,12 @@
     #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; }
   }
   @media (min-width: 992px){
-    /* both columns equal height = max(image ratio, content); image covers it,
-       content is fully visible -> NO internal scrolling. */
+    /* both columns equal height = max(image ratio, content); the GALLERY keeps
+       the exact chosen ratio (vertically centered) instead of stretching with
+       the content column -> "square" is really square. */
     #jsQuickview .modal-body > .row{ align-items: stretch; }
-    #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; align-self: stretch; }
+    #jsQuickview .left-qv{ aspect-ratio: {{ qv_ar }}; align-self: stretch; display: flex; align-items: center; }
+    #qv-product-images{ width: 100%; height: auto; aspect-ratio: {{ qv_ar }}; }
     /* override Bootstrap .align-self-center on the content column */
     #jsQuickview .right-qv{ align-self: stretch !important; }
   }
@@ -244,6 +246,8 @@
   #jsQuickview .qv-add-to-cart > .d-flex{ gap: 12px; align-items: center; }
   #jsQuickview .qv-add-to-cart .quantity{ float: none; flex: 0 0 auto; }
   #jsQuickview .qv-add-button{ flex: 1 1 auto; min-width: 0; width: auto; margin: 0; float: none; white-space: normal; padding-left: 1rem; padding-right: 1rem; }
+  /* Lade-Spinner mittig; Hoehe sperrt zusaetzlich das JS beim Klick */
+  #jsQuickview .qv-add-button .spinner-border{ margin: 0 auto; }
 
 </style>
 <!-- quickview.liquid -->
