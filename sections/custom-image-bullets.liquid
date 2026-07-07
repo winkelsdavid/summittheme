@@ -168,8 +168,8 @@
     }
   }
 
-  /* Hover-Animationen entfernt (Kundenwunsch 2026-07) — hover_style bleibt
-     nur als Legacy-Setting im Schema (Nitro-Mappability). */
+  /* Hover-Animationen entfernt (Kundenwunsch 2026-07); das zugehoerige
+     Setting wurde auf expliziten Wunsch komplett aus dem Schema geloescht. */
 </style>
 
 <section class="iwb-section c-{{ section.id }}" id="iwb-{{ section.id }}" data-aos="{{ section.settings.animation }}">
@@ -612,35 +612,6 @@
           "id": "body",
           "label": "Body Text",
           "default": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out."
-        },
-        {
-          "type": "select",
-          "id": "hover_style",
-          "label": "Hover Animation (Legacy — Not Used)",
-          "info": "Hover animations were removed from this section; this setting has no effect.",
-          "options": [
-            {
-              "value": "auto",
-              "label": "Auto (By Position)"
-            },
-            {
-              "value": "plump",
-              "label": "Plump (Bounce Scale)"
-            },
-            {
-              "value": "jelly",
-              "label": "Jelly (Squash & Stretch)"
-            },
-            {
-              "value": "shine",
-              "label": "Shine (Light Sweep)"
-            },
-            {
-              "value": "guard",
-              "label": "Guard (Pulsing Ring)"
-            }
-          ],
-          "default": "auto"
         }
       ]
     }
