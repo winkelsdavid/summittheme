@@ -21,21 +21,23 @@
   
   {%- for value in option.values -%}
     {%- liquid
-      assign variant_label_state = true 
-      if product.options.size == 1 
-        unless product.variants[forloop.index0].available 
-        assign variant_label_state = false 
-        endunless 
-      endif 
+      assign variant_label_state = true
+      if product.options.size == 1
+        unless product.variants[forloop.index0].available
+        assign variant_label_state = false
+        endunless
+      endif
+      assign currenVariant = false
       for variant in product.variants
-        assign vOption = 'option' | append: option_index 
-        if value == variant[vOption] 
-        assign currenVariant = variant 
-        break 
-        endif 
-      endfor 
+        assign vOption = 'option' | append: option_index
+        if value == variant[vOption]
+        assign currenVariant = variant
+        break
+        endif
+      endfor
+      assign v_image = currenVariant.featured_image | default: currenVariant.image
       assign hasImage = false
-      if currenVariant.image
+      if v_image
         if isColor or force_image
           assign hasImage = true
         endif
@@ -61,8 +63,8 @@
       endif
     endfor
 
-    if force_image and currenVariant.image
-      assign vimg = currenVariant.image | image_url: width: 100
+    if force_image and v_image
+      assign vimg = v_image | image_url: width: 100
       assign style_property = '--swatch-bg: url(' | append: vimg | append: ')'
     endif
 
@@ -80,9 +82,9 @@
     {%- if sw_color_product or force_image -%}
     class="st-color-{{ value_handle }} st-tooltip-top"
     style="{{ style_property }}"
-    {% else %} 
+    {% else %}
     class="st-color-image"
-    style="background-image:url({{ currenVariant.image.src | image_url: width: 100 }})" 
+    style="background-image:url({{ v_image | image_url: width: 100 }})"
     {% endif %}{% endif %}
           for="ProductSelect-option-{{ option.name | handleize }}-{{ value_handle }}"{% unless variant_label_state %} class="disabled"{% endunless %}>
       {% comment %} {%- unless hasImage -%}{{ value | escape }}{%- endunless -%} {% endcomment %}

@@ -8471,6 +8471,15 @@ body.video-playing {
 .single-option-radio.single-color label span{
   display:none;
 }
+/* Variant-Image-Swatches (Option Type: Variant Image Round/Square): das
+   Inline---swatch-bg (echtes Variantenbild) direkt auf dem Label malen —
+   vorher konsumierten nur die Farbpaletten-Klassen bzw. der Txt-Stil die Var. */
+.single-option-radio.single-color.round-color label,
+.single-option-radio.single-color.square-color label {
+  background: var(--swatch-bg);
+  background-size: cover;
+  background-position: center;
+}
 .single-option-radio.single-color.round-color label {
   border-radius: 50%;
 }
