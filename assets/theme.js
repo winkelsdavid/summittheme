@@ -3148,6 +3148,11 @@ theme.Productlists = (function () {
         1201: { slidesPerView: s.slidesToShow, slidesPerGroup: s.slidesToShow },
       },
     };
+    // Swiper 6: loop bricht bei slides <= slidesPerView (Slick war tolerant).
+    var slideCount = el.querySelectorAll(".swiper-slide").length;
+    var maxSpv = Math.max(2, s.slidesToShow || 1);
+    opts.loop = opts.loop && slideCount > maxSpv;
+    opts.watchOverflow = true;
     if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
     if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
     el.style.opacity = "1";
@@ -3226,6 +3231,12 @@ theme.Producttabs = (function () {
       var _self = this;
       this.container.querySelectorAll(this.slickWrap).forEach(function (el) {
         var opts = _self._getSwiperOpts();
+        // Swiper 6: loop bricht bei slides <= slidesPerView (Slick war da
+        // tolerant) - z.B. Platzhalter-Tabs ohne Kollektion mit kleinem Limit.
+        var slideCount = el.querySelectorAll(".swiper-slide").length;
+        var maxSpv = Math.max(2, s.slidesToShow || 1);
+        opts.loop = opts.loop && slideCount > maxSpv;
+        opts.watchOverflow = true;
         if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
         if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
         el.style.opacity = "1";
