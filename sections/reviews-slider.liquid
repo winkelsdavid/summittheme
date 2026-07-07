@@ -282,7 +282,11 @@ color:{{ section.settings.text_color }};
 </style>
 <div class="review-slider-is review-slider-is-{{ section.id }}" data-aos="{{ section.settings.animation }}">
   <div class="container">
-    {% if section.settings.stars_caption != blank %}
+    {%- comment -%} i18n-Fallback: leeres Feld -> uebersetzter Standard (Wert ist
+        parse-sicher fuers Sterne-Rating unten: "... 4,8/5 ..."). {%- endcomment -%}
+    {%- assign stars_caption = section.settings.stars_caption -%}
+    {%- if stars_caption == blank -%}{%- assign stars_caption = 'products.product.stars_caption' | t -%}{%- endif -%}
+    {% if stars_caption != blank %}
       {% comment %}
     <div class="c_testimonial-header-r justify-{{ section.settings.align_heading }}">
         <span>{{ section.settings.stars_caption }}</span>
@@ -296,7 +300,7 @@ color:{{ section.settings.text_color }};
       <div class="rating-custom-2 product-block text-{{ section.settings.align_heading }}" style="--mobile-font_size:{{ section.settings.mobile_font_size }}px;--font_size:{{ section.settings.font_size }}px;{% if section.settings.stars_border_color != "rgba(0,0,0,0)" %}--border-color:{{ section.settings.stars_border_color }};{% endif %}--stars-color:{{ section.settings.stars_color }};--background:{% if section.settings.stars_background != blank %}{{ section.settings.stars_background }}{% else %}{{ settings.branding_color }}{% endif %};">
           <div class="trustpilot-block-rating-text-2">
             <div class="stars">
-              {% assign sanitized_text = section.settings.stars_caption | strip_html | downcase | replace: 'out of', '/' %}
+              {% assign sanitized_text = stars_caption | strip_html | downcase | replace: 'out of', '/' %}
               {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
               {% assign rating_string = pre_slash | split: ' ' | last | strip %}
               {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
@@ -321,7 +325,7 @@ color:{{ section.settings.text_color }};
                 </svg>
               {% endfor %}                
             </div>           
-            <span class="rating-excellent-2"><p>{{ section.settings.stars_caption }}</p></span>
+            <span class="rating-excellent-2"><p>{{ stars_caption }}</p></span>
           </div>
       </div>
     {% endif %}
