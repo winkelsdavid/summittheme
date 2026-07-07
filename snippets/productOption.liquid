@@ -1,17 +1,21 @@
 <!-- productOption.liquid -->
 
-{%- if product_selector == 'radio' -%}
+{%- if product_selector != 'select' -%}
   {%- liquid
     assign isColor = false
     assign optionName = option.name
     assign option_index = loop
     assign keywords_1  = settings.contain_color
     assign keywords_2  = settings.contain_color_2
+    assign force_image = false
+    if product_selector == 'image_round' or product_selector == 'image_square'
+      assign force_image = true
+    endif
   -%}
 {%- if  optionName contains keywords_1 or optionName contains keywords_2 -%}
 {%- assign isColor = true -%}
 {%- endif -%}
-<fieldset class="single-option-radio {% if isColor %} {% if siblings_collection != blank and enable_sibling %} d-none {% endif %} single-color {{ size_color }} {% if type_color == 'circle' %} round-color {% elsif type_color == 'square' %} square-color {% else %} square-color-txt {% endif %} {% endif %} "
+<fieldset class="single-option-radio {% if force_image %} single-color {{ size_color }} {% if product_selector == 'image_round' %} round-color {% else %} square-color {% endif %} {% elsif isColor %} {% if siblings_collection != blank and enable_sibling %} d-none {% endif %} single-color {{ size_color }} {% if type_color == 'circle' %} round-color {% elsif type_color == 'square' %} square-color {% else %} square-color-txt {% endif %} {% endif %} "
           name="{{ option.name | handleize }}"
           id="ProductSelect-option-{{ optionName }}-{{ forloop.index0 }}">
   
@@ -30,10 +34,12 @@
         break 
         endif 
       endfor 
-      assign hasImage = false 
-      if isColor and currenVariant.image 
-      assign hasImage = true 
-      endif 
+      assign hasImage = false
+      if currenVariant.image
+        if isColor or force_image
+          assign hasImage = true
+        endif
+      endif
 
       assign value_handle = value | escape | handle
       assign palette_config = settings.color_swatch_config | newline_to_br | split: '<br />'
@@ -55,6 +61,11 @@
       endif
     endfor
 
+    if force_image and currenVariant.image
+      assign vimg = currenVariant.image | image_url: width: 100
+      assign style_property = '--swatch-bg: url(' | append: vimg | append: ')'
+    endif
+
     -%}
 
   <input type="radio"
@@ -65,8 +76,8 @@
          name="{{ option.name | handleize }}"
          class="single-option-selector-{{ section.id }} single-option-selector__radio{% unless variant_label_state %} disabled{% endunless %}"
          id="ProductSelect-option-{{ option.name | handleize }}-{{ value_handle }}">
-    <label {% if hasImage %} title="{{ value | escape }}" 
-    {%- if sw_color_product -%} 
+    <label {% if hasImage %} title="{{ value | escape }}"
+    {%- if sw_color_product or force_image -%}
     class="st-color-{{ value_handle }} st-tooltip-top"
     style="{{ style_property }}"
     {% else %} 
@@ -75,7 +86,7 @@
     {% endif %}{% endif %}
           for="ProductSelect-option-{{ option.name | handleize }}-{{ value_handle }}"{% unless variant_label_state %} class="disabled"{% endunless %}>
       {% comment %} {%- unless hasImage -%}{{ value | escape }}{%- endunless -%} {% endcomment %}
-      {%- if isColor -%}
+      {%- if isColor or force_image -%}
         <span class="st-color-{{ value_handle }} st-color" style="{{ style_property }}" ></span>
         <span class="">{{ value | escape }}</span>
       {%- else -%}
