@@ -5547,13 +5547,7 @@ p a:not(.button):focus,
     transform: translateX(16px);
     transition:0.2s ease opacity, 0.2s ease visibility, 0.3s ease transform;
   }
-  .product-card--style9 .product-card-cart .btn-theme{
-    background: white;
-    color: rgba(var(--g-color-heading-rgb),1);
-  }
-  .product-card--style9 .product-card-cart .btn-theme:hover,.product-card--style9 .product-card-cart .btn-theme:focus{
-    color:var(--g-btn-hover-color);
-  }
+  /* Style 9 nutzt den soliden Theme-Button (weisser Override entfernt). */
   .product-card--style9:hover .product-card-cart{
     opacity: 1;
     visibility: visible;
