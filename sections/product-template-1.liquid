@@ -1316,6 +1316,10 @@ display:none;
                   {% endfor %}
                   <div class="product-videos-cont">
                     {% for ii in (1..4) %}
+                      {%- comment -%} b1-Positionszaehler pro Slot (zaehlt gefuellte wie
+                          leere Slots; Block hat limit:1, der Zaehler haelt das Muster
+                          auch bei kuenftiger Limit-Erhoehung stabil). {%- endcomment -%}
+                      {%- assign b1_pos_vids = b1_pos_vids | plus: 1 -%}
                       {% assign image = 'image_' | append: forloop.index %}
                       {% assign video_pick = 'video_pick_' | append: forloop.index %}
                       {% assign video = 'video_' | append: forloop.index %}
@@ -1408,8 +1412,8 @@ display:none;
                         </div>
                         {% else %}
                         {% if videos_found == false %}
-                        {% if forloop.index < 4 %}
-                        {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--videos', position: forloop.index, width: 500 %}{%- endcapture -%}
+                        {% if b1_pos_vids < 4 %}
+                        {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--videos', position: b1_pos_vids, width: 500 %}{%- endcapture -%}
                         <div class="video_item">
                           <div class="video_item_c">
                               {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
