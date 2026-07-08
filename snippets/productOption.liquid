@@ -25,15 +25,50 @@
       assign is_image_mode = true
     endif
 
-    # "Enable Swatch Color" (sw_color_product) ist der HAUPTSCHALTER:
-    #   AUS -> die Farb-Option wird als normale Buttons dargestellt (kein Swatch).
-    #   AN  -> die Farb-Option wird als Swatch dargestellt; die Fuellung bestimmt
-    #          die Anzeige-Art:  Button -> Palettenfarbe (Product Swatch),
-    #                            Variant Image -> Variantenbild (Produktfoto).
-    # Nicht-Farb-Optionen (z.B. Groesse) sind immer normale Buttons.
+    # Bild-Modus: eine Option ist "bildwuerdig", wenn ihre Werte >=2 UNTERSCHIEDLICHE
+    # eigene Variantenbilder haben (Farbe, aber auch 2 Pack / 4 Pack, Style, ...).
+    # Optionen ohne eigene Bilder (z.B. Groesse Klein/Gross teilen dasselbe Bild)
+    # bleiben Buttons — so gibt es nie identische Bild-Kreise.
+    assign has_variant_images = false
+    if is_image_mode
+      assign seen_ids = '|'
+      assign distinct_imgs = 0
+      for val in option.values
+        for variant in product.variants
+          assign vOpt = 'option' | append: option_index
+          if val == variant[vOpt]
+            if variant.image
+              assign key = '|' | append: variant.image.id | append: '|'
+              unless seen_ids contains key
+                assign seen_ids = seen_ids | append: variant.image.id | append: '|'
+                assign distinct_imgs = distinct_imgs | plus: 1
+              endunless
+            endif
+            break
+          endif
+        endfor
+      endfor
+      if distinct_imgs >= 2
+        assign has_variant_images = true
+      endif
+    endif
+
+    # "Enable Swatch Color" (sw_color_product) ist der HAUPTSCHALTER: AUS -> Buttons.
+    #   AN + Button-Modus  -> Farb-Optionen als Palettenfarbe (Product Swatch).
+    #   AN + Variant-Image -> Optionen MIT eigenen Variantenbildern (Farbe, Pack, ...)
+    #                         als Bild-Swatch; Optionen ohne eigene Bilder (Groesse)
+    #                         bleiben Buttons.
     assign render_swatch = false
-    if isColor and sw_color_product
-      assign render_swatch = true
+    if sw_color_product
+      if is_image_mode
+        if isColor or has_variant_images
+          assign render_swatch = true
+        endif
+      else
+        if isColor
+          assign render_swatch = true
+        endif
+      endif
     endif
 
     assign fs_class = 'single-option-radio'
