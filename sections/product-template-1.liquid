@@ -2129,16 +2129,20 @@ display:none;
                     {% form 'product', product, class: form_class, id: form_id %}
                       {% unless product.has_only_default_variant %}
                         {% for option in product.options_with_values %}
-                          {%- if block.settings.product_selector == 'radio' -%}
+                          {%- if block.settings.product_selector != 'select' -%}
                             {%- liquid
                               assign isColor = false
-                              assign optionName = option.name
-                              assign keywords_1 = settings.contain_color
-                              assign keywords_2 = settings.contain_color_2
+                              assign optionName_dc = option.name | downcase
+                              assign kw1 = settings.contain_color | downcase
+                              assign kw2 = settings.contain_color_2 | downcase
+                              if optionName_dc contains 'color' or optionName_dc contains 'colour'
+                                assign isColor = true
+                              elsif kw1 != blank and optionName_dc contains kw1
+                                assign isColor = true
+                              elsif kw2 != blank and optionName_dc contains kw2
+                                assign isColor = true
+                              endif
                             -%}
-                            {%- if optionName contains keywords_1 or optionName contains keywords_2 -%}
-                              {%- assign isColor = true -%}
-                            {%- endif -%}
                           {%- endif -%}
                           <div class="selector-wrapper js product-form__item {% if isColor %} {% if siblings_collection != blank and enable_sibling %} d-none {% endif %} {% endif %}  ">
                             <div class="d-flex justify-content-between">
