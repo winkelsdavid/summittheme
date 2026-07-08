@@ -206,7 +206,10 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:bl
       --g-padding-hoz-btn : {{ settings.padding_hoz_btn }}px;
       --g-height-border-btnline: {{ settings.height_border_btn }}px;
 
-      --g-input-bg:{{ settings.input_bg }};
+      {%- comment -%} input_bg hat keinen Default -> war leer -> "background: var(--g-input-bg)"
+          wurde ungueltig/transparent, sodass die gebrandete Section-Farbe durch die
+          Eingabefelder schien (#14). Neutraler Weiss-Fallback, gesetzter Wert greift weiter. {%- endcomment -%}
+      --g-input-bg:{{ settings.input_bg | default: '#ffffff' }};
       --g-input-border:{{ settings.input_border }};
       --g-input-height:{{ settings.input_height }}px;
       --g-input-radius:{{ settings.input_round }}px;
