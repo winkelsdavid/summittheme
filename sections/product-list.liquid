@@ -27,10 +27,11 @@
            data-infinite="{{ section.settings.infinite }}"
            data-section-id="{{ section.id }}"
            data-section-type="productlist">
-        {%- assign collection = collections[section.settings.collection] -%}
+        {%- comment -%} Ohne gewaehlte Kollektion auf collections.all zurueckfallen (#2/#5). {%- endcomment -%}
+        {%- assign collection = collections[section.settings.collection] | default: collections.all -%}
         {%- assign limit = section.settings.limit -%}
         <div class="swiper-wrapper">
-        {%- if collection != blank -%}
+        {%- if collection != blank and collection.all_products_count > 0 -%}
         {%- for product in collection.products limit: limit -%}
         <div class="productlist-item col swiper-slide">
           {%- render 'product-card', product: product -%}

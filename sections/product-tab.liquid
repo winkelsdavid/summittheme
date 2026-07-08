@@ -88,12 +88,14 @@ display:flex;
         </div>
         <div class="tab-content" data-aos="{{ section.settings.animation }}">
           {%- for block in section.blocks -%}
-          {%- assign collection = collections[block.settings.collection] -%}
+          {%- comment -%} Ohne gewaehlte Kollektion auf collections.all zurueckfallen,
+              damit der Tab echte Produkte zeigt statt leerer Platzhalter (#2/#5). {%- endcomment -%}
+          {%- assign collection = collections[block.settings.collection] | default: collections.all -%}
           {%- assign limit = section.settings.limit -%}
           <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="prdtab-{{ block.id }}" role="tabpanel" aria-labelledby="{{ block.id }}-tab">
             <div class="prdtab-content row{% if enable_carousel %} swiper{% endif %} {% unless enable_carousel %} {% if show == 5 %} row-cols-5 {% endif %} {% endunless %}" {% if enable_carousel %} style="opacity:0" {% endif %}>
               {% if enable_carousel %}<div class="swiper-wrapper">{% endif %}
-              {%- if collection != blank -%}
+              {%- if collection != blank and collection.all_products_count > 0 -%}
               {%- for product in collection.products limit: limit -%}
               <div class="producttab-item {% if enable_carousel %} col swiper-slide {% else %} {{ column }} {% endif %}" data-scroll data-scroll-speed="1" >
                 <div class="h-100" data-aos="{{ section.settings.animation }}"  data-aos-delay="{{ forloop.index | times: 100 }}">

@@ -154,7 +154,9 @@
           data-perview-mobile="{% if enable_first_banner %} 1.32 {% else %} 1.38 {% endif %}"
           >
           <div class="swiper-wrapper">
-            {%- assign collection = collections[section.settings.collection] -%}
+            {%- comment -%} Ohne gewaehlte Kollektion auf collections.all zurueckfallen,
+                damit echte Produkte statt leerer Platzhalter erscheinen (#2/#5). {%- endcomment -%}
+            {%- assign collection = collections[section.settings.collection] | default: collections.all -%}
             {%- assign limit = section.settings.limit -%}
             {%- if enable_first_banner -%}
             <div class="productlist-banner swiper-slide h-100">
@@ -213,7 +215,7 @@
               </div>
             </div>
           {%- endif -%}
-            {%- if collection != blank -%}
+            {%- if collection != blank and collection.all_products_count > 0 -%}
             {%- for product in collection.products limit: limit -%}
             <div class="productlist-item swiper-slide" style="--g-color-heading: {{ settings.color_body_headings }};--color-body-text: {{ settings.color_body_text }};
             --color-body-text-rgb: {{ settings.color_body_text.red }}, {{ settings.color_body_text.green }}, {{ settings.color_body_text.blue }};--g-main-2: {{ settings.color_secondary }};--g-color-heading-rgb:{{ settings.color_body_headings.red }}, {{ settings.color_body_headings.green }}, {{ settings.color_body_headings.blue }};">
