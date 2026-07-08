@@ -313,8 +313,11 @@ color:var(--sticky-cart-cl_2);
     margin:0!important;
     }
     }
-    /* --- Responsive-Haertung: alle Breiten --- */
-    .cart_items{ width:100%; }
+    /* --- Responsive-Haertung ---
+       cart_items width:100% NUR mobil: auf Desktop erzwang die Regel einen
+       Umbruch (Info-Block belegte die ganze erste Zeile, Liefertext+Button
+       rutschten in eine zweite) statt Info links / Button rechts auf einer
+       Zeile (space-between). */
     .sticky-cart-selectors{ flex-wrap:wrap; justify-content:center; row-gap:6px; }
     /* Tablet-Band 769-991: Bild/Titel sind (d-lg) verborgen - Reihe kompakt zentrieren */
     @media (min-width:768.1px) and (max-width:991.98px){
@@ -322,6 +325,7 @@ color:var(--sticky-cart-cl_2);
       .c_button_text_sticky{ justify-content:center; }
     }
     @media (max-width:768px){
+      .cart_items{ width:100%; }
       #js-sticky-prd{ padding:0 16px; flex-wrap:wrap; row-gap:6px; }
       /* Close-Button lag mit left:-50px ausserhalb des Viewports */
       #js-sticky-close{
