@@ -25,26 +25,20 @@
       assign is_image_mode = true
     endif
 
-    # Variante A: NUR Farb-Optionen werden zu Swatches. Nicht-Farb-Optionen
-    # (z.B. Groesse) bleiben immer normale Buttons — ein Bild-Swatch ergibt dort
-    # keinen Sinn. Die Fuellung einer Farb-Option entscheidet "Enable Swatch
-    # Color" (sw_color_product):  an -> Palettenfarbe (Product Swatch Hex),
-    # aus -> Variantenbild (Produktfoto). Die Anzeige-Art gibt nur die Form vor.
-    assign swatch_as_image = false
-    if isColor
-      if sw_color_product == false
-        assign swatch_as_image = true
-      endif
+    # "Enable Swatch Color" (sw_color_product) ist der HAUPTSCHALTER:
+    #   AUS -> die Farb-Option wird als normale Buttons dargestellt (kein Swatch).
+    #   AN  -> die Farb-Option wird als Swatch dargestellt; die Fuellung bestimmt
+    #          die Anzeige-Art:  Button -> Palettenfarbe (Product Swatch),
+    #                            Variant Image -> Variantenbild (Produktfoto).
+    # Nicht-Farb-Optionen (z.B. Groesse) sind immer normale Buttons.
+    assign render_swatch = false
+    if isColor and sw_color_product
+      assign render_swatch = true
     endif
 
-    # Fieldset-Klassen: Swatch-Klassen nur fuer Farb-Optionen; Form aus
-    # Anzeige-Art (Bild-Modus) sonst aus "Type Color".
     assign fs_class = 'single-option-radio'
-    if isColor
+    if render_swatch
       assign fs_class = fs_class | append: ' single-color ' | append: size_color
-      if siblings_collection != blank and enable_sibling
-        assign fs_class = fs_class | append: ' d-none'
-      endif
       if is_image_mode
         if product_selector == 'image_round'
           assign fs_class = fs_class | append: ' round-color'
@@ -61,6 +55,10 @@
         endif
       endif
     endif
+    # Sibling-Produkte: Farb-Selektor ausblenden (unabhaengig vom Swatch-Schalter).
+    if isColor and siblings_collection != blank and enable_sibling
+      assign fs_class = fs_class | append: ' d-none'
+    endif
   -%}
 <fieldset class="{{ fs_class }}"
           name="{{ option.name | handleize }}"
@@ -74,51 +72,53 @@
           assign variant_label_state = false
         endunless
       endif
-      assign currenVariant = false
-      for variant in product.variants
-        assign vOption = 'option' | append: option_index
-        if value == variant[vOption]
-          assign currenVariant = variant
-          break
-        endif
-      endfor
-      assign v_image = currenVariant.featured_image | default: currenVariant.image
-
-      # Bild-gefuellter Farb-Swatch (Enable Swatch Color aus): nie leer lassen —
-      # hat die Variante kein eigenes Bild, aufs Produkt-Hauptbild zurueckfallen.
-      if swatch_as_image and v_image == blank
-        assign v_image = product.featured_image
-      endif
-
-      # Palettenfarbe fuer diesen Wert aus Product Swatch (settings.color_swatch_config).
       assign value_handle = value | escape | handle
-      assign palette_config = settings.color_swatch_config | newline_to_br | split: '<br />'
-      assign lowercase_value = value | downcase
-      assign style_property = '--swatch-bg: ' | append: lowercase_value
-      for item in palette_config
-        assign parts = item | split: ':'
-        assign name = parts.first | downcase | strip
-        if lowercase_value == name
-          assign val = parts.last | strip
-          if val contains '#'
-            assign style_property = '--swatch-bg: ' | append: val
-          elsif images[val] != blank
-            assign image = images[val] | image_url: width: 72
-            assign style_property = '--swatch-bg: url(' | append: image | append: ')'
-          endif
-          break
-        endif
-      endfor
 
-      # Variante A: Farb-Option mit "Enable Swatch Color" AUS -> statt Palettenfarbe
-      # das Variantenbild als Fuellung nehmen (ueberschreibt die Palette).
-      if swatch_as_image and v_image
-        assign vimg = v_image | image_url: width: 100
-        assign style_property = '--swatch-bg: url(' | append: vimg | append: ')'
+      assign style_property = ''
+      if render_swatch
+        assign currenVariant = false
+        for variant in product.variants
+          assign vOption = 'option' | append: option_index
+          if value == variant[vOption]
+            assign currenVariant = variant
+            break
+          endif
+        endfor
+        assign v_image = currenVariant.featured_image | default: currenVariant.image
+        # Bild-Modus: hat die Variante kein eigenes Bild (z.B. Groessen), aufs
+        # Produkt-Hauptbild zurueckfallen, damit der Swatch nie leer bleibt.
+        if is_image_mode and v_image == blank
+          assign v_image = product.featured_image
+        endif
+
+        # Palettenfarbe fuer diesen Wert aus Product Swatch (settings.color_swatch_config).
+        assign palette_config = settings.color_swatch_config | newline_to_br | split: '<br />'
+        assign lowercase_value = value | downcase
+        assign style_property = '--swatch-bg: ' | append: lowercase_value
+        for item in palette_config
+          assign parts = item | split: ':'
+          assign name = parts.first | downcase | strip
+          if lowercase_value == name
+            assign val = parts.last | strip
+            if val contains '#'
+              assign style_property = '--swatch-bg: ' | append: val
+            elsif images[val] != blank
+              assign image = images[val] | image_url: width: 72
+              assign style_property = '--swatch-bg: url(' | append: image | append: ')'
+            endif
+            break
+          endif
+        endfor
+
+        # Variant-Image-Modus: statt Palettenfarbe das Variantenbild als Fuellung.
+        if is_image_mode and v_image
+          assign vimg = v_image | image_url: width: 100
+          assign style_property = '--swatch-bg: url(' | append: vimg | append: ')'
+        endif
       endif
 
       assign label_class = ''
-      if isColor
+      if render_swatch
         assign label_class = 'st-color-' | append: value_handle | append: ' st-tooltip-top'
       endif
       unless variant_label_state
@@ -136,9 +136,9 @@
          class="single-option-selector-{{ section.id }} single-option-selector__radio{% unless variant_label_state %} disabled{% endunless %}"
          id="ProductSelect-option-{{ option.name | handleize }}-{{ value_handle }}">
     <label{% if label_class != blank %} class="{{ label_class }}"{% endif %}
-      {%- if isColor %} title="{{ value | escape }}" style="{{ style_property }}"{% endif %}
+      {%- if render_swatch %} title="{{ value | escape }}" style="{{ style_property }}"{% endif %}
           for="ProductSelect-option-{{ option.name | handleize }}-{{ value_handle }}">
-      {%- if isColor -%}
+      {%- if render_swatch -%}
         <span class="st-color-{{ value_handle }} st-color" style="{{ style_property }}"></span>
         <span class="">{{ value | escape }}</span>
       {%- else -%}
