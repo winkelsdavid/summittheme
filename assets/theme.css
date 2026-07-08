@@ -8493,6 +8493,23 @@ body.video-playing {
 .single-option-radio.single-color.round-color label {
   border-radius: 50%;
 }
+/* #4/#15: Circle-/Square-Swatch (nicht Txt) — den .st-color-Span sichtbar machen
+   und mit dem Inline---swatch-bg fuellen (Farbe ODER Variantenbild). So greift die
+   Anzeige bei allen Groessen (Small/Normal/Large) und in jedem Kontext, auch wenn
+   die Variante kein eigenes Bild hat (die Farbe kommt dann ueber den Span, nicht
+   ueber das Label). square-color-txt bleibt unberuehrt (eigene Klasse, Regel 8552). */
+.single-option-radio.single-color.round-color label .st-color,
+.single-option-radio.single-color.square-color label .st-color{
+  display:block;
+  width:100%;
+  height:100%;
+  background:var(--swatch-bg);
+  background-size:cover;
+  background-position:center;
+}
+.single-option-radio.single-color.round-color label .st-color{
+  border-radius:50%;
+}
 .single-option-radio.single-color.round-color label:after,.single-option-radio.single-color.square-color label:after{
   border-radius: 50%;
   top: -7px;
