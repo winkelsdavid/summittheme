@@ -58,7 +58,9 @@ gap:10px;
     position: absolute;
     top: -2px;
     left: 0;
-    {% if section.settings.box_color != "rgba(0,0,0,0)" %}
+    {% comment %} box_color kann leer sein (kein Default) -> ohne blank-Pruefung
+       entstand "background: ;" und der Fill war unsichtbar (#9). {% endcomment %}
+    {% if section.settings.box_color != blank and section.settings.box_color != "rgba(0,0,0,0)" %}
     background: {{ section.settings.box_color }};
     {% else %}
     background:black;
