@@ -1919,8 +1919,11 @@ display:none;
                             margin-top:-6px;
                           }
                           @media (max-width:768px){
-                            .small--text-center .tax-disclaimer-{{ section.id }}{
-                              text-align:center;
+                            .tax-disclaimer-{{ section.id }}{
+                              /* Mobile: Zeilenhoehe kommt vom Badge-Pill, der Text
+                                 laeuft breit bis unter das Badge - hier braucht es
+                                 Luft zur Pill-Unterkante statt Desktop--6px. */
+                              margin-top:3px;
                             }
                           }
                 </style>

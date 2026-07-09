@@ -70,6 +70,16 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         flex-wrap:wrap, der Disclaimer-<li> flex:0 0 100% + display:block. Ergebnis:
         eigene Zeile direkt unter dem Preis INNERHALB der Box, mobil sichtbar,
         margin-top:2px (product-template-1.liquid). Wartet auf Live-Test.
+      → Nachtrag Mobile (2026-07-10): Disclaimer schwebte mobil zentriert und
+        klebte am Badge. Ursache 1: Zentrier-Regel aus #8 setzte text-align:center
+        ueber .small--text-center — die Klasse ist aber eine tote Legacy-Klasse
+        ohne jede CSS-Regel im Theme, Preis/Badges bleiben mobil links → nur der
+        Disclaimer war zentriert. Ursache 2: margin-top:-6px (Desktop-Kalibrierung)
+        zog ihn mobil bis unter die Badge-Pill-Unterkante (Zeilenhoehe kommt vom
+        Badge, Text laeuft breit bis darunter). Fix: Zentrier-Regel entfernt
+        (immer text-align:left), mobil margin-top:3px statt -6px.
+        Live-Test: Mobile → Disclaimer linksbuendig unter dem Preis, mit Luft
+        zum Badge; Desktop unveraendert nah am Preis.
 
 ## 9. Progress Bars: "Progress"-Option
 - [~] Die "Progress"-Option wird nicht angezeigt.
