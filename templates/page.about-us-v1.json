@@ -220,6 +220,73 @@
         "mobile_padding_bottom": 40
       }
     },
+    "timeline_PRpJAX": {
+      "type": "timeline",
+      "blocks": {
+        "milestone_fyznMe": {
+          "type": "milestone",
+          "settings": {
+            "bg": "#75ce66",
+            "title": "Title of block 1",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie mauris ac neque feugiat vestibulum placerat ut ligula. Pellentesque vehicula gravida eros dictum dapibus",
+            "time": "",
+            "year": "1920",
+            "link": "shopify://collections/all"
+          }
+        },
+        "milestone_Xy4EqJ": {
+          "type": "milestone",
+          "settings": {
+            "bg": "#c03b44",
+            "title": "Title of block 2",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.",
+            "time": "",
+            "year": "1920",
+            "link": "shopify://collections/all"
+          }
+        },
+        "milestone_HDjxgQ": {
+          "type": "milestone",
+          "settings": {
+            "bg": "#f0ca45",
+            "title": "Title of block 3",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.",
+            "time": "",
+            "year": "1920",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "milestone_fyznMe",
+        "milestone_Xy4EqJ",
+        "milestone_HDjxgQ"
+      ],
+      "name": "Timeline",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background_section": "",
+        "subtitle_top": "Subtitle Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Timeline",
+        "description": "",
+        "align_heading": "center",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
+        "border": "#d7e4ed",
+        "caption_bg": "#fff",
+        "title_color": "#303e49",
+        "button_text": "Read more",
+        "style_btn": "btn-underline",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
+    },
     "slideshow_1_gkCmR9": {
       "type": "slideshow-1",
       "blocks": {
@@ -568,6 +635,7 @@
     "divider_betQMV",
     "d72bcc8c-88fe-4415-96f0-06511b070083",
     "quotes_KQHqC3",
+    "timeline_PRpJAX",
     "slideshow_1_gkCmR9",
     "custom_instagram_marquee_9nNhWw",
     "abb14abe-2a33-4a6b-aaa1-d36d5422d78d",
