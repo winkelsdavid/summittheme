@@ -1895,37 +1895,38 @@ display:none;
                             font-size:{{ block.settings.mobile_p_c_size }}px;
                           }
                           }
-                          /* Tax Disclaimer: eigene Zeile UNTER dem Preis, aber
-                             INNERHALB der Preis-Box. .product-single__meta-price
-                             ist display:flex (nowrap) - daher die Box umbrechen
-                             lassen und den Disclaimer auf 100% Breite zwingen,
-                             sonst bleibt er inline neben dem Preis (product-template.css:174). */
-                          .price-{{ section.id }}{
-                            flex-wrap:wrap;
+                          /* Preis + Badges bleiben IMMER einzeilig nebeneinander
+                             (nowrap flex = Original-Verhalten der ul); der Tax-Disclaimer
+                             ist ein eigenes Block-Element UNTER der ul, aber INNERHALB
+                             der Price-Box (Wrapper .price-block traegt block.shopify_attributes).
+                             Gilt Desktop, Tablet UND Mobile. */
+                          .price-block-{{ section.id }} .product-single__meta-price{
+                            margin-bottom:0;
                           }
-                          .price-{{ section.id }} .product-single__tax-disclaimer{
+                          .price-block-{{ section.id }}{
+                            margin-bottom:10px;
+                          }
+                          .tax-disclaimer-{{ section.id }}{
                             display:block;
-                            flex:0 0 100%;
                             width:100%;
                             padding-right:0;
                             text-align:left;
                             font-size:12px;
                             line-height:1.2;
                             opacity:.75;
-                            /* Naeher an die Preiszeile ziehen - der sichtbare Abstand
-                               entsteht durch die hoeheren Badge-Pills; negatives
-                               margin holt den Disclaimer ~80% naeher an den Preis. */
-                            margin-top:-8px;
+                            /* Naeher an die Preiszeile ziehen (unter den hoeheren
+                               Badge-Pills, linksbuendig neben deren leerem Unterrand). */
+                            margin-top:-6px;
                           }
                           @media (max-width:768px){
-                            .small--text-center .price-{{ section.id }} .product-single__tax-disclaimer{
+                            .small--text-center .tax-disclaimer-{{ section.id }}{
                               text-align:center;
                             }
                           }
                 </style>
+                <div class="price-block-{{ section.id }} product-block" {{ block.shopify_attributes }}>
                 <ul
-                  class="price-{{ section.id }}  product-block product-single__meta-list product-single__meta-price list--inline{% if shop.taxes_included or shop.shipping_policy.body != blank %} product-single__price-container{% endif %}"
-                  {{ block.shopify_attributes }}
+                  class="price-{{ section.id }}  product-single__meta-list product-single__meta-price list--inline{% if shop.taxes_included or shop.shipping_policy.body != blank %} product-single__price-container{% endif %}"
                 >
                   <li>
                     {%- unless product.compare_at_price_max > product.price -%}
@@ -2001,15 +2002,16 @@ display:none;
                   {%- if section.settings.stock_enable -%}
                     <li>{%- render 'productStock', current_variant: current_variant -%}</li>
                   {%- endif -%}
-                  {%- comment -%} Nur der Merchant-Toggle entscheidet - das fruehere
-                      current_variant.taxable-Gate liess den Schalter bei Produkten
-                      ohne "Steuer berechnen" stumm wirken. Als letztes <li> in der
-                      Preis-ul mit flex:0 0 100% + flex-wrap:wrap der Box: eigene
-                      Zeile direkt unter dem Preis, INNERHALB der Box, mobil sichtbar. {%- endcomment -%}
-                  {%- if block.settings.show_tax_disclaimer -%}
-                    <li class="product-single__tax-disclaimer">{{ 'products.product.tax_disclaimer' | t }}</li>
-                  {%- endif -%}
                 </ul>
+                {%- comment -%} Nur der Merchant-Toggle entscheidet - das fruehere
+                    current_variant.taxable-Gate liess den Schalter bei Produkten ohne
+                    "Steuer berechnen" stumm wirken. Als eigenes Block-Element UNTER der
+                    Preis-ul, aber INNERHALB des Price-Box-Wrappers: eigene Zeile, die
+                    Badges bleiben nowrap nebeneinander (Desktop/Tablet/Mobile). {%- endcomment -%}
+                {%- if block.settings.show_tax_disclaimer -%}
+                  <div class="product-single__tax-disclaimer tax-disclaimer-{{ section.id }}">{{ 'products.product.tax_disclaimer' | t }}</div>
+                {%- endif -%}
+                </div>
               {%- when 'salepoint' -%}
               <style>
               .product-single__meta .product-block.salepoint-{{ block.id }}{
