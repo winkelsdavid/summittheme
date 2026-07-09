@@ -60,8 +60,12 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
 
 ## 8. Product Overview → Show Tax Disclaimer
 - [~] Text muss direkt UNTER dem Preis stehen, nicht daneben — Desktop + Mobile.
-      → Behoben: product-single__tax-disclaimer als eigene Zeile flex:0 0 100%
-        unter dem Preis (product-template-1.liquid:1898-1916). Live-Test.
+      → 1. Versuch (flex:0 0 100% als <li> in der Preis-ul) griff live NICHT:
+        blieb inline neben dem Preis, verschwand mobil komplett (User 2026-07-09).
+      → 2. Fix: Disclaimer aus der list--inline <ul> herausgeloest und als eigenes
+        Block-<div> (.tax-disclaimer-{{ section.id }}) direkt UNTER die ul
+        gerendert (product-template-1.liquid). Garantiert eigene Zeile Desktop +
+        Mobile, unabhaengig vom inline-list/flex-Verhalten. Wartet auf Live-Test.
 
 ## 9. Progress Bars: "Progress"-Option
 - [~] Die "Progress"-Option wird nicht angezeigt.
@@ -112,6 +116,15 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       → Ursache gefunden: Label bekam --swatch-bg nur bei Varianten MIT Bild;
         reine Farb-Varianten blieben leer. Fix 0955dff: .st-color-Span global
         sichtbar + gefüllt für round/square (alle Größen). Wartet auf Live-Test.
+
+## 16. Delivery Date → Box 1 Ein/Aus-Toggle (analog Box 2)
+- [~] Box 1 (Lieferdatum-Zeile) soll wie Box 2 ("Activate Box 2") einen eigenen
+      Ein/Aus-Toggle bekommen, sodass wahlweise nur Box 2 sichtbar bleibt.
+      Toggle innerhalb der Box-1-Settings ÜBER "Pulsating Dot".
+      → Fix: Schema-Checkbox "Activate Box 1" (enable_box_1, default true) direkt
+        unter dem "Box 1"-Header/über pulsating_dot; Rendering von c_order-date in
+        {% if block.settings.enable_box_1 %} gewrappt (product-template-1.liquid).
+        Wartet auf Live-Test.
 
 ---
 

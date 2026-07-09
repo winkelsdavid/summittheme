@@ -1617,6 +1617,7 @@ display:none;
                     }
                 </style>
                 <div class="c_order_information" {{ block.shopify_attributes }}>
+                  {% if block.settings.enable_box_1 %}
                   <div class="c_order-date" style="--icon-color:{{ block.settings.icon_color }};">
                     {% if block.settings.pulsating_dot %}
                         <div class="ring-container" style="--bk:{{ block.settings.dot_color }}">
@@ -1637,6 +1638,7 @@ display:none;
                     <span class="label">{% if block.settings.delivery_label != blank %}{{ block.settings.delivery_label }}{% else %}{{ 'products.product.delivery_label' | t }}{% endif %}</span>
                     <span class="shipping_data" id="delivery-date" data-days="{{ block.settings.delivery_in }}"></span>
                   </div>
+                  {% endif %}
 
                   {% if block.settings.enable_box_2 %}
                     <div class="c_fast-delivery">
@@ -1893,12 +1895,12 @@ display:none;
                             font-size:{{ block.settings.mobile_p_c_size }}px;
                           }
                           }
-                          /* Tax Disclaimer: eigene Zeile, klein/gedimmt - stand
-                             sonst unstyled inline neben dem Preis (list--inline). */
-                          .price-{{ section.id }} .product-single__tax-disclaimer{
+                          /* Tax Disclaimer: eigenes Block-Element unter dem Preis
+                             (aus der list--inline ul herausgeloest, damit er auf
+                             eigener Zeile steht und im Mobile nicht verschwindet). */
+                          .product-single__tax-disclaimer.tax-disclaimer-{{ section.id }}{
                             display:block;
                             width:100%;
-                            flex:0 0 100%;
                             padding-right:0;
                             text-align:left;
                             font-size:12px;
@@ -1907,7 +1909,7 @@ display:none;
                             margin-top:2px;
                           }
                           @media (max-width:768px){
-                            .small--text-center .price-{{ section.id }} .product-single__tax-disclaimer{
+                            .small--text-center .tax-disclaimer-{{ section.id }}{
                               text-align:center;
                             }
                           }
@@ -1990,13 +1992,15 @@ display:none;
                   {%- if section.settings.stock_enable -%}
                     <li>{%- render 'productStock', current_variant: current_variant -%}</li>
                   {%- endif -%}
-                  {%- comment -%} Nur der Merchant-Toggle entscheidet - das fruehere
-                      current_variant.taxable-Gate liess den Schalter bei Produkten
-                      ohne "Steuer berechnen" stumm wirken. {%- endcomment -%}
-                  {%- if block.settings.show_tax_disclaimer -%}
-                    <li class="product-single__tax-disclaimer">{{ 'products.product.tax_disclaimer' | t }}</li>
-                  {%- endif -%}
                 </ul>
+                {%- comment -%} Nur der Merchant-Toggle entscheidet - das fruehere
+                    current_variant.taxable-Gate liess den Schalter bei Produkten
+                    ohne "Steuer berechnen" stumm wirken. Als eigenes Block-Element
+                    UNTER der Preis-ul, damit es auf eigener Zeile steht (Desktop +
+                    Mobile) und nicht inline im list--inline haengen bleibt. {%- endcomment -%}
+                {%- if block.settings.show_tax_disclaimer -%}
+                  <div class="product-single__tax-disclaimer tax-disclaimer-{{ section.id }}">{{ 'products.product.tax_disclaimer' | t }}</div>
+                {%- endif -%}
               {%- when 'salepoint' -%}
               <style>
               .product-single__meta .product-block.salepoint-{{ block.id }}{
@@ -6052,6 +6056,12 @@ function formatPrice(value) {
         {
           "type":"header",
           "content":"Box 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_box_1",
+          "label": "Activate Box 1",
+          "default":true
         },
         {
           "type": "checkbox",
