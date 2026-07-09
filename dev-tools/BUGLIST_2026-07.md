@@ -288,7 +288,15 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         color:var(--g-pass)!important in derselben Regel -> opake Fuellung
         uebermalt den Clip, Headings folgen jetzt ebenfalls der Text Color.
         Live-Test: Shopname, Heading, "We will launch soon.", "Spread the word"
-        muessen alle mitgehen.
+        muessen alle mitgehen. -> Vom User BESTAETIGT ("jetzt klappts").
+      → Runde 3 (User: Buttons wieder entkoppeln): -webkit-text-fill-color ist
+        VERERBBAR - trotz :not()-Ausnahme erbten Buttons/Inputs die Fuellfarbe
+        vom Elternelement (ABONNIEREN + Email-Placeholder folgten der Text
+        Color). Fix: explizite Entkopplungs-Regel .btn-theme/.btn-white/input/
+        input::placeholder { -webkit-text-fill-color: currentColor !important }
+        -> Fuellung haengt wieder an der EIGENEN Buttonfarbe (Markenfarbe).
+        Live-Test: ABONNIEREN + Passwort-Submit in Markenfarbe, Placeholder
+        grau, alle uebrigen Texte weiter an Text Color gekoppelt.
 
 ## 25. Product-Card-Icons werden beim Hovern weiss (theme-weit)
 - [~] Warenkorb/Schnellkauf/Wishlist/Compare-Icons auf den Produktkarten sprangen
