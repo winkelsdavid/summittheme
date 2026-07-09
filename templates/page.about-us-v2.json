@@ -356,26 +356,10 @@
             "image_link": ""
           }
         },
-        "video_TzdQg8": {
-          "type": "video",
-          "settings": {
-            "video_url": "",
-            "image_link": "",
-            "enable_play_video": true
-          }
-        },
         "image_M8kCBN": {
           "type": "image",
           "settings": {
             "image_link": ""
-          }
-        },
-        "video_9KRLgE": {
-          "type": "video",
-          "settings": {
-            "video_url": "",
-            "image_link": "",
-            "enable_play_video": true
           }
         },
         "image_HpcXnH": {
@@ -384,22 +368,32 @@
             "image_link": ""
           }
         },
-        "video_MVxiDD": {
-          "type": "video",
+        "image_pWrHat": {
+          "type": "image",
           "settings": {
-            "video_url": "",
-            "image_link": "",
-            "enable_play_video": true
+            "image_link": ""
+          }
+        },
+        "image_nxnzpQ": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
+          }
+        },
+        "image_zwDADU": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
           }
         }
       },
       "block_order": [
         "image_L4kd7q",
-        "video_TzdQg8",
         "image_M8kCBN",
-        "video_9KRLgE",
         "image_HpcXnH",
-        "video_MVxiDD"
+        "image_pWrHat",
+        "image_nxnzpQ",
+        "image_zwDADU"
       ],
       "name": "Instagram Customize",
       "settings": {
@@ -417,11 +411,11 @@
         "description_color": "",
         "image_size": "portrait",
         "enable_carousel": true,
-        "arrows": false,
-        "dots": true,
+        "arrows": true,
+        "dots": false,
         "infinite": true,
-        "column": 5,
-        "show": 3,
+        "column": 4,
+        "show": 6,
         "padding": true,
         "gutter_padding": 30,
         "padding_top": 60,
