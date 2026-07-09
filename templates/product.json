@@ -1302,7 +1302,7 @@
         "after_circle_color": "#abfcb2",
         "after_bar_track": "#055a47",
         "after_bar_fill": "#abfcb2",
-        "padding_top": 60,
+        "padding_top": 30,
         "padding_bottom": 60,
         "mobile_padding_top": 20,
         "mobile_padding_bottom": 40
@@ -1834,7 +1834,7 @@
         "bg_pos": "left",
         "mobile_pos": "bottom",
         "automatic_sliding": true,
-        "speed": 6,
+        "speed": 44,
         "opacity_color": "#000000",
         "padding_top": 60,
         "padding_bottom": 60,
