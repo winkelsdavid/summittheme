@@ -106,14 +106,21 @@
     display: flex;
     align-items: center;
     margin-bottom: 3px;
+    /* i18n-Textlaengen-Netz: lange Uebersetzungen ellipsieren statt umbrechen */
+    min-width: 0;
 }
 .sticky-add-to-cart__stars {
     display: flex;
+    flex: none;
     margin-right: 8px;
     color:var(--sticky-cart-cl);
 }
 .sticky-add-to-cart__rating-text{
 color:var(--sticky-cart-text);
+min-width: 0;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
 }
 .sticky-add-to-cart__stars .star{
 color:var(--sticky-cart-cl_2);

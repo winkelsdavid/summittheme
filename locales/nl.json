@@ -11,8 +11,8 @@
   "general": {
     "defaults": {
       "sale_ends_in": "Sale eindigt over",
-      "verified_review": "Geverifieerde beoordeling",
-      "rated_on": "Beoordeeld met 4,8/5,0 op",
+      "verified_review": "Geverifieerd",
+      "rated_on": "4,8/5,0 op",
       "footer_menu_title": "Informatie",
       "rating_text": "Vertrouwd door duizenden.",
       "footer_contact_heading": "Contact",
@@ -46,7 +46,7 @@
       "verified": "Geverifieerde recensie"
     },
     "sticky_cart": {
-      "stars_text": "Uitstekend 4.8 | 129 beoordelingen",
+      "stars_text": "Uitstekend 4,8 | 129 reviews",
       "shipping_text" : "Bestel nu en ontvang het op:"
     },
     "cart": {
@@ -416,11 +416,11 @@
   "products": {
     "product": {
       "tax_disclaimer": "Belastingen en verzendkosten worden berekend bij het afrekenen.",
-      "stars_caption": "Uitstekend 4,8/5 | 149+ beoordelingen",
+      "stars_caption": "Uitstekend 4,8/5 | 149+ reviews",
       "review_images_text_html": "<strong>Uitstekend</strong> 4,8/5,0",
       "review_images_content": "Vertrouwd door duizenden klanten.",
       "reviews_start_text_html": "<strong>Uitstekend</strong> 4,8 van 5",
-      "reviews_start_2_text_html": "<strong>4,8/5</strong> op basis van 149+ beoordelingen",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> uit 149+ reviews",
       "custom_badge": "Eindigt binnenkort!",
       "promo_title": "Beperkte aanbieding!",
       "promo_subtitle": "Profiteer van je korting zolang het duurt:",

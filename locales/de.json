@@ -11,8 +11,8 @@
   "general": {
     "defaults": {
       "sale_ends_in": "Sale endet in",
-      "verified_review": "Verifizierte Bewertung",
-      "rated_on": "Bewertet mit 4,8/5,0 auf",
+      "verified_review": "Verifiziert",
+      "rated_on": "4,8/5,0 auf",
       "footer_menu_title": "Informationen",
       "rating_text": "Von Tausenden empfohlen.",
       "footer_contact_heading": "Kontakt",
@@ -46,7 +46,7 @@
       "verified": "verifizierte Bewertung"
     },
     "sticky_cart": {
-      "stars_text": "Ausgezeichnet 4,8 | 129 Bewertungen",
+      "stars_text": "Exzellent 4,8 | 129 Bewertungen",
       "shipping_text" : "Bestelle jetzt und erhalte bis zum:"
     },
     "cart": {
@@ -416,11 +416,11 @@
   "products": {
     "product": {
       "tax_disclaimer": "inkl. MwSt. zzgl. Versandkosten",
-      "stars_caption": "Ausgezeichnet 4,8/5 | 149+ Bewertungen",
-      "review_images_text_html": "<strong>Ausgezeichnet</strong> 4,8/5,0",
+      "stars_caption": "Exzellent 4,8/5 | 149+ Bewertungen",
+      "review_images_text_html": "<strong>Exzellent</strong> 4,8/5,0",
       "review_images_content": "Tausende Kunden vertrauen uns.",
-      "reviews_start_text_html": "<strong>Ausgezeichnet</strong> 4,8 von 5",
-      "reviews_start_2_text_html": "<strong>4,8/5</strong> basierend auf 149+ Bewertungen",
+      "reviews_start_text_html": "<strong>Exzellent</strong> 4,8 von 5",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> aus 149+ Bewertungen",
       "custom_badge": "Endet bald!",
       "promo_title": "Limitiertes Angebot!",
       "promo_subtitle": "Sichere dir deinen Rabatt, solange er gilt:",

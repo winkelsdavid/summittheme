@@ -11,10 +11,10 @@
   "general": {
     "defaults": {
       "sale_ends_in": "A promoção termina em",
-      "verified_review": "Avaliação verificada",
-      "rated_on": "Avaliado com 4,8/5,0 em",
+      "verified_review": "Verificada",
+      "rated_on": "Nota 4,8/5,0 em",
       "footer_menu_title": "Informações",
-      "rating_text": "Com a confiança de milhares.",
+      "rating_text": "A confiança de milhares.",
       "footer_contact_heading": "Contacto",
       "faq_availability": "O nosso apoio ao cliente está disponível de segunda a sexta-feira.",
       "faq_response_time": "Tempo médio de resposta: 24h",
@@ -420,7 +420,7 @@
       "review_images_text_html": "<strong>Excelente</strong> 4,8/5,0",
       "review_images_content": "Milhares de clientes confiam em nós.",
       "reviews_start_text_html": "<strong>Excelente</strong> 4,8 em 5",
-      "reviews_start_2_text_html": "<strong>4,8/5</strong> com base em 149+ avaliações",
+      "reviews_start_2_text_html": "<strong>4,8/5</strong> em 149+ avaliações",
       "custom_badge": "Termina em breve!",
       "promo_title": "Oferta limitada!",
       "promo_subtitle": "Aproveite o seu desconto enquanto dura:",

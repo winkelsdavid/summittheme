@@ -148,6 +148,50 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    /* Gleiches Muster fuer Review Typ 2 + 3: Layout bricht nie um,
+       bei Platznot wird nur der Text ellipsiert (i18n-Textlaengen-Netz). */
+    .trustpilot-block-rating-text-2{
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+    .trustpilot-block-rating-text-2 .stars{
+      flex: none;
+    }
+    .trustpilot-block-rating-text-2 .rating-excellent-2{
+      flex: 0 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .trustpilot-block-rating-text-2 .rating-excellent-2 p{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .review-block-rating-text-2{
+      flex-wrap: nowrap;
+    }
+    .review-block-rating-text-2 .stars{
+      flex: none;
+    }
+    .reviews_text{
+      min-width: 0;
+    }
+    .review-block-rating-text-2 .review-excellent-2,
+    .review_images_content{
+      display: block;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .review-block-rating-text-2 .review-excellent-2 p,
+    .review_images_content p{
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .rating-custom-2{

@@ -156,6 +156,23 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         3 Video-Container nutzen video_pt; Scoped-CSS object-fit:cover fuellt die Box.
         Thumbnails unveraendert (eigene image_size-Klassen). Live-Test.
 
+## 19. i18n Textlaengen: lange Uebersetzungen zerstoeren Box-Layout (mobil)
+- [~] A (Fokus) — Kurz-Uebersetzungen fuer platzkritische Badge-Keys, Ziel <=115%
+      der EN-Laenge: 27 Ersetzungen in de/nl/da/pt-BR/pt-PT/fr/it.
+      de: "Ausgezeichnet"->"Exzellent" (4 Keys), "basierend auf"->"aus",
+      "Bewertet mit 4,8/5,0 auf"->"4,8/5,0 auf", "Verifizierte Bewertung"->"Verifiziert".
+      nl: "op basis van 149+ beoordelingen"->"uit 149+ reviews" (reviews = gaengiges
+      NL-E-Commerce-Wort) u.a.; da: "Fremragende"->"Topbedømt" u.a.; pt: "com base em"
+      ->"em", "Nota 4,8/5,0"; fr/it: Einzelfaelle. 3 Reststellen bewusst belassen
+      (nur 3-4 Zeichen ueber, freie Breite: es/it rated_on, nl rating_text).
+- [~] B (Netz) — Ellipsis-Haertung nach dem Typ-1-Muster (Layout bricht NIE um,
+      nur Text ellipsiert): layout/theme.liquid mobil <=768px fuer Review Typ 2
+      (.rating-excellent-2) + Typ 3 (.review-excellent-2/.review_images_content,
+      inkl. innerer <p>, stars flex:none); ad_sticky-cart.liquid
+      (.sticky-add-to-cart__rating-text nowrap+ellipsis, alle Breiten).
+      Gleiche Klassen in rating-custom.liquid UND product-template-1 -> beide gedeckt.
+      Live-Test: de mobil Review-Badges 1-3, Sticky Bar, Testimonials.
+
 ---
 
 ### Reihenfolge / Notizen
