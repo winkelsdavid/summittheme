@@ -23,7 +23,7 @@
     },
     "404": {
       "title": "Seite nicht gefunden",
-      "subtext_html": "Die von Ihnen angeforderte Seite existiert nicht.",
+      "subtext_html": "Die von Dir angeforderte Seite existiert nicht.",
       "404_link": "Mit dem Einkaufen fortfahren"
     },
     "accessibility": {
@@ -60,20 +60,20 @@
         "shipping_submit": "Versand berechnen",
         "shipping_calculating": "Wird berechnet…",
         "reviews_title": "Schließe dich 10.000+ zufriedenen Kunden an",
-        "timer_title": "Wir können Ihre Bestellung [time] Minuten reservieren",
+        "timer_title": "Wir können Deine Bestellung [time] Minuten reservieren",
         "terms_before": "Ich stimme den",
         "terms_after": "Allgemeinen Geschäftsbedingungen zu",
         "countdown_title": "ANGEBOT ENDET IN"
       },
     "password_page": {
-      "login_form_heading": "Betreten Sie den Shop mit dem Passwort",
+      "login_form_heading": "Betritt den Shop mit dem Passwort",
       "login_form_password_label": "Passwort",
-      "login_form_password_placeholder": "Ihr Passwort",
+      "login_form_password_placeholder": "Dein Passwort",
       "login_form_submit": "Eingeben",
       "signup_form_email_label": "Email",
-      "signup_form_success": "Wir senden Ihnen kurz vor der Eröffnung eine E-Mail!",
-      "admin_link_html": "Sind Sie der Ladenbesitzer? <a href=\"/admin\" class=\"text-link\">Hier anmelden</a>",
-      "password_link": "Geben Sie mit dem Passwort ein",
+      "signup_form_success": "Wir senden Dir kurz vor der Eröffnung eine E-Mail!",
+      "admin_link_html": "Bist Du der Ladenbesitzer? <a href=\"/admin\" class=\"text-link\">Hier anmelden</a>",
+      "password_link": "Gib mit dem Passwort ein",
       "powered_by_shopify_html": "Dieser Shop wird betrieben von {{ shopify }}"
     },
     "social": {
@@ -85,14 +85,14 @@
       }
     },
     "newsletter_form": {
-      "newsletter_label": "Melden Sie sich an, um die neuesten Nachrichten, Angebote und Styles zu erhalten",
+      "newsletter_label": "Melde Dich an, um die neuesten Nachrichten, Angebote und Styles zu erhalten",
       "newsletter_placeholder": "Deine E-Mail",
       "submit": "Abonnieren",
       "confirmation": "Danke fürs Abonnieren"
     },
     "product_bundle": {
       "total": "Gesamtpreis:",
-      "save": "Sie sparen:"
+      "save": "Du sparst:"
     },
     "search": {
       "search": "Suchen",
@@ -171,9 +171,9 @@
       "email": "Email",
       "message": "Nachricht",
       "post": "Kommentar hinzufügen",
-      "moderated": "Bitte beachten Sie, dass Kommentare vor der Veröffentlichung genehmigt werden müssen",
-      "success_moderated": "Ihr Kommentar wurde erfolgreich gepostet. ",
-      "success": "Ihr Kommentar wurde erfolgreich gepostet! ",
+      "moderated": "Bitte beachte, dass Kommentare vor der Veröffentlichung genehmigt werden müssen",
+      "success_moderated": "Dein Kommentar wurde erfolgreich gepostet. ",
+      "success": "Dein Kommentar wurde erfolgreich gepostet! ",
       "with_count": {
         "one": "{{ count }} Kommentar",
         "other": "{{ count }} Kommentare"
@@ -183,7 +183,7 @@
   "cart": {
     "general": {
       "item": "Artikel):",
-      "title": "Ihr Warenkorb",
+      "title": "Dein Warenkorb",
       "remove": "Entfernen",
       "note": "Besondere Hinweise für den Verkäufer",
       "taxes_and_shipping_at_checkout": "Steuern und Versand werden an der Kasse berechnet",
@@ -199,8 +199,8 @@
       "save": "Speichern",
       "close": "Schließen",
       "empty": "Keine Produkte im Einkaufswagen.",
-      "empty_button": "Kaufen Sie unsere Produkte",
-      "cookies_required": "Aktivieren Sie Cookies, um den Warenkorb zu verwenden",
+      "empty_button": "Kaufe unsere Produkte",
+      "cookies_required": "Aktiviere Cookies, um den Warenkorb zu verwenden",
       "continue_browsing": "Mit dem Einkaufen fortfahren",
       "close_notification": "Schließen",
       "savings_html": "Du sparst {{ price }}",
@@ -214,15 +214,15 @@
     },
     "gift": {
       "title": "Geschenk",
-      "description": "Möchten Sie eine Geschenkverpackung?  ",
-      "save": "Fügen Sie eine Geschenkverpackung hinzu",
+      "description": "Möchtest Du eine Geschenkverpackung?  ",
+      "save": "Füge eine Geschenkverpackung hinzu",
       "close": "Schließen"
     },
     "label": {
       "product": "Produkt",
       "quantity": "Menge",
       "decrease_quantity": "Artikelmenge um eins reduzieren",
-      "increase_quantity": "Erhöhen Sie die Artikelmenge um eins",
+      "increase_quantity": "Erhöhe die Artikelmenge um eins",
       "total": "Gesamt"
     }
   },
@@ -234,7 +234,7 @@
       "grid_view": "Rasteransicht",
       "list_view": "Listenansicht",
       "filter": "Filter",
-      "link_title": "Stöbern Sie in unserem {{ title }} Sammlung",
+      "link_title": "Stöbere in unserem {{ title }} Sammlung",
       "item": "Artikel",
       "items": "Artikel"
     },
@@ -254,9 +254,9 @@
   },
   "contact": {
     "product": {
-      "ask_question": "Fragen Sie einen Experten",
+      "ask_question": "Frage einen Experten",
       "title_question": "Habe Fragen?",
-      "des_question": "Fragen Sie alles auf Cadiant"
+      "des_question": "Frage alles auf Cadiant"
     },
     "form": {
       "name": "Name",
@@ -271,8 +271,8 @@
       "send_question": "Frage senden",
       "receive_info": "Erhalte email",
       "post_success": "Danke, dass sie uns kontaktiert haben. ",
-      "post_error": "Bitte passen Sie Folgendes an",
-      "question_success": "Vielen Dank für Ihre Frage. "
+      "post_error": "Bitte passe Folgendes an",
+      "question_success": "Vielen Dank für Deine Frage. "
     }
   },
   "customer": {
@@ -284,14 +284,14 @@
     },
     "activate_account": {
       "title": "Konto aktivieren",
-      "subtext": "Erstellen Sie Ihr Passwort, um Ihr Konto zu aktivieren.",
+      "subtext": "Erstelle Dein Passwort, um Dein Konto zu aktivieren.",
       "password": "Passwort",
       "password_confirm": "Bestätige das Passwort",
       "submit": "Konto aktivieren",
       "cancel": "Einladung ablehnen"
     },
     "addresses": {
-      "title": "Ihre Adressen",
+      "title": "Deine Adressen",
       "default": "Standard",
       "add_new": "Füge eine neue Adresse hinzu",
       "edit_address": "Adresse bearbeiten",
@@ -311,13 +311,13 @@
       "cancel": "Stornieren",
       "edit": "Bearbeiten",
       "delete": "Löschen",
-      "delete_confirm": "Sind Sie sicher, dass Sie diese Adresse löschen möchten?"
+      "delete_confirm": "Bist Du sicher, dass Du diese Adresse löschen möchtest?"
     },
     "login": {
       "title": "Anmeldung",
       "email": "Email",
       "password": "Passwort",
-      "forgot_password": "Haben Sie Ihr Passwort vergessen?",
+      "forgot_password": "Hast Du Dein Passwort vergessen?",
       "sign_in": "Anmeldung",
       "guest_title": "Weiter als Gast",
       "guest_continue": "Weitermachen"
@@ -329,7 +329,7 @@
       "payment_status": "Zahlungsstatus",
       "fulfillment_status": "Erfüllungsstatus",
       "total": "Gesamt",
-      "none": "Sie haben noch keine Bestellungen aufgegeben."
+      "none": "Du hast noch keine Bestellungen aufgegeben."
     },
     "order": {
       "title": "Befehl {{ name }}",
@@ -357,19 +357,19 @@
       "email": "Email",
       "submit": "Einreichen",
       "cancel": "Zurück zur Anmeldung",
-      "subtext": "Wir senden Ihnen eine E-Mail, um Ihr Passwort zurückzusetzen.",
-      "success": "Wir haben Ihnen eine E-Mail mit einem Link zur Aktualisierung Ihres Passworts gesendet."
+      "subtext": "Wir senden Dir eine E-Mail, um Dein Passwort zurückzusetzen.",
+      "success": "Wir haben Dir eine E-Mail mit einem Link zur Aktualisierung Deines Passworts gesendet."
     },
     "reset_password": {
       "title": "Kontopasswort zurücksetzen",
-      "subtext": "Geben Sie ein neues Passwort für ein {{ email }}",
+      "subtext": "Gib ein neues Passwort für ein {{ email }}",
       "password": "Passwort",
       "password_confirm": "Bestätige das Passwort",
       "submit": "Passwort zurücksetzen"
     },
     "register": {
       "title": "Registrieren",
-      "sub_title": "Bitte füllen Sie die untenstehenden Felder aus",
+      "sub_title": "Bitte fülle die untenstehenden Felder aus",
       "first_name": "Vorname",
       "last_name": "Familienname, Nachname",
       "email": "Email",
@@ -385,11 +385,11 @@
       "previous_slide": "Vorherige Folie",
       "pause_slideshow": "Diashow anhalten",
       "play_slideshow": "Diashow abspielen",
-      "navigation_instructions": "Verwenden Sie die Pfeiltasten nach links/rechts, um durch die Diashow zu navigieren, oder wischen Sie nach links/rechts, wenn Sie ein mobiles Gerät verwenden",
+      "navigation_instructions": "Verwende die Pfeiltasten nach links/rechts, um durch die Diashow zu navigieren, oder wische nach links/rechts, wenn Du ein mobiles Gerät verwendest",
       "slide_number": "Gleiten {{ slide_number }}, aktuell"
     },
     "onboarding": {
-      "blog_title": "Der Titel Ihres Beitrags",
+      "blog_title": "Der Titel Deines Beitrags",
       "product_title": "Beispiel für einen Produkttitel",
       "collection_title": "Titel der Sammlung",
       "no_content": "Dieser Abschnitt enthält derzeit keinen Inhalt. "
@@ -404,7 +404,7 @@
       "log_out": "Ausloggen",
       "create_account": "Registrieren",
       "question_account": "Neukunde?",
-      "sub_login": "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Passwort ein:"
+      "sub_login": "Bitte gib Deine E-Mail-Adresse und Dein Passwort ein:"
     },
     "sidebar": {
       "featured_products": "Ausgewählte Produkte"
@@ -438,7 +438,7 @@
       "recently_viewed_subtitle": "Nicht vergessen",
       "hurrify": "Beeil dich, {{ number }} Artikel noch auf Lager!",
       "sold_out": "Ausverkauft",
-      "waitlist": "Treten Sie der Warteliste bei",
+      "waitlist": "Tritt der Warteliste bei",
       "available": "Verfügbar",
       "unavailable": "Nicht verfügbar",
       "will_not_ship_until": "Wird erst versendet {{ date }}",
@@ -461,11 +461,11 @@
       "pre_order": "Vorbestellen",
       "full_details": "Alle Einzelheiten",
       "quickview_text": "Schnellkauf",
-      "wishlist_no_result": "Es sind keine Produkte auf Ihrer Wunschliste!",
+      "wishlist_no_result": "Es sind keine Produkte auf Deiner Wunschliste!",
       "wishlist_text": "Wunschzettel",
       "wishlist_remove": "Entfernen",
-      "wishlist_notice_added": "Artikel zu Ihrer Wunschliste hinzugefügt!",
-      "wishlist_notice_removed": "Artikel von Ihrer Wunschliste entfernt!",
+      "wishlist_notice_added": "Artikel zu Deiner Wunschliste hinzugefügt!",
+      "wishlist_notice_removed": "Artikel von Deiner Wunschliste entfernt!",
       "add_to_wishlist": "Zur Wunschliste hinzufügen",
       "view_wishlist": "Zur Wunschliste gehen",
       "compare_no_result": "Es sind keine Produkte in der Vergleichsliste vorhanden!",
@@ -477,7 +477,7 @@
       "countdown_end_time": "Deal beenden",
       "view": "Sicht",
       "sku": "Sku",
-      "soldout_messenger": "Informieren Sie, wenn dieser Artikel verfügbar ist",
+      "soldout_messenger": "Informiere, wenn dieser Artikel verfügbar ist",
       "view_more": "Mehr sehen",
       "stock_available": {
         "one": "{{ count }} verfügbar",
@@ -485,12 +485,12 @@
       },
       "collection_return": "Zurück zu {{ collection }}",
       "product_added_to_cart_html": "Artikel wurden zum Warenkorb hinzugefügt.",
-      "stock_unavailable": "Der Artikel konnte nicht in Ihren Warenkorb gelegt werden, da nicht genügend Artikel auf Lager sind.",
-      "xr_button": "Sehen Sie in Ihrem Raum",
-      "xr_button_label": "In Ihrem Raum anzeigen, Element im Augmented-Reality-Fenster laden",
+      "stock_unavailable": "Der Artikel konnte nicht in Deinen Warenkorb gelegt werden, da nicht genügend Artikel auf Lager sind.",
+      "xr_button": "Sieh in Deinem Raum",
+      "xr_button_label": "In Deinem Raum anzeigen, Element im Augmented-Reality-Fenster laden",
       "pickup_availability": {
         "view_store_info": "Shop-Informationen anzeigen",
-        "check_other_stores": "Überprüfen Sie die Verfügbarkeit in anderen Geschäften",
+        "check_other_stores": "Überprüfe die Verfügbarkeit in anderen Geschäften",
         "pick_up_available": "Abholung möglich",
         "pick_up_available_at_html": "Abholung möglich unter <span class=\"color-foreground\">{{ location_name }}</span>",
         "pick_up_unavailable_at_html": "Abholung derzeit nicht möglich unter <span class=\"color-foreground\">{{ location_name }}</span>",
@@ -538,11 +538,11 @@
   "gift_cards": {
     "issued": {
       "title_html": "Hier ist dein {{ value }} Geschenkkarte für {{ shop }}!",
-      "subtext": "Hier ist Ihre Geschenkkarte!",
+      "subtext": "Hier ist Deine Geschenkkarte!",
       "disabled": "Deaktiviert",
       "expired": "Abgelaufen am {{ expiry }}",
       "active": "Läuft aus am {{ expiry }}",
-      "redeem": "Verwenden Sie diesen Code an der Kasse, um Ihre Geschenkkarte einzulösen",
+      "redeem": "Verwende diesen Code an der Kasse, um Deine Geschenkkarte einzulösen",
       "shop_link": "Beginn mit dem Einkauf",
       "print": "Drucken",
       "remaining_html": "{{ balance }} links",
@@ -577,8 +577,8 @@
       "get_directions": "Anweisungen bekommen",
       "address_error": "Beim Suchen dieser Adresse ist ein Fehler aufgetreten",
       "address_no_results": "Keine Ergebnisse für diese Adresse",
-      "address_query_limit_html": "Sie haben das Google API-Nutzungslimit überschritten.  <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-Plan</a>.",
-      "auth_error_html": "Bei der Authentifizierung Ihres Google Maps-API-Schlüssels ist ein Problem aufgetreten."
+      "address_query_limit_html": "Du hast das Google API-Nutzungslimit überschritten.  <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-Plan</a>.",
+      "auth_error_html": "Bei der Authentifizierung Deines Google Maps-API-Schlüssels ist ein Problem aufgetreten."
     },
     "slideshow": {
       "next_slide": "Nächste Folie",
@@ -586,16 +586,16 @@
       "pause_slideshow": "Diashow anhalten",
       "rotate_slideshow": "Diashow abspielen",
       "load_slide": "Folie laden {{ slide_number }}",
-      "navigation_instructions": "Verwenden Sie die Pfeiltasten nach links/rechts, um durch die Diashow zu navigieren, oder wischen Sie nach links/rechts, wenn Sie ein mobiles Gerät verwenden"
+      "navigation_instructions": "Verwende die Pfeiltasten nach links/rechts, um durch die Diashow zu navigieren, oder wische nach links/rechts, wenn Du ein mobiles Gerät verwendest"
     },
     "collection_template": {
       "empty": "Keine Produkte gefunden",
       "title": "Sammlung",
-      "use_fewer_filters_html": "Verwenden Sie weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">alles löschen</a>"
+      "use_fewer_filters_html": "Verwende weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">alles löschen</a>"
     },
     "booking": {
       "interested": "Ich bin interessiert an",
-      "label_store": "Wählen Sie Store",
+      "label_store": "Wähle Store",
       "label_date": "Startdatum",
       "label_time": "Öffnungszeiten 09:00 bis 18:00 Uhr",
       "booking_now": "Jetzt planen"

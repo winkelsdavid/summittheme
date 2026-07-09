@@ -23,7 +23,7 @@
     },
     "404": {
       "title": "Pagina niet gevonden",
-      "subtext_html": "De door u opgevraagde pagina bestaat niet.",
+      "subtext_html": "De door jou opgevraagde pagina bestaat niet.",
       "404_link": "Doorgaan met winkelen"
     },
     "accessibility": {
@@ -54,13 +54,13 @@
       "coupon_code_title": "Couponlijst",
       "coupon_first_label": "Besteed",
       "coupon_last_label": "voor gratis verzending",
-      "coupon_free_delivery": "Uw bestelling wordt gratis geleverd!",
+      "coupon_free_delivery": "Je bestelling wordt gratis geleverd!",
       "shipping_title": "Verzendkosten berekenen",
       "shipping_country": "Verenigde Staten",
       "shipping_submit": "Verzending berekenen",
       "shipping_calculating": "Berekenen...",
       "reviews_title": "Sluit je aan bij 10.000+ tevreden klanten",
-      "timer_title": "We kunnen uw bestelling [time] minuten reserveren",
+      "timer_title": "We kunnen je bestelling [time] minuten reserveren",
       "terms_before": "Ik ga akkoord met de",
       "terms_after": "algemene voorwaarden",
       "countdown_title": "AANBIEDING EINDIGT OVER"
@@ -71,8 +71,8 @@
       "login_form_password_placeholder": "Je wachtwoord",
       "login_form_submit": "Binnenkomen",
       "signup_form_email_label": "E-mail",
-      "signup_form_success": "Wij sturen u vlak voordat wij opengaan een e-mail!",
-      "admin_link_html": "Bent u de winkeleigenaar? <a href=\"/admin\" class=\"text-link\">Hier inloggen</a>",
+      "signup_form_success": "Wij sturen je vlak voordat wij opengaan een e-mail!",
+      "admin_link_html": "Ben je de winkeleigenaar? <a href=\"/admin\" class=\"text-link\">Hier inloggen</a>",
       "password_link": "Voer in met wachtwoord",
       "powered_by_shopify_html": "Deze winkel wordt mogelijk gemaakt door {{ shopify }}"
     },
@@ -166,7 +166,7 @@
     },
     "comments": {
       "title": "laat een reactie achter",
-      "description": "Uw e-mailadres wordt niet gepubliceerd. ",
+      "description": "Je e-mailadres wordt niet gepubliceerd. ",
       "name": "Naam",
       "email": "E-mail",
       "message": "Bericht",
@@ -270,9 +270,9 @@
       "send_message": "Bericht versturen",
       "send_question": "Stuur vraag",
       "receive_info": "Ontvang Email",
-      "post_success": "Bedankt dat u contact met ons opneemt. ",
+      "post_success": "Bedankt dat je contact met ons opneemt. ",
       "post_error": "Pas het volgende aan",
-      "question_success": "Bedankt voor uw vraag. "
+      "question_success": "Bedankt voor je vraag. "
     }
   },
   "customer": {
@@ -284,14 +284,14 @@
     },
     "activate_account": {
       "title": "Activeer account",
-      "subtext": "Maak uw wachtwoord aan om uw account te activeren.",
+      "subtext": "Maak je wachtwoord aan om je account te activeren.",
       "password": "Wachtwoord",
       "password_confirm": "bevestig wachtwoord",
       "submit": "Activeer account",
       "cancel": "Uitnodiging afwijzen"
     },
     "addresses": {
-      "title": "Uw adressen",
+      "title": "Je adressen",
       "default": "Standaard",
       "add_new": "Voeg een nieuw adres toe",
       "edit_address": "Verander adres",
@@ -311,7 +311,7 @@
       "cancel": "Annuleren",
       "edit": "Bewerking",
       "delete": "Verwijderen",
-      "delete_confirm": "Weet u zeker dat u dit adres wilt verwijderen?"
+      "delete_confirm": "Weet je zeker dat je dit adres wilt verwijderen?"
     },
     "login": {
       "title": "Log in",
@@ -357,8 +357,8 @@
       "email": "E-mail",
       "submit": "Indienen",
       "cancel": "Terug naar Inloggen",
-      "subtext": "Wij sturen u een e-mail om uw wachtwoord opnieuw in te stellen.",
-      "success": "We hebben u een e-mail gestuurd met een link waarmee u uw wachtwoord kunt bijwerken."
+      "subtext": "Wij sturen je een e-mail om je wachtwoord opnieuw in te stellen.",
+      "success": "We hebben je een e-mail gestuurd met een link waarmee je je wachtwoord kunt bijwerken."
     },
     "reset_password": {
       "title": "Accountwachtwoord opnieuw instellen",
@@ -385,7 +385,7 @@
       "previous_slide": "Vorige dia",
       "pause_slideshow": "Diavoorstelling pauzeren",
       "play_slideshow": "Diavoorstelling afspelen",
-      "navigation_instructions": "Gebruik de pijl-links/rechts om door de diavoorstelling te navigeren of veeg naar links/rechts als u een mobiel apparaat gebruikt",
+      "navigation_instructions": "Gebruik de pijl-links/rechts om door de diavoorstelling te navigeren of veeg naar links/rechts als je een mobiel apparaat gebruikt",
       "slide_number": "Dia {{ slide_number }}, huidig"
     },
     "onboarding": {
@@ -404,7 +404,7 @@
       "log_out": "Uitloggen",
       "create_account": "Register",
       "question_account": "Nieuwe klant?",
-      "sub_login": "Voer uw e-mailadres en wachtwoord in:"
+      "sub_login": "Voer je e-mailadres en wachtwoord in:"
     },
     "sidebar": {
       "featured_products": "Uitgelichte producten"
@@ -461,11 +461,11 @@
       "pre_order": "Voorafgaande bestelling",
       "full_details": "Alle details",
       "quickview_text": "Snelwinkel",
-      "wishlist_no_result": "Er staan ​​geen producten op uw verlanglijstje!",
+      "wishlist_no_result": "Er staan ​​geen producten op je verlanglijstje!",
       "wishlist_text": "Verlanglijst",
       "wishlist_remove": "Verwijderen",
       "wishlist_notice_added": "Artikel toegevoegd aan je verlanglijst!",
-      "wishlist_notice_removed": "Artikel verwijderd van uw verlanglijst!",
+      "wishlist_notice_removed": "Artikel verwijderd van je verlanglijst!",
       "add_to_wishlist": "Voeg toe aan verlanglijst",
       "view_wishlist": "Ga naar verlanglijst",
       "compare_no_result": "Er staan ​​geen producten in de vergelijkingslijst!",
@@ -485,9 +485,9 @@
       },
       "collection_return": "Terug naar {{ collection }}",
       "product_added_to_cart_html": "Artikel(en) toegevoegd aan winkelwagen.",
-      "stock_unavailable": "Het artikel kon niet aan uw winkelwagen worden toegevoegd omdat er niet voldoende op voorraad zijn.",
-      "xr_button": "Bekijk in uw ruimte",
-      "xr_button_label": "Bekijk in uw ruimte, laadt item in augmented reality-venster",
+      "stock_unavailable": "Het artikel kon niet aan je winkelwagen worden toegevoegd omdat er niet voldoende op voorraad zijn.",
+      "xr_button": "Bekijk in je ruimte",
+      "xr_button_label": "Bekijk in je ruimte, laadt item in augmented reality-venster",
       "pickup_availability": {
         "view_store_info": "Winkelinformatie bekijken",
         "check_other_stores": "Controleer beschikbaarheid bij andere winkels",
@@ -542,7 +542,7 @@
       "disabled": "Gehandicapt",
       "expired": "Over de datum op {{ expiry }}",
       "active": "Verloopt op {{ expiry }}",
-      "redeem": "Gebruik deze code bij het afrekenen om uw cadeaubon in te wisselen",
+      "redeem": "Gebruik deze code bij het afrekenen om je cadeaubon in te wisselen",
       "shop_link": "Begin met winkelen",
       "print": "Afdrukken",
       "remaining_html": "{{ balance }} links",
@@ -578,7 +578,7 @@
       "address_error": "Fout bij het opzoeken van dat adres",
       "address_no_results": "Geen resultaten voor dat adres",
       "address_query_limit_html": "U heeft de gebruikslimiet van de Google API overschreden.  <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-abonnement</a>.",
-      "auth_error_html": "Er is een probleem opgetreden bij het verifiëren van uw Google Maps API-sleutel."
+      "auth_error_html": "Er is een probleem opgetreden bij het verifiëren van je Google Maps API-sleutel."
     },
     "slideshow": {
       "next_slide": "Volgende dia",
@@ -586,7 +586,7 @@
       "pause_slideshow": "Diavoorstelling pauzeren",
       "rotate_slideshow": "Diavoorstelling afspelen",
       "load_slide": "Laad dia {{ slide_number }}",
-      "navigation_instructions": "Gebruik de pijl-links/rechts om door de diavoorstelling te navigeren of veeg naar links/rechts als u een mobiel apparaat gebruikt"
+      "navigation_instructions": "Gebruik de pijl-links/rechts om door de diavoorstelling te navigeren of veeg naar links/rechts als je een mobiel apparaat gebruikt"
     },
     "collection_template": {
       "empty": "Geen producten gevonden",

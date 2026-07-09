@@ -250,6 +250,24 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         mit dem Container-Fade. Live-Test: Load mit/ohne Loading Animation
         (alle 3 Varianten), Slide-Wechsel Desktop + Mobile.
 
+## 23. Default-Uebersetzungen: Sie- -> Du-Form (theme-weit, User 2026-07-09)
+- [~] Formelle Anrede auf informell umgestellt. Umfang (User: "Alle"):
+      de (51 Strings, Du/Dein GROSS), fr (73: vous/votre + 22 vous-Imperative
+      ohne Pronomen -> tu), nl (23: u/uw -> je/jij/jouw). NICHT angefasst:
+      es/it/da (schon du-Form), pt-BR/pt-PT ("voce/seu" = Standard, User: so
+      lassen), ja (Keigo, User: lassen).
+      → Wertbasierte 1:1-Exakt-Ersetzung auf Roh-JSONC (Kommentar-Header +
+        Format erhalten; git numstat 51/51, 73/73, 23/23). Verb-Konjugation
+        mit-konvertiert (de "Aktivieren Sie"->"Aktiviere"; fr "Inscrivez-vous"
+        ->"Inscris-toi", "Utilisez"->"Utilise", "Veuillez X"->"X"-Imperativ).
+        Verifikation: 10/10 Locales valide JSON; Rest-formell-Scan = 0 in
+        de/fr/nl (inkl. fr -ez/faites/dites/soyez/veuillez). Timer-Ausloeser
+        (general.cart.timer_title) in allen 3 erledigt.
+      → OFFEN/Nebenbefund: Theme-Setting-Default timer_countdown_text in
+        settings_schema.json ist englisch ("We can reserve your order for
+        [time] minutes"); der Merchant-Wert kann den Locale-Key ueberschreiben.
+        Bei Live-Test pruefen welcher greift; ggf. Setting-Default nachziehen.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
