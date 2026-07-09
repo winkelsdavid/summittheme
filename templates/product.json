@@ -133,7 +133,7 @@
         "c5c11045-e3b5-47e4-80d1-25e86ec844cc": {
           "type": "price",
           "settings": {
-            "show_tax_disclaimer": false,
+            "show_tax_disclaimer": true,
             "enable_badge": true,
             "b_font_size": 12,
             "b_size": 10,
@@ -311,6 +311,7 @@
         "delivery_date_7rkMeD": {
           "type": "delivery_date",
           "settings": {
+            "enable_box_1": true,
             "pulsating_dot": true,
             "dot_color": "#34bf49",
             "icon_svg": "checkmark-1",
@@ -322,14 +323,14 @@
             "delivery_in": 5,
             "box_1_font_size": 12,
             "box_1_font_size_mobile": 12,
-            "icon_1_svg": "shield",
-            "icon_color_2": "#237ee9",
             "enable_box_2": true,
             "box_2_bk": "#f9f9f9",
             "box_2_color": "#000000",
+            "icon_1_svg": "shield",
+            "icon_color_2": "",
             "label_1": "",
             "icon_2_svg": "lock",
-            "icon_color_3": "#34bf49",
+            "icon_color_3": "",
             "label_2": "Secure Checkout",
             "icons_width": 29,
             "box_2_font_size": 12,
@@ -1125,8 +1126,7 @@
             "icon": "checkmark-2",
             "icon_color": "",
             "title": "Heading",
-            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
-            "hover_style": "auto"
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out."
           }
         },
         "bullet_y878jt": {
@@ -1135,8 +1135,7 @@
             "icon": "checkmark-2",
             "icon_color": "",
             "title": "Heading",
-            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
-            "hover_style": "auto"
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out."
           }
         },
         "bullet_kgNNtU": {
@@ -1145,8 +1144,7 @@
             "icon": "checkmark-2",
             "icon_color": "",
             "title": "Heading",
-            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
-            "hover_style": "auto"
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out."
           }
         },
         "bullet_wNXTjk": {
@@ -1155,8 +1153,7 @@
             "icon": "checkmark-2",
             "icon_color": "",
             "title": "Heading",
-            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out.",
-            "hover_style": "auto"
+            "body": "Here you can describe the key advantages, unique features, and overall benefits of your product, highlighting how it adds value, solves customer needs, and stands out."
           }
         }
       },
@@ -1789,7 +1786,6 @@
             "reviews_type": "t_1",
             "title": "Image with text",
             "size_text": "h2",
-            "content": "",
             "answer_content": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "style_btn": "btn-theme",
             "button": "discover now",
