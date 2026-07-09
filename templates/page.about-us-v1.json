@@ -19,7 +19,7 @@
         "41e5d7ef-7845-4f6d-85a2-ae6b277ad52b": {
           "type": "image",
           "settings": {
-            "img-in-hero": 64,
+            "img-in-hero": 220,
             "image_link": ""
           }
         },
@@ -38,6 +38,7 @@
         },
         "02d7795e-308f-44d9-b007-aa374d77dbcb": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "title": "Who we are.",
             "size_text": "h2"
@@ -230,7 +231,7 @@
             "alignment": "center center",
             "text_alignment": "center center",
             "text_alignment_mobile": "center",
-            "bgwrap": "#F8EDE7",
+            "bgwrap": "#f8ede7",
             "blurry_transition": false,
             "blurry_color": "",
             "show_overlay": true,
@@ -309,7 +310,7 @@
         "e_dot": true,
         "slide_dot": "square",
         "color_dot_nav": "#000",
-        "color_dot_active": "#C99A5C"
+        "color_dot_active": "#c99a5c"
       }
     },
     "custom_instagram_marquee_9nNhWw": {

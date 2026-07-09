@@ -24,7 +24,7 @@
             "alignment": "center center",
             "text_alignment": "center center",
             "text_alignment_mobile": "center",
-            "bgwrap": "#F8EDE7",
+            "bgwrap": "#f8ede7",
             "blurry_transition": false,
             "blurry_color": "",
             "show_overlay": true,
@@ -103,7 +103,7 @@
         "e_dot": true,
         "slide_dot": "square",
         "color_dot_nav": "#000",
-        "color_dot_active": "#C99A5C"
+        "color_dot_active": "#c99a5c"
       }
     },
     "1709cb72-25b6-4bc0-9831-fc53df49e9d2": {
@@ -112,7 +112,7 @@
         "e547e523-acd7-4023-af02-f2f77f3e60ce": {
           "type": "image",
           "settings": {
-            "img-in-hero": 68,
+            "img-in-hero": 200,
             "image_link": ""
           }
         },
@@ -124,6 +124,7 @@
         },
         "0f476c49-e094-4f6d-90a8-df8ef124fd7c": {
           "type": "subtitle",
+          "disabled": true,
           "settings": {
             "subtitle": "WHO WE ARE"
           }
@@ -178,16 +179,14 @@
           "type": "scroll_item",
           "settings": {
             "content": "",
-            "text_style": "solid",
-            "image": "shopify://shop_images/LOGO-FIN.png"
+            "text_style": "solid"
           }
         },
         "item_9iVGPz": {
           "type": "scroll_item",
           "settings": {
             "content": "",
-            "text_style": "outline",
-            "image": "shopify://shop_images/LOGO-FIN.png"
+            "text_style": "outline"
           }
         }
       },
@@ -201,9 +200,9 @@
         "size_icon": 100,
         "speed": 10,
         "scroll_type": "from-right",
-        "background": "#FFF2F4",
+        "background": "#fff2f4",
         "gradient_bg": "",
-        "text": "#E45969",
+        "text": "#e45969",
         "padding_top": 20,
         "padding_bottom": 20,
         "mobile_padding_top": 20,
@@ -228,7 +227,6 @@
             "reviews_type": "t_1",
             "title": "Image with text",
             "size_text": "h2",
-            "content": "",
             "answer_content": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
             "style_btn": "btn-theme",
             "button": "discover now",
@@ -249,7 +247,7 @@
         "section_width": "container",
         "background_section": "",
         "rangebg": 0,
-        "bgbefore": "#FE899A",
+        "bgbefore": "#fe899a",
         "bg_pos": "left",
         "enable_padding": true,
         "align_center": true,
@@ -265,7 +263,7 @@
       "settings": {
         "animation": "",
         "section_width": "full",
-        "background_section": "#FFF2F4",
+        "background_section": "#fff2f4",
         "bg_wave": "#ffffff",
         "flip_pos": "down",
         "wave_style": "style1",
@@ -407,7 +405,7 @@
       "settings": {
         "animation": "",
         "section_width": "container",
-        "background_section": "#FFFFFF",
+        "background_section": "#ffffff",
         "subtitle_top": "Subtitle Top",
         "replace_reviews": false,
         "reviews_type": "t_1",
@@ -420,11 +418,10 @@
         "image_size": "portrait",
         "enable_carousel": true,
         "arrows": false,
-        "draggable": true,
         "dots": true,
         "infinite": true,
-        "column": 6,
-        "show": 6,
+        "column": 5,
+        "show": 3,
         "padding": true,
         "gutter_padding": 30,
         "padding_top": 60,
