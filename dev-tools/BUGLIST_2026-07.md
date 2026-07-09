@@ -350,6 +350,17 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         Live-Test: Toggle aus + Text im Feld -> Bild erscheint; Toggle an +
         Video -> Video; Slideshow 2 gleiches Verhalten.
 
+## 28. Slideshow 1: Top Title mobil nicht zentriert (bei Replace-Review-Toggle AUS)
+- [~] Mobile Zentrierung laeuft ueber explizite Element-Liste mit !important
+      (noetig, weil der Wrapper die Desktop-Ausrichtung als Bootstrap text-left
+      !important traegt). Die Liste deckte rating-custom (= Badge bei Toggle AN),
+      Title, Subtitle, Pills, Buttons - aber NICHT .slideshow__toptitle.
+      Toggle AUS -> Top Title statt Badge -> erbt text-left -> klebt links.
+      → Fix: .slideshow__toptitle in die Zentrierungs-Liste aufgenommen
+        (slideshow-1.liquid, @media max-749px). Nur mobil, Desktop-Ausrichtung
+        unveraendert. Live-Test: Replace AUS + Top Title gesetzt -> mobil
+        zentriert; Desktop "Middle Left" weiter linksbuendig.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
