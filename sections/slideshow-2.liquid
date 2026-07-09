@@ -422,6 +422,33 @@ padding-top:4px!important;
     .slideshow .slideshow__arrow {
       color: {{ section.settings.color_arrow }};
     }
+
+    /* Positionierungs-Basis: kam frueher aus der Slick-CSS (.slick-arrow/.slick-prev/
+       .slick-next). Nach der Swiper-Migration tragen die Buttons nur noch
+       .slideshow__arrow -> ohne diese Basis lagen sie unsichtbar unter den Slides. */
+    .slideshow {
+      position: relative;
+    }
+    .slideshow .slideshow__arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+    }
+    .slideshow .slideshow__arrow.swiper-button-lock {
+      display: none;
+    }
+    .slideshow .slideshow__arrow.swiper-button-disabled {
+      opacity: .35;
+      cursor: default;
+    }
     .slideshow .swiper-pagination-bullet{
       border-color:{{ section.settings.color_dot_nav }};
     }
