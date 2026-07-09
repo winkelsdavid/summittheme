@@ -2597,18 +2597,29 @@ theme.Slideshow = (function () {
     // transit: 'slide' = real sliding; 'fade'/'zoom'/'slide-fade' all ran on
     // Slick fade:true plus pure-CSS decoration on .swiper-slide-active/.slick-going.
     var useFade = this.transit !== "slide";
+    // Slick-Paritaet: fade/zoom/slide-fade liefen in Slick als fade:true +
+    // infinite:true OHNE Klone. Swipers loop-Modus dupliziert Slides und
+    // springt nach dem Wrap instant um (loopFix) - Quelle von Animations-
+    // Neustarts und Ruecksprüngen. Daher: fade-Familie ohne loop, der
+    // Endlos-Wrap passiert manuell in den Pfeil-Handlern unten.
+    // crossFade:false = Slick-Look (eingehender Slide blendet sich UEBER den
+    // sichtbaren alten; kein gleichzeitiges Ausblenden beider Texte).
     var opts = {
       effect: useFade ? "fade" : "slide",
-      fadeEffect: { crossFade: true },
-      loop: slides.length > 1,
+      fadeEffect: { crossFade: false },
+      loop: useFade ? false : slides.length > 1,
       speed: 300, // Slick-Default (300ms) - 800 fuehlte sich traeger an als vor der Migration
       threshold: 20,
       watchSlidesProgress: true,
       a11y: { enabled: false }, // Slick had accessibility:false; aria-current handled manually below
       autoplay: this.autorotate
-        ? { delay: autoplaySpeed, disableOnInteraction: false }
+        ? {
+            delay: autoplaySpeed,
+            disableOnInteraction: false,
+            stopOnLastSlide: false, // wickelt bei loop:false automatisch auf Slide 1 zurueck
+          }
         : false,
-      navigation: prevEl ? { nextEl: nextEl, prevEl: prevEl } : false,
+      navigation: !useFade && prevEl ? { nextEl: nextEl, prevEl: prevEl } : false,
       pagination: this.navDot ? { el: pagiEl, clickable: true } : false,
       on: {
         init: function () {
@@ -2637,6 +2648,23 @@ theme.Slideshow = (function () {
     };
 
     this.swiper = window.Swiper ? new Swiper(node, opts) : null;
+
+    // fade-Familie: manueller Endlos-Wrap wie Slicks infinite:true (ohne Klone).
+    // Am Ende -> Slide 1, am Anfang -> letzter Slide; dazwischen normal weiter.
+    if (useFade && this.swiper && prevEl) {
+      prevEl.addEventListener("click", function () {
+        var sw = self.swiper;
+        if (!sw) return;
+        if (sw.isBeginning) sw.slideTo(sw.slides.length - 1);
+        else sw.slidePrev();
+      });
+      nextEl.addEventListener("click", function () {
+        var sw = self.swiper;
+        if (!sw) return;
+        if (sw.isEnd) sw.slideTo(0);
+        else sw.slideNext();
+      });
+    }
 
     // Swiper 6.7 adds 'swiper-container-initialized', but the section CSS gates
     // the reveal on '.swiper-initialized' (the Swiper 7+ name). Add it explicitly
@@ -2782,12 +2810,16 @@ theme.SlideshowSection.prototype = Object.assign(
         index = attr !== null ? parseInt(attr, 10) : 0;
       }
       inst.swiper.slideToLoop(index);
-      if (inst.swiper.autoplay) inst.swiper.autoplay.stop();
+      // Nur pausieren/fortsetzen, wenn Auto-Rotate ueberhaupt aktiv ist.
+      // autoplay.start() ohne konfiguriertes Autoplay startete sonst die
+      // Rotation mit Swipers 3s-DEFAULT-Delay -> Slideshow sprang im Editor
+      // nach Block-Deselect von selbst weiter (User-Bug "springt zurueck").
+      if (inst.autorotate && inst.swiper.autoplay) inst.swiper.autoplay.stop();
     },
 
     onBlockDeselect: function () {
       var inst = theme.slideshows[this.slideshow];
-      if (inst && inst.swiper && inst.swiper.autoplay) {
+      if (inst && inst.autorotate && inst.swiper && inst.swiper.autoplay) {
         inst.swiper.autoplay.start();
       }
     },

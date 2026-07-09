@@ -202,8 +202,26 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         Animationen um .slide-shown-Zwillinge ergaenzt (slideshow-1: zoom +
         slide-fade; slideshow-2: Text-Reveal mit aktiven 0.7s-Transitions).
         Bestehende .swiper-slide-active-Selektoren bleiben als Fallback.
-        speed 800 -> 300 (Slick-Default). Live-Test: Zoom + Slide&Fade mit
-        2+ Slides mehrere Durchlaeufe (gerade der Wrap zurueck zu Slide 1).
+        speed 800 -> 300 (Slick-Default).
+      → Runde 2 (User: "springt nach ~1s zurueck" + "Text-Transitions anders"):
+        1. RUECKSPRUNG-Ursache: onBlockDeselect rief autoplay.start() OHNE
+           Autorotate-Gate -> Swiper startete Rotation mit 3s-DEFAULT-Delay,
+           obwohl Auto-Rotate aus (Editor: Block anklicken -> deselektieren ->
+           Slideshow laeuft von selbst). Fix: stop/start nur noch wenn
+           inst.autorotate (Referenz rief slickPlay auch blind, aber mit 5s
+           Section-Speed statt 3s Default - jetzt sauber gegated).
+        2. TEXT-TRANSITIONS: Slick-Fade legte den EINGEHENDEN Slide ueber den
+           sichtbaren alten (kein Doppel-Crossfade beider Texte). crossFade
+           true -> false (= Slick-Look). Kind-Transitions waren auch im
+           Referenz-Theme auskommentiert - Text faehrt mit dem Slide-Fade.
+        3. fade/zoom/slide-fade jetzt ganz OHNE Swiper-Loop (Slick-fade hatte
+           nie Klone): loop nur noch fuer transit 'slide'; Endlos-Wrap manuell
+           in den Pfeil-Handlern (isEnd->slideTo(0), isBeginning->letzter);
+           Autoplay wickelt via stopOnLastSlide:false selbst zurueck.
+           Eliminiert loopFix-/Duplikat-Bugklasse komplett.
+        Live-Test im Editor UND Storefront: Slide wechseln -> darf NICHT mehr
+        von selbst weiterspringen (ausser Auto-Rotate an); Zoom + Slide&Fade
+        mehrere Durchlaeufe inkl. Wrap.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
