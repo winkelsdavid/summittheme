@@ -371,6 +371,20 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         unveraendert. Live-Test: Replace AUS + Top Title gesetzt -> mobil
         zentriert; Desktop "Middle Left" weiter linksbuendig.
 
+## 29. Promo Sale: Content-Uebersetzungen kuerzen
+- [~] "Product Overview" -> "Promo Sale" -> Content-Default (Locale-Key
+      products.product.promo_subtitle, Zeile 426 in allen Locale-Dateien)
+      lief zu lang und brach in der Promo-Box um. User-Vorgabe (de):
+      "Sichere dir deinen Rabatt, solange er gilt:" -> "Sichere dir deinen
+      Rabatt:". Muster auf alle Sprachen angewandt (der "solange es gilt"-
+      Zusatz ist neben dem Countdown redundant): en "Claim your discount:",
+      da "Få din rabat:", es "Aprovecha tu descuento:", fr "Profite de ta
+      réduction :", it "Approfitta dello sconto:", nl "Profiteer van je
+      korting:", pt-PT "Aproveite o seu desconto:", pt-BR "Garanta seu
+      desconto:". ja war bereits kurz -> unveraendert. Alle 10 Dateien
+      JSON-geparst OK. Live-Test: Promo-Sale-Block ohne Content-Override
+      -> kurzer Text einzeilig ueber dem Countdown.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
