@@ -130,6 +130,22 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         {% if block.settings.enable_box_1 %} gewrappt (product-template-1.liquid).
         Wartet auf Live-Test.
 
+## 17. i18n Sprach-Default nachziehen (3 Stellen, die der grosse Patch 2f5fac6 ausliess)
+- [~] Theme Settings → "Reviews Above Titles": Review-Badge-Texte lokalisieren.
+      → rating-custom.liquid: t1_text/t2_text/t3_text/content bekommen {% if blank %}
+        -> | t Fallback mit BESTEHENDEN Keys (reviews_start_text_html,
+        reviews_start_2_text_html, review_images_text_html, review_images_content;
+        de/fr echt uebersetzt). settings_data.json: t1_text + t3_text (exakte
+        EN-Defaults) geleert; t2_text ("+149") + content ("Recommended") sind
+        abgewandelt -> unangetastet gelassen (strenge Scoping-Regel). Live-Test.
+- [~] Slideshow 1 → "Rating Text": leer -> Shop-Sprache.
+      → slideshow-1.liquid:1148 {% if blank %} -> | t 'general.defaults.rating_text';
+        NEUER Key in allen 10 Locales ("Trusted by thousands." + Uebersetzungen).
+        Template-Werte NICHT geleert (teils echte Zahlen wie "5.0"). Live-Test.
+- [~] Footer → Menu-Block "Menu Title": leer -> statisch "Information" (alle Sprachen).
+      → footer.liquid: linklist.title-Zwischenstufe + uebersetzter Default entfernt;
+        override leer => hartkodiert "Information" (User-Entscheidung). Live-Test.
+
 ---
 
 ### Reihenfolge / Notizen

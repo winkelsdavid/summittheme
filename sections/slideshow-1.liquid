@@ -1145,7 +1145,7 @@ margin-right:auto;
                           </svg>
                         {% endfor %}
                       </div>
-                  <p>{{ block.settings.rating_text }}</p>
+                  <p>{% if block.settings.rating_text != blank %}{{ block.settings.rating_text }}{% else %}{{ 'general.defaults.rating_text' | t }}{% endif %}</p>
                 </div>
                 </div>
                 {% endif %}
