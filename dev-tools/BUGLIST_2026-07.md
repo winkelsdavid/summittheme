@@ -281,6 +281,14 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         hellem Feld). Icons erben currentColor. Schema-Label -> "Text Color"
         (id color_pass unveraendert = kein Wertverlust). Live-Test: Textfarbe
         aendern, alle Bereiche pruefen; ABONNIEREN-Button + Passwortfeld lesbar.
+      → Runde 2 (User: Headings blieben rot): Theme malt ALLE h1-h6/.h1-.h6 per
+        Gradient-Clip (theme.css ~3284: background:var(--g-color-heading) +
+        background-clip:text + -webkit-text-fill-color:transparent) - Glyphen
+        sind transparent, color ist dort wirkungslos. Fix: -webkit-text-fill-
+        color:var(--g-pass)!important in derselben Regel -> opake Fuellung
+        uebermalt den Clip, Headings folgen jetzt ebenfalls der Text Color.
+        Live-Test: Shopname, Heading, "We will launch soon.", "Spread the word"
+        muessen alle mitgehen.
 
 ## 25. Product-Card-Icons werden beim Hovern weiss (theme-weit)
 - [~] Warenkorb/Schnellkauf/Wishlist/Compare-Icons auf den Produktkarten sprangen
