@@ -333,6 +333,23 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         Live-Test: Toggle an/aus, Page Background aendern, Fonts pruefen
         (Scratch- UND Regular-Modus).
 
+## 27. Slideshow 1+2: Bild verschwindet bei deaktiviertem Video-Toggle + Resttext
+- [~] Enable Video AUS + Text im "Video"-Feld (video_hosted) -> Slide leer statt
+      Bild. Ursache: if/elsif-Kette waehlte den Branch allein nach FELD-INHALT;
+      der Toggle wurde erst INNERHALB des video_hosted-Branches geprueft ->
+      Branch verbraucht, Bild-Branch nie erreicht. Zudem ignorierte der
+      Video-Picker-Branch (block.settings.video) den Toggle komplett.
+      → Fix: enable_video in BEIDE Branch-Bedingungen gezogen
+        ({% if enable_video and video != blank %} / {% elsif enable_video and
+        video_hosted != blank %}); inneres if/endif entfernt. Toggle aus =>
+        immer Bild, egal was in den Video-Feldern steht; Toggle gilt jetzt
+        auch fuer den Picker. Slideshow 2 (gleiche Weiche, hatte gar keinen
+        Toggle): enable_video-Checkbox ergaenzt mit default TRUE (update-
+        sicher: Bestands-Slides mit Video spielen weiter). Nebenbei: autoplay-
+        Attribut im Picker-Branch nutzte unzugewiesene Variable -> normalisiert.
+        Live-Test: Toggle aus + Text im Feld -> Bild erscheint; Toggle an +
+        Video -> Video; Slideshow 2 gleiches Verhalten.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

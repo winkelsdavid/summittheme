@@ -713,20 +713,24 @@ padding-top:4px!important;
             {% if block.settings.blurry_transition %}
               <div class="slideshow_blurry" style="background:linear-gradient(360deg, {{ block.settings.blurry_color }}, #ffffff00)"></div>
             {% endif %}
-              {% if block.settings.video != blank %}
+              {%- comment -%} enable_video in den BRANCH-Bedingungen (wie
+                  slideshow-1): Toggle aus => immer Bild, egal was in den
+                  Video-Feldern steht. Default true = update-sicher fuer
+                  Bestands-Slides mit Video. {%- endcomment -%}
+              {% if block.settings.enable_video and block.settings.video != blank %}
                 <div class="slideshow__image box ratio-container lazyload js{%- unless forloop.first -%} lazypreload{%- endunless -%}">
                 {% for source in block.settings.video.sources %}
-                  {% if source.url contains 'mp4' %}       
+                  {% if source.url contains 'mp4' %}
                     {% assign source_url = source.url %}
                   {% endif %}
                 {% endfor %}
                   <div class="video-slideshow" data-provider="hosted" data-video-id="{{ block.settings.video.id }}">
-                    <video playsinline="playsinline" autoplay="{{ autoplay }}" loop="loop" muted="muted" preload="metadata" {%  if block.settings.image != blank %}poster="{{ block.settings.image | image_url: width: 1920 }}"{% endif %}>
+                    <video playsinline="playsinline" autoplay="autoplay" loop="loop" muted="muted" preload="metadata" {%  if block.settings.image != blank %}poster="{{ block.settings.image | image_url: width: 1920 }}"{% endif %}>
                       <source src="{{ source_url }}" type="video/mp4">
                     </video>
                   </div>
                 </div>
-              {% elsif block.settings.video_hosted != blank %}
+              {% elsif block.settings.enable_video and block.settings.video_hosted != blank %}
                 <div class="slideshow__image box ratio-container lazyload js{%- unless forloop.first -%} lazypreload{%- endunless -%}">
                   {%- liquid
                       assign video = block.settings.video_hosted
@@ -1332,6 +1336,12 @@ padding-top:4px!important;
       "type": "slide",
       "name": "Image Slide",
       "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_video",
+          "label": "Enable Video",
+          "default": true
+        },
         {
           "type": "text",
           "id": "video_hosted",

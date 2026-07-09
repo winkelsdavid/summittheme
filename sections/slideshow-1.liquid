@@ -796,19 +796,23 @@ margin-right:auto;
         </style>
         <div class="slideshow__overlay slideshow__overlay-{{ block.id }} {% if gradient %} gradient_overlay-{{block.id}} {% endif %}"></div>
         {%- endif -%}
-        {% if block.settings.video != blank %}
+        {%- comment -%} enable_video gehoert in die BRANCH-Bedingungen: vorher
+            waehlte die Kette den Branch allein nach Feld-Inhalt - Toggle aus +
+            Text im "Video"-Feld verbrauchte das elsif und der Bild-Branch wurde
+            nie erreicht (leerer Slide). Toggle aus => immer Bild; der Picker-
+            Branch ignorierte den Toggle zudem komplett. {%- endcomment -%}
+        {% if block.settings.enable_video and block.settings.video != blank %}
              {% for source in block.settings.video.sources %}
-                  {% if source.url contains 'mp4' %}       
+                  {% if source.url contains 'mp4' %}
                     {% assign source_url = source.url %}
                   {% endif %}
                 {% endfor %}
                   <div class="video-slideshow" data-provider="hosted" data-video-id="{{ block.settings.video.id }}">
-                  <video playsinline="playsinline" autoplay="{{ autoplay }}" loop="loop" muted="muted" preload="metadata" {%  if block.settings.image != blank %}poster="{{ block.settings.image | image_url: width: 1920 }}"{% endif %}>
+                  <video playsinline="playsinline" autoplay="autoplay" loop="loop" muted="muted" preload="metadata" {%  if block.settings.image != blank %}poster="{{ block.settings.image | image_url: width: 1920 }}"{% endif %}>
                     <source src="{{ source_url }}" type="video/mp4">
                   </video>
                   </div>
-         {% elsif block.settings.video_hosted != blank %}
-        {% if block.settings.enable_video %}
+         {% elsif block.settings.enable_video and block.settings.video_hosted != blank %}
           {%- liquid
             assign video = block.settings.video_hosted
             assign autoplay = true
@@ -819,7 +823,6 @@ margin-right:auto;
               <source src="{{ video }}" type="video/mp4">
             </video>
           </div>
-          {% endif %}
         {%- elsif block.settings.image == blank and block.settings.image_mobile == blank -%}
         {%- capture b1_fb -%}{% render 'brand-image', handle: 'slideshow-1--slide', position: forloop.index, width: 1920, class: 'scale-in lazyloaded' %}{%- endcapture -%}
         {%- if b1_fb != blank -%}
