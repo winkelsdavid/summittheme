@@ -146,6 +146,16 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       → footer.liquid: linklist.title-Zwischenstufe + uebersetzter Default entfernt;
         override leer => hartkodiert "Information" (User-Entscheidung). Live-Test.
 
+## 18. Produktmedien: Video-Anzeigeformat folgt "Image Ratio"
+- [~] Bei gemischter Galerie (Fotos + Videos) soll das Video immer der "Image Ratio"
+      (image_size: auto/portrait/square) folgen, nicht seinem eigenen Video-Format.
+      → Ursache: Video-<deferred-media> setzte padding-top aus media.aspect_ratio
+        (eigenes Format); im 'Adapt To Image'-Modus wich es damit von den Fotos ab.
+        Fix (product-media.liquid): video_pt an image_size gekoppelt - square->100%,
+        portrait->120%, auto->Ratio des ersten Produktbildes (product.images.first);
+        3 Video-Container nutzen video_pt; Scoped-CSS object-fit:cover fuellt die Box.
+        Thumbnails unveraendert (eigene image_size-Klassen). Live-Test.
+
 ---
 
 ### Reihenfolge / Notizen

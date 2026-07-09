@@ -173,11 +173,34 @@
          img ist global absolute + object-fit:cover, nur die Ratio-Box aufheben). */
       .product-single__thumbnails.thumbs-fill-vertical .product-single__thumbnail { height: 100%; }
       .product-single__thumbnails.thumbs-fill-vertical .image-wrap { height: 100%; padding-top: 0 !important; }
+      /* Video-Medien: Anzeigeformat folgt der Image-Ratio (Box via padding-top oben);
+         Inhalt fuellt die Box formatfuellend wie die Bilder - auch im 'Adapt To Image'-Modus. */
+      .product__photo-container-{{ section.id }} .deferred-media{ overflow:hidden; }
+      .product__photo-container-{{ section.id }} .deferred-media video,
+      .product__photo-container-{{ section.id }} .deferred-media iframe,
+      .product__photo-container-{{ section.id }} .deferred-media__poster img{
+        width:100%; height:100%; object-fit:cover;
+      }
     </style>
 <div class="photos {{ layout_style }}">
     <div class="photos__item photos__item--main" data-aos="fade">
       <div class="my-gallery gallery-wrap{{ section.id }} mb-0" itemscope itemtype="http://schema.org/ImageGallery">
-        
+        {%- comment -%} Video-Anzeigeformat an "Image Ratio" (image_size) koppeln:
+            square/portrait -> feste Box; 'auto' (Adapt To Image) -> Ratio des ersten
+            Produktbildes, damit Videos im gemischten Galerie-Slider zu den Fotos passen. {%- endcomment -%}
+        {%- liquid
+          assign ratio_ref = product.images.first.aspect_ratio
+          if ratio_ref == blank or ratio_ref == 0
+            assign ratio_ref = 1
+          endif
+          if image_size == 'square'
+            assign video_pt = 100
+          elsif image_size == 'portrait'
+            assign video_pt = 120
+          else
+            assign video_pt = 1 | divided_by: ratio_ref | times: 100
+          endif
+        -%}
         {%- for media in product.media -%}
         {%- liquid
           assign image = media
@@ -251,7 +274,7 @@
                 data-videoid="{{ image.id }}">
                 <div itemprop="contentUrl" >
                 {% unless section.settings.play_auto %}
-                <deferred-media class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
+                <deferred-media class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ video_pt }}%" data-media-id="{{ media.id }}">
                   <button id="Deferred-Poster-Modal-{{ media.id }}" class="deferred-media__poster" type="button">
                     <span class="deferred-media__poster-button motion-reduce">
                         {%- render 'icon-play' -%}
@@ -276,7 +299,7 @@
                   </template>
                 </deferred-media>
                 {% else %}
-                <div class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
+                <div class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ video_pt }}%" data-media-id="{{ media.id }}">
                 {{ media | media_tag: image_size: "2048x", autoplay: true, loop: loop, controls: false, preload: "none" }}
                 </div>
                 {% endunless %}
@@ -288,7 +311,7 @@
                 data-image-id="{{ image.id }}"
                 data-videoid="{{ image.id }}">
                 <div itemprop="contentUrl" >
-                  <deferred-media class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%" data-media-id="{{ media.id }}">
+                  <deferred-media class="deferred-media media global-media-settings global-media-settings--no-shadow {{ image_size }}" style="padding-top: {{ video_pt }}%" data-media-id="{{ media.id }}">
                     <button id="Deferred-Poster-Modal-{{ media.id }}" class="deferred-media__poster" type="button">
                       <span class="deferred-media__poster-button motion-reduce">
                           {%- render 'icon-play' -%}
