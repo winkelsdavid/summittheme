@@ -173,6 +173,23 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Gleiche Klassen in rating-custom.liquid UND product-template-1 -> beide gedeckt.
       Live-Test: de mobil Review-Badges 1-3, Sticky Bar, Testimonials.
 
+## 20. Slideshow 1+2: Pfeile trotz "Enable Arrow" unsichtbar
+- [~] Ursache: Positionierung (absolute/top/z-index) kam frueher aus der Slick-CSS
+      (.slick-arrow); nach der Swiper-Migration (Track B) tragen die Buttons nur
+      noch .slideshow__arrow -> lagen unsichtbar unter den Slides.
+      → Fix b30e7be: Positionierungs-Basis in BEIDEN Slideshow-Sections ergaenzt
+        (position:absolute, top:50%, z-index:10, flex-zentriert, button-reset);
+        swiper-button-lock (1 Slide) versteckt, -disabled gedimmt. Skin (50px rund,
+        Color/Background/Opacity-Arrow-Settings) unveraendert. Mobil <992px bleiben
+        Pfeile designgemaess aus (Dots/Swipe). Live-Test.
+
+## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
+- [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
+      beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
+      Hinweistext "You can choose between two slideshow layouts..." fuer die
+      Nicht-Sticky-Instanz (Vorlage), Sticky-Instanz behaelt ihn. Hintergrund:
+      Schema-Paragraph gilt pro Section-TYP, pro Instanz nicht steuerbar.
+
 ---
 
 ### Reihenfolge / Notizen
