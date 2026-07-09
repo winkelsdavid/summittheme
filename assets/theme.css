@@ -4596,6 +4596,17 @@ p a:not(.button):focus,
   align-items: center;
   justify-content: center;
 }
+/* Icons der Karten-Overlay-Buttons (Warenkorb/Quickview/Wishlist/Compare)
+   bleiben beim Hovern statisch in Heading-Farbe. Die globale Regel
+   .btn-theme:hover (Setting "Button Text Hover" -> --g-btn-hover-color)
+   faerbte sie sonst fast-weiss auf weissem Kreis = unsichtbar. !important
+   haelt auch gegen die hover_2/hover_3-Animationsvarianten; Style-5-
+   "Button Box"-Regeln gewinnen weiter (hoehere Spezifitaet + !important).
+   (Sync mit theme.css.liquid - die wird als gerendertes theme.css serviert.) */
+.product-card__overlay-btn:hover,
+.product-card__overlay-btn:focus {
+  color: rgba(var(--g-color-heading-rgb), 1) !important;
+}
 .product-card__overlay-btn svg {
   fill: none;
   width: 20px;

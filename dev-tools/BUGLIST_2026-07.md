@@ -282,6 +282,23 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         (id color_pass unveraendert = kein Wertverlust). Live-Test: Textfarbe
         aendern, alle Bereiche pruefen; ABONNIEREN-Button + Passwortfeld lesbar.
 
+## 25. Product-Card-Icons werden beim Hovern weiss (theme-weit)
+- [~] Warenkorb/Schnellkauf/Wishlist/Compare-Icons auf den Produktkarten sprangen
+      beim Hovern auf "Button Text Hover" (#fff2f4, fast weiss) -> unsichtbar auf
+      weissem Kreis. Sollen statisch schwarz (Heading-Farbe) bleiben.
+      → Ursache: Icon-Buttons tragen .btn-theme -> globale Regel .btn-theme:hover
+        {color:var(--g-btn-hover-color)} (theme.css.liquid:2297, fuer echte
+        Text-Buttons gedacht) schlaegt .product-card__overlay-btn (Spezifitaet).
+        Betroffen: 41 Buttons in product-card.liquid (alle Hover-Styles 1-11) +
+        collection-blank + swatch-grid-2, sichtbar an ~20 Renderstellen.
+      → Fix: .product-card__overlay-btn:hover/:focus pinnt color auf
+        rgba(--g-color-heading-rgb) !important - in BEIDEN Dateien (theme.css +
+        theme.css.liquid). Haelt auch gegen hover_2/hover_3-Animationen; globale
+        Text-Button-Hover-Regel unangetastet; Style-5 "Button Box" gewinnt weiter
+        (hoehere Spezifitaet). Wishlist-Aktiv-Zustand geprueft: existiert nicht,
+        keine Nebenwirkung. Live-Test: Karten-Icons hovern (Collection/Listen/
+        Megamenu) -> Icon bleibt schwarz; Produktseiten-CTA hovert weiter normal.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
