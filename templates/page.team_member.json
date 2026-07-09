@@ -15,7 +15,6 @@
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2": {
           "type": "member",
           "settings": {
-            "image": "shopify://shop_images/n_43e12efd-7fcf-4df1-b360-3164ba767c31.jpg",
             "name": "Michella Ore",
             "position": "Developer",
             "twitter": "https://twitter.com/",
@@ -27,7 +26,6 @@
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-1": {
           "type": "member",
           "settings": {
-            "image": "shopify://shop_images/nnn_94840389-8e9b-49c4-a188-3a48f0ccda65.jpg",
             "name": "Vera Duncan",
             "position": "Producer",
             "twitter": "https://twitter.com/",
@@ -39,7 +37,6 @@
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-0": {
           "type": "member",
           "settings": {
-            "image": "shopify://shop_images/nn_e202044b-0db6-4a94-9174-76155bf7f65a.jpg",
             "name": "Abdul Khalek",
             "position": "CEO & Founder",
             "twitter": "https://twitter.com/",
@@ -59,37 +56,33 @@
             "facebook": "#",
             "linkedin": "#"
           }
-        },
-        "f919b4ce-0fea-4c28-abf7-e08700202918": {
-          "type": "member",
-          "disabled": true,
-          "settings": {
-            "name": "Slava Fedutik",
-            "position": "Designer",
-            "twitter": "#",
-            "google": "#",
-            "facebook": "#",
-            "linkedin": "#"
-          }
         }
       },
       "block_order": [
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-2",
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-1",
         "template--16716887458110__abb14abe-2a33-4a6b-aaa1-d36d5422d78d-1666689151286d1fe7-0",
-        "ef393f42-f5c0-45d5-a2a1-4b393bd9d289",
-        "f919b4ce-0fea-4c28-abf7-e08700202918"
+        "ef393f42-f5c0-45d5-a2a1-4b393bd9d289"
       ],
       "settings": {
         "animation": "fade",
         "section_width": "container",
         "background_section": "#ffffff",
         "subtitle_top": "Top Team",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
         "title": "Team Of Highly",
         "description": "",
         "align_heading": "center",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
         "items": "3",
-        "layout": "2"
+        "layout": "4",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
       }
     }
   },
