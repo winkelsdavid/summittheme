@@ -1910,9 +1910,12 @@ display:none;
                             padding-right:0;
                             text-align:left;
                             font-size:12px;
-                            line-height:1.4;
+                            line-height:1.2;
                             opacity:.75;
-                            margin-top:2px;
+                            /* Naeher an die Preiszeile ziehen - der sichtbare Abstand
+                               entsteht durch die hoeheren Badge-Pills; negatives
+                               margin holt den Disclaimer ~80% naeher an den Preis. */
+                            margin-top:-8px;
                           }
                           @media (max-width:768px){
                             .small--text-center .price-{{ section.id }} .product-single__tax-disclaimer{
