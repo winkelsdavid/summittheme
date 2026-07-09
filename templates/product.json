@@ -171,8 +171,8 @@
             "background": "linear-gradient(136deg, rgba(246, 212, 217, 1) 11%, rgba(246, 212, 217, 1) 81%)",
             "color": "#200e10",
             "icon_size": 52,
-            "title": "Summer Sale!",
-            "subtitle": "Special offer ends in",
+            "title": "",
+            "subtitle": "",
             "spacing_top": 0,
             "spacing_bottom": 20
           }
