@@ -212,10 +212,11 @@
 
     <div class="scnl__content">
       {%- if s.show_logo -%}
-        {%- comment -%} Shop-Logo ueber die B1-Kette (Metaobject-Slot 2 ->
-            shop.brand.logo aus dem Admin); Text-Fallback shop.name, wenn
-            nirgends ein Logo hinterlegt ist. {%- endcomment -%}
-        {%- capture scnl_logo -%}{% render 'brand-image', handle: 'scratch-newsletter', slot: 2, logo_fallback: true, width: 300, alt: shop.name %}{%- endcapture -%}
+        {%- comment -%} Logo-Kette: 1. Upload aus den Section-Settings
+            (logo_image) -> 2. B1-Metaobject-Slot 2 -> 3. shop.brand.logo
+            (Admin -> Einstellungen -> Marke). Text-Fallback shop.name,
+            wenn nirgends ein Logo hinterlegt ist. {%- endcomment -%}
+        {%- capture scnl_logo -%}{% render 'brand-image', instance: s.logo_image, handle: 'scratch-newsletter', slot: 2, logo_fallback: true, width: 300, alt: shop.name %}{%- endcapture -%}
         <div class="scnl__logo">{%- if scnl_logo != blank -%}{{ scnl_logo }}{%- else -%}{{ shop.name }}{%- endif -%}</div>
       {%- endif -%}
 
@@ -791,7 +792,8 @@
     },
     { "type": "range", "id": "reveal_threshold", "label": "Auto-reveal threshold", "info": "Scratched area at which the remaining foil fades away.", "min": 30, "max": 85, "step": 5, "unit": "%", "default": 55 },
     { "type": "image_picker", "id": "popup_image", "label": "Popup image" },
-    { "type": "checkbox", "id": "show_logo", "label": "Show shop logo", "info": "Shows the logo from your Shopify brand settings.", "default": true },
+    { "type": "checkbox", "id": "show_logo", "label": "Show shop logo", "default": true },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo image", "info": "Optional override. When empty, the logo from your Shopify brand settings (Settings → Brand) is used." },
 
     { "type": "header", "content": "Step 1 — Scratch card" },
     { "type": "text", "id": "scratch_heading", "label": "Heading", "default": "TRY YOUR LUCK" },

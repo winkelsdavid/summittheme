@@ -316,11 +316,12 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         Megamenu) -> Icon bleibt schwarz; Produktseiten-CTA hovert weiter normal.
 
 ## 26. Scratch Newsletter Popup: Logo-Toggle + Theme-Verknuepfung (User 2026-07-10)
-- [~] 1. "Logo text"-Setting entfernt -> Checkbox "Show shop logo" (default an).
-        Logo-Quelle = B1-Kette: brand-image (handle scratch-newsletter, Slot 2,
-        logo_fallback) -> Metaobject -> shop.brand.logo (Admin-Markeneinstellungen);
-        Text-Fallback shop.name wenn nirgends ein Logo existiert. CSS fuer
-        Logo-Bild ergaenzt (max-height 32px). Verwaister logo_text-Wert aus
+- [~] 1. "Logo text"-Setting entfernt -> Checkbox "Show shop logo" (default an)
+        + image_picker "Logo image" als Override (User-Nachtrag 2026-07-10).
+        Logo-Kette: Upload (logo_image) -> B1-Metaobject-Slot 2 ->
+        shop.brand.logo (Admin -> Einstellungen -> Marke); Text-Fallback
+        shop.name wenn nirgends ein Logo existiert. CSS fuer Logo-Bild
+        ergaenzt (max-height 32px). Verwaister logo_text-Wert aus
         settings_data.json entfernt.
      2. Popup-Hintergrund an Theme Settings -> Page -> "Page Background"
         gekoppelt: .scnl__box background: var(--color-body, #F5F2EB).
