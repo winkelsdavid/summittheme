@@ -59,13 +59,17 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         Vom User BESTÄTIGT (2026-07-08). ✔
 
 ## 8. Product Overview → Show Tax Disclaimer
-- [~] Text muss direkt UNTER dem Preis stehen, nicht daneben — Desktop + Mobile.
-      → 1. Versuch (flex:0 0 100% als <li> in der Preis-ul) griff live NICHT:
-        blieb inline neben dem Preis, verschwand mobil komplett (User 2026-07-09).
-      → 2. Fix: Disclaimer aus der list--inline <ul> herausgeloest und als eigenes
-        Block-<div> (.tax-disclaimer-{{ section.id }}) direkt UNTER die ul
-        gerendert (product-template-1.liquid). Garantiert eigene Zeile Desktop +
-        Mobile, unabhaengig vom inline-list/flex-Verhalten. Wartet auf Live-Test.
+- [~] Text muss direkt UNTER dem Preis stehen, INNERHALB der Price-Box, minimaler Abstand.
+      → Root Cause gefunden: .product-single__meta-price ist display:flex mit
+        flex-wrap:nowrap (product-template.css:174). Darum blieb das <li> trotz
+        display:block/flex:0 0 100% inline neben dem Preis; mobil lief die Zeile
+        ueber und verschwand.
+      → Zwischenschritt (Block-<div> AUSSERHALB der ul) landete auf eigener Zeile,
+        aber ausserhalb der blauen Box - vom User verworfen ("muss in der Box bleiben").
+      → Finaler Fix: <li> zurueck in die Preis-ul; .price-{{ section.id }} bekommt
+        flex-wrap:wrap, der Disclaimer-<li> flex:0 0 100% + display:block. Ergebnis:
+        eigene Zeile direkt unter dem Preis INNERHALB der Box, mobil sichtbar,
+        margin-top:2px (product-template-1.liquid). Wartet auf Live-Test.
 
 ## 9. Progress Bars: "Progress"-Option
 - [~] Die "Progress"-Option wird nicht angezeigt.
