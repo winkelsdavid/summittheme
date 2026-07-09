@@ -260,6 +260,34 @@
 .swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn{
   transition-delay: .5s;
 }
+/* .slide-shown Zwillings-Selektoren: JS (theme.js _syncShown) setzt die Klasse auf
+   Original UND Loop-Duplikat gleichzeitig, damit die Text-Animation den instant
+   loopFix-Wechsel (Swiper 6) nahtlos ueberlebt statt sichtbar neu zu starten. */
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__toptitle,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__title,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__subtitle,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__info,
+.swiper-initialized .slide-shown .slideshow__text-content .slideshow__btn{
+  transform: translateX(0);
+  transition: transform 0.7s cubic-bezier(.29,.63,.44,1) , opacity 0.7s cubic-bezier(.29,.63,.44,1);
+  transition-delay: .1s;
+  opacity: 1;
+}
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__toptitle{
+  transition-delay: .2s;
+}
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__title{
+  transition-delay: .3s;
+}
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__subtitle{
+  transition-delay: .4s;
+}
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__info{
+  transition-delay: .45s;
+}
+.swiper-initialized .slide-shown .slideshow__text-content .slideshow__btn{
+  transition-delay: .5s;
+}
 .no-js .slideshow__text-content.slideshow__text-content--vertical-center,.swiper-initialized .swiper-slide-active .slideshow__text-content.slideshow__text-content--vertical-center {
   /* -ms-transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
@@ -441,6 +469,8 @@ padding-top:4px!important;
       padding: 0;
       margin: 0;
       cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
     }
     .slideshow .slideshow__arrow.swiper-button-lock {
       display: none;
@@ -448,6 +478,30 @@ padding-top:4px!important;
     .slideshow .slideshow__arrow.swiper-button-disabled {
       opacity: .35;
       cursor: default;
+    }
+    /* Icon = Icomoon-Glyphe wie vor der Vanilla-Migration (Slick :before \e903/\e904)
+       inkl. animateIcon-Hover (Keyframes global in theme.css). Farbe erbt vom Button
+       (Setting "Color Arrow"). */
+    .slideshow .slideshow__arrow:before {
+      font-family: icomoon !important;
+      font-size: 16px;
+      line-height: 1;
+      opacity: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: inline-block;
+    }
+    .slideshow .slideshow__arrow--prev:before {
+      content: "\e903";
+    }
+    .slideshow .slideshow__arrow--next:before {
+      content: "\e904";
+    }
+    .slideshow .slideshow__arrow--prev:hover:before {
+      animation: 0.4s ease-in-out reverse forwards animateIcon;
+    }
+    .slideshow .slideshow__arrow--next:hover:before {
+      animation: 0.4s ease-in-out forwards animateIcon;
     }
     .slideshow .swiper-pagination-bullet{
       border-color:{{ section.settings.color_dot_nav }};

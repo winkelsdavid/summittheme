@@ -181,7 +181,29 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         (position:absolute, top:50%, z-index:10, flex-zentriert, button-reset);
         swiper-button-lock (1 Slide) versteckt, -disabled gedimmt. Skin (50px rund,
         Color/Background/Opacity-Arrow-Settings) unveraendert. Mobil <992px bleiben
-        Pfeile designgemaess aus (Dots/Swipe). Live-Test.
+        Pfeile designgemaess aus (Dots/Swipe).
+      → Nachtrag (User-Feedback + Referenz-Theme summitfin_vorvanilla_x):
+        1. Falsche Icons: generische SVG-Chevrons ersetzt durch Icomoon-Glyphen
+           \e903/\e904 (= icon-arrow-left/right, die "smoothen" Theme-Pfeile) via
+           :before wie vor der Migration, inkl. animateIcon-Hover (Keyframes
+           existieren in theme.css + theme.css.liquid; Font laedt via font-icon.liquid).
+        2. Pfeile nur bei >1 Slide: JS-Guard in theme.js (slides.length > 1),
+           navigation nur wenn Buttons existieren.
+        Live-Test.
+
+## 20b. Slideshow: Transition-Animationen (Zoom/Slide&Fade) nicht wie vor Vanilla
+- [~] Ursache 1: Swiper 6 Loop-Modus dupliziert Slides; nach dem Loop-Wrap springt
+      loopFix instant vom Duplikat aufs Original -> dessen an .swiper-slide-active
+      haengende CSS-Animation (Zoom scale 1.2->1, Slide-Fade translateX) startet
+      sichtbar NEU (Ruck bei jedem Wrap; bei 2 Slides jede 2. Transition).
+      Ursache 2: Swiper speed 800ms statt Slick-Default 300ms -> traeger.
+      → Fix: theme.js _syncShown setzt Klasse 'slide-shown' auf Original UND
+        Duplikat gleichzeitig (via data-swiper-slide-index == realIndex); CSS-
+        Animationen um .slide-shown-Zwillinge ergaenzt (slideshow-1: zoom +
+        slide-fade; slideshow-2: Text-Reveal mit aktiven 0.7s-Transitions).
+        Bestehende .swiper-slide-active-Selektoren bleiben als Fallback.
+        speed 800 -> 300 (Slick-Default). Live-Test: Zoom + Slide&Fade mit
+        2+ Slides mehrere Durchlaeufe (gerade der Wrap zurueck zu Slide 1).
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer

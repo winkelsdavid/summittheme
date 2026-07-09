@@ -2525,11 +2525,8 @@ theme.Slideshow = (function () {
     textContentMobile: ".slideshow__text-content--mobile",
   };
 
-  // Inline chevrons so the arrows don't depend on the old Slick icon font.
-  var ARROW_PREV =
-    '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
-  var ARROW_NEXT =
-    '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+  // Kein Inline-SVG: das Pfeil-Icon kommt wie vor der Vanilla-Migration aus der
+  // Icomoon-Font (Section-CSS :before, \e903/\e904) inkl. animateIcon-Hover.
 
   function slideshow(el, sectionId) {
     var self = this;
@@ -2576,17 +2573,17 @@ theme.Slideshow = (function () {
 
     var prevEl = null,
       nextEl = null;
-    if (this.navArrow) {
+    // Pfeile nur bei mehr als einem Slide - bei einem einzigen Slide gibt es
+    // nichts zu blaettern (Slick versteckte sie damals selbst).
+    if (this.navArrow && slides.length > 1) {
       prevEl = document.createElement("button");
       prevEl.type = "button";
       prevEl.className = "slideshow__arrow slideshow__arrow--prev";
       prevEl.setAttribute("aria-label", "Previous slide");
-      prevEl.innerHTML = ARROW_PREV;
       nextEl = document.createElement("button");
       nextEl.type = "button";
       nextEl.className = "slideshow__arrow slideshow__arrow--next";
       nextEl.setAttribute("aria-label", "Next slide");
-      nextEl.innerHTML = ARROW_NEXT;
       node.appendChild(prevEl);
       node.appendChild(nextEl);
     }
@@ -2604,23 +2601,25 @@ theme.Slideshow = (function () {
       effect: useFade ? "fade" : "slide",
       fadeEffect: { crossFade: true },
       loop: slides.length > 1,
-      speed: 800,
+      speed: 300, // Slick-Default (300ms) - 800 fuehlte sich traeger an als vor der Migration
       threshold: 20,
       watchSlidesProgress: true,
       a11y: { enabled: false }, // Slick had accessibility:false; aria-current handled manually below
       autoplay: this.autorotate
         ? { delay: autoplaySpeed, disableOnInteraction: false }
         : false,
-      navigation: this.navArrow ? { nextEl: nextEl, prevEl: prevEl } : false,
+      navigation: prevEl ? { nextEl: nextEl, prevEl: prevEl } : false,
       pagination: this.navDot ? { el: pagiEl, clickable: true } : false,
       on: {
         init: function () {
           self.showMobileText(0);
           self._syncAria(0);
+          self._syncShown(this);
         },
         slideChange: function () {
           self.showMobileText(this.realIndex);
           self._syncAria(this.realIndex);
+          self._syncShown(this);
         },
         slideChangeTransitionStart: function () {
           // slide-fade: mark the OUTGOING slide so its image animates out (CSS .slick-going).
@@ -2659,6 +2658,24 @@ theme.Slideshow = (function () {
       }
     }
   }
+
+  // Haelt 'slide-shown' auf Original UND Loop-Duplikat synchron (gleicher
+  // realIndex). Grund: Swiper 6 springt nach dem Loop-Wrap instant vom
+  // Duplikat aufs Original (loopFix) - haengt eine CSS-Animation an
+  // .swiper-slide-active, startet sie dabei sichtbar neu (Zoom-Ruck).
+  // Beide Zwillinge bekommen die Klasse im selben Moment -> ihre
+  // Transitions laufen parallel, der Wechsel ist nahtlos.
+  slideshow.prototype._syncShown = function (sw) {
+    if (!sw || !sw.slides) return;
+    var real = sw.realIndex || 0;
+    for (var i = 0; i < sw.slides.length; i++) {
+      var s = sw.slides[i];
+      if (!s || !s.classList) continue;
+      var di = s.getAttribute("data-swiper-slide-index");
+      var idx = di === null ? i : parseInt(di, 10);
+      s.classList.toggle("slide-shown", idx === real);
+    }
+  };
 
   slideshow.prototype.setSlideshowHeight = function () {
     var minAspectRatio = theme.dataAttr(this.node, "min-aspect-ratio");

@@ -436,6 +436,8 @@ margin-right:auto;
   padding: 0;
   margin: 0;
   cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 .slideshow .slideshow__arrow.swiper-button-lock {
   display: none;
@@ -443,6 +445,30 @@ margin-right:auto;
 .slideshow .slideshow__arrow.swiper-button-disabled {
   opacity: .35;
   cursor: default;
+}
+/* Icon = Icomoon-Glyphe wie vor der Vanilla-Migration (Slick :before \e903/\e904)
+   inkl. animateIcon-Hover (Keyframes global in theme.css). Farbe erbt vom Button
+   (Setting "Color Arrow"). */
+.slideshow .slideshow__arrow:before {
+  font-family: icomoon !important;
+  font-size: 16px;
+  line-height: 1;
+  opacity: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+}
+.slideshow .slideshow__arrow--prev:before {
+  content: "\e903";
+}
+.slideshow .slideshow__arrow--next:before {
+  content: "\e904";
+}
+.slideshow .slideshow__arrow--prev:hover:before {
+  animation: 0.4s ease-in-out reverse forwards animateIcon;
+}
+.slideshow .slideshow__arrow--next:hover:before {
+  animation: 0.4s ease-in-out forwards animateIcon;
 }
 
 {%- if dot == 'square' -%}
@@ -533,7 +559,11 @@ margin-right:auto;
   transform: translateX(10vw);
   opacity: 0;
 }
-.slideshow[data-transit="slide-fade"] .slide.swiper-slide-active .slideshow__image{
+/* .slide-shown ergaenzend zu .swiper-slide-active: JS setzt sie auf Original UND
+   Loop-Duplikat gleichzeitig, damit die Animation den instant loopFix-Wechsel
+   (Swiper 6 Duplikate) nahtlos ueberlebt statt sichtbar neu zu starten. */
+.slideshow[data-transit="slide-fade"] .slide.swiper-slide-active .slideshow__image,
+.slideshow[data-transit="slide-fade"] .slide.slide-shown .slideshow__image{
   transition: transform 0.6s ease, opacity 0.6s;
   opacity: 1;
   transform: translateX(0);
@@ -549,7 +579,8 @@ margin-right:auto;
   will-change: transform;
   transition: transform 1.8s cubic-bezier(0.21, 0.6, 0.35, 1);
 }
-.slideshow[data-transit="zoom"] .slide.swiper-slide-active .slideshow__image{
+.slideshow[data-transit="zoom"] .slide.swiper-slide-active .slideshow__image,
+.slideshow[data-transit="zoom"] .slide.slide-shown .slideshow__image{
   transform: scale(1);
 }
   .c_slideshow_rating_cont{
