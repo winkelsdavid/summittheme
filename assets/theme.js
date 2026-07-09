@@ -2649,6 +2649,12 @@ theme.Slideshow = (function () {
 
     this.swiper = window.Swiper ? new Swiper(node, opts) : null;
 
+    // Fail-safe ohne Swiper: Slide 1 bekommt die Aktiv-Klasse von Hand, damit
+    // daran gegatete Inhalte (Content-Fade der Texte) sichtbar werden.
+    if (!this.swiper && slides.length) {
+      slides[0].classList.add("swiper-slide-active");
+    }
+
     // fade-Familie: manueller Endlos-Wrap wie Slicks infinite:true (ohne Klone).
     // Am Ende -> Slide 1, am Anfang -> letzter Slide; dazwischen normal weiter.
     if (useFade && this.swiper && prevEl) {

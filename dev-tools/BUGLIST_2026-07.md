@@ -223,6 +223,33 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         von selbst weiterspringen (ausser Auto-Rotate an); Zoom + Slide&Fade
         mehrere Durchlaeufe inkl. Wrap.
 
+## 22. Slideshow 1: Content-Fade-Animation (Feature, User-Spec 2026-07-09)
+- [~] ALLE Slide-Inhalte (Review-Badge "Reviews Type", Top Title, Heading,
+      Texte 1-3, Buttons, "Activate Review Badge"-Rating) blenden weich ein
+      (0.5s) - beim Laden der Sektion und bei jedem Slide-Wechsel. Bilder
+      behalten ihre "Transition". Der Fade startet erst NACHDEM die Loading
+      Animation (Theme Settings) vollstaendig fertig ist.
+      → Umsetzung:
+        1. slideshow-1.liquid: @keyframes slideshowContentFade; Container
+           .slideshow__text-content (traegt ALLE Inhalte) opacity:0 ->
+           Animation 0.5s ease both, wenn Slide aktiv (.swiper-slide-active/
+           .slide-shown) UND html:not(.loading-anim-wait). Mobile-Panel
+           (.slideshow__text-content--mobile, per display umgeschaltet):
+           Animation startet bei jedem Sichtbarwerden neu. Scoped per
+           data-section-id (Slideshow 2 unberuehrt). no-js-Fallback opacity:1.
+        2. loading_animation.liquid: setzt 'loading-anim-wait' auf <html>
+           beim PARSEN, entfernt sie erst nach vollstaendigem Ende der
+           jeweiligen Variante (V1: 1s Fade / V2: 2.5s / V3: 2s) + Event
+           'theme:loading:done' + 8s-Notausstieg. Snippet nicht gerendert
+           (deaktiviert/nicht Homepage) -> Klasse existiert nie -> Fade sofort.
+           NEBENBEI-FIX: Tippfehler 'fadout' -> Variante 1 poppte hart weg
+           statt 1s zu faden.
+        3. theme.js: Fail-safe ohne Swiper -> Slide 1 bekommt Aktiv-Klasse.
+        Gecheckt: AOS (keep-libs.js + header-oncss) faded das INNERE div
+        einmalig bei Load (once:true, endet bei opacity:1) - kollidiert nicht
+        mit dem Container-Fade. Live-Test: Load mit/ohne Loading Animation
+        (alle 3 Varianten), Slide-Wechsel Desktop + Mobile.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
