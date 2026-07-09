@@ -315,6 +315,22 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         keine Nebenwirkung. Live-Test: Karten-Icons hovern (Collection/Listen/
         Megamenu) -> Icon bleibt schwarz; Produktseiten-CTA hovert weiter normal.
 
+## 26. Scratch Newsletter Popup: Logo-Toggle + Theme-Verknuepfung (User 2026-07-10)
+- [~] 1. "Logo text"-Setting entfernt -> Checkbox "Show shop logo" (default an).
+        Logo-Quelle = B1-Kette: brand-image (handle scratch-newsletter, Slot 2,
+        logo_fallback) -> Metaobject -> shop.brand.logo (Admin-Markeneinstellungen);
+        Text-Fallback shop.name wenn nirgends ein Logo existiert. CSS fuer
+        Logo-Bild ergaenzt (max-height 32px). Verwaister logo_text-Wert aus
+        settings_data.json entfernt.
+     2. Popup-Hintergrund an Theme Settings -> Page -> "Page Background"
+        gekoppelt: .scnl__box background: var(--color-body, #F5F2EB).
+     3. Typography aus Theme Settings: Basis-Font -> var(--g-font-2) (Body),
+        Serif-Elemente (.scnl__serif, Logo-Text) -> var(--g-font-1) (Heading);
+        Inputs/Buttons erben (font-family:inherit). Hinweis: Der Text AUF der
+        Rubbelfolie ist Canvas-Grafik (kein CSS) und bleibt Helvetica.
+        Live-Test: Toggle an/aus, Page Background aendern, Fonts pruefen
+        (Scratch- UND Regular-Modus).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

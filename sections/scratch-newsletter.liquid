@@ -30,7 +30,8 @@
     justify-content: center;
     z-index: 1060;
     color: #14120F;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    /* Typography aus den Theme Settings: --g-font-2 = Body-Font (header-css) */
+    font-family: var(--g-font-2, 'Helvetica Neue', Helvetica, Arial, sans-serif);
     -webkit-font-smoothing: antialiased;
   }
   dialog.scnl[open] { display: flex; animation: scnlFadeIn 0.35s ease both; }
@@ -41,7 +42,9 @@
     width: min(1020px, 96vw);
     max-height: min(92vh, 780px);
     overflow: auto;
-    background: #F5F2EB;
+    /* Hintergrund an Theme Settings -> Page -> "Page Background"
+       (settings.color_body_bg -> --color-body) gekoppelt. */
+    background: var(--color-body, #F5F2EB);
     box-shadow: 0 40px 90px rgba(20, 18, 15, 0.22);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
@@ -76,15 +79,21 @@
   .scnl__logo {
     position: absolute;
     top: clamp(14px, 2.5vw, 22px); left: 50%; transform: translateX(-50%);
-    font-family: Marcellus, Georgia, serif;
+    /* Typography aus den Theme Settings: --g-font-1 = Heading-Font */
+    font-family: var(--g-font-1, Marcellus, Georgia, serif);
     font-size: 15px; letter-spacing: 6px; padding-left: 6px;
     color: #14120F;
+  }
+  .scnl__logo img {
+    display: block;
+    max-height: 32px;
+    width: auto;
   }
 
   .scnl__step { display: none; flex-direction: column; align-items: center; width: 100%; }
   .scnl__step.is-active { display: flex; animation: scnlFadeUp 0.5s ease both; }
 
-  .scnl__serif { font-family: Marcellus, Georgia, serif; font-weight: 400; }
+  .scnl__serif { font-family: var(--g-font-1, Marcellus, Georgia, serif); font-weight: 400; }
   .scnl__h-top { font-size: 20px; letter-spacing: 4px; padding-left: 4px; color: #8A8375; }
   .scnl__h-main { font-size: 30px; letter-spacing: 2px; padding-left: 2px; margin: 6px 0 26px; line-height: 1.25; }
   .scnl__sub { font-size: 12px; letter-spacing: 1px; color: #6E6759; }
@@ -202,8 +211,12 @@
     </div>
 
     <div class="scnl__content">
-      {%- if s.logo_text != blank -%}
-        <div class="scnl__logo">{{ s.logo_text }}</div>
+      {%- if s.show_logo -%}
+        {%- comment -%} Shop-Logo ueber die B1-Kette (Metaobject-Slot 2 ->
+            shop.brand.logo aus dem Admin); Text-Fallback shop.name, wenn
+            nirgends ein Logo hinterlegt ist. {%- endcomment -%}
+        {%- capture scnl_logo -%}{% render 'brand-image', handle: 'scratch-newsletter', slot: 2, logo_fallback: true, width: 300, alt: shop.name %}{%- endcapture -%}
+        <div class="scnl__logo">{%- if scnl_logo != blank -%}{{ scnl_logo }}{%- else -%}{{ shop.name }}{%- endif -%}</div>
       {%- endif -%}
 
       {%- unless is_regular -%}
@@ -778,7 +791,7 @@
     },
     { "type": "range", "id": "reveal_threshold", "label": "Auto-reveal threshold", "info": "Scratched area at which the remaining foil fades away.", "min": 30, "max": 85, "step": 5, "unit": "%", "default": 55 },
     { "type": "image_picker", "id": "popup_image", "label": "Popup image" },
-    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "JIMMY" },
+    { "type": "checkbox", "id": "show_logo", "label": "Show shop logo", "info": "Shows the logo from your Shopify brand settings.", "default": true },
 
     { "type": "header", "content": "Step 1 — Scratch card" },
     { "type": "text", "id": "scratch_heading", "label": "Heading", "default": "TRY YOUR LUCK" },
