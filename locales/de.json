@@ -47,24 +47,24 @@
     },
     "sticky_cart": {
       "stars_text": "Exzellent 4,8 | 129 Bewertungen",
-      "shipping_text" : "Bestelle jetzt und erhalte bis zum:"
+      "shipping_text": "Bestelle jetzt und erhalte bis zum:"
     },
     "cart": {
       "title_upsell": "Das könnte dir auch gefallen",
-        "coupon_code_title": "Kuponliste",
-        "coupon_first_label": "Kaufe für",
-        "coupon_last_label": "für kostenlosen Versand",
-        "coupon_free_delivery": "Deine Bestellung wird kostenlos geliefert!",
-        "shipping_title": "Versandkosten berechnen",
-        "shipping_country": "Vereinigte Staaten",
-        "shipping_submit": "Versand berechnen",
-        "shipping_calculating": "Wird berechnet…",
-        "reviews_title": "Schließe dich 10.000+ zufriedenen Kunden an",
-        "timer_title": "Wir können Deine Bestellung [time] Minuten reservieren",
-        "terms_before": "Ich stimme den",
-        "terms_after": "Allgemeinen Geschäftsbedingungen zu",
-        "countdown_title": "ANGEBOT ENDET IN"
-      },
+      "coupon_code_title": "Kuponliste",
+      "coupon_first_label": "Kaufe für",
+      "coupon_last_label": "für kostenlosen Versand",
+      "coupon_free_delivery": "Deine Bestellung wird kostenlos geliefert!",
+      "shipping_title": "Versandkosten berechnen",
+      "shipping_country": "Vereinigte Staaten",
+      "shipping_submit": "Versand berechnen",
+      "shipping_calculating": "Wird berechnet…",
+      "reviews_title": "Schließe dich 10.000+ zufriedenen Kunden an",
+      "timer_title": "Wir können Deine Bestellung [time] Minuten reservieren",
+      "terms_before": "Ich stimme den",
+      "terms_after": "Allgemeinen Geschäftsbedingungen zu",
+      "countdown_title": "ANGEBOT ENDET IN"
+    },
     "password_page": {
       "login_form_heading": "Betritt den Shop mit dem Passwort",
       "login_form_password_label": "Passwort",
@@ -73,7 +73,7 @@
       "signup_form_email_label": "Email",
       "signup_form_success": "Wir senden Dir kurz vor der Eröffnung eine E-Mail!",
       "admin_link_html": "Bist Du der Ladenbesitzer? <a href=\"/admin\" class=\"text-link\">Hier anmelden</a>",
-      "password_link": "Gib mit dem Passwort ein",
+      "password_link": "Mit Passwort eintreten",
       "powered_by_shopify_html": "Dieser Shop wird betrieben von {{ shopify }}"
     },
     "social": {
@@ -447,8 +447,8 @@
       "vendor": "Verkäufer",
       "type": "Typ",
       "delivery_label": "Jetzt bestellen für Lieferung bis:",
-      "free_shipping":"Kostenloser Versand",
-      "secure_checkout":"Sicherer Checkout",
+      "free_shipping": "Kostenloser Versand",
+      "secure_checkout": "Sicherer Checkout",
       "regular_price": "Regulärer Preis",
       "on_sale": "Verkauf",
       "on_sale_from_html": "Zum Verkauf ab {{ price }}",
