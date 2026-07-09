@@ -268,6 +268,20 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         [time] minutes"); der Merchant-Wert kann den Locale-Key ueberschreiben.
         Bei Live-Test pruefen welcher greift; ggf. Setting-Default nachziehen.
 
+## 24. Password Page: "Color" faerbt nicht alle Texte + Label umbenennen
+- [~] Setting "Color" (color_pass) soll ALLE Textfarben der Passwortseite steuern
+      (Header + Content + Footer + Login-Modal), nicht nur eine enge Element-Liste.
+      Label "Color" -> "Text Color".
+      → Fix (password-header.liquid): enge Regel (h1-h6,p,a,.text-white,...) ersetzt
+        durch .template-password-page *:not(.btn-white):not(.btn-theme):not(input)
+        {color:var(--g-pass)!important} + color:var(--g-pass) als Erbbasis auf
+        .template-password. Deckt span/li/div/label/Footer/Social-Labels/powered-by/
+        Modal-Text. Ausgeschlossen: gefuellte Buttons (btn-white/btn-theme behalten
+        Markenfarbe var(--g-btn-outline-color)) und Eingabefelder (Lesbarkeit auf
+        hellem Feld). Icons erben currentColor. Schema-Label -> "Text Color"
+        (id color_pass unveraendert = kein Wertverlust). Live-Test: Textfarbe
+        aendern, alle Bereiche pruefen; ABONNIEREN-Button + Passwortfeld lesbar.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
