@@ -22,10 +22,14 @@
   /* Gleiche Boxhoehen wie beim Product Tab: Swipers autoHeight setzt die
      Slides auf height:auto (jede Karte nur inhaltshoch), der Wrapper traegt
      aber die Hoehe des hoechsten Slides inline. height:inherit reicht sie
-     an den Slide weiter; .product-card (height:100%) fuellt ihn dann. */
+     an den Slide weiter; .product-card (height:100%) fuellt ihn dann.
+     Bei 2 Rows (Multirow, autoHeight aus) wuerde inherit beide Reihen auf
+     Wrapper-Hoehe zwingen -> nur bei 1 Row ausgeben. */
+  {% unless section.settings.rows == '2' %}
   .customstyle{{ section.id }} .productlist-item{
     height:inherit;
   }
+  {% endunless %}
 </style>
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}">
   {%- render 'style-section' -%}

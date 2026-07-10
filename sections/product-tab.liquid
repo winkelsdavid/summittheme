@@ -37,7 +37,9 @@ display:flex;
 }
 .customstyle{{ section.id }} .prdtab-content .producttab-item{
   padding: 0 {{ section.settings.spaceBetween | divided_by: 2 }}px;
-  height:inherit;
+  {%- comment -%} Bei 2 Rows (Multirow, autoHeight aus) wuerde inherit beide
+      Reihen auf Wrapper-Hoehe zwingen -> nur bei 1 Row. {%- endcomment -%}
+  {% unless section.settings.rows == '2' %}height:inherit;{% endunless %}
 }
 /* Bootstrap .col setzt flex-basis:0 + flex-grow:1 und ueberstimmt damit die
    Inline-Breite, die Swiper jedem Slide gibt ("Items" wirkungslos, alle

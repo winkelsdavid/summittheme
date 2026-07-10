@@ -3197,7 +3197,12 @@ theme.Productlists = (function () {
       // Draggable AUS = kein Maus-Drag (Slick draggable:false); Touch-Swipe
       // auf echten Touch-Geraeten bleibt an (simulateTouch betrifft nur Maus).
       simulateTouch: !!s.draggable,
-      autoHeight: true,
+      // "Rows" wieder funktional: Swiper-6-Multirow (slidesPerColumn).
+      // autoHeight muss dabei aus, sonst clippt die Wrapper-Hoehe
+      // (= hoechster einzelner Slide) die zweite Reihe weg.
+      slidesPerColumn: s.rows > 1 ? s.rows : 1,
+      slidesPerColumnFill: "row",
+      autoHeight: s.rows > 1 ? false : true,
       a11y: { enabled: false },
       breakpoints: {
         481: { slidesPerView: clamp(s.slidesToShow - 3), slidesPerGroup: clamp(s.slidesToShow - 3) },
@@ -3209,7 +3214,8 @@ theme.Productlists = (function () {
     // Swiper 6: loop bricht bei slides <= slidesPerView (Slick war tolerant).
     var slideCount = el.querySelectorAll(".swiper-slide").length;
     var maxSpv = Math.max(2, s.slidesToShow || 1);
-    opts.loop = opts.loop && slideCount > maxSpv;
+    // Multirow ist in Swiper 6 inkompatibel mit loop -> bei 2 Rows kein Infinite.
+    opts.loop = opts.loop && slideCount > maxSpv && s.rows <= 1;
     opts.watchOverflow = true;
     if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
     if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
@@ -3273,7 +3279,11 @@ theme.Producttabs = (function () {
         grabCursor: !!s.draggable,
         // Draggable AUS = kein Maus-Drag (Slick draggable:false); Touch bleibt.
         simulateTouch: !!s.draggable,
-        autoHeight: true,
+        // "Rows" wieder funktional (Swiper-6-Multirow); autoHeight muss dann
+        // aus, sonst clippt die Wrapper-Hoehe die zweite Reihe weg.
+        slidesPerColumn: s.rows > 1 ? s.rows : 1,
+        slidesPerColumnFill: "row",
+        autoHeight: s.rows > 1 ? false : true,
         observer: true,
         observeParents: true,
         a11y: { enabled: true },
@@ -3295,7 +3305,8 @@ theme.Producttabs = (function () {
         // tolerant) - z.B. Platzhalter-Tabs ohne Kollektion mit kleinem Limit.
         var slideCount = el.querySelectorAll(".swiper-slide").length;
         var maxSpv = Math.max(2, s.slidesToShow || 1);
-        opts.loop = opts.loop && slideCount > maxSpv;
+        // Multirow ist in Swiper 6 inkompatibel mit loop -> bei 2 Rows kein Infinite.
+        opts.loop = opts.loop && slideCount > maxSpv && s.rows <= 1;
         opts.watchOverflow = true;
         if (s.arrows) opts.navigation = { nextEl: el.querySelector(".swiper-button-next"), prevEl: el.querySelector(".swiper-button-prev") };
         if (s.dots) opts.pagination = { el: el.querySelector(".swiper-pagination"), clickable: true };
