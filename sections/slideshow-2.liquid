@@ -370,11 +370,6 @@
   transition-delay: .45s;
 }
 {%- endif -%}
-.no-js .slideshow__text-content.slideshow__text-content--vertical-center,.swiper-initialized .swiper-slide-active .slideshow__text-content.slideshow__text-content--vertical-center {
-  /* -ms-transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%); */
-}
     
 html:not(.no-js) .slideshow{
 	opacity:0;	
@@ -618,11 +613,6 @@ padding-top:4px!important;
       justify-content:center!important;
     }
     .c_icon_item svg{
-      width:var(--icon-size);
-      height:var(--icon-size);
-      color:var(--icon-color);
-    }
-        .c_icon_item svg{
       width:var(--icon-size);
       height:var(--icon-size);
       color:var(--icon-color);
@@ -878,15 +868,6 @@ padding-top:4px!important;
                       </h2>
                     </li>
                     {%- endunless -%}
-                    {% comment %}
-                    {%- unless block.settings.subheading == blank -%}
-                    <li class="pb-1 mb-lg-5">
-                      <div class="mega-subtitle slideshow__subtitle  d-lg-block fz-2" style="color:{{ block.settings.subheading_color }};">
-                        {{ block.settings.subheading }}
-                      </div>
-                    </li>
-                    {%- endunless -%}
-                    {% endcomment %}
                     {%- liquid
                       # Icons-Zeile nur rendern, wenn mind. ein Selling Point
                       # Text hat - leeres li (pb-1/mb-lg-3) = toter Abstand (S12).
@@ -1106,13 +1087,6 @@ padding-top:4px!important;
               {{ block.settings.slide_title }}
             </h2>
             {%- endunless -%}
-            {% comment %}
-            {%- unless block.settings.subheading == blank -%}
-            <div class="mega-subtitle slideshow__subtitle slideshow__subtitle--mobile" style="color:{{ block.settings.subheading_color }};">
-              {{ block.settings.subheading }}
-            </div>
-            {%- endunless -%}
-            {% endcomment %}
              {%- if has_icons -%}
              <div class="mega-subtitle slideshow__subtitle slideshow__subtitle--mobile icons_cont" style="--spacing:{{ block.settings.spacing }}px">
                {% for ii in (1..3) %}
