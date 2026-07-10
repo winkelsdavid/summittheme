@@ -2910,7 +2910,7 @@ figcaption .bg-des {
   color: #737373;
   margin-left: 5px;
 }
-.site-header__compare, .btn-newletter{
+.site-header__compare{
   padding:2px 6px;
   border-radius: 0;
   color:var(--g-color-heading) !important;
@@ -6901,29 +6901,6 @@ p a:not(.button):focus,
   .modal-dialog,
   .modal-dialog.modal-dialog--compare {
     max-width: 960px;
-  }
-  .modal-dialog.modal-dialog--newsletter {
-    max-width: 900px;
-  }
-}
-@media (min-width: 992px) {
-  #shopify-section-pnewsletter-3 .modal-dialog.modal-dialog--newsletter {
-    max-width: 650px;
-  }
-}
-@media (min-width: 992px) {
-  .pnewsletter-2 .modal-dialog.modal-dialog--newsletter {
-    max-width: 750px;
-  }
-}
-@media (max-width: 767px) {
-  .bg-newsletter {
-    min-height: 220px;
-  }
-}
-@media (min-width: 992px) {
-  .popup-newsletter--content {
-    min-height: 550px;
   }
 }
 body.modal--is-active {

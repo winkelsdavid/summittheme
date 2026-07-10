@@ -67,8 +67,6 @@
   {%- endif -%}
 </header>
 <div class="group-fixed d-lg-flex d-none">
-{% render 'show-newlleter' %}
-{%- if settings.enable_compare  and settings.enable_popuptext -%} — {%- endif -%}
 {%- render 'block-compare' -%}
 </div>
 {%- if template != 'customers/login' -%}

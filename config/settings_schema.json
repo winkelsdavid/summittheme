@@ -2034,22 +2034,6 @@
         "id": "page_wishlist",
         "label": "Wishlist Page",
         "info": "[Create new page](/admin/pages/new) and select template suffix is page.wishlist"
-      },
-      {
-        "type": "header",
-        "content": "Text Popup Newsletter"
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_popuptext",
-        "default": true,
-        "label": "Enable Popup Text"
-      },
-      {
-        "type": "text",
-        "id": "enable_popuptext_new",
-        "default": "Get 10% Off",
-        "label": "Text Popup Newsletter"
       }
     ]
   },

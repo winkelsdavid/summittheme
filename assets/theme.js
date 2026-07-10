@@ -3840,7 +3840,6 @@ theme.init = function () {
   sections.register("swipercustom", theme.SwiperCustom);
   sections.register("announcementswiper", theme.AnnouncementSwiper);
   sections.register("cookie", theme.CookieSection);
-  sections.register("popupnewletter", theme.popupNewletter);
   sections.register("beforeafter", theme.BeforeAfter);
   sections.register("bundleproduct", theme.bundleProduct);
   sections.register("footer", theme.FooterSection);
@@ -5789,62 +5788,6 @@ theme.compare = (function () {
   return {
     load: loadCompare,
   };
-})();
-
-// Popup newsletter
-theme.popupNewletter = (function () {
-  function popupNewletter(container) {
-    var sectionId = container.getAttribute("data-section-id");
-    this.selectors = {
-      popupSection: ".popupnew-" + sectionId,
-      formSection: "#jsPopupNewsletter" + sectionId,
-    };
-    this.init();
-  }
-  popupNewletter.prototype = Object.assign({}, popupNewletter.prototype, {
-    init: function () {
-      this.showPopup();
-    },
-    showPopup: function () {
-      var formSel = this.selectors.formSection;
-      var popupEl = document.querySelector(formSel);
-      var newsletterForm = popupEl ? popupEl.querySelector("form") : null;
-      var date = new Date();
-      var minutes = theme.timePopupNewsletter;
-      var minutesdelay = popupEl ? popupEl.getAttribute("data-delay") : 0;
-
-      if (popupEl) {
-        date.setTime(date.getTime() + minutes * 60 * 1000);
-        var setCookies = function () {
-          theme.cookie.set("cookiesNewsletter", "disabled", date, "/");
-        };
-        if (theme.cookie.get("cookiesNewsletter") !== "disabled") {
-          window.addEventListener("load", function () {
-            setTimeout(function () {
-              if (window.NativeUI) NativeUI.openModal(formSel);
-            }, minutesdelay * 1000);
-          });
-          popupEl.addEventListener("close", setCookies);
-          popupEl.addEventListener("modal:hidden", setCookies);
-          if (newsletterForm) {
-            newsletterForm.addEventListener("submit", setCookies);
-          }
-        }
-      }
-      if (window.Shopify && Shopify.designMode) {
-        document.addEventListener("shopify:section:select", function (event) {
-          var el = event.target.querySelector(formSel);
-          if (el && window.NativeUI) NativeUI.openModal(el);
-        });
-        document.addEventListener("shopify:section:deselect", function (event) {
-          var el = event.target.querySelector(formSel);
-          if (el && window.NativeUI) NativeUI.closeModal(el);
-        });
-      }
-    },
-  });
-
-  return popupNewletter;
 })();
 
 theme.BeforeAfter = (function () {

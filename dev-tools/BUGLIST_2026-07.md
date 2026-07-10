@@ -505,6 +505,32 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       bleiben verschieden; (6) 750-768px: Desktop-Text bleibt zentriert;
       (7) Nur aktiver Video-Slide spielt; (8) 1-Slide-Show ohne Dot.
 
+## 32. "Popup Newsletter" restlos entfernt (NICHT Scratch Newsletter)
+- [~] Sektion newsletter-popup komplett aus dem Theme entfernt (2026-07-10):
+      GELOESCHT: sections/newsletter-popup.liquid, snippets/pnew-1/2/3.liquid,
+      snippets/show-newlleter.liquid (Header-Trigger-Button "Get 10% Off").
+      BEREINIGT: layout/theme.liquid (section-Aufruf raus, scratch-newsletter
+      bleibt), sections/header.liquid (Trigger-Render + enable_popuptext-
+      Trennstrich raus), snippets/header-js.liquid (theme.timePopupNewsletter-
+      Global raus - las settings.pnewletter_time, das im Schema gar nicht mehr
+      existierte), assets/theme.js (Komponente popupNewletter + Registrierung),
+      config/settings_schema.json (Header "Text Popup Newsletter" +
+      enable_popuptext + enable_popuptext_new), config/settings_data.json
+      (Sektions-Instanz "newsletter-popup", Theme-Keys popupnewsletter/
+      pnewletter_* und enable_popuptext_* - jeweils in current UND presets),
+      theme.css + theme.css.liquid (btn-newletter aus Shared-Selektor,
+      modal-dialog--newsletter/pnewsletter-Bloecke/bg-newsletter/
+      popup-newsletter--content).
+      Verifiziert: JSON-Parses OK, JS-Syntax OK, CSS-Klammern beide Dateien OK,
+      check-theme.mjs 95 Sections ohne Missing-Section-Befund, Repo-weite
+      Restsuche leer (nur historische dev-tools-Doku erwaehnt sie noch).
+      Hinweis: B1-Metaobjekt-Slot 'newsletter-popup' (section_fallback) ist
+      jetzt verwaist - kann im Shop-Admin geloescht werden, stoert aber nicht.
+      Der Client-Cookie "cookiesNewsletter" bei Bestandsbesuchern laeuft aus.
+      Live-Test: Editor oeffnen -> "Popup Newsletter" taucht nirgends mehr auf
+      (weder als Sektion noch unter Theme Settings), Scratch Newsletter Popup
+      funktioniert unveraendert, Header/Compare-Button ohne Layout-Aenderung.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
