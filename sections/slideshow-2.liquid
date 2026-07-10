@@ -840,7 +840,8 @@ padding-top:4px!important;
                   
               <ul class="list-unstyled"  >
                           {% if block.settings.replace_reviews %}
-                              {%  render 'rating-custom', section: block , align : section.settings.align_heading %}
+                              {%- comment -%} align kam aus nicht existentem section.settings.align_heading (Z5) {%- endcomment -%}
+                              {%  render 'rating-custom', section: block , align : text_horizontal_alignment %}
                           {% else %}
                     {%- unless block.settings.slide_toptitle == blank -%}
                     <li class="mb-3">
@@ -1071,7 +1072,8 @@ padding-top:4px!important;
         <div class="slideshow__text-content slideshow__text-content--mobile slideshow__text-content--mobile-{{ forloop.index0 }} text-center" {% unless forloop.first %}style="display:none"{% endunless %}>
       <div class="container" style="background-color: {{ block.settings.bgwrap }};">
                         {% if block.settings.replace_reviews %}
-                            {%  render 'rating-custom', section: block , align : section.settings.align_heading,  rating_c: "0" %}
+                            {%- comment -%} Panel ist text-center -> align fix 'center' (Z5) {%- endcomment -%}
+                            {%  render 'rating-custom', section: block , align : 'center',  rating_c: "0" %}
               {% else %}
             {%- unless block.settings.slide_toptitle == blank -%}
             <p class="slideshow__toptitle slideshow__toptitle--mobile mb-0 subtop" style="--g-font-color-subtop:{{ block.settings.slide_toptitle_color }};">
