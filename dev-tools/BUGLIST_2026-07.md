@@ -536,13 +536,15 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       bottom:10px im Container) statt darunter. Das alte Slick-Pattern
       (dots-negative -> bottom:-25px + Container-Margin 30px) existierte
       noch, zielte aber auf die tote .slick-dots-Klasse. Auf die Swiper-
-      Pagination portiert: .dots-negative-Wrapper (Product List Carousel)
-      + .prdtab-content (Product Tab) -> bullets bottom:-25px, Container-
-      margin-bottom:30px nur bei tatsaechlich gerenderten Dots (:has, wird
-      im Theme bereits genutzt). In BEIDE CSS-Dateien (theme.css +
-      theme.css.liquid). Live-Test: Dots beider Sektionen mittig direkt
-      unter den Karten, kein Overlap mit Karte oder Folgesektion; Dots AUS
-      -> kein zusaetzlicher Abstand.
+      Pagination portiert. Runde 1 (bottom:-25px + margin) machte die Dots
+      UNSICHTBAR (lagen ausserhalb des Containers -> von Folgesektion
+      verdeckt/geclippt, User-Screenshot). Runde 2: Platz IM Container
+      reservieren - padding-bottom:35px + position:relative auf dem
+      Container (nur bei gerenderten Dots via :has), Bullets bottom:8px an
+      der Container-Unterkante. So kein Verdecken/Clipping moeglich. In
+      BEIDE CSS-Dateien (theme.css + theme.css.liquid). Live-Test: Dots
+      beider Sektionen sichtbar mittig direkt unter den Karten; Dots AUS
+      -> kein zusaetzlicher Abstand; Product Tab auch nach Tab-Wechsel.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer

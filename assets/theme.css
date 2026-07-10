@@ -4290,19 +4290,21 @@ p a:not(.button):focus,
 .dots-negative .slick-dots {
   bottom: -25px;
 }
-/* Swiper-Port des alten dots-negative-Patterns: die Swiper-CSS setzt die
-   Bullets auf bottom:10px INNERHALB des Containers (lagen auf der Karten-
-   unterkante). Unter die Box schieben + Platz reservieren, damit sie nicht
-   mit dem Folgeinhalt kollidieren. Gilt fuer Product List (Carousel,
-   .dots-negative-Wrapper) und Product Tab (.prdtab-content). Margin nur,
-   wenn wirklich Dots gerendert sind (:has). */
-.dots-negative .swiper-container-horizontal > .swiper-pagination-bullets,
-.prdtab-content.swiper-container-horizontal > .swiper-pagination-bullets {
-  bottom: -25px;
-}
+/* Dots unter den Produktkarten (Product List Carousel via .dots-negative,
+   Product Tab via .prdtab-content): Platz wird IM Container reserviert
+   (padding-bottom) und die Bullets sitzen an dessen Unterkante - so koennen
+   sie weder von der Folgesektion verdeckt noch von einem Ancestor geclippt
+   werden (der erste Versuch mit bottom:-25px lag ausserhalb -> unsichtbar).
+   position:relative pinnt den Positionierungs-Kontext auf den Container.
+   Greift nur, wenn wirklich Dots gerendert sind (:has). */
 .dots-negative .swiper:has(> .swiper-pagination-bullets),
 .prdtab-content.swiper:has(> .swiper-pagination-bullets) {
-  margin-bottom: 30px;
+  position: relative;
+  padding-bottom: 35px;
+}
+.dots-negative .swiper-container-horizontal > .swiper-pagination-bullets,
+.prdtab-content.swiper-container-horizontal > .swiper-pagination-bullets {
+  bottom: 8px;
 }
 .slick-dots li {
   position: relative;
