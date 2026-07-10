@@ -643,7 +643,13 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       data-prev/next-label statt totem data-slide-nav-a11y).
       Automatisch via geteilter JS: #36 Autoplay-Refresh, S10 Dot-Guard,
       S13 Video-Pause, speed 500, S16-JS (keine leere Panel-Leiste).
-- [ ] MINI-AUDIT-FINDINGS (offen, auf Zuruf fixen):
+- [~] MINI-AUDIT-FINDINGS ALLE GEFIXT (2026-07-10, "Fix alles aus 2"):
+      Z3 d31a3ef Icon-None-Luecke; Z4+Z1 4c34fac Icons-Zeile-Gate + Panel-
+      Existenz (beide Aenderungen in EINEM Commit gelandet - Z1-Edit war
+      beim Z4-Commit bereits gestaged); Z5 c94eb9f rating-custom-align
+      (Desktop = Slide-Ausrichtung, Panel = center); Z6 03c93a5 Mobile
+      adapt-Hoehe; Z7 e69c4e0 Align-Case right->end; Z8 ecddfb4 Kosmetik.
+      Wartet auf Live-Test. Urspruengliche Findings-Liste:
       Z1 (S16-Klon) Panel-Existenz prueft nur Titel/Button 1 (subheading
          ist auskommentiert) - Slides mit nur Toptitle/Review-Box/Pills/
          Button 2 bekommen kein Mobile-Panel.
