@@ -1259,14 +1259,26 @@ margin-right:auto;
     <div class="slideshow__text-wrap slideshow__text-wrap--mobile bg-white text-center mobile-align-{{ block.settings.text_alignment_mobile }}" >
       {%- for block in section.blocks -%}
       {%- liquid
-        assign show_text = false 
-        unless block.settings.slide_title == blank and block.settings.subheading == blank 
-        assign show_text = true 
-        endunless 
-        assign show_link_button = false 
-        if block.settings.button_label != blank and block.settings.button_link != blank 
-        assign show_link_button = true 
-        endif 
+        assign show_text = false
+        unless block.settings.slide_title == blank and block.settings.subheading == blank
+        assign show_text = true
+        endunless
+        assign show_link_button = false
+        if block.settings.button_label != blank and block.settings.button_link != blank
+        assign show_link_button = true
+        endif
+        # show_link_button-1/-2 stammen sonst noch aus dem DESKTOP-Loop (Liquid-
+        # assign ueberlebt das Loop-Ende) und tragen hier den Stand des LETZTEN
+        # Slides -> Buttons erschienen/fehlten im Panel je nach letztem Slide.
+        # Pro Panel-Block neu berechnen.
+        assign show_link_button-1 = false
+        assign show_link_button-2 = false
+        if block.settings.button_label != blank and block.settings.button_link != blank
+        assign show_link_button-1 = true
+        endif
+        if block.settings.button_label_2 != blank and block.settings.button_link_2 != blank
+        assign show_link_button-2 = true
+        endif
       -%}
       {%- if show_text or show_link_button -%}
       <div class="slideshow__text-content slideshow__text-content--mobile slideshow__text-content--mobile-{{ forloop.index0 }}" {% unless forloop.first %}style="display:none"{% endunless %} >
