@@ -87,6 +87,26 @@
     height: 100vh !important;
   }
 }
+{%- if section.settings.slideshow_height_mobile == 'adapt' and section.blocks.size > 0 -%}
+{%- liquid
+  # Mobile Height "Adapt To First Image" hatte keine CSS-Regel -> 100vh (Z6,
+  # wie slideshow-1 S2). Hoehe aus der Aspect Ratio des ersten Slides;
+  # Image Mobile hat Vorrang. Scoped pro Instanz.
+  assign mb_first = section.blocks[0]
+  assign mb_img = mb_first.settings.image_mobile | default: mb_first.settings.image
+  if mb_img.aspect_ratio == blank
+    assign mb_ar = 2.0
+  else
+    assign mb_ar = mb_img.aspect_ratio
+  endif
+  assign mb_h = 100 | divided_by: mb_ar
+-%}
+@media only screen and (max-width:749px) {
+  [data-section-id="{{ section.id }}"] .mobile--slideshow-adapt{
+    height: {{ mb_h }}vw !important;
+  }
+}
+{%- endif -%}
   @media only screen and (min-width:750px) {
     .slideshow--desktop-750{
       height: 750px;
