@@ -3203,7 +3203,8 @@ theme.Productlists = (function () {
       slidesPerColumn: s.rows > 1 ? s.rows : 1,
       slidesPerColumnFill: "row",
       autoHeight: s.rows > 1 ? false : true,
-      a11y: { enabled: false },
+      // Wie Product Tab / SwiperCustom - ARIA fuer Pfeile & Slides (EU-A11y).
+      a11y: { enabled: true },
       breakpoints: {
         481: { slidesPerView: clamp(s.slidesToShow - 3), slidesPerGroup: clamp(s.slidesToShow - 3) },
         769: { slidesPerView: clamp(s.slidesToShow - 2), slidesPerGroup: clamp(s.slidesToShow - 2) },
