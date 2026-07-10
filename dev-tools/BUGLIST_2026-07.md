@@ -50,6 +50,13 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         kein .swiper-slide). Live-Test Product Tab: Enable Carousel AN,
         Items 3 -> exakt 3 Karten ab 1201px, Pfeile blaettern seitenweise;
         Grid-Modus (Carousel AUS) unveraendert.
+      → Nachtrag Boxhoehen (2026-07-10): Product List (Carousel) Karten
+        unterschiedlich hoch je nach Inhalt (Swatches/Sale) - dem Carousel
+        fehlte die Hoehen-Kette, die der Tab hat (.producttab-item
+        height:inherit + h-100). Fix: .customstyleID .productlist-item
+        {height:inherit} - .product-card (height:100%) fuellt den Slide
+        dann direkt. Live-Test: alle sichtbaren Boxen gleich hoch wie
+        beim Product Tab.
 - [~] Ohne hinterlegte Kollektion wird komplett falsch angezeigt.
       → Fix e9fa5da: collections.all-Fallback in product-tab, product-list,
         product-list-swiper. Wartet auf Live-Test.
