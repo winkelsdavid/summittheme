@@ -570,6 +570,7 @@
             "settings": {
               "enable_video": true,
               "video_hosted": "",
+              "image": "shopify://shop_images/1783648744027-2.png",
               "alignment": "center top",
               "text_alignment": "left center",
               "text_alignment_mobile": "center",
