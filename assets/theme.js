@@ -3636,6 +3636,13 @@ theme.SwiperCustom = (function () {
     var perviewDesktop = theme.dataAttr(container, "perview-desktop");
     var perviewMobile = theme.dataAttr(container, "perview-mobile") || 2.2;
     var spaceBetween = theme.dataAttr(container, "space-between");
+    // Banner-Modus (data-spv-auto, nur product-list-swiper mit Enable Banner):
+    // der Banner-Slide hat eine eigene %-Breite per CSS !important. Mit
+    // numerischem slidesPerView rechnet Swiper seine Rastpunkte aus den selbst
+    // gesetzten (ueberstimmten) Breiten -> Snap-Versatz. slidesPerView:'auto'
+    // misst stattdessen die gerenderten Breiten; die Sektion liefert die
+    // Kartenbreiten per CSS-Breakpoints.
+    var spvAuto = theme.dataAttr(container, "spv-auto") === true;
     var swiper = new Swiper(this.namespace, {
       slidesPerView: "auto",
       freeMode: false,
@@ -3658,7 +3665,16 @@ theme.SwiperCustom = (function () {
       keyboard: {
         enabled: true,
       },
-      breakpoints: {
+      breakpoints: spvAuto ? {
+        // Nur spaceBetween pro Breakpoint; slidesPerView bleibt 'auto'.
+        // <750px passend zur Mobile-CSS (margin-right:20px), ab 750 Setting.
+        320: {
+          spaceBetween: 20,
+        },
+        750: {
+          spaceBetween: spaceBetween,
+        },
+      } : {
         320: {
           slidesPerView: perviewMobile,
           spaceBetween: 20,

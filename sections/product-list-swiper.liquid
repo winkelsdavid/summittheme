@@ -127,11 +127,30 @@
     @media (min-width:750px){
       .productlist-wrapper .swiper-button-prev{
         left: -58px;
-      } 
+      }
       .productlist-wrapper .swiper-button-next{
         right: -58px;
-      } 
+      }
     }
+    {%- if enable_first_banner -%}
+    {%- comment -%} Banner-Modus: Swiper laeuft mit slidesPerView:'auto'
+        (data-spv-auto) und misst die gerenderten Breiten - der Banner behaelt
+        seine %-Breite (Width Banner), die Produktkarten bekommen ihre Breite
+        hier per Breakpoint. Sichtbar = Banner + (PerView-1) Karten (>=992)
+        bzw. Banner + 2 Karten (750-991); <750 gilt die Mobile-CSS (74%). {%- endcomment -%}
+    {%- assign pl_pv = section.settings.perviewDesktop | at_least: 2 -%}
+    {%- assign pl_gaps = pl_pv | minus: 1 -%}
+    @media (min-width:992px){
+      .customstyle{{ section.id }} .productlist-item.swiper-slide{
+        width: calc((100% - {{ width_banner }}% - {{ pl_gaps | times: section.settings.spaceBetween }}px) / {{ pl_gaps }});
+      }
+    }
+    @media (min-width:750px) and (max-width:991px){
+      .customstyle{{ section.id }} .productlist-item.swiper-slide{
+        width: calc((100% - {{ width_banner }}% - {{ section.settings.spaceBetween | times: 2 }}px) / 2);
+      }
+    }
+    {%- endif -%}
 </style>
 <div class="customstyle{{ section.id }} productswiper lazyload" data-aos="{{ section.settings.animation }}"
   data-bgset="{% render 'bgset', image: section.settings.image_bg %}"
@@ -152,6 +171,7 @@
           data-perview-desktop="{{ section.settings.perviewDesktop }}"
           data-space-between="{{ section.settings.spaceBetween }}"
           data-perview-mobile="{% if enable_first_banner %} 1.32 {% else %} 1.38 {% endif %}"
+          data-spv-auto="{% if enable_first_banner %}true{% else %}false{% endif %}"
           >
           <div class="swiper-wrapper">
             {%- comment -%} Ohne gewaehlte Kollektion auf collections.all zurueckfallen,
