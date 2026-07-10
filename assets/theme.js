@@ -3188,7 +3188,9 @@ theme.Productlists = (function () {
     //     Slick's max-width responsive (mobile base = 2 slides). ---
     var el = container;
     var s = this.settings;
-    var clamp = function (n) { return n > 1 ? n : 1; };
+    // Floor 2 statt 1: die Slick-uebersetzte Leiter zeigte bei Display Items 3
+    // auf 481-992px nur 1 Karte, unter 481px aber 2 (invertiert).
+    var clamp = function (n) { return n > 2 ? n : 2; };
     var opts = {
       slidesPerView: 2,
       slidesPerGroup: 2,
@@ -3272,7 +3274,8 @@ theme.Producttabs = (function () {
   Producttabs.prototype = Object.assign({}, Producttabs.prototype, {
     _getSwiperOpts: function () {
       var s = this.settings;
-      var clamp = function (n) { return n > 1 ? n : 1; };
+      // Floor 2 statt 1: wie Productlists - keine 1-Karten-Luecke 481-992px.
+      var clamp = function (n) { return n > 2 ? n : 2; };
       return {
         slidesPerView: 2,
         slidesPerGroup: 2,
