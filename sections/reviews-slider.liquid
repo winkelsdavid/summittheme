@@ -193,6 +193,16 @@
     padding: 6px 15px;
     border-radius: 5px;
 }
+.review_footer img{
+    /* Gleiche Form wie die Card-Boxen (.review_footer/.reviewbox-rating-i =
+       5px): das globale "Enable Radius Image" (.container img ... !important)
+       machte das 45px-Thumbnail sonst oval. Quadratisch beschnitten. */
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 5px !important;
+    flex: 0 0 45px;
+}
 .review-slider-is .swiper-pagination{
     position:relative;
     margin-top:30px;
