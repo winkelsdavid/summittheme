@@ -874,6 +874,10 @@ padding-top:4px!important;
                         {% if block.settings[icon] != blank or block.settings[c_icon] != blank %}
                           {% if block.settings[icon_text] != blank %}
                           <div class="c_icon_item" style="padding:{{ block.settings.icon_padding }}px {{ block.settings.icon_padding_left_right }}px;background:{{ block.settings.icon_background }};border-radius:{{ block.settings.icon_radius }}px;--icon-size:{{ block.settings.icons_size }}px;--icon-color:{{ block.settings.icons_color }}">
+                            {%- comment -%} Icon "None" + kein Custom Icon: Icon-Element ganz
+                                weglassen (list-svg hat keinen none-Zweig -> leere Luecke);
+                                Text-Pille bleibt. Wie slideshow-1 S5. {%- endcomment -%}
+                            {% unless block.settings[c_icon] == blank and block.settings[icon] == 'none' %}
                             <div class="c_item_icon" style="display:flex;--icon-color:{{ block.settings.icon_color }}">
                               {% if block.settings[c_icon] != blank %}
                                   <img src="{{ block.settings[c_icon] | image_url: width: 100 }}" alt="{{ block.settings[icon_text] }}" width="{{ block.settings.icons_size }}">
@@ -881,6 +885,7 @@ padding-top:4px!important;
                                 {% render 'list-svg', block: block ,icon: block.settings[icon] %}
                               {% endif %}
                             </div>
+                            {% endunless %}
                           <span style="--size:{{ block.settings.text_size_desktop }}px;--mobile-size:{{ block.settings.text_size_mobile }}px;--color:{{ block.settings.text_color }}">{{ block.settings[icon_text] }}</span>
                           </div>
                         {% endif %}
@@ -1067,6 +1072,7 @@ padding-top:4px!important;
                   {% if block.settings[icon] != blank or block.settings[c_icon] != blank and block.settings[icon_text] != blank %}
                     {% if block.settings[icon_text] != blank %}
                     <div class="c_icon_item" style="padding:{{ block.settings.icon_padding }}px {{ block.settings.icon_padding_left_right }}px;background:{{ block.settings.icon_background }};border-radius:{{ block.settings.icon_radius }}px;--icon-size:{{ block.settings.icons_size }}px;--icon-color:{{ block.settings.icons_color }}">
+                      {% unless block.settings[c_icon] == blank and block.settings[icon] == 'none' %}
                       <div class="c_item_icon" style="display:flex;--icon-color:{{ block.settings.icon_color }}">
                       {% if block.settings[c_icon] != blank %}
                           <img src="{{ block.settings[c_icon] | image_url: width: 100 }}" alt="{{ block.settings[icon_text] }}" width="{{ block.settings.icons_size }}">
@@ -1074,6 +1080,7 @@ padding-top:4px!important;
                         {% render 'list-svg',block:block, icon: block.settings[icon] %}
                       {% endif %}
                       </div>
+                      {% endunless %}
                     <span style="--size:{{ block.settings.text_size_desktop }}px;--mobile-size:{{ block.settings.text_size_mobile }}px;--color:{{ block.settings.text_color }}">{{ block.settings[icon_text] }}</span>
                     </div>
                   {% endif %}
