@@ -445,6 +445,66 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Items=5 auf Tablet -> 2 Spalten; (8) Swiper-Variante -> Boxen
       gleich hoch (Same Height default an).
 
+## 31. Slideshow-1-Vollaudit (alle Settings, Desktop + Mobile-Panel)
+- [~] Vollaudit 2026-07-10, 21 Findings (S1-S21), S1-S16 auf User-GO gefixt
+      (je 1 Commit). Kontext: Mode A = "Show Text Look Like Desktop" AN
+      (Desktop-Text auch mobil), Mode B = AUS (separates weisses Panel).
+      S1 26b47b6 Panel-Buttons zeigten Stand des LETZTEN Slides (stale
+         Liquid-Assigns show_link_button-1/-2 aus dem Desktop-Loop) ->
+         pro Panel-Block neu berechnet.
+      S2 eea1304 Mobile Height "Adapt To First Image" war tot (Klasse ohne
+         CSS -> 100vh) -> Hoehe aus Aspect Ratio des ersten Slides
+         (Image Mobile vor Image 1), instanz-scoped.
+      S3 6ce57c1 "Text Size Mobile" (Icons) war tot -> --mobile-size wird
+         jetzt <=749px konsumiert.
+      S4 083424a Review Badge fehlte im Mobile-Panel komplett -> ergaenzt
+         (ohne slideshow__btn-Klasse, eigene Gradient-IDs).
+      S5 031fa06 Icon "None" renderte leere Icon-Luecke -> Icon-Element
+         wird uebersprungen, Text-Pille bleibt (Desktop + Panel).
+      S6 4e36cad Arrow-/Dot-Farben + Rotate-Speed lagen auf :root ->
+         letzte Instanz gewann fuer alle. Auf data-section-id gescoped.
+      S7 eb73b53 mobile-align galt bis 768px, Rest der Sektion bis 749px ->
+         Band 750-768 verschob den Desktop-Text. Auf 749 angeglichen.
+      S8 384280c aria-describedby zeigte auf nicht existente ID ->
+         visually-hidden Info-Element (navigation_instructions, pro
+         Instanz); totes data-slide-nav-a11y ersetzt durch data-prev/
+         next-label (sections.slideshow.previous/next_slide, in allen
+         10 Locales vorhanden), JS nutzt sie fuer die Pfeil-aria-labels.
+      S9 514719c Schema-Info: "Enable Arrow" wirkt nur Desktop (<992 hidden).
+      S10 1675744 Dots nur bei >1 Slide (wie Pfeil-Guard); pagination-Opt
+         haengt jetzt am Element statt am Toggle.
+      S11 3711fb5 mobile-align-Klasse am Panel war immer leer (block=nil
+         ausserhalb des Loops) -> entfernt; Schema-Info an Text Alignment
+         (Mobile): wirkt nur in Mode A.
+      S12 e017492 Icons-Zeile (li mit pb-1/mb-lg-4) renderte auch komplett
+         leer -> nur wenn mind. ein Selling-Point-Text gesetzt (beide Modi).
+      S13 cb82f01 Alle Videos liefen permanent -> _syncVideos spielt nur den
+         aktiven Slide (twin-sync wie _syncShown), Rest pausiert;
+         prefers-reduced-motion stoppt Autorotate + Videos (WCAG);
+         onBlockDeselect-Guard gegen 3s-Default-Delay-Falle erweitert.
+      S14 3db320d Align-Case 'right *' mappte auf justify-content-start
+         (vom .text-right-!important maskiert) -> -end.
+      S15 8754be0 rating-custom im Panel bekam align aus nicht existentem
+         section.settings.align_heading -> 'center'.
+      S16 aee5705 Panel-Existenz pruefte nur Titel/Subheading/Button 1 ->
+         jetzt auch Toptitle/Review-Box/Badge/Button 2/Icons; JS versteckt
+         den Panel-Wrapper, wenn der aktive Slide kein Panel hat (vorher
+         leere weisse Leiste bei Mehr-Slide-Shows).
+      NICHT gefixt (Kosmetik, User-Auswahl): S17 tote Klassen/Regeln
+      (transit-*, slideshow__arrows--mobile, leere Regel Z.224), S18 tote
+      icons_color-Var + em/rem-Label, S19 Doppel-Fade (AOS + Content-Fade),
+      S20 tote section.settings.show_overlay-Referenzen (Z.918/946),
+      S21 fehlende rgba-Guards bei mobilen Toptitle-/Subheading-Farben.
+      Hinweis: slideshow-2.liquid hat mehrere der gleichen Muster (u.a.
+      :root-Vars, aria-describedby) - bewusst nicht angefasst, kommt beim
+      Split #21 bzw. auf Zuruf.
+      Live-Test: (1) Mode B: Buttons pro Slide korrekt, Badge sichtbar,
+      keine leere Leiste bei Slides ohne Panel; (2) Mobile Height adapt
+      passt sich dem 1. Bild an; (3) Icons Text Size Mobile wirkt; (4) Icon
+      None ohne Luecke; (5) 2 Instanzen mit verschiedenen Pfeil-/Dot-Farben
+      bleiben verschieden; (6) 750-768px: Desktop-Text bleibt zentriert;
+      (7) Nur aktiver Video-Slide spielt; (8) 1-Slide-Show ohne Dot.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
