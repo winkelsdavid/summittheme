@@ -35,6 +35,16 @@
 .customstyle{{ section.id }} .slick-track{
 display:flex;
 }
+/* Items=5 im Grid-Modus: row-cols-5 schaltet global erst <750px auf 2 Spalten,
+   die col-lg-Werte (Items 3/4/6) schon <992px -> im Band 750-991 zeigten nur
+   Items=5 fuenf gequetschte Spalten. Hier auf 2 Spalten angleichen. */
+@media (min-width:750px) and (max-width:991px){
+  .customstyle{{ section.id }} .prdtab-content.row-cols-5 > *{
+    -ms-flex:0 0 50%;
+    flex:0 0 50%;
+    max-width:50%;
+  }
+}
 .customstyle{{ section.id }} .prdtab-content .producttab-item{
   padding: 0 {{ section.settings.spaceBetween | divided_by: 2 }}px;
   {%- comment -%} Bei 2 Rows (Multirow, autoHeight aus) wuerde inherit beide
