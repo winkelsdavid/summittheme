@@ -1017,6 +1017,16 @@ margin-right:auto;
                   </div>
                 </li>
                 {%- endunless -%}
+                {%- liquid
+                  # Icons-Zeile nur rendern, wenn mindestens ein Selling Point
+                  # Text hat - das leere <li> (pb-1 + mb-lg-4) erzeugte sonst
+                  # toten Abstand zwischen Subheading und Buttons.
+                  assign has_icons = false
+                  if block.settings.icon_text_1 != blank or block.settings.icon_text_2 != blank or block.settings.icon_text_3 != blank
+                    assign has_icons = true
+                  endif
+                -%}
+                {%- if has_icons -%}
                 <li class="pb-1 mb-lg-4 icons_cont slideshow__title" style="--spacing:{{ block.settings.spacing }}px">
                       {% for ii in (1..3) %}
                         {% assign icon = "icon_" | append: forloop.index %}
@@ -1043,6 +1053,7 @@ margin-right:auto;
                         {% endif %}
                       {% endfor %}
                     </li>
+                {%- endif -%}
               </ul>
               {%-liquid
                 assign show_link_button-1 = false
@@ -1326,6 +1337,10 @@ margin-right:auto;
         if block.settings.button_label_2 != blank and block.settings.button_link_2 != blank
         assign show_link_button-2 = true
         endif
+        assign has_icons = false
+        if block.settings.icon_text_1 != blank or block.settings.icon_text_2 != blank or block.settings.icon_text_3 != blank
+        assign has_icons = true
+        endif
       -%}
       {%- if show_text or show_link_button -%}
       <div class="slideshow__text-content slideshow__text-content--mobile slideshow__text-content--mobile-{{ forloop.index0 }}" {% unless forloop.first %}style="display:none"{% endunless %} >
@@ -1350,6 +1365,7 @@ margin-right:auto;
             {{ block.settings.subheading }} 
           </div>
           {%- endunless -%}
+            {%- if has_icons -%}
             <div class="mega-subtitle slideshow__subtitle slideshow__subtitle--mobile icons_cont" style="--spacing:{{ block.settings.spacing }}px">
                {% for ii in (1..3) %}
                   {% assign icon = "icon_" | append: forloop.index %}
@@ -1373,6 +1389,7 @@ margin-right:auto;
                   {% endif %}
                 {% endfor %}
             </div>
+            {%- endif -%}
 
           <div class="slideshow__btn-wrapper align-items-center justify-content-center   {% if block.settings.slide_title != blank or block.settings.subheading != blank %} slideshow__btn-wrapper--push{% endif %}" >
             {%- if show_link_button-1 -%}
