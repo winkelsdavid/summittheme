@@ -4,7 +4,10 @@
   assign dot = section.settings.slide_dot
 -%} 
 <style>
-    :root{
+    /* Frueher :root (global): mehrere Slideshow-Instanzen ueberschrieben sich
+       gegenseitig Pfeil-/Dot-Farben + Rotate-Speed. Auf die eigene Instanz
+       gescoped - wie slideshow-1 (S6). */
+    [data-section-id="{{ section.id }}"]{
       --slidebg-arrow:{{ section.settings.bg_arrow.red }},{{ section.settings.bg_arrow.green }},{{ section.settings.bg_arrow.blue }};
       --slide-arrow-color:{{ section.settings.color_arrow }};
       --slide-alpha : {{ section.settings.opacity_arrow }};
