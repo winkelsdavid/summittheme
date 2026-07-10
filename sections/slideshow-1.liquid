@@ -243,7 +243,10 @@ border-radius:0!important;
 {%- if anim_badges == 'slide-up' -%}
 [data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
 [data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
-  transform: translateY(110%);
+  /* 110% allein reicht nicht: die Maske (li) ist um child-margin (Review-Box
+     mb-2 = 8px) bzw. li-padding (Pills pb-1 = 4px) hoeher als das Element -
+     die Oberkante lugte als duenne Linie heraus. Absoluter Puffer dazu. */
+  transform: translateY(calc(110% + 12px));
 }
 {%- elsif anim_badges == 'slide-right' -%}
 [data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
