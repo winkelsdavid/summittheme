@@ -621,6 +621,50 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       laeuft weiter. Falls es auf einem echten Share-Preview-Link (ausserhalb
       des Customizers) weiterhin auftritt: Konsolen-Probe aus dem Chat.
 
+## 37. Testimonial Slider Auto: Produkt-Thumbnail oval statt Box-Form
+- [~] Thumbnail im Card-Footer (45px) wurde vom globalen "Enable Radius
+      Image" (.container img { border-radius: calc(0.2rem*Range) !important },
+      header-css.liquid) zur Ellipse gerundet. User-Wunsch: exakt die Form
+      der Card-Boxen (5px wie .review_footer/.reviewbox-rating-i).
+      Fix 0c972ab: .review_footer img -> 45x45 object-fit:cover,
+      border-radius:5px !important (ueberstimmt die globale Regel), flex-fix.
+      Gilt auch fuer den B1-Brand-Fallback (gleicher Selektor). Live-Test:
+      Thumbnails quadratisch mit 5px-Ecken, Hoch-/Querformat-Bilder sauber
+      beschnitten.
+
+## 38. Slideshow 2 nachgezogen (Ports) + Mini-Audit
+- [~] PORTIERT (2026-07-10): 0ee7717 "Badges Animation"-Setting (#35) -
+      opacity-basiert im Stil der Sektion (Review-Box liegt hier ohne
+      li-Maske direkt im ul), Optionen Slide Up (translateY 32px) /
+      Slide From Right (translateX 80px, Default - passt zum horizontalen
+      Text-Stagger) / Fade (1s) / None; Delays Review .2s, Pills .45s;
+      instanz-gescoped + slide-shown-Twins. 48d9003 S6-Port (:root ->
+      data-section-id). 51415b8 S8-Port (aria-describedby-Ziel existiert,
+      data-prev/next-label statt totem data-slide-nav-a11y).
+      Automatisch via geteilter JS: #36 Autoplay-Refresh, S10 Dot-Guard,
+      S13 Video-Pause, speed 500, S16-JS (keine leere Panel-Leiste).
+- [ ] MINI-AUDIT-FINDINGS (offen, auf Zuruf fixen):
+      Z1 (S16-Klon) Panel-Existenz prueft nur Titel/Button 1 (subheading
+         ist auskommentiert) - Slides mit nur Toptitle/Review-Box/Pills/
+         Button 2 bekommen kein Mobile-Panel.
+      Z2 KEIN S1-Bug: Panel-Loop berechnet show_link_button-1/-2 korrekt
+         pro Block neu.
+      Z3 (S5-Klon) Icon "None" rendert leere Icon-Luecke (list-svg ohne
+         none-Zweig).
+      Z4 (S12-Klon) Icons-Zeile (li pb-1 mb-lg-3) rendert auch komplett
+         leer -> toter Abstand; Mobile-Panel-Pendant ebenso.
+      Z5 (S15-Klon) rating-custom align aus nicht existentem
+         section.settings.align_heading (Desktop Z.777 + Panel Z.1042).
+      Z6 (S2-Klon) Mobile Height "Adapt To First Image" ohne CSS-Regel
+         -> 100vh.
+      Z7 (S14-Klon) Button-Align-Case 'right' -> -start, maskiert durch
+         !important-CSS (Z.38).
+      Z8 Kosmetik: auskommentierte Subheading-Bloecke referenzieren nicht
+         (mehr) existente Settings; doppelte .c_icon_item-svg-Regel; leere
+         vertical-center-Regel; slideshow__arrows--mobile-Reste.
+      Hinweis (Design-Differenz, kein Bug): Slideshow 2 zeigt Pfeile auch
+      <992px (nur repositioniert), Slideshow 1 versteckt sie dort.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
