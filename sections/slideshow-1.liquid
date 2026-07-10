@@ -237,20 +237,23 @@ border-radius:0!important;
    Einblenden mit denselben Delays, none = statisch. Die Masken
    (li overflow:hidden) existieren bereits. */
 {%- assign anim_badges = section.settings.anim_badges | default: 'slide-up' -%}
+{%- comment -%} WICHTIG: pro Instanz scopen (data-section-id) - die Regeln sind
+    setting-abhaengig, und ungescoped wuerde die zweite Slideshow-1-Instanz
+    ihre Variante global auf BEIDE anwenden ("None" wirkte dann nie). {%- endcomment -%}
 {%- if anim_badges == 'slide-up' -%}
-.slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
-.slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
+[data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
+[data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
   transform: translateY(110%);
 }
 {%- elsif anim_badges == 'slide-right' -%}
-.slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
-.slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
+[data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
+[data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
   transform: translateX(48px);
   opacity: 0;
 }
 {%- elsif anim_badges == 'fade' -%}
-.slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
-.slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
+[data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
+[data-section-id="{{ section.id }}"] .slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
   opacity: 0;
 }
 {%- endif -%}
@@ -309,48 +312,48 @@ border-radius:0!important;
    Pills: Zwischenslot .45s (zwischen Subtitle .4s und Buttons .5s - denselben
    Slot nutzt slideshow-2 fuer __info). */
 {%- if anim_badges == 'slide-up' -%}
-.no-js .slideshow__text-content li .reviews-block,
-.no-js .slideshow__text-content li.icons_cont .c_icon_item,
-.swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
-.swiper-initialized .slide-shown .slideshow__text-content li .reviews-block{
+.no-js [data-section-id="{{ section.id }}"] .slideshow__text-content li .reviews-block,
+.no-js [data-section-id="{{ section.id }}"] .slideshow__text-content li.icons_cont .c_icon_item,
+[data-section-id="{{ section.id }}"] .swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
+[data-section-id="{{ section.id }}"] .swiper-initialized .slide-shown .slideshow__text-content li .reviews-block{
   transform: translateY(0);
   transition: transform 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .1s;
 }
-.swiper-initialized .swiper-slide-active .slideshow__text-content li.icons_cont .c_icon_item,
-.swiper-initialized .slide-shown .slideshow__text-content li.icons_cont .c_icon_item{
+[data-section-id="{{ section.id }}"] .swiper-initialized .swiper-slide-active .slideshow__text-content li.icons_cont .c_icon_item,
+[data-section-id="{{ section.id }}"] .swiper-initialized .slide-shown .slideshow__text-content li.icons_cont .c_icon_item{
   transform: translateY(0);
   transition: transform 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .45s;
 }
 {%- elsif anim_badges == 'slide-right' -%}
-.no-js .slideshow__text-content li .reviews-block,
-.no-js .slideshow__text-content li.icons_cont .c_icon_item,
-.swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
-.swiper-initialized .slide-shown .slideshow__text-content li .reviews-block{
+.no-js [data-section-id="{{ section.id }}"] .slideshow__text-content li .reviews-block,
+.no-js [data-section-id="{{ section.id }}"] .slideshow__text-content li.icons_cont .c_icon_item,
+[data-section-id="{{ section.id }}"] .swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
+[data-section-id="{{ section.id }}"] .swiper-initialized .slide-shown .slideshow__text-content li .reviews-block{
   transform: translateX(0);
   opacity: 1;
   transition: transform 0.7s cubic-bezier(.29,.63,.44,1), opacity 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .1s;
 }
-.swiper-initialized .swiper-slide-active .slideshow__text-content li.icons_cont .c_icon_item,
-.swiper-initialized .slide-shown .slideshow__text-content li.icons_cont .c_icon_item{
+[data-section-id="{{ section.id }}"] .swiper-initialized .swiper-slide-active .slideshow__text-content li.icons_cont .c_icon_item,
+[data-section-id="{{ section.id }}"] .swiper-initialized .slide-shown .slideshow__text-content li.icons_cont .c_icon_item{
   transform: translateX(0);
   opacity: 1;
   transition: transform 0.7s cubic-bezier(.29,.63,.44,1), opacity 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .45s;
 }
 {%- elsif anim_badges == 'fade' -%}
-.no-js .slideshow__text-content li .reviews-block,
-.no-js .slideshow__text-content li.icons_cont .c_icon_item,
-.swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
-.swiper-initialized .slide-shown .slideshow__text-content li .reviews-block{
+.no-js [data-section-id="{{ section.id }}"] .slideshow__text-content li .reviews-block,
+.no-js [data-section-id="{{ section.id }}"] .slideshow__text-content li.icons_cont .c_icon_item,
+[data-section-id="{{ section.id }}"] .swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
+[data-section-id="{{ section.id }}"] .swiper-initialized .slide-shown .slideshow__text-content li .reviews-block{
   opacity: 1;
   transition: opacity 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .1s;
 }
-.swiper-initialized .swiper-slide-active .slideshow__text-content li.icons_cont .c_icon_item,
-.swiper-initialized .slide-shown .slideshow__text-content li.icons_cont .c_icon_item{
+[data-section-id="{{ section.id }}"] .swiper-initialized .swiper-slide-active .slideshow__text-content li.icons_cont .c_icon_item,
+[data-section-id="{{ section.id }}"] .swiper-initialized .slide-shown .slideshow__text-content li.icons_cont .c_icon_item{
   opacity: 1;
   transition: opacity 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .45s;
