@@ -5,7 +5,10 @@
 -%} 
 <style>
 
-:root{
+/* Frueher :root (global): bei mehreren Slideshow-Instanzen ueberschrieb die
+   zuletzt gerenderte Pfeil-/Dot-Farben und Rotate-Speed fuer ALLE. Auf die
+   eigene Instanz gescoped - alle Konsumenten liegen innerhalb des Wrappers. */
+[data-section-id="{{ section.id }}"]{
   --slidebg-arrow:{{ section.settings.bg_arrow.red }},{{ section.settings.bg_arrow.green }},{{ section.settings.bg_arrow.blue }};
   --slide-arrow-color:{{ section.settings.color_arrow }};
   --slide-alpha : {{ section.settings.opacity_arrow }};
