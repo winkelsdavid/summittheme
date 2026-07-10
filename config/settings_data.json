@@ -712,7 +712,7 @@
           "slideshow_mobile": true,
           "autorotate": true,
           "autorotate_speed": 5,
-          "anim_slideshow": "zoom",
+          "anim_slideshow": "slide-fade",
           "anim_badges": "fade",
           "e_arrow": true,
           "color_arrow": "#ffffff",
