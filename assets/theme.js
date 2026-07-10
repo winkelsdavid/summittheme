@@ -2579,11 +2579,12 @@ theme.Slideshow = (function () {
       prevEl = document.createElement("button");
       prevEl.type = "button";
       prevEl.className = "slideshow__arrow slideshow__arrow--prev";
-      prevEl.setAttribute("aria-label", "Previous slide");
+      // Uebersetzte Labels aus der Section (sections.slideshow.previous/next_slide).
+      prevEl.setAttribute("aria-label", d(node, "prev-label") || "Previous slide");
       nextEl = document.createElement("button");
       nextEl.type = "button";
       nextEl.className = "slideshow__arrow slideshow__arrow--next";
-      nextEl.setAttribute("aria-label", "Next slide");
+      nextEl.setAttribute("aria-label", d(node, "next-label") || "Next slide");
       node.appendChild(prevEl);
       node.appendChild(nextEl);
     }
