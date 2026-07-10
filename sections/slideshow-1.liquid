@@ -1347,7 +1347,9 @@ margin-right:auto;
         <div class="container" style="background-color: {% if block.settings.bgwrap != blank and block.settings.bgwrap != "rgba(0,0,0,0)"%}{{ block.settings.bgwrap }}{% else %}{{ settings.color_body_bg }}{% endif %};">
 
             {% if block.settings.replace_reviews %}
-                {%  render 'rating-custom', section: block , align : section.settings.align_heading %}
+                {%- comment -%} align kam aus section.settings.align_heading - das Setting
+                    existiert in dieser Sektion nicht (nil). Panel ist zentriert. {%- endcomment -%}
+                {%  render 'rating-custom', section: block , align : 'center' %}
               {% else %}
           {%- unless block.settings.slide_toptitle == blank -%}
           <p class="slideshow__toptitle mb-2 slideshow__toptitle--mobile subtop" style="color:{{ block.settings.slide_toptitle_color }}">
