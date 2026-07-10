@@ -3645,6 +3645,8 @@ theme.SwiperCustom = (function () {
       preloadImages: true,
       updateOnImagesReady: true,
       spaceBetween: spaceBetween,
+      // Pfeile/Scrollbar deaktivieren, wenn alles reinpasst (Limit <= Per View).
+      watchOverflow: true,
       observer: true,
       observeParents: true,
       parallax: true,
