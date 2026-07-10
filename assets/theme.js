@@ -2544,6 +2544,11 @@ theme.Slideshow = (function () {
     this.navArrow = d(node, "arrow");
     this.navDot = d(node, "dot");
     this.transit = d(node, "transit");
+    // WCAG (bewegte Inhalte): bei prefers-reduced-motion keine Auto-Rotation
+    // und keine autoplayenden Hintergrund-Videos.
+    this.reducedMotion =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var autoplaySpeed = d(node, "speed") || 5000;
 
     var wrapper = node.closest(selectors.wrapper + sectionId);
@@ -2615,7 +2620,7 @@ theme.Slideshow = (function () {
       threshold: 20,
       watchSlidesProgress: true,
       a11y: { enabled: false }, // Slick had accessibility:false; aria-current handled manually below
-      autoplay: this.autorotate
+      autoplay: this.autorotate && !this.reducedMotion
         ? {
             delay: autoplaySpeed,
             disableOnInteraction: false,
@@ -2629,11 +2634,13 @@ theme.Slideshow = (function () {
           self.showMobileText(0);
           self._syncAria(0);
           self._syncShown(this);
+          self._syncVideos(this);
         },
         slideChange: function () {
           self.showMobileText(this.realIndex);
           self._syncAria(this.realIndex);
           self._syncShown(this);
+          self._syncVideos(this);
         },
         slideChangeTransitionStart: function () {
           // slide-fade: mark the OUTGOING slide so its image animates out (CSS .slick-going).
@@ -2656,6 +2663,7 @@ theme.Slideshow = (function () {
     // daran gegatete Inhalte (Content-Fade der Texte) sichtbar werden.
     if (!this.swiper && slides.length) {
       slides[0].classList.add("swiper-slide-active");
+      this._syncVideos({ slides: slides, realIndex: 0 });
     }
 
     // fade-Familie: manueller Endlos-Wrap wie Slicks infinite:true (ohne Klone).
@@ -2682,7 +2690,7 @@ theme.Slideshow = (function () {
     node.classList.add("swiper-initialized");
 
     // Pause auto-rotate while the slideshow has keyboard focus (a11y), resume on blur.
-    if (this.swiper && this.autorotate) {
+    if (this.swiper && this.autorotate && !this.reducedMotion) {
       this._focusIn = function () {
         if (self.swiper && self.swiper.autoplay) self.swiper.autoplay.stop();
       };
@@ -2711,6 +2719,32 @@ theme.Slideshow = (function () {
       var di = s.getAttribute("data-swiper-slide-index");
       var idx = di === null ? i : parseInt(di, 10);
       s.classList.toggle("slide-shown", idx === real);
+    }
+  };
+
+  // Nur der aktive Slide spielt sein Hintergrund-Video, unsichtbare Slides
+  // (inkl. Loop-Duplikate, twin-sync wie _syncShown) pausieren - vorher
+  // liefen ALLE Videos permanent (Akku/Performance). Bei prefers-reduced-
+  // motion pausieren auch aktive Videos (WCAG bewegte Inhalte).
+  slideshow.prototype._syncVideos = function (sw) {
+    if (!sw || !sw.slides) return;
+    var real = sw.realIndex || 0;
+    for (var i = 0; i < sw.slides.length; i++) {
+      var s = sw.slides[i];
+      if (!s || !s.querySelectorAll) continue;
+      var di = s.getAttribute("data-swiper-slide-index");
+      var idx = di === null ? i : parseInt(di, 10);
+      var vids = s.querySelectorAll(".video-slideshow video");
+      for (var v = 0; v < vids.length; v++) {
+        if (idx === real && !this.reducedMotion) {
+          try {
+            var p = vids[v].play();
+            if (p && p.catch) p.catch(function () {});
+          } catch (e) {}
+        } else {
+          vids[v].pause();
+        }
+      }
     }
   };
 
@@ -2828,7 +2862,9 @@ theme.SlideshowSection.prototype = Object.assign(
 
     onBlockDeselect: function () {
       var inst = theme.slideshows[this.slideshow];
-      if (inst && inst.autorotate && inst.swiper && inst.swiper.autoplay) {
+      // reducedMotion: autoplay-Param ist false -> start() liefe mit Swipers
+      // 3s-Default-Delay los (gleiche Falle wie der Ruecksprung-Bug #20b).
+      if (inst && inst.autorotate && !inst.reducedMotion && inst.swiper && inst.swiper.autoplay) {
         inst.swiper.autoplay.start();
       }
     },
