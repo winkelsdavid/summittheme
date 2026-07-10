@@ -594,7 +594,8 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
 ## 35. Slideshow 1: Setting "Badges Animation" (Feature)
 - [~] Neues Select direkt unter "Transition" (id anim_badges), steuert NUR
       Review-Box (.reviews-block) + Selling-Point-Pills (.c_icon_item):
-      Slide Up (Default, = der Stagger aus #34-Nachtrag), Fade (reines
+      Slide Up (Default, = der Stagger aus #34-Nachtrag), Slide From Right
+      (3f431fb: 48px von rechts reinrutschen + Einblenden), Fade (reines
       Einblenden, gleiche 0.7s-Kurve + Delays .1s/.45s), None (statisch,
       keine Regeln emittiert). Liquid-gated im Section-CSS; Default
       slide-up = aktuelles Verhalten fuer Bestands-Instanzen. Live-Test:
