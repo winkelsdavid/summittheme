@@ -2589,7 +2589,9 @@ theme.Slideshow = (function () {
       node.appendChild(nextEl);
     }
     var pagiEl = null;
-    if (this.navDot) {
+    // Wie die Pfeile: Dots nur bei mehr als einem Slide - sonst stand ein
+    // einzelner funktionsloser Dot unter Einzel-Slide-Shows.
+    if (this.navDot && slides.length > 1) {
       pagiEl = document.createElement("div");
       pagiEl.className = "swiper-pagination";
       node.appendChild(pagiEl);
@@ -2621,7 +2623,7 @@ theme.Slideshow = (function () {
           }
         : false,
       navigation: !useFade && prevEl ? { nextEl: nextEl, prevEl: prevEl } : false,
-      pagination: this.navDot ? { el: pagiEl, clickable: true } : false,
+      pagination: pagiEl ? { el: pagiEl, clickable: true } : false,
       on: {
         init: function () {
           self.showMobileText(0);
