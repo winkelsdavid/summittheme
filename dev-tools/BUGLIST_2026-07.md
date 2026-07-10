@@ -671,6 +671,16 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Hinweis (Design-Differenz, kein Bug): Slideshow 2 zeigt Pfeile auch
       <992px (nur repositioniert), Slideshow 1 versteckt sie dort.
 
+## 39. Testimonial Slider Auto: Footer + Badges sticky unten in der Box
+- [~] Inhalt floss von oben - bei kurzen Review-Texten hingen Badges und
+      Footer (Bild/Titel/Datum/Verifiziert) pro Karte auf unterschiedlichen
+      Hoehen, Leerraum unten (User-Screenshot). Fix: Karte height:100%
+      (fuellt den gleich hohen Slide), .cs_review flex:1 (Text dehnt sich
+      als Mittelteil), .review_badges margin-top:auto (Anker greift auch
+      bei leerem Text). Badges + Footer liegen jetzt in JEDER Karte buendig
+      unten. Live-Test: Cards mit kurzem vs. langem Text nebeneinander ->
+      Badges-Zeile und Footer-Box auf identischer Hoehe ueber alle Karten.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

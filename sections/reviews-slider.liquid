@@ -52,11 +52,23 @@
     display: flex !important;
     flex-direction: column;
     gap: 10px;
-    height:auto;
+    /* 100% statt auto: Karte fuellt den (gleich hohen) Slide, damit der
+       Anker unten ueberall auf derselben Hoehe liegt. */
+    height:100%;
     box-shadow: {{ section.settings.border_color }} 0px 0px 0px 1px;
     align-items: flex-start;
     background: #ffffff;
 }
+  /* Badges + Footer (Bild/Titel/Datum/Verifiziert) kleben IMMER unten in der
+     Box: der Review-Text dehnt sich als flexibler Mittelteil - vorher floss
+     alles von oben und kurze Texte liessen Badges/Footer pro Karte auf
+     unterschiedlichen Hoehen haengen. */
+  .review-slider-i .cs_review {
+    flex: 1 1 auto;
+  }
+  .review-slider-i .review_badges {
+    margin-top: auto;
+  }
   .reviewbox-verified-text-i {
     display: flex;
     align-items: center;
