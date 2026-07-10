@@ -44,10 +44,12 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         Inline-Gesamtbreite auf dem Track zufaellig ueberlebt.
         Fix Product List (Carousel): .customstyleID .swiper-slide.col
         {flex:0 0 auto; max-width:none} in product-list.liquid.
-        Product Tab bewusst NOCH NICHT gefixt - User testet erst die
-        Carousel-Sektion, dann GO fuer product-tab.liquid (gleiche Regel
-        in den Carousel-Zweig). Live-Test: Display Items 3 -> exakt 3
-        Karten sichtbar ab 1201px (Leiter darunter 2/1/1/2).
+        Product List (Carousel) vom User BESTAETIGT (2026-07-10). ✔
+        Product Tab danach gleich gefixt: identische Regel im Inline-Style
+        von product-tab.liquid, greift nur im Carousel-Modus (Grid hat
+        kein .swiper-slide). Live-Test Product Tab: Enable Carousel AN,
+        Items 3 -> exakt 3 Karten ab 1201px, Pfeile blaettern seitenweise;
+        Grid-Modus (Carousel AUS) unveraendert.
 - [~] Ohne hinterlegte Kollektion wird komplett falsch angezeigt.
       → Fix e9fa5da: collections.all-Fallback in product-tab, product-list,
         product-list-swiper. Wartet auf Live-Test.

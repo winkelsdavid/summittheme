@@ -39,6 +39,15 @@ display:flex;
   padding: 0 {{ section.settings.spaceBetween | divided_by: 2 }}px;
   height:inherit;
 }
+/* Bootstrap .col setzt flex-basis:0 + flex-grow:1 und ueberstimmt damit die
+   Inline-Breite, die Swiper jedem Slide gibt ("Items" wirkungslos, alle
+   Karten quetschen sich in eine Zeile). Gleicher Fix wie Product List
+   (Carousel) c891674, vom User dort bestaetigt. Greift nur im Carousel-
+   Modus (.swiper-slide existiert im Grid-Modus nicht). */
+.customstyle{{ section.id }} .swiper-slide.col{
+  flex: 0 0 auto;
+  max-width: none;
+}
 .style-button.nav-tabs .nav-item{
   margin-bottom:0;
 }
