@@ -10,6 +10,15 @@
     padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
   }
   }
+  /* Bootstrap .col setzt flex-basis:0 + flex-grow:1 und ueberstimmt damit die
+     Inline-Breite, die Swiper jedem Slide gibt ("Display Items" wirkungslos,
+     alle Karten quetschen sich in eine Zeile). Slick hatte das per Track-
+     Gesamtbreite zufaellig ueberlebt. flex-basis:auto laesst Swipers width
+     wieder greifen; das Gutter-Padding der .col-Klassen bleibt erhalten. */
+  .customstyle{{ section.id }} .swiper-slide.col{
+    flex: 0 0 auto;
+    max-width: none;
+  }
 </style>
 <div class="customstyle{{ section.id }}" data-aos="{{ section.settings.animation }}">
   {%- render 'style-section' -%}

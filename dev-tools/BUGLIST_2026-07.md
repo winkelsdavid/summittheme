@@ -36,6 +36,18 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
 - [~] "Limit Items" und "Display Items" funktionieren nicht richtig.
       → limit + show/perview korrekt verdrahtet; Carousel-Loop-Guard bereits
         gesetzt (theme.js:3154/3238). War Zustand VOR Loop-Guard-Fix. Live-Test.
+      → ECHTE Root Cause gefunden (2026-07-10): Bootstrap .col auf den
+        swiper-slides (header-css.liquid: flex-basis:0 + flex-grow:1)
+        ueberstimmt die Inline-Breite, die Swiper jedem Slide setzt ->
+        "Display Items"/"Items" wirkungslos, alle Karten gleichverteilt in
+        einer Zeile (Dots rechnen trotzdem richtig). Slick hatte das per
+        Inline-Gesamtbreite auf dem Track zufaellig ueberlebt.
+        Fix Product List (Carousel): .customstyleID .swiper-slide.col
+        {flex:0 0 auto; max-width:none} in product-list.liquid.
+        Product Tab bewusst NOCH NICHT gefixt - User testet erst die
+        Carousel-Sektion, dann GO fuer product-tab.liquid (gleiche Regel
+        in den Carousel-Zweig). Live-Test: Display Items 3 -> exakt 3
+        Karten sichtbar ab 1201px (Leiter darunter 2/1/1/2).
 - [~] Ohne hinterlegte Kollektion wird komplett falsch angezeigt.
       → Fix e9fa5da: collections.all-Fallback in product-tab, product-list,
         product-list-swiper. Wartet auf Live-Test.
