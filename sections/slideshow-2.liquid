@@ -866,6 +866,15 @@ padding-top:4px!important;
                     </li>
                     {%- endunless -%}
                     {% endcomment %}
+                    {%- liquid
+                      # Icons-Zeile nur rendern, wenn mind. ein Selling Point
+                      # Text hat - leeres li (pb-1/mb-lg-3) = toter Abstand (S12).
+                      assign has_icons = false
+                      if block.settings.icon_text_1 != blank or block.settings.icon_text_2 != blank or block.settings.icon_text_3 != blank
+                        assign has_icons = true
+                      endif
+                    -%}
+                    {%- if has_icons -%}
                     <li class="pb-1 mb-lg-3 icons_cont slideshow__title" style="--spacing:{{ block.settings.spacing }}px">
                       {% for ii in (1..3) %}
                         {% assign icon = "icon_" | append: forloop.index %}
@@ -892,6 +901,7 @@ padding-top:4px!important;
                         {% endif %}
                       {% endfor %}
                     </li>
+                    {%- endif -%}
                   </ul>
     
                   {%-liquid
@@ -1032,15 +1042,32 @@ padding-top:4px!important;
       </div>
       <div class="slideshow__text-wrap slideshow__text-wrap--mobile bg-white">
         {%- for block in section.blocks -%}
-        {%- assign show_text = false -%}
-        {%- unless block.settings.slide_title == blank and block.settings.subheading == blank -%}
-        {%- assign show_text = true -%}
-        {%- endunless -%}
-        {%- assign show_link_button = false -%}
-        {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
-        {%- assign show_link_button = true -%}
-        {%- endif -%}
-        {%- if show_text or show_link_button -%}
+        {%- liquid
+          # Panel-Existenz prueft ALLE Panel-Inhalte (Z1, wie slideshow-1 S16):
+          # vorher nur Titel/Button 1 - Slides mit nur Toptitle/Review-Box/
+          # Pills/Button 2 bekamen kein Panel. has_icons hier pro Panel-Block
+          # neu berechnen (sonst leakt der Wert des letzten Desktop-Blocks).
+          assign show_text = false
+          unless block.settings.slide_title == blank
+            assign show_text = true
+          endunless
+          if block.settings.slide_toptitle != blank or block.settings.replace_reviews
+            assign show_text = true
+          endif
+          assign show_link_button = false
+          if block.settings.button_label != blank and block.settings.button_link != blank
+            assign show_link_button = true
+          endif
+          assign show_link_button2 = false
+          if block.settings.button_label_2 != blank and block.settings.button_link_2 != blank
+            assign show_link_button2 = true
+          endif
+          assign has_icons = false
+          if block.settings.icon_text_1 != blank or block.settings.icon_text_2 != blank or block.settings.icon_text_3 != blank
+            assign has_icons = true
+          endif
+        -%}
+        {%- if show_text or show_link_button or show_link_button2 or has_icons -%}
         <div class="slideshow__text-content slideshow__text-content--mobile slideshow__text-content--mobile-{{ forloop.index0 }} text-center" {% unless forloop.first %}style="display:none"{% endunless %}>
       <div class="container" style="background-color: {{ block.settings.bgwrap }};">
                         {% if block.settings.replace_reviews %}
@@ -1064,6 +1091,7 @@ padding-top:4px!important;
             </div>
             {%- endunless -%}
             {% endcomment %}
+             {%- if has_icons -%}
              <div class="mega-subtitle slideshow__subtitle slideshow__subtitle--mobile icons_cont" style="--spacing:{{ block.settings.spacing }}px">
                {% for ii in (1..3) %}
                   {% assign icon = "icon_" | append: forloop.index %}
@@ -1087,6 +1115,7 @@ padding-top:4px!important;
                   {% endif %}
                 {% endfor %}
             </div>
+            {%- endif -%}
             {%-liquid
             assign show_link_button-1 = false
             assign show_link_button-2 = false
