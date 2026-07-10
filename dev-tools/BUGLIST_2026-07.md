@@ -532,7 +532,13 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       funktioniert unveraendert, Header/Compare-Button ohne Layout-Aenderung.
 
 ## 33. Product List (Carousel) + Product Tab: Dots unter die Box
-- [~] Dots lagen INNERHALB der Produktbox (Swiper-CSS: bullets absolut
+- [x] ✔ BESTÄTIGT vom User (2026-07-10, nach d2b5504). Der "weiterhin
+      unsichtbar"-Zwischenbefund kam vom zweiten Shop (Ducky) mit nicht
+      aktuellem Theme-Stand; Headless-Browser-Messung hatte Runde 2 als
+      korrekt verifiziert (Dots sichtbar, padding 35px, bottom 8px).
+      Merke: Bei Tabs/Listen mit <= "Items" Produkten versteckt Swipers
+      watchOverflow-Lock Dots UND Pfeile absichtlich (nichts zu blaettern).
+- Historie: Dots lagen INNERHALB der Produktbox (Swiper-CSS: bullets absolut
       bottom:10px im Container) statt darunter. Das alte Slick-Pattern
       (dots-negative -> bottom:-25px + Container-Margin 30px) existierte
       noch, zielte aber auf die tote .slick-dots-Klasse. Auf die Swiper-
