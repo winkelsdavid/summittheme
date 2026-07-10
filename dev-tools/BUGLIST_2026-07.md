@@ -603,6 +603,24 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Setting-Wechsel neu), Text-Stagger der uebrigen Elemente bleibt
       unveraendert.
 
+## 36. Slideshow: Auto-Rotate tot nach Editor-/Vorschau-Refresh
+- [~] Symptom: Rotation laeuft beim ersten Oeffnen, nach Refresh nicht mehr
+      (Editor UND "normale Vorschau" - die Vollbild-Vorschau aus dem
+      Customizer laeuft weiter im Design Mode, gleiche Event-Bruecke).
+      Audit: purer Storefront-Reload im Headless-Harness nachweislich sauber
+      (autoplay.running true + Weiterdrehen vor UND nach reload). Ursache:
+      der Customizer restauriert die Section-/Block-Auswahl nach Refresh und
+      feuert shopify:block:select erneut (evt.detail.load === true) ->
+      onBlockSelect stoppte Autoplay bedingungslos, Restart erst bei
+      manuellem Deselect. Altes Theme hatte dasselbe Verhalten (slickPause
+      bedingungslos) - keine Regression, aber stoerend.
+      Fix ce74ab6: Load-Restore-Selects (detail.load) stoppen nicht mehr;
+      aktive User-Selektion pausiert weiterhin (Editor-UX), Deselect startet.
+      Live-Test: Editor mit selektierter Slideshow refreshen -> Rotation
+      laeuft; Slide-Block aktiv anklicken -> pausiert; woanders klicken ->
+      laeuft weiter. Falls es auf einem echten Share-Preview-Link (ausserhalb
+      des Customizers) weiterhin auftritt: Konsolen-Probe aus dem Chat.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
