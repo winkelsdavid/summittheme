@@ -2856,7 +2856,13 @@ theme.SlideshowSection.prototype = Object.assign(
       // autoplay.start() ohne konfiguriertes Autoplay startete sonst die
       // Rotation mit Swipers 3s-DEFAULT-Delay -> Slideshow sprang im Editor
       // nach Block-Deselect von selbst weiter (User-Bug "springt zurueck").
-      if (inst.autorotate && inst.swiper.autoplay) inst.swiper.autoplay.stop();
+      // evt.detail.load: der Customizer restauriert die Auswahl nach einem
+      // Refresh und feuert die Select-Events erneut (load:true) - dabei NICHT
+      // stoppen, sonst steht die Rotation nach jedem Editor-/Preview-Refresh
+      // still, bis man manuell deselektiert. Gilt auch fuer die Vollbild-
+      // Vorschau aus dem Customizer (laeuft weiter im Design Mode).
+      var isLoadRestore = evt && evt.detail && evt.detail.load;
+      if (!isLoadRestore && inst.autorotate && inst.swiper.autoplay) inst.swiper.autoplay.stop();
     },
 
     onBlockDeselect: function () {
