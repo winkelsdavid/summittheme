@@ -1299,7 +1299,11 @@ margin-right:auto;
     </div>
   </div>
   {%- unless section.settings.slideshow_mobile -%}
-    <div class="slideshow__text-wrap slideshow__text-wrap--mobile bg-white text-center mobile-align-{{ block.settings.text_alignment_mobile }}" >
+    {%- comment -%} Frueher: mobile-align-{{ block.settings.text_alignment_mobile }} -
+        'block' ist hier ausserhalb jedes Loops nil, die Klasse war immer leer.
+        Das Panel liegt statisch UNTER der Slideshow, eine Vertikal-Ausrichtung
+        ist hier gegenstandslos -> Klasse entfernt. {%- endcomment -%}
+    <div class="slideshow__text-wrap slideshow__text-wrap--mobile bg-white text-center" >
       {%- for block in section.blocks -%}
       {%- liquid
         assign show_text = false
@@ -1905,6 +1909,7 @@ margin-right:auto;
           "type": "select",
           "id": "text_alignment_mobile",
           "label": "Text Alignment (Mobile)",
+          "info": "Applies only when \"Show Text Look Like Desktop\" is enabled.",
           "default": "center",
           "options": [
             {
