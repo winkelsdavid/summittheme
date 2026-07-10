@@ -713,6 +713,7 @@
           "autorotate": true,
           "autorotate_speed": 5,
           "anim_slideshow": "zoom",
+          "anim_badges": "fade",
           "e_arrow": true,
           "color_arrow": "#ffffff",
           "bg_arrow": "#ffffff",
