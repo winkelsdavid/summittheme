@@ -591,6 +591,17 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       (Stagger nie stillgelegt, kein Content-Fade, speed via geteilter
       JS-Komponente) - dort nichts zu tun.
 
+## 35. Slideshow 1: Setting "Badges Animation" (Feature)
+- [~] Neues Select direkt unter "Transition" (id anim_badges), steuert NUR
+      Review-Box (.reviews-block) + Selling-Point-Pills (.c_icon_item):
+      Slide Up (Default, = der Stagger aus #34-Nachtrag), Fade (reines
+      Einblenden, gleiche 0.7s-Kurve + Delays .1s/.45s), None (statisch,
+      keine Regeln emittiert). Liquid-gated im Section-CSS; Default
+      slide-up = aktuelles Verhalten fuer Bestands-Instanzen. Live-Test:
+      alle 3 Optionen durchschalten (Editor rendert Section-CSS bei
+      Setting-Wechsel neu), Text-Stagger der uebrigen Elemente bleibt
+      unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

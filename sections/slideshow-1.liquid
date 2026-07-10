@@ -231,15 +231,23 @@ border-radius:0!important;
 ,.slideshow__text-wrap--desktop .slideshow__text-content .slideshow__btn{
   transform: translateY(110%);
 }
-/* Auch die spaeter ergaenzten Elemente in den Stagger einreihen: die
-   Review-Box (Replace Subtitle Top With Review; .reviews-block ist die
-   gemeinsame Klasse aller drei Review-Typen in rating-custom.liquid) und
-   die Selling-Point-Pills (.c_icon_item im icons_cont-li). Die Masken
+/* Badges (Review-Box via .reviews-block + Selling-Point-Pills via
+   .c_icon_item) haben ihre EIGENE Animations-Einstellung "Badges Animation"
+   (anim_badges): slide-up = wie der Text-Stagger (Default), fade = reines
+   Einblenden mit denselben Delays, none = statisch. Die Masken
    (li overflow:hidden) existieren bereits. */
+{%- assign anim_badges = section.settings.anim_badges | default: 'slide-up' -%}
+{%- if anim_badges == 'slide-up' -%}
 .slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
 .slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
   transform: translateY(110%);
 }
+{%- elsif anim_badges == 'fade' -%}
+.slideshow__text-wrap--desktop .slideshow__text-content li .reviews-block,
+.slideshow__text-wrap--desktop .slideshow__text-content li.icons_cont .c_icon_item{
+  opacity: 0;
+}
+{%- endif -%}
 
     @media only screen and (min-width:750px) {
       .slideshow__text-content.slideshow__text-content--vertical-top {
@@ -294,6 +302,7 @@ border-radius:0!important;
 /* Review-Box: sitzt im Toptitle-Slot (ersetzt ihn) -> fruehester Delay .1s.
    Pills: Zwischenslot .45s (zwischen Subtitle .4s und Buttons .5s - denselben
    Slot nutzt slideshow-2 fuer __info). */
+{%- if anim_badges == 'slide-up' -%}
 .no-js .slideshow__text-content li .reviews-block,
 .no-js .slideshow__text-content li.icons_cont .c_icon_item,
 .swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
@@ -308,6 +317,22 @@ border-radius:0!important;
   transition: transform 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .45s;
 }
+{%- elsif anim_badges == 'fade' -%}
+.no-js .slideshow__text-content li .reviews-block,
+.no-js .slideshow__text-content li.icons_cont .c_icon_item,
+.swiper-initialized .swiper-slide-active .slideshow__text-content li .reviews-block,
+.swiper-initialized .slide-shown .slideshow__text-content li .reviews-block{
+  opacity: 1;
+  transition: opacity 0.7s cubic-bezier(.29,.63,.44,1);
+  transition-delay: .1s;
+}
+.swiper-initialized .swiper-slide-active .slideshow__text-content li.icons_cont .c_icon_item,
+.swiper-initialized .slide-shown .slideshow__text-content li.icons_cont .c_icon_item{
+  opacity: 1;
+  transition: opacity 0.7s cubic-bezier(.29,.63,.44,1);
+  transition-delay: .45s;
+}
+{%- endif -%}
 
 /* Content-Fade (#22) rueckabgewickelt: ersetzt durch den reaktivierten
    Original-Text-Stagger (Slick-Paritaet, siehe Block oben). Damit entfaellt
@@ -1750,6 +1775,27 @@ margin-right:auto;
         {
           "value": "slide",
           "label": "Slide"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "anim_badges",
+      "label": "Badges Animation",
+      "info": "Animation of the review box and the selling point badges only.",
+      "default": "slide-up",
+      "options": [
+        {
+          "value": "slide-up",
+          "label": "Slide Up"
+        },
+        {
+          "value": "fade",
+          "label": "Fade"
+        },
+        {
+          "value": "none",
+          "label": "None"
         }
       ]
     },
