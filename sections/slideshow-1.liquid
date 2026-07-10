@@ -246,53 +246,46 @@ border-radius:0!important;
     }
     
 .no-js .slideshow__text-content,.swiper-initialized .swiper-slide-active .slideshow__text-content {}
-.no-js .slideshow__text-content,.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__toptitle,.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__title,
-.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__subtitle,.swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn{
+/* === Original-Text-Stagger (Slick-Parität): kam mit dem Juni-Export
+   auskommentiert an - transition-Reveals an .swiper-slide-active starteten
+   mit Swipers Loop-Duplikaten sichtbar neu. Ursache ist inzwischen geloest
+   (fade-Familie ohne loop; Slide-Modus via .slide-shown-Twins), daher
+   reaktiviert. Werte 1:1 wie im alten Theme: 0.7s cubic-bezier(.29,.63,.44,1),
+   Stagger Toptitle .1s / Title .3s / Subtitle .4s / Button .5s.
+   .slide-shown zusaetzlich in den Selektoren = Loop-Restart-Schutz. === */
+.no-js .slideshow__text-content li .slideshow__toptitle,
+.no-js .slideshow__text-content li .slideshow__title,
+.no-js .slideshow__text-content li .slideshow__subtitle,
+.no-js .slideshow__text-content .slideshow__btn,
+.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__toptitle,
+.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__title,
+.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__subtitle,
+.swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__toptitle,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__title,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__subtitle,
+.swiper-initialized .slide-shown .slideshow__text-content .slideshow__btn{
   transform: translateY(0);
- /* transition: transform 0.7s cubic-bezier(.29,.63,.44,1);
-  transition-delay: .1s;*/
+  transition: transform 0.7s cubic-bezier(.29,.63,.44,1);
+  transition-delay: .1s;
 }
-.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__title{
+.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__title,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__title{
   transition-delay: .3s;
 }
-.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__subtitle{
+.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__subtitle,
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__subtitle{
   transition-delay: .4s;
 }
-/*.swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn{
+.swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn,
+.swiper-initialized .slide-shown .slideshow__text-content .slideshow__btn{
   transition-delay: .5s;
   transition: background 0.4s ease 0s, color 0.4s ease 0s, border 0.4s ease 0s, transform 0.5s cubic-bezier(.29,.63,.44,1) .5s;
-}*/
+}
 
-/* === Content-Fade: ALLE Slide-Inhalte (Review-Badge "Reviews Type", Top Title,
-   Heading, Texte 1-3, Buttons, "Activate Review Badge"-Rating) haengen im
-   Container .slideshow__text-content und blenden pro Slide weich ein (0.5s) -
-   beim Laden der Sektion und bei jedem Slide-Wechsel. Die BILDER behalten ihre
-   eingestellte "Transition" (fade/zoom/slide-fade/slide) unveraendert.
-   Gate: html.loading-anim-wait setzt die Loading Animation (Theme Settings,
-   snippets/loading_animation.liquid) beim Parsen und entfernt sie erst nach
-   ihrem VOLLSTAENDIGEN Ende -> der Content-Fade startet danach. Ohne (bzw.
-   deaktivierte) Loading Animation existiert die Klasse nie -> Fade sofort.
-   Scoped auf diese Section-Instanz via data-section-id. === */
-@keyframes slideshowContentFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-[data-section-id="{{ section.id }}"] .slideshow__text-content {
-  opacity: 0;
-}
-html.no-js [data-section-id="{{ section.id }}"] .slideshow__text-content {
-  opacity: 1;
-}
-html:not(.loading-anim-wait) [data-section-id="{{ section.id }}"] .swiper-initialized .swiper-slide-active .slideshow__text-content,
-html:not(.loading-anim-wait) [data-section-id="{{ section.id }}"] .swiper-initialized .slide-shown .slideshow__text-content {
-  animation: slideshowContentFade 0.5s ease both;
-}
-/* Mobile-Textpanel (liegt AUSSERHALB der Slides, showMobileText schaltet per
-   display um): CSS-Animationen starten bei jedem Sichtbarwerden neu -> Fade
-   laeuft automatisch bei jedem Slide-Wechsel auch mobil. */
-html:not(.loading-anim-wait) [data-section-id="{{ section.id }}"] .slideshow__text-content--mobile {
-  animation: slideshowContentFade 0.5s ease both;
-}
+/* Content-Fade (#22) rueckabgewickelt: ersetzt durch den reaktivierten
+   Original-Text-Stagger (Slick-Paritaet, siehe Block oben). Damit entfaellt
+   auch das Loading-Animation-Gate - wie im alten Theme. */
 
 @media only screen and (max-width:749px) {
   .slideshow__text-wrap--desktop .slideshow__text-content {

@@ -255,7 +255,11 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         mehrere Durchlaeufe inkl. Wrap.
 
 ## 22. Slideshow 1: Content-Fade-Animation (Feature, User-Spec 2026-07-09)
-- [~] ALLE Slide-Inhalte (Review-Badge "Reviews Type", Top Title, Heading,
+- OBSOLET / RUECKABGEWICKELT (2026-07-10, siehe #34): User-Entscheidung -
+  Animationen sollen visuell EXAKT dem alten Theme entsprechen. Der
+  Content-Fade (Ganzblock-Opacity + Loading-Gate) wurde entfernt und durch
+  den reaktivierten Original-Text-Stagger ersetzt.
+- [~] (historisch) ALLE Slide-Inhalte (Review-Badge "Reviews Type", Top Title, Heading,
       Texte 1-3, Buttons, "Activate Review Badge"-Rating) blenden weich ein
       (0.5s) - beim Laden der Sektion und bei jedem Slide-Wechsel. Bilder
       behalten ihre "Transition". Der Fade startet erst NACHDEM die Loading
@@ -551,6 +555,31 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       BEIDE CSS-Dateien (theme.css + theme.css.liquid). Live-Test: Dots
       beider Sektionen sichtbar mittig direkt unter den Karten; Dots AUS
       -> kein zusaetzlicher Abstand; Product Tab auch nach Tab-Wechsel.
+
+## 34. Slideshow 1: Original-Animationen wiederhergestellt (Slick-Paritaet)
+- [~] User-Auftrag: Animationen visuell EXAKT wie im alten Theme (Referenz:
+      old-import-safe.zip, Slick-basiert). Audit ergab 4 Abweichungen:
+      D1 Text-Stagger-Reveal war seit dem Juni-Export auskommentiert
+         (Loop-Duplikat-Restarts als mutmasslicher Grund) -> Texte poppten
+         instant; stattdessen lief der Ganzblock-Content-Fade (#22).
+      D2 speed:300 statt Slick-Default 500 (mein Fehlkommentar "Slick-
+         Default 300ms" - vendor.js sagt speed:500).
+      D3 Loading-Gate (#22) existierte nur neu.
+      D4 Button-Hover-Transition (0.4s bg/color/border) mit auskommentiert.
+      FIX: (1) Original-Stagger reaktiviert - transform 0.7s
+      cubic-bezier(.29,.63,.44,1), Delays Toptitle .1s / Title .3s /
+      Subtitle .4s / Button .5s + Button-Farbtransition, Werte 1:1 alt;
+      einzige bewusste Abweichung: .slide-shown-Twins zusaetzlich in den
+      Selektoren (Loop-Restart-Schutz im Transition-Modus "Slide").
+      (2) Content-Fade #22 komplett entfernt (Keyframes, opacity:0-Basis,
+      Gate-Regeln, Mobile-Panel-Regel) -> kein Warten auf Loading Animation
+      mehr, wie im Original. (3) theme.js speed 300 -> 500.
+      Zoom-CSS (1.8s) und Slide&Fade-CSS (0.6s/60ms/10vw) waren bereits
+      identisch. Nur slideshow-1; slideshow-2 auf Zuruf.
+      Live-Test: alle 4 Transitions durchschalten - Texte wachsen wieder
+      zeilenweise gestaffelt von unten aus ihren Masken (~1,2s Dramaturgie),
+      Blende/Slide spuerbar ruhiger (500ms), kein Ruecksprung/Restart beim
+      Loop-Wrap im Slide-Modus, Texte erscheinen sofort ohne Loading-Warten.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer

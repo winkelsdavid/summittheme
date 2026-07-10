@@ -2616,7 +2616,7 @@ theme.Slideshow = (function () {
       effect: useFade ? "fade" : "slide",
       fadeEffect: { crossFade: false },
       loop: useFade ? false : slides.length > 1,
-      speed: 300, // Slick-Default (300ms) - 800 fuehlte sich traeger an als vor der Migration
+      speed: 500, // ECHTER Slick-Default (vendor.js: speed:500) - Original-Tempo der Blende/des Track-Slides
       threshold: 20,
       watchSlidesProgress: true,
       a11y: { enabled: false }, // Slick had accessibility:false; aria-current handled manually below
