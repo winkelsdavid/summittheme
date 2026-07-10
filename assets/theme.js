@@ -3194,6 +3194,9 @@ theme.Productlists = (function () {
       slidesPerGroup: 2,
       loop: !!s.infinite,
       grabCursor: !!s.draggable,
+      // Draggable AUS = kein Maus-Drag (Slick draggable:false); Touch-Swipe
+      // auf echten Touch-Geraeten bleibt an (simulateTouch betrifft nur Maus).
+      simulateTouch: !!s.draggable,
       autoHeight: true,
       a11y: { enabled: false },
       breakpoints: {
@@ -3268,6 +3271,8 @@ theme.Producttabs = (function () {
         slidesPerGroup: 2,
         loop: !!s.infinite,
         grabCursor: !!s.draggable,
+        // Draggable AUS = kein Maus-Drag (Slick draggable:false); Touch bleibt.
+        simulateTouch: !!s.draggable,
         autoHeight: true,
         observer: true,
         observeParents: true,
