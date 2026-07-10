@@ -531,6 +531,19 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       (weder als Sektion noch unter Theme Settings), Scratch Newsletter Popup
       funktioniert unveraendert, Header/Compare-Button ohne Layout-Aenderung.
 
+## 33. Product List (Carousel) + Product Tab: Dots unter die Box
+- [~] Dots lagen INNERHALB der Produktbox (Swiper-CSS: bullets absolut
+      bottom:10px im Container) statt darunter. Das alte Slick-Pattern
+      (dots-negative -> bottom:-25px + Container-Margin 30px) existierte
+      noch, zielte aber auf die tote .slick-dots-Klasse. Auf die Swiper-
+      Pagination portiert: .dots-negative-Wrapper (Product List Carousel)
+      + .prdtab-content (Product Tab) -> bullets bottom:-25px, Container-
+      margin-bottom:30px nur bei tatsaechlich gerenderten Dots (:has, wird
+      im Theme bereits genutzt). In BEIDE CSS-Dateien (theme.css +
+      theme.css.liquid). Live-Test: Dots beider Sektionen mittig direkt
+      unter den Karten, kein Overlap mit Karte oder Folgesektion; Dots AUS
+      -> kein zusaetzlicher Abstand.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
