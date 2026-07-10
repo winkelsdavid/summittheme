@@ -1341,8 +1341,14 @@ margin-right:auto;
         if block.settings.icon_text_1 != blank or block.settings.icon_text_2 != blank or block.settings.icon_text_3 != blank
         assign has_icons = true
         endif
+        # Panel-Existenz prueft jetzt ALLE Panel-Inhalte - vorher nur Titel/
+        # Subheading/Button 1: Slides mit nur Toptitle, Review-Box, Badge,
+        # Button 2 oder Selling Points bekamen kein Panel.
+        if block.settings.slide_toptitle != blank or block.settings.replace_reviews or block.settings.active_review
+        assign show_text = true
+        endif
       -%}
-      {%- if show_text or show_link_button -%}
+      {%- if show_text or show_link_button-1 or show_link_button-2 or has_icons -%}
       <div class="slideshow__text-content slideshow__text-content--mobile slideshow__text-content--mobile-{{ forloop.index0 }}" {% unless forloop.first %}style="display:none"{% endunless %} >
         <div class="container" style="background-color: {% if block.settings.bgwrap != blank and block.settings.bgwrap != "rgba(0,0,0,0)"%}{{ block.settings.bgwrap }}{% else %}{{ settings.color_body_bg }}{% endif %};">
 

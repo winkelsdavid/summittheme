@@ -2777,10 +2777,9 @@ theme.Slideshow = (function () {
     var currentTextContent = this.textWrapperMobile.querySelectorAll(
       selectors.textContentMobile + "-" + slideIndex
     );
-    if (
-      !currentTextContent.length &&
-      this.node.querySelectorAll(selectors.slides).length === 1
-    ) {
+    if (!currentTextContent.length) {
+      // Gilt auch bei Mehr-Slide-Shows: hat der aktive Slide kein Panel,
+      // Wrapper verstecken - sonst blieb eine leere weisse Leiste stehen.
       this.textWrapperMobile.style.display = "none";
     } else {
       // jQuery .show() forced an inline display:block. The vanilla port used
