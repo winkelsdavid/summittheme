@@ -1463,6 +1463,45 @@ margin-right:auto;
                 </a>
               </div>
             {%- endif -%}
+            {%- comment -%} "Activate Review Badge" fehlte im Mobile-Panel komplett -
+                Badge war in diesem Modus mobil unsichtbar. Gleiches Markup wie
+                Desktop, aber OHNE die Klasse slideshow__btn (die ist in diesem
+                Modus <=749px display:none) und mit eigenen Gradient-IDs. Die
+                .c_rating-Farbstyles emittiert bereits der Desktop-Teil. {%- endcomment -%}
+            {% if block.settings.active_review %}
+            <div class="c_slideshow_rating_cont c_rating-{{ block.id }}">
+              <div class="c_slideshow_note">{{ block.settings.rating_count }}</div>
+              <div class="c_slideshow_text">
+                <div class="c_slideshow-rating">
+                  {% assign sanitized_text = block.settings.rating_count | strip_html | downcase | replace: 'out of', '/' %}
+                  {% assign pre_slash = sanitized_text | split: '/' | first | strip %}
+                  {% assign rating_string = pre_slash | split: ' ' | last | strip %}
+                  {% assign rating = rating_string | replace: ',', '.' | plus: 0.0 %}
+                  {% if rating == 0 %}{% assign rating = rating_string | plus: 0.0 %}{% endif %}
+                  {% for ii in (1..5) %}
+                    {% assign fill_percentage_x = 0 %}
+                    {% assign rating_minus = ii | minus: 1 %}
+                    {% if rating >= ii %}
+                      {% assign fill_percentage_x = 100 %}
+                    {% elsif rating > rating_minus %}
+                      {% assign decimal = rating | minus: ii | plus: 1 %}
+                      {% assign fill_percentage_x = decimal | times: 100 %}
+                    {% endif %}
+                    <svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24">
+                      <defs>
+                        <linearGradient id="grad-{{ ii }}-{{ section.id }}-mb-{{ block.id }}">
+                          <stop offset="{{ fill_percentage_x }}%" stop-color="currentColor" />
+                          <stop offset="{{ fill_percentage_x }}%" stop-color="transparent" />
+                        </linearGradient>
+                      </defs>
+                      <path fill="url(#grad-{{ ii }}-{{ section.id }}-mb-{{ block.id }})" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                    </svg>
+                  {% endfor %}
+                </div>
+                <p>{% if block.settings.rating_text != blank %}{{ block.settings.rating_text }}{% else %}{{ 'general.defaults.rating_text' | t }}{% endif %}</p>
+              </div>
+            </div>
+            {% endif %}
           </div>
         </div>
       </div>
