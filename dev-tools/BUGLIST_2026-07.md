@@ -406,6 +406,45 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       JSON-geparst OK. Live-Test: Promo-Sale-Block ohne Content-Override
       -> kurzer Text einzeilig ueber dem Countdown.
 
+## 30. Swiper-Sektionen-Audit (Product List Carousel / Swiper / Product Tab)
+- [~] Vollaudit aller Settings der 3 Sektionen (2026-07-10), 16 Findings,
+      davon 9 auf User-Auswahl gefixt (je 1 Commit):
+      F1 6844f0a Draggable wirkte nur auf den Cursor - simulateTouch jetzt
+         gekoppelt (Carousel + Tab); Touch-Swipe bleibt an.
+      F2 0ea08cf "Rows" war seit Slick-Migration tot - reaktiviert via
+         Swiper-6 slidesPerColumn (Fill row). Guards: autoHeight aus bei
+         2 Rows (clippte Reihe 2), loop aus (Multirow inkompatibel),
+         height:inherit der Slides nur bei 1 Row (Liquid-gated).
+      F3 61de54d watchOverflow im SwiperCustom - keine toten Pfeile/
+         Scrollbar bei Limit <= Per View (gilt auch product-wrap-banner
+         + featured-collections-3, dort nur Verbesserung).
+      F4 979b13b a11y im Product List Carousel war als einziges aus -> an.
+      F5 ff96212 rating-custom Review Type 3: ':1px solid' ohne Property
+         entfernt; Border nur noch bei nicht-transparenter t3_border_color
+         (vorher immer 1px, ggf. transparent).
+      F6 a06e2ac Breakpoint-Leiter Floor 2: bei Items 3 zeigte 481-992px
+         nur 1 Karte, <481px aber 2. Jetzt monoton (2/2/2/3 bzw. 2/3/4/5...).
+      F8 01b6e69 Banner-Snap-Versatz: data-spv-auto nur bei Enable Banner ->
+         slidesPerView:'auto' misst echte Breiten; Kartenbreiten per CSS
+         (>=992: (100%-Banner%-Gaps)/(PerView-1); 750-991: /2; <750 Mobile-
+         CSS 74%). Andere swipercustom-Sektionen byte-identisch (Ternary).
+      F10 51bc50a Grid Items=5 zeigte 750-991px fuenf Spalten (row-cols-5
+         schaltet global erst <750) -> scoped auf 2 Spalten angeglichen.
+      F11 75eb0a0 Same Height Default true (Product List Swiper) - gleiche
+         Boxhoehen jetzt Standard; Bestands-Instanzen ohne gespeicherten
+         Wert wechseln mit (gewollt).
+      NICHT gefixt (User-Auswahl): F7 (PerView-Desktop vs. fixe Tablet-
+      Breakpoints), F9 (Space Between mobil fix 20px), F12-F16 (Kosmetik:
+      nowrap-Naming, tote Slick-Reste, Schema-Defaults, Grid zeigt tote
+      Settings, doppelte AOS-Verschachtelung).
+      Live-Test: (1) Draggable AUS -> kein Maus-Drag mehr; (2) Rows=2 +
+      Carousel -> 2 Reihen, kein Infinite; (3) Swiper-Variante Limit 3 /
+      Per View 5 -> Pfeile+Scrollbar weg; (4) Review Type 3 ohne Border-
+      Farbe -> randlos; (5) Tablet 481-992 -> 2 Karten statt 1;
+      (6) Enable Banner an -> Blaettern rastet sauber; (7) Tab Grid
+      Items=5 auf Tablet -> 2 Spalten; (8) Swiper-Variante -> Boxen
+      gleich hoch (Same Height default an).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
