@@ -580,6 +580,16 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       zeilenweise gestaffelt von unten aus ihren Masken (~1,2s Dramaturgie),
       Blende/Slide spuerbar ruhiger (500ms), kein Ruecksprung/Restart beim
       Loop-Wrap im Slide-Modus, Texte erscheinen sofort ohne Loading-Warten.
+      Nachtrag Badges (2026-07-10): Review-Box (Replace Subtitle Top With
+      Review; via gemeinsamer Klasse .reviews-block aller 3 Review-Typen)
+      und Selling-Point-Pills (.c_icon_item) in den Stagger eingereiht -
+      beide existieren im Alt-Theme nicht (spaetere Erweiterungen), hatten
+      also nie eine Animation. Review-Box Delay .1s (Toptitle-Slot), Pills
+      .45s (Zwischenslot wie __info in slideshow-2), gleiche 0.7s-Kurve +
+      slide-shown-Twins. Der 4.8-Badge (Activate Review Badge) staggerte
+      bereits ueber .slideshow__btn. Slideshow 2: bereits auf Paritaet
+      (Stagger nie stillgelegt, kein Content-Fade, speed via geteilter
+      JS-Komponente) - dort nichts zu tun.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
