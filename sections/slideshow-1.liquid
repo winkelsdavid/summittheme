@@ -321,7 +321,10 @@ html:not(.no-js) .slideshow .slideshow__slide:first-child{
 html:not(.no-js) .slideshow.swiper-initialized .slideshow__slide{
 	display:block;visibility:visible!important;
 }
-@media (max-width:768px){
+/* 749 statt 768: alle uebrigen Mobile-Regeln der Sektion enden bei 749px -
+   im Band 750-768px verschob die Mobile-Vertikal-Ausrichtung sonst den
+   Desktop-Text (transform:unset gegen die 50%-Zentrierung). */
+@media (max-width:749px){
 .slideshow__text-wrap.mobile-align-top .slideshow__text-content{
       transform: unset;
     top: 0;
