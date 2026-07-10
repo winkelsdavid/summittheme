@@ -696,6 +696,13 @@ margin-right:auto;
       color:var(--color);
       font-weight:400;
     }
+    /* "Text Size Mobile": --mobile-size wurde inline gesetzt, aber nie
+       konsumiert - das Setting war tot, mobil galt die Desktop-Groesse. */
+    @media (max-width:749px) {
+      .c_icon_item span{
+        font-size:var(--mobile-size, var(--size));
+      }
+    }
      .slideshow_blurry{
       display:none;
     }
