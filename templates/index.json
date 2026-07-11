@@ -295,7 +295,7 @@
         "after_circle_color": "#abfcb2",
         "after_bar_track": "#055a47",
         "after_bar_fill": "#abfcb2",
-        "padding_top": 30,
+        "padding_top": 20,
         "padding_bottom": 60,
         "mobile_padding_top": 10,
         "mobile_padding_bottom": 20
@@ -866,6 +866,7 @@
         "autorotate": false,
         "autorotate_speed": 5,
         "anim_slideshow": "slide-fade",
+        "anim_badges": "slide-up",
         "e_arrow": true,
         "color_arrow": "#000",
         "bg_arrow": "#fff",

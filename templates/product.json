@@ -490,11 +490,11 @@
       ],
       "settings": {
         "section_width": "container",
-        "media_style": "media-bottom",
+        "media_style": "media-collage-2",
         "media_size": "normal",
         "image_size": "auto",
         "disable_mobile_thumbs": false,
-        "play_auto": false,
+        "play_auto": true,
         "enable_video_looping": true,
         "enable_image_zoom": false,
         "activate_side_icons": true,
@@ -686,7 +686,7 @@
         "draggable": true,
         "dots": true,
         "infinite": true,
-        "padding_top": 60,
+        "padding_top": 30,
         "padding_bottom": 30,
         "mobile_padding_top": 20,
         "mobile_padding_bottom": 20
