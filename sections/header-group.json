@@ -229,8 +229,6 @@
         "4f9408a1-16cf-4101-b1c3-6439af06ab32"
       ],
       "settings": {
-        "logo": "shopify://shop_images/1_eabf8edc-e388-4854-b614-f6a923f175a1.png",
-        "logo_white": "shopify://shop_images/1_eabf8edc-e388-4854-b614-f6a923f175a1.png",
         "logo_max_width": 165,
         "enable_transparent": false,
         "hover_transparent": false,
@@ -239,7 +237,7 @@
         "layout_header": "logo-center-navigation-left",
         "type_sticky": "sticky",
         "height_header": "small",
-        "background": "#FFF2F4",
+        "background": "#fff2f4",
         "textcolor": "rgba(0,0,0,0)",
         "linkcolor": "#200e10",
         "linkhover": "#fe899a",
@@ -253,7 +251,7 @@
         "menudropborder": "#f1f1f1",
         "main_linklist": "main-menu",
         "font_family_menu": "--g-font-1",
-        "font_sizemenu": "14px",
+        "font_sizemenu": "12px",
         "font_weight": "700",
         "menu_spacing": 0,
         "menu_space": 1.3,

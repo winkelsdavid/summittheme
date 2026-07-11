@@ -1036,22 +1036,32 @@
         "scroll_item_cNx8QW": {
           "type": "scroll_item",
           "settings": {
-            "content": "Promo Text",
-            "text_style": "solid"
+            "content": "",
+            "text_style": "solid",
+            "image": "shopify://shop_images/1783802937110-0_rmbg.png"
+          }
+        },
+        "scroll_item_y8JxtR": {
+          "type": "scroll_item",
+          "settings": {
+            "content": "",
+            "text_style": "solid",
+            "image": "shopify://shop_images/1783802937110-0_rmbg.png"
           }
         }
       },
       "block_order": [
-        "scroll_item_cNx8QW"
+        "scroll_item_cNx8QW",
+        "scroll_item_y8JxtR"
       ],
       "name": "Scrolling Text",
       "settings": {
         "animation": "",
         "size_text": "h6",
-        "size_icon": 24,
+        "size_icon": 76,
         "speed": 20,
         "scroll_type": "from-right",
-        "background": "#fe899a",
+        "background": "#FFFFFF",
         "gradient_bg": "",
         "text": "#ffffff",
         "padding_top": 20,
