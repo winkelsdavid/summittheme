@@ -553,7 +553,7 @@
         "6889c9ba-caef-4edd-9757-6711505cb095": {
           "type": "description",
           "settings": {
-            "title_tab": "Description"
+            "title_tab": ""
           }
         },
         "b69a53cf-5bc1-4b18-add3-92af436f966c": {
@@ -583,7 +583,7 @@
         "related_products_ptxrJP": {
           "type": "related_products",
           "settings": {
-            "title_heading": "Frequently Bought Together.",
+            "title_heading": "",
             "size_text": "h6",
             "product_limit": 2
           }
@@ -1749,7 +1749,7 @@
         "chevron_bg_color": "",
         "chevron_icon_color": "#ffffff",
         "padding_top": 60,
-        "padding_bottom": 80,
+        "padding_bottom": 60,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
