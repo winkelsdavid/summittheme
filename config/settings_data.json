@@ -870,7 +870,7 @@
         "type": "password-header",
         "settings": {
           "blur_password": 0,
-          "bg_password": "#FFFFFF",
+          "bg_password": "#ffffff",
           "color_pass": "#000000",
           "opacity_password": 0.5,
           "logo_max_width": "180",
