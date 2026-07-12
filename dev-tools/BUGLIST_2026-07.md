@@ -681,6 +681,15 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       unten. Live-Test: Cards mit kurzem vs. langem Text nebeneinander ->
       Badges-Zeile und Footer-Box auf identischer Hoehe ueber alle Karten.
 
+## 40. Header-Logo: max-height-Absicherung
+- [~] site-logo.liquid: .site-header__logo img hatte nur width (Setting
+      logo_max_width) - ein hochkant hochgeladenes Logo konnte den Header
+      beliebig hoch machen. Fix: max-height:100px + object-fit:contain -
+      Box-Breite bleibt (Layout stabil), Logo skaliert proportional rein,
+      Header-Hoehe gedeckelt, egal was hochgeladen wird. Live-Test:
+      extrem hochformatiges Logo hochladen -> Header bleibt normal hoch,
+      Logo proportional; normales Querformat-Logo unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

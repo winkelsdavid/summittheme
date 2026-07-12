@@ -4,7 +4,10 @@
   assign logodark = section.settings.logo
   assign logowhite= section.settings.logo_white
 -%}
-<style>.site-header__logo img {width: {{ logo_max_width | append: 'px' }};}.site-header__logo.has-logo{font-size: 0;line-height: 0;}.site-header__logo.has-logo a{font-size: 0;line-height: 0;}</style>
+{%- comment -%} max-height + object-fit:contain: egal wie hochkant das
+    hochgeladene Logo ist, der Header waechst nicht - das Logo skaliert
+    proportional in die Box (Breite = Setting, Hoehe gedeckelt). {%- endcomment -%}
+<style>.site-header__logo img {width: {{ logo_max_width | append: 'px' }};max-height: 100px;object-fit: contain;}.site-header__logo.has-logo{font-size: 0;line-height: 0;}.site-header__logo.has-logo a{font-size: 0;line-height: 0;}</style>
 {%- if template.name == 'index' -%}
 <h1 class="site-header__logo {% if logodark != blank %} has-logo {% endif %}" itemscope itemtype="http://schema.org/Organization">
   {%- else -%}
