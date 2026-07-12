@@ -230,7 +230,7 @@
             "title": "Title of block 1",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie mauris ac neque feugiat vestibulum placerat ut ligula. Pellentesque vehicula gravida eros dictum dapibus",
             "time": "",
-            "year": "1920",
+            "year": "2024",
             "link": "shopify://collections/all"
           }
         },
@@ -241,7 +241,7 @@
             "title": "Title of block 2",
             "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.",
             "time": "",
-            "year": "1920",
+            "year": "2025",
             "link": "shopify://collections/all"
           }
         },
@@ -252,7 +252,7 @@
             "title": "Title of block 3",
             "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.",
             "time": "",
-            "year": "1920",
+            "year": "2026",
             "link": "shopify://collections/all"
           }
         }
@@ -279,7 +279,7 @@
         "border": "#d7e4ed",
         "caption_bg": "#fff",
         "title_color": "#303e49",
-        "button_text": "Read more",
+        "button_text": "",
         "style_btn": "btn-underline",
         "padding_top": 80,
         "padding_bottom": 80,
@@ -370,6 +370,7 @@
         "autorotate": false,
         "autorotate_speed": 5,
         "anim_slideshow": "fade",
+        "anim_badges": "slide-up",
         "e_arrow": false,
         "color_arrow": "#000",
         "bg_arrow": "#fff",
