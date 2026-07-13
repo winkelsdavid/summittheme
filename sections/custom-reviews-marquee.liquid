@@ -362,7 +362,8 @@ display:none;
                 </div>
                 <div class="reviews_info_h_t">
                     {% if section.settings.title != blank %}
-                        <h2 {% if section.settings.title_color != "rgba(0,0,0,0)" and section.settings.title_color != blank %}style="--g-color-heading:{{ section.settings.title_color }}"{% else %}style="--g-color-heading:{{ settings.color_body_headings }}"{% endif %}>{{  section.settings.title }}</h2>
+                        {%- assign title_tag = section.settings.title_tag | default: 'h3' -%}
+                        <{{ title_tag }} {% if section.settings.title_color != "rgba(0,0,0,0)" and section.settings.title_color != blank %}style="--g-color-heading:{{ section.settings.title_color }}"{% else %}style="--g-color-heading:{{ settings.color_body_headings }}"{% endif %}>{{  section.settings.title }}</{{ title_tag }}>
                     {% endif %}
                     {% if section.settings.content != blank %}
                         <div class="rte" {% if section.settings.content_color != "rgba(0,0,0,0)" %}style="--color:{{ section.settings.content_color }}"{% endif %}>{{ section.settings.content }}</div>
@@ -720,11 +721,23 @@ document.addEventListener("DOMContentLoaded", function() {
         "label": "Title",
         "default":"Customer Reviews"
     },
+    {
+        "type":"select",
+        "id":"title_tag",
+        "label": "Heading Tag",
+        "default":"h3",
+        "options":[
+          { "value":"h1", "label":"H1" },
+          { "value":"h2", "label":"H2" },
+          { "value":"h3", "label":"H3" },
+          { "value":"h4", "label":"H4" }
+        ]
+    },
        {
         "type":"color",
         "id":"title_color",
         "label": "Title Color"
-    }, 
+    },
       {
         "type":"richtext",
         "id":"content",
