@@ -71,7 +71,13 @@
   >
   {%- render 'style-section' -%}
     <div class="{{ section.settings.section_width }}">
-        {%- render 'section-heading' -%}
+        {%- liquid
+          # Locale-Defaults (#17-Muster): leeres Feld -> uebersetzter Standard
+          # pro Shop-Sprache; gefuelltes Feld gewinnt.
+          assign faq_fb_subtop = 'general.defaults.faq_subtitle_top' | t
+          assign faq_fb_title = 'general.defaults.faq_title' | t
+        -%}
+        {%- render 'section-heading', fallback_subtitle_top: faq_fb_subtop, fallback_title: faq_fb_title -%}
         <div class="row {% if section.settings.e_reverse %} flex-row-reverse {% endif %} justify-content-center">
           {%- if section.settings.e_small == true -%}
               <div class="col-lg-9">
@@ -377,7 +383,7 @@
       "type": "text",
       "id": "subtitle_top",
       "label": "Subtitle Top",
-      "default": "Subtitle Top"
+      "info": "Leave empty to use the translated default."
     },
             {
       "type": "checkbox",
@@ -412,7 +418,7 @@
       "type": "text",
       "id": "title",
       "label": "Title",
-      "default": "Title FAQ"
+      "info": "Leave empty to use the translated default."
     },
     {
       "type": "textarea",
