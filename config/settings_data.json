@@ -870,10 +870,11 @@
         "type": "password-header",
         "settings": {
           "blur_password": 0,
-          "bg_password": "#ffffff",
+          "bg_password": "#FFF2F4",
           "color_pass": "#000000",
           "opacity_password": 0.5,
-          "logo_max_width": "180",
+          "logo": "shopify://shop_images/1783884602460-14_rmbg.png",
+          "logo_max_width": "120",
           "header": "Launching Soon!"
         }
       },
@@ -889,7 +890,7 @@
       "password-footer": {
         "type": "password-footer",
         "settings": {
-          "show_share_buttons": true,
+          "show_share_buttons": false,
           "social_heading": "Spread the word"
         }
       },
