@@ -263,6 +263,7 @@
         "after_stat_X9hX6F",
         "after_stat_cVkFM8"
       ],
+      "disabled": true,
       "name": "Before After Stats",
       "settings": {
         "animation": "",
@@ -301,24 +302,6 @@
         "mobile_padding_bottom": 20
       }
     },
-    "divider_advanced_aUMFeD": {
-      "type": "divider-advanced",
-      "name": "Dividers Advanced",
-      "settings": {
-        "animation": "",
-        "section_width": "full",
-        "background_section": "#fff2f4",
-        "bg_wave": "#f6d4d9",
-        "flip_pos": "up",
-        "wave_style": "style8",
-        "animated": true,
-        "animation_speed": 10,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "mobile_padding_top": 0,
-        "mobile_padding_bottom": 0
-      }
-    },
     "image_with_text_jYUq9z": {
       "type": "image-with-text",
       "blocks": {
@@ -355,16 +338,34 @@
       "settings": {
         "animation": "fade-up",
         "section_width": "container",
-        "background_section": "",
+        "background_section": "#F6D4D9",
         "rangebg": 0,
         "bgbefore": "rgba(0,0,0,0)",
         "bg_pos": "left",
         "enable_padding": true,
         "align_center": true,
-        "padding_top": 60,
-        "padding_bottom": 60,
+        "padding_top": 20,
+        "padding_bottom": 20,
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
+      }
+    },
+    "divider_advanced_aUMFeD": {
+      "type": "divider-advanced",
+      "name": "Dividers Advanced",
+      "settings": {
+        "animation": "",
+        "section_width": "full",
+        "background_section": "#fff2f4",
+        "bg_wave": "#f6d4d9",
+        "flip_pos": "up",
+        "wave_style": "style8",
+        "animated": true,
+        "animation_speed": 10,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "mobile_padding_top": 0,
+        "mobile_padding_bottom": 0
       }
     },
     "custom_reviews_marquee_7Bx9yY": {
@@ -1076,8 +1077,8 @@
     "grid_banner_M3R7Xt",
     "divider_advanced_kbLyCG",
     "custom_rounded_progress_JwGQrj",
-    "divider_advanced_aUMFeD",
     "image_with_text_jYUq9z",
+    "divider_advanced_aUMFeD",
     "custom_reviews_marquee_7Bx9yY",
     "custom_reviews_NwQAXb",
     "reviews_slider_jCJwNw",
