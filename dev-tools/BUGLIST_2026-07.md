@@ -763,6 +763,24 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Text bleibt beim Hover in Basisfarbe; enable_button_hover aus +
       Hover-Farbe gesetzt -> Farbe greift wie vorher.
 
+## 45. Slideshow 1+2: CTA-Button zeitweise nicht klickbar (Auto-Rotate unterm Cursor)
+- [~] User: Button manchmal nicht klickbar, Cursor wird nicht zum Pointer.
+      Headless vermessen: Nach JEDEM Slide-Wechsel ist die Button-Flaeche
+      ~0,5-1s hit-tot - der Stagger (#34) haelt den Button unter der
+      overflow-Maske (translateY(110%), Reveal 0.5s + 0.5s Delay); im
+      Fade-Modus ist der noch sichtbare ALTE Button (.slide-shown) per
+      Swiper-CSS pointer-events:none. Diese Totzeit ist Design (war in
+      Slick identisch). Der eigentliche Bug: Slick hatte pauseOnHover:true
+      (Default) - Rotation stoppte unterm Cursor; unsere Swiper-Autoplay-
+      Config nicht -> Slide wechselt unter der Maus weg und reisst beim
+      Zielen immer neue Totzeit-Fenster auf. Fix: pauseOnMouseEnter:true
+      in theme.js (theme.Slideshow, gilt fuer Slideshow 1+2).
+      Headless verifiziert: pausiert unterm Cursor, rotiert nach
+      Mouse-Leave weiter. Live-Test: Maus auf Slideshow -> Rotation
+      stoppt, Button klickbar; Maus weg -> Rotation laeuft weiter.
+      Rest-Totzeit ~1s nach manuellem Pfeil-Klick bleibt (Stagger-Design;
+      Delay-Verkuerzung waere bewusste Abweichung vom Original - offen).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

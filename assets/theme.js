@@ -2625,6 +2625,10 @@ theme.Slideshow = (function () {
             delay: autoplaySpeed,
             disableOnInteraction: false,
             stopOnLastSlide: false, // wickelt bei loop:false automatisch auf Slide 1 zurueck
+            // Slick-Paritaet (pauseOnHover:true): Rotation pausiert unterm Cursor.
+            // Ohne das wechselt der Slide unter der Maus weg und der CTA-Button ist
+            // direkt nach jedem Wechsel ~1s lang nicht klickbar (Masken-Reveal).
+            pauseOnMouseEnter: true,
           }
         : false,
       navigation: !useFade && prevEl ? { nextEl: nextEl, prevEl: prevEl } : false,
