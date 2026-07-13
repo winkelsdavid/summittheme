@@ -744,6 +744,25 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       nicht angefasst (ein Fix = ein Commit).
       Live-Test: Slide mit Button 2, Hover -> Textfarbe bleibt.
 
+## 44b. Slideshow 1+2: Hover-Textfarbe gegen VERSTECKTES Setting absichern
+      (b6695cf Slideshow 1, 2e08a40 Slideshow 2)
+- [~] Nachtrag zu #44 - der User-Fall war tiefer: "Color Button Hover"
+      (Button 1+2) hat im Schema visible_if enable_button_hover==false und
+      ist bei aktivierter globaler Hover-Animation (live: an, hover_4) im
+      Editor UNSICHTBAR. Der Underline-Pfad (und die #44-Pin-Regel, in
+      Slideshow 2 auch Solid/Outline) lasen den unsichtbaren gespeicherten
+      Wert trotzdem (!important). Stand dort rgba(0,0,0,0) (geleerter
+      Picker), war der Hover-Text unsichtbar und per UI unfixbar
+      (User-Screenshots: Button Line "EHEH", Hover -> Text weg, nur Linie).
+      Headless verifiziert: rgba(0,0,0,0)-Wert -> computed color transparent.
+      Fix: Guard-Variable an allen 8 Emissionsstellen (2 Sektionen x
+      Desktop+Panel x Button 1+2): verstecktes Feld ODER leer ODER
+      rgba(0,0,0,0) -> Hover-Textfarbe = Basisfarbe (Color Button), sonst
+      Settingwert wie bisher. Hover-LINIE (bg_button_hover_*) bewusst
+      unveraendert. Live-Test: Button Line mit geleertem Hover-Feld ->
+      Text bleibt beim Hover in Basisfarbe; enable_button_hover aus +
+      Hover-Farbe gesetzt -> Farbe greift wie vorher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
