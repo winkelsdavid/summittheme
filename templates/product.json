@@ -459,6 +459,10 @@
             "mobile_padding_top": 40,
             "mobile_padding_bottom": 0
           }
+        },
+        "image_yD39gJ": {
+          "type": "image",
+          "settings": {}
         }
       },
       "block_order": [
@@ -486,7 +490,8 @@
         "tabcustom_9d6FDN",
         "883720d7-3346-4495-85a0-add8b3d7a51f",
         "51f9d856-95f4-4741-bf4d-afe15438ff29",
-        "custom_review_F9cTcD"
+        "custom_review_F9cTcD",
+        "image_yD39gJ"
       ],
       "settings": {
         "section_width": "container",
@@ -1482,7 +1487,7 @@
       "settings": {
         "enable_slideshow": true,
         "setwidthout": "full",
-        "slideshow_height_adapt": "750",
+        "slideshow_height_adapt": "550",
         "slideshow_height_mobile": "500",
         "section_width": "container",
         "slideshow_mobile": true,
