@@ -1280,11 +1280,17 @@ margin-right:auto;
                       border-color:{{ block.settings.bg_button_hover_2 }};
                       color:{{ block.settings.color_button_hover_2 }};
                       {% unless settings.enable_button_hover %}
-                        background:{{ block.settings.bg_button_hover_2 }}; 
+                        background:{{ block.settings.bg_button_hover_2 }};
                       {% endunless %}
                     }
                   {% endif %}
-                    
+                    /* Hover-Textfarbe IMMER ans Block-Setting pinnen: bei aktivierter
+                       globaler Hover-Animation fielen die per-Block-Hover-Regeln oben
+                       weg und die Textfarbe kippte ueber die globale Kaskade
+                       (.btn:hover #212529) ins Dunkle. Stilklassen-unabhaengig. */
+                    .btn.slideshow__btn-2{{ block.id }}:hover{
+                      color:{{ block.settings.color_button_hover_2 }};
+                    }
                     .btn-underline.slideshow__btn-2{{ block.id }}{
                       color:{{ block.settings.color_button_2 }} !important;
                       {% comment %} border-bottom-color:  {{ block.settings.bg_button }} !important; {% endcomment %}
@@ -1566,7 +1572,10 @@ margin-right:auto;
                   {% endunless %}
                 }
                 {% endif %}
-
+                /* Hover-Textfarbe immer pinnen (siehe Desktop-Block, Fix #44) */
+                .btn.slideshow__btn-2{{ block.id }}:hover{
+                  color:{{ block.settings.color_button_hover_2 }};
+                }
                 .btn-outline.slideshow__btn-2{{ block.id }}::before{
                   background:{{ block.settings.bg_button_hover_2 }};
                 }
