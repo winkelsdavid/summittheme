@@ -430,6 +430,51 @@ display:none;
 
     assign media_style = section.settings.media_style
   -%}
+  {%- if media_style == 'media-collage-1' or media_style == 'media-collage-2' -%}
+    {% style %}
+      /* Collage: Unterkanten beider Spalten enden immer buendig auf der Row-Unterkante.
+         Rechts laenger -> Bildzeilen strecken sich mit (cover-Crop);
+         links laenger -> letzter Info-Block (z.B. Banner) wird unten angepinnt. */
+      @media (min-width: 768px) {
+        #ProductSection-{{ section.id }} .photos-thumb-collage-1,
+        #ProductSection-{{ section.id }} .photos-thumb-collage-2,
+        #ProductSection-{{ section.id }} .photos-thumb-collage-1 .photos__item--main,
+        #ProductSection-{{ section.id }} .photos-thumb-collage-2 .photos__item--main {
+          height: 100%;
+        }
+        #ProductSection-{{ section.id }} .my-gallery {
+          height: 100%;
+          align-content: stretch;
+          /* Zeilenabstand via gap statt margin: kein Nachlauf-Margin unter der letzten Reihe */
+          row-gap: var(--g-gutter);
+        }
+        #ProductSection-{{ section.id }} .my-gallery .product-single__photo {
+          margin: 0;
+        }
+        #ProductSection-{{ section.id }} .my-gallery .product__photo-wrapper {
+          height: 100%;
+        }
+        #ProductSection-{{ section.id }} .my-gallery .product__photo-wrapper img {
+          height: 100%;
+          object-fit: cover;
+        }
+        #ProductSection-{{ section.id }} .product-single__info-wrapper {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+        #ProductSection-{{ section.id }} .product-single__meta {
+          display: flex;
+          flex-direction: column;
+          flex: 1 1 auto;
+        }
+        #ProductSection-{{ section.id }} .product-single__meta > :last-child {
+          margin-top: auto;
+          margin-bottom: 0;
+        }
+      }
+    {% endstyle %}
+  {%- endif -%}
   <meta itemprop="name" content="{{ product.title }}">
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | image_url: width: 600, height: 600 }}">
