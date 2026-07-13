@@ -52,9 +52,12 @@
     display: flex !important;
     flex-direction: column;
     gap: 10px;
-    /* 100% statt auto: Karte fuellt den (gleich hohen) Slide, damit der
-       Anker unten ueberall auf derselben Hoehe liegt. */
-    height:100%;
+    /* auto statt 100%: die Karte IST der Swiper-Slide; Swipers .swiper-slide
+       {height:100%} laeuft gegen die auto-hohe Wrapper-Hoehe ins Leere und
+       blockiert dabei das align-items:stretch der Flex-Line. Mit auto strecken
+       sich alle Karten auf die hoechste - Unterkanten immer buendig, der
+       Review-Text (.cs_review, flex:1) ist die einzige variable Mitte. */
+    height:auto;
     box-shadow: {{ section.settings.border_color }} 0px 0px 0px 1px;
     align-items: flex-start;
     background: #ffffff;
