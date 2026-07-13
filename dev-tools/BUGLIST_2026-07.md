@@ -162,6 +162,13 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
         Wartet auf Live-Test.
 
 ## 17. i18n Sprach-Default nachziehen (3 Stellen, die der grosse Patch 2f5fac6 ausliess)
+- [~] Nachtrag (2026-07-10, 35f5448): Faqs Accordion "Subtitle Top" + "Title"
+      aufgenommen - neue Keys general.defaults.faq_subtitle_top ("Noch
+      Fragen?") + faq_title ("Haeufig gestellte Fragen") in allen 10 Locales;
+      section-heading-Fallback-Parameter genutzt; Schema-Defaults ("Subtitle
+      Top"/"Title FAQ") entfernt + Info "Leave empty to use the translated
+      default". ACHTUNG Bestands-Instanzen: dort steht der alte Default-TEXT
+      im Feld -> Feld einmal leeren, dann greift die Uebersetzung.
 - [~] Theme Settings → "Reviews Above Titles": Review-Badge-Texte lokalisieren.
       → rating-custom.liquid: t1_text/t2_text/t3_text/content bekommen {% if blank %}
         -> | t Fallback mit BESTEHENDEN Keys (reviews_start_text_html,
