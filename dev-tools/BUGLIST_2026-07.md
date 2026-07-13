@@ -697,6 +697,53 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       extrem hochformatiges Logo hochladen -> Header bleibt normal hoch,
       Logo proportional; normales Querformat-Logo unveraendert.
 
+## 41. Product Overview Collage 1+2: Spalten-Unterkanten buendig (98bab24)
+- [~] Bild- und Infospalte waren unabhaengig hoch - letztes Collage-Bild
+      links und Banner (Image-Block) rechts endeten leicht versetzt
+      (User-Screenshot, Collage Style 2). Fix (nur Desktop >=768px, pro
+      Instanz gescoped, product-template-1.liquid): beide Spalten fuellen
+      die Row-Hoehe. Rechts laenger -> Bildzeilen strecken sich
+      (align-content:stretch, Wrapper height:100%, img object-fit:cover =
+      leichter Crop); links laenger -> letzter Info-Block wird per
+      margin-top:auto unten angepinnt (Luecke entsteht dann OBERHALB des
+      Banners). Zeilen-Gutter via row-gap statt margin-bottom (kein
+      16px-Nachlauf). Trade-off dokumentiert und vom User abgenommen (GO).
+      Live-Test: Collage Style 2 mit Banner -> Unterkanten identisch;
+      Gegenprobe mit langer Galerie/kurzer Infospalte.
+
+## 42. Testimonial Slider Auto: Karten-Unterkanten immer gleich hoch (7e21daf)
+- [~] Karten endeten je nach Textlaenge auf verschiedenen Hoehen. Ursache:
+      .review-slider-i (= der Swiper-Slide selbst) hatte height:100% (aus
+      #39) - Swipers .swiper-slide{height:100%} laeuft gegen die auto-hohe
+      Wrapper-Hoehe ins Leere UND blockiert align-items:stretch der
+      Flex-Line -> jede Karte so hoch wie ihr Inhalt. Fix: height:auto ->
+      alle Slides strecken sich auf die hoechste Karte; #39-Layout greift
+      dann kartenuebergreifend (Badges+Footer unten, .cs_review flex:1 =
+      einzige Variable). Headless verifiziert (282/318/444px -> alle 444,
+      Footer alle auf 416). Live-Test: kurze vs. lange Reviews -> alle
+      Boxen enden auf einer Linie.
+
+## 43. Testimonials Slider (Marquee): Titel h3 + Heading-Tag-Option (24528d9)
+- [~] Sektionstitel war hart als h2 gerendert, keine Einstellmoeglichkeit
+      (User-Screenshot). Fix custom-reviews-marquee.liquid: Select
+      "Heading Tag" (h1-h4, Default h3) unter dem Title-Feld; Render
+      nutzt den Tag fuer beide Elemente. Bestands-Instanzen ohne
+      gespeicherten Wert fallen automatisch auf h3. Live-Test: Tag im
+      Editor umstellen -> Groesse/Semantik wechselt.
+
+## 44. Slideshow 1: Button-2-Hover kippte Textfarbe ins Dunkle (4bae20b)
+- [~] Mit global aktivierter Button-Hover-Animation (enable_button_hover,
+      live: hover_4) emittiert die Sektion die per-Block-Hover-Farbregeln
+      NICHT - Button 2 fiel beim Hover ueber die globale Kaskade auf
+      Bootstraps .btn:hover{color:#212529} (dunkel). Fix: neue stilklassen-
+      unabhaengige Regel .btn.slideshow__btn-2<id>:hover pinnt die Hover-
+      Textfarbe immer ans Setting "Color Button Hover" (Default weiss) -
+      Desktop- und Mobile-Panel-Pfad. Headless verifiziert (Failure-Repro
+      #212529 -> mit Fix konstant weiss). Hinweis: Button 1 hat dieselbe
+      latente Struktur, zeigte das Symptom laut User aber nicht - bewusst
+      nicht angefasst (ein Fix = ein Commit).
+      Live-Test: Slide mit Button 2, Hover -> Textfarbe bleibt.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
