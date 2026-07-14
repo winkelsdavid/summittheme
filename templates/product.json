@@ -850,6 +850,7 @@
         "show_truspilot": true,
         "trust_icon": "trustpilot",
         "title": "Customer Reviews",
+        "title_tag": "h3",
         "title_color": "",
         "content": "<p>Our customers share honest feedback about their experiences, helping others make confident, informed decisions better.</p>",
         "content_color": "",
@@ -1487,7 +1488,7 @@
       "settings": {
         "enable_slideshow": true,
         "setwidthout": "full",
-        "slideshow_height_adapt": "550",
+        "slideshow_height_adapt": "650",
         "slideshow_height_mobile": "500",
         "section_width": "container",
         "slideshow_mobile": true,
@@ -1566,7 +1567,7 @@
       ],
       "name": "Progress Bars",
       "settings": {
-        "animation": "",
+        "animation": "fade-up",
         "section_width": "container",
         "background": "",
         "subtitle": "",
