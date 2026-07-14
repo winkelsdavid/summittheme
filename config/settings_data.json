@@ -717,7 +717,7 @@
           "e_arrow": true,
           "color_arrow": "#ffffff",
           "bg_arrow": "#ffffff",
-          "opacity_arrow": 0.1,
+          "opacity_arrow": 0.3,
           "e_dot": true,
           "slide_dot": "square",
           "color_dot_nav": "#ffffff",
