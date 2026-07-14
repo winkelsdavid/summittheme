@@ -948,6 +948,12 @@ padding-top:4px!important;
                     if settings.enable_button_hover or btn1_hover_color == blank or btn1_hover_color == 'rgba(0,0,0,0)'
                       assign btn1_hover_color = block.settings.color_button
                     endif
+                    # A6: Hover-Hintergrund absichern (Setting bei aktiver globaler
+                    # Hover-Animation versteckt, faerbte aber Sweep-Layer/Hover-Border)
+                    assign btn1_hover_bg = block.settings.bg_button_hover
+                    if settings.enable_button_hover or btn1_hover_bg == blank or btn1_hover_bg == 'rgba(0,0,0,0)'
+                      assign btn1_hover_bg = ''
+                    endif
                   -%}
                   <style>
                     .btn-theme.slideshow__btn-1{{ block.id }}{
@@ -957,36 +963,40 @@ padding-top:4px!important;
                     }
                     .btn-theme.slideshow__btn-1{{ block.id }}:hover{
                       color:{{ btn1_hover_color }};
-                      border-color:{{ block.settings.bg_button_hover }};
+                      border-color:{{ btn1_hover_bg | default: block.settings.bg_button }};
                       {% unless settings.enable_button_hover %}
                         background-color:{{ block.settings.bg_button_hover }};
                       {% endunless %}
                     }
+                    {% if btn1_hover_bg != blank %}
                     .btn-theme.slideshow__btn-1{{ block.id }}::before{
-                      background-color:{{ block.settings.bg_button_hover }};
+                      background-color:{{ btn1_hover_bg }};
                     }
+                    {% endif %}
                     .btn-outline.slideshow__btn-1{{ block.id }}{
                       color:{{ block.settings.color_button }};
                       border: 2px solid {{ block.settings.bg_button }};
                       background-color:transparent;
                     }
                     .btn-outline.slideshow__btn-1{{ block.id }}:hover{
-                      border-color:{{ block.settings.bg_button_hover }};
+                      border-color:{{ btn1_hover_bg | default: block.settings.bg_button }};
                       color:{{ btn1_hover_color }};
                       {% unless settings.enable_button_hover %}
                         background-color:{{ block.settings.bg_button_hover }};
                       {% endunless %}
                     }
+                    {% if btn1_hover_bg != blank %}
                     .btn-outline.slideshow__btn-1{{ block.id }}::before{
-                      background-color:{{ block.settings.bg_button_hover }};
+                      background-color:{{ btn1_hover_bg }};
                     }
+                    {% endif %}
                     .btn-underline.slideshow__btn-1{{ block.id }}{
                       color:{{ block.settings.color_button }} !important;
                       border-bottom-color:  {{ block.settings.bg_button }} !important;
                     }
                     .btn-underline.slideshow__btn-1{{ block.id }}:hover{
                       color:{{ btn1_hover_color }} !important;
-                      border-bottom-color:  {{ block.settings.bg_button_hover }} !important;
+                      border-bottom-color:  {{ btn1_hover_bg | default: block.settings.bg_button }} !important;
                     }
                   </style>
                   <div class="slideshow__btn">
@@ -1002,6 +1012,11 @@ padding-top:4px!important;
                     if settings.enable_button_hover or btn2_hover_color == blank or btn2_hover_color == 'rgba(0,0,0,0)'
                       assign btn2_hover_color = block.settings.color_button_2
                     endif
+                    # A6: Hover-Hintergrund absichern (siehe Button 1)
+                    assign btn2_hover_bg = block.settings.bg_button_hover_2
+                    if settings.enable_button_hover or btn2_hover_bg == blank or btn2_hover_bg == 'rgba(0,0,0,0)'
+                      assign btn2_hover_bg = ''
+                    endif
                   -%}
                   <style>
                     .btn-theme.slideshow__btn-2{{ block.id }}{
@@ -1011,36 +1026,40 @@ padding-top:4px!important;
                     }
                     .btn-theme.slideshow__btn-2{{ block.id }}:hover{
                       color:{{ btn2_hover_color }};
-                      border-color:{{ block.settings.bg_button_hover_2 }};
+                      border-color:{{ btn2_hover_bg | default: block.settings.bg_button_2 }};
                       {% unless settings.enable_button_hover %}
                         background-color:{{ block.settings.bg_button_hover_2 }};
                       {% endunless %}
                     }
+                    {% if btn2_hover_bg != blank %}
                     .btn-theme.slideshow__btn-2{{ block.id }}::before{
-                      background-color:{{ block.settings.bg_button_hover_2 }};
+                      background-color:{{ btn2_hover_bg }};
                     }
+                    {% endif %}
                     .btn-outline.slideshow__btn-2{{ block.id }}{
                       color:{{ block.settings.color_button_2 }};
                       border: 2px solid {{ block.settings.bg_button_2 }};
                       background-color:transparent;
                     }
                     .btn-outline.slideshow__btn-2{{ block.id }}:hover{
-                      border-color:{{ block.settings.bg_button_hover_2 }};
+                      border-color:{{ btn2_hover_bg | default: block.settings.bg_button_2 }};
                       color:{{ btn2_hover_color }};
                       {% unless settings.enable_button_hover %}
                         background-color:{{ block.settings.bg_button_hover_2 }};
                       {% endunless %}
                     }
+                    {% if btn2_hover_bg != blank %}
                     .btn-outline.slideshow__btn-2{{ block.id }}::before{
-                      background-color:{{ block.settings.bg_button_hover_2 }};
+                      background-color:{{ btn2_hover_bg }};
                     }
+                    {% endif %}
                     .btn-underline.slideshow__btn-2{{ block.id }}{
                       color:{{ block.settings.color_button_2 }} !important;
                       border-bottom-color:  {{ block.settings.bg_button_2 }} !important;
                     }
                     .btn-underline.slideshow__btn-2{{ block.id }}:hover{
                       color:{{ btn2_hover_color }} !important;
-                      border-bottom-color:  {{ block.settings.bg_button_hover_2 }} !important;
+                      border-bottom-color:  {{ btn2_hover_bg | default: block.settings.bg_button_2 }} !important;
                     }
                   </style>
                   <div class="slideshow__btn">
@@ -1168,6 +1187,11 @@ padding-top:4px!important;
               if settings.enable_button_hover or btn1_hover_color == blank or btn1_hover_color == 'rgba(0,0,0,0)'
                 assign btn1_hover_color = block.settings.color_button
               endif
+              # A6: Hover-Hintergrund absichern (siehe Desktop-Loop)
+              assign btn1_hover_bg = block.settings.bg_button_hover
+              if settings.enable_button_hover or btn1_hover_bg == blank or btn1_hover_bg == 'rgba(0,0,0,0)'
+                assign btn1_hover_bg = ''
+              endif
             -%}
             <style>
               .btn-theme.slideshow__btn-1{{ block.id }}{
@@ -1177,36 +1201,40 @@ padding-top:4px!important;
               }
               .btn-theme.slideshow__btn-1{{ block.id }}:hover{
                 color:{{ btn1_hover_color }};
-                border-color:{{ block.settings.bg_button_hover }};
+                border-color:{{ btn1_hover_bg | default: block.settings.bg_button }};
                 {% unless settings.enable_button_hover %}
                   background-color:{{ block.settings.bg_button_hover }};
                 {% endunless %}
               }
+              {% if btn1_hover_bg != blank %}
               .btn-theme.slideshow__btn-1{{ block.id }}::before{
-                background-color:{{ block.settings.bg_button_hover }};
+                background-color:{{ btn1_hover_bg }};
               }
+              {% endif %}
               .btn-outline.slideshow__btn-1{{ block.id }}{
                 color:{{ block.settings.color_button }};
                 border: 2px solid {{ block.settings.bg_button }};
                 background-color:transparent;
               }
               .btn-outline.slideshow__btn-1{{ block.id }}:hover{
-                border-color:{{ block.settings.bg_button_hover }};
+                border-color:{{ btn1_hover_bg | default: block.settings.bg_button }};
                 color:{{ btn1_hover_color }};
                 {% unless settings.enable_button_hover %}
                   background-color:{{ block.settings.bg_button_hover }};
                 {% endunless %}
               }
+              {% if btn1_hover_bg != blank %}
               .btn-outline.slideshow__btn-1{{ block.id }}::before{
-                background-color:{{ block.settings.bg_button_hover }};
+                background-color:{{ btn1_hover_bg }};
               }
+              {% endif %}
               .btn-underline.slideshow__btn-1{{ block.id }}{
                 color:{{ block.settings.color_button }} !important;
                 border-bottom-color:  {{ block.settings.bg_button }} !important;
               }
               .btn-underline.slideshow__btn-1{{ block.id }}:hover{
                 color:{{ btn1_hover_color }} !important;
-                border-bottom-color:  {{ block.settings.bg_button_hover }} !important;
+                border-bottom-color:  {{ btn1_hover_bg | default: block.settings.bg_button }} !important;
               }
             </style>
           <div>
@@ -1222,6 +1250,11 @@ padding-top:4px!important;
             if settings.enable_button_hover or btn2_hover_color == blank or btn2_hover_color == 'rgba(0,0,0,0)'
               assign btn2_hover_color = block.settings.color_button_2
             endif
+            # A6: Hover-Hintergrund absichern (siehe Button 1)
+            assign btn2_hover_bg = block.settings.bg_button_hover_2
+            if settings.enable_button_hover or btn2_hover_bg == blank or btn2_hover_bg == 'rgba(0,0,0,0)'
+              assign btn2_hover_bg = ''
+            endif
           -%}
           <style>
             .btn-theme.slideshow__btn-2{{ block.id }}{
@@ -1231,36 +1264,40 @@ padding-top:4px!important;
             }
             .btn-theme.slideshow__btn-2{{ block.id }}:hover{
               color:{{ btn2_hover_color }};
-              border-color:{{ block.settings.bg_button_hover_2 }};
+              border-color:{{ btn2_hover_bg | default: block.settings.bg_button_2 }};
               {% unless settings.enable_button_hover %}
                 background-color:{{ block.settings.bg_button_hover_2 }};
               {% endunless %}
             }
+            {% if btn2_hover_bg != blank %}
             .btn-theme.slideshow__btn-2{{ block.id }}::before{
-              background-color:{{ block.settings.bg_button_hover_2 }};
+              background-color:{{ btn2_hover_bg }};
             }
+            {% endif %}
             .btn-outline.slideshow__btn-2{{ block.id }}{
               color:{{ block.settings.color_button_2 }};
               border: 2px solid {{ block.settings.bg_button_2 }};
               background-color:transparent;
             }
             .btn-outline.slideshow__btn-2{{ block.id }}:hover{
-              border-color:{{ block.settings.bg_button_hover_2 }};
+              border-color:{{ btn2_hover_bg | default: block.settings.bg_button_2 }};
               color:{{ btn2_hover_color }};
               {% unless settings.enable_button_hover %}
                 background-color:{{ block.settings.bg_button_hover_2 }};
               {% endunless %}
             }
+            {% if btn2_hover_bg != blank %}
             .btn-outline.slideshow__btn-2{{ block.id }}::before{
-              background-color:{{ block.settings.bg_button_hover_2 }};
+              background-color:{{ btn2_hover_bg }};
             }
+            {% endif %}
             .btn-underline.slideshow__btn-2{{ block.id }}{
               color:{{ block.settings.color_button_2 }} !important;
               border-bottom-color:  {{ block.settings.bg_button_2 }} !important;
             }
             .btn-underline.slideshow__btn-2{{ block.id }}:hover{
               color:{{ btn2_hover_color }} !important;
-              border-bottom-color:  {{ block.settings.bg_button_hover_2 }} !important;
+              border-bottom-color:  {{ btn2_hover_bg | default: block.settings.bg_button_2 }} !important;
             }
           </style>
           <div>
