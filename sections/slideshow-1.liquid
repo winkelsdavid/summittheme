@@ -1114,7 +1114,7 @@ margin-right:auto;
                         {% assign icon_text = "icon_text_" | append: forloop.index %}
                         {% if block.settings[icon] != blank or block.settings[c_icon] != blank %}
                           {% if block.settings[icon_text] != blank %}
-                          <div class="c_icon_item" style="padding:{{ block.settings.icon_padding }}px {{ block.settings.icon_padding_left_right }}px;border-radius:{{ block.settings.icon_radius }}px;background:{{ block.settings.icon_background }};--icon-size:{{ block.settings.icons_size }}px;--icon-color:{{ block.settings.icons_color }}">
+                          <div class="c_icon_item" style="padding:{{ block.settings.icon_padding }}px {{ block.settings.icon_padding_left_right }}px;border-radius:{{ block.settings.icon_radius }}px;background:{{ block.settings.icon_background }};--icon-size:{{ block.settings.icons_size }}px;--icon-color:{{ block.settings.icon_color }}">
                             {%- comment -%} Icon "None" + kein Custom Icon: Icon-Element ganz
                                 weglassen (list-svg hat keinen none-Zweig -> leere Luecke);
                                 die Text-Pille bleibt bewusst erhalten. {%- endcomment -%}
