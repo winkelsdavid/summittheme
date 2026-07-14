@@ -648,6 +648,16 @@ margin-right:auto;
     width:100%;
     {%- endif -%}
   }
+  {%- if rotate -%}
+  /* A10: bei reduced-motion deaktiviert das JS die Rotation komplett -
+     der Fortschrittsbalken darf dann keine Wechsel signalisieren. */
+  @media (prefers-reduced-motion: reduce) {
+    .dot-square.slideshow .swiper-pagination-bullet-active::after{
+      animation: none;
+      width: 100%;
+    }
+  }
+  {%- endif -%}
 {%- elsif dot == 'circle' -%}
 .dot-circle.slideshow .swiper-pagination-bullet{
   width: 20px;
