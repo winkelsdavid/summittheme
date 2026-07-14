@@ -865,7 +865,7 @@ margin-right:auto;
          data-prev-label="{{ 'sections.slideshow.previous_slide' | t }}"
          data-next-label="{{ 'sections.slideshow.next_slide' | t }}"
          data-transit="{{ section.settings.anim_slideshow }}"
-         {%- if section.settings.slideshow_height_adapt == 'adapt' -%}data-min-aspect-ratio="{{ min_aspect_ratio }}"
+         {%- if section.settings.slideshow_height_adapt == 'adapt' %} data-min-aspect-ratio="{{ min_aspect_ratio }}"
          style="height: {{ wrapper_height }}vw"{%- endif -%}>
 
       {%- for block in section.blocks -%}
