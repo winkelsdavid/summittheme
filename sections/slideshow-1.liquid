@@ -971,12 +971,17 @@ margin-right:auto;
         {%- else -%}
         <div class="{% if block.settings.image_mobile != blank %} d-none d-lg-block {% endif %} {% if block.settings.image2 != blank %} w-50 slide_img_left {% endif %} slideshow__image box ratio-container">
              {%- liquid
-              assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
-              assign width = block.settings.image.width | round
+              # A5: Rechnung nur bei vorhandenem Bild - dieser Zweig laeuft auch,
+              # wenn nur Image Mobile gesetzt ist (Image 1 leer); ungeguarded
+              # stand dann "Liquid error: divided by 0" sichtbar im Slide.
+              if block.settings.image != blank
+                assign height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio | round
+                assign width = block.settings.image.width | round
+              endif
               assign sizes = '100vw'
-              assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'  
+              assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
               assign fetch_priority = 'high'
-              assign object_position = 'object-position:'| append: block.settings.alignment 
+              assign object_position = 'object-position:'| append: block.settings.alignment
             -%}
             {% if block.settings.image != blank %}
             {%- if forloop.first %}
