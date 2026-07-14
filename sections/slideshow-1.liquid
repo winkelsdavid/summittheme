@@ -144,19 +144,6 @@ border-radius:0!important;
   overflow: hidden;
 }
 
-.slideshow__link {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.slideshow__link:active,.slideshow__link:focus {
-  opacity: 1;
-}
-
 
 .slideshow__image {
   -webkit-transition: opacity .8s cubic-bezier(.44,.13,.48,.87);
@@ -204,10 +191,6 @@ border-radius:0!important;
 .slideshow__text-wrap {
   height: 100%;
   position: relative;
-}
-
-.slideshow__link .slideshow__text-wrap {
-  cursor: inherit;
 }
 
 .slideshow__text-wrap--mobile {
@@ -1052,7 +1035,6 @@ margin-right:auto;
                     | image_tag: loading: 'lazy',width: width, height: height, sizes: sizes, widths: widths, class:'lazyload scale-in'
                   }}
                 {%- endif -%}
-                {%- if section.settings.show_overlay -%}<div class="slideshow__overlay {% if section.settings.gradient_overlay %} gradient_overlay {% endif %}"></div>{%- endif -%}
           </div>
           {%- else -%}
           <div class="img_mobile d-lg-none image-content__image-wrapper position-relative" style="padding-top:{{ 1 | divided_by: image_mb.aspect_ratio | times: 100 }}%;" >
@@ -1080,7 +1062,6 @@ margin-right:auto;
           {%- endif -%}
         {% endif %}
         {%- endif -%}
-        {%- if section.settings.show_overlay -%}<div class="slideshow__overlay {% if section.settings.gradient_overlay %} gradient_overlay {% endif %}"></div>{%- endif -%}
 
         <div class="slideshow__text-wrap slideshow__text-wrap--desktop mobile-align-{{ block.settings.text_alignment_mobile }}">
           <div class="slideshow__text-content slideshow__text-content--vertical-{{ text_vertical_alignment }} text-{{ text_horizontal_alignment }} mob-text-center">
