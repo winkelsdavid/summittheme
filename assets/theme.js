@@ -2853,7 +2853,15 @@ theme.SlideshowSection.prototype = Object.assign(
       var index = 0;
       if (slide) {
         var attr = slide.getAttribute("data-swiper-slide-index");
-        index = attr !== null ? parseInt(attr, 10) : 0;
+        if (attr !== null) {
+          index = parseInt(attr, 10);
+        } else if (inst.swiper && inst.swiper.slides) {
+          // Fade-Familie laeuft ohne loop - Swiper schreibt data-swiper-slide-index
+          // nur in loopCreate. Fallback: Position unter den Slides selbst bestimmen,
+          // sonst zeigte die Editor-Blockauswahl immer Slide 1.
+          index = Array.prototype.indexOf.call(inst.swiper.slides, slide);
+          if (index < 0) index = 0;
+        }
       }
       inst.swiper.slideToLoop(index);
       // Nur pausieren/fortsetzen, wenn Auto-Rotate ueberhaupt aktiv ist.
