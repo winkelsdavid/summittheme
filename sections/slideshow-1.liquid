@@ -132,10 +132,13 @@ border-radius:0!important;
     height: 450px;
   }
   .slideshow--desktop-full{
-    height:calc(100vh - var(--height-announbar) - var(--height-header) - var(--height-announcementbar));
+    /* A12: --height-header setzt erst theme.js (defer) - ohne Fallback ist die
+       calc() bis dahin "invalid at computed-value time" und die Hoehe
+       kollabiert (auch dauerhaft, wenn Header-Sektion/JS fehlt). */
+    height:calc(100vh - var(--height-announbar, 0px) - var(--height-header, 90px) - var(--height-announcementbar, 0px));
   }
   .slideshow--desktop-full-header{
-    height:calc(100vh - var(--height-announbar) - var(--height-announcementbar));
+    height:calc(100vh - var(--height-announbar, 0px) - var(--height-announcementbar, 0px));
   }
 }
 
