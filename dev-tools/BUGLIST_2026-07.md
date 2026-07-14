@@ -825,6 +825,24 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       ohne Image 1 aber mit Image Mobile ohne Fehlertext; 2 Instanzen
       mobil unabhaengig; Maus stoppt Rotation NICHT (gewollt).
 
+## 47. Slideshow 1+2: CTA-Buttons durchgehend klickbar (eb89130)
+- [~] Folge-Entscheid zu #45/#46: Rotation laeuft unterm Cursor weiter,
+      also mussten die Buttons aus dem Stagger raus. Vorher fuhren sie
+      versetzt ein (SS1 aus der Maske translateY(110%), SS2
+      translateX(80px)+opacity, je .5s Delay + .5s Dauer) -> nach jedem
+      Slide-Wechsel ~1s keine klickbare Flaeche an der Button-Position.
+      Fix: CTA-Zeile (.slideshow__btn: Button 1, Button-2-Wrapper,
+      Review-Badge) blendet nur noch per Opacity ein (0.3s, ohne Delay) -
+      Element steht ab Slide-Aktivierung an der finalen Position, Opacity
+      blockiert kein Hit-Testing. Texte/Titel/Badges behalten den
+      Original-Stagger (bewusste Mini-Abweichung von Slick nur fuer die
+      CTA-Zeile, vom User explizit gewaehlt).
+      Headless: 0/80 tote Samples ueber 3 Rotationen (vorher 19-21);
+      Klick 80ms nach Wechselbeginn trifft den Button.
+      Live-Test: Maus auf Button liegen lassen, mehrere Auto-Wechsel
+      abwarten -> Cursor bleibt Pointer, Klick oeffnet Link jederzeit;
+      Optik: Buttons erscheinen als sanftes Einblenden statt Hochfahren.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
