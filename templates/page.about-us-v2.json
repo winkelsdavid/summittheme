@@ -96,6 +96,7 @@
         "autorotate": false,
         "autorotate_speed": 5,
         "anim_slideshow": "fade",
+        "anim_badges": "slide-up",
         "e_arrow": false,
         "color_arrow": "#000",
         "bg_arrow": "#fff",
@@ -282,7 +283,7 @@
           "type": "quote",
           "settings": {
             "title": "Awesome",
-            "quote": "<h4>\" I love Lola! They're one of my favorite brands. Customer service is excellent. I have only returned items once and it was so easy. \" </h4>",
+            "quote": "\"I love Lola! They're one of my favorite brands. Customer service is excellent. I have only returned items once and it was so easy.\"",
             "rate": 5,
             "author_caption": "—  Kai Felix",
             "author_info_caption": "",
