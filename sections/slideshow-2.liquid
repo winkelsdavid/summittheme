@@ -243,8 +243,14 @@
   overflow: hidden;
 }
 .slideshow__text-wrap--desktop .slideshow__text-content li .slideshow__toptitle,.slideshow__text-wrap--desktop .slideshow__text-content li .slideshow__title,.slideshow__text-wrap--desktop .slideshow__text-content li .slideshow__subtitle
-,.slideshow__text-wrap--desktop .slideshow__text-content .slideshow__btn,.slideshow__text-wrap--desktop .slideshow__text-content .slideshow__toptitle, .slideshow__text-wrap--desktop .slideshow__text-content .slideshow__info{
+,.slideshow__text-wrap--desktop .slideshow__text-content .slideshow__toptitle, .slideshow__text-wrap--desktop .slideshow__text-content .slideshow__info{
   transform: translateX(80px);
+  opacity: 0;
+}
+/* #47 (wie slideshow-1): CTA-Zeile nur einblenden statt versetzt einfahren -
+   waehrend translateX(80px) + Delay .5s war der Button nach jedem Slide-Wechsel
+   nicht an seiner Zielposition klickbar. Opacity blockiert Hit-Testing nicht. */
+.slideshow__text-wrap--desktop .slideshow__text-content .slideshow__btn{
   opacity: 0;
 }
 
@@ -261,7 +267,7 @@
     
 .no-js .slideshow__text-content,.swiper-initialized .swiper-slide-active .slideshow__text-content {}
 .no-js .slideshow__text-content,.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__toptitle,.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__title,
-.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__subtitle,.swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn,.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__toptitle,
+.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__subtitle,.swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__toptitle,
 .swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__info{
   transform: translateX(0);
   transition: transform 0.7s cubic-bezier(.29,.63,.44,1) , opacity 0.7s cubic-bezier(.29,.63,.44,1);
@@ -280,17 +286,13 @@
 .swiper-initialized .swiper-slide-active .slideshow__text-content li .slideshow__info{
   transition-delay: .45s;
 }
-.swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn{
-  transition-delay: .5s;
-}
 /* .slide-shown Zwillings-Selektoren: JS (theme.js _syncShown) setzt die Klasse auf
    Original UND Loop-Duplikat gleichzeitig, damit die Text-Animation den instant
    loopFix-Wechsel (Swiper 6) nahtlos ueberlebt statt sichtbar neu zu starten. */
 .swiper-initialized .slide-shown .slideshow__text-content li .slideshow__toptitle,
 .swiper-initialized .slide-shown .slideshow__text-content li .slideshow__title,
 .swiper-initialized .slide-shown .slideshow__text-content li .slideshow__subtitle,
-.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__info,
-.swiper-initialized .slide-shown .slideshow__text-content .slideshow__btn{
+.swiper-initialized .slide-shown .slideshow__text-content li .slideshow__info{
   transform: translateX(0);
   transition: transform 0.7s cubic-bezier(.29,.63,.44,1) , opacity 0.7s cubic-bezier(.29,.63,.44,1);
   transition-delay: .1s;
@@ -308,8 +310,12 @@
 .swiper-initialized .slide-shown .slideshow__text-content li .slideshow__info{
   transition-delay: .45s;
 }
+/* #47: Buttons ohne Delay einblenden - ab Slide-Aktivierung klickbar. */
+.no-js .slideshow__text-content .slideshow__btn,
+.swiper-initialized .swiper-slide-active .slideshow__text-content .slideshow__btn,
 .swiper-initialized .slide-shown .slideshow__text-content .slideshow__btn{
-  transition-delay: .5s;
+  opacity: 1;
+  transition: opacity 0.3s ease 0s;
 }
 /* === "Badges Animation" (anim_badges): steuert NUR Review-Box (.reviews-block,
    liegt hier als ul-Kind OHNE li-Maske) und Selling-Point-Pills (.c_icon_item).
