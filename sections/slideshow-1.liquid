@@ -82,6 +82,19 @@ border-radius:0!important;
     object-fit: cover;
   }
 }
+/* A4: Sektions-Breakpoint ist 750, Bootstraps lg aber 992 - im Band 750-991px
+   war bei gesetztem "Image Mobile" das Desktop-Bild versteckt (d-lg-block)
+   und stattdessen der ungestylte mobile Ratio-Zweig sichtbar (Bild im Fluss,
+   Text aus dem Slide geschoben, Panel ab 750 bereits aus). Bilder folgen
+   jetzt demselben 750er-Schnitt wie Text und Panel. */
+@media only screen and (min-width:750px) and (max-width:991.98px) {
+  [data-section-id="{{ section.id }}"] .slideshow__image.d-none.d-lg-block {
+    display: block !important;
+  }
+  [data-section-id="{{ section.id }}"] .img_mobile.d-lg-none {
+    display: none !important;
+  }
+}
 {%- if section.settings.slideshow_height_mobile == 'adapt' and section.blocks.size > 0 -%}
 {%- liquid
   # Mobile Height "Adapt To First Image" hatte keine CSS-Regel (Klasse
