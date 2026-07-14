@@ -780,6 +780,50 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       stoppt, Button klickbar; Maus weg -> Rotation laeuft weiter.
       Rest-Totzeit ~1s nach manuellem Pfeil-Klick bleibt (Stagger-Design;
       Delay-Verkuerzung waere bewusste Abweichung vom Original - offen).
+      NACHTRAG: durch #46 REVERTIERT (User-Entscheid, siehe dort).
+
+## 46. Slideshow-1-Reaudit (User-Zweifel an #45) + Befunde A1-A13
+- [~] Empirie zu #45: pauseOnMouseEnter fixte nur den Grenzuebertritts-
+      Fall; lag der Zeiger beim Laden schon ueber der Slideshow (100vh-
+      Hero = Normalfall), feuerte nie mouseenter -> Rotation lief weiter
+      (Swiper 6 bindet nur mouseenter/mouseleave).
+      USER-ENTSCHEID 2026-07-14: Maus soll die Rotation grundsaetzlich
+      NICHT stoppen -> pauseOnMouseEnter revertiert (ca07546); die
+      ~0,5-1s Klick-Totzeit nach jedem Slide-Wechsel (Stagger-Maske,
+      Slick-identisch) ist damit akzeptiertes Design. Der Revert erledigt
+      auch A9 (Swipers mouseleave-run() hebelte Fokus-Pause/Editor-Stop
+      aus - ohne pauseOnMouseEnter keine Maus-Listener).
+      Gefixt (je eigener Commit):
+      A2 6a2b928 Editor-Blockauswahl Fade zeigte immer Slide 1
+         (data-swiper-slide-index nur im Loop; Fallback via indexOf).
+      A3 5bb5b5e Mobile-Hide-Regeln ungescoped -> Panel-Modus-Instanz
+         versteckte mobil Titel/Buttons ALLER Slideshows der Seite.
+      A4 a4a21ba Tablet-Band 750-991px: Bild folgte Bootstrap-lg (992)
+         statt Sektions-Breakpoint 750 (Desktop-Bild weg, Roh-Bild im
+         Fluss, Text rausgeschoben).
+      A5 87e3ae3 Liquid error divided by 0 sichtbar im Slide (Image 1
+         leer + Image Mobile gesetzt; Rechnung vor dem Guard).
+      A6 6469249 + 27a577e (SS2) versteckte Hover-HINTERGRUENDE
+         (visible_if) faerbten ungeguarded Sweep-Layer/Underline-Linie/
+         Hover-Border - Guard analog #44b, beide Slideshows.
+      A7+A11 a65e2d8 toter Code (Overlay-Zweige auf nicht existente
+         Section-Settings; .slideshow__link-Vollflaechen-CSS).
+      A8 4cf3c79 Typo icons_color -> icon_color.
+      A10 996b055 Square-Dot-Progressbalken ignorierte reduced-motion.
+      A12 18d502a var()-Fallbacks fuer --height-header & Co. in den
+         Full-Screen-Hoehen (calc war bis JS-Init invalid).
+      A13 944d52d verklebte data-Attribute im Adapt-Modus.
+      GEPARKT A1: swiper-bundle.min.css ist v11, JS v6.7.0 - funktional
+         kompensiert durch die v6-CSS inline in header-css.liquid
+         (empirisch verifiziert: fade-pointer-events + Dots greifen).
+         Asset-Tausch waere riskant fuer ALLE Swiper-Sektionen -> nur
+         dokumentiert, nicht angefasst.
+      Rest-Notiz A10: Progressbalken laeuft bei Fokus-/Editor-Stop
+         weiter (CSS kennt Autoplay-Zustand nicht, kosmetisch).
+      Live-Test: Editor-Blockauswahl bei Fade trifft richtigen Slide;
+      Tablet-Breite 750-991 mit Image Mobile zeigt Desktop-Bild; Slide
+      ohne Image 1 aber mit Image Mobile ohne Fehlertext; 2 Instanzen
+      mobil unabhaengig; Maus stoppt Rotation NICHT (gewollt).
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
