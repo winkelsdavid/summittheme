@@ -16,7 +16,7 @@
         "blog_layout": "grid",
         "grid_column": "3",
         "item_style": "blog-1",
-        "image_size": "landscape",
+        "image_size": "wide",
         "enable_btn_blog": true,
         "style_btn": "btn-theme btn-sm",
         "enable_date": false,

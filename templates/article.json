@@ -23,7 +23,7 @@
         "enable_comment": false,
         "enable_date": false,
         "enable_author": true,
-        "social_sharing_blog": true,
+        "social_sharing_blog": false,
         "blog_show_previous_and_next_buttons": false,
         "sidebar_enable": false,
         "sidebar_position": "right",
