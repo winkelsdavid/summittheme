@@ -466,11 +466,16 @@ html:not(.no-js) .slideshow.swiper-initialized .slideshow__slide{
 }
 
 {%- unless section.settings.slideshow_mobile -%}
+{%- comment -%} A3: auf die eigene Instanz gescoped - ungescoped versteckte eine
+    Instanz im Panel-Modus mobil die Titel/Buttons ALLER Slideshows der Seite
+    (gleiche Klassen in weiteren Slideshow-1-Instanzen und Slideshow 2). {%- endcomment -%}
 @media only screen and (max-width:749px) {
-  .slideshow__subtitle,.slideshow__title,.slideshow__toptitle {
+  [data-section-id="{{ section.id }}"] .slideshow__subtitle,
+  [data-section-id="{{ section.id }}"] .slideshow__title,
+  [data-section-id="{{ section.id }}"] .slideshow__toptitle {
     display: none;
   }
-  .slideshow__btn {
+  [data-section-id="{{ section.id }}"] .slideshow__btn {
     display: none;
   }
 }
