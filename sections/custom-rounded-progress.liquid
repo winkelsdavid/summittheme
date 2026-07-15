@@ -144,16 +144,15 @@ margin-top:50px;
   padding: 0;
   width: 100%;
   max-width: 260px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  column-gap: 10px;
+  row-gap: 12px;
 }
 
 .bas-stat-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
+  display: contents;
 }
 
 .bas-stat-label {
@@ -161,7 +160,6 @@ margin-top:50px;
   line-height: 22px;
   min-width: 94px;
   padding-right: 5px;
-  max-width:94px;
 }
 .bas-before-card .bas-stat-label {
   color: {{ section.settings.stat_label_color }};
@@ -172,7 +170,6 @@ margin-top:50px;
 
 .bas-stat-bar {
   position: relative;
-  flex: 1;
   height: 8px;
   border-radius: 100px;
 }
