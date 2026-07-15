@@ -2798,7 +2798,11 @@ display:none;
                   endif
                 -%}
                 <div class="safe-checkout-detail product-block">
-                  {%- if img_banner != blank -%}
+                  {%- comment -%} Video-Upload (Setting) gewinnt vor summit.banner/Bild —
+                      manuellste Absicht; Kontrakt deckt nur den Bild-Slot. {%- endcomment -%}
+                  {%- if block.settings.video != blank -%}
+                  {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, class: 'img-fluid w-100' }}
+                  {%- elsif img_banner != blank -%}
                   <img
                     class="lazyload img-fluid w-100"
                     loading="lazy"
@@ -6927,6 +6931,15 @@ function formatPrice(value) {
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "paragraph",
+          "content": "💡 Video plays automatically (muted, looped) and overrides the image when both are set."
         }
       ]
     },
