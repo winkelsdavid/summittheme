@@ -515,6 +515,27 @@ display:none;
           href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
         >
         <div class="product-single__meta small--text-center">
+          {%- comment -%} METAFIELD_CONTRACT.md: summit.*-Metafields gewinnen, wenn gesetzt;
+              leere Arrays zaehlen als nicht gesetzt (Normalisierung auf nil). {%- endcomment -%}
+          {%- liquid
+            assign smf_usps = product.metafields.summit.usps.value
+            unless smf_usps and smf_usps[0]
+              assign smf_usps = nil
+            endunless
+            assign smf_faq = product.metafields.summit.faq.value
+            unless smf_faq and smf_faq[0]
+              assign smf_faq = nil
+            endunless
+            assign smf_reviews = product.metafields.summit.reviews.value
+            unless smf_reviews and smf_reviews[0]
+              assign smf_reviews = nil
+            endunless
+            assign smf_rimgs = product.metafields.summit.review_images.value
+            unless smf_rimgs and smf_rimgs[0]
+              assign smf_rimgs = nil
+            endunless
+            assign smf_banner = product.metafields.summit.banner.value
+          -%}
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
@@ -545,8 +566,11 @@ display:none;
                     {% render 'product-label', showlabel: false %}
                   {%- endif -%}
                   <h1 itemprop="name" class="product-single__title">
+                    {% comment -%} METAFIELD_CONTRACT.md Abschn. 2: Titel immer nativ
+                        product.title; use_custom_title/custom_title entfallen (Settings
+                        bleiben im Schema als tote Felder — Mappability). {%- endcomment -%}
                     {% if block.settings.use_custom_title %}
-                      {{ block.settings.custom_title }}
+                      {{ product.title }}
                     {% else %}
                       {{ product.title }}
                     {% endif %}
@@ -687,19 +711,30 @@ display:none;
                   </div>
                 </div>
               {% when 'review_images' %}
+                {% comment -%} METAFIELD_CONTRACT.md Tab. 3: image_1..3 <- summit.review_images[0..2] {%- endcomment -%}
+                {%- liquid
+                  assign ri1 = block.settings.image_1
+                  assign ri2 = block.settings.image_2
+                  assign ri3 = block.settings.image_3
+                  if smf_rimgs
+                    assign ri1 = smf_rimgs[0]
+                    assign ri2 = smf_rimgs[1]
+                    assign ri3 = smf_rimgs[2]
+                  endif
+                -%}
                 <div class="reviews_images product-block" {{ block.shopify_attributes }} style="--font-color:{{ block.settings.text_color }};border:1px solid {{ block.settings.border_color }};background:{{ block.settings.background }};{% if block.settings.border_color != "rgba(0,0,0,0)" %}:1px solid {{ block.settings.border_color }};{% endif %}border-radius:{{ block.settings.roundness }}px;">
                     <div class="reviews_images_r">
-                      {% if block.settings.image_1 != blank %}
-                        <img src="{{ block.settings.image_1 | img_url:"100x" }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                      {% if ri1 != blank %}
+                        <img src="{{ ri1 | img_url:"100x" }}" loading="lazy" style='--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% else %}
                         {%- assign b1_rv_style = '--width:' | append: block.settings.images_size | append: 'px;--width-mobile:' | append: block.settings.images_size_mobile | append: 'px' -%}
                         {% render 'brand-image', handle: 'product-template-1--review_images', position: 1, width: 100, style: b1_rv_style %}
                       {% endif  %}
-                      {% if block.settings.image_2 != blank %}
-                        <img src="{{ block.settings.image_2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                      {% if ri2 != blank %}
+                        <img src="{{ ri2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
-                      {% if block.settings.image_3 != blank %}
-                        <img src="{{ block.settings.image_3 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                      {% if ri3 != blank %}
+                        <img src="{{ ri3 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
                       {% endif  %}
                     </div>
                     <div class="reviews_text">
@@ -744,6 +779,27 @@ display:none;
                 </div>
               {% when 'custom_review' %}
                 {%- assign b1_pos_cr = b1_pos_cr | plus: 1 -%}
+                {%- comment -%} METAFIELD_CONTRACT.md Tab. 3: name/text <- summit.reviews[i],
+                    image <- summit.review_images[3+i] (i = 0-basierter Block-Index = b1_pos_cr-1).
+                    Metafield gesetzt + Eintrag fehlt -> Block ueberspringen (kein Mischen). {%- endcomment -%}
+                {%- liquid
+                  assign cr_name = block.settings.name
+                  assign cr_text = block.settings.text
+                  assign cr_image = block.settings.image
+                  if smf_reviews
+                    assign cr_i0 = b1_pos_cr | minus: 1
+                    assign cr_item = smf_reviews[cr_i0]
+                    if cr_item == blank
+                      continue
+                    endif
+                    assign cr_name = cr_item.name
+                    assign cr_text = cr_item.text
+                  endif
+                  if smf_rimgs
+                    assign cr_img_i = b1_pos_cr | plus: 2
+                    assign cr_image = smf_rimgs[cr_img_i]
+                  endif
+                -%}
                 <style>
                       .customer-review-cont{
                         padding-top:{{ block.settings.padding_top }}px;
@@ -923,14 +979,14 @@ display:none;
                   >
                     <div class="customer-review-avatar-container">
                       <div class="customer-review-avatar">
-                        {%- if block.settings.image != blank -%}
+                        {%- if cr_image != blank -%}
                         <img
-                          src="{{ block.settings.image | img_url: "200x" }}"
-                          alt="{{ block.settings.name }}"
+                          src="{{ cr_image | img_url: "200x" }}"
+                          alt="{{ cr_name }}"
                           loading="lazy"
                         >
                         {%- else -%}
-                          {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--custom_review', position: b1_pos_cr, width: 200, alt: block.settings.name %}{%- endcapture -%}
+                          {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--custom_review', position: b1_pos_cr, width: 200, alt: cr_name %}{%- endcapture -%}
                           {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                         {%- endif -%}
                       </div>
@@ -938,7 +994,7 @@ display:none;
                     <div class="customer-review-content">
                       <div class="customer-review-header">
                         <div class="customer-review-name">
-                          {{ block.settings.name }}
+                          {{ cr_name }}
                           <svg
                             class="customer-review-verified"
                             width="16"
@@ -998,11 +1054,25 @@ display:none;
                           </svg>
                         </div>
                       </div>
-                      <p class="customer-review-text">{{ block.settings.text }}</p>
+                      <p class="customer-review-text">{{ cr_text }}</p>
                     </div>
                   </div>
                 </div>               
                 {%- when 'icon_text_box' -%}
+                {%- comment -%} METAFIELD_CONTRACT.md Tab. 3: text <- summit.usps[i]
+                    (i = 0-basierter Index unter den icon_text_box-Bloecken).
+                    Metafield gesetzt + Eintrag fehlt -> Block ueberspringen. {%- endcomment -%}
+                {%- liquid
+                  assign itb_i = itb_i | plus: 1
+                  assign itb_text = block.settings.text
+                  if smf_usps
+                    assign itb_i0 = itb_i | minus: 1
+                    assign itb_text = smf_usps[itb_i0]
+                    if itb_text == blank
+                      continue
+                    endif
+                  endif
+                -%}
                 <style> 
                   .c_icon_text_box{
                   margin-bottom:12px;
@@ -1027,7 +1097,7 @@ display:none;
                       {% render 'list-svg', block:block,  icon: block.settings.icon %}
                     </div>
                     <div class="c_box_text">
-                      {{ block.settings.text }}
+                      {{ itb_text }}
                     </div>
                 </div>
               {%- when 'promo' -%}
@@ -1366,7 +1436,7 @@ display:none;
                       {% if block.settings[image] != blank or block.settings[video] != blank or block.settings[video_pick] != blank %}
                           {% assign videos_found = true %}
                       {% endif %}
-                  {% endfor %}
+                  {% endfor %}{% comment %} METAFIELD_CONTRACT.md Tab. 3: image_1..3 <- summit.review_images[4..6] {% endcomment %}{% if smf_rimgs and smf_rimgs[4] %}{% assign videos_found = true %}{% endif %}
                   <div class="product-videos-cont">
                     {% for ii in (1..4) %}
                       {%- comment -%} b1-Positionszaehler pro Slot (zaehlt gefuellte wie
@@ -1375,8 +1445,8 @@ display:none;
                       {%- assign b1_pos_vids = b1_pos_vids | plus: 1 -%}
                       {% assign image = 'image_' | append: forloop.index %}
                       {% assign video_pick = 'video_pick_' | append: forloop.index %}
-                      {% assign video = 'video_' | append: forloop.index %}
-                      {% if block.settings[image] != blank or block.settings[video] != blank or block.settings[video_pick] != blank %}
+                      {% assign video = 'video_' | append: forloop.index %}{% assign vid_img = block.settings[image] %}{% if smf_rimgs %}{% assign vid_img = nil %}{% if ii < 4 %}{% assign vid_idx = ii | plus: 3 %}{% assign vid_img = smf_rimgs[vid_idx] %}{% endif %}{% endif %}
+                      {% if vid_img != blank or block.settings[video] != blank or block.settings[video_pick] != blank %}
                         <div class="video_item">
                           <div class="video_item_c">
                             {% if block.settings[video_pick] != blank %}
@@ -1459,7 +1529,7 @@ display:none;
                                 </svg>
                               </button>
                             {% else %}
-                                    <img src="{{ block.settings[image] | img_url:"500x" }}" loading="lazy" alt="">
+                                    <img src="{{ vid_img | img_url:"500x" }}" loading="lazy" alt="">
                             {% endif %}
                           </div>
                         </div>
@@ -2061,6 +2131,20 @@ display:none;
                 {%- endif -%}
                 </div>
               {%- when 'salepoint' -%}
+              {%- comment -%} METAFIELD_CONTRACT.md Tab. 3: free_word <- summit.usps[i]
+                  (i = 0-basierter Index unter den salepoint-Bloecken).
+                  Metafield gesetzt + Eintrag fehlt -> Block ueberspringen. {%- endcomment -%}
+              {%- liquid
+                assign sp_i = sp_i | plus: 1
+                assign sp_text = block.settings.free_word
+                if smf_usps
+                  assign sp_i0 = sp_i | minus: 1
+                  assign sp_text = smf_usps[sp_i0]
+                  if sp_text == blank
+                    continue
+                  endif
+                endif
+              -%}
               <style>
               .product-single__meta .product-block.salepoint-{{ block.id }}{
                 margin-bottom:8px;
@@ -2083,7 +2167,7 @@ display:none;
                   {% else %}
                   {% render 'list-svg', block:block,  icon: block.settings.icon %}
                   {% endif %}
-                  {{ block.settings.free_word }}
+                  {{ sp_text }}
                 </div>
               {%- when 'buttons' -%}
                 <style>
@@ -2706,15 +2790,22 @@ display:none;
                 </div>
               {%- when 'image' -%}
                 {%- assign b1_pos_img = b1_pos_img | plus: 1 -%}
+                {%- comment -%} METAFIELD_CONTRACT.md Tab. 3: image <- summit.banner {%- endcomment -%}
+                {%- liquid
+                  assign img_banner = block.settings.image
+                  if smf_banner
+                    assign img_banner = smf_banner
+                  endif
+                -%}
                 <div class="safe-checkout-detail product-block">
-                  {%- if block.settings.image != blank -%}
+                  {%- if img_banner != blank -%}
                   <img
                     class="lazyload img-fluid w-100"
                     loading="lazy"
-                    src="{{ block.settings.image | image_url: width: 600 }}"
-                    data-src="{{ block.settings.image | image_url: width: 600 }}"
+                    src="{{ img_banner | image_url: width: 600 }}"
+                    data-src="{{ img_banner | image_url: width: 600 }}"
                     height="auto"
-                    width="{{ block.settings.image.width }}"
+                    width="{{ img_banner.width | default: img_banner.preview_image.width }}"
                   >
                   {%- else -%}
                     {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--image', position: b1_pos_img, width: 600, class: 'img-fluid w-100' %}{%- endcapture -%}
@@ -2772,6 +2863,23 @@ display:none;
                   </div>
                 </div>
               {%- when 'tabcustom' -%}
+                {%- comment -%} METAFIELD_CONTRACT.md Tab. 3: title_tab/answer_content <-
+                    summit.faq[i].q/.a (i = 0-basierter Index unter den tabcustom-Bloecken).
+                    Metafield gesetzt + Eintrag fehlt -> Block ueberspringen. {%- endcomment -%}
+                {%- liquid
+                  assign tab_i = tab_i | plus: 1
+                  assign tab_q = block.settings.title_tab
+                  assign tab_a = block.settings.answer_content
+                  if smf_faq
+                    assign tab_i0 = tab_i | minus: 1
+                    assign tab_item = smf_faq[tab_i0]
+                    if tab_item == blank
+                      continue
+                    endif
+                    assign tab_q = tab_item.q
+                    assign tab_a = tab_item.a
+                  endif
+                -%}
                 <style>
                 .accordion_{{ block.id }} .tabcustom{
                   font-size:{{ block.settings.font_size }}px;
@@ -2810,14 +2918,14 @@ display:none;
                         {% render 'list-svg',block:block, icon: block.settings.icon %}
                       {%- endif -%}
                     {% endif %}
-                    {{ block.settings.title_tab | default: 'Question' }}
+                    {{ tab_q | default: 'Question' }}
                   </div>
                   <div
                     id="tabp-{{ block.id }}"
                     class="collapse tab-content {% if block.settings.open_default %} show{% endif %}"
                   >
                     <div class="py-3">
-                      {{ block.settings.answer_content }}
+                      {{ tab_a }}
                       {{ block.settings.page.content }}
                     </div>
                   </div>

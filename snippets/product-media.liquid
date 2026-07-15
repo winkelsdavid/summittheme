@@ -244,21 +244,23 @@
                     >
               </a>
               {% comment %} List-Grid: Side Icons komplett raus (Kundenwunsch) {% endcomment %}
-              {% if section.settings.activate_side_icons and media_style != 'media-grid' %}
+              {% comment %} METAFIELD_CONTRACT.md Tab. 3: icon_1..4 <- summit.benefit_icons[0..3],
+                  text_1..4 <- summit.benefit_texts[0..3]; leere Arrays = nicht gesetzt. {% endcomment -%}
+              {% if section.settings.activate_side_icons and media_style != 'media-grid' %}{% assign smf_bicons = product.metafields.summit.benefit_icons.value %}{% unless smf_bicons and smf_bicons[0] %}{% assign smf_bicons = nil %}{% endunless %}{% assign smf_btexts = product.metafields.summit.benefit_texts.value %}{% unless smf_btexts and smf_btexts[0] %}{% assign smf_btexts = nil %}{% endunless %}
                   <div class="custom_images_icons {% if section.settings.hide_mobile %} mobile_hidden {% endif %}">
                     {% for ii in (1..4) %}
                       {% assign icon = 'icon_' | append: forloop.index %}
-                      {% assign text = 'text_' | append: forloop.index %}
-                      {% if section.settings[icon] != blank or section.settings[text] != blank %}
+                      {% assign text = 'text_' | append: forloop.index %}{% assign slot_icon = section.settings[icon] %}{% assign slot_text = section.settings[text] %}{% if smf_bicons %}{% assign slot_icon = smf_bicons[forloop.index0] %}{% endif %}{% if smf_btexts %}{% assign slot_text = smf_btexts[forloop.index0] %}{% endif %}
+                      {% if slot_icon != blank or slot_text != blank %}
                         <div class="custom_media_icon_item" style='background:{% if section.settings.bk != blank %}{{ section.settings.bk }}{% else %}{{ settings.branding_color }}{% endif %}'>
                           <div class="custom_media_icons">
-                            {% if section.settings[icon] != blank %}
+                            {% if slot_icon != blank %}
                           <div class="media_icon_icon">
-                            <img src="{{ section.settings[icon] | image_url: width: 100 }}" loading="lazy" style="--width:{{ section.settings.icon_size }}px;--mobile-width:{{ section.settings.mobile_width }}px">
+                            <img src="{{ slot_icon | image_url: width: 100 }}" loading="lazy" style="--width:{{ section.settings.icon_size }}px;--mobile-width:{{ section.settings.mobile_width }}px">
                           </div>
                         {% endif %}
                           <div class="media_icon_content" style="color:{{ section.settings.text_color }}">
-                            {{ section.settings[text] }}
+                            {{ slot_text }}
                           </div>
                         </div>
                         </div>

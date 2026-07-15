@@ -59,9 +59,10 @@
       
     </div>
   </div>
-  <div class="hide">
+  <div class="hide">{% comment %} METAFIELD_CONTRACT.md Abschn. 2: Setting gewinnt, wenn gesetzt;
+      sonst nativ das aktuelle Seitenprodukt (auf Nicht-Produktseiten wie bisher nichts). {% endcomment %}{% assign ps_page_product = product %}
     {%- for block in section.blocks -%}
-    {%- assign product = all_products[block.settings.product] -%}
+    {%- assign product = all_products[block.settings.product] -%}{% if product == blank %}{% assign product = ps_page_product %}{% endif %}
     {%- if product != blank -%}
     <div class="data-product" 
          data-id="{{ product.id }}" 
