@@ -110,10 +110,43 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Suggest | `product` | `product.title` (nativ) |
 
 ¹ Die Index-Arithmetik spiegelt die heutigen `outputIndex`-Werte der
-Block-Type-Mappings. Die Theme-Session darf sie vereinfachen (z. B. Reviews
-und ihre Bilder in EIN `reviews`-json mit `image_index` zusammenziehen) —
-dann wird DIESE Tabelle entsprechend aktualisiert; Kontrakt und Theme müssen
-identisch rechnen.
+Block-Type-Mappings — die Theme-Session (Branch `feat/summit-metafields`,
+15.07.2026) hat sie EXAKT gespiegelt, nicht vereinfacht. Bekannte Grenze
+der geerbten Arithmetik: bei ≥2 `custom_review`-Blöcken kollidiert
+`review_images[3+i]` mit den `videos`-Indizes `[4..6]` — heute irrelevant
+(Templates tragen einen Review-Block), bei mehr Blöcken muss die Arithmetik
+beidseitig (Writer + Reader + diese Tabelle) geändert werden.
+
+### Reader-Verhalten v1 (verbindlich, aus dem Theme-Patch zurückgeschrieben)
+
+Diese Semantik hat der Theme-Patch implementiert — der Writer (Schritt 4/5)
+MUSS damit rechnen:
+
+- **`usps`-Index läuft je Block-TYP separat**: `icon_text_box` und
+  `salepoint` haben jeweils einen eigenen 0-basierten Zähler; beide Typen
+  lesen also DIESELBEN `usps[i]`-Einträge. Das spiegelt den heutigen Writer
+  (beide Block-Type-Mappings starten bei outputIndex 0 mit
+  Per-Instanz-Fan-out). Der Writer darf die Typen NICHT gemischt
+  durchnummerieren.
+- **Fehlender Index bei gesetztem Metafield → Block wird übersprungen**
+  (kein Settings-Fallback) — gilt für `usps`, `faq`, `reviews`. Weniger
+  Einträge als Blöcke = bewusstes Kürzen. Ausnahme `custom_review`-Avatar:
+  fehlendes `review_images[3+i]` fällt in den bestehenden Blank-Pfad
+  (Brand-Fallback/Placeholder), nie in das Settings-Bild.
+- **`videos`-Block, Slot 4**: der Kontrakt deckt nur `image_1..3` (=
+  `review_images[4..6]`). Bei gesetztem `review_images` rendert Slot 4 KEIN
+  Settings-Bild mehr (Kein-Mischen-Regel); die Video-Settings
+  (`video_pick_*`/`video_*`) sind nicht Teil des Kontrakts und rendern
+  unverändert weiter.
+- **Nicht metafield-gated (bewusste Verhaltensänderungen ab Theme-Merge):**
+  (a) Der `title`-Block rendert IMMER `product.title` — auch wo
+  `use_custom_title` aktiv war (Settings bleiben als tote Felder im Schema).
+  (b) `Product Suggest`: gesetztes `product`-Setting gewinnt; nur ein
+  LEERES Setting fällt aufs aktuelle Seitenprodukt zurück. Hinweis: der
+  heutige Push schreibt in dieses Setting den Titel-TEXT, `all_products[…]`
+  matcht aber per HANDLE — der Block war auf Bestandsstores daher still
+  tot und wird durch den Fallback erstmals sichtbar (latenter Bug, vom
+  Patch behoben).
 
 ## 4. Fallback-Regel (macht den Theme-Patch risikofrei deploybar)
 
