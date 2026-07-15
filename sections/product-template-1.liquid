@@ -2797,6 +2797,15 @@ display:none;
                     assign img_banner = smf_banner
                   endif
                 -%}
+                <style>
+                  /* Advertising Banner: Bild und Video hart auf 21:9, Ueberstand beschnitten */
+                  .safe-checkout-detail img,
+                  .safe-checkout-detail video{
+                    aspect-ratio: 21 / 9;
+                    object-fit: cover;
+                    width: 100%;
+                  }
+                </style>
                 <div class="safe-checkout-detail product-block">
                   {%- comment -%} Video-Upload (Setting) gewinnt vor summit.banner/Bild —
                       manuellste Absicht; Kontrakt deckt nur den Bild-Slot. {%- endcomment -%}
@@ -6925,7 +6934,7 @@ function formatPrice(value) {
     },
     {
       "type": "image",
-      "name": "Image",
+      "name": "Advertising Banner",
       "settings": [
         {
           "type": "image_picker",

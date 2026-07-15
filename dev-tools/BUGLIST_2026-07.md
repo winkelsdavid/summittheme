@@ -881,6 +881,19 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       spielt automatisch stumm in Schleife, volle Breite, gleiche Rundung;
       Video entfernen -> Bild wie vorher.
 
+## 50. Product Overview: Image-Block -> "Advertising Banner" + 21:9 erzwungen
+- [~] sections/product-template-1.liquid, Block type:image: Schema-NAME
+      auf "Advertising Banner" geaendert (nur das Label; type bleibt
+      "image" - Mappability verbietet Type-Renames, Templates referenzieren
+      den Type). Bild UND Video werden per CSS hart auf 21:9 gezwungen
+      (.safe-checkout-detail img/video: aspect-ratio 21/9, object-fit
+      cover, width 100% - Ueberstand wird mittig beschnitten). Gilt auch
+      fuer summit.banner-Metafield-Bilder und Brand-Fallback (gleiche
+      img-Selektoren). .safe-checkout-detail wird nur von diesem Block
+      benutzt (verifiziert per Grep: 1 Renderstelle + 1 CSS-Regel).
+      Live-Test: Block zeigt Bild/Video immer im 21:9-Band, unabhaengig
+      vom Quellformat; Editor-Sidebar listet "Advertising Banner".
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
