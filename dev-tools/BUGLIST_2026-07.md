@@ -843,6 +843,29 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       abwarten -> Cursor bleibt Pointer, Klick oeffnet Link jederzeit;
       Optik: Buttons erscheinen als sanftes Einblenden statt Hochfahren.
 
+## 48. Before After Stats: lange Labels verschwinden unter den Balken
+- [~] sections/custom-rounded-progress.liquid: .bas-stat-label war auf
+      94px festgenagelt (min-width UND max-width 94px; ab 1400px nur
+      min-width auf 115px erhoeht, max-width 94 blieb). Einzelwoerter wie
+      "Fassungsvermoegen" (123px bei 14px Schrift) liefen ueber die Box
+      hinaus, und weil .bas-stat-bar position:relative hat, malt der
+      Balken UEBER den ueberlaufenden Text -> Text wirkt abgeschnitten.
+      Fix (Option 1, User-GO): ul.bas-stats von Flex-Zeilen auf CSS Grid
+      (grid-template-columns: max-content 1fr, li display:contents,
+      column-gap 10px / row-gap 12px wie vorher) - Labelspalte pro Karte
+      so breit wie das laengste Label, alle Balken bleiben buendig.
+      max-width entfernt, min-width 94px (115px ab 1400) bleibt als
+      Untergrenze; totes flex:1 am Balken entfernt.
+      Headless (alt vs neu): Overlap 14px/28px (Viewport 1200/1600,
+      elementFromPoint am Textende traf bas-stat-fill) -> 0px, Label
+      voll getroffen; Screenshot: Balken buendig.
+      Nebenwirkung Editor: li hat durch display:contents keine eigene
+      Box mehr -> Klick auf einen Stat-Row-Block in der Editor-Sidebar
+      zeichnet evtl. keinen Outline-Rahmen in der Vorschau; Auswahl und
+      Settings funktionieren normal.
+      Live-Test: Karte mit langem Label (Fassungsvermoegen) pruefen -
+      Text komplett sichtbar, Balken aller Zeilen starten auf einer Linie.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
