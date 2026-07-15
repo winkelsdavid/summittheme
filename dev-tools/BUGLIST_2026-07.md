@@ -866,6 +866,21 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Live-Test: Karte mit langem Label (Fassungsvermoegen) pruefen -
       Text komplett sichtbar, Balken aller Zeilen starten auf einer Linie.
 
+## 49. Product Overview: Image-Block unterstuetzt Video-Upload (Feature)
+- [~] sections/product-template-1.liquid, Block "image": neues Schema-
+      Setting type:video id:video (additiv, keine Renames -> mappability-
+      sicher; Upload ueber den Shopify-Video-Picker). Rendering wie im
+      Product Wrap Banner: video_tag mit autoplay/loop/muted/controls:false/
+      playsinline, class img-fluid w-100 -> gleiches Format wie das Bild;
+      globales Radius-CSS greift auch (header-css: .container video).
+      Vorrang: Video-Setting > summit.banner-Metafield > Bild-Setting >
+      Brand-Fallback (manuellster Input gewinnt; METAFIELD_CONTRACT deckt
+      nur den Bild-Slot). Ohne gesetztes Video rendert alles unveraendert.
+      Verifiziert: Schema-JSON-Parse, Tag-Balance, @shopify/liquid-html-parser.
+      Live-Test: im Editor beim Image-Block ein Video hochladen/waehlen ->
+      spielt automatisch stumm in Schleife, volle Breite, gleiche Rundung;
+      Video entfernen -> Bild wie vorher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
