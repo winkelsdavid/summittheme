@@ -922,6 +922,40 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
           funktioniert dann auch, wenn die theme.js-Registerkette stirbt.
       Wartet auf GO.
 
+## 52. Shop The Look: Swiper-Layout zerschossen (slickCarousel-Init ungehaertet)
+- [ ] AUDIT 2026-07-17 (Fix wartet auf GO). Screenshot: Karten mit
+      falschen Breiten nebeneinander, Nachbar-Slide ragt links raus,
+      Pfeile ueberlappen. Referenz old.zip: alte Version lief mit Slick
+      (jQuery/vendor.js) und war ok; Migration auf Swiper in 0d0162e
+      (Slice 6a, 9 Display-Carousels).
+      BEFUND 1: Aktueller main-Code ist in Isolation KORREKT - Headless-
+      Repro mit echten Assets (swiper-bundle v11-CSS + v6-Inline +
+      theme.css + Swiper-JS 6.7.0, Init 1:1 wie theme.slickCarousel):
+      Container 270px, Slides 270px, 1 Karte sichtbar, Dots ok.
+      BEFUND 2 (Ursache des Screenshots): Swiper 6 misst nur beim Init +
+      window.resize. Die Shop-The-Look-Breite (.split-p--right max-width
+      270px, mx-auto, in 2-Spalten-Row neben async ladender Bildspalte;
+      im Editor zusaetzlich Section-Inject) steht beim Init oft noch
+      nicht fest. theme.slickCarousel ist der EINZIGE Carousel-Init-Pfad,
+      der die #30-Haertung NICHT bekam: kein observer/observeParents,
+      kein watchOverflow, kein simulateTouch-Kopplung (F1). Vergleich:
+      Producttabs observer+observeParents+watchOverflow+simulateTouch;
+      Productlists simulateTouch+watchOverflow; SwiperCustom
+      watchOverflow+observer+observeParents.
+      BEWEIS (repro-stl-latewidth.js): Init bei 120px, Container settelt
+      auf 270px ohne resize -> OHNE observer bleiben Slides 120px, aktive
+      Karte fuellt Container nicht, 2 Nachbar-Slides sichtbar (=Screen-
+      shot); MIT observer/observeParents heilt es sich (270px, 1 Karte).
+      BETROFFEN (gleicher Init-Pfad data-section-type=slickCarousels):
+      shop-the-look, icon-list, quotes, quotes-split, quotes-square,
+      featured-collections-1.
+      FIX-VORSCHLAG: theme.slickCarousel-Opts um observer:true,
+      observeParents:true, watchOverflow:true, simulateTouch:
+      !!s.draggable ergaenzen (exakt das bewaehrte #30-Muster; wirkt
+      auf alle 6 Sektionen gleichmaessig, sonst keine Verhaltensaenderung).
+      Zusatzhinweis: Screenshot-Theme "XXXXX PRESET" kann zudem ein
+      veralteter Stand sein - Haertung wirkt unabhaengig davon.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
