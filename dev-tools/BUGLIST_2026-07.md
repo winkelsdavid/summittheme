@@ -894,26 +894,33 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Live-Test: Block zeigt Bild/Video immer im 21:9-Band, unabhaengig
       vom Quellformat; Editor-Sidebar listet "Advertising Banner".
 
-## 51. Before/After Image: Bild fixen (Symptom vom User noch offen)
-- [ ] sections/before-after.liquid (BeerSlider). User-Auftrag 2026-07-16:
-      "Bild fixen" - konkretes Symptom/Screenshot ausstehend. Vorab-Audit,
-      Kandidaten:
-      (a) Theme-CSS ueberschreibt die BeerSlider-Mechanik: .beer-reveal
-          steht auf position:relative (Original: absolute) und bestimmt
-          damit die Sektionshoehe; das Basis-Bild (After) liegt absolut
-          mit object-fit:cover dahinter. VOR JS-Init gilt fuers
-          Before-Bild noch width:200% (Original-CSS) -> Sektion laedt
-          doppelt so hoch und springt beim Init zusammen (Layout-Shift);
-          schlaegt der Init fehl, bleibt sie so haengen (Before unsichtbar
-          wegen opacity:0 bis .beer-ready).
-      (b) Ungleiche Bildformate: Hoehe kommt NUR vom Before-Bild, das
-          After-Bild wird per cover beschnitten - Schema warnt nur per
-          info-Text "Dimensions must match".
-      (c) Bilder tragen class lazyload scale-in, image_tag setzt aber
-          src direkt (loading:lazy, kein data-src) - Zusammenspiel mit
-          Track-B-Lazysizes-Umbau pruefen (scale-in koennte auf
-          .lazyloaded warten).
-      Naechster Schritt: Symptom/Screenshot vom User, dann Repro headless.
+## 51. Before/After Image: Sektion riesig + disfunktional (Init laeuft nicht)
+- [ ] sections/before-after.liquid (BeerSlider). Screenshot (Fahko/
+      "Nitro mapped - Summit", Startseite): Sektion doppelt so hoch,
+      After-Bild ueberzoomt, kein Handle/Slider.
+      URSACHE (headless verifiziert, repro-beerslider.js): Das ist exakt
+      der Zustand OHNE BeerSlider-JS-Init - ohne Init 1125px statt 563px
+      Hoehe (2x, weil Original-CSS .beer-reveal>:first-child width:200%
+      setzt und das Theme-CSS .beer-reveal auf position:relative stellt,
+      wodurch das Before-Bild die Sektionshoehe bestimmt); Before-Bild
+      opacity:0 bis .beer-ready. MIT Init: 563px, Handle, alles korrekt.
+      Init-Kette in main ist korrekt und seit theme_start unveraendert
+      (theme.js: sections.register("beforeafter") -> new BeerSlider;
+      Skript-Reihenfolge defer ok: beerslider.js im Body VOR theme.js).
+      Warum der Init auf dem Store nicht laeuft - Verdacht, zu klaeren:
+      (1) Zweitshop faehrt veraltete Theme-Kopie (bekanntes Muster) ODER
+      (2) ein JS-Fehler eines frueher registrierten Section-Konstruktors
+          (Register-Kette theme.js 3848-3863, z.B. slideshow-section VOR
+          beforeafter) bricht die Kette ab -> Konsole des Stores pruefen.
+      FIX-VORSCHLAG (Haertung, wirkt unabhaengig von der Ursache):
+      (a) CSS-Guard in beerslider.css: .beer-reveal>:first-child auf
+          width:100% - unintialisiert rendert die Sektion dann in
+          normaler Hoehe (nur ohne Slider-Griff, kein Riesenbild);
+          nach Init ueberschreibt setImgWidth ohnehin inline (px).
+      (b) Selbst-Init-Fallback inline in der Section (DOMContentLoaded,
+          mit Guard gegen Doppel-Init via .beer-range-Check) - Slider
+          funktioniert dann auch, wenn die theme.js-Registerkette stirbt.
+      Wartet auf GO.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
