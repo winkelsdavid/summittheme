@@ -894,6 +894,27 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Live-Test: Block zeigt Bild/Video immer im 21:9-Band, unabhaengig
       vom Quellformat; Editor-Sidebar listet "Advertising Banner".
 
+## 51. Before/After Image: Bild fixen (Symptom vom User noch offen)
+- [ ] sections/before-after.liquid (BeerSlider). User-Auftrag 2026-07-16:
+      "Bild fixen" - konkretes Symptom/Screenshot ausstehend. Vorab-Audit,
+      Kandidaten:
+      (a) Theme-CSS ueberschreibt die BeerSlider-Mechanik: .beer-reveal
+          steht auf position:relative (Original: absolute) und bestimmt
+          damit die Sektionshoehe; das Basis-Bild (After) liegt absolut
+          mit object-fit:cover dahinter. VOR JS-Init gilt fuers
+          Before-Bild noch width:200% (Original-CSS) -> Sektion laedt
+          doppelt so hoch und springt beim Init zusammen (Layout-Shift);
+          schlaegt der Init fehl, bleibt sie so haengen (Before unsichtbar
+          wegen opacity:0 bis .beer-ready).
+      (b) Ungleiche Bildformate: Hoehe kommt NUR vom Before-Bild, das
+          After-Bild wird per cover beschnitten - Schema warnt nur per
+          info-Text "Dimensions must match".
+      (c) Bilder tragen class lazyload scale-in, image_tag setzt aber
+          src direkt (loading:lazy, kein data-src) - Zusammenspiel mit
+          Track-B-Lazysizes-Umbau pruefen (scale-in koennte auf
+          .lazyloaded warten).
+      Naechster Schritt: Symptom/Screenshot vom User, dann Repro headless.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
