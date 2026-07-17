@@ -1151,6 +1151,13 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Live-Test: "Enable Radius Image" an + Logo mit farbigem Kasten ->
       Header- und Footer-Logo eckig, Produktbilder weiter gerundet.
 
+## 56. Image With Text: Heading-Size-Default H2 -> H3 (User 2026-07-18)
+- [~] sections/image-with-text.liquid, Text-Block size_text: Schema-
+      Default von h2 auf h3. Wirkt nur auf NEU hinzugefuegte Sektionen
+      bzw. Instanzen ohne gespeicherten Wert; bestehende mit explizit
+      gewaehlter Groesse bleiben unveraendert. Live-Test: Sektion neu
+      hinzufuegen -> Heading Size steht auf H3.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
