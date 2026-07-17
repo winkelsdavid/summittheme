@@ -923,7 +923,17 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Wartet auf GO.
 
 ## 52. Shop The Look: Swiper-Layout zerschossen
-- [ ] REOPENED 2026-07-17 (User: Haertung half nicht; broken auf
+- [~] GEFIXT auf User-GO 2026-07-17 (2. Anlauf): globale Regel
+      .swiper > .swiper-wrapper > .swiper-slide.col{flex:0 0 auto;
+      max-width:none} in theme.css UND theme.css.liquid (nach dem
+      dots-negative-Block) - globale Fassung des bestehenden Patterns
+      aus product-list/product-tab. Headless verifiziert: shop-the-look
+      Slide 270px = Inline-Breite (vorher 116px), genau 1 Karte im
+      Container; product-list 285px/4 Karten korrekt; grow 0/basis auto.
+      Live-Test: Shop The Look im Editor -> 1 Karte in der Spalte,
+      kein Sliver; zusaetzlich Featured Collections 1 und Icon List
+      (Carousel-Modus) pruefen - profitieren mit.
+- [x] REOPENED 2026-07-17 (User: Haertung half nicht; broken auf
       summittheme/main selbst). ECHTE URSACHE gefunden und headless
       reproduziert (Repro brach erst, als das Bootstrap-Inline-CSS aus
       header-css.liquid Zeile 2 mitgeladen wurde - das fehlte im ersten
