@@ -519,5 +519,16 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:bl
       .product-single__thumbnail, .cart-right, #shipping-calculator{
          border-radius:calc(0.2rem * {{ settings.radius_allimg_range }});
       }
+      /* #55: Logos nie runden (Kundenwunsch) - Header-Logo (inkl. Option-
+         Sidebar, gleiches Snippet) und Footer-Logo. Schlaegt die pauschalen
+         .container img/.full img-!important-Regeln oben per gleicher
+         Wichtigkeit + spaeterer Position; der Footer-Logo-CONTAINER traegt
+         bereits .border-radius-0 (theme.css), hier zusaetzlich Bild+Wrapper. */
+      .site-header__logo img,
+      .logofooter img,
+      .logofooter .image-content__image-wrapper img,
+      .logofooter .image-content__image-wrapper{
+        border-radius: 0 !important;
+      }
     {% endif %}
 </style>
