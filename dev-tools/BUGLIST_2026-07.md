@@ -946,20 +946,27 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       ohne Access-Token kein Feed rendert). product-list-swiper setzt
       Kartenbreiten per CSS !important (#30 F8). Ein globales
       Neutralisieren fehlt.
-      OFFENER WIDERSPRUCH: product-list.liquid (Slides ebenfalls
-      "col swiper-slide") bricht im Repro identisch, bestand aber die
-      #30-Live-Tests am 10.07. -> User bitte Product List (Carousel)
-      im Editor kurz pruefen; Fix ist fuer beide Faelle no-op-sicher.
-      FIX-VORSCHLAG (Option A, minimalinvasiv): globale CSS-Regel in
-      theme.css UND theme.css.liquid (laedt als letztes):
-        .swiper > .swiper-wrapper > .swiper-slide{ flex: 0 0 auto; }
-      Spezifitaet 0,3,0 schlaegt .col ordnungsunabhaengig; stellt
-      Swipers Inline-width wieder her. Fuer Slides ohne .col ein
-      No-Op (Swiper-CSS erwartet genau grow:0/shrink:0/basis:auto).
-      col-Padding + row-Negativmargins bleiben -> Karten-Gutter wie
-      im alten Slick-Layout. Betroffene Nutzniesser: shop-the-look,
-      icon-list (Carousel-Modus), featured-collections-1, product-list,
-      product-tab (Carousel), instagram (Carousel).
+      WIDERSPRUCH AUFGELOEST (User bestaetigt: Product List Carousel
+      laeuft): product-list.liquid traegt den Fix BEREITS als Section-
+      Style (Zeilen 13-21: .customstyle{{id}} .swiper-slide.col{flex:
+      0 0 auto;max-width:none} - mit Kommentar, der exakt diese
+      Diagnose beschreibt), ebenso product-tab.liquid (Zeile 59).
+      Das Pattern wurde bei der Migration nur bei einem Teil der
+      Sektionen eingebaut. Repro brach bei product-list, weil der
+      Section-Style-Kopf dort nicht nachgebaut war.
+      INVENTUR .col-Slides OHNE Pattern (= kaputt): shop-the-look,
+      featured-collections-1, icon-list (Carousel-Modus), instagram
+      (JS-generierte col-Slides). OHNE .col (nicht betroffen):
+      quotes, quotes-split, quotes-square.
+      FIX-VORSCHLAG (Option A, verfeinert): EINE globale Regel in
+      theme.css UND theme.css.liquid (laedt als letztes), Praezedenz
+      = bestehendes Pattern aus product-list/product-tab:
+        .swiper > .swiper-wrapper > .swiper-slide.col{
+          flex: 0 0 auto; max-width: none; }
+      Matcht NUR col-Slides in initialisierten Swipers (0,4,0 schlaegt
+      .col ordnungsunabhaengig); deckt auch Instagrams Laufzeit-Slides;
+      No-Op fuer product-list/product-tab (dort doppelt) und alle
+      Nicht-col-Slider. col-Gutter-Padding bleibt (Slick-Geometrie).
       Die #52-Haertung (observer/watchOverflow/simulateTouch, c7e60d4)
       bleibt drin - korrekt, aber nicht die Ursache dieses Bugs.
       Wartet auf GO.
