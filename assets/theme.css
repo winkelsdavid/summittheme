@@ -4306,6 +4306,17 @@ p a:not(.button):focus,
 .prdtab-content.swiper-container-horizontal > .swiper-pagination-bullets {
   bottom: 8px;
 }
+/* #52: Bootstrap .col (flex-basis:0 + flex-grow:1, inline in header-css)
+   ueberstimmt an Swiper-Slides die Inline-Breite, die Swiper setzt - die
+   Karten quetschen sich auf min-content und das Translate-Raster passt
+   nicht mehr (Slick baute keinen Flex-Kontext, dort war .col harmlos).
+   Globale Fassung des Patterns aus product-list/product-tab (dort als
+   Section-Style, hier fuer shop-the-look, featured-collections-1,
+   icon-list und Instagrams Laufzeit-Slides); No-Op ohne .col. */
+.swiper > .swiper-wrapper > .swiper-slide.col {
+  flex: 0 0 auto;
+  max-width: none;
+}
 .slick-dots li {
   position: relative;
   display: inline-block;
