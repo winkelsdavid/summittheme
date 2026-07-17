@@ -1112,6 +1112,27 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Live-Test: Image Ratio auf Square/Portrait stellen -> Bild
       erscheint im gewaehlten Format; "Adapt To Image" wie bisher.
 
+## 54. Scratch Newsletter Popup: Uebersetzungs-Fallbacks fehlten (i18n)
+- [~] GEFIXT auf User-GO 2026-07-17: Die ~30 Text-Settings renderten nur
+      ihre englischen Schema-Defaults, ohne | t-Fallback (Luecke im
+      theme-weiten i18n-Muster #17/#23; nur das Scratch-Popup betroffen,
+      newsletter.liquid nutzt das Muster korrekt).
+      Umsetzung: (1) Schema-Defaults der Text-Settings entfernt
+      (Setting-IDs unveraendert; discount_code behaelt Default JIMMY15 -
+      Codes werden nicht uebersetzt); (2) Liquid-Kopf loest alle Texte
+      per s.x | default: ('general.scratch_newsletter.x' | t) auf,
+      Renderstellen + JSON-Config (foilText/hintScratch/hintRevealed)
+      nutzen die t_-Variablen; (3) 31 Keys in alle 10 Locale-Dateien
+      injiziert (en.default/de/da/es/fr/it/ja/nl/pt-BR/pt-PT; de in
+      Du-Form gemaess #23), textuell vor "newsletter_form" (Rest der
+      Dateien byte-unveraendert), alle per JSON.parse validiert.
+      Verhalten: gespeicherte Texte gewinnen weiter; leere Felder =
+      Shop-Sprache. Editor-Hinweis-Paragraph im Schema ergaenzt.
+      Live-Test: Shop-Sprache Deutsch + Popup mit leeren Textfeldern
+      oeffnen (Test mode) -> alle Schritte deutsch (Rubbelkarte, E-Mail,
+      Telefon, Erfolg, Fehlermeldungen, Folientext); eigenen Text in
+      ein Feld tippen -> gewinnt.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
