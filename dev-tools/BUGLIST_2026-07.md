@@ -1158,6 +1158,12 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       gewaehlter Groesse bleiben unveraendert. Live-Test: Sektion neu
       hinzufuegen -> Heading Size steht auf H3.
 
+## 57. Testimonials Split: Text-Size-Default p -> H3 (User 2026-07-18)
+- [~] sections/quotes-split.liquid, size_text: Schema-Default von "p"
+      (Body) auf h3 - analog #56. Wirkt auf neue Sektionen und
+      Instanzen ohne gespeicherten Wert; explizit gewaehlte Groessen
+      bleiben. Live-Test: Sektion neu hinzufuegen -> Text Size = H3.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
