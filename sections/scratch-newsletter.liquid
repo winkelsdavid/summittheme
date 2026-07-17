@@ -6,6 +6,75 @@
   if s.popup_mode == 'regular'
     assign is_regular = true
   endif
+
+  comment
+    #54 i18n: Settings gewinnen, leere Felder fallen auf die Shop-Sprache
+    zurueck (general.scratch_newsletter.* in den Locale-Dateien) - gleiches
+    Muster wie theme-weit (Bugliste #17/#23). discount_code bleibt bewusst
+    unuebersetzt (muss einem Shopify-Rabattcode entsprechen).
+  endcomment
+  assign fb = 'general.scratch_newsletter.scratch_heading' | t
+  assign t_scratch_heading = s.scratch_heading | default: fb
+  assign fb = 'general.scratch_newsletter.scratch_subheading' | t
+  assign t_scratch_subheading = s.scratch_subheading | default: fb
+  assign fb = 'general.scratch_newsletter.card_kicker' | t
+  assign t_card_kicker = s.card_kicker | default: fb
+  assign fb = 'general.scratch_newsletter.card_prize' | t
+  assign t_card_prize = s.card_prize | default: fb
+  assign fb = 'general.scratch_newsletter.foil_text' | t
+  assign t_foil_text = s.foil_text | default: fb
+  assign fb = 'general.scratch_newsletter.claim_button' | t
+  assign t_claim_button = s.claim_button | default: fb
+  assign fb = 'general.scratch_newsletter.hint_scratch' | t
+  assign t_hint_scratch = s.hint_scratch | default: fb
+  assign fb = 'general.scratch_newsletter.hint_revealed' | t
+  assign t_hint_revealed = s.hint_revealed | default: fb
+  assign fb = 'general.scratch_newsletter.regular_heading_top' | t
+  assign t_regular_heading_top = s.regular_heading_top | default: fb
+  assign fb = 'general.scratch_newsletter.regular_heading' | t
+  assign t_regular_heading = s.regular_heading | default: fb
+  assign fb = 'general.scratch_newsletter.regular_subheading' | t
+  assign t_regular_subheading = s.regular_subheading | default: fb
+  assign fb = 'general.scratch_newsletter.regular_button' | t
+  assign t_regular_button = s.regular_button | default: fb
+  assign fb = 'general.scratch_newsletter.regular_success_kicker' | t
+  assign t_regular_success_kicker = s.regular_success_kicker | default: fb
+  assign fb = 'general.scratch_newsletter.email_heading_top' | t
+  assign t_email_heading_top = s.email_heading_top | default: fb
+  assign fb = 'general.scratch_newsletter.email_heading' | t
+  assign t_email_heading = s.email_heading | default: fb
+  assign fb = 'general.scratch_newsletter.email_placeholder' | t
+  assign t_email_placeholder = s.email_placeholder | default: fb
+  assign fb = 'general.scratch_newsletter.email_button' | t
+  assign t_email_button = s.email_button | default: fb
+  assign fb = 'general.scratch_newsletter.email_error' | t
+  assign t_email_error = s.email_error | default: fb
+  assign fb = 'general.scratch_newsletter.email_legal' | t
+  assign t_email_legal = s.email_legal | default: fb
+  assign fb = 'general.scratch_newsletter.phone_heading' | t
+  assign t_phone_heading = s.phone_heading | default: fb
+  assign fb = 'general.scratch_newsletter.phone_subheading' | t
+  assign t_phone_subheading = s.phone_subheading | default: fb
+  assign fb = 'general.scratch_newsletter.phone_legal' | t
+  assign t_phone_legal = s.phone_legal | default: fb
+  assign fb = 'general.scratch_newsletter.phone_placeholder' | t
+  assign t_phone_placeholder = s.phone_placeholder | default: fb
+  assign fb = 'general.scratch_newsletter.phone_button' | t
+  assign t_phone_button = s.phone_button | default: fb
+  assign fb = 'general.scratch_newsletter.phone_error' | t
+  assign t_phone_error = s.phone_error | default: fb
+  assign fb = 'general.scratch_newsletter.success_kicker' | t
+  assign t_success_kicker = s.success_kicker | default: fb
+  assign fb = 'general.scratch_newsletter.discount_value' | t
+  assign t_discount_value = s.discount_value | default: fb
+  assign fb = 'general.scratch_newsletter.copy_label' | t
+  assign t_copy_label = s.copy_label | default: fb
+  assign fb = 'general.scratch_newsletter.copied_label' | t
+  assign t_copied_label = s.copied_label | default: fb
+  assign fb = 'general.scratch_newsletter.success_note' | t
+  assign t_success_note = s.success_note | default: fb
+  assign fb = 'general.scratch_newsletter.success_button' | t
+  assign t_success_button = s.success_button | default: fb
 -%}
 <style>
   /* ===== Scratch Newsletter Popup (scnl) — Design-Port 1:1 ===== */
@@ -223,78 +292,78 @@
       {%- unless is_regular -%}
       {%- comment -%} Schritt 1 — Rubbelkarte {%- endcomment -%}
       <div class="scnl__step is-active" data-scnl-step="scratch">
-        <div class="scnl__serif scnl__scratch-h">{{ s.scratch_heading }}</div>
-        <div class="scnl__sub scnl__scratch-sub">{{ s.scratch_subheading }}</div>
+        <div class="scnl__serif scnl__scratch-h">{{ t_scratch_heading }}</div>
+        <div class="scnl__sub scnl__scratch-sub">{{ t_scratch_subheading }}</div>
         <div class="scnl__card-wrap">
           <div class="scnl__card">
-            <div class="scnl__card-kicker">{{ s.card_kicker }}</div>
-            <div class="scnl__serif scnl__card-prize">{{ s.card_prize }}</div>
+            <div class="scnl__card-kicker">{{ t_card_kicker }}</div>
+            <div class="scnl__serif scnl__card-prize">{{ t_card_prize }}</div>
             <button type="button" class="scnl__btn scnl__btn--claim" data-scnl-claim>
-              {{ s.claim_button }}
+              {{ t_claim_button }}
               <span class="scnl__shine"></span>
             </button>
           </div>
           <canvas class="scnl__foil" data-scnl-foil></canvas>
           <canvas class="scnl__fx" data-scnl-fx></canvas>
         </div>
-        <div class="scnl__hint" data-scnl-hint>{{ s.hint_scratch }}</div>
+        <div class="scnl__hint" data-scnl-hint>{{ t_hint_scratch }}</div>
       </div>
       {%- else -%}
       {%- comment -%} Regular-Intro (ersetzt Schritt 1) {%- endcomment -%}
       <div class="scnl__step is-active" data-scnl-step="intro">
-        <div class="scnl__serif scnl__h-top">{{ s.regular_heading_top }}</div>
-        <div class="scnl__serif scnl__h-main" style="margin-bottom:0; max-width:360px;">{{ s.regular_heading }}</div>
-        <div class="scnl__sub" style="letter-spacing:0.5px; margin:14px 0 26px; max-width:330px; line-height:1.7;">{{ s.regular_subheading }}</div>
+        <div class="scnl__serif scnl__h-top">{{ t_regular_heading_top }}</div>
+        <div class="scnl__serif scnl__h-main" style="margin-bottom:0; max-width:360px;">{{ t_regular_heading }}</div>
+        <div class="scnl__sub" style="letter-spacing:0.5px; margin:14px 0 26px; max-width:330px; line-height:1.7;">{{ t_regular_subheading }}</div>
         <form class="scnl__form" data-scnl-email-form novalidate>
-          <input class="scnl__input" data-scnl-email type="email" inputmode="email" autocomplete="email" placeholder="{{ s.email_placeholder | escape }}" aria-label="{{ s.email_placeholder | escape }}">
-          <div class="scnl__error" role="alert">{{ s.email_error }}</div>
-          <button type="submit" class="scnl__btn">{{ s.regular_button }}</button>
+          <input class="scnl__input" data-scnl-email type="email" inputmode="email" autocomplete="email" placeholder="{{ t_email_placeholder | escape }}" aria-label="{{ t_email_placeholder | escape }}">
+          <div class="scnl__error" role="alert">{{ t_email_error }}</div>
+          <button type="submit" class="scnl__btn">{{ t_regular_button }}</button>
         </form>
-        <p class="scnl__legal">{{ s.email_legal }}</p>
+        <p class="scnl__legal">{{ t_email_legal }}</p>
       </div>
       {%- endunless -%}
 
       {%- comment -%} Schritt 2 — E-Mail (Scratch-Flow) {%- endcomment -%}
       {%- unless is_regular -%}
       <div class="scnl__step" data-scnl-step="email">
-        <div class="scnl__serif scnl__h-top">{{ s.email_heading_top }}</div>
-        <div class="scnl__serif scnl__h-main">{{ s.email_heading }}</div>
+        <div class="scnl__serif scnl__h-top">{{ t_email_heading_top }}</div>
+        <div class="scnl__serif scnl__h-main">{{ t_email_heading }}</div>
         <form class="scnl__form" data-scnl-email-form novalidate>
-          <input class="scnl__input" data-scnl-email type="email" inputmode="email" autocomplete="email" placeholder="{{ s.email_placeholder | escape }}" aria-label="{{ s.email_placeholder | escape }}">
-          <div class="scnl__error" role="alert">{{ s.email_error }}</div>
-          <button type="submit" class="scnl__btn">{{ s.email_button }}</button>
+          <input class="scnl__input" data-scnl-email type="email" inputmode="email" autocomplete="email" placeholder="{{ t_email_placeholder | escape }}" aria-label="{{ t_email_placeholder | escape }}">
+          <div class="scnl__error" role="alert">{{ t_email_error }}</div>
+          <button type="submit" class="scnl__btn">{{ t_email_button }}</button>
         </form>
-        <p class="scnl__legal">{{ s.email_legal }}</p>
+        <p class="scnl__legal">{{ t_email_legal }}</p>
       </div>
       {%- endunless -%}
 
       {%- comment -%} Schritt 3 — Telefon (optional) {%- endcomment -%}
       {%- if s.enable_phone_step -%}
       <div class="scnl__step" data-scnl-step="phone">
-        <div class="scnl__serif" style="font-size:28px; letter-spacing:2.5px; padding-left:2px;">{{ s.phone_heading }}</div>
-        <div class="scnl__sub" style="margin:8px 0 18px;">{{ s.phone_subheading }}</div>
-        <p class="scnl__legal" style="margin:0 0 16px;">{{ s.phone_legal }}</p>
+        <div class="scnl__serif" style="font-size:28px; letter-spacing:2.5px; padding-left:2px;">{{ t_phone_heading }}</div>
+        <div class="scnl__sub" style="margin:8px 0 18px;">{{ t_phone_subheading }}</div>
+        <p class="scnl__legal" style="margin:0 0 16px;">{{ t_phone_legal }}</p>
         <form class="scnl__form" data-scnl-phone-form novalidate>
           <div class="scnl__phone-row">
             <select data-scnl-country aria-label="Country"></select>
-            <input data-scnl-phone type="tel" autocomplete="tel" placeholder="{{ s.phone_placeholder | escape }}" aria-label="{{ s.phone_placeholder | escape }}">
+            <input data-scnl-phone type="tel" autocomplete="tel" placeholder="{{ t_phone_placeholder | escape }}" aria-label="{{ t_phone_placeholder | escape }}">
           </div>
-          <div class="scnl__error" role="alert">{{ s.phone_error }}</div>
-          <button type="submit" class="scnl__btn">{{ s.phone_button }}</button>
+          <div class="scnl__error" role="alert">{{ t_phone_error }}</div>
+          <button type="submit" class="scnl__btn">{{ t_phone_button }}</button>
         </form>
       </div>
       {%- endif -%}
 
       {%- comment -%} Schritt 4 — Erfolg {%- endcomment -%}
       <div class="scnl__step" data-scnl-step="done">
-        <div class="scnl__done-kicker">{% if is_regular %}{{ s.regular_success_kicker }}{% else %}{{ s.success_kicker }}{% endif %}</div>
-        <div class="scnl__serif scnl__done-value">{{ s.discount_value }}</div>
+        <div class="scnl__done-kicker">{% if is_regular %}{{ t_regular_success_kicker }}{% else %}{{ t_success_kicker }}{% endif %}</div>
+        <div class="scnl__serif scnl__done-value">{{ t_discount_value }}</div>
         <div class="scnl__code-row">
           <div class="scnl__code" data-scnl-code>{{ s.discount_code }}</div>
-          <button type="button" class="scnl__copy" data-scnl-copy data-label="{{ s.copy_label | escape }}" data-copied="{{ s.copied_label | escape }}">{{ s.copy_label }}</button>
+          <button type="button" class="scnl__copy" data-scnl-copy data-label="{{ t_copy_label | escape }}" data-copied="{{ t_copied_label | escape }}">{{ t_copy_label }}</button>
         </div>
-        <div class="scnl__done-note">{{ s.success_note }}</div>
-        <button type="button" class="scnl__btn scnl__btn--done" data-scnl-close>{{ s.success_button }}</button>
+        <div class="scnl__done-note">{{ t_success_note }}</div>
+        <button type="button" class="scnl__btn scnl__btn--done" data-scnl-close>{{ t_success_button }}</button>
       </div>
 
       {%- comment -%} Echtes Shopify-Customer-Form (per fetch abgeschickt, kein Reload) {%- endcomment -%}
@@ -318,10 +387,10 @@
   "cookieDaysSubscribed": {{ s.cookie_days_subscribed | json }},
   "scratchStyle": {{ s.scratch_style | json }},
   "revealThreshold": {{ s.reveal_threshold | json }},
-  "foilText": {{ s.foil_text | json }},
+  "foilText": {{ t_foil_text | json }},
   "phoneStep": {{ s.enable_phone_step | json }},
-  "hintScratch": {{ s.hint_scratch | json }},
-  "hintRevealed": {{ s.hint_revealed | json }},
+  "hintScratch": {{ t_hint_scratch | json }},
+  "hintRevealed": {{ t_hint_revealed | json }},
   "discountCode": {{ s.discount_code | json }}
 }
 </script>
@@ -796,48 +865,49 @@
     { "type": "image_picker", "id": "logo_image", "label": "Logo image", "info": "Optional override. When empty, the logo from your Shopify brand settings (Settings → Brand) is used." },
 
     { "type": "header", "content": "Step 1 — Scratch card" },
-    { "type": "text", "id": "scratch_heading", "label": "Heading", "default": "TRY YOUR LUCK" },
-    { "type": "text", "id": "scratch_subheading", "label": "Subheading", "default": "Scratch below to see what you win" },
-    { "type": "text", "id": "card_kicker", "label": "Card kicker", "default": "YOU'VE GOT A" },
-    { "type": "text", "id": "card_prize", "label": "Card prize text", "default": "MYSTERY DISCOUNT" },
-    { "type": "text", "id": "foil_text", "label": "Text on foil", "default": "SCRATCH TO REVEAL" },
-    { "type": "text", "id": "claim_button", "label": "Claim button", "default": "CLAIM" },
-    { "type": "text", "id": "hint_scratch", "label": "Hint (before reveal)", "default": "USE YOUR CURSOR TO SCRATCH THE CARD" },
-    { "type": "text", "id": "hint_revealed", "label": "Hint (after reveal)", "default": "LUCKY YOU — CLAIM YOUR PRIZE" },
+    { "type": "paragraph", "content": "💡 Empty text fields fall back to the shop language automatically." },
+    { "type": "text", "id": "scratch_heading", "label": "Heading" },
+    { "type": "text", "id": "scratch_subheading", "label": "Subheading" },
+    { "type": "text", "id": "card_kicker", "label": "Card kicker" },
+    { "type": "text", "id": "card_prize", "label": "Card prize text" },
+    { "type": "text", "id": "foil_text", "label": "Text on foil" },
+    { "type": "text", "id": "claim_button", "label": "Claim button" },
+    { "type": "text", "id": "hint_scratch", "label": "Hint (before reveal)" },
+    { "type": "text", "id": "hint_revealed", "label": "Hint (after reveal)" },
 
     { "type": "header", "content": "Regular newsletter — Intro" },
     { "type": "paragraph", "content": "Shown instead of the scratch card when popup type is 'Regular newsletter'. Reuses the email placeholder, error and legal text from Step 2; phone and success steps are shared." },
-    { "type": "text", "id": "regular_heading_top", "label": "Heading line 1", "default": "SIGN UP AND GET" },
-    { "type": "text", "id": "regular_heading", "label": "Heading line 2", "default": "15% OFF YOUR FIRST ORDER" },
-    { "type": "text", "id": "regular_subheading", "label": "Subheading", "default": "Be the first to know about new arrivals, exclusive offers and stories." },
-    { "type": "text", "id": "regular_button", "label": "Submit button", "default": "SIGN UP" },
-    { "type": "text", "id": "regular_success_kicker", "label": "Success kicker", "default": "YOUR DISCOUNT" },
+    { "type": "text", "id": "regular_heading_top", "label": "Heading line 1" },
+    { "type": "text", "id": "regular_heading", "label": "Heading line 2" },
+    { "type": "text", "id": "regular_subheading", "label": "Subheading" },
+    { "type": "text", "id": "regular_button", "label": "Submit button" },
+    { "type": "text", "id": "regular_success_kicker", "label": "Success kicker" },
 
     { "type": "header", "content": "Step 2 — Email" },
-    { "type": "text", "id": "email_heading_top", "label": "Heading line 1", "default": "WANT YOUR" },
-    { "type": "text", "id": "email_heading", "label": "Heading line 2", "default": "MYSTERY DISCOUNT?" },
-    { "type": "text", "id": "email_placeholder", "label": "Input placeholder", "default": "Your email address" },
-    { "type": "text", "id": "email_button", "label": "Submit button", "default": "CONTINUE" },
-    { "type": "text", "id": "email_error", "label": "Error message", "default": "Invalid email" },
-    { "type": "textarea", "id": "email_legal", "label": "Legal text", "default": "By submitting your email address, you agree to receive marketing emails from us. You also agree to our Terms and Privacy Policy. We may use information collected about you to suggest other products and offers. You can unsubscribe at any time." },
+    { "type": "text", "id": "email_heading_top", "label": "Heading line 1" },
+    { "type": "text", "id": "email_heading", "label": "Heading line 2" },
+    { "type": "text", "id": "email_placeholder", "label": "Input placeholder" },
+    { "type": "text", "id": "email_button", "label": "Submit button" },
+    { "type": "text", "id": "email_error", "label": "Error message" },
+    { "type": "textarea", "id": "email_legal", "label": "Legal text" },
 
     { "type": "header", "content": "Step 3 — Phone (optional)" },
     { "type": "checkbox", "id": "enable_phone_step", "label": "Enable phone number step", "info": "When disabled, email signup leads directly to the discount.", "default": true },
-    { "type": "text", "id": "phone_heading", "label": "Heading", "default": "FINISH SIGNING UP" },
-    { "type": "text", "id": "phone_subheading", "label": "Subheading", "default": "for texts to activate your discount" },
-    { "type": "textarea", "id": "phone_legal", "label": "Legal text", "default": "By providing your number and clicking the button, you agree to receive recurring automated marketing texts (including cart reminders) from us and to our Terms of Service. Consent is not a condition of purchase. Msg & data rates may apply. Msg frequency varies. Reply HELP for help, STOP to opt out. View Privacy Policy." },
-    { "type": "text", "id": "phone_placeholder", "label": "Input placeholder", "default": "Your phone number" },
-    { "type": "text", "id": "phone_button", "label": "Submit button", "default": "ACTIVATE NOW" },
-    { "type": "text", "id": "phone_error", "label": "Error message", "default": "Invalid phone" },
+    { "type": "text", "id": "phone_heading", "label": "Heading" },
+    { "type": "text", "id": "phone_subheading", "label": "Subheading" },
+    { "type": "textarea", "id": "phone_legal", "label": "Legal text" },
+    { "type": "text", "id": "phone_placeholder", "label": "Input placeholder" },
+    { "type": "text", "id": "phone_button", "label": "Submit button" },
+    { "type": "text", "id": "phone_error", "label": "Error message" },
 
     { "type": "header", "content": "Step 4 — Success" },
-    { "type": "text", "id": "success_kicker", "label": "Kicker", "default": "YOUR MYSTERY DISCOUNT" },
-    { "type": "text", "id": "discount_value", "label": "Discount value", "default": "15% OFF" },
+    { "type": "text", "id": "success_kicker", "label": "Kicker" },
+    { "type": "text", "id": "discount_value", "label": "Discount value" },
     { "type": "text", "id": "discount_code", "label": "Discount code", "info": "Must match a discount code created in Shopify admin.", "default": "JIMMY15" },
-    { "type": "text", "id": "copy_label", "label": "Copy button", "default": "COPY" },
-    { "type": "text", "id": "copied_label", "label": "Copy button (copied)", "default": "COPIED ✓" },
-    { "type": "text", "id": "success_note", "label": "Note under code", "default": "Applied at checkout — and on its way to your inbox." },
-    { "type": "text", "id": "success_button", "label": "Close button", "default": "START SHOPPING" }
+    { "type": "text", "id": "copy_label", "label": "Copy button" },
+    { "type": "text", "id": "copied_label", "label": "Copy button (copied)" },
+    { "type": "text", "id": "success_note", "label": "Note under code" },
+    { "type": "text", "id": "success_button", "label": "Close button" }
   ]
 }
 {% endschema %}
