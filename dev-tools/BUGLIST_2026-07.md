@@ -968,7 +968,14 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       veralteter Stand sein - Haertung wirkt unabhaengig davon.
 
 ## 53. Testimonials Split: Bild trotz Image-Picker unsichtbar (Ratio-Var undefiniert)
-- [ ] AUDIT 2026-07-17 (Fix wartet auf GO). sections/quotes-split.liquid.
+- [~] GEFIXT auf User-GO 2026-07-17: Var-Definition reaktiviert, gescoped
+      auf .customstyle{{section.id}} und nur ausgegeben wenn paddingTop
+      != blank (Liquid-gated). Verifiziert: Schema/Parser OK; Headless
+      square OHNE Fix Wrapper 0px -> MIT Fix paddingTop = 100% der
+      Breite, Bild sichtbar; auto unveraendert. Live-Test: Image Ratio
+      Square/Portrait/Landscape/Wide -> Bild im gewaehlten Format;
+      "Adapt To Image" wie bisher.
+      AUDIT 2026-07-17: sections/quotes-split.liquid.
       URSACHE: Die Liquid-Logik berechnet paddingTop (portrait 120% /
       square 100% / landscape 75% / wide 56%), aber die CSS-Definition
       dazu ist SEIT JEHER auskommentiert (Zeilen 17-19, identisch schon
