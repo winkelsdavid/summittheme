@@ -4425,8 +4425,13 @@ p a:not(.button):focus,
    nicht mehr (Slick baute keinen Flex-Kontext, dort war .col harmlos).
    Globale Fassung des Patterns aus product-list/product-tab (dort als
    Section-Style, hier fuer shop-the-look, featured-collections-1,
-   icon-list und Instagrams Laufzeit-Slides); No-Op ohne .col. */
-.swiper > .swiper-wrapper > .swiper-slide.col {
+   icon-list und Instagrams Laufzeit-Slides); No-Op ohne .col.
+   WICHTIG: auf .swiper-container-initialized gescoped (setzt Swiper 6
+   beim Init) - featured-collections-1 traegt die swiper-Klassen auch
+   bei Enable Carousel AUS und baut sein statisches Drittel-Raster dann
+   gerade AUS dem .col-Flex; ungescoped wuerde die Regel dort jede
+   Karte auf width:100% aufblasen (v6-CSS greift bei basis:auto). */
+.swiper-container-initialized > .swiper-wrapper > .swiper-slide.col {
   flex: 0 0 auto;
   max-width: none;
 }
