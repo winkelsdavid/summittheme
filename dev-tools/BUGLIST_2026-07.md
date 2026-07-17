@@ -1133,6 +1133,24 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Telefon, Erfolg, Fehlermeldungen, Folientext); eigenen Text in
       ein Feld tippen -> gewinnt.
 
+## 55. Logos vom globalen "Enable Radius Image" ausgenommen
+- [~] GEFIXT auf User-GO 2026-07-18: Der globale Radius-Block rundete
+      per .container img/.full img (!important) auch Logos - sichtbar,
+      sobald ein Logo einen weissen/farbigen Hintergrund-Kasten hat.
+      Ausnahme am Ende des Radius-Blocks in header-css (Muster wie
+      Grid-Banner-Ausnahme a2e59f5): .site-header__logo img (Header +
+      Option-Sidebar, gleiches Snippet), .logofooter img + .logofooter
+      .image-content__image-wrapper img (Footer-Logo; die spezifischere
+      Wrapper-Variante noetig, weil .container .image-content__image-
+      wrapper img (0,2,1) sonst gewinnt - im Headless-Test gefunden)
+      + Wrapper selbst; Footer-CONTAINER trug bereits .border-radius-0.
+      Newsletter-Popup-Logo liegt ausserhalb der Container - unbetroffen.
+      Headless verifiziert (Kaskade mit echtem Radius-Block, range=2):
+      Header-Logo 0px, Footer-Logo 0px, Wrapper 0px, normales
+      .container-Bild bleibt 6.4px gerundet.
+      Live-Test: "Enable Radius Image" an + Logo mit farbigem Kasten ->
+      Header- und Footer-Logo eckig, Produktbilder weiter gerundet.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
