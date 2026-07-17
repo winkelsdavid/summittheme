@@ -14,9 +14,15 @@
   endcase
 -%}
 {% style %}
-/*  .customstyle{{ section.id }}{
-    --g-padding-s-top: {{ paddingTop }} ;
-  }*/
+  {%- comment -%} #53: Ratio-Var pro Instanz definieren - war auskommentiert, wodurch
+      padding-top: var(--g-padding-s-top) !important auf 0 kollabierte und den
+      Inline-Style schlug (Bild unsichtbar bei jedem Ratio ausser "Adapt To Image").
+      Nur ausgeben, wenn gesetzt: bei "auto" waere "--g-padding-s-top: ;" invalid. {%- endcomment -%}
+  {%- if paddingTop != blank -%}
+  .customstyle{{ section.id }}{
+    --g-padding-s-top: {{ paddingTop }};
+  }
+  {%- endif -%}
    .customstyle{{ section.id }}{
     padding-top:{{ section.settings.padding_top }}px;
     padding-bottom:{{ section.settings.padding_bottom }}px;
