@@ -922,8 +922,49 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
           funktioniert dann auch, wenn die theme.js-Registerkette stirbt.
       Wartet auf GO.
 
-## 52. Shop The Look: Swiper-Layout zerschossen (slickCarousel-Init ungehaertet)
-- [~] GEFIXT auf User-GO 2026-07-17: theme.js slickCarousel-Opts um
+## 52. Shop The Look: Swiper-Layout zerschossen
+- [ ] REOPENED 2026-07-17 (User: Haertung half nicht; broken auf
+      summittheme/main selbst). ECHTE URSACHE gefunden und headless
+      reproduziert (Repro brach erst, als das Bootstrap-Inline-CSS aus
+      header-css.liquid Zeile 2 mitgeladen wurde - das fehlte im ersten
+      Repro, daher die Fehldiagnose):
+      Bootstrap-4-Grid liegt SEIT theme_start inline in header-css
+      (Zeile 2) und laedt NACH der Swiper-CSS. Die Slides tragen aus
+      der Slick-Zeit noch class "col" -> .col{flex-basis:0;flex-grow:1}
+      schlaegt an den Flex-Items der .swiper-wrapper die von Swiper
+      gesetzte Inline-Breite (bei flex-basis!=auto ignoriert Flexbox
+      width): Slides kollabieren auf min-content (~116px statt 270px),
+      Swipers Translate-Raster (270er-Schritte) passt nicht mehr ->
+      Teilkarten/Sliver sichtbar, Pfeile ueberlappen (= Screenshot).
+      WARUM ALT OK: Slick baut KEINEN Flex-Kontext (slick-track =
+      block + floats/eigene Breiten) -> .col-Flexregeln liefen ins
+      Leere. Die Swiper-Migration (0d0162e) behielt row/col bei ->
+      erst seitdem giftig.
+      ALTE FIX-PATTERN GEPRUEFT: Instagram-Carousel (theme.js 3071)
+      entfernt beim JS-Init classList.remove("row","mx-n2") vom
+      Container (Teil-Pattern; dessen col-Slides fielen nie auf, weil
+      ohne Access-Token kein Feed rendert). product-list-swiper setzt
+      Kartenbreiten per CSS !important (#30 F8). Ein globales
+      Neutralisieren fehlt.
+      OFFENER WIDERSPRUCH: product-list.liquid (Slides ebenfalls
+      "col swiper-slide") bricht im Repro identisch, bestand aber die
+      #30-Live-Tests am 10.07. -> User bitte Product List (Carousel)
+      im Editor kurz pruefen; Fix ist fuer beide Faelle no-op-sicher.
+      FIX-VORSCHLAG (Option A, minimalinvasiv): globale CSS-Regel in
+      theme.css UND theme.css.liquid (laedt als letztes):
+        .swiper > .swiper-wrapper > .swiper-slide{ flex: 0 0 auto; }
+      Spezifitaet 0,3,0 schlaegt .col ordnungsunabhaengig; stellt
+      Swipers Inline-width wieder her. Fuer Slides ohne .col ein
+      No-Op (Swiper-CSS erwartet genau grow:0/shrink:0/basis:auto).
+      col-Padding + row-Negativmargins bleiben -> Karten-Gutter wie
+      im alten Slick-Layout. Betroffene Nutzniesser: shop-the-look,
+      icon-list (Carousel-Modus), featured-collections-1, product-list,
+      product-tab (Carousel), instagram (Carousel).
+      Die #52-Haertung (observer/watchOverflow/simulateTouch, c7e60d4)
+      bleibt drin - korrekt, aber nicht die Ursache dieses Bugs.
+      Wartet auf GO.
+      ALTE (unvollstaendige) DIAGNOSE vom 17.07.: theme.js
+      slickCarousel-Opts um
       observer:true, observeParents:true, watchOverflow:true,
       simulateTouch:!!s.draggable ergaenzt (#30-Muster). Verifiziert:
       node --check OK; Headless Normalfall unveraendert korrekt (270px/
