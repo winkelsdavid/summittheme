@@ -3158,6 +3158,14 @@ theme.slickCarousel = (function () {
       loop: !!s.infinite,
       speed: s.speed || 500,
       grabCursor: !!s.draggable,
+      // Draggable AUS = kein Maus-Drag; Touch-Swipe bleibt (wie Productlists, #30 F1).
+      simulateTouch: !!s.draggable,
+      // #52: Containerbreite steht bei Shop The Look & Co. beim Init oft noch
+      // nicht fest (270px-Spalte neben async Bildspalte, Editor-Inject) - Swiper 6
+      // misst sonst nur bei Init/window.resize und bleibt auf falschen Maessen.
+      observer: true,
+      observeParents: true,
+      watchOverflow: true,
       // autoHeight: false fuer Multi-Slide-Grids - true clippte die Karten auf
       // die Bildhoehe des aktiven Slides (Titel/Excerpt/Button unter dem Bild weg).
       autoHeight: false,
