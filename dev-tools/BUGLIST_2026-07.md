@@ -967,6 +967,32 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Zusatzhinweis: Screenshot-Theme "XXXXX PRESET" kann zudem ein
       veralteter Stand sein - Haertung wirkt unabhaengig davon.
 
+## 53. Testimonials Split: Bild trotz Image-Picker unsichtbar (Ratio-Var undefiniert)
+- [ ] AUDIT 2026-07-17 (Fix wartet auf GO). sections/quotes-split.liquid.
+      URSACHE: Die Liquid-Logik berechnet paddingTop (portrait 120% /
+      square 100% / landscape 75% / wide 56%), aber die CSS-Definition
+      dazu ist SEIT JEHER auskommentiert (Zeilen 17-19, identisch schon
+      im alten Slick-Theme old.zip - kein Migrationsschaden). Die vier
+      Ratio-Regeln nutzen trotzdem padding-top: var(--g-padding-s-top)
+      !important - undefinierte Var => "invalid at computed-value time"
+      => padding-top faellt auf 0 UND gewinnt per !important gegen den
+      korrekten Inline-Style des Wrappers. Ergebnis: Wrapper 0px hoch +
+      overflow:hidden => Bild unsichtbar, sobald Image Ratio NICHT
+      "Adapt To Image" ist. Nur mit Ratio "auto" rendert das Bild.
+      EMPIRISCH (repro-quotessplit.js, echte Assets inkl. lazysizes +
+      Swiper-Init nach #52): auto -> Bild sichtbar (opacity 1,
+      lazyloaded); square -> Wrapper paddingTop 0px, Hoehe 0, unsichtbar.
+      Lazyload/scale-in und Swiper-Struktur sind NICHT das Problem.
+      Nur diese Sektion betroffen (einzige mit --g-padding-s-top).
+      FIX-VORSCHLAG: Var-Definition reaktivieren, aber nur wenn
+      paddingTop != blank (bei auto waere "--g-padding-s-top: ;"
+      invalid): .customstyle{{section.id}}{--g-padding-s-top:...}.
+      Instanz-sicher: Ratio-Regeln sind global, die Var loest aber pro
+      Section-Scope auf -> mehrere Instanzen mit verschiedenen Ratios
+      kollidieren nicht. Kein Schema-/Markup-Eingriff.
+      Live-Test: Image Ratio auf Square/Portrait stellen -> Bild
+      erscheint im gewaehlten Format; "Adapt To Image" wie bisher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
