@@ -8,6 +8,37 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
 
 ---
 
+## Wiederkehrende Fix-Patterns (bei neuen Bugs zuerst prüfen)
+
+**P1 — Bootstrap `.col` vs. Swiper-Slide-Breiten (#52):** Slick baute keinen
+Flex-Kontext, Swiper schon — `.col{flex-basis:0;flex-grow:1}` (Bootstrap-Inline
+in header-css Zeile 2, lädt NACH der Swiper-CSS) überstimmt an `.swiper-slide`s
+die Inline-Breite, die Swiper setzt: Karten kollabieren auf min-content,
+Translate-Raster passt nicht mehr (Symptom: Teilkarten/Sliver nebeneinander,
+Pfeile überlappen). Gegenmittel global in theme.css + theme.css.liquid:
+`.swiper-container-initialized > .swiper-wrapper > .swiper-slide.col{flex:0 0 auto;max-width:none}`
+— BEWUSST auf initialisierte Swiper gescoped: featured-collections-1 trägt die
+swiper-Klassen auch bei Carousel AUS und baut sein statisches Raster gerade AUS
+dem `.col`-Flex (ungescoped → jede Karte width:100%). product-list/product-tab
+haben zusätzlich ihre ältere sektionsweise Fassung. Bei NEUEN Swiper-Sektionen:
+entweder kein `.col` an Slides (wie quotes*) oder auf die globale Regel bauen.
+
+**P2 — Swiper-Init-Härtung (#30/#52):** Jeder Swiper-Init braucht
+`observer:true, observeParents:true, watchOverflow:true, simulateTouch:!!draggable`
+— sonst bleibt er bei spät settelnder Containerbreite (Editor-Inject, async
+Bildspalten) auf falschen Maßen stehen bzw. zeigt tote Pfeile.
+
+**P3 — BeerSlider/JS-Init-Ketten (#51):** Sektion sieht „doppelt so hoch /
+Vor-Init-Zustand" aus → prüfen, ob der zugehörige JS-Init überhaupt läuft
+(Registerkette theme.js 3848ff, Konsole auf Fehler früherer Konstruktoren).
+
+**P4 — Undefinierte CSS-Var mit `!important` (#53):** `var(--x)` ohne Definition
+macht die Deklaration „invalid at computed-value time" → Property fällt auf
+initial UND behält `!important` (schlägt Inline-Styles). Symptom: 0-Höhe-Boxen,
+unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
+
+---
+
 ## 1. Option Type: neue Werte hinzufügen
 - [x] Product Overview → Buttons & Variants → "Option Type": neue Optionen
       **Variant Image Round** und **Variant Image Square** hinzufügen.
@@ -923,16 +954,37 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Wartet auf GO.
 
 ## 52. Shop The Look: Swiper-Layout zerschossen
-- [~] GEFIXT auf User-GO 2026-07-17 (2. Anlauf): globale Regel
-      .swiper > .swiper-wrapper > .swiper-slide.col{flex:0 0 auto;
-      max-width:none} in theme.css UND theme.css.liquid (nach dem
+- [x] BESTAETIGT vom User 2026-07-17 (Shop The Look 1 Karte + Pfeile +
+      Dots; Collection List und Icons rendern korrekt). Als Pattern P1
+      oben aufgenommen.
+      NACHSCHAERFUNG nach Vollscan (gleicher Tag): Regel auf
+      .swiper-container-initialized > .swiper-wrapper > .swiper-slide.col
+      gescoped - die ungescope Fassung haette featured-collections-1
+      bei Enable Carousel AUS gebrochen (traegt swiper-Klassen UNGATED,
+      statisches Drittel-Raster kommt dort AUS dem .col-Flex; Headless:
+      ungescoped 1140px/Karte statt 380px-Drittel, gescoped korrekt in
+      allen 4 Faellen inkl. Init-Fall 380px und stl 270px/pl 285px).
+      VOLLSCAN-Protokoll (alle swiper-slide-Vorkommen geprueft):
+      .col-Slides = shop-the-look, featured-collections-1, icon-list
+      (nur Carousel-Zweig), product-list, product-tab (beide zusaetzlich
+      mit eigener Section-Regel), instagram (JS-Laufzeit, Container
+      bekommt swiper+initialized beim Init -> abgedeckt). OHNE .col
+      (kein Handlungsbedarf, Regel = No-Op): quotes, quotes-split,
+      quotes-square, announcement-bar-slide, custom-reviews,
+      custom-shoppable-video, image-auto-slider, reviews-slider,
+      slideshow-1/2, Produktgalerie/Thumbs (theme.js). swiper-container-
+      Markup (featured-collections-3, product-list-swiper, product-wrap-
+      banner, product-recommendations): keine .col-Slides ->
+      unbetroffen; product-recommendations grid__item hat eigenen
+      flex-basis:auto!important-Schutz. col-N-Varianten an Swiper-
+      Slides: keine (icon-list nutzt col-12/col-6 nur im statischen
+      Zweig ohne swiper-Klassen).
+      GEFIXT auf User-GO 2026-07-17 (2. Anlauf): globale Regel
+      (Selektor s.o.) in theme.css UND theme.css.liquid (nach dem
       dots-negative-Block) - globale Fassung des bestehenden Patterns
       aus product-list/product-tab. Headless verifiziert: shop-the-look
       Slide 270px = Inline-Breite (vorher 116px), genau 1 Karte im
       Container; product-list 285px/4 Karten korrekt; grow 0/basis auto.
-      Live-Test: Shop The Look im Editor -> 1 Karte in der Spalte,
-      kein Sliver; zusaetzlich Featured Collections 1 und Icon List
-      (Carousel-Modus) pruefen - profitieren mit.
 - [x] REOPENED 2026-07-17 (User: Haertung half nicht; broken auf
       summittheme/main selbst). ECHTE URSACHE gefunden und headless
       reproduziert (Repro brach erst, als das Bootstrap-Inline-CSS aus
@@ -1026,7 +1078,9 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       veralteter Stand sein - Haertung wirkt unabhaengig davon.
 
 ## 53. Testimonials Split: Bild trotz Image-Picker unsichtbar (Ratio-Var undefiniert)
-- [~] GEFIXT auf User-GO 2026-07-17: Var-Definition reaktiviert, gescoped
+- [x] BESTAETIGT vom User 2026-07-17 ("funktioniert"). Als Pattern P4
+      oben aufgenommen.
+      GEFIXT auf User-GO 2026-07-17: Var-Definition reaktiviert, gescoped
       auf .customstyle{{section.id}} und nur ausgegeben wenn paddingTop
       != blank (Liquid-gated). Verifiziert: Schema/Parser OK; Headless
       square OHNE Fix Wrapper 0px -> MIT Fix paddingTop = 100% der
