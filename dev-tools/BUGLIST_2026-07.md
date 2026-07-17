@@ -923,7 +923,18 @@ Status-Legende: `[ ]` offen · `[~]` in Arbeit / wartet auf Klick-Test · `[x]` 
       Wartet auf GO.
 
 ## 52. Shop The Look: Swiper-Layout zerschossen (slickCarousel-Init ungehaertet)
-- [ ] AUDIT 2026-07-17 (Fix wartet auf GO). Screenshot: Karten mit
+- [~] GEFIXT auf User-GO 2026-07-17: theme.js slickCarousel-Opts um
+      observer:true, observeParents:true, watchOverflow:true,
+      simulateTouch:!!s.draggable ergaenzt (#30-Muster). Verifiziert:
+      node --check OK; Headless Normalfall unveraendert korrekt (270px/
+      1 Karte); Bug-Fall (Init 120px -> Container 270px ohne resize)
+      heilt sich mit observer (vorher: Slides blieben 120px, 2 Nachbarn
+      sichtbar). Live-Test: Shop The Look im Editor oeffnen/Setting
+      aendern -> genau 1 Karte in der 270px-Spalte, Pfeile seitlich,
+      kein Karten-Sliver links; gilt ebenso fuer Icon List, Quotes(-Split/
+      -Square), Featured Collections 1. Draggable AUS unterbindet jetzt
+      auch Maus-Drag (F1-Paritaet, gewollt).
+      AUDIT 2026-07-17: Screenshot: Karten mit
       falschen Breiten nebeneinander, Nachbar-Slide ragt links raus,
       Pfeile ueberlappen. Referenz old.zip: alte Version lief mit Slick
       (jQuery/vendor.js) und war ok; Migration auf Swiper in 0d0162e
