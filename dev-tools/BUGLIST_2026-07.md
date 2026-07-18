@@ -1281,7 +1281,8 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Produktbilder weiter gerundet. (Preset braucht frischen Build.)
 
 ## 60. Rich Text: Image-Block nie runden (Logo-Slot) [Bug-Sammler 18.07., chris-admin]
-- [~] GEFIXT 2026-07-18: Operator-Report (verbatim, massgeblich):
+- [x] BESTAETIGT vom User 2026-07-18 ("fix hat geklappt").
+      GEFIXT 2026-07-18: Operator-Report (verbatim, massgeblich):
       Rich-Text-Image-Block darf keine rounded edges haben, da dort
       Logos eingesetzt werden. Screenshot (PETS/Hammy, aktives Nitro-
       Theme) bestaetigt: Logo mit gerundeten Ecken beschnitten.
