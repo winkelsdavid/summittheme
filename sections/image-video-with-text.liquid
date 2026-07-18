@@ -225,9 +225,9 @@
                     {%- if block.settings.title -%}
                       <h2 class="mb-3 {{ block.settings.size_text }}" {% if block.settings.color_title != 'rgba(0,0,0,0)' and block.settings.color_title != blank %}style='--g-color-heading:{{ block.settings.color_title }}'{% endif %}>{{ block.settings.title }}</h2>
                     {%- endif -%}
-                    {%- if block.settings.content -%}
-                      <div class="rte-setting" style='--color:{{ block.settings.color_answer }}'>{{ block.settings.content }}</div>
-                    {%- endif -%}
+                    {%- comment -%} #62: Description-Feld (id content) entfernt -
+                        rendete DOPPELT zum Text Content (answer_content); der
+                        Richtext ist der eine Text-Slot (Operator 18.07.). {%- endcomment -%}
                     {%- if block.settings.answer_content != blank -%}
                     <div class="rte-setting" style='--color:{{ block.settings.color_answer }}'>
                       {{ block.settings.answer_content }}
@@ -537,12 +537,6 @@
             }
           ],
           "label": "Heading Size"
-        },
-        {
-          "type": "textarea",
-          "id": "content",
-          "label": "Description",
-          "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
         },
         {
           "type": "richtext",

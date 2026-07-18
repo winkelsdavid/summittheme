@@ -1319,6 +1319,25 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       bestehende Stores mit bereits kopierter Vorlage brauchen das
       Leeren einmal im Editor.
 
+## 62. Image (Video) With Text: doppeltes Description-Feld entfernt [Bug-Sammler 18.07., chris-admin]
+- [~] GEFIXT 2026-07-18: Text-Block hatte ZWEI Textfelder, die BEIDE
+      untereinander renderten - id content (textarea, Label Description,
+      mit engl. Default) und id answer_content (richtext, Label Text
+      Content). Screenshot (PETS, aktives Nitro-Theme): AI-Text in
+      Description PLUS Richtext-Default darunter = Dopplung.
+      Operator (verbatim): description raus, text content wird befuellt.
+      Fix: Setting content aus dem Schema entfernt + Renderstelle raus;
+      answer_content ist der eine Text-Slot. Setting-ENTFERNUNG, kein
+      Rename -> parse-Contract laut Briefing-Reminder unkritisch.
+      WICHTIG Writer-Rueckmeldung (Summit-Session): Der Writer befuellte
+      bisher offenbar content (Screenshot). Schreibt er weiter dorthin,
+      landet der Wert unsichtbar in den Settings - Mapping des Blocks
+      auf answer_content umstellen, sonst fehlt der AI-Text in neuen
+      Builds. Bestandsinstanzen mit content-Text zeigen diesen nach dem
+      Update nicht mehr an (gewollt - war die Dopplung).
+      Live-Test: Text-Block zeigt nur noch ein Textfeld (Text Content);
+      Frontend rendert den Text einfach statt doppelt.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
