@@ -1165,7 +1165,20 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       bleiben. Live-Test: Sektion neu hinzufuegen -> Text Size = H3.
 
 ## 58. Button Box: fremdfarbige 1px-Umrandung (CTA-Farbe) [Bug-Sammler 18.07.]
-- [~] GEFIXT auf User-GO 2026-07-18: .btn-theme-Basisregel in theme.css
+- [~] NACHFIX #58b (User: "immer noch da, Primary-Farbe") 2026-07-18:
+      ZWEITE Border-Quelle gefunden - .btn-theme:hover (theme.css 2252)
+      und :active/:focus (2290) setzen border-color: var(--g-main)
+      (Primary); da der Focus nach einem Klick stehen bleibt, blieb der
+      Rand dauerhaft sichtbar. Override-Regel mit identischen Selektoren
+      (OHNE .btn-outline - dessen Hover-Rand ist gewollt) direkt
+      dahinter: border-color transparent; in theme.css UND
+      theme.css.liquid. Headless verifiziert: Ruhe/Hover/Geklickt-Focus
+      alle transparent, Backgrounds unveraendert.
+      WICHTIG Testkontext: die Preset-Themes (FASHION 16:39 etc.) sind
+      Snapshots von VOR den Fixes - eindeutiger Marker-Check per Admin-
+      API bestaetigt, dass #58 dort fehlt. Test nur auf summittheme/main
+      bzw. einem NEUEN Preset-Build aussagekraeftig.
+      ERSTFIX: GEFIXT auf User-GO 2026-07-18: .btn-theme-Basisregel in theme.css
       UND theme.css.liquid auf border: 1px solid transparent (statt
       var(--g-cta-button)); background-clip border-box fuellt den
       Randbereich mit der Hintergrundfarbe -> Standard-Optik identisch.

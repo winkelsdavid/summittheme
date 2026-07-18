@@ -2363,6 +2363,34 @@ input.spr-summary-actions-newreview:hover {
   /* background-color: var(--g-main); */
   color: #fff;
 }
+/* #58b: Button Box soll NIE einen Rahmen zeigen - die Hover/Active/Focus-
+   Regeln oben setzen border-color auf var(--g-main) (Primary), und weil
+   der Focus nach einem Klick stehen bleibt, blieb der Rand dauerhaft.
+   Gleiche Selektoren wie oben (ohne .btn-outline - dessen Hover-Rand ist
+   gewollt), spaeter im Stylesheet -> gewinnt bei gleicher Spezifitaet. */
+.btn-theme:hover,
+.shopify-payment-button .shopify-payment-button__button--unbranded:hover,
+.spr-summary-actions-newreview:hover,
+.rte .btn-theme:hover,
+.rte .shopify-payment-button .shopify-payment-button__button--unbranded:hover,
+.shopify-payment-button .rte .shopify-payment-button__button--unbranded:hover,
+.rte .spr-summary-actions-newreview:hover,
+.btn-theme:active,
+.btn-theme:focus,
+.shopify-payment-button .shopify-payment-button__button--unbranded:active,
+.shopify-payment-button .shopify-payment-button__button--unbranded:focus,
+.spr-summary-actions-newreview:active,
+.spr-summary-actions-newreview:focus,
+.rte .btn-theme:active,
+.rte .btn-theme:focus,
+.rte .shopify-payment-button .shopify-payment-button__button--unbranded:active,
+.rte .shopify-payment-button .shopify-payment-button__button--unbranded:focus,
+.shopify-payment-button .rte .shopify-payment-button__button--unbranded:active,
+.shopify-payment-button .rte .shopify-payment-button__button--unbranded:focus,
+.rte .spr-summary-actions-newreview:active,
+.rte .spr-summary-actions-newreview:focus {
+  border-color: transparent;
+}
 .btn-theme:active:before,
 .shopify-payment-button
   .shopify-payment-button__button--unbranded:active:before,
