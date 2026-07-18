@@ -1165,7 +1165,8 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       bleiben. Live-Test: Sektion neu hinzufuegen -> Text Size = H3.
 
 ## 58. Button Box: fremdfarbige 1px-Umrandung (CTA-Farbe) [Bug-Sammler 18.07.]
-- [~] NACHFIX #58b (User: "immer noch da, Primary-Farbe") 2026-07-18:
+- [x] BESTAETIGT vom User 2026-07-18 ("ja ist gefixt").
+      NACHFIX #58b (User: "immer noch da, Primary-Farbe") 2026-07-18:
       ZWEITE Border-Quelle gefunden - .btn-theme:hover (theme.css 2252)
       und :active/:focus (2290) setzen border-color: var(--g-main)
       (Primary); da der Focus nach einem Klick stehen bleibt, blieb der
