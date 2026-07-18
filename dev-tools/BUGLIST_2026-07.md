@@ -1361,8 +1361,19 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       facets/quickview-loader/...), Dark-Smoke (#181818/#fff/#333)
       kippt alle 16. (Messartefakt BOM beim Alt-Export erkannt und
       neutralisiert - kein echter Diff.)
+      ERKENNTNIS aus dem User-Livetest 19.07.: Der CART-/SUCH-DRAWER
+      hoert NICHT auf die Chrome-Schicht, sondern auf das seit jeher
+      existierende Setting color_drawer_bg (Colors -> "Drawer
+      Background", Default #fff) - header-oncss Z417-429 neutralisiert
+      die cart-draw-Literale per background:transparent!important und
+      setzt {{ settings.color_drawer_bg }}!important auf search-modal/
+      mini-cart-content/drawer-crossell. Die gepatchten cart-draw-
+      Literale sind darunter toter Code (unschaedlich, Light bewiesen
+      unveraendert). KONSEQUENZ Summit-Mapping: color_drawer_bg MUSS
+      zusaetzlich zu den 3 Chrome-Feldern im Dark-Preset gemappt werden.
       OFFEN: P1 (~20 Commerce-Flaechen) einzeln abnehmen; Summit-Seite:
-      Re-Parse + Dark-Preset-Mapping der 3 Felder.
+      Re-Parse + Dark-Preset-Mapping der 3 Chrome-Felder PLUS
+      color_drawer_bg.
       Live-Test: Customizer -> Colors -> UI Chrome auf #181818/#ffffff/
       #333 -> Cart-/Menu-/Filter-Drawer, Dropdowns, Mengen-Input,
       Quick-View, Pfeile, Such-/Meganav-Panels, Verkaufs-Popup dunkel;
