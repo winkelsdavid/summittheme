@@ -1300,6 +1300,25 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       -> eckig; andere Bilder behalten Rundung. Gilt auf summittheme/
       main sofort; Preset-/Nitro-Builds brauchen frischen Build.
 
+## 61. FAQ-Vorlage: Default-Uebersetzung griff nicht [Bug-Sammler 18.07.]
+- [~] GEFIXT 2026-07-18: Screenshot (PETS/Hammy, deutsch): FAQ-Seite
+      zeigte "SUBTITLE TOP" + "Frequently Asked Questions." englisch.
+      AUDIT: Section faq-accordion hat das #17-i18n-Muster komplett
+      (Fallbacks general.defaults.faq_subtitle_top/faq_title verdrahtet,
+      Keys in allen 10 Locales - de "Haeufig gestellte Fragen"; Schema
+      ohne Defaults + "Leave empty"-Info). Ursache war ALLEIN die
+      Vorlage templates/page.faqs.json: hart gespeicherte englische
+      Werte (subtitle_top "Subtitle Top", title "Frequently Asked
+      Questions.") - gespeicherte Werte schlagen jeden Fallback
+      (#54-Nachtrag-Muster). Fix: beide Werte in der Vorlage geleert;
+      JSON validiert. Die FAQ-FRAGEN im Screenshot sind AI-Content vom
+      Writer (nicht Vorlagen-Defaults) - nicht betroffen.
+      Live-Test: FAQ-Seite auf deutschem Shop -> "Haeufig gestellte
+      Fragen" (+ uebersetzter Subtitle); eigene Eintraege in den
+      Feldern gewinnen weiterhin. Gilt fuer neue Builds/Installationen;
+      bestehende Stores mit bereits kopierter Vorlage brauchen das
+      Leeren einmal im Editor.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
