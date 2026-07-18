@@ -1165,7 +1165,17 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       bleiben. Live-Test: Sektion neu hinzufuegen -> Text Size = H3.
 
 ## 58. Button Box: fremdfarbige 1px-Umrandung (CTA-Farbe) [Bug-Sammler 18.07.]
-- [ ] AUDIT (Fix wartet auf GO). Mechanismus in theme.css bestaetigt:
+- [~] GEFIXT auf User-GO 2026-07-18: .btn-theme-Basisregel in theme.css
+      UND theme.css.liquid auf border: 1px solid transparent (statt
+      var(--g-cta-button)); background-clip border-box fuellt den
+      Randbereich mit der Hintergrundfarbe -> Standard-Optik identisch.
+      .btn-primary (Z. 2055) bewusst unveraendert - dort wandert die
+      Border beim Hover korrekt mit. Headless verifiziert (CTA orange):
+      Standard voll orange, btn-white rein weiss, Sektionsfarbe rein
+      schwarz - kein Fremdrand mehr; computed borderColor transparent.
+      Live-Test: FASHION-Preset, Button Box (White) -> kein orangener
+      Rahmen; Standard-Buttons unveraendert.
+      AUDIT: Mechanismus in theme.css bestaetigt:
       .btn-theme traegt border: 1px solid var(--g-cta-button) UND
       background: var(--g-cta-button) - Rand normal unsichtbar. Sobald
       der Hintergrund umgefaerbt wird, bleibt der Rand in der globalen

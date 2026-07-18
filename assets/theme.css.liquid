@@ -2103,7 +2103,12 @@ input.spr-summary-actions-newreview:hover {
   vertical-align: middle;
   white-space: nowrap;
   cursor: pointer;
-  border: 1px solid var(--g-cta-button);
+  /* #58: transparent statt var(--g-cta-button) - der Rand ist bei Standard-
+     Buttons unsichtbar (border == background), blieb aber in CTA-Farbe
+     stehen, sobald der Hintergrund umgefaerbt wird (btn-white, Sektions-
+     Farbsettings, input:hover). background-clip ist border-box, die
+     Hintergrundfarbe fuellt den Randbereich -> Optik identisch. */
+  border: 1px solid transparent;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
