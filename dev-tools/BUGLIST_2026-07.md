@@ -1216,8 +1216,19 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Preset-Theme (version 870bdf44) auf einem Stand VOR #50, rendert
       der Banner nativ quadratisch. Alle uebrigen summit.*-Bild-Slots
       (Side-Icons, Review-Strip, Avatar, Video-Thumbs) croppen per CSS.
-      NAECHSTER SCHRITT: funktionierenden Screenshot + Fundort (Seite/
-      Sektion) nachliefern; Preset-Theme-Stand gegen main pruefen.
+      LIVE-ANALYSE 18.07. (Admin-API + Storefront-Preview, read-only):
+      Hypothese "Preset zu alt fuer #50" WIDERLEGT - FASHION-Presets und
+      Live-Nitro-Theme enthalten #50 + Metafield-Code. Ratio-Audit aller
+      CDN-File-Bilder auf der Preset-Produktseite: ALLE summit.*-Slots
+      croppen korrekt (Banner=Video 21:9, Avatar/Thumbs/Icons per CSS);
+      Icon-Slots sind gewollt quadratisch. AUFFAELLIG einzig die
+      PRODUKTGALERIE (product.media, AI-Uploads 1:1): aktiver Slide
+      rendert portrait-gecroppt (556x570), uebrige Slides nativ
+      quadratisch (262/540) - Galerie wirkt gemischt/1:1. Vermutlich
+      ist DAS die Meldung; das waeren aber product.media, nicht
+      summit.*-Metafields. NAECHSTER SCHRITT: Operator-Screenshot
+      (funktionierender Link) bestaetigt Fundort, dann Fix im Bereich
+      product-media (Image-Ratio-Anwendung auf alle Galerie-Slides).
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
