@@ -10,6 +10,10 @@ theme-import-safe/
 # Node dev-tool dependencies (local checker only, not part of the live theme)
 node_modules/
 
+# Lokale Secrets (Shopify Admin-API-Token) - NIE committen
+.env
+.env.*
+
 # Claude Code local config
 .claude/
 
