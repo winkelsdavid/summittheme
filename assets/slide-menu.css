@@ -78,7 +78,7 @@
         position: absolute;
         top: 0;
         width:var(--menu-width);
-        background:white;
+        background:var(--g-chrome-bg, white);
         z-index:1005;
     }
     .side-menu__banner .image-content__image-wrapper img{
@@ -125,7 +125,7 @@
         position: absolute;
         top: 0;
         width:var(--menu-width);
-        background:white;
+        background:var(--g-chrome-bg, white);
         z-index:1006;
         border-left:1px solid rgba(0,0,0,0.08);
     }

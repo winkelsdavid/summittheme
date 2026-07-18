@@ -170,6 +170,20 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:bl
       
       
 
+      {%- comment -%} #63 UI-Chrome-Schicht (Darkmode-Briefing): bewusst KONDITIONAL -
+          leeres Setting => Variable existiert nicht => jedes
+          var(--g-chrome-*, <Literal>) faellt aufs klassische Weiss/Schwarz zurueck.
+          Nur fuer Voll-Dark-Presets gedacht (Auflage 8.3). {%- endcomment -%}
+      {%- if settings.color_chrome_bg != blank and settings.color_chrome_bg != 'rgba(0,0,0,0)' -%}
+      --g-chrome-bg: {{ settings.color_chrome_bg }};
+      {%- endif -%}
+      {%- if settings.color_chrome_text != blank and settings.color_chrome_text != 'rgba(0,0,0,0)' -%}
+      --g-chrome-text: {{ settings.color_chrome_text }};
+      {%- endif -%}
+      {%- if settings.color_chrome_border != blank and settings.color_chrome_border != 'rgba(0,0,0,0)' -%}
+      --g-chrome-border: {{ settings.color_chrome_border }};
+      {%- endif -%}
+
       --g-alert: {{ settings.alert_text }};
       --g-alert-bg: {{ settings.alert_bg }};
       --g-alert-bd: {{ settings.alert_bd }};

@@ -329,6 +329,28 @@
       },
       {
         "type": "header",
+        "content": "UI Chrome (Drawers, Inputs, Overlays)"
+      },
+      {
+        "type": "color",
+        "id": "color_chrome_bg",
+        "label": "Chrome Background",
+        "info": "Drawers, dropdowns, quantity inputs, card overlays. Empty = classic white."
+      },
+      {
+        "type": "color",
+        "id": "color_chrome_text",
+        "label": "Chrome Text",
+        "info": "Text/icons on chrome surfaces. Empty = classic black."
+      },
+      {
+        "type": "color",
+        "id": "color_chrome_border",
+        "label": "Chrome Border",
+        "info": "Borders/dividers on chrome surfaces. Empty = classic light grey."
+      },
+      {
+        "type": "header",
         "content": "Alert & Message"
       },
       {

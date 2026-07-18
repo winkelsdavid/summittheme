@@ -2554,8 +2554,8 @@ optgroup {
   font-weight: 700;
 }
 option {
-  color: #000;
-  background-color: #fff;
+  color: var(--g-chrome-text, #000);
+  background-color: var(--g-chrome-bg, #fff);
 }
 select::-ms-expand {
   display: none;
@@ -3820,7 +3820,7 @@ select.input--error::-ms-input-placeholder {
   opacity: 1;
 }
 .input--content-color {
-  background-color: #fff;
+  background-color: var(--g-chrome-bg, #fff);
 }
 input,
 textarea {
@@ -4174,7 +4174,7 @@ p a:not(.button):focus,
   z-index: 1001;
 }
 .slick-loading .slick-list {
-  background: white url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/96/assets/ajax-loader.gif?v=41356863302472015721781721766') center center no-repeat;
+  background: var(--g-chrome-bg, white) url('//nitrotheme-demo1.myshopify.com/cdn/shop/t/96/assets/ajax-loader.gif?v=41356863302472015721781721766') center center no-repeat;
 }
 @keyframes animateIcon {
   0% {
@@ -4252,7 +4252,7 @@ p a:not(.button):focus,
   font-family: icomoon !important;
   font-size: 16px;
   line-height: 1;
-  color: #000;
+  color: var(--g-chrome-text, #000);
   opacity: 1;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -5812,12 +5812,12 @@ p a:not(.button):focus,
   position: relative;
 }
 .modal-dialog--upsell .btn-decline {
-  background: white;
+  background: var(--g-chrome-bg, white);
   border: 1px solid var(--g-main);
   color: var(--g-main);
 }
 .modal-dialog--upsell .btn-decline:hover{
-  background: white;
+  background: var(--g-chrome-bg, white);
   border: 1px solid var(--g-main);
   color: var(--g-main);
   opacity: 0.8;
@@ -5964,7 +5964,7 @@ p a:not(.button):focus,
   height: 36px;
   border-radius: 100%;
   color: #fff;
-  background: #fff;
+  background: var(--g-chrome-bg, #fff);
   border:1px solid rgba(var(--g-color-heading-rgb),0.1);
   box-shadow: none;
   transform: translateY(-50%) !important;
@@ -5974,7 +5974,7 @@ p a:not(.button):focus,
   font-family: icomoon !important;
   font-size: 16px;
   line-height: 1;
-  color: #000;
+  color: var(--g-chrome-text, #000);
   opacity: 1;
   -webkit-font-smoothing: antialiased;
 }
@@ -6173,7 +6173,7 @@ p a:not(.button):focus,
   bottom: 0;
   max-width: 95%;
   z-index: 9999;
-  background-color: #fff;
+  background-color: var(--g-chrome-bg, #fff);
   transition: all 0.35s cubic-bezier(0.33, 0.59, 0.14, 1);
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -6283,7 +6283,7 @@ p a:not(.button):focus,
 }
 .drawer {
   overflow: visible;
-  color: #000;
+  color: var(--g-chrome-text, #000);
 }
 .drawer .show {
   opacity: 1 !important;
@@ -6652,7 +6652,7 @@ p a:not(.button):focus,
 }
 .cart__note {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--g-chrome-bg, #fff);
   border: 1px solid var(--g-input-border);
   border-radius: var(--g-input-radius);
 }
@@ -6697,7 +6697,7 @@ p a:not(.button):focus,
 }
 .product-form__item .js-qty__input {
   border: 2px solid #e9e9e9;
-  background: #fff;
+  background: var(--g-chrome-bg, #fff);
   height: 50px;
   padding: 12px 16px;
   min-width: 120px;
@@ -6714,7 +6714,7 @@ p a:not(.button):focus,
 .js-qty__input {
   width: 100%;
   border: 2px solid #e9e9e9;
-  background: #fff;
+  background: var(--g-chrome-bg, #fff);
   height: 50px;
   padding: 12px 15px;
   text-align: center;
@@ -7184,7 +7184,7 @@ body.modal--is-active {
   width: 50px;
   height: 50px;
   line-height: 50px;
-  background: #fff;
+  background: var(--g-chrome-bg, #fff);
   bottom: -25px;
   top: auto;
 }
@@ -7626,7 +7626,7 @@ body.video-playing {
   width: 50px;
   height: 50px;
   line-height: 54px;
-  background-color: #fff;
+  background-color: var(--g-chrome-bg, #fff);
   border-radius: 50%;
   border: 0;
 }
@@ -7639,11 +7639,11 @@ body.video-playing {
 }
 .video-section--loaded .video-section__player-close {
   z-index: 17;
-  background-color: white !important;
+  background-color: var(--g-chrome-bg, white) !important;
 }
 .video-section__player-close .icon,
 .video-section__player-close [class^="icon-"] {
-  fill: #000;
+  fill: var(--g-chrome-text, #000);
   width: 25px;
   height: 25px;
 }
@@ -10302,7 +10302,7 @@ a.text-primary:active {
   overflow: hidden;
   top: 0;
   left: 0;
-  background: #fff;
+  background: var(--g-chrome-bg, #fff);
   z-index: 99999;
   right: 0;
   width: 100%;
@@ -11049,7 +11049,7 @@ blockquote::before {
 .swiper-button-next {
   height: 44px !important;
   width: 44px !important;
-  background: white;
+  background: var(--g-chrome-bg, white);
   box-shadow: 0 2px 6px #36363626;
   border-radius: 50%;
   transition: all 0.3s ease;

@@ -1338,6 +1338,36 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Live-Test: Text-Block zeigt nur noch ein Textfeld (Text Content);
       Frontend rendert den Text einfach statt doppelt.
 
+## 63. Darkmode-Chrome-Schicht Phase 1 (Briefing THEME_BRIEFING_darkmode_chrome.md)
+- [~] UMGESETZT auf User-GO 2026-07-19 (P0 + header-oncss + 2 Inline-
+      Funde; P1 folgt einzeln zur Abnahme):
+      (1) settings_schema: Header "UI Chrome" + color_chrome_bg/text/
+          border, bewusst OHNE Defaults (additive IDs, kein Contract-
+          Risiko). (2) header-css: konditionaler --g-chrome-*-Block
+      (leeres Setting => Variable existiert nicht => Literal-Fallback).
+      (3) Codemod (strikt, jede Op exakt 1x, Dry-Run vorab): 68 Er-
+      setzungen var(--g-chrome-*, <altes Literal>) in theme.css UND
+      theme.css.liquid (je 20 Regeln, Doppelpflege-Auflage 8.1),
+      cart-draw (7), component-facets (7), slide-menu (2), template-
+      collection (1), header-oncss (8, inkl. Indicator Z1641),
+      quickview.liquid (QV-Pfeile inline), product-suggest.liquid
+      (Popup, 2 Stellen).
+      Abweichungen vom Briefing: .js-qty__adjust:focus ENTFAELLT
+      (Literal war bereits auskommentiert); BONUS video-close-X-Icon
+      fill:#000 -> chrome-text mitgenommen (sonst black-on-dark).
+      VERIFIKATION: settings_schema-JSON + 4 Liquid-Parser OK;
+      Headless 32/32: Light computed ALT vs NEU identisch ueber 16
+      repraesentative Chrome-Elemente (drawer/cart/qty/option/arrows/
+      facets/quickview-loader/...), Dark-Smoke (#181818/#fff/#333)
+      kippt alle 16. (Messartefakt BOM beim Alt-Export erkannt und
+      neutralisiert - kein echter Diff.)
+      OFFEN: P1 (~20 Commerce-Flaechen) einzeln abnehmen; Summit-Seite:
+      Re-Parse + Dark-Preset-Mapping der 3 Felder.
+      Live-Test: Customizer -> Colors -> UI Chrome auf #181818/#ffffff/
+      #333 -> Cart-/Menu-/Filter-Drawer, Dropdowns, Mengen-Input,
+      Quick-View, Pfeile, Such-/Meganav-Panels, Verkaufs-Popup dunkel;
+      Settings leeren -> exakt heutiger Light-Mode.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

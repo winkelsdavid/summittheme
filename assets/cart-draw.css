@@ -1,5 +1,5 @@
 .mini-cart-header{
-  background-color: white;
+  background-color: var(--g-chrome-bg, white);
     color: var(--color-body-text);
   }
 .mini-cart-header .modal-header .close{
@@ -12,7 +12,7 @@
     border:none;
 }
 .js-mini-cart-content{
-  background-color: white;
+  background-color: var(--g-chrome-bg, white);
   flex-grow:1;
   overflow-x: hidden;
   /* overflow-y: auto; */
@@ -52,11 +52,11 @@
 }
 .mini-cart-footer{
 position: relative;
-background-color: white;
+background-color: var(--g-chrome-bg, white);
 }
 .js-note-cart{
   position: absolute;
-  background-color: white;
+  background-color: var(--g-chrome-bg, white);
   z-index: 100;
   opacity: 0;
   visibility: hidden;
@@ -163,7 +163,7 @@ background-color: white;
   left: -24px;
   right: -24px;
   z-index: 100;
-  background: white;
+  background: var(--g-chrome-bg, white);
   text-align: center;
   padding: 40px;
   min-height: 200px;
@@ -180,7 +180,7 @@ background-color: white;
   left: -24px;
   right: -24px;
   z-index: 100;
-  background: white;
+  background: var(--g-chrome-bg, white);
   text-align: center;
   padding: 40px;
   min-height: 220px;
@@ -348,7 +348,7 @@ background-color: white;
 
 .recommend-loading{
   position: absolute;
-  background-color: white;
+  background-color: var(--g-chrome-bg, white);
   top:0;
   left:0;
   right:0;
