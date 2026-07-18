@@ -1164,6 +1164,38 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Instanzen ohne gespeicherten Wert; explizit gewaehlte Groessen
       bleiben. Live-Test: Sektion neu hinzufuegen -> Text Size = H3.
 
+## 58. Button Box: fremdfarbige 1px-Umrandung (CTA-Farbe) [Bug-Sammler 18.07.]
+- [ ] AUDIT (Fix wartet auf GO). Mechanismus in theme.css bestaetigt:
+      .btn-theme traegt border: 1px solid var(--g-cta-button) UND
+      background: var(--g-cta-button) - Rand normal unsichtbar. Sobald
+      der Hintergrund umgefaerbt wird, bleibt der Rand in der globalen
+      CTA-Farbe stehen: (a) .btn-theme.btn-white setzt nur background
+      #fff ohne border-color (Z. 2171-2184), (b) Sektionen mit eigenen
+      Button-Farbsettings (nur background inline), (c) input.btn-theme
+      :hover wechselt background auf --g-main, Rand bleibt CTA.
+      FASHION-Preset hat orange CTA-Farbe -> orangener Rahmen.
+      FIX-VORSCHLAG: border-color entkoppeln - global .btn-theme
+      {border-color: transparent} (Rand war nie als sichtbares
+      Gestaltungselement in Benutzung, btn-outline hat eigene Border)
+      oder minimal-invasiv nur .btn-theme.btn-white{border-color:#fff}.
+      Empfehlung: transparent global, deckt alle drei Pfade.
+      OFFEN: Screenshot des Sammlers nicht abrufbar (s. #59) - genauer
+      Fundort unbekannt, Mechanismus aber eindeutig.
+
+## 59. Metafield-Bilder "rendern 1:1 statt angepasst" [Bug-Sammler 18.07.]
+- [ ] BLOCKIERT: Screenshot-Link des Bug-Sammlers ungueltig (Supabase
+      "signature verification failed"; Ordner-Pfad in URL und JWT-Payload
+      widersprechen sich -> Briefing-Generator baut die Signed-URL um,
+      statt sie 1:1 einzubetten). Ohne Screenshot/Fundort nicht sauber
+      diagnostizierbar. HYPOTHESE: AI-generierte summit.banner-Bilder
+      sind quadratisch (1024x1024); der Advertising-Banner-Slot erzwingt
+      seit #50 (15.07., fddf4b9) 21:9 per CSS - laeuft das FASHION-
+      Preset-Theme (version 870bdf44) auf einem Stand VOR #50, rendert
+      der Banner nativ quadratisch. Alle uebrigen summit.*-Bild-Slots
+      (Side-Icons, Review-Strip, Avatar, Video-Thumbs) croppen per CSS.
+      NAECHSTER SCHRITT: funktionierenden Screenshot + Fundort (Seite/
+      Sektion) nachliefern; Preset-Theme-Stand gegen main pruefen.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
