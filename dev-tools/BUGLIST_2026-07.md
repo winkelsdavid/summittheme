@@ -1207,7 +1207,38 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Fundort unbekannt, Mechanismus aber eindeutig.
 
 ## 59. Metafield-Bilder "rendern 1:1 statt angepasst" [Bug-Sammler 18.07.]
-- [ ] BLOCKIERT: Screenshot-Link des Bug-Sammlers ungueltig (Supabase
+- [~] GELOEST 2026-07-18 (Fundort vom User: Product Grid Image, Banner-
+      Block; Analyse-Zulieferung aus der Summit-Session): B1-Fallback-Ast
+      strukturell ungleich zum Picker-Ast - der Fallback rendert das
+      Bild in <div class="image-content__image h-100"> OHNE den
+      image-content__image-wrapper; das Cover haengt aber am Selektor
+      .image-content__image-wrapper img (product-with-image Section-CSS
+      Z. 34) -> Fallback-Bild rendert in Quellratio ("1:1 in der Box"),
+      Picker-Bild fuellt per object-fit:cover.
+      FIX: Fallback strukturgleich zum Picker-Ast (b1_fb in
+      image-content__image-wrapper h-100; Placeholder behaelt altes Div)
+      in product-with-image, product-wrap-banner, product-list-swiper
+      (die 3 h-100-Sites mit identischem Muster).
+      Headless bewiesen (echte theme.css + Bootstrap-Inline; 800x800-
+      Bild in 420x600-Box): Picker 467x600 cover / alter Fallback
+      467x467 Quellratio / neuer Fallback 467x600 = Picker.
+      CALLSITE-AUDIT (alle ~50 brand-image-Renderstellen):
+      - GEFIXT (h-100-Fill): product-with-image:121, product-wrap-
+        banner:213, product-list-swiper:209.
+      - GLEICHWERTIG (kein Fix noetig): adapt-to-image-Slots, deren
+        Picker-Pfad selbst Quellratio rendert (padding-top aus
+        image.aspect_ratio): image-with-text, image-video-with-text,
+        image-with-icons, advanced-content(promo), main-login u.a.
+      - RANDFALL notiert: quotes-split-Fallback ignoriert Image-Ratio-
+        Setting (nur relevant bei leerem Avatar + Ratio != auto; blindes
+        Wrappen wuerde dort 0-Hoehe erzeugen - separat behandeln falls
+        gemeldet).
+      WRITER-SEITE (Summit): "per API injizierte Vorlage erscheint erst
+      nach Sektion-neu-hinzufuegen" ist ein Editor-/Push-Thema, kein
+      Theme-Bug - an Summit-Session zurueckgemeldet.
+      Live-Test: Product Grid Image OHNE Picker-Bild (B1/API-Vorbe-
+      fuellung) -> Banner fuellt die Box wie mit Picker-Bild.
+      Urspruengliche Blockade: Screenshot-Link des Bug-Sammlers ungueltig (Supabase
       "signature verification failed"; Ordner-Pfad in URL und JWT-Payload
       widersprechen sich -> Briefing-Generator baut die Signed-URL um,
       statt sie 1:1 einzubetten). Ohne Screenshot/Fundort nicht sauber
