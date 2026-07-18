@@ -1262,6 +1262,43 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       (funktionierender Link) bestaetigt Fundort, dann Fix im Bereich
       product-media (Image-Ratio-Anwendung auf alle Galerie-Slides).
 
+## 60. Rich Text: Image-Block ohne runde Ecken (Logo-Slot) [Bug-Sammler 18.07.]
+- [~] GEFIXT 2026-07-18 (Operator-Report chris-admin, PETS-Preset,
+      Screenshot: Hammy-Logo mit gerundet beschnittenen Ecken).
+      Ursache = #55-Familie: globales "Enable Radius Image" rundet
+      Container (.container .image-content__image-container) und Bild
+      (.container img !important) des Rich-Text-Image-Blocks.
+      Fix: Ausnahme im Radius-Block (header-css, direkt bei der
+      #55-Logo-Ausnahme), gescoped auf die blockeigene Klasse
+      hero-img__wrap (nur vom Rich-Text-Image-Block genutzt, per Grep
+      verifiziert): Container, Wrapper, Wrapper-img und img auf
+      border-radius:0 !important (Wrapper-img-Variante gegen die
+      spezifischere .container .image-content__image-wrapper img-Regel).
+      Headless verifiziert (Kaskaden-Repro, range=2): Rich-Text-Bild
+      und -Container 0px; Header-/Footer-Logo-Ausnahmen intakt;
+      normales Container-Bild bleibt 6.4px gerundet.
+      Live-Test: PETS/Hammy about-us -> Logo im Rich Text eckig,
+      Produktbilder weiter gerundet. (Preset braucht frischen Build.)
+
+## 60. Rich Text: Image-Block nie runden (Logo-Slot) [Bug-Sammler 18.07., chris-admin]
+- [~] GEFIXT 2026-07-18: Operator-Report (verbatim, massgeblich):
+      Rich-Text-Image-Block darf keine rounded edges haben, da dort
+      Logos eingesetzt werden. Screenshot (PETS/Hammy, aktives Nitro-
+      Theme) bestaetigt: Logo mit gerundeten Ecken beschnitten.
+      Ursache = #55-Familie: globales "Enable Radius Image" rundet
+      .container img (!important) + .image-content__image-container.
+      Fix: Ausnahme im Radius-Block (header-css) direkt bei der
+      #55-Logo-Ausnahme, gescoped auf .hero-img__wrap (Klasse ist
+      exklusiv am Rich-Text-Image-Block, beide Aeste; per Grep
+      verifiziert) - Container, Wrapper, Bild; inkl. der spezifischeren
+      Wrapper-img-Variante (Lehre aus #55).
+      Headless verifiziert (Kaskade, range=2): RichText-Logo 0px,
+      Container 0px; Header-/Footer-Logo-Ausnahmen (#55) intakt;
+      normales Container-Bild bleibt 6.4px gerundet.
+      Live-Test: Rich Text > Image mit Logo + "Enable Radius Image" an
+      -> eckig; andere Bilder behalten Rundung. Gilt auf summittheme/
+      main sofort; Preset-/Nitro-Builds brauchen frischen Build.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

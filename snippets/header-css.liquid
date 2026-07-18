@@ -530,5 +530,15 @@ article,aside,figcaption,figure,footer,header,hgroup,main,nav,section{display:bl
       .logofooter .image-content__image-wrapper{
         border-radius: 0 !important;
       }
+      /* #60: Rich-Text-Image-Block (hero-img__wrap) nie runden - dort werden
+         Logos eingesetzt (Operator-Report 18.07.). Deckt Container, Wrapper
+         und Bild; Wrapper-img-Variante noetig gegen die spezifischere
+         .container .image-content__image-wrapper img-Regel oben (vgl. #55). */
+      .hero-img__wrap,
+      .hero-img__wrap .image-content__image-wrapper,
+      .hero-img__wrap .image-content__image-wrapper img,
+      .hero-img__wrap img{
+        border-radius: 0 !important;
+      }
     {% endif %}
 </style>
