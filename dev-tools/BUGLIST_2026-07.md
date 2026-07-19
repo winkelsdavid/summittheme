@@ -1505,8 +1505,40 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Cart-Note-Text weiss, Countdown-Ziffern weiss, Gift-Icon im
       Drawer sichtbar; Light: Inputs unveraendert #333 auf #f4f4f4.
 
-## 65. Custom Reviews: Badge-Color-Mapping + Sterne-Gradient
-- [~] UMGESETZT 2026-07-19 (User-Wunsch nach Dark-Livetest-Screenshot):
+## 65. Custom Review(s): Badge-Color-Mapping + Sterne-Gradient
+- [~] KORREKTUR 2026-07-19: Der User meinte den BLOCK "Custom Review"
+      in Product Overview (product-template-1.liquid, block type
+      custom_review) - zuerst wurde die eigenstaendige SEKTION
+      "Custom Reviews" gepatcht (Fehlgriff, bleibt als sinnvolles
+      Zusatzfeature bestehen). BLOCK-Umsetzung (der eigentliche Auftrag):
+      (1) Block-Setting "Verified Badge Color" (badge_color, color,
+          ohne Default, info "Empty = classic dark") - Haken-SVG hing
+          hart an fill="#202329"; jetzt CSS-Route
+          .customer-review-verified path { fill: var(--badge-color,
+          #202329) } (CSS schlaegt Praesentationsattribut), Var wird
+          am .customer-review-card-style nur bei gesetztem Wert
+          emittiert. Leer = exakt bisheriges Dunkel. KEINE Chrome-
+          Kaskade hier: die Karte laeuft ueber Operator-Settings
+          (--background aus block.settings/branding_color), analog
+          parallax-bg_box-Entscheidung.
+      (2) stars_color: Typ color -> color_background (ID bleibt -
+          gespeicherte Solid-Werte bleiben gueltige Strings; Summit-
+          Mapping unveraendert nutzbar, aber Typ-Aenderung im Parse
+          beachten). Solid-Pfad unveraendert (--stars-color/fill);
+          bei Gradient-Wert ({% if contains 'gradient' %}) Mask-Route
+          wie in der Sektionsvariante: fill transparent + background +
+          mask(Stern-Pfad 32er-viewBox, identische Geometrie), Regel
+          NACH der Solid-Regel (Kaskade), wirkt pro Stern, nur auf
+          --filled (leere Sterne bleiben #D8D8D8).
+      VERIFIKATION Block: Schema-JSON + alle Tags balanced; Headless
+      6/6 (Badge default #202329 / Operator-Farbe gewinnt; Sterne
+      solid identisch, Gradient-Fall fill transparent + background +
+      mask aktiv).
+      Live-Test Block: Produktseite -> Product Overview -> Block
+      "Custom Review": "Verified Badge Color" setzen -> Haken folgt;
+      "Stars Color" bietet jetzt Verlaufs-Picker -> Sterne im
+      Gradient; Solid-Bestandswerte rendern unveraendert.
+      SEKTIONS-Variante (Fehlgriff, behalten):
       (1) BLOCK-Setting "Verified Badge Color" (badge_color, type color,
           ohne Default, info "Empty = automatic (light/dark)") - der
           Haken haengt jetzt an der Kaskade
