@@ -1574,7 +1574,8 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       leeren -> alte Solid-Farbe. Header-Sterne unveraendert.
 
 ## 66. Localization-Dropdowns (Header/Footer) auf Chrome-Route (Briefing #66)
-- [~] UMGESETZT 2026-07-19 (Operator-Report TECH DARK 2: Country-/
+- [x] VOM USER BESTAETIGT 2026-07-19 ("hat geklappt").
+      UMGESETZT 2026-07-19 (Operator-Report TECH DARK 2: Country-/
       Language-Dropdowns blieben weiss). Befund des Briefings am Source
       verifiziert - das custom .disclosure-Panel lief an #63/#64 vorbei
       (die Formular-Globalregel aus aa55391 greift nur native
