@@ -261,6 +261,7 @@ display:flex;
       {% for block in section.blocks %}
           {% case block.type %}
             {% when "product" %}
+            {%- assign b1_pos_v = b1_pos_v | default: 0 | plus: 1 -%}
             <div class="swiper-slide custom_shoppable_video custom_review-{{ block.id }}">
                 <div class="c_video_content">
                         {% if block.settings.video_pick != blank %}
@@ -317,9 +318,14 @@ display:flex;
                         <div class="c_video_item_s c_video-wrapper video-container">
                         <div class="c_video_item_c low-power-video">
                         <div class="wt-video__movie">
+                        {%- capture b1_vid -%}{% render 'brand-video', handle: 'custom-shoppable-video--product', position: b1_pos_v, loop: true, muted: true, autoplay: false, controls: false %}{%- endcapture -%}
+                        {%- if b1_vid != blank -%}
+                        {{ b1_vid }}
+                        {%- else -%}
                         <div class="svg_video">
                           {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
                         </div>
+                        {%- endif -%}
                             <button class="shoppable-video_control-button" aria-label="Play/pause button">
                                 <span class="icon-play">
                                 </span>

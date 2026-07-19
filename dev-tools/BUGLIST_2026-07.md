@@ -1687,6 +1687,61 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Griff laeuft ueber volle Breite, Mobile gleiche Ratio; Setting
       auf "Auto" -> exakt altes Verhalten.
 
+## 70. B1-Verdrahtung Welle 1 + 3 (Freigabe auf B1_WIRING_AUDIT.md)
+- [~] UMGESETZT 2026-07-19 auf User-GO ("Welle 1 + 3 freigegeben. Go").
+      WELLE 1 (Handle liegt im Store, reine Theme-Fixes):
+      (1) product-tab-split: BEIDE Placeholder-Zweige (mit/ohne
+          Kollektion) -> brand-image product-tab-split--collection,
+          position forloop.index, h-100-Wrapper wie if-Zweig.
+      (2) count-down: BEIDE bgset-Zweige (bg_full/inline) -> else mit
+          brand-image-src Slot 1 als inline background-image.
+      (3) featured-collections-4: else-Ast setzt img_url jetzt via
+          brand-image-src (position forloop.index); Element bekommt
+          im Fallback-Fall style= statt data-bgset.
+      (4) faq-accordion: Section-Root bgset + Slot-1-src-Fallback als
+          style (Slot 2 = image_right war schon verdrahtet -
+          Schema-Reihenfolge bestaetigt: image_bg ist Picker #1).
+      (5) footer: image_bg-else -> brand-image Slot 1 (img_bg--footer;
+          Schema-Reihenfolge: image_bg #1, imgpayment #2 bleibt BEWUSST).
+      WELLE 3 (Code jetzt, Handles pusht Summit nach):
+      (6) collection-grid-item: neue Param-Route b1_handle/b1_position
+          (Muster quote-style) vor dem Placeholder; Klasse konditional
+          (auto = Flow, sonst image-content__image cover).
+          fc-1 reicht featured-collections-1--collection durch.
+      (7) fc-3/fc-5: NUTZEN das Snippet NICHT (Audit-Korrektur -
+          inline-Markup) -> eigener else-Ast vor dem Placeholder,
+          Handles featured-collections-3/5--collection.
+      (8) announcement-bar-slide: statischer 2. Zweig (Marquee) ->
+          else wie Swiper-Zweig (--slide, forloop.index).
+      (9) logo-list (inline) + logo-carousel-item (Snippet, neuer
+          Param b1_position von beiden Callsites): logo-list--logo /
+          logo-carousel--logo.
+      (10) quotes + quotes-square: image_bg style-Attribut elsif-Route
+          ueber brand-image-src Slot 1 (Handles quotes/quotes-square).
+      (11) tab-vertical: Section-bgset + Slot-1-src-Fallback (faq-
+          accordion-Muster); Handle tab-vertical.
+      (12) map: else-Ast vor Onboarding-Placeholder, src Slot 1.
+      (13) brand-video: neuer optionaler position-Param (video_<pos>,
+          Fallback video_1 - rueckwaerts-kompatibel); custom-shoppable-
+          video: table-Zaehler b1_pos_v + brand-video-Fallback im
+          Placeholder-Ast (gleiche Wrapper-Struktur, Controls intakt).
+      NICHT umgesetzt: header-slide-menu-Bilder (Slot-Zuordnung mit
+      Summit offen, s. Audit); Welle 4 (Sekundaer-Picker-Kontrakt)
+      nicht freigegeben.
+      DATEN-NACHTRAG an Summit (Welle-3-Handles fehlen im Store):
+      featured-collections-1/3/5--collection, announcement-bar-slide
+      --slide (Welle 2), logo-list--logo, logo-carousel--logo, quotes,
+      quotes-square, tab-vertical, map, custom-shoppable-video--product
+      (video_1..N!).
+      VERIFIKATION: 16 Sektionen + 3 Snippets Liquid-parse OK (schema/
+      if/for/case/capture balanced), Marker-Check aller 19 Dateien
+      (fc-1/logo-carousel korrekt 0 direkte Calls = Param-Route).
+      Live-Test: Customizer, Sektion FRISCH hinzufuegen (leere
+      Settings) -> Welle-1-Sektionen zeigen sofort B1-Bilder; Welle-3-
+      Sektionen zeigen B1 sobald Summit die Handles gepusht hat (bis
+      dahin unveraendert Placeholder); Sektionen mit manuell gesetzten
+      Bildern byte-identisch.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

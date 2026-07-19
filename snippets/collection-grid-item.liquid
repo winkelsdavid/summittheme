@@ -47,12 +47,24 @@
       width="{{ featured_collection.image.width }}"
       height="{{ featured_collection.image.height }}">
       {%- else -%}
+      {%- comment -%} B1-Fallback via Param-Route (Muster quote-style):
+          Aufrufer reicht b1_handle + b1_position durch. {%- endcomment -%}
+      {%- if size_image == 'auto' -%}
+        {%- assign b1_class = 'scale-in lazyloaded' -%}
+      {%- else -%}
+        {%- assign b1_class = 'image-content__image scale-in lazyloaded' -%}
+      {%- endif -%}
+      {%- capture b1_fb -%}{%- if b1_handle != blank -%}{% render 'brand-image', handle: b1_handle, position: b1_position, width: 1200, class: b1_class %}{%- endif -%}{%- endcapture -%}
+      {%- if b1_fb != blank -%}
+      {{ b1_fb }}
+      {%- else -%}
       {%- if size_image == 'auto' -%}
        {%- assign class = 'placeholder-svg' -%}
       {%- else -%}
         {%- assign class = 'placeholder-svg position-absolute' -%}
       {%- endif -%}
       {{ 'collection-' | append: current | placeholder_svg_tag: class }}
+      {%- endif -%}
       {%- endif -%}
     </a>
   </div>

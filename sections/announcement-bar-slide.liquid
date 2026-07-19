@@ -147,6 +147,8 @@
                   loading="lazy"
                   width="{{ block.settings.image.width }}"
                   height="{{ block.settings.image.height }}">
+              {% else %}
+                {% render 'brand-image', handle: 'announcement-bar-slide--slide', position: forloop.index, width: 240, class: 'image-content__image mr-2' %}
               {% endif %}  
               {{ block.settings.content }} 
                 {% if block.settings.button_text != blank %} 

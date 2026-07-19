@@ -32,9 +32,14 @@
                 >
               </a>
               {%- else -%}
+              {%- capture b1_fb -%}{% render 'brand-image', handle: 'logo-list--logo', position: forloop.index, width: 250, class: 'image-block__image scale-in lazyloaded' %}{%- endcapture -%}
+              {%- if b1_fb != blank -%}
+              {{ b1_fb }}
+              {%- else -%}
               <div class="image-block__image">
                 {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
+              {%- endif -%}
               {%- endif -%}
             </div>
           </div>

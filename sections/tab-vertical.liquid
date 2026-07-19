@@ -99,8 +99,9 @@
 {% endstyle %}
 <section class="customstyle{{ section.id }} lazyload" data-aos="{{ section.settings.animation }}"  
     data-bgset="{% render 'bgset', image: section.settings.image_bg %}"
+    {%- if section.settings.image_bg == blank -%}{%- capture b1_bg -%}{% render 'brand-image-src', handle: 'tab-vertical', slot: 1, width: 1920 %}{%- endcapture -%}{%- if b1_bg != blank %} style="background-image:url('{{ b1_bg }}');background-size:cover;background-position:center"{% endif -%}{%- endif -%}
     data-sizes="auto"
-    data-parent-fit="cover" 
+    data-parent-fit="cover"
 >
   {%- render 'style-section' -%}
   <div class="{{ section.settings.section_width }}">

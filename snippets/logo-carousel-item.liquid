@@ -21,7 +21,12 @@
              width="{{ block.settings.image.width }}"
              height="{{ block.settings.image.height }}">
       {%- else -%}
+        {%- capture b1_fb -%}{%- if b1_position != blank -%}{% render 'brand-image', handle: 'logo-carousel--logo', position: b1_position, width: 500, class: 'scale-in lazyloaded' %}{%- endif -%}{%- endcapture -%}
+        {%- if b1_fb != blank -%}
+        {{ b1_fb }}
+        {%- else -%}
         <div class="image-block__image">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
       {%- endif -%}
     </a>
   </div>

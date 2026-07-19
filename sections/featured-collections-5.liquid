@@ -250,11 +250,21 @@ grid-template-columns: 1fr 1fr;
                                 >   
                             {%- else -%}
                             {%- if section.settings.size_image_col == 'auto' -%}
+                              {%- assign b1_class = 'scale-in lazyloaded' -%}
+                            {%- else -%}
+                              {%- assign b1_class = 'image-content__image scale-in lazyloaded' -%}
+                            {%- endif -%}
+                            {%- capture b1_fb -%}{% render 'brand-image', handle: 'featured-collections-5--collection', position: forloop.index, width: 1200, class: b1_class %}{%- endcapture -%}
+                            {%- if b1_fb != blank -%}
+                            {{ b1_fb }}
+                            {%- else -%}
+                            {%- if section.settings.size_image_col == 'auto' -%}
                               {%- assign class = 'placeholder-svg' -%}
                              {%- else -%}
                                {%- assign class = 'placeholder-svg position-absolute' -%}
                              {%- endif -%}
                             {{ 'collection-' | append: current | placeholder_svg_tag: class }}
+                            {%- endif -%}
                             {%- endif -%}
                           </a>
                           <div class="m-0 type-onimage position-absolute collection-card__meta w-100 d-flex h-100 p-4 {{ positiontxt }}">

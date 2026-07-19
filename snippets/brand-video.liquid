@@ -1,10 +1,16 @@
 {%- comment -%} B1 brand-video — Video-Fallback mit media_type-Guard.
   NUR für Settings vom Typ `video` (Datei), NIE für `video_url`.
-  Params: handle, instance, class, autoplay/loop/muted/controls (optional) {%- endcomment -%}
+  Params: handle, instance, class, autoplay/loop/muted/controls (optional),
+  position (optional, 1-basiert: liest video_<position>, faellt auf video_1 zurueck) {%- endcomment -%}
 {%- liquid
   assign v = instance
   if v == blank
-    assign v = metaobjects.section_fallback[handle]['video_1'].value
+    assign b1v_pos = position | default: 1
+    assign b1v_key = 'video_' | append: b1v_pos
+    assign v = metaobjects.section_fallback[handle][b1v_key].value
+    if v == blank and b1v_pos != 1
+      assign v = metaobjects.section_fallback[handle]['video_1'].value
+    endif
   endif
 -%}
 {%- if v != blank and v.media_type == 'video' -%}

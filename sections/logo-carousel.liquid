@@ -104,7 +104,7 @@
           <div class="logomarquee-{{ section.id }}">
             {%- for i in (1..2) -%}
               {%- for block in section.blocks -%}
-                {%- render 'logo-carousel-item', block: block, section: section, clone: forloop.parentloop.last -%}
+                {%- render 'logo-carousel-item', block: block, section: section, clone: forloop.parentloop.last, b1_position: forloop.index -%}
               {%- endfor -%}
             {%- endfor -%}
           </div>
@@ -112,7 +112,7 @@
           {%- comment -%} Manual mode: native scroll-snap with drag, arrows, dots, optional infinite. {%- endcomment -%}
           <div class="logoscroll-{{ section.id }}" id="logoscroll-{{ section.id }}">
             {%- for block in section.blocks -%}
-              {%- render 'logo-carousel-item', block: block, section: section -%}
+              {%- render 'logo-carousel-item', block: block, section: section, b1_position: forloop.index -%}
             {%- endfor -%}
           </div>
           {%- if section.settings.arrows -%}

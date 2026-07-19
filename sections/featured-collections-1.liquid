@@ -46,7 +46,7 @@
           <div class="col collectionlist-item carousel__slide-wrapper--{{ block.id }} swiper-slide" {{ block.shopify_attributes }} >
             {%- assign featured_collection = collections[block.settings.collection] -%}
             {%- assign featured_image = block.settings.image -%}
-            {%- render 'collection-grid-item' , featured_image: featured_image, featured_collection: featured_collection, column: 'none', size_image: section.settings.size_image, headinglist: section.settings.size_text -%}
+            {%- render 'collection-grid-item' , featured_image: featured_image, featured_collection: featured_collection, column: 'none', size_image: section.settings.size_image, headinglist: section.settings.size_text, b1_handle: 'featured-collections-1--collection', b1_position: forloop.index -%}
           </div>
           {%- endfor -%}
           </div>

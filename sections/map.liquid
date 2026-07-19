@@ -196,10 +196,15 @@
        </noscript>
       {% elsif map_code != blank %}
       <div class="map-section__image map-section__iframe" >{{ section.settings.map_code }}</div>
-      {% elsif onboarding == true %}
+      {% else %}
+        {%- capture b1_bg -%}{% render 'brand-image-src', handle: 'map', slot: 1, width: 1920 %}{%- endcapture -%}
+        {%- if b1_bg != blank -%}
+        <section class="d-block map-section__image" style="background-image:url('{{ b1_bg }}');background-size:cover;background-position:center"></section>
+        {%- elsif onboarding == true -%}
         <div class="placeholder-background">
           {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
         </div>
+        {%- endif -%}
       {% endif %}
       {% if display_map %}
         <div class="map-section__container"
