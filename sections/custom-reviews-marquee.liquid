@@ -4,6 +4,9 @@
   padding-bottom: {{ section.settings.padding_bottom }}px;
   background:{{  section.settings.background }};
 }
+.c-{{ section.id }} .reviewbox-verified-text-i svg {
+  fill: var(--g-chrome-text, #000000);
+}
 @media screen and (max-width: 991px) {
   .c-{{ section.id }}{
       padding-top: {{ section.settings.mobile_padding_top }}px;

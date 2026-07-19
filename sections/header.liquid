@@ -26,7 +26,7 @@
     -webkit-text-fill-color:unset;
   }
   .modal-header .close:after, .modal-header .close:before {
---g-color-heading: #000;
+--g-color-heading: var(--g-chrome-text, #000);
 }
 {% if section.settings.enable_search == false %}
   .site-header__search-wrap{

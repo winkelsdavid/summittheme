@@ -60,7 +60,7 @@
     height:auto;
     box-shadow: {{ section.settings.border_color }} 0px 0px 0px 1px;
     align-items: flex-start;
-    background: #ffffff;
+    background: var(--g-chrome-bg, #ffffff);
 }
   /* Badges + Footer (Bild/Titel/Datum/Verifiziert) kleben IMMER unten in der
      Box: der Review-Text dehnt sich als flexibler Mittelteil - vorher floss
@@ -80,7 +80,7 @@
   .reviewbox-verified-text-i svg {
     width: 20px;
     height: 20px;
-    fill: #9e9e9e;
+    fill: var(--g-chrome-text, #9e9e9e);
 }
   .reviewbox-verified-text-i span {
     font-size: 12px;
@@ -167,6 +167,10 @@
   .slider_items-i .swiper-button-next_r {
     right: 10px;
     left: auto;
+}
+  .slider_items-i .swiper-button-next_r svg,
+  .slider_items-i .swiper-button-prev_r svg {
+    fill: var(--g-chrome-text, #000000);
 }
   .reviews_link_i{
     display:flex;

@@ -1402,6 +1402,60 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Quick-View, Pfeile, Such-/Meganav-Panels, Verkaufs-Popup dunkel;
       Settings leeren -> exakt heutiger Light-Mode.
 
+## 64. Darkmode-Nachzuegler: Drawer-X, Verified-Badges, SVG-Hardcodes (Briefing 2)
+- [~] UMGESETZT 2026-07-19 (Briefing THEME_BRIEFING_darkmode_chrome_2.md,
+      Abschnitt 6 = verbindliche Audit-Korrekturen dieser Session):
+      AUDIT-KERNBEFUNDE (Briefing-Korrekturen):
+      - #63a Drawer-Close-X: NICHT icon-close-small (rendert nur in
+        facets.liquid/Filter-Chips). Echte Ursache: header.liquid Z28-30
+        pinnte --g-color-heading:#000 direkt auf den ::before/::after-
+        X-Strichen ALLER Modal-Close-X - im Light unauffaellig (schwarz
+        auf weiss), im Dark unsichtbar (schwarz auf color_drawer_bg).
+      - Klasse-3-Tabelle: block-cart 307/313 + image-auto-slider 296/301
+        sind {% comment %}-toter Code; whatsapp:36 ist der Blur-SCHATTEN
+        des Marken-Logos (Skip); scratch-newsletter:632 ist ein JS-
+        Scratch-Cursor als Data-URI (Skip, currentColor unmoeglich).
+        ECHTE Drawer-Qty-Quelle: theme.js:5053 (JS-Template, 2x
+        fill="#000") + block-cart.liquid Z29 CSS fill:#000 + theme.css
+        .js-qty__adjust .icon fill:#222 (dritte Scanner-Luecke: .js!).
+      FIXES (12 Edits, alle als var(--g-chrome-*, <altes Literal>)):
+      (1) header.liquid: X-Pin -> var(--g-chrome-text, #000) - DER
+          #63a-Fix, wirkt konsistent auf alle Modal-X.
+      (2) block-cart.liquid Z29: Selektor um "svg path" erweitert +
+          fill:var(--g-chrome-text, #000) - CSS auf dem path schlaegt
+          das fill-Attribut aus theme.js; theme.js selbst UNANGETASTET.
+      (3) theme.css + theme.css.liquid: .js-qty__adjust .icon
+          fill:#222 -> var(--g-chrome-text, #222).
+      (4) custom-reviews: Karte background -> chrome-bg (Nebenbefund,
+          angenommen; Konsistenz zu Judge.me-Karten aus P1), Badge-CSS
+          fill:#9e9e9e -> chrome-text (ENTSCHIEDENE Route statt
+          verified_color - Light byte-identisch), Pfeil-Regel
+          .custom_slider_items ... svg fill -> chrome-text(#000000) NEU.
+      (5) reviews-slider: analog Karte + Badge + Pfeile
+          (.slider_items-i-Scope).
+      (6) custom-reviews-marquee: Badge-Regel NEU, per .c-{{section.id}}
+          gescoped (Klasse .reviewbox-verified-text-i wird mit reviews-
+          slider GETEILT - ungescoped wuerden sich die Sektionen auf
+          gemeinsamen Seiten gegenseitig faerben).
+      (7) custom-shoppable-video: Pfeil-Regel (.custom_video_items).
+      SVG-fill-ATTRIBUTE bewusst NICHT auf currentColor umgestellt:
+      CSS-Regel schlaegt Praesentationsattribut deterministisch;
+      currentColor haette die Farbe an vererbte color-Werte gekoppelt
+      (nicht byte-identisch beweisbar). icon-down/up sind bereits
+      currentColor (sauber, kein Handlungsbedarf).
+      BEKANNTE NUANCE (verifiziert): Marquee+reviews-slider auf EINER
+      Seite - bisher leckte die Slider-Badge-Regel (#9e9e9e) in den
+      Marquee-Badge; die gescopte Regel stellt das vom Marquee-Attribut
+      intendierte Schwarz her (Leck-Korrektur, kein Regressions-Diff).
+      VERIFIKATION: Headless 22/22 + Kombi-Check - 11 Proben Light
+      computed alt=neu (X-::before, qty-path, icon-222, 2x Karte,
+      3x Badge inkl. Marquee-allein, 3x Pfeile), 11 Dark-Smoke
+      #181818/#fff kippt alles; Kombi-Fall alt=grau/neu=schwarz wie
+      dokumentiert. Liquid-Parser: alle 5 Sektionen OK.
+      Live-Test (TECH DARK 2): Drawer-X weiss sichtbar; Qty +/- im
+      Drawer weiss; Review-Karten dunkel, Verified-Badges + Slider-
+      Pfeile hell; Light-Stores unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
