@@ -1608,7 +1608,8 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       dunkel wie immer.
 
 ## 67. Blog-Karussell: "Mehr Details"-Buttons nicht buendig (Bug-Sammler 19.07., PETS)
-- [~] UMGESETZT 2026-07-19. Operator: "mehr details immer auf der
+- [x] VOM USER BESTAETIGT 2026-07-19 ("Fixes haben beide geklappt").
+      UMGESETZT 2026-07-19. Operator: "mehr details immer auf der
       gleichen hoehe". Screenshot = featured-articles-Karussell
       (blogscroll, P6-Scroll-Snap) mit item_style blog-1: 3-zeiliger
       Titel drueckt den Button der dritten Karte tiefer.
@@ -1631,7 +1632,8 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Mehr-Details-Buttons auf gleicher Hoehe, auch beim Sliden.
 
 ## 68. Comparison Table: B1-Bild-Fallback fehlte (THEME-Briefing "#67", 19.07.)
-- [~] UMGESETZT 2026-07-19. Operator: "Wenn neu hinzugefuegt, werden
+- [x] VOM USER BESTAETIGT 2026-07-19 ("Fixes haben beide geklappt").
+      UMGESETZT 2026-07-19. Operator: "Wenn neu hinzugefuegt, werden
       gemappte Bilder nicht angezeigt." Briefing-Befund am Source
       bestaetigt: custom-comparison-table renderte das Spalten-Bild
       nur bei {% if block.settings.image != blank %} OHNE else -
