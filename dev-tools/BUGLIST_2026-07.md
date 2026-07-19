@@ -1883,6 +1883,21 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       skaliert den Text neben den Sternen, Text Color faerbt ihn;
       mit eigenem Content unveraendert.
 
+## 78. Reviews Stars Trustpilot: "4,8 von 5" ignorierte Text Color (User 20.07.)
+- [~] UMGESETZT 2026-07-20. User: "das '4,8 von 5' muss immer die Farbe
+      von 'Text Color' uebernehmen".
+      URSACHE: Gleiche Klasse wie #77, Typ-1-Variante - Locale-Text ist
+      "<strong>Exzellent</strong> 4,8 von 5"; ".rating-excellent *"
+      faerbt nur ELEMENTE (das strong), der nackte Textknoten "4,8
+      von 5" erbte die Umgebungsfarbe (auf dem Badge-Hintergrund).
+      FIX (layout/theme.liquid): Selektor auf ".rating-excellent,
+      .rating-excellent *" erweitert - Textknoten + strong folgen
+      Text Color, Font Size wirkt jetzt ebenfalls auf den ganzen Text.
+      VERIFIKATION: Headless 4/4 - ALT: Textknoten weiss (Umgebung)/
+      strong Setting; NEU: beide Setting-Farbe, Font Size 18px greift
+      am Textknoten. Live-Test: Reviews Stars Trustpilot -> Text Color
+      aendern -> "Exzellent" UND "4,8 von 5" faerben sich gemeinsam.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
