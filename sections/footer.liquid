@@ -329,6 +329,8 @@
             | image_url: width: 3840
             | image_tag: height: height, width: width, sizes: sizes, widths: widths, fetchpriority: fetch_priority, class:'lazyload img_bg--footer pointer-events-none', lazyload:'lazy'
           }}
+  {%- else -%}
+    {% render 'brand-image', handle: 'footer', slot: 1, width: 3840, class: 'img_bg--footer pointer-events-none lazyloaded' %}
   {%- endif -%}
   <div class="site-footer--head">
   <div class="{{ section.settings.section_width }}">

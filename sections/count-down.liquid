@@ -96,23 +96,33 @@
         <section class="cd-bg lazyload"
             data-bgset="{% render 'bgset', image: bg_image %}"
             data-sizes="auto"
-            data-parent-fit="cover" 
+            data-parent-fit="cover"
             loading="lazy"></section>
+    {% else %}
+      {%- capture b1_bg -%}{% render 'brand-image-src', handle: 'count-down', slot: 1, width: 1920 %}{%- endcapture -%}
+      {%- if b1_bg != blank -%}
+        <section class="cd-bg" style="background-image:url('{{ b1_bg }}');background-size:cover;background-position:center"></section>
+      {%- endif -%}
     {% endif %}
 {%- endif -%}
 
 <div class="{{ section.settings.section_width }}">
     <div class="{% if section.settings.enable_padding %} px-lg-5 px-2 {% endif %} {% unless bg_full %}  customstyle{{ section.id }} {% endunless %}   cd-section position-relative" data-aos="{{ section.settings.animation }}" >
-      {% unless bg_full %}  
+      {% unless bg_full %}
       {% if section.settings.image_bg != blank %}
           {% assign bg_image = section.settings.image_bg %}
             <section class="cd-bg lazyload"
                 data-bgset="{% render 'bgset', image: bg_image %}"
                 data-sizes="auto"
-                data-parent-fit="cover" 
+                data-parent-fit="cover"
                 loading="lazy"></section>
+        {% else %}
+          {%- capture b1_bg -%}{% render 'brand-image-src', handle: 'count-down', slot: 1, width: 1920 %}{%- endcapture -%}
+          {%- if b1_bg != blank -%}
+            <section class="cd-bg" style="background-image:url('{{ b1_bg }}');background-size:cover;background-position:center"></section>
+          {%- endif -%}
         {% endif %}
-      {% endunless %}  
+      {% endunless %}
             <div class="row align-items-center content-countdown">
                 <div class="col-lg-5 col-12">
                     {%- if  section.settings.title != blank -%}

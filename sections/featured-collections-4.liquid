@@ -33,10 +33,10 @@
                 {%- if block.settings.image != blank -%}
                       {%- assign img_url = block.settings.image | image_url: width: 1920 -%}
                   {%- else -%}
-                      {%- assign img_url = '' -%}
+                      {%- capture img_url -%}{% render 'brand-image-src', handle: 'featured-collections-4--item_collection', position: forloop.index, width: 1920 %}{%- endcapture -%}
                   {%- endif -%}
                 <div class=" d-block colgrid__bg--full lazyload {% if forloop.first %} active {% endif %}" {% if block.settings.image != blank %} data-bgset="{% render 'bgset', image: block.settings.image %}"
-                data-sizes="auto" data-src="background-image: url({{ img_url }})" {% endif %} data-index="{{ forloop.index }}"></div>
+                data-sizes="auto" data-src="background-image: url({{ img_url }})" {% elsif img_url != blank %} style="background-image: url({{ img_url }})" {% endif %} data-index="{{ forloop.index }}"></div>
                 {%- endfor -%}
             </div>
             <div class="container" style="position: relative;z-index:1;">
