@@ -1573,6 +1573,39 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       "Reviews Stars Gradient" setzen -> Karten-Sterne im Verlauf;
       leeren -> alte Solid-Farbe. Header-Sterne unveraendert.
 
+## 66. Localization-Dropdowns (Header/Footer) auf Chrome-Route (Briefing #66)
+- [~] UMGESETZT 2026-07-19 (Operator-Report TECH DARK 2: Country-/
+      Language-Dropdowns blieben weiss). Befund des Briefings am Source
+      verifiziert - das custom .disclosure-Panel lief an #63/#64 vorbei
+      (die Formular-Globalregel aus aa55391 greift nur native
+      input/textarea/select, nicht das UL-Panel).
+      5 IN-PLACE-Edits (theme.css + theme.css.liquid, identisch):
+      (1) .disclosure__list-wrapper: background -> var(--g-chrome-bg,
+          rgba(var(--color-white),1)), border -> var(--g-chrome-border,
+          rgb(var(--g-input-bg))).
+      (2) .disclosure__item .disclosure__link: color -> var(--g-chrome-
+          text, rgba(var(--color-body-text-rgb),1)) !important.
+      (3) __link--active:after: Haken-Borders -> chrome-text-Route
+          (Shorthand beibehalten, nur Farbwert getauscht).
+      (4) #Header*Form .disclosure__list-wrapper: border ->
+          var(--g-chrome-border, var(--g-input-border)).
+      (5) .localization-form__select (Footer-Trigger): border ->
+          chrome-border-Route.
+      NICHT angefasst (Briefing-Auflage, im Test bewiesen): Trigger-
+      TEXTFARBEN (--footer-title / --header-linkcolor / --header-text-
+      top) und #Header*-Trigger border:transparent - ueberschreiben
+      die Basis-Regel weiterhin. noscript-select laeuft ueber die
+      aa55391-Globalregel (nichts zu tun).
+      VERIFIKATION: Headless 16/16 - 8 Proben Light computed alt=neu
+      (mit realistischen Seiten-Vars: Panel weiss, Border input-bg/
+      input-border, Link body-text, Haken body-text, Trigger footer-
+      title), 8 Dark #181818/#fff/#333 - Panel/Borders/Link/Haken
+      kippen, die zwei Nicht-anfassen-Proben bleiben exakt Light-Wert.
+      Live-Test (TECH DARK 2): Footer- und Header-Dropdown (Desktop +
+      Mobile) oeffnen -> Panel dunkel, Text hell, Border chrome-border,
+      Haken hell; Gegenprobe Preset ohne Chrome-Settings -> weiss/
+      dunkel wie immer.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
