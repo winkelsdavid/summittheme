@@ -1455,6 +1455,42 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Live-Test (TECH DARK 2): Drawer-X weiss sichtbar; Qty +/- im
       Drawer weiss; Review-Karten dunkel, Verified-Badges + Slider-
       Pfeile hell; Light-Stores unveraendert.
+      NACHTRAG §7 (Davids Qty-"1"-Fund, Halb-Routen-Klasse):
+      URSACHE der grauen Ziffer: theme.css Z3779 setzt global
+      input/textarea/select auf color:#333 (schlaegt input{color:
+      inherit} aus dem Normalize) - Form-Controls haengen also NICHT
+      an den Seiten-Vars, sondern an einem Literal, das im Dark grau-
+      auf-dunkel steht. FIXES (theme.css + .liquid, Doppelpflege):
+      color: var(--g-chrome-text, #333) auf .js-qty__input,
+      .product-form__item .js-qty__input, .cart__note (deckt Cart-
+      Seite UND Drawer-Notiz - selbe Klasse), .input--content-color
+      (Passwort-Seite); color: var(--g-chrome-text, inherit) auf
+      .product-card .js-countdown li (Ziffern erben heute die Body-
+      Textfarbe - inherit-Fallback beweisbar identisch, chrome-text
+      macht sie im Dark crisp-weiss; .countdown-text behaelt bewusst
+      sein gedaempftes rgba(body-text)). BONUS-Fund: block-cart Z391
+      Gift-Icon inline stroke:#000 auf boxgift (P0-Chrome-Flaeche)
+      -> stroke:var(--g-chrome-text, #000).
+      DOKUMENTIERTE SKIPS (Text haengt an dark-preset-gemappten
+      Settings-Vars, keine Halb-Route): overlay-btn (heading-rgb),
+      style4-hover/btn-decline (g-main = CTA-Akzent), style5-btn
+      (g-color-heading), split-banner/hotspot/pro__ser (Headings/
+      Absaetze = Seiten-Typo), swiper-Pfeile (:after g-color-carousel),
+      slick-thumb-Pfeile (chrome-text seit P0), option/video-close/
+      drawer (Routen existieren seit P0), Judge.me-KARTENTEXT: Widget-
+      CSS bringt eigene Literale mit - Container-color dringt nicht
+      durch, Route = Judge.me-App-Einstellungen (an Summit gemeldet).
+      NEBENBEFUND (Entscheidung Summit): theme.css Z3779 input/
+      textarea/select {background:#f4f4f4; color:#333} ist die letzte
+      grosse UNGEROUTETE Formular-Flaeche (Login, Kontakt, Suche,
+      Newsletter-Inputs) - Chrome-Route waere konsistent, aber grosser
+      Wirkradius; nicht ohne GO angefasst.
+      VERIFIKATION §7: Headless 12/12 - 6 Proben Light alt=neu (Form-
+      Controls #333 via Global-Regel bewiesen, countdown erbt grauen
+      Ancestor durch, Gift-stroke schwarz), 6 Dark alle rgb(255,255,255).
+      Live-Test: TECH DARK Qty-Ziffer weiss (Drawer + Produktseite),
+      Cart-Note-Text weiss, Countdown-Ziffern weiss, Gift-Icon im
+      Drawer sichtbar; Light: Inputs unveraendert #333 auf #f4f4f4.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
