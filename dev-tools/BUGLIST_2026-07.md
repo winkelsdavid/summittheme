@@ -1505,6 +1505,42 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Cart-Note-Text weiss, Countdown-Ziffern weiss, Gift-Icon im
       Drawer sichtbar; Light: Inputs unveraendert #333 auf #f4f4f4.
 
+## 65. Custom Reviews: Badge-Color-Mapping + Sterne-Gradient
+- [~] UMGESETZT 2026-07-19 (User-Wunsch nach Dark-Livetest-Screenshot):
+      (1) BLOCK-Setting "Verified Badge Color" (badge_color, type color,
+          ohne Default, info "Empty = automatic (light/dark)") - der
+          Haken haengt jetzt an der Kaskade
+          var(--badge-color, var(--g-chrome-text, #9e9e9e)):
+          leer = exakt bisheriges Verhalten (grau im Light, chrome-text
+          im Dark), gesetzt = Operator-Farbe schlaegt BEIDE Modi.
+          Var wird als style="--badge-color:..." am Verified-Container
+          emittiert (nur wenn != blank/rgba(0,0,0,0)) - mappbar via
+          Block-Settings (Summit-Writer).
+      (2) SECTION-Setting "Reviews Stars Gradient" (color_gradient,
+          type color_background, info "Overrides Reviews Stars Color") -
+          Sterne-Gradient via CSS-Mask-Technik: SVG-fill kann keine
+          CSS-Gradients, daher bei gesetztem Gradient fill:transparent
+          + background:<gradient> + mask:url(data:svg Stern-Pfad,
+          identische Geometrie wie das gerenderte Icon) center/contain.
+          Gradient wirkt PRO Stern. Leer = kein CSS emittiert = exakt
+          bisheriges Solid-Verhalten (Setting color).
+          SCOPE-Auflage beachtet: .c_testimonial-reviewbox-rating wird
+          auch von den HEADER-Sternen genutzt (eigenes SVG-Gradient-
+          System) - Gradient-Regel deshalb auf
+          .c_testimonial-reviewbox-footer gescoped (nur Karten).
+      VERIFIKATION: Schema-JSON + Liquid-Parser OK; Headless 8/8 -
+      Badge-Kaskade (default light grau / dark weiss / Operator-Farbe
+      gewinnt in beiden Modi), Sterne solid unveraendert, Gradient-Fall
+      (fill transparent, background-gradient aktiv, mask aktiv).
+      (Harness-Lektion dokumentiert: {{ }}-Interpolationen VOR der
+      Klammer-Extraktion ersetzen - "}" im Liquid-Tag truncated sonst
+      die Regel und der Solid-Test bestand nur zufaellig via SVG-Attr.)
+      Live-Test: Customizer -> Custom Reviews -> Block "Reviews":
+      "Verified Badge Color" setzen -> Haken folgt der Farbe (Light
+      UND Dark); leeren -> grau/weiss-Automatik. Section-Setting
+      "Reviews Stars Gradient" setzen -> Karten-Sterne im Verlauf;
+      leeren -> alte Solid-Farbe. Header-Sterne unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
