@@ -2014,89 +2014,6 @@
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
-    },
-    "instagram_customize_NWp7mh": {
-      "type": "instagram-customize",
-      "blocks": {
-        "image_hBhdct": {
-          "type": "image",
-          "settings": {
-            "image_link": ""
-          }
-        },
-        "video_Mbrmqj": {
-          "type": "video",
-          "settings": {
-            "video_url": "",
-            "image_link": "",
-            "enable_play_video": true
-          }
-        },
-        "image_k448hR": {
-          "type": "image",
-          "settings": {
-            "image_link": ""
-          }
-        },
-        "video_XqWMKA": {
-          "type": "video",
-          "settings": {
-            "video_url": "",
-            "image_link": "",
-            "enable_play_video": true
-          }
-        },
-        "image_Pih66g": {
-          "type": "image",
-          "settings": {
-            "image_link": ""
-          }
-        },
-        "video_a37jDk": {
-          "type": "video",
-          "settings": {
-            "video_url": "",
-            "image_link": "",
-            "enable_play_video": true
-          }
-        }
-      },
-      "block_order": [
-        "image_hBhdct",
-        "video_Mbrmqj",
-        "image_k448hR",
-        "video_XqWMKA",
-        "image_Pih66g",
-        "video_a37jDk"
-      ],
-      "name": "Instagram Customize",
-      "settings": {
-        "animation": "",
-        "section_width": "container",
-        "background_section": "",
-        "subtitle_top": "Subtitle Top",
-        "replace_reviews": false,
-        "reviews_type": "t_1",
-        "title": "Instagram Customize",
-        "description": "",
-        "align_heading": "center",
-        "subtitle_top_color": "",
-        "heading_color": "",
-        "description_color": "",
-        "image_size": "portrait",
-        "enable_carousel": true,
-        "arrows": false,
-        "dots": true,
-        "infinite": true,
-        "column": 4,
-        "show": 6,
-        "padding": true,
-        "gutter_padding": 30,
-        "padding_top": 60,
-        "padding_bottom": 60,
-        "mobile_padding_top": 40,
-        "mobile_padding_bottom": 40
-      }
     }
   },
   "order": [
@@ -2122,7 +2039,6 @@
     "image_auto_slider_JHhfbk",
     "product-recommendations",
     "product-requently",
-    "product-recent",
-    "instagram_customize_NWp7mh"
+    "product-recent"
   ]
 }
