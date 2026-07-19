@@ -1834,6 +1834,33 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Liquid OK. Live-Test: Text-Block mit Review Type 1-3 ->
       Alignment Left/Center/Right verschiebt die Review-Box mit.
 
+## 76. Reviews Stars (Product Overview): Stars Color mit Gradient (User 20.07.)
+- [~] UMGESETZT 2026-07-20. User: "Stars Color Feld von 'Reviews Stars'
+      Block in Product Overview soll auch gradient unterstuetzen wie
+      die Sterne in 'Custom Review'".
+      Block = reviews_start_2 in product-template-1 (5 Einzel-SVGs mit
+      TEILFUELLUNG ueber linearGradient-stop currentColor - Stars
+      Rating 3..5 in 0.1-Schritten!).
+      UMSETZUNG (#65-Mask-Muster + Teilfuellungs-Erweiterung):
+      - Schema: stars_color color -> color_background (ID bleibt,
+        Solid-Bestandswerte gueltig; Parse-Hinweis Typ-Wechsel wie
+        stars_color/#65 und bgborder/#71).
+      - Gradient-Fall: pro Stern 3-Span-Stack - aeussere Box in
+        Sterngroesse, CLIP-Ebene mit width=fill% (uebernimmt die
+        +3-Offset-Semantik des SVG-Stops, gedeckelt auf 100), innere
+        PAINT-Ebene in voller Sternbreite mit background=Verlauf +
+        Stern-Mask (Data-URI, identischer 24er-Pfad) - so bleibt die
+        Mask-Geometrie beim Teil-Clip stabil. CSS nur im Gradient-Fall
+        emittiert; Solid-Zweig byte-identisch (git-diff: einzige
+        geloeschte Zeile = Schema-Typ).
+      VERIFIKATION: Headless 6/6 - Boxen 21px, volle Sterne Clip 21px,
+      4.5-Rating-Halbstern Clip 11px (~53%), Paint bleibt 21px,
+      Gradient + Mask aktiv; Schema/Liquid balanced.
+      Live-Test: Product Overview -> Reviews Stars -> "Stars Color"
+      bietet Verlaufs-Picker; Verlauf setzen -> Sterne im Gradient
+      inkl. korrektem Halbstern bei Rating 4.5; Solid-Werte (#FFD900)
+      rendern exakt wie bisher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
