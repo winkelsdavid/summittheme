@@ -385,6 +385,7 @@
           "settings": {
             "open_default": false,
             "no_border": false,
+            "divider_color": "",
             "title_tab": "Here will be a question.",
             "font_size": 13,
             "font_size_mobile": 13,
@@ -400,6 +401,7 @@
           "settings": {
             "open_default": false,
             "no_border": false,
+            "divider_color": "",
             "title_tab": "Here will be a question.",
             "font_size": 13,
             "font_size_mobile": 13,
@@ -415,6 +417,7 @@
           "settings": {
             "open_default": false,
             "no_border": false,
+            "divider_color": "",
             "title_tab": "Here will be a question.",
             "font_size": 13,
             "font_size_mobile": 13,
@@ -453,6 +456,7 @@
             "text_color": "",
             "border_color": "rgba(0,0,0,0)",
             "stars_color": "#fe899a",
+            "badge_color": "",
             "background": "linear-gradient(136deg, rgba(246, 212, 217, 1) 11%, rgba(246, 212, 217, 1) 81%)",
             "padding_top": 10,
             "padding_bottom": 0,
@@ -882,6 +886,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -893,6 +898,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -904,6 +910,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -915,6 +922,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -926,6 +934,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -937,6 +946,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -964,6 +974,7 @@
         "align_heading": "center",
         "stars_rating": 4.5,
         "color": "",
+        "color_gradient": "",
         "verified_caption": "",
         "autoplay": true,
         "speed": 2,
@@ -1107,6 +1118,7 @@
         "arrows": true,
         "dots": false,
         "border_color": "",
+        "card_background": "",
         "color": "",
         "verified_caption": "Verified Review",
         "columns": 3,
@@ -1333,6 +1345,7 @@
         "description_color": "",
         "before_caption": "Before",
         "after_caption": "After",
+        "aspect": "16/9",
         "padding_top": 60,
         "padding_bottom": 60,
         "mobile_padding_top": 40,
@@ -2001,6 +2014,89 @@
         "mobile_padding_top": 40,
         "mobile_padding_bottom": 40
       }
+    },
+    "instagram_customize_NWp7mh": {
+      "type": "instagram-customize",
+      "blocks": {
+        "image_hBhdct": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
+          }
+        },
+        "video_Mbrmqj": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "image_link": "",
+            "enable_play_video": true
+          }
+        },
+        "image_k448hR": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
+          }
+        },
+        "video_XqWMKA": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "image_link": "",
+            "enable_play_video": true
+          }
+        },
+        "image_Pih66g": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
+          }
+        },
+        "video_a37jDk": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "image_link": "",
+            "enable_play_video": true
+          }
+        }
+      },
+      "block_order": [
+        "image_hBhdct",
+        "video_Mbrmqj",
+        "image_k448hR",
+        "video_XqWMKA",
+        "image_Pih66g",
+        "video_a37jDk"
+      ],
+      "name": "Instagram Customize",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background_section": "",
+        "subtitle_top": "Subtitle Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Instagram Customize",
+        "description": "",
+        "align_heading": "center",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
+        "image_size": "portrait",
+        "enable_carousel": true,
+        "arrows": false,
+        "dots": true,
+        "infinite": true,
+        "column": 4,
+        "show": 6,
+        "padding": true,
+        "gutter_padding": 30,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -2026,6 +2122,7 @@
     "image_auto_slider_JHhfbk",
     "product-recommendations",
     "product-requently",
-    "product-recent"
+    "product-recent",
+    "instagram_customize_NWp7mh"
   ]
 }
