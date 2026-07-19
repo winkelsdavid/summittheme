@@ -12,6 +12,33 @@
     padding-bottom:{{ section.settings.mobile_padding_bottom }}px;
   }
   }
+  {%- if section.settings.aspect != 'auto' and section.settings.aspect != blank -%}
+  {%- comment -%} #69: Ratio erzwingen. Nach-Bild ist bereits absolute+cover
+     (beerslider.css); das Vor-Bild MUSS bei width:200% bleiben - der
+     Reveal-Clip (right:50%) zeigt sonst eine gequetschte linke Haelfte
+     statt derselben Bildgeometrie wie die Nach-Ebene. {%- endcomment -%}
+  .beforeafter-{{ section.id }} .beer-slider{
+    aspect-ratio: {{ section.settings.aspect }};
+    width: 100%;
+  }
+  {%- comment -%} beerslider.css biegt .beer-reveal auf position:relative -
+     dann waechst die Box mit der natuerlichen Bildhoehe statt mit der Ratio
+     (und height:100% der Bilder loest sich nicht auf). Im Ratio-Modus die
+     Vendor-Geometrie wiederherstellen; die Breite setzt beerslider.js inline. {%- endcomment -%}
+  .beforeafter-{{ section.id }} .beer-slider .beer-reveal{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+  .beforeafter-{{ section.id }} .beer-slider .beer-reveal > img{
+    width: 200%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  {%- endif -%}
 </style>
 <div class="customstyle{{ section.id }} before-after-section beforeafter-{{ section.id }}" 
 data-aos="{{ section.settings.animation }}"
@@ -324,6 +351,26 @@ data-section-type="beforeafter">
       "id": "after_caption",
       "label": "After Text",
       "default": "After"
+    },
+    {
+      "type": "select",
+      "id": "aspect",
+      "label": "Aspect Ratio",
+      "default": "16/9",
+      "options": [
+        {
+          "value": "16/9",
+          "label": "16:9"
+        },
+        {
+          "value": "5/3",
+          "label": "5:3"
+        },
+        {
+          "value": "auto",
+          "label": "Auto (image height)"
+        }
+      ]
     },
     {
       "type": "header",

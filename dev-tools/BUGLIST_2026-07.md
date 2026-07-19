@@ -1656,6 +1656,37 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Spalte 1 Produktbild, Spalte 2 Competitor-Chart (Metaobject);
       Sektion mit manuell gesetzten Bildern rendert unveraendert.
 
+## 69. Before/After: Seitenverhaeltnis erzwingen (THEME-Briefing #69)
+- [~] UMGESETZT 2026-07-19. Operator 18.07.: "Before/After bilder fucked.
+      Sind nicht 16:9" - Primaerursache 1:1-Generierung fixt Summit;
+      Theme wird zusaetzlich formatstabil.
+      UMSETZUNG (before-after.liquid, Section-Style + Schema):
+      - Neues Schema-Select "Aspect Ratio" (id aspect: 16/9 default,
+        5/3, auto = heutiges Verhalten). NEUES Setting = parse-safe.
+      - Bei aspect != auto: aspect-ratio auf .beer-slider + beide
+        Bild-Ebenen auf cover.
+      ZWEI ABWEICHUNGEN vom Briefing-CSS (beide verifiziert noetig):
+      (1) Reveal-Bild MUSS width:200% behalten (nicht 100% wie im
+          Briefing) - der Reveal-Clip zeigt sonst eine gequetschte
+          linke Haelfte statt derselben Bildgeometrie wie die
+          Nach-Ebene (Vendor-200%-Trick).
+      (2) beerslider.css biegt .beer-reveal auf position:relative -
+          dadurch waechst die Box mit der natuerlichen Bildhoehe an
+          der aspect-ratio VORBEI und height:100% loest sich nicht
+          auf. Im Ratio-Modus wird die Vendor-Geometrie
+          wiederhergestellt (.beer-reveal absolute/top/left/height:100%,
+          Breite bleibt JS-inline). NEBENEFFEKT: Die Ratio-Box deckelt
+          damit auch das #51-Doppelhoehen-Symptom (uninitialisiert) -
+          der tote Griff ohne Init bleibt #51.
+      VERIFIKATION: Headless 4/4 - 1:1-Testbilder: AUTO folgt Bildhoehe
+      (0.97, heutiges Verhalten), 16/9 erzwingt 1.778, Nach-Bild fuellt
+      Box exakt, Vor-Ebene deckungsgleich (1000x563 == 1000x563, Init-
+      Zustand mit width:50% simuliert wie von beerslider.js gesetzt);
+      Schema-JSON + Liquid OK.
+      Live-Test: Sektion mit 1:1-Bildern -> rendert 16:9 mit Crop,
+      Griff laeuft ueber volle Breite, Mobile gleiche Ratio; Setting
+      auf "Auto" -> exakt altes Verhalten.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
