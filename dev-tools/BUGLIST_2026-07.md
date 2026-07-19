@@ -1861,6 +1861,28 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       inkl. korrektem Halbstern bei Rating 4.5; Solid-Werte (#FFD900)
       rendern exakt wie bisher.
 
+## 77. Reviews Stars: Font Size ohne Wirkung (Bug-Sammler 19.07., winkels)
+- [~] UMGESETZT 2026-07-20. Operator: "review start 2 font size
+      funktioniert nicht, es aendert sich nichts".
+      URSACHE: Selektor-Mismatch in layout/theme.liquid - die Regel
+      zielte auf .rating-excellent-2 p (Richtext-Content), aber der
+      Locale-FALLBACK-Text (products.product.reviews_start_2_text_html
+      = "<strong>4,8/5</strong> aus 149+ Bewertungen") hat KEIN <p>
+      -> bei leerem Content-Feld (Default-Zustand!) griff weder
+      Font Size noch Mobile Font Size noch TEXT COLOR (haengt an
+      derselben Regel). Typ 1 nutzt .rating-excellent * und war
+      deshalb nie betroffen.
+      FIX: Selektor auf ".rating-excellent-2, .rating-excellent-2 p"
+      erweitert (Desktop + Mobile-Media-Query) - Fallback-Text folgt
+      jetzt Setting, Custom-<p>-Content unveraendert.
+      VERIFIKATION: Headless 4/4 - ALT reproduziert 16px/schwarz trotz
+      --font_size:20px; NEU 20px/Settingfarbe am Fallback, Custom-<p>
+      identisch, Mobile 14px greift. (Harness-Randnotiz: theme.liquid
+      lokal CRLF - Extraktions-Needles normalisieren.)
+      Live-Test: Reviews Stars mit LEEREM Content -> Font-Size-Slider
+      skaliert den Text neben den Sternen, Text Color faerbt ihn;
+      mit eigenem Content unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
