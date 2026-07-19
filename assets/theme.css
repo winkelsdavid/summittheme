@@ -3779,8 +3779,8 @@ th {
 input,
 textarea,
 select {
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: var(--g-chrome-bg, #f4f4f4);
+  color: var(--g-chrome-text, #333);
   border: 0;
   max-width: 100%;
 }

@@ -1488,6 +1488,19 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       VERIFIKATION §7: Headless 12/12 - 6 Proben Light alt=neu (Form-
       Controls #333 via Global-Regel bewiesen, countdown erbt grauen
       Ancestor durch, Gift-stroke schwarz), 6 Dark alle rgb(255,255,255).
+      NACHTRAG 2 (User-GO 19.07.): Formular-GLOBALREGEL theme.css
+      Z3779 input/textarea/select -> background var(--g-chrome-bg,
+      #f4f4f4) + color var(--g-chrome-text, #333) (beide Dateien) -
+      damit sind Login/Kontakt/Newsletter/Suche im Voll-Dark keine
+      hellen Fremdkoerper mehr. BEWUSSTER REST: input[disabled]
+      {color:#0006} bleibt (Disabled-Kontrast im Dark = eigene
+      Entscheidung, an Summit gemeldet). Judge.me = OPERATOR-Aufgabe
+      (App-Widget-Farben im Judge.me-Admin), steht auf Summits Dark-
+      Preset-Checkliste, kein Theme-Edit.
+      VERIFIKATION Nachtrag 2: Headless 24/24 - 12 Proben Light alt=neu
+      (Login-/Kontakt-/Newsletter-/Such-Inputs, Textarea, Select je
+      bg+color; Regression qty-input; Skip-Beweis disabled), 12 Dark
+      #181818/#fff inkl. disabled unveraendert wie dokumentiert.
       Live-Test: TECH DARK Qty-Ziffer weiss (Drawer + Produktseite),
       Cart-Note-Text weiss, Countdown-Ziffern weiss, Gift-Icon im
       Drawer sichtbar; Light: Inputs unveraendert #333 auf #f4f4f4.
