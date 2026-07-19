@@ -1607,6 +1607,53 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Haken hell; Gegenprobe Preset ohne Chrome-Settings -> weiss/
       dunkel wie immer.
 
+## 67. Blog-Karussell: "Mehr Details"-Buttons nicht buendig (Bug-Sammler 19.07., PETS)
+- [~] UMGESETZT 2026-07-19. Operator: "mehr details immer auf der
+      gleichen hoehe". Screenshot = featured-articles-Karussell
+      (blogscroll, P6-Scroll-Snap) mit item_style blog-1: 3-zeiliger
+      Titel drueckt den Button der dritten Karte tiefer.
+      URSACHE: Der blogscroll-Flex-Container streckt die SLIDES gleich
+      hoch, aber die innere Kette (.blogscroll-slide > div >
+      .blog__item > .blog__content) war block-basiert - der Button
+      hing am Textende statt am Kartenende.
+      FIX (Section-Style, aufs Karussell gescoped - Blog-SEITEN-Grids
+      unangetastet): Kette auf height:100%, .blog__item + .blog__content
+      als Flex-Spalte, Button margin-top:auto + align-self:flex-start
+      (align-self statt align-items, damit Titel/Text volle Breite
+      behalten und der Button nicht auf Spaltenbreite streckt).
+      Nur blog-grid-1 betroffen: grid-6/7 loesen es bereits selbst
+      per mt-auto, grid-3 hat keinen Button.
+      VERIFIKATION: Headless - ALT reproduziert Versatz (Unterkanten
+      224/242/260 bei 1/2/3-zeiligen Titeln), NEU buendig (268 x3),
+      Button bleibt shrink-to-fit (156px von 441px Spalte);
+      Liquid-Parser OK.
+      Live-Test: PETS-Homepage "Ratgeber"-Sektion - alle drei
+      Mehr-Details-Buttons auf gleicher Hoehe, auch beim Sliden.
+
+## 68. Comparison Table: B1-Bild-Fallback fehlte (THEME-Briefing "#67", 19.07.)
+- [~] UMGESETZT 2026-07-19. Operator: "Wenn neu hinzugefuegt, werden
+      gemappte Bilder nicht angezeigt." Briefing-Befund am Source
+      bestaetigt: custom-comparison-table renderte das Spalten-Bild
+      nur bei {% if block.settings.image != blank %} OHNE else -
+      frisch hinzugefuegte Sektion = leere Blocks = kein Bild, obwohl
+      das section_fallback-Metaobject (custom-comparison-table--table,
+      image_1/2) gefuellt ist. Schwester-Sektionen waren laengst an
+      brand-image angeschlossen.
+      FIX: else-Zweig in der table-Block-Schleife nach Briefing-Muster
+      (tab-vertical): brand-image mit position: loop_i (zaehlt 1-basiert
+      NUR table-Blocks = exakte Position-Semantik), width 1000, in
+      identischem table_media/media_image-Wrapper; Badge-Logik in den
+      Fallback-Zweig GESPIEGELT (Auflage erlaubte es - Highlight-Spalte
+      zeigt ihr Badge auch am Fallback-Bild). Bestehender if-Zweig
+      byte-identisch. Keine Renames (parse-Contract unberuehrt).
+      Hinweis aus dem Briefing: pool_size=2 - ein drittes table-Bild
+      wrappt modulo auf image_1 (Datenlage, kein Theme-Problem).
+      VERIFIKATION: Liquid-Parser OK (schema/for/if/capture balanced),
+      brand-image-Callsite verdrahtet (Z343).
+      Live-Test: Customizer -> Comparison Table NEU hinzufuegen ->
+      Spalte 1 Produktbild, Spalte 2 Competitor-Chart (Metaobject);
+      Sektion mit manuell gesetzten Bildern rendert unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
