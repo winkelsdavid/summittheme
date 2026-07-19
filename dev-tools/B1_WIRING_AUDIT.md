@@ -49,9 +49,10 @@ Statuslegende:
 | grid-banner | block banner.image | img | VOLL | ✓ | – | – |
 | grid-banner | block banner.image_mobile / video | img/video | BEWUSST | – | Mobile-Override optional; Desktop-Bild fällt durch | – |
 | header | section.logo (via snippets/site-logo) | img | VOLL | ✓ (`header`, Slot 1, logo_fallback) | – | – |
-| header | section.logo_white | img | TEILW | ✓ | Sekundär-Picker (weiße Variante) → Kontrakt | M |
+| header | section.logo_white | img | VOLL (seit Nachtrag 19.07.) | ✓ (`header`, Slot 2 — Summit-Klärung: Section-Level hat genau 2 Picker) | – (KORRIGIERT: kein Welle-4-Fall) | – |
 | header | menu_banner_image_1..6 (2 Blocktypen) | – | UNGENUTZT | – | wird nirgends gerendert | – |
-| header | level_1/level_2 Menü-Bilder, sidebar_image_1..6 | img (slide-menu) | NICHT | ✓ (`header`)? Slots unklar | Snippet-Route + Slot-Zuordnung klären | M |
+| header | block level_1.image_menu_lv1 / level_2.image_menu_lv2 (slide-menu-Banner) | img | Code✓/Daten✗ (seit Nachtrag 19.07.) | ✗ (`header--level_1` / `header--level_2`) | Handles pushen (Position = Nter Block des Typs) | Daten |
+| header | block option-sidebar.sidebar_image_1..6 | – | UNGENUTZT | – | KORREKTUR zur Summit-Klärung: rendert nirgends (wie menu_banner) — kein Handle nötig, sidebar_image_2..6 auch KEIN Welle-4-Fall | – |
 | icon-list | block icon_item.image_icon (beide Zweige) | img | VOLL | ✓ | – | – |
 | image-auto-slider | block video.image (Poster) | img | VOLL | ✓ (`--video`) | – | – |
 | image-auto-slider | block video.video | video | BEWUSST | – | Bild-Fallback deckt den Slot | – |
@@ -147,7 +148,7 @@ keinen Datenslot haben:
 | tab-vertical `tab` | image | **image2** (kleines Zweitbild) |
 | image-video-with-text `image_block` | image | **image2** |
 | custom-images-tabs `tab` | image | **icon** |
-| header (Section-Level) | logo | **logo_white** |
+| ~~header (Section-Level): logo_white~~ | — | GESTRICHEN 19.07.: logo_white = Slot 2 im header-Handle, verdrahtet |
 | slideshow-1 `slide` | image | image2 (Split), image_mobile — als bewusste Operator-Overrides vertretbar |
 | grid-banner `banner` | image | image_mobile — bewusster Override |
 | instagram-customize `video` | image_poster (via `--video`) | – (video-file selbst = Video-Kontrakt) |

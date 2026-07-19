@@ -1725,9 +1725,21 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
           Fallback video_1 - rueckwaerts-kompatibel); custom-shoppable-
           video: table-Zaehler b1_pos_v + brand-video-Fallback im
           Placeholder-Ast (gleiche Wrapper-Struktur, Controls intakt).
-      NICHT umgesetzt: header-slide-menu-Bilder (Slot-Zuordnung mit
-      Summit offen, s. Audit); Welle 4 (Sekundaer-Picker-Kontrakt)
-      nicht freigegeben.
+      NICHT umgesetzt: Welle 4 (Sekundaer-Picker-Kontrakt) nicht
+      freigegeben.
+      NACHTRAG Header-Slots (Summit-Klaerung 19.07.):
+      - logo_white = Slot 2 im BESTEHENDEN header-Handle (Section-Level
+        hat exakt 2 Picker) -> site-logo.liquid verdrahtet: else-Zweig
+        bei gesetztem Dark-Logo + Anhang im B1-Logo-Zweig; BEWUSST ohne
+        logo_fallback (dunkles Markenlogo waere auf transparentem
+        Header falsch). Audit korrigiert: kein Welle-4-Fall.
+      - Slide-Menu-Banner lv1/lv2 -> Handles header--level_1/--level_2,
+        Position = Nter Block des Typs: typ-gescopte Zaehler in beiden
+        Titel-Match-Schleifen (slide-menu.liquid), B1-else vor beiden
+        Placeholdern. Daten kommen mit Summits Sammel-Push.
+      - KORREKTUR an Summit: sidebar_image_1..6 rendert NIRGENDS
+        (wie menu_banner_*) - kein header--option-sidebar noetig,
+        sidebar_image_2..6 auch kein Welle-4-Fall. Audit korrigiert.
       DATEN-NACHTRAG an Summit (Welle-3-Handles fehlen im Store):
       featured-collections-1/3/5--collection, announcement-bar-slide
       --slide (Welle 2), logo-list--logo, logo-carousel--logo, quotes,
