@@ -1793,6 +1793,47 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Verlauf setzen -> Karten im Gradient (beide Modi); leeren ->
       alte Light/Dark-Automatik.
 
+## 73. Announcement Bar Slide: Animation-Setting entfernt (Bug-Sammler 19.07.)
+- [~] UMGESETZT 2026-07-20. Operator (chris-admin): "Option 'Animation'
+      rausnehmen" - Screenshot bestaetigt: das AOS-Dropdown unter
+      "Enable" (NICHT "Scroll Animation" From Left/Right - das bleibt).
+      Schema-Select animation entfernt + Nutzung bereinigt (data-aos +
+      data-aos-duration vom Wrapper). Setting-ENTFERNUNG = parse-safe
+      (#62-Praezedenz); gespeicherte animation-Werte in Presets werden
+      schlicht ignoriert. VERIFIKATION: Schema OK, 0 Rest-Referenzen.
+      Live-Test: Sektion anwaehlen -> kein "Animation"-Dropdown mehr;
+      Bar rendert ohne AOS-Attribut wie vorher mit "None".
+
+## 74. Product Overview Collapsible Row: Divider-Linienfarbe (Bug-Sammler 19.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "Farbe dieser linie anpassbar
+      machen" - Screenshot: Trennlinien unter den Collapsible Rows
+      (block tabcustom, border-bottom 1px var(--g-input-border) aus
+      product-template.css Z125).
+      Neues Block-Setting "Divider Line Color" (divider_color, color,
+      ohne Default, info "Empty = theme default") nach "Disable Border";
+      Emission nur bei gesetztem Wert als border-bottom-color im
+      vorhandenen .accordion_{{block.id}}-Style (hoehere Spezifitaet
+      als Basis; no_border-Checkbox gewinnt weiter via !important).
+      Leer = byte-identisch. VERIFIKATION: Schema + Liquid OK.
+      Live-Test: Product Overview -> Collapsible Row -> Farbe setzen
+      -> Linie dieser Row faerbt sich; andere Rows unveraendert.
+
+## 75. Image with Text: Text Alignment wirkte nicht auf Review Type 1-3 (Bug-Sammler 19.07.)
+- [~] UMGESETZT 2026-07-20. Operator: Review-Box bleibt links trotz
+      "Text Alignment: Right".
+      URSACHE: rating-custom wurde mit align: section.settings.
+      align_heading gerendert - das Setting EXISTIERT im Schema von
+      image-with-text nicht (Copy-Paste aus Sektionen, die es haben)
+      -> leere text-Klasse -> die fit-content-Box blieb links. Die
+      Ausricht-Mechanik existiert laengst (.reviews-block.text-center/
+      right mit margin-auto in theme.liquid Z296ff).
+      FIX: align : block.settings.align (das "Text Alignment" des
+      Blocks, Werte left/center/right passen 1:1).
+      VERIFIKATION: Headless 4/4 - leere Klasse (alt) = links, left =
+      links, center = mittig (307/307), right = rechts (614/0);
+      Liquid OK. Live-Test: Text-Block mit Review Type 1-3 ->
+      Alignment Left/Center/Right verschiebt die Review-Box mit.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

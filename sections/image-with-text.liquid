@@ -135,7 +135,10 @@
                   -%}
                   <div class="{{ block_width }}">
                     {% if block.settings.replace_reviews %}
-                        {%  render 'rating-custom', section: block , align : section.settings.align_heading %}
+                        {%- comment -%} #75: align hing an section.settings.align_heading -
+                            das Setting existiert in dieser Sektion nicht (leere text-Klasse,
+                            Box blieb links). Text Alignment des Blocks ist die Quelle. {%- endcomment -%}
+                        {%  render 'rating-custom', section: block , align : block.settings.align %}
                       {% else %}
                     {%- if block.settings.subtitle != blank -%}
                       <div class="subtop mb-3">{{ block.settings.subtitle }}</div>
