@@ -1773,6 +1773,26 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Picker; Verlauf waehlen -> Linie im Gradient (Staerke = Width
       Border); Bestands-Divider mit Solid-Farbe unveraendert.
 
+## 72. Testimonial Slider Auto: Card-Background-Setting mit Gradient (Bug-Sammler 19.07.)
+- [~] UMGESETZT 2026-07-19. Operator (chris-admin): "Option einfuegen
+      den Hintergrund ... mit gradient anzupassen" - Screenshot zeigt
+      die Review-KARTEN (.review-slider-i) der Sektion "Testimonial
+      Slider Auto" (= reviews-slider.liquid).
+      UMSETZUNG: Neues Section-Setting "Card Background"
+      (card_background, color_background, info "Empty = automatic
+      (light/dark)") - Kaskade: Operator-Wert (Solid ODER Gradient)
+      > chrome-bg-Automatik (#64) > weiss. Konditionale Regel wird NACH
+      der Basis-Regel emittiert (gleiche Spezifitaet, spaeter gewinnt);
+      leeres Setting emittiert GAR KEIN CSS = byte-identisch inkl.
+      Dark-Chrome-Verhalten.
+      VERIFIKATION: Headless 4/4 - leer: light weiss + dark #181818
+      exakt wie alt; Solid #ff00aa schlaegt chrome; Gradient aktiv.
+      Schema + Liquid OK. (Harness: Liquid-Stub VOR Klammer-Extraktion,
+      Conditional aus Roh-Source - die {{ }}-Lektion greift weiter.)
+      Live-Test: Testimonial Slider Auto -> "Card Background" mit
+      Verlauf setzen -> Karten im Gradient (beide Modi); leeren ->
+      alte Light/Dark-Automatik.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

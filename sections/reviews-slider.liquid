@@ -62,6 +62,13 @@
     align-items: flex-start;
     background: var(--g-chrome-bg, #ffffff);
 }
+  {%- if section.settings.card_background != blank -%}
+  {%- comment -%} Operator-Setting schlaegt die Chrome-Automatik; unterstuetzt
+      Solid UND Gradient (color_background). Leer = Regel entfaellt komplett. {%- endcomment -%}
+  .review-slider-i {
+    background: {{ section.settings.card_background }};
+  }
+  {%- endif -%}
   /* Badges + Footer (Bild/Titel/Datum/Verifiziert) kleben IMMER unten in der
      Box: der Review-Text dehnt sich als flexibler Mittelteil - vorher floss
      alles von oben und kurze Texte liessen Badges/Footer pro Karte auf
@@ -805,6 +812,12 @@ window.addEventListener('resize', () => {
           "type": "color",
           "id": "border_color",
           "label": "Box Border Color"
+        },
+    {
+          "type": "color_background",
+          "id": "card_background",
+          "label": "Card Background",
+          "info": "Empty = automatic (light/dark)"
         },
       {
           "type": "color",
