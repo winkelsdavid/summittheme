@@ -19,7 +19,7 @@
   border-radius: 8px;
 }
 .giftcard__content .giftcard__wrapper {
-  background: white;
+  background: var(--g-chrome-bg, white);
   border-radius: 8px;
   overflow: hidden;
   padding-bottom: 16px;
@@ -35,7 +35,7 @@
   content: "";
   display: block;
   position: absolute;
-  background-color: #fff;
+  background-color: var(--g-chrome-bg, #fff);
   height: 40px;
   width: 40px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -87,7 +87,7 @@
 .giftcard__code-bubble {
   position: relative;
   display: inline-block;
-  background-color: #fff;
+  background-color: var(--g-chrome-bg, #fff);
   color: var(--color-body-text);
   padding: var(--g-hgutter) var(--g-gutter);
   font-size: 1.07143em;
@@ -143,7 +143,7 @@
     display: none;
   }
   .giftcard__amount-wrapper {
-    background-color: #fff;
+    background-color: var(--g-chrome-bg, #fff);
     border-radius: 4px;
     padding: 0 var(--g-hgutter);
   }

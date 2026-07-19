@@ -237,7 +237,7 @@
     width: 100%;
   }
   .media__poster-button{
-    background-color:#fff;
+    background-color: var(--g-chrome-bg, #fff);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -434,7 +434,7 @@
     grid-template-columns: repeat(3,1fr);
   }
   .pswp__bg{
-    background: white;
+    background: var(--g-chrome-bg, white);
   }
   .pswp__button  svg{
     stroke: currentColor;
@@ -445,10 +445,10 @@
   .pswp__button--arrow{
     width: 46px;
     height: 46px;
-    background-color: white;
+    background-color: var(--g-chrome-bg, white);
     box-shadow: 0 .125rem .625rem rgb(28 28 28 / .15) !important;
     border-radius: 50%;
-    background-color: white !important;
+    background-color: var(--g-chrome-bg, white) !important;
     bottom:50px;
     top:auto;
     transform: translate(-50%);
@@ -471,7 +471,7 @@
     box-shadow: 0 .125rem .625rem rgb(28 28 28 / .15) !important;
     bottom:46px;
     border-radius: 50%;
-    background-color: white !important;
+    background-color: var(--g-chrome-bg, white) !important;
     margin:0;
   }
   .pswp__button--close svg{

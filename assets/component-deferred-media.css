@@ -59,7 +59,7 @@
 }
 
 .deferred-media__poster-button {
-  background-color: white;
+  background-color: var(--g-chrome-bg, white);
   border: 0.1rem solid rgba(var(--color-foreground), 0.1);
   border-radius: 50%;
   color: rgb(var(--color-foreground));
@@ -94,7 +94,7 @@
   justify-content: center;
   top: 0;
   right: 0;
-  background: white;
+  background: var(--g-chrome-bg, white);
   border-radius: 0;
   border:.1rem solid rgba(var(--color-foreground),.1);
 }

@@ -1371,9 +1371,32 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Literale sind darunter toter Code (unschaedlich, Light bewiesen
       unveraendert). KONSEQUENZ Summit-Mapping: color_drawer_bg MUSS
       zusaetzlich zu den 3 Chrome-Feldern im Dark-Preset gemappt werden.
-      OFFEN: P1 (~20 Commerce-Flaechen) einzeln abnehmen; Summit-Seite:
-      Re-Parse + Dark-Preset-Mapping der 3 Chrome-Felder PLUS
-      color_drawer_bg.
+      P1-RUNDE 19.07. (auf User-GO, einzeln auditiert): 34 Ersetzungen
+      umgesetzt - product-card-Countdown-Badge, overlay-btn, style4-
+      Hover, style5-Overlay-Btn(+:before), cross-item-title (Text),
+      split-banner-1(+:before), hotspot-product, pro__ser--box,
+      Judge.me-Review-Karte (je in theme.css UND theme.css.liquid);
+      PhotoSwipe-Lightbox pswp__bg/arrow(2x)/close + media__poster-
+      button (product-template.css - Briefing-Auflage "verifizieren"
+      erfuellt: es IST die Lightbox); Giftcard (4 inkl. Nach-Scan-Fund
+      amount-wrapper); deferred-media poster+badge; Ajaxinate-Pagination.
+      BEGRUENDETE SKIPS (Zeilen-Scanner-Geister/Design):
+      - product-card__pricesale: das Briefing-#fff war ein AUSKOMMEN-
+        TIERTER Nachbarblock (.template-product .page-container) -
+        pricesale selbst hat kein Weiss.
+      - style5 overlaybottom .btn: laeuft laengst ueber
+        var(--g-cta-button)!important (frueherer Button-Box-Fix).
+      - js-countdown--1: beige (#f8ede7) + #000 = gewollter Akzent,
+        chrome-text waere dort unlesbar.
+      - js-countdown--2: background:white ist toter Code (wird in
+        derselben Regel von background-color:transparent ueberschrieben).
+      - parallax-banner__meta: hat Section-Setting-Override (bg_box in
+        background-video.liquid) - Settings-Route, nicht Chrome.
+      VERIFIKATION P1: Headless 32/32 (16 Proben Light alt=neu,
+      16 Dark #181818/#fff).
+      SUMMIT-STAND (Rueckmeldung 19.07.): color_drawer_bg bereits auf
+      secondary (#000000) gemappt; die 3 Chrome-Felder kommen mit dem
+      V2.17-Parse und werden auf background/primary_text/border gemappt.
       Live-Test: Customizer -> Colors -> UI Chrome auf #181818/#ffffff/
       #333 -> Cart-/Menu-/Filter-Drawer, Dropdowns, Mengen-Input,
       Quick-View, Pfeile, Such-/Meganav-Panels, Verkaufs-Popup dunkel;

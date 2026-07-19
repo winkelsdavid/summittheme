@@ -90,7 +90,7 @@
   min-width: 140px;
 }
 .AjaxinatePagination .btn.active:before{
-  background-color: white;
+  background-color: var(--g-chrome-bg, white);
 }
 .AjaxinatePagination{
   position: relative;
