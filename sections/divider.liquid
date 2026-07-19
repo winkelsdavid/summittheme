@@ -1,9 +1,19 @@
 <!-- line.liquid -->
 <style>
+    {%- if section.settings.bgborder contains 'gradient' -%}
+    {%- comment -%} Gradient-Fall: border-color kann keine Verlaeufe -
+        Linie als Flaeche (height = Width Border, background = Verlauf). {%- endcomment -%}
+    .customstyle{{ section.id }} .border-custom{
+        border-top: 0 !important;
+        height: {{ section.settings.wborder }};
+        background: {{ section.settings.bgborder }};
+    }
+    {%- else -%}
     .customstyle{{ section.id }} .border-custom{
         border-top-width: {{ section.settings.wborder }} !important;
         border-color: {{ section.settings.bgborder }} !important;
     }
+    {%- endif -%}
    .customstyle{{ section.id }}{
     padding-top:{{ section.settings.padding_top }}px;
     padding-bottom:{{ section.settings.padding_bottom }}px;
@@ -216,7 +226,7 @@
       ]
     },
     {
-      "type": "color",
+      "type": "color_background",
       "id": "bgborder",
       "label": "Border Divider",
       "default": "#dddddd"

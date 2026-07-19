@@ -1754,6 +1754,25 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       dahin unveraendert Placeholder); Sektionen mit manuell gesetzten
       Bildern byte-identisch.
 
+## 71. Divider: Gradient-Option fuer Border Divider (Bug-Sammler 19.07., TECH DARK 2)
+- [~] UMGESETZT 2026-07-19. Operator (chris-admin): "fuer diese farbe
+      option fuer gradient einfuegen" - Screenshot: Divider-Sektion
+      (Footer Group), Setting "Border Divider".
+      UMSETZUNG (divider.liquid, Muster #65 stars_color):
+      - Schema: bgborder Typ color -> color_background (ID bleibt,
+        Default #dddddd bleibt; gespeicherte Solid-Werte gueltig -
+        Summit-Parse: Typ-Wechsel beachten wie bei stars_color).
+      - CSS-Verzweigung: bei Gradient-Wert border-top:0 !important +
+        height:{{ wborder }} + background:{{ gradient }} (border-color
+        kann keine Verlaeufe - Linie wird zur Flaeche in Border-Staerke);
+        Solid-Zweig byte-identisch wie bisher.
+      VERIFIKATION: Headless 5/5 - Solid alt=neu identisch (3px,
+      #ddd, Bootstrap-.border-top ueberstimmt), Gradient-Fall border
+      0px / Hoehe 3px / linear-gradient aktiv; Schema+Liquid OK.
+      Live-Test: Divider-Setting "Border Divider" bietet Verlaufs-
+      Picker; Verlauf waehlen -> Linie im Gradient (Staerke = Width
+      Border); Bestands-Divider mit Solid-Farbe unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
