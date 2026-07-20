@@ -2011,6 +2011,34 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: Produktkarte/Sticky-Cart/Quickview auf de ->
       "Warenkorb"; Sprachwechsel fr/es/it -> kurze Nomen.
 
+## 81. Image With Tabs: Preset 4 -> 3 Bloecke (Bug-Sammler 20.07., FASHION)
+- [~] UMGESETZT 2026-07-20. Operator: "darf nur mit 3 bloecken kommen,
+      nicht 4" (Screenshot: 4. Block "Title" durchgestrichen).
+      FIX: custom-images-tabs.liquid Preset-blocks von 4x tab auf 3x
+      tab. Rein additiv-subtraktives Schema (kein Rename, parse-safe);
+      Bestandsinstanzen unberuehrt (Presets wirken nur beim
+      Neu-Hinzufuegen). VERIFIKATION: Schema OK.
+      Live-Test: Sektion neu hinzufuegen -> genau 3 Image-Bloecke.
+
+## 82. Slideshow: Icon-Pills erbten "Slide Font Transform" Uppercase (Bug-Sammler 18.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "Icons aus den slideshows
+      duerften nicht 'Uppercase' aus den Theme Settings uebernehmen.
+      Es ist body font."
+      URSACHE: Das Icon-Pill-<li> traegt selbst die Klasse
+      slideshow__title (slideshow-1 Z1130, slideshow-2 Z886 -
+      Layout-/Abstands-Kette) und erbte damit die komplette
+      Title-Typo inkl. text-transform: var(--g-slide-font-transform)
+      (Theme-Setting "Slide Font Transform" unter Title Slideshow).
+      FIX (minimal-invasiv, beide Slideshows): Override
+      li.icons_cont.slideshow__title { text-transform: none; } direkt
+      nach der Title-Regel - nur das gemeldete Symptom, restliche
+      Pill-Typo (Groesse/Spacing ueber c_icon_item) unangetastet.
+      VERIFIKATION: Headless 4/4 - ALT: Titel uppercase + Pill ERBT
+      uppercase (Repro); NEU: Titel uppercase, Pill none. Liquid OK.
+      Live-Test: Theme Settings -> Title Slideshow -> Slide Font
+      Transform "Uppercase" -> Titel gross, Pills behalten
+      Body-Schreibweise (Desktop + Mobile, Slideshow 1 UND 2).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

@@ -460,6 +460,11 @@ html:not(.no-js) .slideshow.swiper-initialized .slideshow__slide{
   letter-spacing:var(--g-slide-font-spacing);
   text-transform: var(--g-slide-font-transform);
 }
+/* #82: Das Icon-Pill-<li> traegt die slideshow__title-Klasse (Layout-Kette) -
+   das Title-Setting "Slide Font Transform" darf die Pills aber nicht kippen. */
+li.icons_cont.slideshow__title {
+  text-transform: none;
+}
 @media (min-width:992px) {
   .mega-subtitle{
     line-height: 1.5;
