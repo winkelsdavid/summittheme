@@ -91,9 +91,16 @@
               </button>
             </div>
             
-                {%- if section.settings.answer_content != blank -%}
+                {%- liquid
+                  # #104: leer => Shopifys reCAPTCHA-Hinweis (System-Key, von Shopify
+                  # in allen Sprachen gepflegt, inkl. Privacy/Terms-Links). Key ZUERST
+                  # uebersetzen, dann default (Filter-Order-Falle, Muster #95).
+                  assign cf_disclaimer = 'shopify.online_store.spam_detection.disclaimer_html' | t
+                  assign cf_desc = section.settings.answer_content | default: cf_disclaimer
+                -%}
+                {%- if cf_desc != blank -%}
                     <div class="mt-5 text-center">
-                    {{ section.settings.answer_content }}
+                    {{ cf_desc }}
                 </div>
                 {%- endif -%}
             
@@ -309,7 +316,7 @@
       "type": "richtext",
       "id": "answer_content",
       "label": "Description",
-      "default": "<p>Pair large text with an image to give focus to your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>"
+      "info": "Empty = reCAPTCHA privacy notice (auto-translated)"
     },
     {
       "type": "header",
