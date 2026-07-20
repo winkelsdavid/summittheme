@@ -2487,6 +2487,20 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       (bei aktiver Animation sichtbar) je Button setzen -> Hover-Text
       nimmt die Farbe an; Feld leer -> wie bisher.
 
+## 109. Scratch-Newsletter: Dark-Backdrop deckend schwarz -> halbtransparent (User 20.07.)
+- [~] UMGESETZT 2026-07-20 (33c25c0). #83 hatte dialog.scnl::backdrop
+      aufs OPAKE --g-chrome-bg geroutet -> im Dark-Preset komplett
+      schwarz, Seite unsichtbar (Light-Original: rgba(252,251,247,0.82)).
+      FIX: Light-Logik uebertragen - color_modify: 'alpha', 0.82 auf
+      settings.color_chrome_bg zur Renderzeit (dark -> rgba(0,0,0,0.82));
+      ohne/transparentes Chrome-Setting = Light-Original byte-gleich.
+      MERKE: --g-chrome-bg ist opak - fuer Overlay-/Backdrop-Flaechen
+      NICHT direkt verwenden, sondern Alpha per color_modify (vgl. #83-
+      Backdrop war die einzige solche Flaeche mit voller Deckung).
+      VERIFIKATION: liquidjs 3 Faelle (dark/leer/transparent).
+      Live-Test: TECH DARK 2 -> Scratch-Popup oeffnen -> Seite hinter
+      dem Modal bleibt abgedunkelt sichtbar; Light unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
