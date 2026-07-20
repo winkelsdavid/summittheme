@@ -8409,7 +8409,8 @@ body.video-playing {
   margin-right:0;
   z-index: 1;
   border:1px solid #E0E0E0;
-  --g-color-heading-rgb:0,0,0;
+  /* #86: KEIN --g-color-heading-rgb-Hardcode mehr - Icon-Striche folgen
+     den Theme-Heading-Vars (im Dark hell), sonst schwarz-auf-dunkel. */
 }
 .js-btn-view:not(:first-child){
   margin-left: -1px;
@@ -11597,7 +11598,7 @@ blockquote::before {
   width: 16px;
   height: 16px;
   background-color: transparent;
-  border: 1px solid rgba(var(--g-color-heading-rgb), 0.2);
+  border: 1px solid var(--g-chrome-border, rgba(var(--g-color-heading-rgb), 0.2));
   border-radius: 2px;
   z-index: 1;
   transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);

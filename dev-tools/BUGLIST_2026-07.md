@@ -2111,6 +2111,38 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: TECH DARK -> Quick View oeffnen -> Panel dunkel,
       Titel/Preis/Optionen hell lesbar; Default-Preset -> weiss.
 
+## 86. Kollektionsseite: View-Mode-Icons + Filter-Checkboxen unsichtbar im Dark (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "Kollektionsseiten: Elemente
+      aus Screenshot nicht sichtbar" - View-Mode-Toggle (3 leere Kaesten)
+      + Filter-Checkbox-Rahmen ohne Kontrast im TECH DARK. PATTERN:
+      Chrome/Dark (#63/#64).
+      URSACHE:
+      (1) View-Icons (.js-btn-view, theme.css Z8412): der Button
+          HARDCODET lokal --g-color-heading-rgb:0,0,0 -> die Icon-
+          Striche (rgba(var(--g-color-heading-rgb),0.2) + aktive
+          box-shadows) sind IMMER schwarz, im Dark unsichtbar; nur der
+          graue Rahmen #E0E0E0 = die sichtbare leere Box.
+      (2) Checkbox-Rahmen (.checkbox__label:before Z11600): border
+          rgba(heading,0.2) - im Dark hell@20% zu schwach.
+      FIX (theme.css + theme.css.liquid):
+      (1) Den lokalen --g-color-heading-rgb:0,0,0-Hardcode ENTFERNT ->
+          Striche folgen den Theme-Heading-Vars (Dark hell = sichtbar).
+          Kopplung wie #82/#64; Light minimal (reines #000 -> Heading-
+          Farbe @0.2 auf 2px-Strich, bei den ueblichen schwarzen
+          Headings identisch).
+      (2) Checkbox-border -> var(--g-chrome-border, <altes rgba>) -
+          Light byte-identisch (Chrome-Var nur im Dark gesetzt), Dark
+          ueber den Border-Token (#333). Generische .checkbox betroffen
+          (Facets/Cart/etc.), Light unveraendert.
+      VERIFIKATION: Headless 5/5 - Checkbox Light identisch + Dark
+      chrome-border #333; View-Icon Light Heading-gekoppelt, Dark hell,
+      ALT-Dark bleibt schwarz (Repro).
+      HINWEIS SUMMIT: chrome-border(#333) auf #181818 ist bewusst
+      subtil - falls Checkboxen deutlicher sein sollen, ist das ein
+      chrome-border-Tuning (Settings), keine Theme-Logik.
+      Live-Test: TECH DARK Kollektion -> View-Toggle-Striche hell
+      sichtbar, Checkbox-Rahmen erkennbar; Default -> unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
