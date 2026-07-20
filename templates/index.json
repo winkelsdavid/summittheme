@@ -492,6 +492,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -503,6 +504,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -514,6 +516,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -525,6 +528,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -536,6 +540,7 @@
             "review_color": "",
             "add_verified": true,
             "verified_color": "#34bf49",
+            "badge_color": "",
             "name": "John Doe",
             "name_color": ""
           }
@@ -561,6 +566,7 @@
         "align_heading": "center",
         "stars_rating": 4.5,
         "color": "",
+        "color_gradient": "",
         "verified_caption": "",
         "autoplay": true,
         "speed": 2,
@@ -703,6 +709,7 @@
         "arrows": true,
         "dots": false,
         "border_color": "",
+        "card_background": "",
         "color": "",
         "verified_caption": "",
         "columns": 3,
@@ -1071,6 +1078,89 @@
         "mobile_padding_top": 20,
         "mobile_padding_bottom": 20
       }
+    },
+    "instagram_customize_3TJPLa": {
+      "type": "instagram-customize",
+      "blocks": {
+        "image_LBHarY": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
+          }
+        },
+        "video_FnqnJM": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "image_link": "",
+            "enable_play_video": true
+          }
+        },
+        "image_LtTaRF": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
+          }
+        },
+        "video_xTVUrd": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "image_link": "",
+            "enable_play_video": true
+          }
+        },
+        "image_fXcEFt": {
+          "type": "image",
+          "settings": {
+            "image_link": ""
+          }
+        },
+        "video_48fTA9": {
+          "type": "video",
+          "settings": {
+            "video_url": "",
+            "image_link": "",
+            "enable_play_video": true
+          }
+        }
+      },
+      "block_order": [
+        "image_LBHarY",
+        "video_FnqnJM",
+        "image_LtTaRF",
+        "video_xTVUrd",
+        "image_fXcEFt",
+        "video_48fTA9"
+      ],
+      "name": "Instagram Customize",
+      "settings": {
+        "animation": "",
+        "section_width": "container",
+        "background_section": "",
+        "subtitle_top": "Subtitle Top",
+        "replace_reviews": false,
+        "reviews_type": "t_1",
+        "title": "Instagram Customize",
+        "description": "",
+        "align_heading": "center",
+        "subtitle_top_color": "",
+        "heading_color": "",
+        "description_color": "",
+        "image_size": "portrait",
+        "enable_carousel": true,
+        "arrows": false,
+        "dots": true,
+        "infinite": true,
+        "column": 4,
+        "show": 6,
+        "padding": true,
+        "gutter_padding": 30,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "mobile_padding_top": 40,
+        "mobile_padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -1087,6 +1177,7 @@
     "custom_instagram_marquee_bi87tf",
     "divider_advanced_jqTA6R",
     "featured_articles_AreczD",
-    "scrolling_text_JPmYzc"
+    "scrolling_text_JPmYzc",
+    "instagram_customize_3TJPLa"
   ]
 }
