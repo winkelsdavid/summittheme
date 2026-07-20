@@ -2243,6 +2243,54 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       unberuehrt. VERIFIKATION: Schema OK, Preset zaehlt 2.
       Live-Test: Sektion neu hinzufuegen -> 2 Bloecke.
 
+## 93. Tab Vertical: nur erstes Bild gerendert (Bug-Sammler 19.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "Image gemapped, im theme nur
+      das erste angezeigt". NICHT dieselbe Baustelle wie #70/#79 (die
+      waren nur B1-Fallback-Verdrahtung) - Pattern-Check bestaetigt
+      neuer Bug. Depot-Daten korrekt (image_1/2/3 distinct, pool 3).
+      URSACHE: Der block.settings.image-Pfad nutzt das lazysizes-Muster
+      (src=1x1-Platzhalter, data-src=echtes Bild, .lazyload). Inaktive
+      Tab-Panes sind display:none, es gibt KEIN shown.bs.tab-Re-Init in
+      theme.js -> lazysizes enthuellt die Bilder in Tab 2/3 nie (bleiben
+      1x1). Nur Tab 1 (aktiv beim Laden) laedt. Daher: VOR dem Mappen
+      (leer->B1, plain <img>, laedt sofort) zeigten alle; NACH dem
+      Mappen (->lazysizes) nur der erste. Big- UND Small-Bild betroffen.
+      FIX: beide Bilder auf echten src + scale-in lazyloaded (wie der
+      B1-Pfad, laedt unabhaengig von Sichtbarkeit) statt src=1x1/
+      data-src/.lazyload; srcset+sizes fuer Responsivitaet.
+      Memory-Regel beachtet: scale-in NIE bare -> scale-in lazyloaded.
+      VERIFIKATION: Headless 4/4 - ALT in display:none nur 1x1 geladen
+      (Repro), NEU echtes Bild (300px) + opacity 1 (lazyloaded); ALT
+      bare scale-in opacity 0. Liquid OK.
+      Live-Test: Tab Vertical mit 3 gemappten Bildern -> jeder Tab
+      zeigt sein Bild (auch nach Klick auf Tab 2/3).
+
+## 94+95. Booking Form: Description-Default + englische Defaults (Bug-Sammler 19.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "Booking Form komplett
+      uebersetzen, Description per default leer." Section =
+      contact-booking.liquid.
+      #94: answer_content (richtext, Label "Description") hatte
+      Lorem-Default -> geleert (Default-Key entfernt). Das zweite
+      "Description"-Feld (id description, textarea) war schon leer.
+      #95: Englische Werte-DEFAULTS (rendern auf dem dt. Storefront)
+      auf Deutsch: title "Questions? Send us an email" -> "Fragen?
+      Schreib uns eine E-Mail"; store_label "Your Budget" -> "Dein
+      Budget"; interested_want "Interested Service" -> "Gewuenschter
+      Service"; store_location "Budget 1" bleibt (neutral). contact.
+      form.*-Felder (Name/Email/Telefon/Nachricht) waren schon per
+      | t lokalisiert.
+      HINWEIS/Kontrakt: Shopify-Schema-default-WERTE koennen KEIN t:
+      (nur label/info/content) - echte Mehrsprachigkeit ginge nur
+      ueber Render-| t-Fallback; fuer Merchant-Beispielinhalte
+      (Services/Budgets) unpassend + Ueberschrift haengt am geteilten
+      section-heading. Da Store deutsch: dt. Defaults = korrekt,
+      Merchant editiert pro Storefront-Sprache. Editor-LABELS bleiben
+      englisch (Customizer-Sprache).
+      VERIFIKATION: Schema-JSON valide, 0 englische Werte-Defaults
+      uebrig (Label "Interested Service" bewusst engl.).
+      Live-Test: Booking Form neu -> Description leer; Ueberschrift/
+      Budget-Label/Radio-Optionen deutsch.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
