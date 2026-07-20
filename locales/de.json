@@ -147,7 +147,7 @@
     },
     "quickview": {
       "view_full": "Details anzeigen",
-      "addtocart": "In den Warenkorb legen",
+      "addtocart": "Warenkorb",
       "sku": "Artikelnummer",
       "type": "Typ",
       "vendor": "Verkäufer"
@@ -491,7 +491,7 @@
       "include_taxes": "Steuern inklusive.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Versand</a> An der Kasse berechnet.",
       "quantity": "Menge",
-      "add_to_cart": "in den Warenkorb legen",
+      "add_to_cart": "Warenkorb",
       "add_to": "Hinzufügen",
       "pre_order": "Vorbestellen",
       "full_details": "Alle Einzelheiten",

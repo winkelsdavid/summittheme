@@ -147,7 +147,7 @@
     },
     "quickview": {
       "view_full": "Se detaljer",
-      "addtocart": "Tilføj til kurv",
+      "addtocart": "Kurv",
       "sku": "SKU",
       "type": "Type",
       "vendor": "Sælger"
@@ -491,7 +491,7 @@
       "include_taxes": "Skat inkluderet.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Forsendelse</a> beregnes ved kassen.",
       "quantity": "Antal",
-      "add_to_cart": "Tilføj til kurv",
+      "add_to_cart": "Kurv",
       "add_to": "Tilføje",
       "pre_order": "Forudbestille",
       "full_details": "Alle detaljer",

@@ -147,7 +147,7 @@
     },
     "quickview": {
       "view_full": "Bekijk details",
-      "addtocart": "Voeg toe aan winkelkar",
+      "addtocart": "Winkelkar",
       "sku": "SKU",
       "type": "Type",
       "vendor": "Leverancier"
@@ -491,7 +491,7 @@
       "include_taxes": "Inclusief belasting.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Verzenden</a> Berekend bij het afrekenen.",
       "quantity": "Hoeveelheid",
-      "add_to_cart": "Voeg toe aan winkelkar",
+      "add_to_cart": "Winkelkar",
       "add_to": "Toevoegen",
       "pre_order": "Voorafgaande bestelling",
       "full_details": "Alle details",

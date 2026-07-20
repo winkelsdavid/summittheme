@@ -147,7 +147,7 @@
     },
     "quickview": {
       "view_full": "Voir les détails",
-      "addtocart": "Ajouter au panier",
+      "addtocart": "Panier",
       "sku": "UGS",
       "type": "Taper",
       "vendor": "Fournisseur"
@@ -491,7 +491,7 @@
       "include_taxes": "Taxe inclu.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Expédition</a> Calculé à la caisse.",
       "quantity": "Quantité",
-      "add_to_cart": "Ajouter au panier",
+      "add_to_cart": "Panier",
       "add_to": "Ajouter",
       "pre_order": "Pré-commander",
       "full_details": "Tous les détails",

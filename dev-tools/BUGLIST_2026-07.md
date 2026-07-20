@@ -1989,6 +1989,28 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       VERIFIKATION Nachtrag: Headless 3/3 - ALT Item 0px (Kollaps
       reproduziert), NEU 300px-Box, Bild cover 300x300; Liquid OK.
 
+## 80. "In den Warenkorb legen" theme-weit gekuerzt (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator (chris-admin): de -> "Warenkorb",
+      "ggf fuer alle Sprachen verkuerzen" (lange Button-Texte sprengen
+      Layouts - i18n-Textlaengen-Klasse wie #19/#29).
+      INVENTUR: 2 Theme-Keys (general.quickview.addtocart +
+      products.product.add_to_cart) in 10 Locales; pagefly.* =
+      App-Namespace, NICHT angefasst. Nutzung = reine Button-Labels/
+      Tooltips/JS-Strings, keine Satz-Einbettung (Kleinschreibung in
+      de/es/pt war Altbestand ohne Funktion).
+      KUERZUNGEN (Substantiv-Form analog Operator-Vorgabe): de
+      Warenkorb, da Kurv, es Cesta, fr Panier, it Carrello, nl
+      Winkelkar (deren Vokabular), pt-BR/PT Carrinho. UNVERAENDERT:
+      en "Add to Cart" + ja (bereits kurz).
+      HYGIENE: minimal-invasive String-Replaces statt JSON-Reserialisierung
+      (die sortierte 404-Bloecke um) - Diff exakt 16 Zeilen, alle 10
+      JSONs validiert.
+      HINWEIS: Gespeicherte Button-Text-SETTINGS in Presets/Templates
+      schlagen Locale-Defaults - wo Operatoren eigene Texte gesetzt
+      haben, greift die Kuerzung nicht (bekanntes i18n-Muster).
+      Live-Test: Produktkarte/Sticky-Cart/Quickview auf de ->
+      "Warenkorb"; Sprachwechsel fr/es/it -> kurze Nomen.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

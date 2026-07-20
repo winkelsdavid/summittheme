@@ -147,7 +147,7 @@
     },
     "quickview": {
       "view_full": "Ver detalles",
-      "addtocart": "Añadir a la cesta",
+      "addtocart": "Cesta",
       "sku": "SKU",
       "type": "Tipo",
       "vendor": "Proveedor"
@@ -491,7 +491,7 @@
       "include_taxes": "Impuesto incluido.",
       "shipping_policy_html": "<a href=\"{{ link }}\">Envío</a> calculado a la salida.",
       "quantity": "Cantidad",
-      "add_to_cart": "añadir a la cesta",
+      "add_to_cart": "Cesta",
       "add_to": "Agregar",
       "pre_order": "Hacer un pedido",
       "full_details": "Todos los detalles",
