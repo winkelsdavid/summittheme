@@ -141,16 +141,20 @@
       .product-single__thumbnails.swiper .product-single__thumbnail-item {
         display: block; width: auto; max-width: none; padding: 0;
       }
+      /* 32px + Position INNERHALB des Containers: theme.css setzt global 44px
+         !important auf .swiper-button-* — hier zurueckerobern, sonst ragt der
+         44er-Kreis bei left/right:-4px aus dem overflow:hidden (abgeschnittene
+         Pfeile, Bug #98). */
       .product-single__thumbnails.swiper .swiper-button-prev,
       .product-single__thumbnails.swiper .swiper-button-next {
-        width: 32px; height: 32px; margin-top: 0; top: 50%; transform: translateY(-50%);
+        width: 32px !important; height: 32px !important; margin-top: 0; top: 50%; transform: translateY(-50%);
         border-radius: 50%; background: #fff; border: 1px solid rgba(0,0,0,.1);
         box-shadow: 0 1px 6px rgba(0,0,0,.12);
       }
-      .product-single__thumbnails.swiper .swiper-button-prev { left: -4px; }
-      .product-single__thumbnails.swiper .swiper-button-next { right: -4px; }
+      .product-single__thumbnails.swiper .swiper-button-prev { left: 4px; }
+      .product-single__thumbnails.swiper .swiper-button-next { right: 4px; }
       .product-single__thumbnails.swiper .swiper-button-prev:after,
-      .product-single__thumbnails.swiper .swiper-button-next:after { font-size: 12px; color: #111; }
+      .product-single__thumbnails.swiper .swiper-button-next:after { font-size: 12px !important; color: #111; }
       .product-single__thumbnails.swiper .swiper-slide-thumb-active .product-single__thumbnail:after {
         opacity: 1; visibility: visible; transform: scale(1);
       }
