@@ -247,8 +247,16 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    {%- if section.settings.stars_border_color contains 'gradient' -%}
+    {%- comment -%} Shorthand: nur letzte Layer darf Farbe sein - solide Innenfarbe als linear-gradient(c,c). {%- endcomment -%}
+    {%- assign rs_bgl = section.settings.stars_background | default: settings.branding_color -%}
+    {%- unless rs_bgl contains 'gradient' -%}{%- capture rs_bgl -%}linear-gradient({{ rs_bgl }},{{ rs_bgl }}){%- endcapture -%}{%- endunless -%}
+    border:1px solid transparent;
+    background:{{ rs_bgl }} padding-box, {{ section.settings.stars_border_color }} border-box;
+    {%- else -%}
     border:1px solid var(--border-color);
     background:var(--background);
+    {%- endif -%}
     {% if settings.enable_radius_allimg %}border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});{% endif %}
     margin:0;
     margin-bottom:.5rem;
@@ -742,7 +750,7 @@ window.addEventListener('resize', () => {
         },
 
         {
-          "type": "color",
+          "type": "color_background",
           "id": "stars_border_color",
           "label": "Stars Border Color"
         },

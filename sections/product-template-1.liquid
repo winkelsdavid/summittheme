@@ -837,8 +837,17 @@ display:none;
                      .customer-review-card{
                             display: flex;
                               padding: clamp(12px, 1%, 24px);
+                              {%- if block.settings.border_color contains 'gradient' -%}
+                              {%- comment -%} Shorthand-Regel: nur die LETZTE Layer darf eine Farbe sein -
+                                  solide Innenfarbe daher als linear-gradient(c,c) gewrappt. {%- endcomment -%}
+                              {%- assign cr_bgl = block.settings.background | default: settings.branding_color -%}
+                              {%- unless cr_bgl contains 'gradient' -%}{%- capture cr_bgl -%}linear-gradient({{ cr_bgl }},{{ cr_bgl }}){%- endcapture -%}{%- endunless -%}
+                              border: 1px solid transparent;
+                              background: {{ cr_bgl }} padding-box, {{ block.settings.border_color }} border-box;
+                              {%- else -%}
                               background: var(--background);
                               border: 1px solid var(--border-color);
+                              {%- endif -%}
                               {% if settings.enable_radius_allimg %}
                               border-radius: calc(0.2rem * {{ settings.radius_allimg_range }});
                               {% endif %}
@@ -4657,7 +4666,7 @@ function formatPrice(value) {
           "label": "Text Color"
         },
         {
-          "type": "color",
+          "type": "color_background",
           "id": "border_color",
           "label": "Border Color"
         },

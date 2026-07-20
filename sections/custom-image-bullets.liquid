@@ -51,9 +51,15 @@
     display: flex;
     gap: 12px;
     padding: 16px;
+    {%- if section.settings.card_border_color contains 'gradient' -%}
+    {%- comment -%} Shorthand: nur letzte Layer darf Farbe sein - solide Innenfarbe als linear-gradient(c,c). {%- endcomment -%}
+    border: 1px solid transparent;
+    background: linear-gradient({{ section.settings.card_bg_color }},{{ section.settings.card_bg_color }}) padding-box, {{ section.settings.card_border_color }} border-box;
+    {%- else -%}
     background: {{ section.settings.card_bg_color }};
-    {% if settings.enable_radius_allimg %}border-radius:calc(0.2rem * {{ settings.radius_allimg_range }}) !important;{% endif %}
     border: 1px solid {{ section.settings.card_border_color }};
+    {%- endif -%}
+    {% if settings.enable_radius_allimg %}border-radius:calc(0.2rem * {{ settings.radius_allimg_range }}) !important;{% endif %}
     align-items: flex-start;
   }
 
@@ -501,7 +507,7 @@
       "default": "#FFFFFF"
     },
     {
-      "type": "color",
+      "type": "color_background",
       "id": "card_border_color",
       "label": "Bullet Card Border",
       "default": "#D3DBD9"

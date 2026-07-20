@@ -92,11 +92,19 @@ min-width:340px;
     border-radius: 0;
     padding: 15px 30px;
     border-radius: 10px;
-    border: 1px solid #ffffff;
+    border: 1px solid {% if section.settings.quote_box_border contains 'gradient' %}transparent{% else %}{{ section.settings.quote_box_border | default: '#ffffff' }}{% endif %};
     box-shadow: rgb(0 0 0 / 6%) 0px 2px 25px 0px;
 }
 .c-{{ section.id }} .review_marquee_item {
+    {%- if section.settings.quote_box_border contains 'gradient' -%}
+    {%- comment -%} Shorthand: nur letzte Layer darf Farbe sein - solide Innenfarbe als linear-gradient(c,c). {%- endcomment -%}
+    {%- assign mq_bgl = section.settings.quote_box_color | default: '#ffffff' -%}
+    {%- unless mq_bgl contains 'gradient' -%}{%- capture mq_bgl -%}linear-gradient({{ mq_bgl }},{{ mq_bgl }}){%- endcapture -%}{%- endunless -%}
+    border: 1px solid transparent;
+    background: {{ mq_bgl }} padding-box, {{ section.settings.quote_box_border }} border-box;
+    {%- else -%}
     background: {{  section.settings.quote_box_color }};
+    {%- endif -%}
 }
 .badges_verified {
     width: 20px;
@@ -767,7 +775,13 @@ document.addEventListener("DOMContentLoaded", function() {
         "id":"quote_box_color",
         "label": "Quote Box Color",
         "default":"#ffffff"
-    },  
+    },
+     {
+        "type":"color_background",
+        "id":"quote_box_border",
+        "label": "Border Color",
+        "default":"#ffffff"
+    },
      {
         "type":"color",
         "id":"quote_title_color",

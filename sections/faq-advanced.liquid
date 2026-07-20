@@ -82,6 +82,9 @@
 
 .accordion {
   border-bottom: 1px solid var(--accordion-border);
+  {%- if section.settings.border_color contains 'gradient' -%}
+  border-image: {{ section.settings.border_color }} 1;
+  {%- endif -%}
 }
 .accordion:last-child {
   border-bottom: none;
@@ -561,7 +564,7 @@ max-width: {{  section.settings.team_image_width_mobile }}px;
       "default": "#f3f4f6"
     },
     {
-      "type": "color",
+      "type": "color_background",
       "id": "border_color",
       "label": "FAQ Divider Border",
       "default": "#e5e7eb"
