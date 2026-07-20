@@ -2447,6 +2447,23 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Regeln griffen im 553-767px-Gap (Shopify-Preview 749px) nicht;
       #89 erweiterte die Query genau darauf, headless-verifiziert.
 
+## 107. Image With Text: Style-Button-Default Line White -> Button Box (Summit-Briefing 20.07.)
+- [~] UMGESETZT 2026-07-20 (b434dfd). Als SUMMIT/push-Bug gemeldet
+      ("Mapping sagt Button Box, neu hinzugefuegt zeigt Line White"),
+      tatsaechlich THEME-Schema: beim manuellen Customizer-Add greift
+      NUR der Schema-Default (Mapping wirkt nur auf gepushte Template-
+      Sektionen). Text-Block-Default war "btn-underline btn-underline-
+      white" (weiss, auf hellen Presets unlesbar) -> "btn-theme"
+      (Button Box), konsistent mit Mapping + #84-Fallback.
+      Nebenwirkung gewollt: Bestandsbloecke ohne gespeicherten
+      Style-Wert rendern kuenftig Button Box.
+      HINWEIS Schwester-Sektionen: image-auto-slider, grid-banner
+      (u.a.) haben denselben Line-White-Default - nicht angefasst
+      (Report-Scope nur Image With Text); bei Folge-Reports gleiches
+      Muster anwenden.
+      Live-Test: Image With Text neu hinzufuegen -> Style Button
+      steht auf "Button Box", Button dunkel/lesbar.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
