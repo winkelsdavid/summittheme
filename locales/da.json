@@ -637,6 +637,9 @@
       "title": "Spørgsmål? Send os en e-mail",
       "budget_label": "Dit budget",
       "interested_default": "Ønsket service"
+    },
+    "collection_list": {
+      "all_products": "Alle produkter"
     }
   },
   "video": {

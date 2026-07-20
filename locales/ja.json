@@ -637,6 +637,9 @@
       "title": "ご質問は？メールでお問い合わせください",
       "budget_label": "ご予算",
       "interested_default": "ご希望のサービス"
+    },
+    "collection_list": {
+      "all_products": "すべての商品"
     }
   },
   "video": {

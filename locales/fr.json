@@ -637,6 +637,9 @@
       "title": "Des questions ? Écrivez-nous",
       "budget_label": "Votre budget",
       "interested_default": "Service souhaité"
+    },
+    "collection_list": {
+      "all_products": "Tous les produits"
     }
   },
   "video": {

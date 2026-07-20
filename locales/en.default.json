@@ -637,6 +637,9 @@
       "title": "Questions? Send us an email",
       "budget_label": "Your Budget",
       "interested_default": "Interested Service"
+    },
+    "collection_list": {
+      "all_products": "All Products"
     }
   },
   "video": {

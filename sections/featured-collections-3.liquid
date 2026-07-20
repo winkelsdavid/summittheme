@@ -309,9 +309,15 @@
                 <div class="swiper-scrollbar"></div>
                 {%- endif -%}
               </div>
-              {%- if section.settings.button != blank -%}
+              {%- liquid
+                # i18n-Fallback (Muster #95): Key ZUERST uebersetzen, dann default -
+                # sonst wuerde | t auf den Merchant-Wert angewendet ("translation missing").
+                assign btn_fb = 'sections.collection_list.all_products' | t
+                assign btn_txt = section.settings.button | default: btn_fb
+              -%}
+              {%- if btn_txt != blank -%}
                 <div class="pt-5 text-center">
-                  <a class="btn {{ style_btn }}" href="{{ section.settings.button_link }}">{{ section.settings.button }}</a>
+                  <a class="btn {{ style_btn }}" href="{{ section.settings.button_link }}">{{ btn_txt }}</a>
                 </div>
               {%- endif -%}
               {%- if section.blocks.size == 0 -%}
@@ -721,8 +727,7 @@
     {
       "type": "text",
       "id": "button",
-      "label": "Button",
-      "default": "All Products"
+      "label": "Button"
     },
     {
       "type": "header",

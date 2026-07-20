@@ -637,6 +637,9 @@
       "title": "Dúvidas? Envie-nos um email",
       "budget_label": "O seu orçamento",
       "interested_default": "Serviço pretendido"
+    },
+    "collection_list": {
+      "all_products": "Todos os produtos"
     }
   },
   "video": {

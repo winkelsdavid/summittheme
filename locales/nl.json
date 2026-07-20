@@ -637,6 +637,9 @@
       "title": "Vragen? Stuur ons een e-mail",
       "budget_label": "Jouw budget",
       "interested_default": "Gewenste service"
+    },
+    "collection_list": {
+      "all_products": "Alle producten"
     }
   },
   "video": {

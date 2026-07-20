@@ -637,6 +637,9 @@
       "title": "¿Preguntas? Escríbenos",
       "budget_label": "Tu presupuesto",
       "interested_default": "Servicio de interés"
+    },
+    "collection_list": {
+      "all_products": "Todos los productos"
     }
   },
   "video": {
