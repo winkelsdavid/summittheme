@@ -2628,15 +2628,18 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       markiert -> unangetastet. Render blank-tolerant (section-heading).
       Live-Test: Sektion frisch hinzufuegen -> Header-Felder leer.
 
-## 119. Team Member: Social-Icons im Dark unsichtbar (Bug-Sammler 20.07.)
+## 119. Team Member: Social-Icons unsichtbar (Bug-Sammler 20.07., MODUS-UNABHAENGIG)
 - [~] UMGESETZT 2026-07-20 (8b4cbf2). Icon-Chips (alle 4 Styles) =
-      var(--g-color-heading) (Dark: WEISS); SVG-Icons im statischen
-      CSS hardcoded #fff -> weiss auf weiss. FIX: section-scoped
-      .smember-icon svg{color:var(--color-body,#fff)} = Gegenfarbe
-      des Chips (Light hell wie bisher, Dark dunkel); ID-Spezifitaet
-      schlaegt statische Regel.
-      Live-Test: TECH DARK 2 Team Member, alle 4 Styles -> Icons
-      dunkel auf weissem Chip sichtbar; Light unveraendert.
+      var(--g-color-heading); SVG-Icons im statischen CSS hardcoded
+      #fff -> unsichtbar, SOBALD die Heading-Farbe hell ist - nicht
+      nur Dark-Presets (User-Korrektur), jedes Preset/Setting mit
+      heller Heading-Farbe traf es. FIX: section-scoped
+      .smember-icon svg{color:var(--color-body,#fff)} = strukturell
+      die Gegenfarbe des Chips (Chip=heading, Icon=body - die
+      kontrastieren in jedem funktionierenden Preset per Definition).
+      Kontrast-Matrix 4 Paletten: ALT 1.0-21:1, NEU durchweg >=4.5:1.
+      Live-Test: Team Member in dunklem UND hellem Preset, alle 4
+      Styles -> Icons sichtbar auf ihrem Chip.
 
 ## 120. Instagram Customize: Videos beim frischen Add unsichtbar (Bug-Sammler 20.07.)
 - [~] UMGESETZT 2026-07-21 (1581e02). Preset spawnte 3 image + 3
