@@ -1,5 +1,17 @@
 <!-- image-content.liquid -->
 <style>
+/* #123: Pre-Init-Layout (P2-Familie, wie #122 shoppable) - Editor-Add-Preview/
+   No-JS ohne Swiper-Init: bundle-CSS gibt Slides width:100% -> EINE Riesenkarte.
+   Init-Zielbreiten (2.8 mobil / 2.5 ab 600px, spaceBetween 12) vorwegnehmen. */
+.custom_video_items-{{ section.id }}:not(.swiper-initialized):not(.swiper-container-initialized) .swiper-slide{
+  width: calc(100% / 2.8);
+  margin-right: 12px;
+}
+@media (min-width: 600px){
+  .custom_video_items-{{ section.id }}:not(.swiper-initialized):not(.swiper-container-initialized) .swiper-slide{
+    width: calc(100% / 2.5);
+  }
+}
 
  /* .customstyle{{ section.id }}::before{
     position: absolute;
