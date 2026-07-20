@@ -37,6 +37,24 @@
     overflow: hidden;
     background-color: unset;
 }
+/* #122: Pre-Init-Layout (P2-Familie) - im Editor-Add-Preview (und bei No-/Slow-JS)
+   laeuft der Swiper-Init nicht: swiper-bundle gibt jeder Slide width:100%,
+   man sieht EINE riesige Karte. Bis zur Initialisierung die Ziel-Breiten
+   des Inits (slidesPerView 1.5/2.5/4.5) per CSS vorwegnehmen. */
+.custom_video_items-{{ section.id }}:not(.swiper-initialized):not(.swiper-container-initialized) .swiper-slide{
+  width: calc(100% / 1.5);
+  margin-right: 24px;
+}
+@media (min-width: 600px){
+  .custom_video_items-{{ section.id }}:not(.swiper-initialized):not(.swiper-container-initialized) .swiper-slide{
+    width: calc(100% / 2.5);
+  }
+}
+@media (min-width: 999px){
+  .custom_video_items-{{ section.id }}:not(.swiper-initialized):not(.swiper-container-initialized) .swiper-slide{
+    width: calc(100% / 4.5);
+  }
+}
 .c_video-wrapper{
     position: relative;
     overflow: hidden;
