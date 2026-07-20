@@ -2651,6 +2651,27 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Sektion frisch hinzufuegen -> 6 Bild-Kacheln,
       keine Videos; Video-Block manuell adden -> B1-Video erscheint.
 
+## 121. Reviews Above Titles: Gradient fuer alle 3 Border Colors (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-21 (f71b657). Theme-Settings-Gruppe hat DREI
+      Border-Settings (t1/t2/t3 je Review-Typ) -> alle color ->
+      color_background. Render P6-Mask-Ring: t1/t2 in layout/
+      theme.liquid (t1 haette sonst P4-Kollaps via var), t3-Ring
+      zentral ebenda (.reviews_images.reviews-block, grenzt vom
+      PT1-product-block ab), Inline-Solid im Snippet nur noch im
+      Nicht-Gradient-Fall. Solid/leer byte-genau ALT.
+      Summit-Folge: 3 Typwechsel. Verifiziert: liquidjs 10 Faelle.
+      Live-Test: Theme Settings -> Reviews Above Titles -> Border
+      Color (je Typ) auf Verlauf -> Badge-Ring im Gradient; Solid/
+      leer wie bisher.
+
+## Redeliveries 21.07. frueh
+- [x] Scratch-Popup Texte dunkel + weisses Overlay (reported 20.07.
+      09:54 auf 09:40-Push) = DUBLETTE #83 (Texte, Fix 12:31) + #109
+      (Overlay, Fix 23:13); verbleibende #14120F-Hardcodes sitzen auf
+      weissen Flaechen (Input/Phone-Row) = korrekt.
+- [x] Kollektion View-Icons + Filter-Checkboxen (reported 20.07.
+      08:47 auf 01:17-Push) = DUBLETTE #86 (Fix 12:56).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
