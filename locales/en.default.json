@@ -640,6 +640,19 @@
     },
     "collection_list": {
       "all_products": "All Products"
+    },
+    "bundle": {
+      "limit_error": "You can only add a maximum of {{ count }} products in the bundle.",
+      "duplicate_error": "This product is already in the bundle.",
+      "eyebrow": "build your bundle",
+      "heading": "Build your bundle and save",
+      "description": "Choose any {{ count }} products and save on your total.",
+      "add_to_cart": "Add bundle to cart",
+      "your_bundle": "Your bundle",
+      "no_products": "No products selected — add products in the section settings.",
+      "adding": "Adding…",
+      "remove_item": "Remove item",
+      "error_generic": "Something went wrong. Please try again."
     }
   },
   "video": {

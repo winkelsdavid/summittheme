@@ -640,6 +640,19 @@
     },
     "collection_list": {
       "all_products": "Tutti i prodotti"
+    },
+    "bundle": {
+      "limit_error": "Puoi aggiungere al massimo {{ count }} prodotti al bundle.",
+      "duplicate_error": "Questo prodotto è già nel bundle.",
+      "eyebrow": "crea il tuo bundle",
+      "heading": "Crea il tuo bundle e risparmia",
+      "description": "Scegli {{ count }} prodotti e risparmia sul totale.",
+      "add_to_cart": "Aggiungi il bundle al carrello",
+      "your_bundle": "Il tuo bundle",
+      "no_products": "Nessun prodotto selezionato — aggiungi prodotti nelle impostazioni della sezione.",
+      "adding": "Aggiunta in corso…",
+      "remove_item": "Rimuovi articolo",
+      "error_generic": "Qualcosa è andato storto. Riprova."
     }
   },
   "video": {

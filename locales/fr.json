@@ -640,6 +640,19 @@
     },
     "collection_list": {
       "all_products": "Tous les produits"
+    },
+    "bundle": {
+      "limit_error": "Vous pouvez ajouter au maximum {{ count }} produits au lot.",
+      "duplicate_error": "Ce produit est déjà dans le lot.",
+      "eyebrow": "composez votre lot",
+      "heading": "Composez votre lot et économisez",
+      "description": "Choisissez {{ count }} produits et économisez sur le total.",
+      "add_to_cart": "Ajouter le lot au panier",
+      "your_bundle": "Votre lot",
+      "no_products": "Aucun produit sélectionné — ajoutez des produits dans les réglages de la section.",
+      "adding": "Ajout…",
+      "remove_item": "Retirer l’article",
+      "error_generic": "Une erreur est survenue. Veuillez réessayer."
     }
   },
   "video": {

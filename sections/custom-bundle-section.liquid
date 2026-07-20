@@ -4,6 +4,20 @@
   assign section_id = section.id
   assign min_items   = section.settings.min_items
   assign max_items   = section.settings.max_items
+  # i18n-Fallbacks (Muster #95): Keys ZUERST uebersetzen, dann | default: -
+  # sonst wuerde | t auf gesetzte Merchant-Werte angewendet (translation missing).
+  assign bns_limit_fb = 'sections.bundle.limit_error' | t: count: max_items
+  assign bns_dup_fb = 'sections.bundle.duplicate_error' | t
+  assign bns_eyebrow_fb = 'sections.bundle.eyebrow' | t
+  assign bns_heading_fb = 'sections.bundle.heading' | t
+  assign bns_desc_fb = 'sections.bundle.description' | t: count: min_items
+  assign bns_add_fb = 'sections.bundle.add_to_cart' | t
+  assign bns_limit_msg = section.settings.limit_caption | default: bns_limit_fb
+  assign bns_dup_msg = section.settings.duplicate_caption | default: bns_dup_fb
+  assign bns_eyebrow = section.settings.eyebrow_subheading | default: bns_eyebrow_fb
+  assign bns_heading = section.settings.heading | default: bns_heading_fb
+  assign bns_desc = section.settings.description | default: bns_desc_fb
+  assign bns_add_label = section.settings.add_bundle_label | default: bns_add_fb
 -%}
 
 <style>
@@ -376,8 +390,8 @@ content:unset!important;
     id="bns-app-{{ section_id }}"
     data-min="{{ min_items }}"
     data-max="{{ max_items }}"
-    data-dup-msg="{{ section.settings.duplicate_caption }}"
-    data-limit-msg="{{ section.settings.limit_caption }}"
+    data-dup-msg="{{ bns_dup_msg }}"
+    data-limit-msg="{{ bns_limit_msg }}"
   >
 
     <!-- ── Sidebar ── -->
@@ -386,21 +400,21 @@ content:unset!important;
 
         <!-- Header -->
         <div>
-          {% if section.settings.eyebrow_subheading != blank %}
-            <div class="subtop text-top mb-2 bns-eyebrow aos-init aos-animate" data-aos="fade-up">{{ section.settings.eyebrow_subheading }}</div>
+          {% if bns_eyebrow != blank %}
+            <div class="subtop text-top mb-2 bns-eyebrow aos-init aos-animate" data-aos="fade-up">{{ bns_eyebrow }}</div>
           {% endif %}
-          {% if section.settings.heading != blank %}
-            <h2 class="bns-heading">{{ section.settings.heading }}</h2>
+          {% if bns_heading != blank %}
+            <h2 class="bns-heading">{{ bns_heading }}</h2>
           {% endif %}
-          {% if section.settings.description != blank %}
-            <p class="bns-desc">{{ section.settings.description }}</p>
+          {% if bns_desc != blank %}
+            <p class="bns-desc">{{ bns_desc }}</p>
           {% endif %}
         </div>
 
         <!-- Tray -->
         <div>
           <div class="bns-tray-label">
-            Your bundle
+            {{ 'sections.bundle.your_bundle' | t }}
             <span class="bns-tray-count" id="bns-count-{{ section_id }}">0</span>
           </div>
           <div class="bns-tray" id="bns-tray-{{ section_id }}">
@@ -409,7 +423,7 @@ content:unset!important;
                 <div class="bns-tray-slot__placeholder">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/></svg>
                 </div>
-                <button class="bns-tray-slot__remove" data-remove-slot="{{ i }}" aria-label="Remove item">
+                <button class="bns-tray-slot__remove" data-remove-slot="{{ i }}" aria-label="{{ 'sections.bundle.remove_item' | t }}">
                   <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15.625 4.375L4.375 15.625M15.625 15.625L4.375 4.375"/></svg>
                 </button>
               </div>
@@ -424,7 +438,7 @@ content:unset!important;
             id="bns-submit-{{ section_id }}"
             disabled
           >
-            {{ section.settings.add_bundle_label }}
+            {{ bns_add_label }}
           </button>
           <p class="bns-error" id="bns-error-{{ section_id }}"></p>
         </div>
@@ -509,7 +523,7 @@ content:unset!important;
 
           </div>
         {% else %}
-          <p style="grid-column:1/-1;opacity:.5;font-size:1.4rem;">No products selected — add products in the section settings.</p>
+          <p style="grid-column:1/-1;opacity:.5;font-size:1.4rem;">{{ 'sections.bundle.no_products' | t }}</p>
         {% endfor %}
       </div>
     </div>
@@ -638,7 +652,7 @@ content:unset!important;
     });
 
     submitEl.disabled = true;
-    submitEl.textContent = 'Adding…';
+    submitEl.textContent = {{ 'sections.bundle.adding' | t | json }};
 
     fetch('/cart/add.js', {
       method:  'POST',
@@ -649,15 +663,15 @@ content:unset!important;
     .then(function () {
       bundle = [];
       updateUI();
-      submitEl.textContent = '{{ section.settings.add_bundle_label }}';
+      submitEl.textContent = {{ bns_add_label | json }};
       /* open cart drawer if theme supports it */
       theme.miniCart.updateElements();
       theme.miniCart.generateCart();
     })
     .catch(function () {
-      showError('Something went wrong. Please try again.');
+      showError({{ 'sections.bundle.error_generic' | t | json }});
       submitEl.disabled = false;
-      submitEl.textContent = '{{ section.settings.add_bundle_label }}';
+      submitEl.textContent = {{ bns_add_label | json }};
     });
   });
 
@@ -831,14 +845,12 @@ content:unset!important;
     {
       "type": "text",
       "id": "limit_caption",
-      "label": "Max-Items Error Message",
-      "default": "You can only add a maximum of 3 products in the bundle."
+      "label": "Max-Items Error Message"
     },
     {
       "type": "text",
       "id": "duplicate_caption",
-      "label": "Duplicate-Product Error Message",
-      "default": "This product is already in the bundle."
+      "label": "Duplicate-Product Error Message"
     },
     {
       "type": "header",
@@ -847,14 +859,12 @@ content:unset!important;
     {
       "type": "text",
       "id": "eyebrow_subheading",
-      "label": "Subheading",
-      "default": "build your bundle"
+      "label": "Subheading"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "Build your bundle, get 15% OFF"
+      "label": "Heading"
     },
     {
       "type": "range",
@@ -869,14 +879,12 @@ content:unset!important;
     {
       "type": "textarea",
       "id": "description",
-      "label": "Description",
-      "default": "Choose any 3 products and get 15% OFF your total. Build your bundle today."
+      "label": "Description"
     },
      {
       "type": "text",
       "id": "add_bundle_label",
-      "label": "Add Bundle Label",
-      "default": "Add bundle to cart"
+      "label": "Add Bundle Label"
     },
     {
       "type": "header",

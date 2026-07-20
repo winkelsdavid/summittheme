@@ -640,6 +640,19 @@
     },
     "collection_list": {
       "all_products": "すべての商品"
+    },
+    "bundle": {
+      "limit_error": "セットに追加できるのは最大{{ count }}点です。",
+      "duplicate_error": "この商品はすでにセットに含まれています。",
+      "eyebrow": "セットを作る",
+      "heading": "セットを作ってお得に",
+      "description": "{{ count }}点の商品を選んで合計金額をお得に。",
+      "add_to_cart": "セットをカートに追加",
+      "your_bundle": "あなたのセット",
+      "no_products": "商品が選択されていません。セクション設定で商品を追加してください。",
+      "adding": "追加中…",
+      "remove_item": "商品を削除",
+      "error_generic": "エラーが発生しました。もう一度お試しください。"
     }
   },
   "video": {

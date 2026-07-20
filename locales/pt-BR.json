@@ -640,6 +640,19 @@
     },
     "collection_list": {
       "all_products": "Todos os produtos"
+    },
+    "bundle": {
+      "limit_error": "Você pode adicionar no máximo {{ count }} produtos ao kit.",
+      "duplicate_error": "Este produto já está no kit.",
+      "eyebrow": "monte seu kit",
+      "heading": "Monte seu kit e economize",
+      "description": "Escolha {{ count }} produtos e economize no total.",
+      "add_to_cart": "Adicionar kit ao carrinho",
+      "your_bundle": "Seu kit",
+      "no_products": "Nenhum produto selecionado — adicione produtos nas configurações da seção.",
+      "adding": "Adicionando…",
+      "remove_item": "Remover item",
+      "error_generic": "Algo deu errado. Tente novamente."
     }
   },
   "video": {

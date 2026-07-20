@@ -640,6 +640,19 @@
     },
     "collection_list": {
       "all_products": "Alle produkter"
+    },
+    "bundle": {
+      "limit_error": "Du kan højst tilføje {{ count }} produkter til dit bundle.",
+      "duplicate_error": "Dette produkt er allerede i dit bundle.",
+      "eyebrow": "sammensæt dit bundle",
+      "heading": "Sammensæt dit bundle og spar",
+      "description": "Vælg {{ count }} produkter og spar på totalen.",
+      "add_to_cart": "Læg bundle i kurv",
+      "your_bundle": "Dit bundle",
+      "no_products": "Ingen produkter valgt — tilføj produkter i sektionens indstillinger.",
+      "adding": "Tilføjer…",
+      "remove_item": "Fjern vare",
+      "error_generic": "Noget gik galt. Prøv igen."
     }
   },
   "video": {

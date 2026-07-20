@@ -640,6 +640,19 @@
     },
     "collection_list": {
       "all_products": "Alle producten"
+    },
+    "bundle": {
+      "limit_error": "Je kunt maximaal {{ count }} producten aan de bundel toevoegen.",
+      "duplicate_error": "Dit product zit al in de bundel.",
+      "eyebrow": "stel je bundel samen",
+      "heading": "Stel je bundel samen en bespaar",
+      "description": "Kies {{ count }} producten en bespaar op je totaal.",
+      "add_to_cart": "Bundel toevoegen aan winkelkar",
+      "your_bundle": "Jouw bundel",
+      "no_products": "Geen producten geselecteerd — voeg producten toe in de sectie-instellingen.",
+      "adding": "Toevoegen…",
+      "remove_item": "Item verwijderen",
+      "error_generic": "Er is iets misgegaan. Probeer het opnieuw."
     }
   },
   "video": {
