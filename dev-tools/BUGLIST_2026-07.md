@@ -2349,6 +2349,78 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       -> Rahmen/Linie zeigt Verlauf, Karteninneres behaelt seine
       Farbe; Solid-Werte und Bestandsinstanzen unveraendert.
 
+## 98. Product Overview: Thumbnail-Pfeile abgeschnitten (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (aa0cde8). Operator (alle Presets): Arrows am
+      Thumbnail-Slider abgeschnitten. URSACHE doppelt: theme.css setzt
+      global .swiper-button-* 44px !important und ueberstimmt die 32px
+      der Snippet-Regeln (product-media.liquid = laut theme.css-Kommentar
+      single source of truth); zusaetzlich left/right:-4px AUS dem
+      .swiper-Container (overflow:hidden) heraus -> Kreis gekappt.
+      FIX im Snippet: 32px !important, left/right +4px, :after 12px
+      !important. Headless-Repro (echte Schichten swiper-bundle ->
+      theme.css -> Snippet): VOR 44px+Ueberstand, NACH 32px, 4/4
+      Clip-Checks false + Screenshot.
+      Live-Test: Produktseite mit >6 Medien -> beide Thumb-Pfeile
+      vollstaendig rund sichtbar.
+
+## 99. Timeline: 4->3 Preset-Bloecke + Neben-Datum/READ-MORE leer (Bug-Sammler 20.07., 2 Splits)
+- [~] UMGESETZT 2026-07-20 (81a684b). Kreis-Jahr "1920" bleibt (orange
+      markiert). Preset: 4. milestone raus, "time"+"link" aus den 3
+      verbleibenden. Schema: button_text-Default "Read more" +
+      Block-link-Default "/collections/all" geleert. Render-Guard:
+      Anchor nur wenn link UND button_text (sonst leerer btn-underline).
+      Live-Test: neue Timeline -> 3 Bloecke, keine Jan/Feb-Daten,
+      kein READ MORE.
+
+## 100. Rich Text: Platzhalter-Defaults leer (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (b277794). Defaults "Subtitle Top" /
+      "Talk about your brand" / "<p>Use this text...</p>" entfernt;
+      blank-Guards vorhanden, Preset setzt nichts.
+      Live-Test: neue Rich-Text-Sektion -> alle 3 Felder leer.
+
+## 101. Collection List Swiper: "All Products"-Button uebersetzen (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (fa5ceaf). Sektion = featured-collections-3.
+      Muster #95: Default geleert, Render-| t-Fallback (Key vorab
+      uebersetzt wegen Filter-Order-Falle). Neuer Key
+      sections.collection_list.all_products in allen 10 Locales.
+      TRADE-OFF (wie #95): leer -> uebersetzter Text; Button laesst
+      sich nicht mehr durch Leeren ausblenden.
+      Live-Test: Sektion neu je Storefront-Sprache -> Button in
+      Landessprache; eigener Text gewinnt.
+
+## 102. Bundle Selection: komplett uebersetzen (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (117877d). custom-bundle-section: 6 Schema-
+      Defaults geleert -> vorab uebersetzte Fallback-Assigns (Muster #95);
+      limit_error mit count=max_items, description mit count=min_items
+      interpoliert ("15% OFF" der alten Defaults war Beispieltext ohne
+      Setting -> Fallbacks generisch "und spare"). Hardcodes uebersetzt:
+      Your bundle, No-products-Hinweis, JS Adding.../Fetch-Fehler
+      (| t | json, quote-sicher), aria Remove item. 11 Keys
+      sections.bundle.* in 10 Locales (nl "winkelkar" wie #80).
+      Gleicher Trade-off wie #101 (heading/desc/eyebrow nicht mehr
+      per Leeren ausblendbar).
+      Live-Test: Sektion je Sprache -> alle Texte lokalisiert;
+      Fehlermeldungen mit korrekter Max-Zahl.
+
+## 103. Contact Form: Inputs rosa (FASHION) — KEIN Theme-Bug, Preset-Daten
+- [x] DIAGNOSE 2026-07-20, kein Theme-Commit. Operator: "Eingabefelder
+      uebernehmen eine Farbe... warum kloppt der da ne farbe rein?"
+      URSACHE: Kontakt-Inputs (.field.form-group > .form-control) ziehen
+      background: var(--g-input-bg) = Theme-Setting "Background Input"
+      (Gruppe "--- Input", header-css.liquid Z.232, Default weiss seit
+      #14). Das FASHION-Preset befuellt dieses Setting mit dem
+      Brand-Rosa -> Theme rendert korrekt, was das Setting sagt.
+      Die Chrome-Route aus #64 (input/textarea/select global) ist NICHT
+      die Quelle (wird von der spezifischeren form-group-Regel
+      ueberstimmt) - erster Verdacht widerlegt, Umbau (neues
+      color_input_bg-Setting) verworfen/zurueckgebaut: haette mit dem
+      BESTEHENDEN --g-input-bg kollidiert (immer gesetzt, Default #fff)
+      und die Dark-Kette ausgehebelt.
+      SINNVOLLE FARBE: Setting leeren (= Weiss) oder bewusst Weiss.
+      FIX-ORT: Summit-Preset-Daten (FASHION u.a.): "Background Input"
+      NICHT mit Brandfarbe befuellen; Operator kann sofort im
+      Customizer Theme Settings -> Input -> Background Input leeren.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
