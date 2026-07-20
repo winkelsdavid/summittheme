@@ -2297,6 +2297,26 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Budget-Label/Radio-Optionen in der jeweiligen Sprache; Merchant-
       Override bleibt erhalten; Description leer.
 
+## 96. Grid Banner: ungewollte Default-Texte beim Hinzufuegen (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (dd05d11). Operator (PETS-Preset): neu
+      hinzugefuegte Grid-Banner-Sektion zeigt 3 statt 2 Bilder + Default-
+      Text ueber der Sektion + Subtitle auf den Bannern. Section =
+      grid-banner.liquid.
+      BLOCK-COUNT 3->2: Theme-Basispreset war BEREITS 2 (presets[0].
+      blocks). Die 3 Blocks stammen aus Summits PETS-Preset (Builder-
+      seitig, NICHT im Repo) -> Summit-Folgepunkt, nicht theme-fixbar.
+      TEXT-DEFAULTS (das Repo-fixbare): 3 Schema-Defaults lecken durch,
+      wenn ein Preset die Banner befuellt aber diese Felder leer laesst:
+      subtitle_top="Subtitle Top", section title="Grid banner", block
+      subtitle="Subtitle". Alle drei Default-Werte GELEERT (Key entfernt)
+      -> Felder starten leer. Block-title "Image with text" + desc
+      "Lorem" bewusst NICHT angefasst (Operator-Scope = Subtitle +
+      Section-Headings; AI-Summary bestaetigt selbe 3 Felder).
+      VERIFIKATION: Schema-JSON valide, preset=2 Blocks, 3 Defaults
+      undefined.
+      Live-Test: neue Grid-Banner-Sektion (Basis-Add) -> keine
+      "Subtitle Top"/"Grid banner"/"Subtitle"-Platzhalter mehr.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
