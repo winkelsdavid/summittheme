@@ -2317,6 +2317,38 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: neue Grid-Banner-Sektion (Basis-Add) -> keine
       "Subtitle Top"/"Grid banner"/"Subtitle"-Platzhalter mehr.
 
+## 97. Gradient-Option fuer 5 Border-Farben + fehlende Border-Option (Bug-Sammler 20.07., 2 Splits = 1 Report)
+- [~] UMGESETZT 2026-07-20 (868f593). Operator: Gradient fuer "Border
+      Color" in Custom Review (Product Overview), "Stars Border Color"
+      (Testimonial Slider Auto = reviews-slider), "Bullet Card Border"
+      (Image With Bullets = custom-image-bullets), "FAQ Divider Border"
+      (FAQ Advanced); im Testimonials Slider (= custom-reviews-marquee)
+      fehlt die Border-Color-Option KOMPLETT.
+      SCHEMA: 4x color -> color_background (Custom-Review-Block
+      border_color; stars_border_color; card_border_color; faq
+      border_color). Marquee: NEUES Setting quote_box_border
+      (color_background, default #ffffff = alter Hardcode ->
+      Bestandsinstanzen byte-gleich). KEIN Rename -> parse-safe;
+      color_background im Theme etabliert. Summit-Folge: 5 Typwechsel/
+      Neu-Setting in Summits Parse nachziehen (zu den 4 offenen aus
+      #65/#71/#72/#76/#91).
+      RENDER: 4 Karten (radius-faehig) via Doppel-Background
+      padding-box/border-box + border:transparent im Gradient-Branch;
+      SHORTHAND-FALLE headless gefangen: nur die LETZTE Background-
+      Layer darf eine Farbe sein - solide Innenfarbe MUSS als
+      linear-gradient(c,c) gewrappt werden, sonst wird die GANZE
+      Deklaration verworfen (backgroundImage:none). FAQ-Divider
+      (gerade border-bottom-Linie) via border-image wie #91.
+      Solid-/Leer-Pfad = alte Deklarationen im else-Branch.
+      VERIFIKATION: 14/14 liquidjs (solid=ALT je Stelle; gradient-
+      Branch; PT1 mit bg solid/leer->branding/gradient), 3/3 Edge
+      headless (2-Layer-Background aktiv, Border transparent,
+      border-image-Source) + Pixel-Screenshot: weisse Karte mit
+      rot->blau-Ring (Radius erhalten) + Gradient-Linie.
+      Live-Test: je Sektion Border-Setting auf einen Gradient stellen
+      -> Rahmen/Linie zeigt Verlauf, Karteninneres behaelt seine
+      Farbe; Solid-Werte und Bestandsinstanzen unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
