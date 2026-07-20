@@ -36,7 +36,9 @@
 </style>
 <div class="customstyle{{ section.id }}">
   <div class="contact container">
-    {%- render 'section-heading' -%}
+    {%- comment -%} #95: i18n-Default in ALLEN Locales - leerer Titel faellt auf
+        die uebersetzte sections.booking.title zurueck (fallback_title-Param). {%- endcomment -%}
+    {%- render 'section-heading', fallback_title: 'sections.booking.title' | t -%}
     <div class="row justify-content-center">
         <div class="col-lg-6 col-12" id="booking_form">
         {%- form 'contact', id: 'ContactForm', class: 'isolate' -%}
@@ -63,10 +65,12 @@
                         <div class="contact-radio p-4">
                             {% for block in section.blocks %}
                                 {%- if block.type == 'interested' -%}
-                                    {%- if block.settings.interested_want != blank -%}
+                                    {%- assign iw_fb = 'sections.booking.interested_default' | t -%}
+                                    {%- assign iw = block.settings.interested_want | default: iw_fb -%}
+                                    {%- if iw != blank -%}
                                         <div>
-                                            <input type="radio" name="contact[contact_service]" value="{{ block.settings.interested_want }}" id="i-{{ block.id }}">
-                                            <label for="i-{{ block.id }}">{{ block.settings.interested_want }}</label>
+                                            <input type="radio" name="contact[contact_service]" value="{{ iw }}" id="i-{{ block.id }}">
+                                            <label for="i-{{ block.id }}">{{ iw }}</label>
                                         </div>
                                     {%- endif -%}
                                     
@@ -79,7 +83,8 @@
             {%- if section.settings.enable_store -%}
             <div class="field mb-4">
                 <div class="contact-method">
-                    <label for="request-store">{{ section.settings.store_label }}</label>
+                    {%- assign store_label_fb = 'sections.booking.budget_label' | t -%}
+                    <label for="request-store">{{ section.settings.store_label | default: store_label_fb }}</label>
                     <select id="request-store" name="contact[contact_store]" required>
                         {% for block in section.blocks %}
                             {%- if block.type == 'budget' -%}
@@ -416,8 +421,7 @@
     {
       "type": "text",
       "id": "title",
-      "label": "Heading",
-      "default": "Fragen? Schreib uns eine E-Mail"
+      "label": "Heading"
     },
     {
       "type": "textarea",
@@ -510,8 +514,7 @@
     {
         "type": "text",
         "id": "store_label",
-        "label": "Budget Label",
-        "default": "Dein Budget"
+        "label": "Budget Label"
     },
     {
       "type": "richtext",
@@ -571,8 +574,7 @@
         {
           "type": "text",
           "id": "interested_want",
-          "label": "Interested Service",
-          "default": "Gewünschter Service"
+          "label": "Interested Service"
         }
       ]
     },

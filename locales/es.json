@@ -9,6 +9,11 @@
  */
 {
   "general": {
+    "404": {
+      "title": "Página no encontrada",
+      "subtext_html": "La página solicitada no existe.",
+      "404_link": "Seguir comprando"
+    },
     "defaults": {
       "sale_ends_in": "La oferta termina en",
       "verified_review": "Reseña verificada",
@@ -22,11 +27,6 @@
       "faq_response_time": "Tiempo medio de respuesta: 24h",
       "suggest_pretext": "Alguien acaba de comprar",
       "suggest_verified": "Verificado"
-    },
-    "404": {
-      "title": "Página no encontrada",
-      "subtext_html": "La página solicitada no existe.",
-      "404_link": "Seguir comprando"
     },
     "accessibility": {
       "loading": "Cargando...",
@@ -49,7 +49,7 @@
     },
     "sticky_cart": {
       "stars_text": "Excelente 4,8 | 129 reseñas",
-      "shipping_text" : "Haz tu pedido ahora y recíbelo antes del:"
+      "shipping_text": "Haz tu pedido ahora y recíbelo antes del:"
     },
     "cart": {
       "title_upsell": "También te podría gustar",
@@ -482,8 +482,8 @@
       "vendor": "Proveedor",
       "type": "Tipo",
       "delivery_label": "Haz tu pedido ahora para recibirlo antes del:",
-      "free_shipping":"envío gratis",
-      "secure_checkout":"Pago seguro",
+      "free_shipping": "envío gratis",
+      "secure_checkout": "Pago seguro",
       "regular_price": "Precio regular",
       "on_sale": "Venta",
       "on_sale_from_html": "A la venta desde {{ price }}",
@@ -633,7 +633,10 @@
       "label_store": "Seleccionar tienda",
       "label_date": "Fecha de inicio",
       "label_time": "Horario de apertura de 09:00 a 18:00",
-      "booking_now": "Programar ahora"
+      "booking_now": "Programar ahora",
+      "title": "¿Preguntas? Escríbenos",
+      "budget_label": "Tu presupuesto",
+      "interested_default": "Servicio de interés"
     }
   },
   "video": {

@@ -9,6 +9,11 @@
  */
 {
   "general": {
+    "404": {
+      "title": "ページが見つかりません",
+      "subtext_html": "要求したページは存在しません。",
+      "404_link": "ショッピングを続ける"
+    },
     "defaults": {
       "sale_ends_in": "セール終了まで",
       "verified_review": "認証済みレビュー",
@@ -22,11 +27,6 @@
       "faq_response_time": "平均返信時間:24時間",
       "suggest_pretext": "誰かが最近購入しました",
       "suggest_verified": "認証済み"
-    },
-    "404": {
-      "title": "ページが見つかりません",
-      "subtext_html": "要求したページは存在しません。",
-      "404_link": "ショッピングを続ける"
     },
     "accessibility": {
       "loading": "読み込み中...",
@@ -49,7 +49,7 @@
     },
     "sticky_cart": {
       "stars_text": "優秀 4.8｜129件のレビュー",
-      "shipping_text" : "今すぐ注文すると、以下の日付までにお届けします："
+      "shipping_text": "今すぐ注文すると、以下の日付までにお届けします："
     },
     "cart": {
       "title_upsell": "こちらもおすすめです",
@@ -484,8 +484,8 @@
       "regular_price": "通常価格",
       "on_sale": "セール",
       "delivery_label": "今すぐご注文で、〜までにお届け",
-        "free_shipping":"送料無料",
-      "secure_checkout":"安全なチェックアウト",
+      "free_shipping": "送料無料",
+      "secure_checkout": "安全なチェックアウト",
       "on_sale_from_html": "から発売中 {{ price }}",
       "from_text_html": "から {{ price }}",
       "include_taxes": "税込み。",
@@ -633,7 +633,10 @@
       "label_store": "ストアを選択",
       "label_date": "開始日",
       "label_time": "営業時間 09:00～18:00",
-      "booking_now": "今すぐスケジュールを立てる"
+      "booking_now": "今すぐスケジュールを立てる",
+      "title": "ご質問は？メールでお問い合わせください",
+      "budget_label": "ご予算",
+      "interested_default": "ご希望のサービス"
     }
   },
   "video": {

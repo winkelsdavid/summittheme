@@ -2272,24 +2272,30 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       #94: answer_content (richtext, Label "Description") hatte
       Lorem-Default -> geleert (Default-Key entfernt). Das zweite
       "Description"-Feld (id description, textarea) war schon leer.
-      #95: Englische Werte-DEFAULTS (rendern auf dem dt. Storefront)
-      auf Deutsch: title "Questions? Send us an email" -> "Fragen?
-      Schreib uns eine E-Mail"; store_label "Your Budget" -> "Dein
-      Budget"; interested_want "Interested Service" -> "Gewuenschter
-      Service"; store_location "Budget 1" bleibt (neutral). contact.
-      form.*-Felder (Name/Email/Telefon/Nachricht) waren schon per
-      | t lokalisiert.
-      HINWEIS/Kontrakt: Shopify-Schema-default-WERTE koennen KEIN t:
-      (nur label/info/content) - echte Mehrsprachigkeit ginge nur
-      ueber Render-| t-Fallback; fuer Merchant-Beispielinhalte
-      (Services/Budgets) unpassend + Ueberschrift haengt am geteilten
-      section-heading. Da Store deutsch: dt. Defaults = korrekt,
-      Merchant editiert pro Storefront-Sprache. Editor-LABELS bleiben
-      englisch (Customizer-Sprache).
-      VERIFIKATION: Schema-JSON valide, 0 englische Werte-Defaults
-      uebrig (Label "Interested Service" bewusst engl.).
-      Live-Test: Booking Form neu -> Description leer; Ueberschrift/
-      Budget-Label/Radio-Optionen deutsch.
+      #95: VOLLER i18n-Fallback in ALLEN 10 Locales (Nachbesserung auf
+      User-Hinweis "in allen Sprachen wie immer" - erste Fassung setzte
+      nur dt. Schema-Defaults). Shopify-Schema-default-WERTE koennen
+      KEIN t: (nur label/info/content), daher Render-| t-Fallback:
+      - 3 neue Keys sections.booking.title / .budget_label /
+        .interested_default in de/en/fr/es/it/nl/da/ja/pt-BR/pt-PT
+        (de in Du-Form).
+      - Schema-Defaults der 3 Felder GELEERT; leer -> uebersetzter
+        Fallback: title via section-heading fallback_title-Param;
+        store_label + interested via {%- assign fb = 'key' | t -%}
+        dann | default: fb. interested-Guard auf iw umgestellt (blank
+        -> Fallback, sonst Merchant-Wert). store_location "Budget 1"
+        bleibt (neutrales Nummern-Placeholder). contact.form.*-Felder
+        waren schon lokalisiert.
+      FILTER-ORDER-FALLE (vor Push gefangen): {{ x | default: 'key'
+        | t }} wendet | t auf das default-ERGEBNIS an -> gesetzte
+        Merchant-Werte wuerden zu "translation missing". Fix: Key
+        ZUERST per assign uebersetzen, dann default: <var>. Mit
+        liquidjs-Mock bewiesen (gesetzt=Merchant-Wert, leer=Fallback).
+      VERIFIKATION: Schema-JSON valide, 3/3 Keys in allen 10 Locales,
+      Liquid OK, Filter-Order-Beweis.
+      Live-Test: Booking Form neu je Storefront-Sprache -> Ueberschrift/
+      Budget-Label/Radio-Optionen in der jeweiligen Sprache; Merchant-
+      Override bleibt erhalten; Description leer.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer

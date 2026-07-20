@@ -9,6 +9,11 @@
  */
 {
   "general": {
+    "404": {
+      "title": "Page Not Found",
+      "subtext_html": "The page you requested does not exist.",
+      "404_link": "Continue shopping"
+    },
     "defaults": {
       "sale_ends_in": "Sale Ends In",
       "verified_review": "Verified Review",
@@ -22,11 +27,6 @@
       "faq_response_time": "Average Answer Time: 24h",
       "suggest_pretext": "Someone recently bought",
       "suggest_verified": "Verified"
-    },
-    "404": {
-      "title": "Page Not Found",
-      "subtext_html": "The page you requested does not exist.",
-      "404_link": "Continue shopping"
     },
     "accessibility": {
       "loading": "Loading...",
@@ -44,28 +44,28 @@
       "tags": "Tagged \"{{ tags }}\"",
       "page": "Page {{ page }}"
     },
-     "reviews": {
+    "reviews": {
       "verified": "Verified Review"
     },
-     "sticky_cart": {
+    "sticky_cart": {
       "stars_text": "Excellent 4.8 | 129 reviews",
-      "shipping_text" : "Order now and receive by:"
+      "shipping_text": "Order now and receive by:"
     },
     "cart": {
-      "title_upsell":"You may also like",
+      "title_upsell": "You may also like",
       "coupon_code_title": "List Coupon",
-      "coupon_first_label" : "Spend",
-      "coupon_last_label" : "for Free Shipping",
-      "coupon_free_delivery" :"Your order is free delivery !",
-      "shipping_title" :"Get shipping estimates",
-      "shipping_country" :"United States",
-      "shipping_submit" :"Calculate shipping",
-      "shipping_calculating" :"Calculating...",
-      "reviews_title" :"Join 10,000+ happy customers",
-      "timer_title" :"We can reserve your order for [time] minutes",
-      "terms_before" :"I agree with the",
-      "terms_after" :"terms and conditions",
-      "countdown_title" :"SALE ENDS IN"
+      "coupon_first_label": "Spend",
+      "coupon_last_label": "for Free Shipping",
+      "coupon_free_delivery": "Your order is free delivery !",
+      "shipping_title": "Get shipping estimates",
+      "shipping_country": "United States",
+      "shipping_submit": "Calculate shipping",
+      "shipping_calculating": "Calculating...",
+      "reviews_title": "Join 10,000+ happy customers",
+      "timer_title": "We can reserve your order for [time] minutes",
+      "terms_before": "I agree with the",
+      "terms_after": "terms and conditions",
+      "countdown_title": "SALE ENDS IN"
     },
     "password_page": {
       "login_form_heading": "Enter store using password",
@@ -183,10 +183,10 @@
       "october": "October",
       "november": "November",
       "december": "December",
-      "days":"Days",
-      "hours":"Hours",
-      "minutes":"Minutes",
-      "seconds":"Seconds"
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
     }
   },
   "blogs": {
@@ -484,8 +484,8 @@
       "regular_price": "Regular price",
       "on_sale": "Sale",
       "delivery_label": "Order now for delivery by:",
-      "free_shipping":"Free Shipping",
-      "secure_checkout":"Secure Checkout",
+      "free_shipping": "Free Shipping",
+      "secure_checkout": "Secure Checkout",
       "on_sale_from_html": "On sale from {{ price }}",
       "from_text_html": "From {{ price }}",
       "include_taxes": "Tax included.",
@@ -633,7 +633,10 @@
       "label_store": "Select Store",
       "label_date": "Start date",
       "label_time": "Opening hours 09:00 to 18:00",
-      "booking_now": "Schedule Now"
+      "booking_now": "Schedule Now",
+      "title": "Questions? Send us an email",
+      "budget_label": "Your Budget",
+      "interested_default": "Interested Service"
     }
   },
   "video": {

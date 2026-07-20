@@ -9,6 +9,11 @@
  */
 {
   "general": {
+    "404": {
+      "title": "Pagina niet gevonden",
+      "subtext_html": "De door jou opgevraagde pagina bestaat niet.",
+      "404_link": "Doorgaan met winkelen"
+    },
     "defaults": {
       "sale_ends_in": "Sale eindigt over",
       "verified_review": "Geverifieerd",
@@ -22,11 +27,6 @@
       "faq_response_time": "Gemiddelde reactietijd: 24 uur",
       "suggest_pretext": "Iemand kocht zojuist",
       "suggest_verified": "Geverifieerd"
-    },
-    "404": {
-      "title": "Pagina niet gevonden",
-      "subtext_html": "De door jou opgevraagde pagina bestaat niet.",
-      "404_link": "Doorgaan met winkelen"
     },
     "accessibility": {
       "loading": "Bezig met laden...",
@@ -44,12 +44,12 @@
       "tags": "Getagd \"{{ tags }}\"",
       "page": "Bladzijde {{ page }}"
     },
-     "reviews": {
+    "reviews": {
       "verified": "Geverifieerde recensie"
     },
     "sticky_cart": {
       "stars_text": "Uitstekend 4,8 | 129 reviews",
-      "shipping_text" : "Bestel nu en ontvang het op:"
+      "shipping_text": "Bestel nu en ontvang het op:"
     },
     "cart": {
       "title_upsell": "Dit vind je misschien ook leuk",
@@ -482,8 +482,8 @@
       "vendor": "Leverancier",
       "type": "Type",
       "delivery_label": "Jetzt bestellen für Lieferung bis:",
-      "free_shipping":"Kostenloser Versand",
-      "secure_checkout":"Sicherer Checkout",
+      "free_shipping": "Kostenloser Versand",
+      "secure_checkout": "Sicherer Checkout",
       "regular_price": "Normale prijs",
       "on_sale": "Verkoop",
       "on_sale_from_html": "Te koop vanaf {{ price }}",
@@ -633,7 +633,10 @@
       "label_store": "Selecteer Winkel",
       "label_date": "Begin datum",
       "label_time": "Openingstijden 09:00 tot 18:00 uur",
-      "booking_now": "Plan nu"
+      "booking_now": "Plan nu",
+      "title": "Vragen? Stuur ons een e-mail",
+      "budget_label": "Jouw budget",
+      "interested_default": "Gewenste service"
     }
   },
   "video": {

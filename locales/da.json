@@ -9,6 +9,11 @@
  */
 {
   "general": {
+    "404": {
+      "title": "Siden blev ikke fundet",
+      "subtext_html": "Den side, du anmodede om, findes ikke.",
+      "404_link": "Fortsætte med at handle"
+    },
     "defaults": {
       "sale_ends_in": "Udsalget slutter om",
       "verified_review": "Verificeret",
@@ -22,11 +27,6 @@
       "faq_response_time": "Gennemsnitlig svartid: 24 timer",
       "suggest_pretext": "Nogen har lige købt",
       "suggest_verified": "Verificeret"
-    },
-    "404": {
-      "title": "Siden blev ikke fundet",
-      "subtext_html": "Den side, du anmodede om, findes ikke.",
-      "404_link": "Fortsætte med at handle"
     },
     "accessibility": {
       "loading": "Indlæser...",
@@ -49,7 +49,7 @@
     },
     "sticky_cart": {
       "stars_text": "Topbedømt 4,8 | 129 anmeldelser",
-      "shipping_text" : "Bestil nu og modtag inden:"
+      "shipping_text": "Bestil nu og modtag inden:"
     },
     "cart": {
       "title_upsell": "Du vil måske også synes om",
@@ -480,8 +480,8 @@
       "will_be_in_stock_after": "Kommer på lager efter {{ date }}",
       "sale_price": "Udsalgspris",
       "delivery_label": "Bestil nu til levering inden:",
-      "free_shipping":"Gratis forsendelse",
-      "secure_checkout":"Sikker checkout",
+      "free_shipping": "Gratis forsendelse",
+      "secure_checkout": "Sikker checkout",
       "vendor": "Sælger",
       "type": "Type",
       "regular_price": "Normal pris",
@@ -633,7 +633,10 @@
       "label_store": "Vælg Butik",
       "label_date": "Start dato",
       "label_time": "Åbningstider 09.00 til 18.00",
-      "booking_now": "Planlæg nu"
+      "booking_now": "Planlæg nu",
+      "title": "Spørgsmål? Send os en e-mail",
+      "budget_label": "Dit budget",
+      "interested_default": "Ønsket service"
     }
   },
   "video": {

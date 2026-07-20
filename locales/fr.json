@@ -9,6 +9,11 @@
  */
 {
   "general": {
+    "404": {
+      "title": "Page non trouvée",
+      "subtext_html": "La page que tu as demandée n'existe pas.",
+      "404_link": "Continuer tes achats"
+    },
     "defaults": {
       "sale_ends_in": "La promo se termine dans",
       "verified_review": "Avis vérifié",
@@ -22,11 +27,6 @@
       "faq_response_time": "Temps de réponse moyen : 24h",
       "suggest_pretext": "Quelqu'un vient d'acheter",
       "suggest_verified": "Vérifié"
-    },
-    "404": {
-      "title": "Page non trouvée",
-      "subtext_html": "La page que tu as demandée n'existe pas.",
-      "404_link": "Continuer tes achats"
     },
     "accessibility": {
       "loading": "Chargement...",
@@ -47,9 +47,9 @@
     "reviews": {
       "verified": "Avis vérifié"
     },
-      "sticky_cart": {
+    "sticky_cart": {
       "stars_text": "Excellent 4,8 | 129 avis",
-      "shipping_text" : "Commande maintenant et reçois avant le :"
+      "shipping_text": "Commande maintenant et reçois avant le :"
     },
     "cart": {
       "title_upsell": "Tu aimeras peut-être aussi",
@@ -481,8 +481,8 @@
       "sale_price": "Prix ​​de vente",
       "vendor": "Fournisseur",
       "delivery_label": "Commande maintenant pour une livraison d'ici le :",
-      "free_shipping":"livraison gratuite",
-      "secure_checkout":"Paiement sécurisé",
+      "free_shipping": "livraison gratuite",
+      "secure_checkout": "Paiement sécurisé",
       "type": "Taper",
       "regular_price": "Prix ​​habituel",
       "on_sale": "Vente",
@@ -633,7 +633,10 @@
       "label_store": "Sélectionne un magasin",
       "label_date": "Date de début",
       "label_time": "Horaires d'ouverture de 09h00 à 18h00",
-      "booking_now": "Planifie maintenant"
+      "booking_now": "Planifie maintenant",
+      "title": "Des questions ? Écrivez-nous",
+      "budget_label": "Votre budget",
+      "interested_default": "Service souhaité"
     }
   },
   "video": {

@@ -9,6 +9,11 @@
  */
 {
   "general": {
+    "404": {
+      "title": "Página não encontrada",
+      "subtext_html": "A página que você solicitou não existe.",
+      "404_link": "Continue comprando"
+    },
     "defaults": {
       "sale_ends_in": "A promoção termina em",
       "verified_review": "Verificada",
@@ -22,11 +27,6 @@
       "faq_response_time": "Tempo médio de resposta: 24h",
       "suggest_pretext": "Alguém comprou recentemente",
       "suggest_verified": "Verificado"
-    },
-    "404": {
-      "title": "Página não encontrada",
-      "subtext_html": "A página que você solicitou não existe.",
-      "404_link": "Continue comprando"
     },
     "accessibility": {
       "loading": "Carregando...",
@@ -44,12 +44,12 @@
       "tags": "Marcado \"{{ tags }}\"",
       "page": "Página {{ page }}"
     },
-     "reviews": {
+    "reviews": {
       "verified": "Avaliação verificada"
     },
-   "sticky_cart": {
+    "sticky_cart": {
       "stars_text": "Excelente 4.8 | 129 avaliações",
-      "shipping_text" : "Compre agora e receba até:"
+      "shipping_text": "Compre agora e receba até:"
     },
     "cart": {
       "title_upsell": "Você também pode gostar",
@@ -481,8 +481,8 @@
       "sale_price": "Preço de venda",
       "vendor": "Fornecedor",
       "delivery_label": "Quais são as melhores recomendações para Lieferung:",
-      "free_shipping":"Frete grátis",
-      "secure_checkout":"Check-out seguro",
+      "free_shipping": "Frete grátis",
+      "secure_checkout": "Check-out seguro",
       "type": "Tipo",
       "regular_price": "Preço regular",
       "on_sale": "Oferta",
@@ -633,7 +633,10 @@
       "label_store": "Selecione Loja",
       "label_date": "Data de início",
       "label_time": "Horário de funcionamento 09:00 às 18:00",
-      "booking_now": "Agende agora"
+      "booking_now": "Agende agora",
+      "title": "Dúvidas? Envie-nos um email",
+      "budget_label": "O seu orçamento",
+      "interested_default": "Serviço pretendido"
     }
   },
   "video": {
