@@ -2039,6 +2039,37 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Transform "Uppercase" -> Titel gross, Pills behalten
       Body-Schreibweise (Desktop + Mobile, Slideshow 1 UND 2).
 
+## 83. Scratch Newsletter Popup: Dark-Mode (Texte unsichtbar + weisser Backdrop) (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator (split 2/2): "Texte im dark mode
+      nicht sichtbar. Hintergrund ... weisses overlay, muss dunkel."
+      PATTERN: Darkmode-Chrome-Klasse (#63/#64) - Popup war
+      "separat-entscheiden"-Zone aus Briefing 1, jetzt explizit
+      angefordert.
+      URSACHE: Box-BG folgt --color-body (Page Background, im Dark-
+      Preset dunkel -> Box wird schwarz), aber Texte HART #14120F
+      (dunkel-auf-dunkel) + muted-Grays; Backdrop hart
+      rgba(252,251,247,.82) weiss. --color-body-text als Route
+      SCHEIDET AUS (immer definiert -> wuerde die Light-Muting-
+      Hierarchie #8A8375/#6E6759 auf Body-Text vereinheitlichen).
+      FIX (Chrome-Route, Fallback = altes Literal): 8 Ersetzungen -
+      dialog.scnl Basisfarbe (h-main erbt sie), .scnl__close,
+      .scnl__logo, .scnl__h-top, .scnl__sub, .scnl__legal,
+      .scnl__hint auf var(--g-chrome-text, <lit>); ::backdrop auf
+      var(--g-chrome-bg, rgba(252,251,247,.82)) - Light byte-identisch
+      (Chrome-Vars nur im Dark-Preset gesetzt), Dark -> Text weiss +
+      Backdrop #181818 (opak statt transluzent-weiss = sauberer).
+      BEWUSST NICHT: Weisses Input-Feld (#FFFFFF, im Dark lesbarer
+      Kontrast, Operator ok laut Screenshot) + dunkler CTA-Button
+      (#14120F Flaeche/weisser Text: Label bleibt lesbar, Flaeche
+      geht im Dark unter - als Folge-Beobachtung notiert, nicht
+      ungefragt umgebaut). Muted-Grays werden im Dark voll-weiss
+      (Hierarchie-Verlust) - konsistent mit #64-Badge-Entscheidung.
+      VERIFIKATION: Headless 10/10 - 5 Proben Light computed alt=neu
+      (Basis/h-main-Erbe/2x muted/Backdrop), 5 Dark kippen (#fff /
+      #181818); Liquid OK.
+      Live-Test: TECH DARK -> Scratch Popup oeffnen -> Texte hell
+      lesbar, Backdrop dunkel; Default-Preset -> unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

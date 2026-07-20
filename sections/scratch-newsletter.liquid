@@ -98,13 +98,13 @@
     align-items: center;
     justify-content: center;
     z-index: 1060;
-    color: #14120F;
+    color: var(--g-chrome-text, #14120F);
     /* Typography aus den Theme Settings: --g-font-2 = Body-Font (header-css) */
     font-family: var(--g-font-2, 'Helvetica Neue', Helvetica, Arial, sans-serif);
     -webkit-font-smoothing: antialiased;
   }
   dialog.scnl[open] { display: flex; animation: scnlFadeIn 0.35s ease both; }
-  dialog.scnl::backdrop { background: rgba(252, 251, 247, 0.82); }
+  dialog.scnl::backdrop { background: var(--g-chrome-bg, rgba(252, 251, 247, 0.82)); }
 
   .scnl__box {
     position: relative;
@@ -128,7 +128,7 @@
     z-index: 6;
     background: none; border: none;
     font-size: 24px; line-height: 1;
-    color: #14120F; cursor: pointer;
+    color: var(--g-chrome-text, #14120F); cursor: pointer;
     padding: 8px;
   }
   .scnl__close:hover { color: #6E6759; }
@@ -151,7 +151,7 @@
     /* Typography aus den Theme Settings: --g-font-1 = Heading-Font */
     font-family: var(--g-font-1, Marcellus, Georgia, serif);
     font-size: 15px; letter-spacing: 6px; padding-left: 6px;
-    color: #14120F;
+    color: var(--g-chrome-text, #14120F);
   }
   .scnl__logo img {
     display: block;
@@ -163,12 +163,12 @@
   .scnl__step.is-active { display: flex; animation: scnlFadeUp 0.5s ease both; }
 
   .scnl__serif { font-family: var(--g-font-1, Marcellus, Georgia, serif); font-weight: 400; }
-  .scnl__h-top { font-size: 20px; letter-spacing: 4px; padding-left: 4px; color: #8A8375; }
+  .scnl__h-top { font-size: 20px; letter-spacing: 4px; padding-left: 4px; color: var(--g-chrome-text, #8A8375); }
   .scnl__h-main { font-size: 30px; letter-spacing: 2px; padding-left: 2px; margin: 6px 0 26px; line-height: 1.25; }
-  .scnl__sub { font-size: 12px; letter-spacing: 1px; color: #6E6759; }
-  .scnl__legal { max-width: 330px; font-size: 10px; line-height: 1.7; color: #8A8375; margin: 16px 0 0; }
+  .scnl__sub { font-size: 12px; letter-spacing: 1px; color: var(--g-chrome-text, #6E6759); }
+  .scnl__legal { max-width: 330px; font-size: 10px; line-height: 1.7; color: var(--g-chrome-text, #8A8375); margin: 16px 0 0; }
   .scnl__legal a { color: inherit; }
-  .scnl__hint { margin-top: 16px; font-size: 10px; letter-spacing: 1.5px; color: #8A8375; }
+  .scnl__hint { margin-top: 16px; font-size: 10px; letter-spacing: 1.5px; color: var(--g-chrome-text, #8A8375); }
 
   .scnl__btn {
     position: relative; overflow: hidden;
