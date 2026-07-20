@@ -61,6 +61,24 @@
     .block-product-imgtxt .block-product-imgtxt__item:nth-child({{ count | minus: 1 }}),.block-product-imgtxt .block-product-imgtxt__item:last-child{
       border-bottom: transparent;
     }
+    {%- assign iwi_bc = section.settings.border_color -%}
+    {%- if iwi_bc != blank and iwi_bc != 'rgba(0,0,0,0)' -%}
+    {%- if iwi_bc contains 'gradient' -%}
+    {%- comment -%} #113: Trennlinien als Gradient - border-image malt ueber die
+        validen var-Basis-Borders (gerade Linien, kein Radius); die last-child-
+        Regel (style none -> Breite 0) blendet die Bottom-Kante weiter aus. {%- endcomment -%}
+    .block-product-imgtxt .block-product-imgtxt__item:nth-child(odd),
+    .block-product-imgtxt .block-product-imgtxt__item:nth-child(even){
+      border-image: {{ iwi_bc }} 1;
+    }
+    {%- else -%}
+    {%- comment -%} #113: Solid-Override der automatischen Linienfarbe (Var-Route,
+        Basisregeln lesen --g-border-block). {%- endcomment -%}
+    .block-product-imgtxt .block-product-imgtxt__item{
+      --g-border-block: {{ iwi_bc }};
+    }
+    {%- endif -%}
+    {%- endif -%}
     @media(max-width:990px){
       .block-product-imgtxt{
         padding:1.5rem;
@@ -375,6 +393,12 @@
         "id": "block_text_bg",
         "label": "Block Text Background",
         "default": "#FFFFFF"
+      },
+      {
+        "type": "color_background",
+        "id": "border_color",
+        "label": "Border Color",
+        "info": "Divider lines between the icon fields. Empty = automatic (darkened block background)."
       },
     {
       "type": "header",
