@@ -151,6 +151,12 @@
     padding: 1.3rem 2rem;
     word-break: break-all;
     line-height: calc(1 + 0.4 / var(--font-body-scale));
+    /* #87: <button> hatte KEINE explizite bg/color -> UA-Default hellgrau;
+       im Dark-Preset heller Text auf hellgrau = unsichtbar. An die Theme-
+       Foreground-Var koppeln (kippt mit dem Preset), subtile Bar-Optik wie
+       die vorgesehene Hover-Regel darueber. */
+    background-color: rgba(var(--color-foreground), 0.04);
+    color: rgb(var(--color-foreground));
   }
   
   @media screen and (min-width: 750px) {
