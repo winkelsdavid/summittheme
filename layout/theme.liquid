@@ -105,12 +105,34 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        {% if settings.t1_border_color contains 'gradient' %}
+        {%- comment -%} #121 (P6): Gradient-Border - var(--border-color) traegt den
+            Gradient, "1px solid var()" waere invalid (P4) -> transparent + Mask-Ring. {%- endcomment -%}
+        border:1px solid transparent;
+        position:relative;
+        {% else %}
         border:1px solid var(--border-color);
+        {% endif %}
         background:var(--background);
         border-radius:var(--radius);
     margin-bottom:.5rem;
     width:fit-content;
   }
+  {% if settings.t1_border_color contains 'gradient' %}
+  .rating-custom::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:inherit;
+    padding:1px;
+    background:{{ settings.t1_border_color }};
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite:exclude;
+    pointer-events:none;
+  }
+  {% endif %}
   .rating-excellent, .rating-excellent *{
       font-size: var(--font_size);
     line-height:1;
@@ -199,13 +221,52 @@
       align-items: center;
       flex-wrap: wrap;
       {%  if settings.t2_border_color != blank and settings.t2_border_color != "rgba(0,0,0,0)" %}
+      {% if settings.t2_border_color contains 'gradient' %}
+      border:1px solid transparent;
+      position:relative;
+      {% else %}
       border:1px solid var(--border-color, transparent);
+      {% endif %}
       {% endif %}
       background:var(--background);
       border-radius:var(--radius);
       margin-bottom:.5rem;
       width:fit-content;
 }
+{% if settings.t2_border_color contains 'gradient' %}
+.rating-custom-2::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1px;
+  background:{{ settings.t2_border_color }};
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+}
+{% endif %}
+{% if settings.t3_border_color contains 'gradient' %}
+{%- comment -%} #121: t3-Badge (reviews_images.reviews-block, Border sonst inline im
+    rating-custom-Snippet) - Gradient-Ring zentral hier; .reviews-block grenzt vom
+    PT1-Block (reviews_images.product-block, eigenes Setting) ab. {%- endcomment -%}
+.reviews_images.reviews-block{ position:relative; }
+.reviews_images.reviews-block::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1px;
+  background:{{ settings.t3_border_color }};
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+}
+{% endif %}
 .rating-excellent-2, .rating-excellent-2 p{
     font-size: var(--font_size);
     line-height:1;

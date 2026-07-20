@@ -76,7 +76,15 @@
                   </div>
                 </div>
             {% when "t_3" %}
-                <div class="reviews_images reviews-block mb-2 text-{{ align }}" style="--font-color:{{ settings.t3_text_color }};background:{{ settings.t3_background }};{% if settings.t3_border_color != blank and settings.t3_border_color != "rgba(0,0,0,0)" %}border:1px solid {{ settings.t3_border_color }};{% endif %}border-radius:{{ settings.roundness }}px;">
+                {%- liquid
+                  # #121: bei Gradient-Border KEIN Inline-Solid-Border - der Ring kommt
+                  # als maskiertes ::before aus theme.liquid; transparent haelt das Layout.
+                  assign t3_bc_is_gradient = false
+                  if settings.t3_border_color contains 'gradient'
+                    assign t3_bc_is_gradient = true
+                  endif
+                -%}
+                <div class="reviews_images reviews-block mb-2 text-{{ align }}" style="--font-color:{{ settings.t3_text_color }};background:{{ settings.t3_background }};{% if settings.t3_border_color != blank and settings.t3_border_color != "rgba(0,0,0,0)" %}{% if t3_bc_is_gradient %}border:1px solid transparent;{% else %}border:1px solid {{ settings.t3_border_color }};{% endif %}{% endif %}border-radius:{{ settings.roundness }}px;">
                     <div class="reviews_images_r">
                       {% if settings.image_1 != blank %}
                         <img src="{{ settings.image_1 | image_url: width: 100 }}" loading="lazy" style='--width:{{ settings.images_size }}px;--width-mobile:{{ settings.images_size_mobile }}px'>
