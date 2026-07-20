@@ -2952,11 +2952,21 @@ display:none;
                 .accordion_{{ block.id }} .tabcustom{
                   font-size:{{ block.settings.font_size }}px;
                 }
+                {% unless block.settings.no_border %}
                 {% if block.settings.divider_color != blank and block.settings.divider_color != 'rgba(0,0,0,0)' %}
                 .accordion_{{ block.id }} .tabcustom{
+                  {% if block.settings.divider_color contains 'gradient' %}
+                  {%- comment -%} #90b: border-color kann keine Verlaeufe; :before/:after
+                      sind vom +/- -Icon belegt -> border-image auf der Bottom-Kante
+                      (nur sie hat Breite). unless no_border, weil border-image NICHT
+                      von .no-border{border:unset} gekillt wird. {%- endcomment -%}
+                  border-image: {{ block.settings.divider_color }} 1;
+                  {% else %}
                   border-bottom-color: {{ block.settings.divider_color }};
+                  {% endif %}
                 }
                 {% endif %}
+                {% endunless %}
                   .accordion_{{ block.id }} .tabcustom svg{
                     width:{{ block.settings.icon_size }}px;
                     height:{{ block.settings.icon_size }}px;
@@ -7278,10 +7288,10 @@ function formatPrice(value) {
           "label": "Disable Border"
         },
         {
-          "type": "color",
+          "type": "color_background",
           "id": "divider_color",
           "label": "Divider Line Color",
-          "info": "Empty = theme default"
+          "info": "Empty = theme default. Supports gradient."
         },
         {
           "type": "text",

@@ -2213,6 +2213,28 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Instagram / Logo-Carousel -> Pfeile sichtbar (dunkler Kreis,
       heller Pfeil); Default -> weisse Kreise wie gehabt.
 
+## 91. Collapsible Row: Divider Line Color mit Gradient (Bug-Sammler 20.07., Folge zu #74)
+- [~] UMGESETZT 2026-07-20. Operator: "Gradient Funktion hinzufuegen
+      fuer Divider Line Color". PATTERN: color_background + Gradient
+      (#71/#76).
+      UMSETZUNG: divider_color (tabcustom-Block) color -> color_background
+      (Parse-Hinweis: 4. Typ-Wechsel neben stars_color/bgborder).
+      CSS-Verzweigung: bei Gradient border-image: {{ gradient }} 1
+      (border-color kann keine Verlaeufe; :before/:after sind vom
+      +/- -Toggle-Icon belegt -> kein Pseudo frei; border-image
+      rendert nur auf der Bottom-Kante, die als einzige Breite hat).
+      Solid-Fall unveraendert (border-bottom-color, #74-identisch).
+      WICHTIG: ganzer Divider-Block in {% unless no_border %} gewrappt -
+      border-image ist NICHT Teil der border-Kurzform, wuerde also von
+      .no-border{border:unset!important} NICHT gekillt -> Leak-Schutz.
+      VERIFIKATION: Headless 5/5 - Solid border-bottom-color=Setting
+      (img none), Gradient border-image aktiv + Bottom 1px bleibt,
+      no_border+Gradient KEIN Leak (border-image none), leer=Theme-
+      Default; Schema+Liquid OK.
+      Live-Test: Collapsible Row -> Divider Line Color -> Verlaufs-
+      Picker -> Trennlinie im Gradient; Solid + Disable Border wie
+      gehabt.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
