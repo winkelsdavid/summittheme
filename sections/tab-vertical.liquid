@@ -176,13 +176,14 @@
                             <div class="tab-image__big">
                                 <div class="image-content__image-container">
                                     <a class="image-content__image-wrapper" href="{{ block.settings.link }}" style="padding-top:{{ 1 | divided_by: block.settings.image.aspect_ratio | times: 100 }}%;">
-                                    {% assign img_url = block.settings.image | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
-                                    <img class="image-content__image scale-in lazyload"
-                                        src="{{ block.settings.image | image_url: width: 1, height: 1 }}"
-                                        data-src="{{ img_url }}"
-                                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
-                                        data-aspectratio="{{ block.settings.image.aspect_ratio }}"
-                                        data-sizes="auto"
+                                    {%- comment -%} #93: lazysizes (src=1x1 + data-src + .lazyload) enthuellt
+                                        Bilder in initial verborgenen Tab-Panes (display:none) nie -> nur
+                                        Tab 1 zeigte sein Bild. Echter src + scale-in lazyloaded (wie der
+                                        B1-Pfad) laedt unabhaengig von der Sichtbarkeit. {%- endcomment -%}
+                                    <img class="image-content__image scale-in lazyloaded"
+                                        src="{{ block.settings.image | image_url: width: 1500 }}"
+                                        srcset="{{ block.settings.image | image_url: width: 720 }} 720w, {{ block.settings.image | image_url: width: 1080 }} 1080w, {{ block.settings.image | image_url: width: 1500 }} 1500w"
+                                        sizes="(min-width: 990px) 50vw, 100vw"
                                         alt="{{ block.settings.image.alt | escape }}"
                                         loading="lazy"
                                         width="{{ block.settings.image.width }}"
@@ -212,13 +213,12 @@
                             <div class="tab-image__small">
                                 <div class="image-content__image-container ">
                                     <a class="image-content__image-wrapper" href="{{ block.settings.link }}" style="padding-top:{{ 1 | divided_by: block.settings.image2.aspect_ratio | times: 100 }}%;">
-                                    {% assign img_url = block.settings.image2 | image_url: width: 1 | replace: 'width=1', 'width={width}' %}
-                                    <img class="image-content__image scale-in lazyload"
-                                        src="{{ block.settings.image2 | image_url: width: 1, height: 1 }}"
-                                        data-src="{{ img_url }}"
-                                        data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 1944, 2048]"
-                                        data-aspectratio="{{ block.settings.image2.aspect_ratio }}"
-                                        data-sizes="auto"
+                                    {%- comment -%} #93: siehe Big-Image - echter src statt lazysizes,
+                                        sonst in verborgenen Tabs nie geladen. {%- endcomment -%}
+                                    <img class="image-content__image scale-in lazyloaded"
+                                        src="{{ block.settings.image2 | image_url: width: 1066 }}"
+                                        srcset="{{ block.settings.image2 | image_url: width: 540 }} 540w, {{ block.settings.image2 | image_url: width: 1066 }} 1066w"
+                                        sizes="(min-width: 990px) 25vw, 50vw"
                                         alt="{{ block.settings.image2.alt | escape }}"
                                         loading="lazy"
                                         width="{{ block.settings.image2.width }}"
