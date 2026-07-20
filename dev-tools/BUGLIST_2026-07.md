@@ -2421,6 +2421,32 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       NICHT mit Brandfarbe befuellen; Operator kann sofort im
       Customizer Theme Settings -> Input -> Background Input leeren.
 
+## 104. Contact Form: reCAPTCHA-Hinweis als Description-Default (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (07278ff). Operator: "Text muss immer der
+      text aus dem screenshot sein per default" (reCAPTCHA-Disclaimer).
+      Feld = answer_content (richtext, Label "Description"), hatte
+      Lorem-Default. Statt engl. Hardcode: Default geleert + Render-
+      Fallback auf Shopifys System-Key shopify.online_store.
+      spam_detection.disclaimer_html (von Shopify in ALLEN Sprachen
+      gepflegt, inkl. Privacy/Terms-Links); Key vorab uebersetzt
+      (Filter-Order, Muster #95). Merchant-Text gewinnt. Schema-info
+      dokumentiert. Nebeneffekt gewollt: Bestandsinstanzen mit
+      unangetastetem Lorem zeigen jetzt den Disclaimer.
+      Live-Test: neue Contact-Form-Sektion je Sprache -> Disclaimer
+      lokalisiert unterm Formular; eigener Text ersetzt ihn.
+
+## Redeliveries 20.07. (Bug-Sammler liefert alte Beobachtungsstaende nach)
+- [x] Timeline 4->3 + Texte (reported 19.07. 15:29) = DUBLETTE #99
+      (gefixt 81a684b 20.07.); Preset heute 3 Bloecke, verifiziert.
+- [x] Image With Auto Slider Button-Style (reported 19.07. 12:09,
+      Theme-Push 11:54) = DUBLETTE #84 (Fix ef16dcc erst 20.07. 12:39).
+      Screenshot zeigt exakt das #84-Symptom: Dropdown zeigt "Button
+      Box" fuer den leeren Preset-Wert, gerendert nur nackter .btn.
+- [x] Promo Sale Tablet "fucked" (reported 18.07. 20:57) = DUBLETTE #89
+      (Fix c290139 20.07. 14:19): Countdown linksgedraengt = Tablet-
+      Regeln griffen im 553-767px-Gap (Shopify-Preview 749px) nicht;
+      #89 erweiterte die Query genau darauf, headless-verifiziert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
