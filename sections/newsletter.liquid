@@ -40,6 +40,14 @@
         background-color: {{ section.settings.bg_overlay }};
       opacity: {{ section.settings.opacity_bg_overlay }};
   }
+  {%- if section.settings.background_section != blank and section.settings.background_section != 'rgba(0,0,0,0)' -%}
+  {%- comment -%} #116: "Background Color" hatte KEINEN Render-Konsumenten (nur
+      Schema) - jetzt als Sektions-Grundfarbe unter Bild/Overlay; "Opacity
+      Background" steuert ihre Deckkraft (color_modify-Alpha, Muster #109). {%- endcomment -%}
+  .newsletter-section-{{ section.id }}{
+    background-color: {{ section.settings.background_section | color_modify: 'alpha', section.settings.opacity_background }};
+  }
+  {%- endif -%}
   .mail-section .form-group {
     border:1px solid {{ section.settings.colorborder }};
     border-radius:var(--g-input-radius) !important;
@@ -263,7 +271,17 @@
     {
       "type": "color",
       "id": "background_section",
-      "label": "Background Color"
+      "label": "Background Color",
+      "info": "Base color of the section, visible behind or without the background image."
+    },
+    {
+      "type": "range",
+      "id": "opacity_background",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Opacity Background",
+      "default": 1
     },
     {
       "type": "color",
