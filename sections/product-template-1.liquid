@@ -392,6 +392,29 @@ display:none;
         width: 100%;
       }
     }
+    {%- assign po_bc = section.settings.section_border_color -%}
+    {%- if po_bc != blank and po_bc != 'rgba(0,0,0,0)' -%}
+    {%- if po_bc contains 'gradient' -%}
+    {%- comment -%} #114: Sektionsrahmen als Gradient - maskiertes ::before-Ring-
+        Overlay (#112-Technik), Inhalt/Hintergrund bleiben unberuehrt. {%- endcomment -%}
+    #ProductSection-{{ section.id }}{ position: relative; }
+    #ProductSection-{{ section.id }}::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      padding:1px;
+      background:{{ po_bc }};
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+      mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite:exclude;
+      pointer-events:none;
+      z-index:2;
+    }
+    {%- else -%}
+    #ProductSection-{{ section.id }}{ border: 1px solid {{ po_bc }}; }
+    {%- endif -%}
+    {%- endif -%}
 </style>
 <div
   class="{{ section.settings.section_width }} js-recently-view"
@@ -4192,6 +4215,12 @@ function formatPrice(value) {
       "id": "atc_text",
       "label": "Button Label",
       "default": "Get it now"
+    },
+    {
+      "type": "color_background",
+      "id": "section_border_color",
+      "label": "Border Color",
+      "info": "Frame around the whole section. Empty = no border."
     }
   ],
   "blocks": [
