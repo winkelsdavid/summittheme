@@ -67,6 +67,25 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
   getBoundingClientRect, notfalls temporaere b1-probe per Git-Push
   (Muster in Scratchpad/Historie 47219a5).
 
+**P6 — Gradient-Border-Techniken (#97→#111/#112-Lektionen):**
+Standard = maskiertes ::before-Ring-Overlay (inset:-1px, padding:1px,
+mask content-box XOR full, mask-composite:exclude, pointer-events none,
+border-radius:inherit; Element ggf. position:relative + border 1px
+transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
+  (a) Doppel-Background padding-box/border-box NICHT verwenden: die
+      border-box-Layer fuellt die GANZE Flaeche und blutet durch
+      halbtransparente Innenfarben (TECH-DARK-Glas) — #112-Repro.
+  (b) border-image nur fuer GERADE Linien ohne Radius (folgt border-radius
+      nicht); dabei P4 beachten: haelt eine Var/Literal-Basis-Border den
+      GRADIENT, ist `1px solid <gradient>` invalid → Breite 0 → border-image
+      unsichtbar (#111). Basis-Border im Gradient-Zweig auf `transparent`
+      neu setzen. Kanten mit style:none (Breite 0) bleiben automatisch leer.
+  (c) box-shadow-Ringe koennen nie Gradient — auf (Standard) umbauen,
+      Ring liegt mit inset:-1px genauso 1px AUSSERHALB wie der Spread.
+  (d) Multi-Layer-background-Shorthand: nur die LETZTE Layer darf eine
+      Farbe sein; var() mit Farb-Fallback in einer Layer macht die GANZE
+      Deklaration invalid.
+
 ---
 
 ## 1. Option Type: neue Werte hinzufügen
@@ -2515,6 +2534,60 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       VERIFIKATION: liquidjs 6 Faelle.
       Live-Test: Box Border Color auf Verlauf -> Ring zeigt Gradient,
       Karteninneres behaelt Farbe (auch mit gesetztem Card Background).
+
+## 111. FAQ Advanced: Gradient-Divider unsichtbar (Bug-Sammler 20.07., #97-Folgebug)
+- [~] UMGESETZT 2026-07-20 (bb59dd8). P4: --accordion-border hielt den
+      Gradient -> "1px solid var(<grad>)" invalid -> Breite 0 ->
+      border-image ohne Flaeche. #97-Test hatte Solid-Literal statt
+      echter Var-Pipeline (Luecke geschlossen). FIX: im Gradient-Zweig
+      border-bottom 1px transparent VOR border-image. Headless: ALT
+      0px (Repro), NEU 1px+Gradient, Solid unveraendert.
+      Live-Test: FAQ-Divider auf Verlauf -> Linie sichtbar.
+
+## 112. Gradient-Border-Familienfix: Mask-Ring statt Doppel-Background (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (db0457e). Operator: Custom-Review-Border
+      "ueberschreibt ganzen background". URSACHE: border-box-Layer der
+      #97/#110-Doppel-Background-Technik fuellt die GANZE Flaeche ->
+      blutet durch halbtransparente Innen (TECH-DARK-Glas). FIX an
+      allen 5 Stellen: maskiertes ::before-Ring-Overlay (P6), Innen
+      exakt ALT (Wrap-Hacks + var-Verbote entfallen; reviews-slider
+      card_background-Override wieder unconditional): customer-review-
+      card, rating-custom-2, review-slider-i, iwb-bullet-item,
+      review_marquee_item. Keine Schema-Aenderungen.
+      Verifiziert: liquidjs 10 Faelle + Headless-Screenshot
+      (ALT=Karte komplett rot, NEU=Glas + 1px-Ring).
+      Live-Test: TECH DARK 2 Custom Review, Border-Gradient setzen ->
+      nur Ring farbig, Karten-Glas bleibt.
+
+## 113. Border Color mit Gradient ADD: Image With 4 Icons + Testimonials Trustpilot (Bug-Sammler 20.07., 2 Splits)
+- [~] UMGESETZT 2026-07-20 (113a Icons, 113b in 4f7ad80-Serie).
+      image-with-icons: neues border_color (color_background, leer =
+      Automatik abgedunkeltes Block-BG); solid via --g-border-block-
+      Override, Gradient via border-image auf den odd/even-Trennlinien
+      (gerade Linien; last-child style:none blendet weiter aus).
+      custom-reviews: neues card_border_color (leer = kein Border wie
+      ALT); solid = border 1px, Gradient = P6-Mask-Ring.
+      Summit-Folge: 2 neue Settings. Verifiziert: liquidjs je 3 Faelle.
+      Live-Test: je Sektion Border auf Verlauf -> Linien/Ring im
+      Gradient; leer = wie vorher.
+
+## 114. Product Overview: Border Color (Sektionsrahmen) mit Gradient (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (8e03736). Report ohne Screenshot ->
+      als Rahmen um die GESAMTE Sektion interpretiert (additiv,
+      leer = kein Rahmen). section_border_color (color_background)
+      auf #ProductSection-<id>: solid border 1px, Gradient P6-Ring
+      (z-index 2, pointer-events none). Summit-Folge: neues Setting.
+      Live-Test: Setting fuellen -> Rahmen um die Sektion; falls der
+      Operator etwas ANDERES meinte (z.B. Media-Border), Follow-up
+      mit Screenshot abwarten.
+
+## 115. Testimonials Trustpilot: Card Background eigene Option (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (mit #113b committed). card_background
+      (color_background, leer = Chrome-Automatik wie ALT, Muster #83)
+      als spaetere Regel ueber der Chrome-Basis; Solid UND Gradient.
+      Summit-Folge: neues Setting.
+      Live-Test: Card Background setzen -> Karten eigene Farbe/Verlauf;
+      leer -> Chrome wie bisher.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
