@@ -2092,6 +2092,25 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: Image With Auto Slider Text-Block -> Button gefuellt
       (Button Box); andere Styles bleiben waehlbar.
 
+## 85. Quick View: weisse Modal-Flaeche -> Content unsichtbar im Dark (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "Quick View hintergrund ist
+      weiss daher content unsichtbar" (Titel/Preis/Optionen weiss-auf-
+      weiss im Dark-Preset). PATTERN: Chrome-Klasse (#63/#64, Modal wie
+      Drawer).
+      URSACHE: Die weisse Flaeche kommt vom INLINE-BOOTSTRAP
+      (.modal-content{background:#fff} im 154KB-Blob header-css Z2) -
+      Text erbt --color-body-text (im Dark hell) -> weiss auf weiss.
+      FIX (QV-gescoped, im quickview.liquid-Style-Block - Bootstrap-Blob
+      NICHT angefasst): #jsQuickview .modal-content background ->
+      var(--g-chrome-bg, #fff); dazu die 2 weissen Fade-Gradienten
+      (.qv-content:after Verlauf + .qv-product-description:after) auf
+      chrome-bg (Verlauf-Start auf transparent). Andere Modals
+      (Upsell etc.) unberuehrt.
+      VERIFIKATION: Headless 4/4 - modal-content + desc-fade Light
+      #fff (mit Bootstrap-Basis, byte-identisch), Dark #181818.
+      Live-Test: TECH DARK -> Quick View oeffnen -> Panel dunkel,
+      Titel/Preis/Optionen hell lesbar; Default-Preset -> weiss.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

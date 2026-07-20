@@ -9,7 +9,7 @@
   endcase
 -%}
 <style>
-  .qv-content{text-align:left}.rtl .qv-content{text-align:right}#qv-product-images{margin:0;opacity: 0;transition: opacity 0.1s ease-in;}#jsQuickview .option-selection{margin-bottom:16px}#jsQuickview select.option{width: calc(100% - 120px);}#jsQuickview span.option{min-width:120px;display:inline-block;text-transform:capitalize;margin-bottom:6px;}#jsQuickview .qv-product-price{display:inline-block;margin:0}#jsQuickview .qv-product-price .money{color:{{ settings.color_primary }}}#jsQuickview .qv-product-description{max-height:180px;overflow:hidden;position:relative;}#jsQuickview .qv-product-description:after{position:absolute;content:"";width:100%;left:0;bottom:0;background:#fff}.rtl #jsQuickview .qv-product-description:after{right:0;left:auto}.qv-add-to-cart .quantity{height:40px;width:100px}.qv-add-to-cart .quantity span{display:none}.qv-quantity{height:50px;width:100%;text-align:center;}
+  .qv-content{text-align:left}.rtl .qv-content{text-align:right}#qv-product-images{margin:0;opacity: 0;transition: opacity 0.1s ease-in;}#jsQuickview .option-selection{margin-bottom:16px}#jsQuickview select.option{width: calc(100% - 120px);}#jsQuickview span.option{min-width:120px;display:inline-block;text-transform:capitalize;margin-bottom:6px;}#jsQuickview .qv-product-price{display:inline-block;margin:0}#jsQuickview .qv-product-price .money{color:{{ settings.color_primary }}}#jsQuickview .qv-product-description{max-height:180px;overflow:hidden;position:relative;}#jsQuickview .qv-product-description:after{position:absolute;content:"";width:100%;left:0;bottom:0;background:var(--g-chrome-bg, #fff)}.rtl #jsQuickview .qv-product-description:after{right:0;left:auto}.qv-add-to-cart .quantity{height:40px;width:100px}.qv-add-to-cart .quantity span{display:none}.qv-quantity{height:50px;width:100%;text-align:center;}
   #jsQuickview .option-selection.color .single-option-radio{
     padding-left:8px;
     padding-top:4px;
@@ -19,6 +19,12 @@
        the content scrolls inside that height instead of a fixed 620px. */
     height: auto;
     position:relative;
+  }
+  /* #85: Die QV-Modal-Flaeche ist weiss (Inline-Bootstrap .modal-content) -
+     im Dark-Preset weiss-auf-weiss. Chrome-Route, Fallback = Bootstrap-Weiss
+     (Light byte-identisch). QV-gescoped, andere Modals unberuehrt. */
+  #jsQuickview .modal-content{
+    background: var(--g-chrome-bg, #fff);
   }
   .loadqvpopup .qv-content-holder{
     overflow-y:auto;
@@ -42,7 +48,7 @@
   .qv-content:after{
     position:absolute;
     content:"";
-    background:linear-gradient(to bottom,rgba(255,255,255,0) 86%,rgba(255,255,255,1) 100%);
+    background:linear-gradient(to bottom,transparent 86%,var(--g-chrome-bg, #fff) 100%);
     width: 100%;
     height: 100%;
     pointer-events: none;
