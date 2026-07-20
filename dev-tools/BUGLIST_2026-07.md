@@ -1946,6 +1946,18 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       Live-Test: Instagram Customize frisch -> 3 Bild-Kacheln
       (Depot) + 3 Video-Kacheln (video_1, autoplay muted); tab-
       vertical/ivwt ohne Zweitbild -> Depot-Bild statt Placeholder.
+      NACHTRAG Hoehen-Falle (User-Fund "keine Kacheln mehr"):
+      Die Ratio-Box der Kacheln haengt am <a> der INSTANZ-Pfade
+      (.instagramoff-item a{padding-top:var(--h-image-insta)}) und
+      theme.css macht JEDES img/video im Item absolut (Z9805) - die
+      B1-Fallback-Medien ohne <a>-Wrapper kollabierten auf 0 Hoehe
+      (Placeholder-DIV hatte dagegen eine eigene Box; deshalb sah
+      man mit Depot-Daten WENIGER als ohne!). FIX: .instagramoff-b1box
+      (position relative + padding-top var + overflow hidden) um alle
+      drei Fallback-Ausgaben (Bild, Video, Poster). Memory-Regel
+      bestaetigt: Fallback-Container brauchen IMMER eigene Ratio.
+      VERIFIKATION Nachtrag: Headless 3/3 - ALT Item 0px (Kollaps
+      reproduziert), NEU 300px-Box, Bild cover 300x300; Liquid OK.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer

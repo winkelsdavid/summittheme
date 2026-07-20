@@ -54,6 +54,15 @@
     position: relative;
     padding-top: var(--h-image-insta);
   }
+  /* B1-Fallback-Medien: die Ratio-Box haengt sonst am <a> der Instanz-Pfade
+     (.instagramoff-item a) und JEDES img/video im Item ist global absolut -
+     ohne eigene Box kollabiert der Depot-Fallback auf 0 Hoehe (#79-Nachtrag). */
+  .customstyle{{ section.id }} .instagramoff-b1box{
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding-top: var(--h-image-insta);
+  }
   .customstyle{{ section.id }} .instagramoff-placeholder .placeholder-svg{
     position: absolute;
     top: 0;
@@ -132,7 +141,7 @@
                 </a>
                 {%- else -%}
                 {%- capture b1_fb -%}{% render 'brand-image', handle: 'instagram-customize--image', position: b1_pos, width: 600, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
-                {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}<div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>{%- endif -%}
+                {%- if b1_fb != blank -%}<div class="instagramoff-b1box">{{ b1_fb }}</div>{%- else -%}<div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>{%- endif -%}
                 {%- endif -%}
               </div>
             </div>
@@ -163,10 +172,10 @@
                   --image_poster. Kette: Video -> Poster-Bild -> Placeholder. {%- endcomment -%}
               {%- capture b1_vid -%}{% render 'brand-video', handle: 'instagram-customize--video', position: b1_pos_v, autoplay: true, loop: true, muted: true, controls: false, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
               {%- if b1_vid != blank -%}
-              {{ b1_vid }}
+              <div class="instagramoff-b1box">{{ b1_vid }}</div>
               {%- else -%}
               {%- capture b1_fb -%}{% render 'brand-image', handle: 'instagram-customize--video--image_poster', position: b1_pos_v, width: 600, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
-              {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}<div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>{%- endif -%}
+              {%- if b1_fb != blank -%}<div class="instagramoff-b1box">{{ b1_fb }}</div>{%- else -%}<div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>{%- endif -%}
               {%- endif -%}
               {%- endif -%}
             </div>
