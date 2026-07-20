@@ -2619,6 +2619,15 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
 - [x] Newsletter Opacity Background (reported 21:47) = DUBLETTE #116
       (e2fe178).
 
+## 118. Product List Slider: Header-Defaults leer (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (30e0626). product-wrap-banner: Defaults
+      "Subtitle Top" + "Product list Banner wrap" geleert. Das dritte
+      markierte Feld (Description "NIGO WEAR") hatte KEINEN Theme-
+      Default -> Instanz-/Preset-Mapping-Wert (Summit-seitig, wie #96).
+      Banner-Teil-Defaults (Subtitle/Title Banner/discover now) nicht
+      markiert -> unangetastet. Render blank-tolerant (section-heading).
+      Live-Test: Sektion frisch hinzufuegen -> Header-Felder leer.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
