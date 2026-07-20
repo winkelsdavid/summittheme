@@ -36,7 +36,7 @@
                         {% if block.settings.time != blank %}
                         <div class="or-timeline__date pb-3 pb-lg-0 d-lg-inline-block d-block">{{block.settings.time}}</div>
                         {% endif %}
-                        {% if block.settings.link != blank %}
+                        {% if block.settings.link != blank and section.settings.button_text != blank %}
                         <a target="_blank" href="{{block.settings.link}}" title="{{ section.settings.button_text }}" class="mt-4 {{ section.settings.style_btn }}">{{section.settings.button_text}}</a>
                         {% endif %}
                         
@@ -310,8 +310,7 @@
     {
       "type": "text",
       "id": "button_text",
-      "label": "Button Text",
-      "default": "Read more"
+      "label": "Button Text"
     },
     {
         "type": "select",
@@ -441,8 +440,7 @@
         {
           "type": "url",
           "id": "link",
-          "label": "URL Link",
-          "default": "/collections/all"
+          "label": "URL Link"
         }
       ]
     }
@@ -460,9 +458,7 @@
             "image": "",
             "bg": "#75ce66",
             "title": "Title of block 1",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie mauris ac neque feugiat vestibulum placerat ut ligula. Pellentesque vehicula gravida eros dictum dapibus",
-            "time": "Jan 04",
-            "link": "shopify://collections/all"
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie mauris ac neque feugiat vestibulum placerat ut ligula. Pellentesque vehicula gravida eros dictum dapibus"
           }
         },
         {
@@ -471,9 +467,7 @@
             "image": "",
             "bg": "#c03b44",
             "title": "Title of block 2",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum.",
-            "time": "Jan 17",
-            "link": "shopify://collections/all"
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum."
           }
         },
         {
@@ -482,20 +476,7 @@
             "image": "",
             "bg": "#f0ca45",
             "title": "Title of block 3",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci.",
-            "time": "Feb 10",
-            "link": "shopify://collections/all"
-          }
-        },
-        {
-          "type": "milestone",
-          "settings": {
-            "image": "",
-            "bg": "#75ce66",
-            "title": "Title of block 4",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.",
-            "time": "Feb 28",
-            "link": "shopify://collections/all"
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis. Odit, itaque, deserunt corporis vero ipsum nisi eius odio natus ullam provident pariatur temporibus quia eos repellat consequuntur perferendis enim amet quae quasi repudiandae sed quod veniam dolore possimus rem voluptatum eveniet eligendi quis fugiat aliquam sunt similique aut adipisci."
           }
         }
       ]
