@@ -2601,6 +2601,24 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Newsletter OHNE Hintergrundbild -> Farbe sichtbar,
       Opacity-Regler daempft sie; mit Bild -> Bild verdeckt (gewollt).
 
+## 117. Before/After-Slider: Linie + Badges im Dark unsichtbar (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (aa7346f). beerslider.css, zwei Ursachen:
+      (1) Trennlinie border-right an var(--color-body) (Page-BG) ->
+      Dark schwarz auf dunklen Fotos unsichtbar -> fest #fff (Farbe
+      des immer weissen Handles). (2) Before/After-Badges (weisser
+      Chip) ohne Textfarbe -> erbten Section-Text (Dark weiss/weiss)
+      -> color:#000. Headless 6/6 (Dark-Repro + Light byte-identisch).
+      Live-Test: TECH DARK 2 Before/After -> weisse Linie + lesbare
+      Badges; Light unveraendert.
+
+## Redeliveries 20.07. Abend
+- [x] Testimonials Slider Border fehlt (reported 13:06, PETS-Push
+      01:17) = DUBLETTE #97 (Fix ~15 Uhr; quote_box_border + 4 Typ-
+      wechsel verifiziert vorhanden, seither auf P6-Mask-Ring #112
+      gehaertet).
+- [x] Newsletter Opacity Background (reported 21:47) = DUBLETTE #116
+      (e2fe178).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
