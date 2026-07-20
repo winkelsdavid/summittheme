@@ -57,6 +57,37 @@
     justify-content: center;
     background: var(--g-chrome-bg, #ffffff);
 }
+  {%- if section.settings.card_background != blank -%}
+  {%- comment -%} #115: Operator-Setting schlaegt die Chrome-Automatik; unterstuetzt
+      Solid UND Gradient (color_background). Leer = Regel entfaellt komplett
+      (Muster reviews-slider #83). {%- endcomment -%}
+  .custom_review{
+    background: {{ section.settings.card_background }};
+  }
+  {%- endif -%}
+  {%- assign tp_bc = section.settings.card_border_color -%}
+  {%- if tp_bc != blank and tp_bc != 'rgba(0,0,0,0)' -%}
+  {%- if tp_bc contains 'gradient' -%}
+  {%- comment -%} #113: Gradient-Ring als maskiertes Overlay (#112-Technik) -
+      malt NUR die 1px-Randzone, Karteninneres bleibt unberuehrt. {%- endcomment -%}
+  .custom_review{ position: relative; }
+  .custom_review::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:inherit;
+    padding:1px;
+    background:{{ tp_bc }};
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite:exclude;
+    pointer-events:none;
+  }
+  {%- else -%}
+  .custom_review{ border: 1px solid {{ tp_bc }}; }
+  {%- endif -%}
+  {%- endif -%}
   .c_testimonial-reviewbox-verified-text {
     display: flex;
     align-items: center;
@@ -572,6 +603,18 @@ window.addEventListener('resize', () => {
           "type": "text",
           "id": "label",
           "label": "Button Label"
+        },
+    {
+          "type": "color_background",
+          "id": "card_background",
+          "label": "Card Background",
+          "info": "Background of the review cards. Empty = Chrome Background from Theme Settings."
+        },
+    {
+          "type": "color_background",
+          "id": "card_border_color",
+          "label": "Border Color",
+          "info": "Border of the review cards. Empty = no border."
         },
     {
       "type":"header",
