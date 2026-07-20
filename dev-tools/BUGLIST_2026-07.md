@@ -37,6 +37,36 @@ macht die Deklaration „invalid at computed-value time" → Property fällt auf
 initial UND behält `!important` (schlägt Inline-Styles). Symptom: 0-Höhe-Boxen,
 unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
 
+**P5 — B1-Fallback-Triage „Depot füllt nicht" (#79 + Instagram-Saga 19./20.07.):**
+IMMER in dieser Reihenfolge prüfen, NIE beim ersten Verdacht stoppen — hier
+lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
+  (a) GESPEICHERT? Ungespeicherte Customizer-Entwuerfe sind von aussen nicht
+      renderbar; Editor rendert frisch injizierte Sektionen zudem mit
+      VERALTETEN Metaobject-Daten (erst Preview-Reload zeigt Fallbacks).
+      Editor-Saves auf summittheme/main werden vom naechsten Git-Push
+      ueberschrieben (templates liegen im Repo!) — Editor-Tests auf
+      Summit-Builds machen.
+  (b) DATEN? Handle existiert + Felder GEFUELLT + ACTIVE + Definition
+      storefront=PUBLIC_READ (GraphQL, read-Token kann alles davon).
+      Writer-Kontrakt beachten: erstes Media-Setting (image ODER video)
+      in Schema-Reihenfolge = Legacy-Handle `<section>--<block>`; video-
+      erste Bloecke tragen dort video_1..N (brand-VIDEO noetig, nicht
+      brand-image!); jedes weitere Media-Setting = eigenes Depot
+      `...--<settingId>` (je position 1 fuer Setting-Slots).
+  (c) SICHTBARKEIT? Wenn HTML das Medium enthaelt, aber nichts zu sehen
+      ist: Ratio-Box-Falle. Ratio haengt oft am INSTANZ-Wrapper (z. B.
+      `.instagramoff-item a{padding-top:var(--h)}`) und globale Regeln
+      setzen img/video absolut — Fallback-Medien ohne Wrapper
+      kollabieren auf 0. Fallback-Ausgaben brauchen IMMER eine eigene
+      Ratio-Box (Muster `.instagramoff-b1box`: relative + padding-top +
+      overflow hidden). Perfides Symptom: mit funktionierenden Daten
+      sieht man WENIGER als mit Placeholder (der hat eine eigene Box).
+  Beweis-Werkzeuge: Storefront-Render via Puppeteer+Passwort+preview_
+  theme_id (HTML nach CDN-Dateien durchsuchen — NIE nach Dateinamen-
+  Mustern, Summit re-pusht Pools mit neuen Namen!), Kachel-Hoehen per
+  getBoundingClientRect, notfalls temporaere b1-probe per Git-Push
+  (Muster in Scratchpad/Historie 47219a5).
+
 ---
 
 ## 1. Option Type: neue Werte hinzufügen
