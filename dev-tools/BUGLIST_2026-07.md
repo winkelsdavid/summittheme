@@ -2464,6 +2464,29 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: Image With Text neu hinzufuegen -> Style Button
       steht auf "Button Box", Button dunkel/lesbar.
 
+## 108. Slideshow 1+2: Hover-Textfarbe pro Button bei aktiver Hover-Animation (User-Feature 20.07.)
+- [~] UMGESETZT 2026-07-20 (0366507). WARUM: Bei enable_button_hover
+      sind die Block-Hover-Settings versteckt+neutralisiert (#44b/A6);
+      Hover-Zustand = globale Farben (var(--g-btn-hover-color), Sweep
+      var(--g-main)) bzw. #44-Pins auf Basisfarbe. Zwei Buttons pro
+      Slide (Solid hell + Outline weiss) koennen mit EINEM globalen
+      Wert nie beide kontrastieren.
+      NEU: color_button_hover_anim (+_2) je Button in SS1+SS2,
+      visible_if NUR bei Animation an (komplementaer zu Legacy-
+      Settings; SS2-Legacy-visible_if nachgezogen). Render: 8 Style-
+      bloecke, am Ende .btn.slideshow__btn*:hover{color:X !important}
+      (!important wegen #44-Underline-Pins; leer/transparent/Animation-
+      aus = byte-genau ALT).
+      SUMMIT-FOLGE: 2 NEUE Block-Settings je Sektion im Parse
+      nachziehen (color_button_hover_anim, color_button_hover_anim_2
+      in Slideshow 1 + Slideshow 2).
+      VERIFIKATION: Schema-JSON, liquidjs 8x4 Faelle, Edge headless
+      echte Kaskade (hover_1): Setting-Farbe gewinnt auch gegen
+      !important-Pin; ohne Setting ALT-Verhalten.
+      Live-Test: TECH DARK 2, Slideshow-Block: "Color Button Hover"
+      (bei aktiver Animation sichtbar) je Button setzen -> Hover-Text
+      nimmt die Farbe an; Feld leer -> wie bisher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
