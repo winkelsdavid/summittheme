@@ -2672,6 +2672,22 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
 - [x] Kollektion View-Icons + Filter-Checkboxen (reported 20.07.
       08:47 auf 01:17-Push) = DUBLETTE #86 (Fix 12:56).
 
+## 122. Shoppable Videos Slider: Editor-Add-Preview zeigte EINE Riesenkarte (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-21 (b738c15). Als SUMMIT/admin gemeldet
+      ("Preview-Asset"), tatsaechlich THEME (User-Korrektur): der
+      Shopify-Section-Picker rendert die Sektion LIVE mit Preset-
+      Daten in einem Frame OHNE Swiper-Init -> swiper-bundle gibt
+      Slides width:100% -> eine riesige Karte (P2-Familie).
+      FIX: Pre-Init-CSS via :not(.swiper-initialized):not(.swiper-
+      container-initialized) - Slides auf Init-Zielbreiten
+      (1.5/2.5/4.5 Karten + 24px margin). Hilft auch No-/Slow-JS.
+      MERKE: Editor-Add-Preview = Live-Preset-Render ohne JS-Init;
+      Sektionen brauchen ein sinnvolles Pre-Init-Layout.
+      Verifiziert headless (echtes swiper-bundle, 360px-Frame,
+      3 Checks inkl. Init-Deaktivierung der Regel).
+      Live-Test: Editor -> Abschnitt hinzufuegen -> Shoppable Videos
+      Slider hovern -> Preview zeigt mehrere Karten nebeneinander.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
