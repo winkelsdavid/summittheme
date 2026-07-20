@@ -2628,6 +2628,26 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       markiert -> unangetastet. Render blank-tolerant (section-heading).
       Live-Test: Sektion frisch hinzufuegen -> Header-Felder leer.
 
+## 119. Team Member: Social-Icons im Dark unsichtbar (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (8b4cbf2). Icon-Chips (alle 4 Styles) =
+      var(--g-color-heading) (Dark: WEISS); SVG-Icons im statischen
+      CSS hardcoded #fff -> weiss auf weiss. FIX: section-scoped
+      .smember-icon svg{color:var(--color-body,#fff)} = Gegenfarbe
+      des Chips (Light hell wie bisher, Dark dunkel); ID-Spezifitaet
+      schlaegt statische Regel.
+      Live-Test: TECH DARK 2 Team Member, alle 4 Styles -> Icons
+      dunkel auf weissem Chip sichtbar; Light unveraendert.
+
+## 120. Instagram Customize: Videos beim frischen Add unsichtbar (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-21 (1581e02). Preset spawnte 3 image + 3
+      video; leere video-Bloecke rendern per Welle-4-B1-Fallback
+      sofort Brand-Videos. enable_play_video=false wuerde nur
+      Autoplay stoppen -> Preset-video-Bloecke durch image ersetzt
+      (6x image, B1-gefuellt, null Videos); video-Blocktyp bleibt
+      manuell hinzufuegbar.
+      Live-Test: Sektion frisch hinzufuegen -> 6 Bild-Kacheln,
+      keine Videos; Video-Block manuell adden -> B1-Video erscheint.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
