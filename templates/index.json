@@ -1078,6 +1078,44 @@
         "mobile_padding_top": 20,
         "mobile_padding_bottom": 20
       }
+    },
+    "b1_ig_probe": {
+      "type": "instagram-customize",
+      "blocks": {
+        "b1_ig_i1": {
+          "type": "image",
+          "settings": {}
+        },
+        "b1_ig_v1": {
+          "type": "video",
+          "settings": {}
+        },
+        "b1_ig_i2": {
+          "type": "image",
+          "settings": {}
+        },
+        "b1_ig_v2": {
+          "type": "video",
+          "settings": {}
+        },
+        "b1_ig_i3": {
+          "type": "image",
+          "settings": {}
+        },
+        "b1_ig_v3": {
+          "type": "video",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "b1_ig_i1",
+        "b1_ig_v1",
+        "b1_ig_i2",
+        "b1_ig_v2",
+        "b1_ig_i3",
+        "b1_ig_v3"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -1094,6 +1132,7 @@
     "custom_instagram_marquee_bi87tf",
     "divider_advanced_jqTA6R",
     "featured_articles_AreczD",
-    "scrolling_text_JPmYzc"
+    "scrolling_text_JPmYzc",
+    "b1_ig_probe"
   ]
 }
