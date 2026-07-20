@@ -2589,6 +2589,20 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Card Background setzen -> Karten eigene Farbe/Verlauf;
       leer -> Chrome wie bisher.
 
+## 116. Newsletter: Background Color wirkungslos + Opacity Background (Bug-Sammler 20.07., 2 Splits)
+- [~] UMGESETZT 2026-07-20 (e2fe178). BUG: background_section
+      ("Background Color") existierte NUR im Schema - kein Render-
+      Konsument -> Farbe wirkte nie. FEATURE: "Opacity Background"
+      direkt darunter. Render: background-color auf .newsletter-
+      section-<id> (Grundfarbe UNTER Bild/B1 + Overlay; fuer Toenung
+      UEBER dem Bild weiterhin Background/Opacity Overlay), Deckkraft
+      via color_modify-Alpha (#109-Muster); opacity_background
+      (0-1, default 1). Leer/transparent = ALT. Schema-info erklaert
+      Sichtbarkeits-Semantik (Farbe hinter Cover-Bild unsichtbar).
+      Summit-Folge: neues Setting. Verifiziert: liquidjs 4 Faelle.
+      Live-Test: Newsletter OHNE Hintergrundbild -> Farbe sichtbar,
+      Opacity-Regler daempft sie; mit Bild -> Bild verdeckt (gewollt).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
