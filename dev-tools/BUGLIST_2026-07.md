@@ -2143,6 +2143,50 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: TECH DARK Kollektion -> View-Toggle-Striche hell
       sichtbar, Checkbox-Rahmen erkennbar; Default -> unveraendert.
 
+## 87. Search-Drawer "Suchen nach"-Button unsichtbar im Dark (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "dark mode search unsichtbar".
+      URSACHE: .predictive-search__item--term ist ein <button> OHNE
+      explizite background/color -> UA-Default-hellgrau; im echten
+      Drawer erbt der Button die helle Drawer-Textfarbe -> hell-auf-
+      hellgrau unsichtbar (Light: dunkler UA-Button-Text war lesbar).
+      FIX (component-predictive-search.css): background-color
+      rgba(var(--color-foreground),0.04) + color rgb(var(--color-
+      foreground)) - koppelt an die Theme-Foreground-Var (kippt mit
+      Preset), subtile Bar-Optik wie die vorgesehene Hover-Regel;
+      component-CSS laedt nach theme.css -> gewinnt deterministisch.
+      VERIFIKATION: Headless - NEU dark Kontrast 18.2, light 17.3
+      (beide klar lesbar, komponiert ueber Body-BG).
+      Live-Test: TECH DARK -> Suche oeffnen, tippen -> "Suchen nach"-
+      Bar hell lesbar; Default -> unveraendert.
+
+## 88. Delivery Date: "Box 2 Font Size Mobile" wirkungslos (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator: Setting aendert nichts,
+      "denke bei allen presets". URSACHE: Der Mobile-Media-Query
+      setzte .c_fast-delivery span HART auf font-size:12px - der
+      sichtbare Text steckt in diesem span, und .c_fast-delivery span
+      (Spezifitaet 0,1,1) ueberstimmt die Setting-Regel .c_fast-
+      delivery (0,1,0) bei box_2_font_size_mobile. Desktop war ok
+      (kein span-Font-Override).
+      FIX: das harte 12px auf {{ block.settings.box_2_font_size_mobile
+      }}px geroutet. VERIFIKATION: Headless - mobile span = 5px
+      (Setting-Wert); Liquid OK.
+      Live-Test: Delivery Date -> Box 2 Font Size Mobile -> Text der
+      unteren Box (Versand/Checkout) skaliert mobil.
+
+## 89. Promo Sale: im Tablet-View nicht zentriert (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "fuer tablet view zentrieren,
+      auf allen presets". URSACHE: Die Zentrier-Regel galt
+      @media (max-width:1049px) AND (min-width:768px) - die Spanne
+      553-767px (u.a. Shopifys 749px-Tablet-Preview!) war ungedeckt
+      -> dort space-between/linksbuendig.
+      FIX: untere Grenze (min-width:768) entfernt -> ganzer Sub-Desktop-
+      Bereich <=1049px zentriert; Desktop (>=1050) unveraendert
+      space-between.
+      VERIFIKATION: Headless - Promo @749/@900 justify-content:center,
+      @1300 bleibt space-between.
+      Live-Test: Tablet-Preview -> Promo-Box (Copy + Countdown)
+      mittig; Desktop -> Copy links / Countdown rechts wie gehabt.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

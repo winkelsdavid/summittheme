@@ -1219,7 +1219,10 @@ display:none;
                       .promo_c #countdown ul li span:first-child{
                         font-size:24px;
                       }
-                      @media (max-width:1049px) and (min-width:768px){
+                      /* #89: min-width:768 liess die 553-767px-Spanne (u.a. Shopifys
+                         749px-Tablet-Preview) ungedeckt -> dort linksbuendig. Untere
+                         Grenze entfernt: der ganze Sub-Desktop-Bereich zentriert. */
+                      @media (max-width:1049px){
                       .promo_c {
                           justify-content: center;
                       }
@@ -1770,7 +1773,10 @@ display:none;
                      .c_fast-delivery>span:nth-child(2) {
                         padding: 0 10px;
                     } .c_fast-delivery span{
-                      font-size:12px;
+                      /* #88: war hart 12px -> "Box 2 Font Size Mobile" wirkungslos,
+                         weil .c_fast-delivery span (hoehere Spezifitaet) die
+                         .c_fast-delivery-Setting-Regel ueberstimmt. Aufs Setting geroutet. */
+                      font-size:{{ block.settings.box_2_font_size_mobile }}px;
                     }
                     .c_order-date{
                       font-size:{{ block.settings.box_1_font_size_mobile }}px;
