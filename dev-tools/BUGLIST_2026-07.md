@@ -2688,6 +2688,20 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Editor -> Abschnitt hinzufuegen -> Shoppable Videos
       Slider hovern -> Preview zeigt mehrere Karten nebeneinander.
 
+## 123. Add-Preview-Audit nach #122: image-auto-slider gefixt, Rest sauber (proaktiv 21.07.)
+- [~] UMGESETZT 2026-07-21 (3f68256). Audit aller Swiper-Sektionen
+      auf den #122-Previewbug: image-auto-slider einziger weiterer
+      echter Fall (slidesPerView 2.8 mobil, kein Pre-Init-CSS) ->
+      gleiche :not(initialized)-Zielbreiten-Regel (2.8/2.5, 12px).
+      UNAUFFAELLIG: custom-reviews + product-recommendations
+      (slidesPerView auto + CSS-Breiten), reviews-slider + slideshows
+      (mobil 1 voll breit = Soll), quotes (CSS-Breiten), fc-1
+      (statisches Raster). .col-Familie: pre-init gleichverteilte
+      Karten (slider-artig, kein Riesenkarten-Look) - nicht angefasst
+      (P1-Minenfeld). Headless 3/3.
+      Live-Test: Add-Preview von Image With Auto Slider -> mehrere
+      Karten statt einer.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
