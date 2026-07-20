@@ -2501,6 +2501,21 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: TECH DARK 2 -> Scratch-Popup oeffnen -> Seite hinter
       dem Modal bleibt abgedunkelt sichtbar; Light unveraendert.
 
+## 110. Testimonial Slider Auto: Gradient fuer Box Border Color (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20 (6c41e33). border_color (Karten-Ring; #97
+      hatte nur stars_border_color) color -> color_background. Ring war
+      box-shadow 0 0 0 1px (kann kein Gradient) -> Gradient-Branch mit
+      border transparent + padding-box/border-box (#97-Technik).
+      ZWEI FALLEN: (a) Innen-Layer darf kein var() mit Farb-Fallback
+      sein (Multi-Layer-Shorthand wird sonst KOMPLETT verworfen) ->
+      card_background bzw. color_chrome_bg/#ffffff als Literal +
+      linear-gradient(c,c)-Wrap; (b) card_background-Override-Regel
+      bei Gradient-Border NICHT emittieren (uebermalte sonst den Ring).
+      Solid/leer byte-genau ALT. Summit-Folge: Typwechsel nachziehen.
+      VERIFIKATION: liquidjs 6 Faelle.
+      Live-Test: Box Border Color auf Verlauf -> Ring zeigt Gradient,
+      Karteninneres behaelt Farbe (auch mit gesetztem Card Background).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
