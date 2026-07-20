@@ -2235,6 +2235,14 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Picker -> Trennlinie im Gradient; Solid + Disable Border wie
       gehabt.
 
+## 92. Collection Image Hover: Preset 3 -> 2 Bloecke (Bug-Sammler 18.07., PETS)
+- [~] UMGESETZT 2026-07-20. Operator: "Wenn neu hinzugefuegt, 3 Bloecke,
+      sollen 2 sein, bei allen Presets." Section = featured-collections-4
+      (Editor-Label "Collection Image Hover"). Preset-blocks von 3x auf
+      2x item_collection. Parse-safe (kein Rename), Bestandsinstanzen
+      unberuehrt. VERIFIKATION: Schema OK, Preset zaehlt 2.
+      Live-Test: Sektion neu hinzufuegen -> 2 Bloecke.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
