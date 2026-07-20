@@ -14,7 +14,16 @@
 }
 .beer-reveal {
     position: relative;
-    border-right:2px solid var(--color-body);
+    /* #117: fest Weiss statt var(--color-body) - die Linie hing an der
+       Page-Hintergrundfarbe und war in Dark-Presets (Body schwarz) auf den
+       Fotos unsichtbar. Weiss = Farbe des (immer weissen) Handles. */
+    border-right:2px solid #fff;
+}
+/* #117: Badge-Text immer dunkel - die Before/After-Labels (weiss-transluzenter
+   Chip) erbten die Section-Textfarbe und waren in Dark-Presets weiss auf weiss. */
+.beer-reveal[data-beer-label]:after,
+.beer-slider[data-beer-label]:after{
+    color:#000;
 }
 .beer-handle{
     width: 40px;
