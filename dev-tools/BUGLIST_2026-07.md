@@ -2571,15 +2571,13 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: je Sektion Border auf Verlauf -> Linien/Ring im
       Gradient; leer = wie vorher.
 
-## 114. Product Overview: Border Color (Sektionsrahmen) mit Gradient (Bug-Sammler 20.07.)
-- [~] UMGESETZT 2026-07-20 (8e03736). Report ohne Screenshot ->
-      als Rahmen um die GESAMTE Sektion interpretiert (additiv,
-      leer = kein Rahmen). section_border_color (color_background)
-      auf #ProductSection-<id>: solid border 1px, Gradient P6-Ring
-      (z-index 2, pointer-events none). Summit-Folge: neues Setting.
-      Live-Test: Setting fuellen -> Rahmen um die Sektion; falls der
-      Operator etwas ANDERES meinte (z.B. Media-Border), Follow-up
-      mit Screenshot abwarten.
+## 114. Product Overview: Border Color mit Gradient — ZURUECKGENOMMEN
+- [x] REVERTIERT 2026-07-20 auf User-Anweisung (Revert von 8e03736;
+      Interpretation "Rahmen um die ganze Sektion" war geraten, Report
+      hatte keinen Screenshot). KEIN section_border_color-Setting mehr,
+      KEINE Summit-Folge. Offen bis der Operator praezisiert, WELCHE
+      Border in Product Overview gemeint ist (Follow-up mit Screenshot
+      abwarten, dann mit P6-Technik umsetzen).
 
 ## 115. Testimonials Trustpilot: Card Background eigene Option (Bug-Sammler 20.07.)
 - [~] UMGESETZT 2026-07-20 (mit #113b committed). card_background
