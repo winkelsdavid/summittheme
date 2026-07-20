@@ -1284,7 +1284,19 @@ margin-right:auto;
                     .btn-underline.slideshow__btn{{ block.id }}:hover{
                       color:{{ btn1_hover_color }} !important;
                     }
-                  </style>
+                  
+                {% if settings.enable_button_hover %}
+                {%- assign btn1_anim_color = block.settings.color_button_hover_anim -%}
+                {%- if btn1_anim_color != blank and btn1_anim_color != 'rgba(0,0,0,0)' -%}
+                /* #108: Hover-Textfarbe bei aktiver globaler Hover-Animation (pro Button) -
+                   schlaegt die globale var(--g-btn-hover-color)-Regel und die
+                   #44-Basisfarben-Pins (daher !important, eng gescoped). */
+                .btn.slideshow__btn{{ block.id }}:hover{
+                  color:{{ btn1_anim_color }} !important;
+                }
+                {%- endif -%}
+                {% endif %}
+                </style>
                   <div class="pb-1">
                   <a href="{{ block.settings.button_link }}" class="btn slideshow__btn slideshow__btn{{ block.id }} {{ block.settings.stylebtns }}">
                     <span>{{ block.settings.button_label }}</span>
@@ -1367,7 +1379,19 @@ margin-right:auto;
                       color:{{ btn2_hover_color }} !important;
                       {% comment %} border-bottom-color:  {{ block.settings.bg_button_hover }} !important; {% endcomment %}
                     }
-                  </style>
+                  
+                {% if settings.enable_button_hover %}
+                {%- assign btn2_anim_color = block.settings.color_button_hover_anim_2 -%}
+                {%- if btn2_anim_color != blank and btn2_anim_color != 'rgba(0,0,0,0)' -%}
+                /* #108: Hover-Textfarbe bei aktiver globaler Hover-Animation (pro Button) -
+                   schlaegt die globale var(--g-btn-hover-color)-Regel und die
+                   #44-Basisfarben-Pins (daher !important, eng gescoped). */
+                .btn.slideshow__btn-2{{ block.id }}:hover{
+                  color:{{ btn2_anim_color }} !important;
+                }
+                {%- endif -%}
+                {% endif %}
+                </style>
                   <div class="pb-1">
                     <div class="slideshow__btn">
                     <a href="{{ block.settings.button_link_2 }}" class="btn  slideshow__btn-2{{ block.id }} {{ block.settings.stylebtns_2 }}">
@@ -1612,7 +1636,19 @@ margin-right:auto;
                   color:{{ btn1_hover_color }} !important;
                   border-bottom-color:  {{ btn1_hover_bg | default: block.settings.bg_button }} !important;
                 }
-              </style>
+              
+                {% if settings.enable_button_hover %}
+                {%- assign btn1_anim_color = block.settings.color_button_hover_anim -%}
+                {%- if btn1_anim_color != blank and btn1_anim_color != 'rgba(0,0,0,0)' -%}
+                /* #108: Hover-Textfarbe bei aktiver globaler Hover-Animation (pro Button) -
+                   schlaegt die globale var(--g-btn-hover-color)-Regel und die
+                   #44-Basisfarben-Pins (daher !important, eng gescoped). */
+                .btn.slideshow__btn{{ block.id }}:hover{
+                  color:{{ btn1_anim_color }} !important;
+                }
+                {%- endif -%}
+                {% endif %}
+                </style>
               <div>
               <a href="{{ block.settings.button_link }}" class="btn  slideshow__btn{{ block.id }} {{ block.settings.stylebtns }}">
                 <span>{{ block.settings.button_label }}</span>
@@ -1681,7 +1717,19 @@ margin-right:auto;
                   color:{{ btn2_hover_color }} !important;
                   border-bottom-color:  {{ btn2_hover_bg | default: block.settings.bg_button_2 }} !important;
                 }
-              </style>
+              
+                {% if settings.enable_button_hover %}
+                {%- assign btn2_anim_color = block.settings.color_button_hover_anim_2 -%}
+                {%- if btn2_anim_color != blank and btn2_anim_color != 'rgba(0,0,0,0)' -%}
+                /* #108: Hover-Textfarbe bei aktiver globaler Hover-Animation (pro Button) -
+                   schlaegt die globale var(--g-btn-hover-color)-Regel und die
+                   #44-Basisfarben-Pins (daher !important, eng gescoped). */
+                .btn.slideshow__btn-2{{ block.id }}:hover{
+                  color:{{ btn2_anim_color }} !important;
+                }
+                {%- endif -%}
+                {% endif %}
+                </style>
               <div>
                 <a href="{{ block.settings.button_link_2 }}" class="btn slideshow__btn-2{{ block.id }} {{ block.settings.stylebtns_2 }}">
                   <span>{{ block.settings.button_label_2 }}</span>
@@ -2722,6 +2770,13 @@ margin-right:auto;
           "visible_if":"{{ settings.enable_button_hover == false }}"
         },
         {
+          "type": "color",
+          "id": "color_button_hover_anim",
+          "label": "Color Button Hover",
+          "info": "Hover text color while the global button hover animation is enabled. Empty = keep base text color.",
+          "visible_if":"{{ settings.enable_button_hover }}"
+        },
+        {
           "type": "header",
           "content": "Button 2"
         },
@@ -2784,6 +2839,13 @@ margin-right:auto;
           "label": "Color Button Hover",
           "default": "#ffffff",
           "visible_if":"{{ settings.enable_button_hover == false }}"
+        },
+        {
+          "type": "color",
+          "id": "color_button_hover_anim_2",
+          "label": "Color Button Hover",
+          "info": "Hover text color while the global button hover animation is enabled. Empty = keep base text color.",
+          "visible_if":"{{ settings.enable_button_hover }}"
         },
          {
           "type": "checkbox",
