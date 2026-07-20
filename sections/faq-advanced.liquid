@@ -83,6 +83,11 @@
 .accordion {
   border-bottom: 1px solid var(--accordion-border);
   {%- if section.settings.border_color contains 'gradient' -%}
+  {%- comment -%} #111 (P4): var(--accordion-border) enthaelt hier den GRADIENT ->
+      "1px solid <gradient>" ist invalid at computed-value time, die ganze
+      border-bottom-Deklaration faellt weg und border-image hat keine Flaeche.
+      Basis-Border mit validem transparent neu setzen, DANN border-image. {%- endcomment -%}
+  border-bottom: 1px solid transparent;
   border-image: {{ section.settings.border_color }} 1;
   {%- endif -%}
 }
