@@ -2187,6 +2187,32 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: Tablet-Preview -> Promo-Box (Copy + Countdown)
       mittig; Desktop -> Copy links / Countdown rechts wie gehabt.
 
+## 90. Slider-Navigations-Pfeile unsichtbar im Dark (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator: "Dark Mode: Arrows unsichtbar,
+      auch Testimonials Trustpilot, vermutlich noch anderswo". PATTERN:
+      Chrome/Dark (#63/#64). Screenshot = Blog Posts (weisse Kreise
+      ohne sichtbaren Pfeil).
+      URSACHE: --g-color-carousel = color_body_headings (im Dark hell).
+      Die GLOBALE Swiper-Flaeche ist seit #63 chrome-routed (dunkler
+      Kreis -> heller Glyph sichtbar), ABER SECHS Arrow-Flaechen waren
+      HART weiss -> im Dark hell-auf-hell:
+      - 3 Scroll-Snap-Arrows (background:#fff + glyph var(--g-color-
+        carousel)): featured-articles (blogscroll), instagram-customize
+        (instascroll), logo-carousel (logoscroll).
+      - 3 _r-Swiper-Arrows (background-color:white + svg fill chrome-
+        text): custom-reviews (= Testimonials Trustpilot!), reviews-
+        slider, custom-shoppable-video. NB: #64 hatte hier nur den
+        Glyph (SVG-fill) auf chrome-text geroutet, die FLAECHE blieb
+        weiss - Halb-Fix; jetzt komplett.
+      FIX: alle 6 Arrow-Flaechen background -> var(--g-chrome-bg,
+      <weiss>). Light byte-identisch (Chrome-Var nur im Dark gesetzt),
+      Dark dunkle Kreise -> heller Glyph/SVG sichtbar.
+      VERIFIKATION: Headless 12/12 - je Sektion Light-Flaeche #fff
+      identisch + Dark #000; alle 6 Sektionen Liquid OK.
+      Live-Test: TECH DARK -> Blog Posts / Testimonials Trustpilot /
+      Instagram / Logo-Carousel -> Pfeile sichtbar (dunkler Kreis,
+      heller Pfeil); Default -> weisse Kreise wie gehabt.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
