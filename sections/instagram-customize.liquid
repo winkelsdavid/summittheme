@@ -158,8 +158,16 @@
               </video>
               </a>
               {%- else -%}
-              {%- capture b1_fb -%}{% render 'brand-image', handle: 'instagram-customize--video', position: b1_pos_v, width: 600, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
+              {%- comment -%} Welle-4-Kontrakt: Legacy-Handle des video-Blocks traegt
+                  video_1..N (erstes Media-Setting = Video); Poster liegen unter
+                  --image_poster. Kette: Video -> Poster-Bild -> Placeholder. {%- endcomment -%}
+              {%- capture b1_vid -%}{% render 'brand-video', handle: 'instagram-customize--video', position: b1_pos_v, autoplay: true, loop: true, muted: true, controls: false, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
+              {%- if b1_vid != blank -%}
+              {{ b1_vid }}
+              {%- else -%}
+              {%- capture b1_fb -%}{% render 'brand-image', handle: 'instagram-customize--video--image_poster', position: b1_pos_v, width: 600, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
               {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}<div class="instagramoff-placeholder">{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</div>{%- endif -%}
+              {%- endif -%}
               {%- endif -%}
             </div>
           </div>

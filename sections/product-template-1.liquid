@@ -756,9 +756,14 @@ display:none;
                       {% endif  %}
                       {% if ri2 != blank %}
                         <img src="{{ ri2 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                      {% else %}
+                        {%- assign b1_rv_style2 = '--margin:-' | append: block.settings.images_margin | append: 'px;--width:' | append: block.settings.images_size | append: 'px;--width-mobile:' | append: block.settings.images_size_mobile | append: 'px' -%}
+                        {% render 'brand-image', handle: 'product-template-1--review_images--image_2', position: 1, width: 100, style: b1_rv_style2 %}
                       {% endif  %}
                       {% if ri3 != blank %}
                         <img src="{{ ri3 | img_url:"100x" }}" loading="lazy" style='--margin:-{{ block.settings.images_margin }}px;--width:{{ block.settings.images_size }}px;--width-mobile:{{ block.settings.images_size_mobile }}px'>
+                      {% else %}
+                        {% render 'brand-image', handle: 'product-template-1--review_images--image_3', position: 1, width: 100, style: b1_rv_style2 %}
                       {% endif  %}
                     </div>
                     <div class="reviews_text">
@@ -1571,7 +1576,16 @@ display:none;
                         {% else %}
                         {% if videos_found == false %}
                         {% if b1_pos_vids < 4 %}
-                        {%- capture b1_fb -%}{% render 'brand-image', handle: 'product-template-1--videos', position: b1_pos_vids, width: 500 %}{%- endcapture -%}
+                        {%- comment -%} Welle-4-Kontrakt: image_1 = Legacy-Handle,
+                            image_2/3 = eigene Sekundaer-Depots (je position 1). {%- endcomment -%}
+                        {%- liquid
+                          if b1_pos_vids == 1
+                            assign b1_vids_handle = 'product-template-1--videos'
+                          else
+                            assign b1_vids_handle = 'product-template-1--videos--image_' | append: b1_pos_vids
+                          endif
+                        -%}
+                        {%- capture b1_fb -%}{% render 'brand-image', handle: b1_vids_handle, position: 1, width: 500 %}{%- endcapture -%}
                         <div class="video_item">
                           <div class="video_item_c">
                               {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}

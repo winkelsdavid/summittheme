@@ -960,7 +960,7 @@ margin-right:auto;
             </video>
           </div>
         {%- elsif block.settings.image == blank and block.settings.image_mobile == blank -%}
-        {%- capture b1_fb -%}{% render 'brand-image', handle: 'slideshow-1--slide', position: forloop.index, width: 1920, class: 'scale-in lazyloaded' %}{%- endcapture -%}
+        {%- capture b1_fb -%}{% render 'brand-image', handle: 'slideshow-1--slide--image', position: forloop.index, width: 1920, class: 'scale-in lazyloaded' %}{%- endcapture -%}
         {%- if b1_fb != blank -%}
         <div class="slideshow__image box ratio-container js">{{ b1_fb }}</div>
         {%- else -%}
@@ -1001,7 +1001,7 @@ margin-right:auto;
               }}
             {%- endif -%}
           {% else %}
-              {%- capture b1_fb -%}{% render 'brand-image', handle: 'slideshow-1--slide', position: forloop.index, width: 1920, class: 'scale-in lazyloaded' %}{%- endcapture -%}
+              {%- capture b1_fb -%}{% render 'brand-image', handle: 'slideshow-1--slide--image', position: forloop.index, width: 1920, class: 'scale-in lazyloaded' %}{%- endcapture -%}
               {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
           {% endif %}
         </div>

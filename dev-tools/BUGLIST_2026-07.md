@@ -1898,6 +1898,55 @@ unsichtbare Bilder. Bei `var()`-Nutzung immer Definition mitprüfen.
       am Textknoten. Live-Test: Reviews Stars Trustpilot -> Text Color
       aendern -> "Exzellent" UND "4,8 von 5" faerben sich gemeinsam.
 
+## 79. B1 Welle-4-Leseseite: Video-Depots + Sekundaer-Kontrakt (Briefing "#70", 20.07.)
+- [~] UMGESETZT 2026-07-20. NEUER Writer-Kontrakt (generalisiert, laeuft
+      bei jedem Push): erstes Media-Setting (image_picker ODER video)
+      in Schema-Reihenfolge = Legacy-Handle <section>--<block>; jedes
+      weitere Media-Setting = <section>--<block>--<settingId>. Folge:
+      video-erste Bloecke tragen im Legacy jetzt video_1..N.
+      DATENLAGE VERIFIZIERT (56 Handles): instagram-customize--video
+      = video_1(+pool 1), --video--image_poster = image_1; pt1
+      --review_images nur noch image_1 (image_2/3 in eigenen Depots!),
+      --videos analog, --image--video = video_1; slideshow-1/2
+      --slide--image(+--image_mobile) NEU; tab-vertical--tab--image2
+      (image_1..3, pool 3); ivwt --image_block--image2.
+      UMBAUTEN (7 Dateien):
+      (1) brand-video: pool_size-Modulo wie brand-image (position ->
+          video_<idx>, Fallback video_1) - rueckwaerts-kompatibel.
+      (2) instagram-customize video-Block: Flip auf brand-video
+          (Legacy, position b1_pos_v) -> Poster via brand-image
+          (--image_poster) -> Placeholder.
+      (3+4) slideshow-1/2: Bild-Fallback-Handle auf --slide--image
+          (Legacy gehoert dem video-Setting; hielt nur Alt-Bilder und
+          bricht beim naechsten Writer-Lauf).
+      (5) pt1 videos-Block: Setting-Position -> Handle-Mapping
+          (pos1=Legacy, pos2/3=--videos--image_2/3, je position 1) -
+          vorher lief pos2/3 per Modulo IMMER auf image_1.
+      (6) pt1 review_images: NEUE ri2/ri3-else-Zweige auf
+          --review_images--image_2/3 (hatten nie Fallbacks).
+      (7) tab-vertical image2 + ivwt image2: Sekundaer-Anschluss
+          (else vor Placeholder, Muster Big-Image bzw. Container).
+      KEIN FLIP (verifiziert Bild-first, Daten belegen es):
+      image-auto-slider--video traegt weiterhin image_1..4 (Poster
+      ist erstes Media-Setting) - bestehender brand-image-Call korrekt.
+      custom-shoppable-video: Code laeuft schon auf brand-video ✓.
+      RUECKMELDUNGEN AN SUMMIT: Depots fehlen weiterhin fuer
+      custom-shoppable-video--product und sticky-video-product;
+      slideshow-1--slide Legacy haelt Alt-Bilder mit inkonsistenter
+      pool_size(2)/6 Bildern - beim naechsten Writer-Lauf klaeren;
+      pt1 --image--video (video_1) noch NICHT angeschlossen (Video-
+      Sekundaer am pt1-Banner-Block = eigener Folgeauftrag falls
+      gewuenscht). Editor-Preview-Artefakt dokumentiert: frisch
+      injizierte Sektionen rendern im Customizer mit veralteten
+      Metaobject-Daten - erst Preview-Reload zeigt Fallbacks;
+      Kundenfall nicht betroffen (Bild-Pfad E2E-bewiesen).
+      VERIFIKATION: 6 Sektionen Liquid-parse OK, brand-video
+      tag-balanced, Marker-Check alle 7 Dateien; Live-E2E via
+      Probe-Sektion auf der Sync-Homepage (b1_ig_probe) nach Push.
+      Live-Test: Instagram Customize frisch -> 3 Bild-Kacheln
+      (Depot) + 3 Video-Kacheln (video_1, autoplay muted); tab-
+      vertical/ivwt ohne Zweitbild -> Depot-Bild statt Placeholder.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

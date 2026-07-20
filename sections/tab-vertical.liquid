@@ -227,9 +227,10 @@
                                 </div>
                             </div>
                         {%- else -%}
+                            {%- capture b1_fb2 -%}{% render 'brand-image', handle: 'tab-vertical--tab--image2', position: forloop.index, width: 1066, class: 'image-content__image scale-in lazyloaded' %}{%- endcapture -%}
                             <div class="tab-image__small">
                                 <div class="image-content__image">
-                                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                                    {%- if b1_fb2 != blank -%}{{ b1_fb2 }}{%- else -%}{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                                 </div>
                             </div>
                         {%- endif -%}

@@ -5,10 +5,15 @@
 {%- liquid
   assign v = instance
   if v == blank
+    assign b1v_n = metaobjects.section_fallback[handle]['pool_size'].value | times: 1
+    if b1v_n < 1
+      assign b1v_n = 1
+    endif
     assign b1v_pos = position | default: 1
-    assign b1v_key = 'video_' | append: b1v_pos
+    assign b1v_idx = b1v_pos | minus: 1 | modulo: b1v_n | plus: 1
+    assign b1v_key = 'video_' | append: b1v_idx
     assign v = metaobjects.section_fallback[handle][b1v_key].value
-    if v == blank and b1v_pos != 1
+    if v == blank and b1v_idx != 1
       assign v = metaobjects.section_fallback[handle]['video_1'].value
     endif
   endif

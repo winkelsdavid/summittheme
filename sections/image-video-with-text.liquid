@@ -204,9 +204,14 @@
                               </div>
                             </div>
                             {%- else -%}
+                              {%- capture b1_fb2 -%}{% render 'brand-image', handle: 'image-video-with-text--image_block--image2', position: b1_pos, width: 1066, class: 'scale-in lazyloaded' %}{%- endcapture -%}
+                              {%- if b1_fb2 != blank -%}
+                              <div class="image-content__image-container image-content-2">{{ b1_fb2 }}</div>
+                              {%- else -%}
                               <div class="image-content__image">
                               {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
                               </div>
+                              {%- endif -%}
                         {%- endif -%}
                         </div>
                     </div>
