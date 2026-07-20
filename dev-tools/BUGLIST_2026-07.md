@@ -2070,6 +2070,28 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
       Live-Test: TECH DARK -> Scratch Popup oeffnen -> Texte hell
       lesbar, Backdrop dunkel; Default-Preset -> unveraendert.
 
+## 84. Image With Auto Slider: "Style Button" wird nicht uebernommen (Bug-Sammler 20.07.)
+- [~] UMGESETZT 2026-07-20. Operator: Style Button "Button Box"
+      gewaehlt, Button rendert aber nackt/als Umriss.
+      URSACHE (per Admin-API im Template gelesen, NICHT geraten): der
+      GESPEICHERTE style_btn-Wert ist ein LEERER String "" (vom Preset-
+      Mapping geschrieben, nicht der Schema-Default). Das Schema hat
+      keine Leer-Option -> Shopify-Editor zeigt als Fallback die 1.
+      Option "Button Box" an, gerendert kam aber class="btn " (nackt).
+      Panel-Anzeige und Render widersprachen sich -> "wird nicht
+      uebernommen". KEIN CSS-/Markup-Bug.
+      FIX: {{ style_btn | default: 'btn-theme' }} in allen 3 identischen
+      Markup-Stellen (image-auto-slider, image-with-text, product-with-
+      image - gleiche Copy-Paste-Kette, gleiche latente Luecke). Liquid-
+      default greift bei leerem String (verifiziert) -> Render == Panel-
+      Anzeige (1. Option); echte Werte passieren unveraendert.
+      VERIFIKATION: Liquid-default-Semantik (""->btn-theme, sonst
+      pass-through) + 3 Sektionen Liquid-parse OK.
+      RUECKMELDUNG SUMMIT: Preset-Mapping schreibt leere style_btn -
+      idealerweise den Schema-Default (btn-theme) statt "" setzen.
+      Live-Test: Image With Auto Slider Text-Block -> Button gefuellt
+      (Button Box); andere Styles bleiben waehlbar.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

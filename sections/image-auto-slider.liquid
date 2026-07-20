@@ -183,7 +183,11 @@
                     {%- endif -%}
                     {%- if block.settings.button != blank -%}
                       <div class="mt-4">
-                        <a href="{{ block.settings.link }}" class="btn {{ block.settings.style_btn }} ">
+                        {%- comment -%} #84: Preset-Mapping schreibt style_btn="" (leer);
+                            Schema hat keine Leer-Option -> Editor zeigt die 1. Option
+                            "Button Box" an, gerendert kam aber nur .btn (nackt). Leeren
+                            Wert auf die angezeigte 1. Option (btn-theme) defaulten. {%- endcomment -%}
+                        <a href="{{ block.settings.link }}" class="btn {{ block.settings.style_btn | default: 'btn-theme' }} ">
                           {{ block.settings.button }}
                         </a>
                       </div>
