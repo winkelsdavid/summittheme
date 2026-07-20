@@ -97,15 +97,31 @@ min-width:340px;
 }
 .c-{{ section.id }} .review_marquee_item {
     {%- if section.settings.quote_box_border contains 'gradient' -%}
-    {%- comment -%} Shorthand: nur letzte Layer darf Farbe sein - solide Innenfarbe als linear-gradient(c,c). {%- endcomment -%}
-    {%- assign mq_bgl = section.settings.quote_box_color | default: '#ffffff' -%}
-    {%- unless mq_bgl contains 'gradient' -%}{%- capture mq_bgl -%}linear-gradient({{ mq_bgl }},{{ mq_bgl }}){%- endcapture -%}{%- endunless -%}
+    {%- comment -%} #112: Mask-Ring statt Doppel-Background (blutete durch
+        halbtransparente Innenfarben). Innen bleibt exakt ALT. {%- endcomment -%}
     border: 1px solid transparent;
-    background: {{ mq_bgl }} padding-box, {{ section.settings.quote_box_border }} border-box;
+    position: relative;
+    background: {{ section.settings.quote_box_color }};
     {%- else -%}
     background: {{  section.settings.quote_box_color }};
     {%- endif -%}
 }
+{%- if section.settings.quote_box_border contains 'gradient' -%}
+/* #112: Gradient-Ring als maskiertes Overlay - nur die 1px-Randzone. */
+.c-{{ section.id }} .review_marquee_item::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1px;
+  background:{{ section.settings.quote_box_border }};
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+}
+{%- endif -%}
 .badges_verified {
     width: 20px;
     border-radius:0!important;

@@ -59,32 +59,36 @@
        Review-Text (.cs_review, flex:1) ist die einzige variable Mitte. */
     height:auto;
     {%- if section.settings.border_color contains 'gradient' -%}
-    {%- comment -%} #110: Gradient-Ring statt box-shadow (kann kein Gradient) -
-        Doppel-Background padding-box/border-box (Technik #97). Innen-Layer darf
-        kein var() mit Farb-Fallback sein (im Multi-Layer-Shorthand ungueltig) ->
-        card_background bzw. Chrome-/Weiss-Literal, solide Farbe als
-        linear-gradient(c,c) gewrappt (nur letzte Layer darf Farbe sein). {%- endcomment -%}
-    {%- assign rs_card_bg = section.settings.card_background -%}
-    {%- if rs_card_bg == blank -%}
-      {%- assign rs_card_bg = settings.color_chrome_bg -%}
-      {%- if rs_card_bg == blank or rs_card_bg == 'rgba(0,0,0,0)' -%}{%- assign rs_card_bg = '#ffffff' -%}{%- endif -%}
-    {%- endif -%}
-    {%- unless rs_card_bg contains 'gradient' -%}{%- capture rs_card_bg -%}linear-gradient({{ rs_card_bg }},{{ rs_card_bg }}){%- endcapture -%}{%- endunless -%}
-    border: 1px solid transparent;
-    background: {{ rs_card_bg }} padding-box, {{ section.settings.border_color }} border-box;
+    {%- comment -%} #110/#112: Gradient-Ring als maskiertes ::before-Overlay
+        (box-shadow kann kein Gradient; Doppel-Background blutete durch
+        halbtransparente Innenfarben). Innen bleibt exakt ALT - der Ring
+        liegt wie der alte box-shadow-Spread 1px AUSSERHALB. {%- endcomment -%}
+    position: relative;
+    background: var(--g-chrome-bg, #ffffff);
     {%- else -%}
     box-shadow: {{ section.settings.border_color }} 0px 0px 0px 1px;
     background: var(--g-chrome-bg, #ffffff);
     {%- endif -%}
     align-items: flex-start;
 }
-  {%- assign rs_border_is_gradient = false -%}
-  {%- if section.settings.border_color contains 'gradient' -%}{%- assign rs_border_is_gradient = true -%}{%- endif -%}
-  {%- if section.settings.card_background != blank and rs_border_is_gradient == false -%}
+  {%- if section.settings.border_color contains 'gradient' -%}
+  .review-slider-i::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:inherit;
+    padding:1px;
+    background:{{ section.settings.border_color }};
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite:exclude;
+    pointer-events:none;
+  }
+  {%- endif -%}
+  {%- if section.settings.card_background != blank -%}
   {%- comment -%} Operator-Setting schlaegt die Chrome-Automatik; unterstuetzt
-      Solid UND Gradient (color_background). Leer = Regel entfaellt komplett.
-      Bei Gradient-Border NICHT emittieren - card_background steckt dort schon
-      in der padding-box-Layer, diese Regel wuerde den Ring uebermalen (#110). {%- endcomment -%}
+      Solid UND Gradient (color_background). Leer = Regel entfaellt komplett. {%- endcomment -%}
   .review-slider-i {
     background: {{ section.settings.card_background }};
   }
@@ -268,11 +272,11 @@
     align-items: center;
     flex-wrap: wrap;
     {%- if section.settings.stars_border_color contains 'gradient' -%}
-    {%- comment -%} Shorthand: nur letzte Layer darf Farbe sein - solide Innenfarbe als linear-gradient(c,c). {%- endcomment -%}
-    {%- assign rs_bgl = section.settings.stars_background | default: settings.branding_color -%}
-    {%- unless rs_bgl contains 'gradient' -%}{%- capture rs_bgl -%}linear-gradient({{ rs_bgl }},{{ rs_bgl }}){%- endcapture -%}{%- endunless -%}
+    {%- comment -%} #112: Mask-Ring statt Doppel-Background (blutete durch
+        halbtransparente Innenfarben). Innen bleibt exakt ALT. {%- endcomment -%}
     border:1px solid transparent;
-    background:{{ rs_bgl }} padding-box, {{ section.settings.stars_border_color }} border-box;
+    position:relative;
+    background:var(--background);
     {%- else -%}
     border:1px solid var(--border-color);
     background:var(--background);
@@ -282,6 +286,22 @@
     margin-bottom:.5rem;
     width:fit-content;
 }
+{%- if section.settings.stars_border_color contains 'gradient' -%}
+/* #112: Gradient-Ring als maskiertes Overlay - nur die 1px-Randzone, Innen unberuehrt. */
+.review-slider-is-{{ section.id }} .rating-custom-2::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1px;
+  background:{{ section.settings.stars_border_color }};
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+}
+{%- endif -%}
 .review-slider-is-{{ section.id }} .rating-custom-2.text-center{
   margin:0 auto;
   margin-bottom:.5rem;

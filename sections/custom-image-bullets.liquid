@@ -52,9 +52,11 @@
     gap: 12px;
     padding: 16px;
     {%- if section.settings.card_border_color contains 'gradient' -%}
-    {%- comment -%} Shorthand: nur letzte Layer darf Farbe sein - solide Innenfarbe als linear-gradient(c,c). {%- endcomment -%}
+    {%- comment -%} #112: Mask-Ring statt Doppel-Background (blutete durch
+        halbtransparente Innenfarben). Innen bleibt exakt ALT. {%- endcomment -%}
     border: 1px solid transparent;
-    background: linear-gradient({{ section.settings.card_bg_color }},{{ section.settings.card_bg_color }}) padding-box, {{ section.settings.card_border_color }} border-box;
+    position: relative;
+    background: {{ section.settings.card_bg_color }};
     {%- else -%}
     background: {{ section.settings.card_bg_color }};
     border: 1px solid {{ section.settings.card_border_color }};
@@ -62,6 +64,22 @@
     {% if settings.enable_radius_allimg %}border-radius:calc(0.2rem * {{ settings.radius_allimg_range }}) !important;{% endif %}
     align-items: flex-start;
   }
+  {%- if section.settings.card_border_color contains 'gradient' -%}
+  /* #112: Gradient-Ring als maskiertes Overlay - nur die 1px-Randzone. */
+  .c-{{ section.id }} .iwb-bullet-item::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:inherit;
+    padding:1px;
+    background:{{ section.settings.card_border_color }};
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite:exclude;
+    pointer-events:none;
+  }
+  {%- endif -%}
 
   .iwb-bullet-icon {
     flex-shrink: 0;

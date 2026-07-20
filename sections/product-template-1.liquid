@@ -838,12 +838,12 @@ display:none;
                             display: flex;
                               padding: clamp(12px, 1%, 24px);
                               {%- if block.settings.border_color contains 'gradient' -%}
-                              {%- comment -%} Shorthand-Regel: nur die LETZTE Layer darf eine Farbe sein -
-                                  solide Innenfarbe daher als linear-gradient(c,c) gewrappt. {%- endcomment -%}
-                              {%- assign cr_bgl = block.settings.background | default: settings.branding_color -%}
-                              {%- unless cr_bgl contains 'gradient' -%}{%- capture cr_bgl -%}linear-gradient({{ cr_bgl }},{{ cr_bgl }}){%- endcapture -%}{%- endunless -%}
+                              {%- comment -%} #112: Mask-Ring statt Doppel-Background - die border-box-Layer
+                                  fuellte die GANZE Flaeche und blutete durch halbtransparente
+                                  Karten-Backgrounds (TECH-DARK-Glas). Innen bleibt exakt ALT. {%- endcomment -%}
                               border: 1px solid transparent;
-                              background: {{ cr_bgl }} padding-box, {{ block.settings.border_color }} border-box;
+                              position: relative;
+                              background: var(--background);
                               {%- else -%}
                               background: var(--background);
                               border: 1px solid var(--border-color);
@@ -856,6 +856,23 @@ display:none;
                               gap: clamp(10px, 3%, 20px);
                               width: 100%;
                     }
+                    {%- if block.settings.border_color contains 'gradient' -%}
+                    /* #112: Gradient-Ring als maskiertes Overlay - malt NUR die 1px-Randzone,
+                       Karteninneres (auch halbtransparent) bleibt unberuehrt. */
+                    .customer-review-card::before{
+                      content:"";
+                      position:absolute;
+                      inset:-1px;
+                      border-radius:inherit;
+                      padding:1px;
+                      background:{{ block.settings.border_color }};
+                      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                      -webkit-mask-composite:xor;
+                      mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+                      mask-composite:exclude;
+                      pointer-events:none;
+                    }
+                    {%- endif -%}
 
                   .customer-review-avatar-container {
                     position: relative;
