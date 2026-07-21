@@ -232,6 +232,10 @@
     border: 1px solid #DCD5C6; background: #FBFAF6;
     padding: 26px 22px 22px;
     display: flex; flex-direction: column; align-items: center; gap: 13px;
+    /* #124: Karte ist IMMER hell - Textfarbe hier festnageln statt von
+       dialog.scnl (chrome-text, im Dark WEISS) zu erben; sonst steht der
+       Prize-Text weiss auf der Gold-/Creme-Karte (#117-Fehlerklasse). */
+    color: #14120F;
   }
   .scnl__card-kicker { font-size: 11px; letter-spacing: 3px; color: #6E6759; }
   .scnl__card-prize { font-size: 29px; line-height: 1.12; letter-spacing: 1px; }
