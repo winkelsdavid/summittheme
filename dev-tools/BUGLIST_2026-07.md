@@ -2808,6 +2808,23 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test mobil: Drawer oeffnen -> Avatare vollstaendig im
       Balken; Reservierungszeile ohne Umbruch.
 
+## 130. Reviews Stars Trustpilot: Gradient fuer Stars Color (User 22.07.)
+- [~] UMGESETZT 2026-07-22 (d5024a8). reviews_start stars_color
+      color -> color_background. Original steckt der Wert als
+      stop-color in SVG-linearGradient-Defs (Rating-Teilfuellung) -
+      kein CSS-Gradient moeglich. Gradient-Zweig: Ersatz-Span mit
+      Verlauf als background + Maske "5 Quadrate minus Sterne"
+      (evenodd, Original-Pfade als data-URI) + Rating-Teilfuellung
+      als zweite Gradient-Maske (mask-composite:intersect).
+      Solid = Original-SVG byte-gleich. Summit-Folge: 1 Typwechsel.
+      OFFEN/Notiz: review_images-stars weiterhin color (nicht
+      angefragt); gleiche stop-color-Struktur im rating-custom-
+      Snippet (Theme-Settings t1).
+      Screenshot-verifiziert: 4.5 Verlaufs-Quadrate mit Stern-Loechern.
+      Live-Test: Product Overview -> Reviews Stars Trustpilot ->
+      Stars Color auf Verlauf -> Quadrate im Gradient, Rating-
+      Anteil korrekt; Solid wie bisher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
