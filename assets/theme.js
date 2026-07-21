@@ -25,7 +25,18 @@ theme.Sections.prototype = Object.assign({}, theme.Sections.prototype, {
       return;
     }
 
-    var instance = Object.assign(new constructor(container), {
+    // #128: ein werfender Section-Konstruktor darf nicht die restliche
+    // Registerkette (alle danach registrierten Sektionen) mitreissen.
+    var created;
+    try {
+      created = new constructor(container);
+    } catch (e) {
+      if (window.console && console.error) {
+        console.error("Section init failed for type '" + type + "':", e);
+      }
+      return;
+    }
+    var instance = Object.assign(created, {
       id: id,
       type: type,
       container: container,
@@ -3772,12 +3783,19 @@ theme.AnnouncementSwiper = (function () {
     this.namespace = ".announswipercol-" + this.sectionId;
     var rootElement = document.querySelector(":root");
     var anNounBar = document.querySelector(".announcement-bar-carousel");
-    var Nautoplay = document.querySelector(this.namespace).dataset.autoplay === "true";
-    var Nautoplay_speed = parseInt(document.querySelector(this.namespace).dataset.speed);
-    rootElement.style.setProperty(
-      "--height-announbar",
-      anNounBar.offsetHeight + "px"
-    );
+    if (anNounBar) {
+      rootElement.style.setProperty(
+        "--height-announbar",
+        anNounBar.offsetHeight + "px"
+      );
+    }
+    // #128: im Nicht-Karussell-Modus (Auto-Scrolling/Static) existiert das
+    // Swiper-Element nicht - der harte .dataset-Zugriff crashte und riss die
+    // ganze Registerkette mit (beforeafter/cookie/footer ohne JS, P3).
+    var swiperEl = document.querySelector(this.namespace);
+    if (!swiperEl) return;
+    var Nautoplay = swiperEl.dataset.autoplay === "true";
+    var Nautoplay_speed = parseInt(swiperEl.dataset.speed);
     var swiper = new Swiper(this.namespace, {
       slidesPerView: 1,
       loop:
