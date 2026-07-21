@@ -466,6 +466,7 @@
         "content_color": "",
         "show_quotes": true,
         "quote_box_color": "#ffffff",
+        "quote_box_border": "#ffffff",
         "quote_title_color": "#200e10",
         "quote_date_color": "",
         "quote_content_color": "",
@@ -572,6 +573,8 @@
         "speed": 2,
         "link": "",
         "label": "",
+        "card_background": "",
+        "card_border_color": "",
         "padding_top": 60,
         "padding_bottom": 60,
         "mobile_padding_top": 40,
@@ -777,6 +780,7 @@
             "color_button": "#ffffff",
             "bg_button_hover": "",
             "color_button_hover": "#ffffff",
+            "color_button_hover_anim": "",
             "button_label_2": "",
             "button_link_2": "",
             "stylebtns_2": "btn-theme",
@@ -784,6 +788,7 @@
             "color_button_2": "#ffffff",
             "bg_button_hover_2": "#FF6F2E",
             "color_button_hover_2": "#ffffff",
+            "color_button_hover_anim_2": "",
             "active_review": false,
             "rating_count": "4.8",
             "rating_text": "",
@@ -842,6 +847,7 @@
             "color_button": "#ffffff",
             "bg_button_hover": "",
             "color_button_hover": "#ffffff",
+            "color_button_hover_anim": "",
             "button_label_2": "",
             "button_link_2": "",
             "stylebtns_2": "btn-theme",
@@ -849,6 +855,7 @@
             "color_button_2": "#ffffff",
             "bg_button_hover_2": "#FF6F2E",
             "color_button_hover_2": "#ffffff",
+            "color_button_hover_anim_2": "",
             "active_review": false,
             "rating_count": "4.8",
             "rating_text": "",
@@ -1078,6 +1085,36 @@
         "mobile_padding_top": 20,
         "mobile_padding_bottom": 20
       }
+    },
+    "scrolling_text_NXTT9e": {
+      "type": "scrolling-text",
+      "blocks": {
+        "scroll_item_XWKWD7": {
+          "type": "scroll_item",
+          "settings": {
+            "content": "",
+            "text_style": "solid"
+          }
+        }
+      },
+      "block_order": [
+        "scroll_item_XWKWD7"
+      ],
+      "name": "Scrolling Text",
+      "settings": {
+        "animation": "",
+        "size_text": "h3",
+        "size_icon": 24,
+        "speed": 20,
+        "scroll_type": "from-right",
+        "background": "#000000",
+        "gradient_bg": "",
+        "text": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "mobile_padding_top": 20,
+        "mobile_padding_bottom": 20
+      }
     }
   },
   "order": [
@@ -1094,6 +1131,7 @@
     "custom_instagram_marquee_bi87tf",
     "divider_advanced_jqTA6R",
     "featured_articles_AreczD",
-    "scrolling_text_JPmYzc"
+    "scrolling_text_JPmYzc",
+    "scrolling_text_NXTT9e"
   ]
 }
