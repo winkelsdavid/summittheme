@@ -2796,6 +2796,18 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Before/After-Linie+Handle sichtbar, Konsole ohne Uncaught
       TypeError; Cookie-Banner/Footer-JS funktionieren.
 
+## 129. Cart-Drawer: Community-Avatare ragten mobil raus + Timer-Satz einzeilig (User 22.07.)
+- [~] UMGESETZT 2026-07-22 (caee682). block-cart.liquid:
+      (1) Avatar-Stack: ALLE 3 Kreise hatten margin-left:-15px (auch
+      der erste) -> im zentrierten Flex lief der Inhalt mobil
+      beidseitig ueber, ohne Overflow-Schutz ueber die Drawer-Box
+      hinaus. Erster Avatar auf 0 + overflow:hidden-Failsafe.
+      (2) Reservierungs-Satz white-space:nowrap + Stufen 11px/10px
+      (<=480/<=360) NACH der 768er-Query (Kaskade!).
+      Headless 375+320px: Avatare im Balken, Satz einzeilig, passt.
+      Live-Test mobil: Drawer oeffnen -> Avatare vollstaendig im
+      Balken; Reservierungszeile ohne Umbruch.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
