@@ -234,7 +234,7 @@ width:42px;
           <div class="review-information" style="background:{% if settings.review_gradient_background %}{{ settings.review_information_gradient_background }}{% else %}{{ settings.review_information_background }}{% endif %}; padding: 10px;">
             <div style="display: flex; align-items: center;">
               <div style="display: flex; margin-right: 10px; position: relative;">
-                  <div style="width: 30px; height: 30px; border-radius: 50%; padding: 2px; background:{% if settings.review_gradient_background %}{{ settings.review_information_gradient_background }}{% else %}{{ settings.review_information_background }}{% endif %}; margin-left: -15px; position: relative; z-index: 1;">
+                  <div style="width: 30px; height: 30px; border-radius: 50%; padding: 2px; background:{% if settings.review_gradient_background %}{{ settings.review_information_gradient_background }}{% else %}{{ settings.review_information_background }}{% endif %}; margin-left: 0; position: relative; z-index: 1;">
                     <div style="width: 100%; height: 100%; border-radius: 50%; overflow: hidden;">
                       <img 
                         alt="image-customer-1" 
@@ -786,6 +786,10 @@ width:42px;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* #129: Failsafe - zentrierter Flex-Inhalt lief bei knapper Mobilbreite
+       beidseitig ueber (Avatare ragten links aus Drawer/Screen); zusammen mit
+       margin-left:0 am ersten Avatar bleibt alles im Balken. */
+    overflow: hidden;
   }
   .customer-image-dummy {
     border-radius: 50%;
@@ -800,11 +804,20 @@ width:42px;
 
   .countdown-information p {
     font-size: 14px;
+    /* #129: Reservierungs-Satz immer einzeilig (User-Vorgabe); Schrift
+       skaliert auf schmalen Screens runter statt umzubrechen. */
+    white-space: nowrap;
   }
   @media (max-width:768px){
       .countdown-information p {
     font-size: 12px;
   }
+  }
+  @media (max-width:480px){
+    .countdown-information p { font-size: 11px; }
+  }
+  @media (max-width:360px){
+    .countdown-information p { font-size: 10px; }
   }
   .custom-timer {
     color: black;
