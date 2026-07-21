@@ -2723,6 +2723,16 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Add-Preview von Image With Auto Slider -> mehrere
       Karten statt einer.
 
+## 124. Scratch-Rubbelkarte: Prize-Text weiss auf heller Karte im Dark (User 21.07.)
+- [~] UMGESETZT 2026-07-21 (0e21a57). .scnl__card-prize ("MYSTERY-
+      RABATT") hatte keine eigene color -> erbte dialog.scnl-Basis
+      (var(--g-chrome-text), Dark=WEISS) auf der IMMER hellen Karte
+      (#117-Fehlerklasse). FIX: .scnl__card{color:#14120F} -
+      vererbungssicher fuer alle Karten-Kinder; Kicker/Buttons eigene
+      Farben unveraendert; Light byte-gleich. Headless 2/2.
+      Live-Test: Dark-Preset Scratch-Popup -> Kartentexte dunkel
+      auf Gold/Creme lesbar.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
