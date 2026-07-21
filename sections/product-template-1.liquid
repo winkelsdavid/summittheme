@@ -630,6 +630,30 @@ display:none;
                      {% endcomment %}
                     {% assign rating = block.settings.stars_rating %}
                     {% assign fill_percentage_3 = rating | divided_by: 5.0 | times: 100 %}
+                    {% if block.settings.stars_color contains 'gradient' %}
+                    {%- comment -%} #130: SVG-stop-color kann keinen CSS-Gradient - Ersatz-
+                        Markup: Verlauf als background, Silhouette "Quadrate minus Sterne"
+                        (evenodd) als Maske, Teilfuellung (Rating) als zweite Gradient-
+                        Maske via mask-composite intersect (P6-Familie, Muster #65). {%- endcomment -%}
+                    <style>
+                    .tp-stars-grad-{{ section.id }}{
+                      display:inline-block;
+                      height:var(--height,15px);
+                      width:calc(var(--height,15px) * 5.3334);
+                      flex-shrink:0;
+                      background:{{ block.settings.stars_color }};
+                      -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 96'><path fill-rule='evenodd' d='M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96zM48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z'/></svg>"), linear-gradient(90deg, #000 {{ fill_percentage_3 }}%, transparent {{ fill_percentage_3 }}%);
+                      -webkit-mask-size:100% 100%, 100% 100%;
+                      -webkit-mask-repeat:no-repeat;
+                      -webkit-mask-composite:source-in;
+                      mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 96'><path fill-rule='evenodd' d='M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96zM48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z'/></svg>"), linear-gradient(90deg, #000 {{ fill_percentage_3 }}%, transparent {{ fill_percentage_3 }}%);
+                      mask-size:100% 100%, 100% 100%;
+                      mask-repeat:no-repeat;
+                      mask-composite:intersect;
+                    }
+                    </style>
+                    <span class="trustpilot-star-five tp-stars-grad-{{ section.id }}" style="--height:{{ block.settings.stars_height }}px"></span>
+                    {% else %}
                     <svg
                       class="trustpilot-star-five"
                       style="--height:{{ block.settings.stars_height }}px"
@@ -650,6 +674,7 @@ display:none;
                         </defs>
                       <g fill="none"><g fill="url(#grad-1-{{ ii }}-{{ section.id }})"><path d="M0 0h96v96H0zM104 0h96v96h-96zM208 0h96v96h-96zM312 0h96v96h-96zM416 0h96v96h-96z"></path></g><path d="M48 64.7L62.6 61l6.1 18.8zm33.6-24.3H55.9L48 16.2l-7.9 24.2H14.4l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM152 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L152 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM256 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L256 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM360 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L360 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2zM464 64.7l14.6-3.7 6.1 18.8zm33.6-24.3h-25.7L464 16.2l-7.9 24.2h-25.7l20.8 15-7.9 24.2 20.8-15 12.8-9.2z" fill="url(#grad-stars-{{ ii }}-{{ section.id }})"></path></g>
                     </svg>
+                    {% endif %}
                     <span class="rating-excellent" style="--color:{{ block.settings.text_color }}">{% if block.settings.text != blank %}{{ block.settings.text }}{% else %}{{ 'products.product.reviews_start_text_html' | t }}{% endif %}</span>
                     {% if block.settings.show_truspilot  %}
                     
@@ -4489,7 +4514,7 @@ function formatPrice(value) {
           "label": "Border Color"
         },
         {
-          "type": "color",
+          "type": "color_background",
           "id": "stars_color",
           "label": "Stars Color"
         },
