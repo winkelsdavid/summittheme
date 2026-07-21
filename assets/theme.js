@@ -5833,7 +5833,22 @@ theme.BeforeAfter = (function () {
       var el = document.querySelector(this.selectors.bablockSection);
       // BeerSlider is a global class (no jQuery wrapper needed).
       if (el && typeof BeerSlider !== "undefined") {
-        new BeerSlider(el, { start: 50 });
+        var slider = new BeerSlider(el, { start: 50 });
+        // #126: der Vendor bricht bei EINEM fehlgeschlagenen Bild-Load still ab
+        // (onImagesLoad-reject -> kein init) - Linie/Handle/Before-Badge blieben
+        // komplett unsichtbar. Range+Handle existieren zu dem Zeitpunkt bereits
+        // (Constructor), also nach Timeout erzwingen: init() setzt beer-ready,
+        // Geometrie und Listener; ein kaputtes Bild bleibt sichtbar leer statt
+        // den ganzen Slider zu toeten.
+        setTimeout(function () {
+          if (
+            slider && slider.element && slider.revealElement &&
+            !el.classList.contains("beer-ready") &&
+            typeof slider.init === "function"
+          ) {
+            try { slider.init(); } catch (e) {}
+          }
+        }, 3000);
       }
     },
   });
