@@ -67,6 +67,27 @@ lagen ZWEI gestapelte Bugs uebereinander, die sich gegenseitig maskierten:
   getBoundingClientRect, notfalls temporaere b1-probe per Git-Push
   (Muster in Scratchpad/Historie 47219a5).
 
+**P7 — „Farben/Fonts global zerschossen"-Triage (Incident 21.07.):**
+Wenn ein gepushtes Theme global falsche Farben/Fonts traegt (z.B. Summit-
+Demo-Rosa #fe899a statt Preset): NICHT zuerst im Theme-CSS suchen.
+  (1) settings_data.json des gepushten Themes ziehen (read-only Admin-API)
+      und gegen config/settings_data.json im Repo diffen. Ist der Push
+      byte-nah am Repo-Rohzustand (Preset-Palette fehlt: branding_color,
+      color_body_*, color_chrome_*, font_family*), fehlt das Summit-
+      Preset-Overlay -> Pipeline-Problem, Theme unschuldig.
+  (2) Summit-Debug-Zip des Runs pruefen (temp_zip_preserved_for_debug):
+      Rosa schon VOR Upload = Verlust beim Zip-Bau/Mutator.
+  (3) Teilmenge angewandter Werte beachten: Templates/Content gemappt,
+      aber Palette fehlt = einzelne Loader-Schicht tot, nicht "alles".
+  Root-Cause 21.07.: Summit-Loader paginieren mit .range() OHNE .order()
+  -> Postgres-Reihenfolge instabil -> 343 theme_global-Felder aus dem
+  Load gefallen; Mutator skippt Werte ohne Feld STUMM -> Repo-Rohsettings
+  gingen mit Status "complete" live. Layoutabhaengig: neue Feld-Rows
+  (Versions-Anlagen) verschieben Page-Grenzen -> "ploetzlich". Fix
+  Summit-seitig (order + harter Fehler statt Silent-Skip).
+  Theme-Konsequenz: Livetests von Pushes aus dem Ausfallfenster
+  (21.07. bis Fix) sind ungueltig und nach Re-Push zu wiederholen.
+
 **P6 — Gradient-Border-Techniken (#97→#111/#112-Lektionen):**
 Standard = maskiertes ::before-Ring-Overlay (inset:-1px, padding:1px,
 mask content-box XOR full, mask-composite:exclude, pointer-events none,
