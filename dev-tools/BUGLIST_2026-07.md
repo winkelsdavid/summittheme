@@ -2755,6 +2755,29 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       KEIN Theme-Fix - Summit muss aktuellen main-Stand als Version
       ziehen/parsen (passt zum Loader-Incident-Kontext P7).
 
+## 126. Before/After: Force-Init nach 3s - Vendor-Silent-Fail bei Bildfehler (User 21.07.)
+- [~] UMGESETZT 2026-07-21 (4b0c4a9). Linie trotz #117 unsichtbar
+      (Fix nachweislich auf aktivem 19:32-Push). URSACHE (P3-Familie):
+      BeerSlider setzt beer-ready NUR wenn BEIDE Bilder laden; bei
+      EINEM onerror stiller Abbruch -> Linie/Handle/Before-Badge
+      opacity 0, nur After-Badge bleibt (exakt das Symptom).
+      HAERTUNG theme.BeforeAfter: Referenz behalten, nach 3s ohne
+      beer-ready slider.init() erzwingen (Guards element/revealElement).
+      URSACHEN-CHECK offen: Storefront-Konsole "Some errors occurred
+      and images are not loaded." + Network-Status der 2 Bild-URLs.
+      Headless: Repro + Haertung + Normalfall gruen.
+      Live-Test: Before/After im Storefront -> Linie+Handle sichtbar
+      (ggf. nach 3s); Konsole checken warum Bild nicht laedt.
+
+## 127. Scrolling Text: Spawn-Defaults Icon 75px + Text leer (User 21.07.)
+- [~] UMGESETZT 2026-07-21 (1ecd210). size_icon step 4->1 (75 sonst
+      nicht erreichbar), default 24->75; Item-content-Default
+      "Promo Text" geleert (Render blank-tolerant: leer = reiner
+      Icon-Marquee mit B1-Fallback). Achtung: wirkt auch auf
+      Bestandsinstanzen mit unangetasteten Defaults.
+      Live-Test: Sektion frisch hinzufuegen -> Icon 75px, Items ohne
+      Text.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
