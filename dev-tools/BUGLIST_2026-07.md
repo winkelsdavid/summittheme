@@ -2778,6 +2778,24 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Sektion frisch hinzufuegen -> Icon 75px, Items ohne
       Text.
 
+## 128. AnnouncementSwiper-Crash riss Registerkette mit (echte #126-Ursache, User-Konsole 21.07.)
+- [~] UMGESETZT 2026-07-21 (83c21eb). Storefront-Konsole: Uncaught
+      TypeError in AnnouncementSwiper (dataset auf null) - im
+      Auto-Scrolling/Static-Modus existiert das announswipercol-
+      Element nicht, Container traegt den section-type trotzdem.
+      Der SYNCHRONE Crash toetete alle danach registrierten
+      Sektionen: cookie, BEFOREAFTER (unsichtbare Trennlinie trotz
+      #117/#126 - Bild-These widerlegt), bundleproduct, footer.
+      FIX doppelt (P3): (1) Guards im AnnouncementSwiper (early-return
+      ohne Swiper-Element, anNounBar-null-safe); (2) STRUKTURFIX
+      Sections._createInstance: try/catch + console.error - ein
+      kaputter Konstruktor kann die Kette nie wieder mitreissen.
+      Headless mit echten theme.js-Bloecken: Kette laeuft durch,
+      beer-ready + Linie sichtbar. #126-Haertung bleibt als Resilienz.
+      Live-Test: Storefront mit Auto-Scrolling-Announcement ->
+      Before/After-Linie+Handle sichtbar, Konsole ohne Uncaught
+      TypeError; Cookie-Banner/Footer-JS funktionieren.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
