@@ -2733,6 +2733,28 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Dark-Preset Scratch-Popup -> Kartentexte dunkel
       auf Gold/Creme lesbar.
 
+## 125. Product Overview: Gradient fuer Border Color der 3 Review-Bloecke (Bug-Sammler 21.07.)
+- [~] UMGESETZT 2026-07-21 (ce954a4). reviews_start ("Reviews Stars
+      Trustpilot"), reviews_start_2 ("Reviews Stars"), review_images
+      ("Reviews With Images"): border_color color -> color_background;
+      Render P6-Mask-Ring block-gescoped (crbc-<id>). WICHTIG: Gradient
+      NICHT in --border-color kippen - globale .rating-custom(-2)-Regeln
+      (theme.liquid) waeren invalid (P4), deren #121-Zweige haengen an
+      den THEME-Settings, nicht am Block. review_images: Inline-Border
+      im Gradient-Fall transparent; totes ";:1px solid"-Altfragment im
+      Solid-Pfad bewusst byte-gleich belassen.
+      Summit-Folge: 3 weitere Typwechsel. liquidjs 7 Faelle OK.
+      Live-Test (NACH Loader-Fix + frischem Push): je Block Border auf
+      Verlauf -> Ring im Gradient; solid/leer wie bisher.
+
+## Redelivery 21.07. Abend
+- [x] "Reviews Above Titles 3x Border Gradient" (reported 18:23, Push
+      20:19) = #121 bereits gefixt (f71b657, 01:16). Der 20:19-Push
+      traegt aber noch t1/t2/t3=color -> Summit pusht von einer
+      theme_version VOR f71b657 (verifiziert via Schema-Read).
+      KEIN Theme-Fix - Summit muss aktuellen main-Stand als Version
+      ziehen/parsen (passt zum Loader-Incident-Kontext P7).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
