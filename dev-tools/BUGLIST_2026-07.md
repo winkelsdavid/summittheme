@@ -2829,6 +2829,21 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Stars Color auf Verlauf -> Quadrate im Gradient, Rating-
       Anteil korrekt; Solid wie bisher.
 
+## 132. Reviews Above Titles: Gradient fuer alle 3 Stars Colors (User 22.07.)
+- [~] UMGESETZT 2026-07-22 (a6b0986). t1/t2/t3_stars_color color ->
+      color_background (Theme Settings). Alle 3 Typen trugen den Wert
+      als stop-color in SVG-Defs -> Gradient-Zweige mit Ersatz-Markup:
+      Type 1 = #130-Muster (Quadrate-minus-Sterne-Maske + Rating-
+      Teilfuellung intersect); Type 2+3 = pro Stern Span mit Verlauf +
+      Stern-Path-Maske, Teilfuellung als CSS-Var --sg-fill (eine
+      Klassen-Regel, variable Fuellung je Stern). Solid = Original-
+      SVGs byte-gleich. Summit-Folge: 3 Typwechsel (gesamt 20).
+      Screenshot-verifiziert (t2: 3.5 -> 3 volle + Halbstern im
+      Verlauf).
+      Live-Test: Theme Settings -> Reviews Above Titles -> je Typ
+      Stars Color auf Verlauf -> Sterne/Quadrate im Gradient mit
+      korrektem Rating-Anteil; Solid unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
