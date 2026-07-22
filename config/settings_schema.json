@@ -464,7 +464,7 @@
           "label": "Border Color"
         },
         {
-          "type": "color",
+          "type": "color_background",
           "id": "t1_stars_color",
           "label": "Stars Color"
         },
@@ -535,7 +535,7 @@
           "label": "Border Color"
         },
         {
-          "type": "color",
+          "type": "color_background",
           "id": "t2_stars_color",
           "label": "Stars Color"
         },
@@ -570,7 +570,7 @@
           "default":true
         },
                  {
-          "type": "color",
+          "type": "color_background",
           "id": "t3_stars_color",
           "label": "Stars Color"
         },
