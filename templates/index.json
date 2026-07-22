@@ -1085,36 +1085,6 @@
         "mobile_padding_top": 20,
         "mobile_padding_bottom": 20
       }
-    },
-    "scrolling_text_NXTT9e": {
-      "type": "scrolling-text",
-      "blocks": {
-        "scroll_item_XWKWD7": {
-          "type": "scroll_item",
-          "settings": {
-            "content": "",
-            "text_style": "solid"
-          }
-        }
-      },
-      "block_order": [
-        "scroll_item_XWKWD7"
-      ],
-      "name": "Scrolling Text",
-      "settings": {
-        "animation": "",
-        "size_text": "h3",
-        "size_icon": 24,
-        "speed": 20,
-        "scroll_type": "from-right",
-        "background": "#000000",
-        "gradient_bg": "",
-        "text": "#ffffff",
-        "padding_top": 20,
-        "padding_bottom": 20,
-        "mobile_padding_top": 20,
-        "mobile_padding_bottom": 20
-      }
     }
   },
   "order": [
@@ -1131,7 +1101,6 @@
     "custom_instagram_marquee_bi87tf",
     "divider_advanced_jqTA6R",
     "featured_articles_AreczD",
-    "scrolling_text_JPmYzc",
-    "scrolling_text_NXTT9e"
+    "scrolling_text_JPmYzc"
   ]
 }
