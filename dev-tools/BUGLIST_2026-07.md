@@ -2769,14 +2769,18 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test: Before/After im Storefront -> Linie+Handle sichtbar
       (ggf. nach 3s); Konsole checken warum Bild nicht laedt.
 
-## 127. Scrolling Text: Spawn-Defaults Icon 75px + Text leer (User 21.07.)
-- [~] UMGESETZT 2026-07-21 (1ecd210). size_icon step 4->1 (75 sonst
-      nicht erreichbar), default 24->75; Item-content-Default
-      "Promo Text" geleert (Render blank-tolerant: leer = reiner
-      Icon-Marquee mit B1-Fallback). Achtung: wirkt auch auf
-      Bestandsinstanzen mit unangetasteten Defaults.
-      Live-Test: Sektion frisch hinzufuegen -> Icon 75px, Items ohne
-      Text.
+## 127. Scrolling Text: Spawn-Defaults Icon ~75px + Text leer (User 21.07., KORRIGIERT #131)
+- [~] UMGESETZT 2026-07-21 (1ecd210), REGRESSION-HOTFIX 22.07.
+      (f70535c): step 1 bei Spanne 4-120 = 116 Steps > Shopifys
+      101-Limit -> Shopify lehnte die DATEI ab, index/about-us-
+      Templates 422, Sync scheiterte (Summit-Befund). Jetzt step 2,
+      default 76 (naechster Rasterwert zu 75). content-Default
+      weiterhin leer. Theme-weites range-Audit: keine weiteren
+      Verstoesse.
+      MERKE: Shopify-range max 101 Positionen ((max-min)/step<=100),
+      sonst Datei-Reject mit Template-Kaskade.
+      Live-Test: Sektion frisch hinzufuegen -> Icon 76px, Items ohne
+      Text; Startseite laedt wieder aktuellen Stand.
 
 ## 128. AnnouncementSwiper-Crash riss Registerkette mit (echte #126-Ursache, User-Konsole 21.07.)
 - [~] UMGESETZT 2026-07-21 (83c21eb). Storefront-Konsole: Uncaught
