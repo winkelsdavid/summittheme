@@ -2844,6 +2844,30 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Stars Color auf Verlauf -> Sterne/Quadrate im Gradient mit
       korrektem Rating-Anteil; Solid unveraendert.
 
+## 133-135. Default-Leerungen Welle 22.07. (Bug-Sammler)
+- [~] #133 Testimonials Split (quotes-split, Commit in 6198555-Serie):
+      5 Defaults geleert (subtitle_top, title "User reviews", Block
+      title "Comment", quote-Lorem, author_caption).
+- [~] #134 Product List Slider (product-wrap-banner, ebd.):
+      banner_description "Protection from the" geleert (in #118
+      bewusst belassen, jetzt explizit markiert). Subtitle/Title
+      Banner + discover now bleiben.
+- [~] #135 Product Grid Image (product-with-image, 727934b):
+      subtitle_top + title "Product list" + Banner-description_body
+      "Protection from the" geleert. Header-Description "AGLAESIO"
+      war Mapping-/Instanzwert (kein Schema-Default, wie #118) ->
+      Summit-Preset-Daten. Banner-Subtitle/Title/Button bleiben.
+      Live-Tests: Sektionen frisch hinzufuegen -> markierte Felder
+      leer.
+
+## Summit-Punkt 22.07.: Timeline-Preset-Jahre
+- [x] KEIN Theme-Anteil: "Jahre auf 2024/2025/2026 + 4. Block raus"
+      betrifft Summits Builder-Preset-Komposition (page.timeline.json
+      im Builder; Screenshot zeigt die dortige 4er-Composition mit
+      4x "1920"). Theme-Preset spawnt seit #99 korrekt 3 Bloecke;
+      year-Schema-Default "1920" bleibt (Operator aendert Jahre im
+      Builder-Preset, nicht im Theme).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
