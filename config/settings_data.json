@@ -571,7 +571,7 @@
             "settings": {
               "enable_video": true,
               "video_hosted": "",
-              "image": "shopify://shop_images/1783648744027-2.png",
+              "image": "",
               "alignment": "center top",
               "text_alignment": "left center",
               "text_alignment_mobile": "center",
@@ -873,7 +873,7 @@
           "bg_password": "#FFF2F4",
           "color_pass": "#000000",
           "opacity_password": 0.5,
-          "logo": "shopify://shop_images/1783884602460-14_rmbg.png",
+          "logo": "",
           "logo_max_width": "120",
           "header": "Launching Soon!"
         }
