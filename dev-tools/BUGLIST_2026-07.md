@@ -2897,6 +2897,33 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       (file_reference Video) in METAFIELD_CONTRACT.md (liegt im
       Summit-Repo; hier nicht vorhanden).
 
+## 137. Eingefrorene generierte Store-Bilder aus Repo-Werten entfernt (Summit-Forensik 23.07.)
+- [~] Befund (Summit-Session, verifiziert): konkrete generierte Shopify-
+      Store-Dateien (Epoch-ms-Timestamp-Namen 17836.../17838..., teils
+      _rmbg) waren als Werte im Repo eingefroren und wandern beim Parsen
+      als "Geister-Content" in jede Summit-Theme-Version. 4 Stellen:
+      (1) settings_data.json current.sections.slideshow-1 Slide-image
+      1783648744027-2.png - Legacy-Block (Shopify ignoriert ihn, da
+      index.json existiert; im Editor unsichtbar), aber Summit parst
+      die Datei als Ganzes. (2) settings_data.json current.sections.
+      password-header logo 1783884602460-14_rmbg.png - LIVE wirksam
+      (password.liquid rendert die Section statisch aus current.sections).
+      (3+4) templates/index.json scrolling-text 2x Block-Icon
+      1783802937110-0_rmbg.png - live auf der Homepage.
+      Fix: alle 4 Werte auf "" (nur Werte, keine IDs/Renames); leere
+      Slots rendern sauber via B1-Fallback (scrolling-text--scroll_item,
+      slideshow-B1) bzw. Shopname statt Logo auf der Passwortseite.
+      WICHTIG - Abgrenzung: Die ~80 uebrigen shopify://shop_images/-Refs
+      (pi*.jpg, REV*, m5-m7, safe-checkout.png, main1_566a... usw.) sind
+      Original-Demo-Assets des Theme-Autors; deren UUID-Suffixe sind
+      Shopify-Dedup-Suffixe, KEINE Generierungs-Marker - bleiben drin.
+      Verlaessliche Signatur fuer Generate: 13-stelliger Epoch-Timestamp
+      oder _rmbg; Restsuche danach = 0 Treffer.
+      Verifiziert: JSON beider Dateien valide; theme check 0 Errors,
+      einzige Offense = vorbestehende DeprecatedFonts-Warnung (Z. 341).
+      Livetest: naechster Push entfernt die 3 live sichtbaren Bilder
+      (Passwortseiten-Logo, 2 Homepage-Scroll-Icons) auch auf nitrothemex.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
