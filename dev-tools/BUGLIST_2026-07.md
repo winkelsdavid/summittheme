@@ -2868,6 +2868,35 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       year-Schema-Default "1920" bleibt (Operator aendert Jahre im
       Builder-Preset, nicht im Theme).
 
+## 136. [FEATURE] Produkt-Banner via Metafields summit.banner_image/_video (K2-Handoff 23.07.)
+- [~] Handoff aus der Summit-Session: jede Produktseite soll IHR eigenes
+      Banner-Medium rendern (Multi-Produkt-Stores, 1 Video/Bild pro Produkt)
+      statt ein Section-Setting fuer alle. Summit legt Definition+Werte an
+      (K2 folgt), Theme liest nur.
+      Ziel-Section: sections/image-with-icons.liquid ("Image With 4 Icons") -
+      die einzige grosse Werbe-Media-Flaeche im Produkt-Template
+      (product.json: image_with_icons_ynjyXp, aktiv) mit genau der
+      beschriebenen Kette Section-Bild/video_pick/video/B1-Fallback.
+      Patch (additiv, KEINE Renames/Schema-Aenderung, kein neues Setting):
+      Prioritaet product.metafields.summit.banner_video.value (video_tag:
+      autoplay/loop/muted/playsinline, controls false, preload metadata)
+      -> summit.banner_image.value (image_url 2400 + image_tag, Klasse
+      summit-pbanner-img mit width/height 100% + object-fit cover analog
+      zur bestehenden video-Regel) -> bestehende Section-Settings-Kette
+      byte-identisch als Fallback (nur "if" -> "elsif").
+      Verifiziert headless (liquidjs, repro-pbanner-metafield.js): Video
+      gewinnt bei beiden Metafields; nur Bild -> Bild; ohne Metafields ->
+      Altpfad section_image; ohne product-Objekt (Homepage) -> Altpfad
+      video_pick; CSS-Regel vorhanden. theme check: 0 Offenses in der
+      Datei (41 Errors = Alt-Baseline anderer Dateien).
+      Abnahme offen (braucht Summit K2-Write + Push-only-Run auf
+      nitrothemex): Produkt mit beiden Feldern -> Video; nur Bild ->
+      Bild; ohne -> heutiger Zustand.
+      Summit-Folgeliste: KEINE Typwechsel/Settings; Kontrakt-Eintrag
+      summit.banner_image (file_reference MediaImage) + summit.banner_video
+      (file_reference Video) in METAFIELD_CONTRACT.md (liegt im
+      Summit-Repo; hier nicht vorhanden).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
