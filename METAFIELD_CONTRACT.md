@@ -73,6 +73,8 @@ Scope-Ableitung MUSS die Chain bis zur Wurzel prüfen.
 | `reviews` | `json` | `[{ "name": string, "text": string }]` | Name Generation → `name` + Reviews → `review` |
 | `review_images` | `list.file_reference` | Bilder index-treu zur Pool-Reihenfolge (heute 7 Outputs) | Review Images, Outputs 0–6 |
 | `banner` | `file_reference` | Produktseiten-Banner | Banner Design Product Page, Output 0 |
+| `banner_image` | `file_reference` (MediaImage) | Werbe-Banner-Bild (Dual-Write, gleiche GID wie `banner`) | Banner Design Product Page, Output 0 (BTM `image:image`) |
+| `banner_video` | `file_reference` (Video) | Werbe-Video des Produkts (Seedance, mp4, autoplay/loop/muted im Theme) | Seedance Video Generation, Output 0 (BTM `image:video`) |
 | `managed` | `boolean` | „Summit verwaltet dieses Produkt“ | existiert bereits (Push) |
 
 **Reserviert (aktuell unmapped, bei Aktivierung diesen Key nutzen):**
@@ -108,6 +110,19 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Overview | Block `image` → `image` | `banner` |
 | Product Overview | Block `title` → `custom_title` | `product.title` (nativ) |
 | Product Suggest | `product` | `product.title` (nativ) |
+| Image With 4 Icons | Section-Bild/Video (`image-with-icons.liquid`) | `banner_video` → `banner_image` → Section-Setting (Fallback-Kette, Theme-Patch 23.07.2026) |
+
+**Banner-Keys (K2, 23.07.2026):** Der Writer schreibt `banner` UND
+`banner_image` mit derselben MediaImage-GID (Dual-Write). `banner` bedient
+den älteren Reader (Branch `feat/summit-metafields`, Product Overview
+Block `image`); `banner_image`/`banner_video` bedienen die
+Image-With-4-Icons-Section (Priorität Video → Bild → Section-Setting).
+`banner_video` ist die GID eines Shopify-**Video**-Files (fileCreate
+`contentType: VIDEO`, ohne Readiness-Polling — die Referenz auf ein noch
+verarbeitendes File ist gültig; das Theme rendert es, sobald Shopify
+fertig transkodiert hat). Quelle ist das Block-Type-Mapping `image:video`
+der Version — Versionen ohne dieses Mapping schreiben schlicht kein
+`banner_video` (Skip-Reason `no_binding`).
 
 ¹ Die Index-Arithmetik spiegelt die heutigen `outputIndex`-Werte der
 Block-Type-Mappings — die Theme-Session (Branch `feat/summit-metafields`,
