@@ -2973,6 +2973,46 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Livetest: purize-glas/cbd-crumble/e-liquid muessen nach Deploy je
       IHR Video zeigen; Produkt ohne MF weiter das Setting-Medium.
 
+## 140. [FEATURE] icon-list ("Icons"): produktspezifische Items per Metafield (Auftrag 24.07.)
+- [~] Mechanik wie #136/#139 (produktspezifisch schlaegt generisch, additiv,
+      keine Renames). Reads am Section-Kopf mit Listen-Guard; ausserhalb
+      von Produktseiten ist product nil -> alle Reads leer -> Alt-Verhalten.
+      (1) Icon-Bild <- summit.benefit_icons[i] (bestehender Key, list.
+          file_reference) -> Block-Setting image_icon -> B1 -> Placeholder.
+          Beide Layouts (style-1 + style-2) gepatcht; alt-Attribut des
+          B1-Fallbacks nutzt jetzt den ggf. per MF gesetzten Titel.
+      (2) Heading/Description <- summit.icon_items[i].heading/.text (NEU,
+          json-Liste). Feld-weiser Fallback: fehlendes Item ODER leeres
+          Feld -> Block-Setting; Ueberhang ueber die Blockzahl ignoriert.
+      (3) Section-Kopf <- summit.icons_intro (NEU, json-Objekt:
+          subtitle/title/description), feld-weise. Umsetzung ueber NEUE
+          optionale render-Parameter override_subtitle_top/override_title/
+          override_description im GETEILTEN snippets/section-heading.liquid
+          (Gegenstueck zu den bestehenden fallback_*-Params: override
+          gewinnt VOR dem Setting, fallback nur bei leerem Wert). Nur
+          icon-list uebergibt sie; alle anderen ~50 Sections rufen das
+          Snippet unveraendert ohne Params auf. Dabei section.settings.
+          description -> sh_desc gezogen (4 Stellen, inkl. der mb-2/mb-5-
+          Bedingungen), damit der Override auch das Abstands-Verhalten
+          korrekt steuert.
+      Blast-Radius-Absicherung: section-heading ohne override_* ueber 32
+      Kombinationen (heading-1/-2 x title/description/subtitle_top gesetzt-
+      leer x replace_reviews) byte-identisch zum Alt-Stand verifiziert.
+      Verifiziert headless (repro-iconlist-mf.js, 23 Checks PASS): ohne MF
+      und im Homepage-Kontext HTML-identisch zum Alt-Stand (beide Layouts),
+      MF voll, MF teilweise (fehlendes Item / nur heading / leeres heading),
+      Ueberhang ignoriert, B1-Fallback erreichbar, Override-Verhalten.
+      theme check: 0 Offenses in beiden Dateien, vorher wie nachher.
+      OFFEN (Summit): summit.icon_items + summit.icons_intro in
+      METAFIELD_CONTRACT.md + Definition + K2-Write; benefit_icons wird
+      bereits geschrieben. Bewusst: dieselben Icons wie in Product Overview
+      (Wiederverwendung von benefit_icons) - separater Key summit.icon_images
+      nur auf Ansage.
+      CAVEAT type_icon: Der MF-Icon-Pfad haengt am Bild-Zweig; steht der
+      Block auf type_icon = 'svg' (Inline-SVG-Feld), gewinnt weiterhin das
+      SVG. Summits Mapping setzt 'img' - falls MF auch SVG-Bloecke
+      uebersteuern soll, bitte melden.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
