@@ -110,13 +110,18 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Overview | Block `image` → `image` | `banner` |
 | Product Overview | Block `title` → `custom_title` | `product.title` (nativ) |
 | Product Suggest | `product` | `product.title` (nativ) |
-| Image With 4 Icons | Section-Bild/Video (`image-with-icons.liquid`) | `banner_video` → `banner_image` → Section-Setting (Fallback-Kette, Theme-Patch 23.07.2026) |
+| Image With 4 Icons | Section-Bild (`image-with-icons.liquid`) | `banner_image` → Section-Setting (Fallback-Kette; Theme-Patch 23.07.2026, Video-Zweig entfernt 25.07.2026) |
+| Product Overview | Block `image` → `video` | `banner_video` → `banner` → Setting-Video → Setting-Bild (Theme-Patch 24.07.2026) |
 
-**Banner-Keys (K2, 23.07.2026):** Der Writer schreibt `banner` UND
-`banner_image` mit derselben MediaImage-GID (Dual-Write). `banner` bedient
-den älteren Reader (Branch `feat/summit-metafields`, Product Overview
-Block `image`); `banner_image`/`banner_video` bedienen die
-Image-With-4-Icons-Section (Priorität Video → Bild → Section-Setting).
+**Banner-Keys (K2, 23.07.2026; Slot-Aufteilung 25.07.2026):** Der Writer
+schreibt `banner` UND `banner_image` mit derselben MediaImage-GID
+(Dual-Write). `banner` bedient den älteren Reader (Branch
+`feat/summit-metafields`, Product Overview Block `image`); `banner_image`
+bedient die Image-With-4-Icons-Section (Priorität Bild → Section-Setting).
+`banner_video` liest **nur noch** Product Overview (Block `image`,
+Theme-Patch 24.07.2026) — der Video-Zweig in Image With 4 Icons ist am
+25.07.2026 entfernt worden, weil sonst beide Sections derselben
+Produktseite dasselbe Video zeigen.
 `banner_video` ist die GID eines Shopify-**Video**-Files (fileCreate
 `contentType: VIDEO`, ohne Readiness-Polling — die Referenz auf ein noch
 verarbeitendes File ist gültig; das Theme rendert es, sobald Shopify

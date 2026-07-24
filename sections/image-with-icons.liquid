@@ -2,7 +2,6 @@
 <!-- image-text-product.liquid -->
 {%-liquid
     assign section_image = section.settings.section_image
-    assign p_banner_video = product.metafields.summit.banner_video.value
     assign p_banner_image = product.metafields.summit.banner_image.value
     assign block_text_color = section.settings.block_text_color
     assign block_text_bg = section.settings.block_text_bg
@@ -130,14 +129,13 @@
     <div class="section-block">
       <div class="row">
         <div class="col-lg-6 col-12">
-            {%- comment -%} Produkt-eigene Banner-Medien aus summit.banner_video/banner_image
-                (file_reference, von Summit geschrieben) haben Vorrang; die
-                Section-Settings-Kette bleibt unveraendert als Fallback. {%- endcomment -%}
-            {%- if p_banner_video != blank -%}
-                <div class="image-content__image-container overflow-hidden block-product-img h-100">
-                  {{ p_banner_video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata' }}
-                </div>
-              {% elsif p_banner_image != blank %}
+            {%- comment -%} Produkt-eigenes Banner-Bild aus summit.banner_image
+                (file_reference, von Summit geschrieben) hat Vorrang; die
+                Section-Settings-Kette bleibt unveraendert als Fallback.
+                KEIN banner_video-Zweig: den Video-Slot bedient seit #139
+                product-template-1 (Block 'image') - sonst zeigten zwei
+                Sections derselben Produktseite dasselbe Video. {%- endcomment -%}
+            {%- if p_banner_image != blank -%}
                 <div class="image-content__image-container overflow-hidden block-product-img h-100">
                   {{ p_banner_image | image_url: width: 2400 | image_tag: loading: 'lazy', sizes: '100vw', class: 'image-content__image summit-pbanner-img' }}
                 </div>
