@@ -2947,6 +2947,32 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Summit-Folgeliste: NEUES Setting menu_position (select) in 4
       Header-Blocktypen -> Mappability-Doku/parse ingest.
 
+## 139. Produkt-Banner-Video: alle Produktseiten zeigten dasselbe Video (Summit-Handoff 24.07.)
+- [~] Diagnose der Summit-Session vollstaendig verifiziert (inkl. Live-
+      Read-only-Beweis auf main-Theme 199010615683): (a) product-
+      template-1.liquid las summit.banner_video an keiner Stelle - nur
+      der Bild-Slot hatte den Metafield-Read (smf_banner, Z.537);
+      (b) der 'image'-Block prueffte block.settings.video ZUERST, und
+      das gepushte Template traegt dort statisch shopify://files/
+      videos/1784906368331-... (Pull-Artefakt, auf jeder Produktseite
+      identisch) -> ueberall Crumble-Video trotz korrekter, individueller
+      banner_video-Metafields der 3 Produkte.
+      Fix (wie im Handoff): smf_banner_video-Assign neben smf_banner;
+      Render-Prioritaet jetzt produktspezifisch vor generisch:
+      summit.banner_video -> summit.banner -> settings.video ->
+      settings.image -> B1-Fallback. img_banner-Zwischen-Assign
+      entfallen (Zweige explizit); 21:9-Regel greift fuers MF-Video
+      automatisch weiter. Alter "Video-Setting gewinnt"-Kommentar raus,
+      Kontrakt-Kommentar um video <- summit.banner_video ergaenzt.
+      Verifiziert headless (repro-ptbanner-video.js, 5 Faelle PASS:
+      MF-Video schlaegt Setting-Video / nur MF-Bild schlaegt Setting-
+      Video / ohne MF Altverhalten Setting-Video / Setting-Bild / B1).
+      theme check: 56 Offenses vorher wie nachher (Alt-Baseline, nichts
+      Neues). ACHTUNG Verhaltensaenderung gewollt: smf_banner (Bild)
+      schlaegt jetzt auch ein gesetztes Setting-Video (vorher umgekehrt).
+      Livetest: purize-glas/cbd-crumble/e-liquid muessen nach Deploy je
+      IHR Video zeigen; Produkt ohne MF weiter das Setting-Medium.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
