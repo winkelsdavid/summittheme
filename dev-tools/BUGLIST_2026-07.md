@@ -2924,6 +2924,29 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Livetest: naechster Push entfernt die 3 live sichtbaren Bilder
       (Passwortseiten-Logo, 2 Homepage-Scroll-Icons) auch auf nitrothemex.
 
+## 138. [FEATURE] Mega-Menu-Matching per Position: menu_position (Auftrag 24.07.)
+- [~] Additiv: in sections/header.liquid bei allen 4 Mega-Block-Typen
+      (menu-product, menu-collection, menu-banner, menu-banner-classic)
+      neues select "menu_position" (""=Off, "1".."10", default "").
+      In den 3 Header-Snippets mit titleCheckMega-Logik (header-logo-
+      left-nav-left, header-logo-center-nav-center, header-logo-left)
+      Matching erweitert: menu_position gesetzt -> Block matcht auf den
+      n-ten Link (linkIndexMega == menu_position | plus: 0), Titel-Match
+      fuer DIESEN Block aus; menu_position leer -> bestehendes Titel-
+      Matching unveraendert. Keine Renames/Entfernungen.
+      NICHT angefasst (nicht beauftragt): slide-menu.liquid und
+      block-menu-split.liquid haben ebenfalls titleCheckMega (Mobile-/
+      Split-Varianten) - dort matcht weiterhin nur der Titel; bei Bedarf
+      nachziehen.
+      Verifiziert headless (repro-menuposition.js): Schema-JSON valide,
+      genau 4x menu_position; pro Snippet 4 Faelle PASS (Titel-only
+      unveraendert / Position schlaegt Titel / Position gesetzt =
+      Titel-Match aus / Mischbetrieb inkl. [Label]-Split). theme check:
+      keine Errors; nur VariableName-Style-Warnungen in der bestehenden
+      camelCase-Konvention der Snippets.
+      Summit-Folgeliste: NEUES Setting menu_position (select) in 4
+      Header-Blocktypen -> Mappability-Doku/parse ingest.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
