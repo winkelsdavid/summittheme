@@ -35,12 +35,29 @@
   assign carousel =  section.settings.enable_carousel
   assign service_heading = section.settings.service_heading
   assign layout = section.settings.layout
+  # METAFIELD_CONTRACT.md: summit.*-Metafields gewinnen, wenn gesetzt; leere
+  # Arrays zaehlen als nicht gesetzt (Normalisierung auf nil). Ausserhalb von
+  # Produktseiten ist product nil -> alle Reads leer -> Alt-Verhalten.
+  assign smf_bicons = product.metafields.summit.benefit_icons.value
+  unless smf_bicons and smf_bicons[0]
+    assign smf_bicons = nil
+  endunless
+  assign smf_icon_items = product.metafields.summit.icon_items.value
+  unless smf_icon_items and smf_icon_items[0]
+    assign smf_icon_items = nil
+  endunless
+  assign smf_icons_intro = product.metafields.summit.icons_intro.value
 -%}
 <div class="customstyle{{ section.id }} block-icon-text {% if section.settings.layout == 'style-3' %} block-sv3 {% endif %}" data-aos="{{ section.settings.animation }}" >
   {%- render 'style-section' -%}
 <div class="{{ section.settings.section_width }}">
   <div class="section-block sv-bgsub-{{ section.id }}" style="padding:{{ section.settings.paddingbox }}">
-    {%- render 'section-heading' -%}
+    {%- comment -%} METAFIELD_CONTRACT.md: subtitle_top/title/description <- summit.icons_intro
+        (feld-weise; leeres oder fehlendes Feld faellt auf das Section-Setting zurueck). {%- endcomment -%}
+    {%- render 'section-heading',
+      override_subtitle_top: smf_icons_intro.subtitle,
+      override_title: smf_icons_intro.title,
+      override_description: smf_icons_intro.description -%}
     <div class="services-wrapper dots-negative">
       <div class="services-slider row mb-0{% if carousel %} swiper{% endif %}" id="service-list-{{ section.id }}"
            data-rows="{{ section.settings.rows }}"
@@ -58,6 +75,24 @@
         {%- for block in section.blocks -%}
           {%- liquid
             assign type_icon = block.settings.type_icon
+            # METAFIELD_CONTRACT.md: image_icon <- summit.benefit_icons[i],
+            # title/description <- summit.icon_items[i].heading/.text
+            # (i = 0-basierter Block-Index). Fehlender Eintrag -> Block-Setting.
+            assign il_icon = block.settings.image_icon
+            assign il_title = block.settings.title
+            assign il_desc = block.settings.description
+            if smf_bicons and smf_bicons[forloop.index0]
+              assign il_icon = smf_bicons[forloop.index0]
+            endif
+            if smf_icon_items and smf_icon_items[forloop.index0]
+              assign il_item = smf_icon_items[forloop.index0]
+              if il_item.heading != blank
+                assign il_title = il_item.heading
+              endif
+              if il_item.text != blank
+                assign il_desc = il_item.text
+              endif
+            endif
            -%}
         <div class="{% if carousel %}  col swiper-slide {% else %} {% if layout == 'style-1' %} col-12 {% else %} col-6 {% endif %} col-lg  mb-4 mb-lg-0  {% endif %} services-item carousel__slide-wrapper--{{ block.id }}"
         {{ block.shopify_attributes }} >
@@ -69,28 +104,28 @@
               {% if type_icon == 'svg' %}
                 {{ block.settings.icon | default: '[[ Icon ]]' }}
               {% else %}
-                {%- if block.settings.image_icon != blank -%}
+                {%- if il_icon != blank -%}
                   {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
                   {%- capture sizes -%}
                     (min-width: {{ settings.container }}px) {{ settings.container | minus: 100 | divided_by: 2 }}px,
                     (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
                   {%- endcapture -%}
                   {{
-                    block.settings.image_icon
+                    il_icon
                     | image_url: width: 300
                     | image_tag: sizes: sizes, widths: widths, fetchpriority: 'auto'
                   }}
                 {%- else -%}
-                {%- capture b1_fb -%}{% render 'brand-image', handle: 'icon-list--icon_item', position: forloop.index, width: 300, class: 'scale-in lazyloaded', alt: block.settings.title %}{%- endcapture -%}
+                {%- capture b1_fb -%}{% render 'brand-image', handle: 'icon-list--icon_item', position: forloop.index, width: 300, class: 'scale-in lazyloaded', alt: il_title %}{%- endcapture -%}
                 {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
               {%- endif -%}
               {% endif %}
             </span>
             <div class="media-body">
-              {%- if block.settings.title != blank -%}
-              <h5 class="mt-0 mb-2 {{ service_heading }}" style="color:{{ section.settings.titlecolor }};">{{ block.settings.title }}</h5>
+              {%- if il_title != blank -%}
+              <h5 class="mt-0 mb-2 {{ service_heading }}" style="color:{{ section.settings.titlecolor }};">{{ il_title }}</h5>
               {%- endif -%}
-              <div style="color:{{ section.settings.subcolor }};">{{ block.settings.description }}</div>
+              <div style="color:{{ section.settings.subcolor }};">{{ il_desc }}</div>
             </div>
           </div>
           {%- when 'style-2' -%}
@@ -100,27 +135,27 @@
                   {% if type_icon == 'svg' %}
                     {{ block.settings.icon | default: '[[ Icon ]]' }}
                   {% else %}
-                    {%- if block.settings.image_icon != blank -%}
+                    {%- if il_icon != blank -%}
                       {%- assign widths = '165, 360, 535, 750, 1070, 1500' -%}
                       {%- capture sizes -%}
                         (min-width: {{ settings.container }}px) {{ settings.container | minus: 100 | divided_by: 2 }}px,
                         (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)
                       {%- endcapture -%}
                       {{
-                        block.settings.image_icon
+                        il_icon
                         | image_url: width: 300
                         | image_tag: sizes: sizes, widths: widths, fetchpriority: 'auto'
                       }}
                     {%- else -%}
-                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'icon-list--icon_item', position: forloop.index, width: 300, class: 'scale-in lazyloaded', alt: block.settings.title %}{%- endcapture -%}
+                    {%- capture b1_fb -%}{% render 'brand-image', handle: 'icon-list--icon_item', position: forloop.index, width: 300, class: 'scale-in lazyloaded', alt: il_title %}{%- endcapture -%}
                     {%- if b1_fb != blank -%}{{ b1_fb }}{%- else -%}{{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
                   {%- endif -%}
                   {% endif %}
               </div>
-              {%- if block.settings.title != blank -%}
-                <h5 class="mt-0 mb-2 {{ service_heading }}" {% if section.settings.titlecolor != "rgba(0,0,0,0)" and section.settings.titlecolor != blank %} style="--g-color-heading:{{ section.settings.titlecolor }};"{%  endif %}>{{ block.settings.title }}</h5>
+              {%- if il_title != blank -%}
+                <h5 class="mt-0 mb-2 {{ service_heading }}" {% if section.settings.titlecolor != "rgba(0,0,0,0)" and section.settings.titlecolor != blank %} style="--g-color-heading:{{ section.settings.titlecolor }};"{%  endif %}>{{ il_title }}</h5>
               {%- endif -%}
-              <div {% if section.settings.subcolor != "rgba(0,0,0,0)" and section.settings.subcolor != blank %} style="color:{{ section.settings.subcolor }};" {%  endif %}>{{ block.settings.description }}</div>
+              <div {% if section.settings.subcolor != "rgba(0,0,0,0)" and section.settings.subcolor != blank %} style="color:{{ section.settings.subcolor }};" {%  endif %}>{{ il_desc }}</div>
             </div>
           </div>
           {%- endcase -%}

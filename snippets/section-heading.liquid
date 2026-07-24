@@ -7,13 +7,25 @@
 {%- liquid
   # Optional translated fallbacks (passed via render params); without them
   # behaviour is byte-identical to reading section.settings directly.
+  # override_* (ebenfalls optional, z.B. aus summit-Metafields) gewinnt
+  # umgekehrt VOR dem Setting; leer/nicht uebergeben = unveraendert.
   assign sh_title = section.settings.title
+  if override_title != blank
+    assign sh_title = override_title
+  endif
   if sh_title == blank and fallback_title != blank
     assign sh_title = fallback_title
   endif
   assign sh_subtop = section.settings.subtitle_top
+  if override_subtitle_top != blank
+    assign sh_subtop = override_subtitle_top
+  endif
   if sh_subtop == blank and fallback_subtitle_top != blank
     assign sh_subtop = fallback_subtitle_top
+  endif
+  assign sh_desc = section.settings.description
+  if override_description != blank
+    assign sh_desc = override_description
   endif
 -%}
 {%- if settings.sectionheading == 'heading-1' -%}
@@ -25,12 +37,12 @@
   {%- endif -%}
   {% endif %}
   {%- if sh_title != blank -%}
-  <h3 {% if section.settings.heading_color != blank and  section.settings.heading_color != "rgba(0,0,0,0)"  %} style="--g-color-heading:{{ section.settings.heading_color }}"{% endif %} class="{{ settings.size_text_heading }} {{ r_class }}  {% if section.settings.description != blank %} mb-2 {% else %} mb-5 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
+  <h3 {% if section.settings.heading_color != blank and  section.settings.heading_color != "rgba(0,0,0,0)"  %} style="--g-color-heading:{{ section.settings.heading_color }}"{% endif %} class="{{ settings.size_text_heading }} {{ r_class }}  {% if sh_desc != blank %} mb-2 {% else %} mb-5 {% endif %}" data-aos="{{ section.settings.animation }}" data-aos-duration="500">
     <span>{{ sh_title }}</span>
   </h3>
   {%- endif -%}
-  {%- if section.settings.description != blank -%}
-  <div {% if section.settings.description_color != blank and  section.settings.description_color != "rgba(0,0,0,0)"  %} style="color:{{ section.settings.description_color }}"{% endif %} class="font-family-2 mb-5 txt-body-70 {{ r_class }}" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ section.settings.description }}</div>
+  {%- if sh_desc != blank -%}
+  <div {% if section.settings.description_color != blank and  section.settings.description_color != "rgba(0,0,0,0)"  %} style="color:{{ section.settings.description_color }}"{% endif %} class="font-family-2 mb-5 txt-body-70 {{ r_class }}" data-aos="{{ section.settings.animation }}" data-aos-duration="800">{{ sh_desc }}</div>
   {%- endif -%}
 {%- elsif settings.sectionheading == 'heading-2' -%}
     {% if section.settings.replace_reviews %}
@@ -41,12 +53,12 @@
   {%- endif -%}
 {% endif %}
   {%- if sh_title != blank -%}
-  <h3 class="section-title-2 {% if section.settings.description != blank %} mb-2 {% else %} mb-5 {% endif %}">
+  <h3 class="section-title-2 {% if sh_desc != blank %} mb-2 {% else %} mb-5 {% endif %}">
     <span>{{ sh_title }}</span>
   </h3>
   {%- endif -%}
-  {%- if section.settings.description != blank -%}
-  <p class="font-family-2 mb-5 txt-body-70">{{ section.settings.description }}</p>
+  {%- if sh_desc != blank -%}
+  <p class="font-family-2 mb-5 txt-body-70">{{ sh_desc }}</p>
   {%- endif -%}
 {%- endif -%}
 </div>
