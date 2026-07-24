@@ -73,17 +73,25 @@
         {%- liquid
           assign hasMega = false
           assign titleCheckMega = link.title | strip | split: '[' | first | downcase
-          
+          assign linkIndexMega = forloop.index
+
           for block in blocks
             assign type = block.type
             assign block = block
-            assign menu_title = block.settings.menu_title | strip | downcase 
+            assign menu_title = block.settings.menu_title | strip | downcase
 
-            if titleCheckMega == menu_title
+            if block.settings.menu_position != blank
+              assign posMega = block.settings.menu_position | plus: 0
+              if posMega == linkIndexMega
+                assign hasMega = true
+                assign intMega = forloop.index
+                break
+              endif
+            elsif titleCheckMega == menu_title
               assign hasMega = true
               assign intMega = forloop.index
-            break 
-            endif 
+            break
+            endif
           endfor
         
         -%}
