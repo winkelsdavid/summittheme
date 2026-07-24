@@ -3013,6 +3013,25 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       SVG. Summits Mapping setzt 'img' - falls MF auch SVG-Bloecke
       uebersteuern soll, bitte melden.
 
+## 141. image-with-icons: banner_video-Zweig entfernt (Slot-Aufteilung, Auftrag 25.07.)
+- [~] Seit #139 bedient product-template-1 (Block 'image') den Video-Slot
+      aus summit.banner_video. Der #136-Zweig in image-with-icons haette
+      auf derselben Produktseite dasselbe Video ein zweites Mal gezeigt.
+      Fix: banner_video-Read + Render-Zweig raus; die Section liest jetzt
+      nur noch summit.banner_image -> Section-Setting-Kette (section_image
+      -> video_pick -> video -> B1 -> Placeholder), unveraendert.
+      CSS-Regel .summit-pbanner-img bleibt (gilt dem MF-Bild).
+      Kontrakt nachgezogen (METAFIELD_CONTRACT.md): Zeile fuer "Image With
+      4 Icons" jetzt "banner_image -> Section-Setting"; NEUE Zeile fuer
+      Product Overview Block image -> video: banner_video -> banner ->
+      Setting-Video -> Setting-Bild; Banner-Keys-Absatz auf die
+      Slot-Aufteilung umgeschrieben. Hinweis: die im Auftrag genannte
+      "Zeile 111" war die image-with-icons-Zeile (stand auf 113).
+      Verifiziert headless (repro-iwi-novideo.js, 7 Checks PASS): kein
+      banner_video-Read mehr im Code; banner_video ohne banner_image wird
+      ignoriert (Section-Bild rendert); beide MF -> nur Bild; ohne MF und
+      Homepage-Kontext -> Altpfade unveraendert. theme check: 0 Offenses.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
