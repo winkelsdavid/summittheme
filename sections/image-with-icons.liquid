@@ -3,6 +3,24 @@
 {%-liquid
     assign section_image = section.settings.section_image
     assign p_banner_image = product.metafields.summit.banner_image.value
+    # METAFIELD_CONTRACT.md: Icons/Texte der text_icon-Bloecke. Dedizierte Keys
+    # (image_icons/image_icon_items) gewinnen; ohne sie greifen die geteilten
+    # Keys benefit_icons/icon_items (wie in icon-list). Leere Listen = nicht
+    # gesetzt; ausserhalb von Produktseiten ist product nil -> Alt-Verhalten.
+    assign p_icons = product.metafields.summit.image_icons.value
+    unless p_icons and p_icons[0]
+      assign p_icons = product.metafields.summit.benefit_icons.value
+    endunless
+    unless p_icons and p_icons[0]
+      assign p_icons = nil
+    endunless
+    assign p_items = product.metafields.summit.image_icon_items.value
+    unless p_items and p_items[0]
+      assign p_items = product.metafields.summit.icon_items.value
+    endunless
+    unless p_items and p_items[0]
+      assign p_items = nil
+    endunless
     assign block_text_color = section.settings.block_text_color
     assign block_text_bg = section.settings.block_text_bg
     assign count = 0
@@ -191,6 +209,22 @@
                         assign icon_image = block.settings.icon_image
                         assign block_title = block.settings.block_title
                         assign block_des = block.settings.block_description
+                        # icon_image <- image_icons[i]/benefit_icons[i],
+                        # block_title/-_description <- (image_)icon_items[i].heading/.text
+                        # (i = 0-basierter Block-Index). Fehlender Eintrag oder
+                        # leeres Feld -> Block-Setting.
+                        if p_icons and p_icons[forloop.index0]
+                          assign icon_image = p_icons[forloop.index0]
+                        endif
+                        if p_items and p_items[forloop.index0]
+                          assign p_item = p_items[forloop.index0]
+                          if p_item.heading != blank
+                            assign block_title = p_item.heading
+                          endif
+                          if p_item.text != blank
+                            assign block_des = p_item.text
+                          endif
+                        endif
                     -%}
                         <div class="block-product-imgtxt__item flex-column c_align_{{ block.settings.alignment }}">
                             {%- if icon_image != blank -%}

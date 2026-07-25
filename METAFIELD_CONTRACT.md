@@ -111,6 +111,11 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Overview | Block `title` → `custom_title` | `product.title` (nativ) |
 | Product Suggest | `product` | `product.title` (nativ) |
 | Image With 4 Icons | Section-Bild (`image-with-icons.liquid`) | `banner_image` → Section-Setting (Fallback-Kette; Theme-Patch 23.07.2026, Video-Zweig entfernt 25.07.2026) |
+| Image With 4 Icons | Block `text_icon` → `icon_image` | `image_icons[i]` → `benefit_icons[i]` (i = Block-Index) |
+| Image With 4 Icons | Block `text_icon` → `block_title` / `block_description` | `image_icon_items[i].heading` / `.text` → `icon_items[i].heading` / `.text` |
+| Icons (`icon-list`) | Block `icon_item` → `image_icon` | `benefit_icons[i]` |
+| Icons (`icon-list`) | Block `icon_item` → `title` / `description` | `icon_items[i].heading` / `.text` |
+| Icons (`icon-list`) | `subtitle_top` / `title` / `description` (Section) | `icons_intro.subtitle` / `.title` / `.description` |
 | Product Overview | Block `image` → `video` | `banner_video` → `banner` → Setting-Video → Setting-Bild (Theme-Patch 24.07.2026) |
 
 **Banner-Keys (K2, 23.07.2026; Slot-Aufteilung 25.07.2026):** Der Writer
@@ -128,6 +133,19 @@ verarbeitendes File ist gültig; das Theme rendert es, sobald Shopify
 fertig transkodiert hat). Quelle ist das Block-Type-Mapping `image:video`
 der Version — Versionen ohne dieses Mapping schreiben schlicht kein
 `banner_video` (Skip-Reason `no_binding`).
+
+**Icon-Keys (Theme-Patches 24./25.07.2026):** `icon_items` (json-Liste
+`[{heading, text}]`) und `icons_intro` (json-Objekt
+`{subtitle, title, description}`) sind NEU und müssen writer-seitig noch
+angelegt werden; `benefit_icons` schreibt der Writer bereits. Alle Reads
+sind item-/feldweise: fehlender Index ODER leeres Feld → Section-/Block-
+Setting (kein Skip), Einträge über die Blockzahl hinaus werden ignoriert.
+Icons und Image With 4 Icons teilen sich `benefit_icons`/`icon_items`, d. h.
+ohne weitere Keys zeigen beide Sections denselben Inhalt. Sollen sie sich
+unterscheiden, schreibt der Writer zusätzlich die **dedizierten** Keys
+`image_icons` (list.file_reference) und `image_icon_items` (json, gleiche
+Struktur wie `icon_items`) — die liest ausschließlich Image With 4 Icons und
+sie gewinnen dort vor den geteilten Keys.
 
 ¹ Die Index-Arithmetik spiegelt die heutigen `outputIndex`-Werte der
 Block-Type-Mappings — die Theme-Session (Branch `feat/summit-metafields`,
