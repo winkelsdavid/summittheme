@@ -3130,6 +3130,42 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Fallback 6 (nicht 0 Karten); 0 Empfehlungen -> nichts; URL
       unveraendert. theme check: 4 Offenses vorher wie nachher.
 
+## 146. Collection: View-Mode-Icons unsichtbar im HELLEN Preset (Bug-Sammler 24.07.)
+- [~] Nachfolger von #86 (dort: Dark). Operator FASHION (hell): drei leere
+      Kaesten. PATTERN P4.
+      MESSUNG am Bug-Screenshot (Puppeteer/Canvas, Originalkoordinaten):
+      Kastenrahmen (#E0E0E0) rendert = Luminanz 224, INNEN dunkelstes
+      Pixel 244-249 (Referenz Schwarztext 0). Die Striche werden also
+      GAR NICHT gemalt - kein Kontrastproblem, sondern eine gekippte
+      Deklaration.
+      URSACHE (Klasse): .js-btn-view:before haengt komplett an
+      rgba(var(--g-color-heading-rgb), .2) OHNE Fallback. Ist die Var
+      nicht aufloesbar (fehlend oder ", , " aus einem leeren
+      Color-Setting), ist die Deklaration invalid at computed-value time
+      -> background faellt auf transparent, box-shadow auf "none" =
+      leerer Kasten. Steht sie auf der Flaechenfarbe (weiss auf hell),
+      ebenfalls unsichtbar. Alle drei Faelle im Harness reproduziert:
+      Alt-CSS Kontrast 0 bei fehlender/kaputter/weisser Var (mit intakter
+      Var 51). Repo == gepushtes Theme (theme.css/theme.css.liquid/
+      header-css per Asset-GET verglichen), gepushtes settings_data
+      traegt color_body_headings #000000 - der exakte Live-Ausloeser
+      liess sich nicht final festnageln (Storefront passwortgeschuetzt,
+      kein Live-DOM). Der Fix ist gegen ALLE drei Faelle immun.
+      FIX (theme.css + theme.css.liquid, beide Dateien - servierte
+      Fassung ist die .liquid): Striche/Schatten auf currentColor +
+      opacity .28 (aktiv opacity 1) statt auf die Heading-Var.
+      currentColor erbt die Textfarbe der Toolbar und kontrastiert damit
+      per Definition zum Seitenhintergrund - das #86-Ziel (Dark) bleibt
+      erhalten, ohne von einer einzelnen Var abzuhaengen. Der aktive
+      Kasten-Tint behaelt die Var, aber mit Fallback
+      rgba(var(--g-color-heading-rgb, 0, 0, 0), .05).
+      Verifiziert headless (repro-viewmode2.js, 7 Checks PASS): Kontrast
+      inaktiv 71 / aktiv >=242 in 6 Szenarien (hell/dark x Var intakt/
+      fehlend/kaputt/weiss) und in beiden CSS-Dateien; Alt-Stand zum
+      Vergleich 0 bzw. 51. theme check: 0 Offenses.
+      Nebeneffekt (gewollt): inaktive Striche minimal kraeftiger als
+      vorher (opacity .28 statt alpha .2, Kontrast 71 statt 51).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
