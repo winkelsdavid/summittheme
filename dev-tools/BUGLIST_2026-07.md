@@ -3201,6 +3201,22 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       identisch zur Baseline, keine einzige Datei mit veraenderten
       Offenses; 0 Restvorkommen der 5 Keys im Repo.
 
+## 148. Cart Drawer: Trennlinie ueber "Total" entfernt (Bug-Sammler 25.07.)
+- [~] Operator: "Diese linie entfernen" (Screenshot, Linie direkt ueber
+      der Summenzeile).
+      IDENTIFIKATION per Pixelmessung im Screenshot (Puppeteer/Canvas):
+      genau 1 Zeile mit rgb(233,233,233) ueber die volle Drawer-Breite
+      -> .mini-cart-total{border-top:1px solid #e9e9e9} (theme.css
+      Z8305). Der zunaechst naheliegende Kandidat (Addon-Zeile mit
+      border-bottom) scheidet aus: e_notecart ist im gepushten
+      FASHION-Theme false, der Block rendert gar nicht.
+      FIX (theme.css + theme.css.liquid): border-top-Deklaration
+      entfernt; margin-top/padding-top 16px bleiben, damit die
+      Summenzeile nicht an den Inhalt heranrueckt.
+      Verifiziert headless (repro-cartline.js, 4 Checks PASS): Alt-Stand
+      reproduziert die 1px-Linie #e9e9e9, beide neuen CSS-Dateien liefern
+      border-top 0px, Abstaende unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
