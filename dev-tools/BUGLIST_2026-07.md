@@ -3032,6 +3032,35 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       ignoriert (Section-Bild rendert); beide MF -> nur Bild; ohne MF und
       Homepage-Kontext -> Altpfade unveraendert. theme check: 0 Offenses.
 
+## 142. [FEATURE] image-with-icons: text_icon-Bloecke per Metafield (User 25.07.)
+- [~] Auftrag: Section soll wie icon-list (#140) komplett produktspezifisch
+      werden. Medien-Slot lief bereits (banner_image, #136/#141); ergaenzt
+      sind jetzt die 4 text_icon-Bloecke:
+      icon_image <- image_icons[i] -> benefit_icons[i];
+      block_title/block_description <- image_icon_items[i].heading/.text
+      -> icon_items[i].heading/.text; dann Block-Setting, dann B1.
+      Kein Section-Kopf vorhanden (Section hat keine title/subtitle-
+      Settings) -> nichts zu mappen; kein Video-Zweig (siehe #141).
+      ZWEI-EBENEN-KEYS (Entscheidung, weil beide Sections in product.json
+      auf derselben Seite liegen): geteilte Keys benefit_icons/icon_items
+      wirken sofort (Writer schreibt benefit_icons bereits), fuehren aber
+      zu identischem Inhalt in Icons und Image With 4 Icons. Schreibt der
+      Writer zusaetzlich die dedizierten Keys image_icons/image_icon_items,
+      gewinnen die hier - damit koennen sich beide Sections unterscheiden,
+      ohne dass am Theme nochmal etwas geaendert werden muss.
+      Verifiziert headless (repro-iwi-blocks.js, 14 Checks PASS): ohne MF
+      und im Homepage-Kontext HTML-identisch zum Alt-Stand; geteilte Keys
+      greifen; dedizierte schlagen geteilte; leere dedizierte Listen
+      fallen auf die geteilten zurueck; item-/feldweiser Fallback
+      (fehlendes Item / nur heading / leeres heading); Ueberhang ignoriert;
+      MF-Icon schlaegt B1, ohne MF bleiben alle 4 B1-Fallbacks;
+      banner_image im Medien-Slot unveraendert. theme check: 0 Offenses.
+      Kontrakt (METAFIELD_CONTRACT.md) erweitert: 6 neue Tabellenzeilen
+      (Image With 4 Icons Bloecke + icon-list komplett, war noch nicht
+      eingetragen) + Absatz "Icon-Keys" mit Semantik und Zwei-Ebenen-Regel.
+      OFFEN (Summit): icon_items/icons_intro anlegen + schreiben; optional
+      image_icons/image_icon_items fuer unterschiedliche Inhalte.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
