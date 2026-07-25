@@ -3217,6 +3217,28 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       reproduziert die 1px-Linie #e9e9e9, beide neuen CSS-Dateien liefern
       border-top 0px, Abstaende unveraendert.
 
+## 149. Cart Drawer: Upsell-Block nach unten (Bug-Sammler 25.07., split 1/2)
+- [~] Operator: "'Upsell cart' unten anordnen" (zweiter Teil = #150).
+      Ausgangslage: der Upsell-Block lag INNERHALB von .mini-cart-scroll,
+      also im scrollenden Bereich hinter der Artikelliste - auf Mobile
+      scrollte er mit weg.
+      Fix: Block aus dem Scroll-Container heraus direkt vor den
+      <footer class="mini-cart-footer"> verschoben (weiterhin Kind von
+      .mini-cart-content). Klasse px-lg-4 -> px-4, weil das seitliche
+      Padding vorher vom Scroll-Container (.mini-cart-scroll px-4) kam;
+      ab lg ist der Wert identisch, Desktop bleibt unveraendert.
+      DESKTOP unberuehrt: .drawer-crossell ist ab 992px position:absolute
+      (ausfahrendes Seitenpanel); Containing Block ist .cardraw
+      .mini-cart-content (position:fixed) - die DOM-Verschiebung
+      innerhalb desselben Elternteils aendert daran nichts (gemessen:
+      x/y/Breite/Hoehe/Padding identisch).
+      Verifiziert headless (repro-upsell-move2.js, 10 Checks PASS, echte
+      Kaskade inkl. Bootstrap aus header-css Z2): Quelltext-Struktur
+      (Scroll-Container schliesst jetzt VOR dem Upsell; Alt-Stand hatte
+      ihn drin), mobil nicht mehr im Scroll-Container + Footer als
+      direktes Geschwister + Padding wirkt, Desktop-Geometrie identisch.
+      theme check: block-cart unveraendert 6 Offenses (Alt-Baseline).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
