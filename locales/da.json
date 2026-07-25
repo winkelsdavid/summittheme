@@ -53,7 +53,6 @@
     },
     "cart": {
       "title_upsell": "Du vil måske også synes om",
-      "coupon_code_title": "Liste over kuponer",
       "coupon_first_label": "Brug",
       "coupon_last_label": "for gratis fragt",
       "coupon_free_delivery": "Din ordre leveres gratis!",
@@ -241,17 +240,10 @@
       "savings_html": "Du sparer {{ price }}",
       "accept": "Vi accepterer",
       "total": "Total",
-      "coupon_title": "Kupon",
       "calc_title": "Forsendelse",
       "you_are_saving": "Du sparer {{ price }}",
       "order_reserved_html": "Vi kan reservere din ordre i {{ time }} minutter",
       "saving_congrats_html": "Tillykke, du sparer {{ amount }} på din første ordre"
-    },
-    "gift": {
-      "title": "Gave",
-      "description": "Vil du have en gaveindpakning?  ",
-      "save": "Tilføj gaveindpakning",
-      "close": "Tæt"
     },
     "label": {
       "product": "Produkt",

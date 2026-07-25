@@ -3166,6 +3166,41 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Nebeneffekt (gewollt): inaktive Striche minimal kraeftiger als
       vorher (opacity .28 statt alpha .2, Kontrast 71 statt 51).
 
+## 147. Gift Wrapping + Coupon Code komplett entfernt (Bug-Sammler 25.07.)
+- [~] Operator: "Diese beiden Optionen komplett aus dem theme loeschen"
+      (Theme Settings > Style Cart). Entfernt:
+      (1) config/settings_schema.json: beide Header-Bloecke + 5 Settings
+          (gift_wrapping_enable, product_gift, coupon_code_enable,
+          coupon_code_title, coupon_code_content).
+      (2) snippets/block-cart.liquid: Gift-Box + Coupon-Box inkl. der
+          inline definierten <discount-code>-Komponente (106 Zeilen).
+      (3) sections/cart-template.liquid: Gift-Zeile (Warenkorbseite) +
+          Coupon-Block inkl. zweiter <discount-code>-Definition.
+      (4) config/settings_data.json: die 5 gespeicherten Werte.
+      (5) locales/*.json (10 Sprachen): verwaiste Keys cart.gift.*,
+          general.cart.coupon_code_title, cart.general.coupon_title.
+      (6) snippets/icon-gift.liquid + icon-discount.liquid geloescht -
+          nach dem Markup-Entfernen verwaist (theme check meldete beide
+          als OrphanedSnippet). Die "gift"-Option der Icon-Picker
+          (list-svg.liquid/list-svg-cart.liquid) bleibt - eigenes Inline-
+          SVG, kein Snippet-Render.
+      BEWUSST STEHEN GELASSEN (dead code, kein sichtbarer Effekt):
+      theme.GiftWrap in assets/theme.js (Z4757ff) - das Modul wird an
+      zwei Stellen der Cart-Flow-Kette aufgerufen (hideGift/checkGift);
+      ein Entfernen muesste beide Call-Sites mitnehmen (P3-Risiko:
+      werfender Aufruf killt die Kette). Es lief bereits bisher ohne
+      Gift-Markup (gift_wrapping_enable war false) -> erwiesenermassen
+      null-sicher. Ebenso die Gift-/Coupon-Regeln in cart-draw.css.
+      Auf Ansage strippe ich beides in einem eigenen Commit.
+      KONTRAKT-FLAG (Summit): 5 Setting-IDs sind WEG und 2 Snippet-
+      Dateien geloescht. Schreibt Summits Mapping eines dieser Keys,
+      laeuft der Write ins Leere (harmlos, aber Mappability-Doku
+      anpassen). Keine Section-/Schema-RENAMES.
+      Verifiziert: settings_schema.json + settings_data.json + alle 10
+      Locale-JSONs valide; theme check 400 Offenses / 41 Errors -
+      identisch zur Baseline, keine einzige Datei mit veraenderten
+      Offenses; 0 Restvorkommen der 5 Keys im Repo.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

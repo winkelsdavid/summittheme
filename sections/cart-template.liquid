@@ -163,17 +163,6 @@
               </tbody>
             </table>
             <div>
-              {% assign product_gift = settings.product_gift %}
-              {%- if settings.gift_wrapping_enable and product_gift != blank -%}
-                <div class="d-flex align-items-center gap-2 py-4 border-top giftwrap flex-lg-row flex-column">
-                <p class="font-family-2 mb-0 d-flex align-items-center gap-2">{% render 'icon-gift' %} {{ 'cart.gift.description' | t }} {{ product_gift.price | money }}</p>
-                <div>
-                <a class="add-gift__btn add-gift btn btn-outline btn-sm " href="{{ product_gift.url }}" data-id="{{ product_gift.selected_or_first_available_variant.id }}">
-                  <div class="product-card__loading spinner-border" role="status"></div>
-                  <span>{{ 'cart.gift.save' | t }}</span></a>
-                </div>
-                </div> 
-              {%- endif -%}
               {%  comment %}
               {% render 'shipping-calculator' %}
                {% endcomment %}
@@ -189,59 +178,6 @@
                 <textarea name="note" id="CartSpecialInstructions" class="cart__note">{{ cart.note }}</textarea>
               </div>
               {% endif %}
-              {%- if settings.coupon_code_enable -%}
-                <div class="block-coupon col-12 block-coupon-cart">
-                  <discount-code >
-                    {%- if settings.coupon_code_title != blank -%}
-                    <div id="list-coupon" class="pt-2 mb-3 text-left">
-                      <div class="card-coupon">
-                        <h6> {{ settings.coupon_code_title }} </h6>
-                        <div class="pb-3 border-bottom mb-3">
-                          {{ settings.coupon_code_content }}
-                        </div>
-                        <div class="d-flex flex-column align-items-center">
-                          <div class="mb-4 w-100 text-left">
-                            <label class="mb-1" for="discount-code-input">{{ 'cart.general.coupon_title' | t }}</label>
-                            <div class="d-flex w-100 gap-2">
-                              <input class="form-control" type="text" id="discount-code-input" autocomplete="on" value="">
-                              <div>
-                                <span id="apply-discount-btn" class="btn btn-theme">{{ 'cart.general.save' | t }}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  {%- endif -%}
-                  </discount-code>
-                </div>
-                <script>
-                  class DiscountCode extends HTMLElement {
-                      constructor() {
-                        super();
-                        this.couponCodeValue = document.getElementById('discount-code-input'); 
-                        this.btnApply = document.getElementById('apply-discount-btn');
-                        //this.checkCode();
-                        this.btnApply.addEventListener('click', this.saveCode.bind(this));
-                      }
-                      checkCode(){
-                        if (localStorage.getItem('couponCode')){
-                          this.couponCodeValue.value = localStorage.getItem('couponCode');  
-                          //this.couponCodeValue.classList.add('has-value');
-                        }
-                      }
-                      saveCode(){
-                        this.valCode = this.couponCodeValue.value;
-                        localStorage.setItem('couponCode', this.valCode );
-                        fetch(`/discount/${this.valCode}`)
-                              .then((response) => response.text())
-                              .then((responseText) => {
-                          });
-                      }
-                    }
-                    customElements.define('discount-code', DiscountCode);
-                </script>
-              {%- endif -%}
               <div class="col text-left">
                 <div class="flex align-items-center mt-2">
                  <span class="mr-auto">{{ 'cart.general.total' | t }}</span>

@@ -53,7 +53,6 @@
     },
     "cart": {
       "title_upsell": "You may also like",
-      "coupon_code_title": "List Coupon",
       "coupon_first_label": "Spend",
       "coupon_last_label": "for Free Shipping",
       "coupon_free_delivery": "Your order is free delivery !",
@@ -241,17 +240,10 @@
       "savings_html": "You're saving {{ price }}",
       "accept": "We accept",
       "total": "Total",
-      "coupon_title": "Coupon",
       "calc_title": "Shipping",
       "you_are_saving": "You're saving {{ price }}",
       "order_reserved_html": "We can reserve your order for {{ time }} minutes",
       "saving_congrats_html": "Congrats, you're saving {{ amount }} on your first order"
-    },
-    "gift": {
-      "title": "Gift",
-      "description": "Do you want a gift wrap? Only ",
-      "save": "Add Gift Wrapping",
-      "close": "Close"
     },
     "label": {
       "product": "Product",

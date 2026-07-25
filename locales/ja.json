@@ -53,7 +53,6 @@
     },
     "cart": {
       "title_upsell": "こちらもおすすめです",
-      "coupon_code_title": "クーポン一覧",
       "coupon_first_label": "購入金額",
       "coupon_last_label": "で送料無料",
       "coupon_free_delivery": "ご注文は送料無料です！",
@@ -241,17 +240,10 @@
       "savings_html": "節約していますね {{ price }}",
       "accept": "承ります",
       "total": "合計",
-      "coupon_title": "クーポン",
       "calc_title": "配送",
       "you_are_saving": "{{ price }} お得です",
       "order_reserved_html": "ご注文を {{ time }} 分間確保できます",
       "saving_congrats_html": "おめでとうございます！初回注文で {{ amount }} お得になります"
-    },
-    "gift": {
-      "title": "贈り物",
-      "description": "ギフト包装をご希望ですか? ",
-      "save": "ギフトラッピングを追加する",
-      "close": "近い"
     },
     "label": {
       "product": "製品",

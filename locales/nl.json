@@ -53,7 +53,6 @@
     },
     "cart": {
       "title_upsell": "Dit vind je misschien ook leuk",
-      "coupon_code_title": "Couponlijst",
       "coupon_first_label": "Besteed",
       "coupon_last_label": "voor gratis verzending",
       "coupon_free_delivery": "Je bestelling wordt gratis geleverd!",
@@ -241,17 +240,10 @@
       "savings_html": "Je bent aan het sparen {{ price }}",
       "accept": "We aanvaarden",
       "total": "Totaal",
-      "coupon_title": "Coupon",
       "calc_title": "Verzenden",
       "you_are_saving": "Je bespaart {{ price }}",
       "order_reserved_html": "We kunnen je bestelling {{ time }} minuten reserveren",
       "saving_congrats_html": "Gefeliciteerd! Je bespaart {{ amount }} op je eerste bestelling"
-    },
-    "gift": {
-      "title": "Geschenk",
-      "description": "Wil je een cadeauverpakking?  ",
-      "save": "Cadeauverpakking toevoegen",
-      "close": "Dichtbij"
     },
     "label": {
       "product": "Product",

@@ -53,7 +53,6 @@
     },
     "cart": {
       "title_upsell": "Tu aimeras peut-être aussi",
-      "coupon_code_title": "Liste de coupons",
       "coupon_first_label": "Dépense",
       "coupon_last_label": "pour la livraison gratuite",
       "coupon_free_delivery": "Ta commande est livrée gratuitement !",
@@ -241,17 +240,10 @@
       "savings_html": "Tu économises {{ price }}",
       "accept": "Nous acceptons",
       "total": "Total",
-      "coupon_title": "Coupon",
       "calc_title": "Expédition",
       "you_are_saving": "Tu économises {{ price }}",
       "order_reserved_html": "Nous pouvons réserver ta commande pendant {{ time }} minutes",
       "saving_congrats_html": "Félicitations, tu économises {{ amount }} sur ta première commande"
-    },
-    "gift": {
-      "title": "Cadeau",
-      "description": "Tu souhaites un emballage cadeau ?  ",
-      "save": "Ajouter un emballage cadeau",
-      "close": "Fermer"
     },
     "label": {
       "product": "Produit",

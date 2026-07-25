@@ -53,7 +53,6 @@
     },
     "cart": {
       "title_upsell": "Também poderás gostar de",
-      "coupon_code_title": "Lista de cupões",
       "coupon_first_label": "Gaste",
       "coupon_last_label": "para envio grátis",
       "coupon_free_delivery": "O seu pedido tem envio grátis!",
@@ -241,17 +240,10 @@
       "savings_html": "Você está economizando {{ price }}",
       "accept": "Nós aceitamos",
       "total": "Total",
-      "coupon_title": "Cupom",
       "calc_title": "Envio",
       "you_are_saving": "Está a poupar {{ price }}",
       "order_reserved_html": "Podemos reservar a sua encomenda durante {{ time }} minutos",
       "saving_congrats_html": "Parabéns, está a poupar {{ amount }} na sua primeira encomenda"
-    },
-    "gift": {
-      "title": "Presente",
-      "description": "Você quer um embrulho para presente?  ",
-      "save": "Adicionar embrulho para presente",
-      "close": "Fechar"
     },
     "label": {
       "product": "produtos",

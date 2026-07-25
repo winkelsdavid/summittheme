@@ -2905,45 +2905,6 @@
       },
       {
         "type": "header",
-        "content": "🎁 Gift Wrapping"
-      },
-      {
-        "type": "checkbox",
-        "id": "gift_wrapping_enable",
-        "label": "Enable Gift Wrapping",
-        "default": true
-      },
-      {
-        "type": "product",
-        "id": "product_gift",
-        "label": "Gift Product",
-        "info": "Select Gift Wrapping"
-      },
-      {
-        "type": "header",
-        "content": "🏷 Coupon Code"
-      },
-      {
-        "type": "checkbox",
-        "id": "coupon_code_enable",
-        "label": "Enable Coupon Code",
-        "default": true,
-        "info": "Coupon Code will auto add in Checkout Page"
-      },
-      {
-        "type": "text",
-        "id": "coupon_code_title",
-        "label": "Title",
-        "default": "List Coupon"
-      },
-      {
-        "type": "richtext",
-        "id": "coupon_code_content",
-        "label": "Content",
-        "default": "<p>Discount Code</p>"
-      },
-      {
-        "type": "header",
         "content": "🚚 Free Shipping"
       },
       {
