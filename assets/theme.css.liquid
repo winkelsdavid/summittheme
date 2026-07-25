@@ -8500,8 +8500,16 @@ body.video-playing {
   margin-left: -1px;
 }
 .js-btn-view:before {
-  box-shadow: 6px 0 rgba(var(--g-color-heading-rgb), 0.2);
-  background: rgba(var(--g-color-heading-rgb), 0.2);
+  /* #146: Striche haengen an currentColor statt an --g-color-heading-rgb.
+     Die Var ist nicht ueberall aufloesbar - dann kippt die ganze
+     Deklaration (P4: invalid at computed-value time, box-shadow wird
+     "none") und die Kaesten bleiben leer; steht sie auf der Flaechen-
+     farbe, sind die Striche ebenfalls unsichtbar. currentColor erbt die
+     Textfarbe der Toolbar und kontrastiert damit per Definition zum
+     Seitenhintergrund - hell wie dunkel (#86-Ziel bleibt erhalten). */
+  box-shadow: 6px 0 currentColor;
+  background: currentColor;
+  opacity: 0.28;
   content: "";
   position: absolute;
   left: 0px;
@@ -8514,25 +8522,25 @@ body.video-playing {
 .js-btn-view.active {
   /* border-color: var(--g-main); */
   z-index: 2;
-  background-color: rgba(var(--g-color-heading-rgb), 0.05);
+  background-color: rgba(var(--g-color-heading-rgb, 0, 0, 0), 0.05);
 }
 .js-btn-view.active:before {
-  background-color: rgb(var(--g-color-heading-rgb));
-  box-shadow: 6px 0 0 rgb(var(--g-color-heading-rgb));
+  /* #146: aktiv = volle Deckkraft derselben Striche (statt zweiter Farbquelle) */
+  opacity: 1;
 }
 .btn-view-3:before {
-  box-shadow: 6px 0 rgba(var(--g-color-heading-rgb), 0.2), 12px 0 rgba(var(--g-color-heading-rgb), 0.2);
+  box-shadow: 6px 0 currentColor, 12px 0 currentColor;
   transform: translateY(-50%) translateX(calc(-50% - 6px) );
 }
 .btn-view-3.active:before {
-  box-shadow: 6px 0 rgba(var(--g-color-heading-rgb)), 12px 0 rgba(var(--g-color-heading-rgb));
+  box-shadow: 6px 0 currentColor, 12px 0 currentColor;
 }
 .btn-view-4:before {
-  box-shadow: 6px 0 rgba(var(--g-color-heading-rgb), 0.2), 12px 0 rgba(var(--g-color-heading-rgb), 0.2), 18px 0 rgba(var(--g-color-heading-rgb), 0.2);
+  box-shadow: 6px 0 currentColor, 12px 0 currentColor, 18px 0 currentColor;
   transform: translateY(-50%) translateX(calc(-50% - 9px) );
 }
 .btn-view-4.active:before {
-  box-shadow: 6px 0 rgba(var(--g-color-heading-rgb)), 12px 0 rgba(var(--g-color-heading-rgb)), 18px 0 rgba(var(--g-color-heading-rgb));
+  box-shadow: 6px 0 currentColor, 12px 0 currentColor, 18px 0 currentColor;
 }
 .btn-view-5 {
   width: 74px;
