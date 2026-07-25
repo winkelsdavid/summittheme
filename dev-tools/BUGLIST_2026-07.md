@@ -3108,6 +3108,28 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Summit-Folgeliste: NEUES Setting section_width (select) in
       custom-shoppable-video -> Mappability-Doku/parse ingest.
 
+## 145. Featured Products: "Limit Products" wurde ignoriert (Bug-Sammler 25.07.)
+- [~] Block related_products (Section product-content, im Editor "Featured
+      Products"). Der limit-Wert steckte NUR im Fetch-URL-Parameter
+      (Z.137 ...&limit={{ block.settings.product_limit }}&intent=
+      complementary); die Render-Schleife (Z.145) lief ohne Schranke ueber
+      recommendations.products. Bei intent=complementary wandte die
+      Storefront den Parameter nicht an -> Limit 2, aber 4 Karten
+      (Screenshot). Repo == gepushtes Theme (Asset-GET verglichen), also
+      kein Push-/Mapping-Artefakt.
+      Fix: Limit zusaetzlich im Template erzwingen -
+      "for recommendation in recommendations.products limit: rec_limit",
+      rec_limit = product_limit (Fallback 6 = Schema-Default, wenn leer
+      oder < 1). Die Spaltenlogik vergleicht jetzt die effektive Anzahl
+      (rec_count = min(products_count, rec_limit)) statt products_count -
+      sonst haette ein API-Ueberhang das 2er-Layout (col-lg-6) verhindert.
+      URL-Parameter bleibt drin (spart Payload, wo er greift).
+      Verifiziert headless (repro-featured-limit.js, 10 Checks PASS):
+      4 aus API + Limit 2 -> 2 Karten + col-lg-6; 3 aus API + Limit 6 ->
+      3 Karten + col-lg; Limit 1/6 exakt; leeres Setting bzw. 0 ->
+      Fallback 6 (nicht 0 Karten); 0 Empfehlungen -> nichts; URL
+      unveraendert. theme check: 4 Offenses vorher wie nachher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
