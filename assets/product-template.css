@@ -126,6 +126,17 @@
     cursor: pointer;
     font-family: var(--g-font-2);
   }
+  /* #143: Die Basisregel zeichnet nur border-bottom - der obersten
+     Collapsible Row fehlte dadurch die Trennlinie nach oben. Folgt ein
+     Accordion direkt auf ein anderes, zeichnet dessen border-bottom die
+     Linie bereits -> dort KEIN zweiter Strich (sonst 2px-Doppellinie,
+     z. B. Description-Block + Collapsible Row untereinander). */
+  .product-single__meta .accordion .tabcustom{
+    border-top: 1px solid var( --g-input-border);
+  }
+  .product-single__meta .accordion + .accordion .tabcustom{
+    border-top: 0;
+  }
   .tabcustom i{
     font-size: 14px;
     transition: transform .2s ease;

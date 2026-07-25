@@ -3082,6 +3082,9 @@ display:none;
                   border-image: {{ block.settings.divider_color }} 1;
                   {% else %}
                   border-bottom-color: {{ block.settings.divider_color }};
+                  {%- comment -%} #143: gilt auch fuer die neue Oberkante der
+                      ersten Row - sonst haette sie die Default-Farbe. {%- endcomment -%}
+                  border-top-color: {{ block.settings.divider_color }};
                   {% endif %}
                 }
                 {% endif %}
