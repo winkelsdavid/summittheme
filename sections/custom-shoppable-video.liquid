@@ -259,8 +259,14 @@ display:flex;
       }   
   }
 </style>
+{%- comment -%} #144: Section Width fehlte in dieser Section komplett. Default
+    'full' = bisheriges Rendering (Slider randlos, Heading in .container);
+    'container'/'container-fluid' legen BEIDE Ebenen auf dieselbe Breite. {%- endcomment -%}
+{%- assign sw = section.settings.section_width | default: 'full' -%}
+{%- assign sw_head = sw -%}
+{%- if sw == 'full' -%}{%- assign sw_head = 'container' -%}{%- endif -%}
 <div class="custom_reviews_slider-{{ section.id }}" data-aos="{{ section.settings.animation }}">
-  <div class="container">
+  <div class="{{ sw_head }}">
       {% if section.settings.replace_reviews %}
         {%  render 'rating-custom' , align : section.settings.align_heading %}
       {% else %}
@@ -274,6 +280,7 @@ display:flex;
           </h3>
         {% endif %}
   </div>
+  <div class="{{ sw }}">
   <div class="custom_video_items custom_video_items_1 swiper custom_video_items-{{ section.id }}" >
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
@@ -442,6 +449,7 @@ display:flex;
           <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
         </svg>
       </div>
+  </div>
   </div>
 </div>
 <script>
@@ -654,6 +662,27 @@ function handleSlideChange(swiper, videos, playButtons) {
         }
       ],
       "label": "Animation"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "default": "full",
+      "info": "Box and Container Fluid put heading and slider on the same width. Full keeps the slider edge-to-edge (previous behaviour).",
+      "options": [
+        {
+          "value": "container",
+          "label": "Box"
+        },
+        {
+          "value": "container-fluid",
+          "label": "Container Fluid"
+        },
+        {
+          "value": "full",
+          "label": "Full"
+        }
+      ]
     },
     {
           "type": "text",
