@@ -3086,6 +3086,28 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Fremd-Block dazwischen -> neue Oberkante; no-border killt beide
       Kanten (Inline-!important schlaegt die neue Regel).
 
+## 144. Shoppable Videos Slider: Section Width fehlte (Bug-Sammler 23.07.)
+- [~] BEFUND korrigiert die Ursachenvermutung des Briefings: section_width
+      war NIE in custom-shoppable-video.liquid (git log -S ueber die
+      gesamte Historie: 0 Treffer; b738c15/#122 enthaelt 0 Vorkommen;
+      auch das gepushte Theme vom 23.07. 22:27 hat 0). Die Korrelation
+      "kam nach dem Preview-Fix" ist also falsch - das Setting hat schlicht
+      immer gefehlt. Kein Regressionsfix, sondern ein NEUES Setting.
+      Umsetzung: select section_width (Box/Container Fluid/Full) direkt
+      nach animation, Default "full". Markup: Heading-Wrapper und ein
+      NEUER Wrapper um den Slider tragen die Klasse; bei "full" behaelt
+      der Heading bewusst .container (die Klasse .full hat KEINE
+      CSS-Regel -> ohne Padding wuerde die Ueberschrift auf Mobile am
+      Rand kleben). Damit ist Default = exakt bisheriges Rendering,
+      "Box"/"Container Fluid" boxen Heading und Slider gemeinsam.
+      Verifiziert headless (repro-shoppable-width.js, 8 Checks PASS):
+      Schema valide, Restschema unveraendert (keine Umbenennung/Verlust),
+      ohne gespeicherten Wert HTML-identisch zum Alt-Stand (nur der neue
+      Wrapper unterscheidet), Klassenbelegung je Option, div-Bilanz.
+      theme check: 4 Offenses vorher wie nachher (Alt-Baseline).
+      Summit-Folgeliste: NEUES Setting section_width (select) in
+      custom-shoppable-video -> Mappability-Doku/parse ingest.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
