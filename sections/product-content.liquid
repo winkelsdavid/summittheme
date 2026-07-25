@@ -135,6 +135,21 @@
                       <div class="product-block product-related mt-lg-0 mt-4 {% if section.settings.tab_size  == 'full' %} pl-0 {% endif %}">
                             <product-pairs class="product-pairs isolate product-pairs--loaded" data-id="{{ section.id }}" 
                               data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_limit }}&intent=complementary">
+                              {%- comment -%} #145: Limit zusaetzlich im Template erzwingen. Der
+                                  limit-Parameter der Recommendations-URL wird bei
+                                  intent=complementary nicht zuverlaessig angewandt (Storefront
+                                  lieferte 4 Karten bei limit=2) - ohne diese Schranke rendert
+                                  die Schleife schlicht alles, was die API zurueckgibt. {%- endcomment -%}
+                              {%- liquid
+                                assign rec_limit = block.settings.product_limit | plus: 0
+                                if rec_limit < 1
+                                  assign rec_limit = 6
+                                endif
+                                assign rec_count = recommendations.products_count
+                                if rec_count > rec_limit
+                                  assign rec_count = rec_limit
+                                endif
+                              -%}
                               {% if recommendations.performed and recommendations.products_count > 0 %}
                                 {%- if block.settings.title_heading != blank -%}
                                   <h5 class="mb-4 {{ block.settings.size_text }}">{{ block.settings.title_heading }}</h5>
@@ -142,8 +157,8 @@
                                   <h5 class="mb-4 {{ block.settings.size_text }}">{{ 'products.product.content_featured_heading' | t }}</h5>
                                 {%- endif -%}
                                 <div class="row">
-                                  {% for recommendation in recommendations.products %}
-                                  <div class="col-6 {% if  recommendations.products_count <= 2 %} col-lg-6 {% else %} col-lg {% endif  %}">
+                                  {% for recommendation in recommendations.products limit: rec_limit %}
+                                  <div class="col-6 {% if  rec_count <= 2 %} col-lg-6 {% else %} col-lg {% endif  %}">
                                     {%- render 'product-grid-buywith', product: recommendation -%}
                                   </div>
                                   {% endfor %}
