@@ -3061,6 +3061,31 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       OFFEN (Summit): icon_items/icons_intro anlegen + schreiben; optional
       image_icons/image_icon_items fuer unterschiedliche Inhalte.
 
+## 143. Collapsible Row: obere Trennlinie fehlte (Bug-Sammler 24.07., "lines")
+- [~] Ursache: .tabcustom (product-template.css Z.122) traegt NUR
+      border-bottom. Damit hat jede Row eine Linie unten - der obersten
+      fehlte die Kante nach oben (Screenshot: Linien zwischen und unter
+      den Items, keine darueber).
+      Fix (CSS, nicht per Block-Index): .product-single__meta .accordion
+      .tabcustom{border-top:1px solid var(--g-input-border)} PLUS
+      .accordion + .accordion .tabcustom{border-top:0}. Der zweite
+      Selektor verhindert die 2px-Doppellinie, wenn Accordions direkt
+      aufeinander folgen - inkl. des description-Blocks, der ebenfalls
+      .accordion/.tabcustom rendert. Liegt ein Fremd-Block dazwischen,
+      bekommt die neue Gruppe wieder eine Oberkante (gewollt).
+      Zusatz in der Section: im divider_color-Solid-Zweig jetzt auch
+      border-top-color, sonst haette die neue Oberkante die Default-
+      Farbe; im Gradient-Zweig malt das bestehende border-image die
+      Oberkante automatisch mit (border-image deckt alle Kanten mit
+      Breite ab).
+      Nicht betroffen: die bare .tabcustom im bundle-Block (kein
+      .accordion-Wrapper) und faq-accordion/faq-advanced (eigene Klassen).
+      Verifiziert headless im gerenderten DOM (Edge, echte
+      product-template.css + .no-border-Inline-Regel): 3 Rows -> nur die
+      erste hat border-top; description davor -> keine Doppellinie;
+      Fremd-Block dazwischen -> neue Oberkante; no-border killt beide
+      Kanten (Inline-!important schlaegt die neue Regel).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
