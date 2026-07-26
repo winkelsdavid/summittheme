@@ -3277,6 +3277,36 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       keine JS-Fehler. theme check: 400 Offenses / 41 Errors =
       unveraendert; theme.js Syntax OK.
 
+## 151. Cart-Drawer: Promo-Texte immer einzeilig (Bug-Sammler 25.07.)
+- [~] Operator: "Hier texte kleiner machen. muessen immer in einer zeile
+      sein" - betrifft den gelben Discount-Balken und den schwarzen
+      Review-Balken oben im Drawer (beide brachen zweizeilig um, die
+      zweite Zeile wurde vom overflow:hidden aus #129 angeschnitten).
+      WARUM KEINE FESTE GROESSE: gemessen (measure-promo.js) haengt die
+      noetige Groesse an Drawer-Breite (500px / 360px), Theme-Font UND
+      der frei einstellbaren Textlaenge - fuer denselben deutschen Satz
+      liegt sie je nach Font zwischen 8,5px und 12px. Viewport-Media-
+      Queries helfen zusaetzlich NICHT, weil der Drawer eine feste Breite
+      hat (500px) und der Umbruch auch auf 3148px-Viewports auftritt.
+      FIX zweiteilig:
+      (1) block-cart.liquid {% stylesheet %}: .discount-information p /
+          .review-information p bekommen white-space:nowrap, min-width:0,
+          flex:0 1 auto, overflow:hidden. Das min-width/flex-Paar ist
+          noetig, damit der Absatz im Flex-Container ueberhaupt auf die
+          verfuegbare Breite schrumpft - sonst waere scrollWidth ==
+          clientWidth und ein Ueberlauf nicht messbar.
+      (2) theme.js: theme.CartPromoFit - Auto-Fit von 12px in 0,5er-
+          Schritten runter bis der Absatz passt, Untergrenze 8px
+          (darunter greift overflow:hidden als Failsafe). Laeuft auf
+          DOMContentLoaded, resize und via rAF-gedrosseltem
+          MutationObserver (Drawer wird bei jedem Cart-Update neu
+          gerendert). Schleife hart auf 10 Durchlaeufe begrenzt.
+      Verifiziert headless (repro-promofit.js, 16 Checks PASS): Verdana
+      und Arial je bei 500/430/360px Drawer-Breite -> beide Balken
+      einzeilig ohne Ueberlauf (12px bis 9,5px je nach Fall); XXL-Text
+      bleibt einzeilig bei 8px; kurzer Text behaelt 12px; keine
+      JS-Fehler. theme check 400/41 unveraendert, theme.js Syntax OK.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
