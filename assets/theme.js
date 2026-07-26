@@ -4919,6 +4919,53 @@ theme.CrossellNav = (function () {
   return { sync: sync, syncAll: syncAll };
 })();
 
+/* #151: Cart-Drawer-Promobalken - Texte muessen IMMER einzeilig bleiben
+   (User-Vorgabe). Eine feste Schriftgroesse reicht dafuer nicht: noetige
+   Groesse haengt an Drawer-Breite, Theme-Font UND der frei einstellbaren
+   Textlaenge (gemessen: 8,5px bis 12px Spanne allein zwischen Fonts).
+   Darum Auto-Fit: von 12px in 0,5er-Schritten runter, bis der Absatz in
+   seine Flex-Breite passt (Untergrenze 8px, darunter greift das
+   overflow:hidden des Balkens). Delegiert + defensiv (P3). */
+theme.CartPromoFit = (function () {
+  var SEL = ".discount-information p, .review-information p",
+    MAX = 12,
+    MIN = 8;
+
+  function fit(el) {
+    if (!el || !el.style) return;
+    var size = MAX;
+    el.style.fontSize = size + "px";
+    // Sicherheitsnetz gegen Endlosschleifen: max. (MAX-MIN)/0.5 Durchlaeufe
+    for (var i = 0; i < 10 && size > MIN; i++) {
+      if (el.scrollWidth <= el.clientWidth + 0.5) break;
+      size -= 0.5;
+      el.style.fontSize = size + "px";
+    }
+  }
+
+  function fitAll() {
+    document.querySelectorAll(SEL).forEach(fit);
+  }
+
+  try {
+    var pending = false;
+    new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        fitAll();
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+  } catch (err) {
+    /* ohne MutationObserver bleibt es beim Initial-Fit */
+  }
+  window.addEventListener("resize", fitAll);
+  document.addEventListener("DOMContentLoaded", fitAll);
+
+  return { fit: fit, fitAll: fitAll };
+})();
+
 theme.openAddon = (function () {
   var openBlock = ".js-open-addon",
     closeBlock = ".btn-close-addon",

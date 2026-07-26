@@ -697,6 +697,18 @@ width:42px;
        margin-left:0 am ersten Avatar bleibt alles im Balken. */
     overflow: hidden;
   }
+  /* #151: Promo-Texte immer EINZEILIG (User-Vorgabe). nowrap verhindert den
+     Umbruch; min-width:0 + flex:0 1 auto laesst den Absatz im Flex-Container
+     auf die verfuegbare Breite schrumpfen, damit theme.CartPromoFit den
+     Ueberlauf ueberhaupt messen kann (ohne das waere scrollWidth ==
+     clientWidth). font-size setzt der Auto-Fit zwischen 8px und 12px. */
+  .discount-information p, .review-information p {
+    white-space: nowrap;
+    min-width: 0;
+    flex: 0 1 auto;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
   .customer-image-dummy {
     border-radius: 50%;
     object-fit: cover;
