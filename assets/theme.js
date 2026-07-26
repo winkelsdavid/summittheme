@@ -4839,6 +4839,86 @@ theme.GiftWrap = (function () {
   };
 })();
 
+/* #150: Cart-Upsell - Pfeile statt nativer Scrollbar. Bewusst OHNE
+   Slider-Library: der Track scrollt weiterhin nativ (Wischen bleibt), die
+   Pfeile schieben ihn per scrollBy um eine Kartenbreite. Alles delegiert,
+   weil der Drawer bei jedem Cart-Update neu gerendert wird, und komplett
+   defensiv (P3: kein Throw darf die Init-Kette reissen). */
+theme.CrossellNav = (function () {
+  var TRACK = ".drawer-crossell-product",
+    ITEM = ".drawer-crossell__item",
+    WRAP = ".drawer-crossell-inner";
+
+  function stepOf(el) {
+    var item = el.querySelector(ITEM);
+    var w = item ? item.getBoundingClientRect().width : 0;
+    return w > 0 ? w + 16 : Math.max(el.clientWidth * 0.8, 1);
+  }
+
+  function sync(el) {
+    if (!el || !el.closest) return;
+    var wrap = el.closest(WRAP);
+    if (!wrap) return;
+    var nav = wrap.querySelector(".crossell-nav");
+    var prev = wrap.querySelector(".js-crossell-prev");
+    var next = wrap.querySelector(".js-crossell-next");
+    var scrollable = el.scrollWidth - el.clientWidth > 2;
+    if (nav) nav.style.visibility = scrollable ? "" : "hidden";
+    if (prev) prev.disabled = el.scrollLeft <= 1;
+    if (next) next.disabled = el.scrollLeft >= el.scrollWidth - el.clientWidth - 2;
+  }
+
+  function syncAll() {
+    document.querySelectorAll(TRACK).forEach(sync);
+  }
+
+  document.addEventListener("click", function (e) {
+    if (!e.target || !e.target.closest) return;
+    var btn = e.target.closest(".js-crossell-prev, .js-crossell-next");
+    if (!btn) return;
+    var wrap = btn.closest(WRAP);
+    var el = wrap ? wrap.querySelector(TRACK) : null;
+    if (!el) return;
+    e.preventDefault();
+    var dir = btn.classList.contains("js-crossell-next") ? 1 : -1;
+    if (typeof el.scrollBy === "function") {
+      el.scrollBy({ left: dir * stepOf(el), behavior: "smooth" });
+    } else {
+      el.scrollLeft += dir * stepOf(el);
+    }
+    setTimeout(function () {
+      sync(el);
+    }, 400);
+  });
+
+  document.addEventListener(
+    "scroll",
+    function (e) {
+      var el = e.target;
+      if (el && el.classList && el.classList.contains("drawer-crossell-product")) sync(el);
+    },
+    true
+  );
+
+  // Drawer wird nachgeladen/neu gerendert -> Zustand nachziehen (rAF-gedrosselt).
+  try {
+    var pending = false;
+    new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        syncAll();
+      });
+    }).observe(document.body, { childList: true, subtree: true });
+  } catch (err) {
+    /* MutationObserver nicht verfuegbar - Pfeile funktionieren trotzdem */
+  }
+  document.addEventListener("DOMContentLoaded", syncAll);
+
+  return { sync: sync, syncAll: syncAll };
+})();
+
 theme.openAddon = (function () {
   var openBlock = ".js-open-addon",
     closeBlock = ".btn-close-addon",

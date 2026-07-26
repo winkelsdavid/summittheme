@@ -328,12 +328,24 @@ width:42px;
           {% if settings.e_upsellcart %}
             <div class="drawer-crossell px-4">
               <div class="drawer-crossell-inner pt-lg-3">
+              {%- comment -%} #150: Titelzeile traegt rechts die Slider-Pfeile (mobil);
+                  die native Scrollbar unter der Reihe ist ausgeblendet. {%- endcomment -%}
+              <div class="crossell-head d-flex align-items-center justify-content-between">
               {%- if settings.title_upsell != blank -%}
                 <h6 class="text-left mb-lg-4 mb-3 pb-1 pt-3">{{ settings.title_upsell }}</h6>
               {% else %}
                 <h6 class="text-left mb-lg-4 mb-3 pb-1 pt-3"> {{ 'general.cart.title_upsell' | t }}</h6>
               {%- endif -%}
-              
+                <div class="crossell-nav">
+                  <button type="button" class="crossell-nav__btn js-crossell-prev" aria-label="{{ 'sections.slideshow.previous_slide' | t }}">
+                    <svg viewBox="0 0 256 256" width="14" height="14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M165.66 202.34a8 8 0 0 1-11.32 11.32l-80-80a8 8 0 0 1 0-11.32l80-80a8 8 0 0 1 11.32 11.32L91.31 128Z"></path></svg>
+                  </button>
+                  <button type="button" class="crossell-nav__btn js-crossell-next" aria-label="{{ 'sections.slideshow.next_slide' | t }}">
+                    <svg viewBox="0 0 256 256" width="14" height="14" aria-hidden="true" focusable="false"><path fill="currentColor" d="M181.66 133.66l-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z"></path></svg>
+                  </button>
+                </div>
+              </div>
+
                 <div class="product-recommendations-cart position-relative">
                   <div class="recommend-loading" ></div>
                 <div

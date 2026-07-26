@@ -102,14 +102,51 @@ background-color: var(--g-chrome-bg, white);
 .drawer-crossell-product .drawer-crossell__item .first-image{
   transform: none !important;
 }
+/* #150: Statt der nativen Scrollbar zwei Pfeile rechts in der Titelzeile.
+   Gescrollt wird weiterhin nativ (kein Slider-Init noetig) - die Pfeile
+   schieben den Container per scrollBy, Wischen bleibt moeglich. */
+.crossell-nav{
+  /* Sichtbarkeit bewusst hier statt per Bootstrap-Utility: .d-flex traegt
+     !important und liesse sich per Media Query nicht mehr abschalten. */
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+.crossell-nav__btn{
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(var(--g-color-heading-rgb, 0, 0, 0), 0.15);
+  border-radius: 50%;
+  background-color: transparent;
+  color: currentColor;
+  cursor: pointer;
+  transition: opacity .2s ease;
+}
+.crossell-nav__btn[disabled]{
+  opacity: .35;
+  cursor: default;
+}
 @media (max-width:991px){
   .drawer-crossell-product {
     overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;         /* Firefox */
+    -ms-overflow-style: none;      /* alte Edge/IE */
+  }
+  .drawer-crossell-product::-webkit-scrollbar{
+    display: none;                 /* Chrome/Safari */
+  }
+  .crossell-nav{
+    display: flex;
   }
   .drawer-crossell-product .drawer-crossell__item{
     flex:0 0 260px;
     width: 260px;
-    padding-right: 1rem; 
+    padding-right: 1rem;
   }
 }
 
