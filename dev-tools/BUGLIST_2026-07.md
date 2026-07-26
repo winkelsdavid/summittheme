@@ -3239,6 +3239,44 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       direktes Geschwister + Padding wirkt, Desktop-Geometrie identisch.
       theme check: block-cart unveraendert 6 Offenses (Alt-Baseline).
 
+## 150. Cart-Upsell: Scrollbar raus, Pfeile rechts (Bug-Sammler 25.07., split 2/2)
+- [~] Operator: "Scrolling bar darunter entfernen. Stattdessen arrows
+      rechte seite." (erster Teil = #149).
+      Ausgangslage: .drawer-crossell-product ist mobil (<=991px)
+      overflow-x:scroll -> native Scrollbar unter der Produktreihe. Die
+      alten .slick-arrow-Regeln in cart-draw.css sind seit der Slick-
+      Ablœsung (Track B) tot.
+      Fix bewusst OHNE Slider-Library - der Track scrollt weiterhin nativ
+      (Wischen bleibt), nur die Bedienung kommt dazu:
+      (1) block-cart.liquid: Titelzeile wird zu .crossell-head
+          (flex, space-between) und traegt rechts .crossell-nav mit zwei
+          Buttons (prev/next, Inline-SVG, aria-label aus den bestehenden
+          Keys sections.slideshow.previous_slide/next_slide - KEINE neuen
+          Locale-Keys noetig).
+      (2) cart-draw.css: Scrollbar ausgeblendet (scrollbar-width:none,
+          -ms-overflow-style, ::-webkit-scrollbar{display:none}),
+          scroll-behavior:smooth; Buttons als 30px-Kreise mit
+          rgba(var(--g-color-heading-rgb, 0,0,0),.15)-Rand (Fallback nach
+          #146!) und currentColor-Icon. Sichtbarkeit NUR <=991px - ab
+          992px ist der Upsell das vertikale Seitenpanel, dort keine
+          Pfeile. WICHTIG: display wird im CSS gesteuert, nicht per
+          Bootstrap-.d-flex - das traegt !important und liesse sich per
+          Media Query nicht abschalten (im Test zuerst genau daran
+          gescheitert).
+      (3) theme.js: theme.CrossellNav - delegierter Click-Handler
+          (scrollBy um eine Kartenbreite + 16px Gap), Scroll-Listener und
+          rAF-gedrosselter MutationObserver fuer den Zustand (prev/next
+          disabled; Nav wird per visibility ausgeblendet, wenn nichts zu
+          scrollen ist). Komplett defensiv (P3), MutationObserver in
+          try/catch.
+      Verifiziert headless (repro-crossell-nav.js, 11 Checks PASS, echte
+      Kaskade + echtes Modul aus theme.js): Pfeile rechtsbuendig in der
+      Titelzeile, Scrollbar nimmt keine Hoehe mehr ein, Track weiterhin
+      nativ scrollbar, next/prev scrollen und schalten den disabled-
+      Zustand, 1 Produkt -> Pfeile ausgeblendet, Desktop ohne Pfeile,
+      keine JS-Fehler. theme check: 400 Offenses / 41 Errors =
+      unveraendert; theme.js Syntax OK.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
