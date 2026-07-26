@@ -3307,6 +3307,37 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       bleibt einzeilig bei 8px; kurzer Text behaelt 12px; keine
       JS-Fehler. theme check 400/41 unveraendert, theme.js Syntax OK.
 
+## 152. Image With Bullets: Beschreibungstexte auf Body-Typografie (Bug-Sammler 24.07.)
+- [~] Operator: "Mobile: Checken ob texte aus screenshot auf 'Body' sind.
+      Wenn nicht, auf 'Body' umstellen. (Theme Settings)"
+      PRUEFUNG: nein, waren sie nicht. Die Theme-Body-Typografie kommt aus
+      der globalen Regel "body,input,textarea,button,select,p" (theme.css
+      Z3221ff): font-size var(--g-font-size) = settings.base_size,
+      line-height var(--g-body-lineheight), font-weight
+      var(--g-font-weight-body), letter-spacing var(--g-body-spacing),
+      font-family var(--g-font-2). Die Section ueberschrieb davon
+      Groesse und Zeilenhoehe hart: .iwb-description 16px/1.5,
+      .c-<id> .iwb-bullet-body 15px/1.5 (+ mobiler 14px-Override).
+      Farbe und Font-Family wurden bereits geerbt.
+      FIX: font-size + line-height in beiden Regeln entfernt (und den
+      wirkungslosen mobilen bullet-body-Override gleich mit), sodass die
+      globale p-Regel greift. Die section-eigene Farboption
+      (text_color) bleibt unveraendert bestehen.
+      NEBENBEFUND (nicht angefasst, weil nicht beauftragt und sonst
+      stiller Optik-Wechsel): der mobile Override .iwb-bullet-title
+      {font-size:17px} greift NIE - .c-<id> .iwb-bullet-title (0,2,0)
+      schlaegt ihn (0,1,0). Titel bleiben daher auch mobil bei 20px,
+      vor wie nach dem Patch. Falls die 17px gewollt sind, muss die
+      mobile Regel auf .c-<id> gescoped werden.
+      Verifiziert headless (repro-bullets-body.js, 8 Checks PASS, echte
+      theme.css + per liquidjs gerendertes Section-CSS): Alt-Stand wich
+      nachweislich ab (16/15px gegen Body 14px), neu sind Description und
+      Bullet-Text in Groesse, Zeilenhoehe, Gewicht und Laufweite exakt
+      gleich einem reinen Body-Absatz - auf Desktop UND Mobil; bei
+      geaenderten Theme Settings (18px/1.8/500/0.5px) wandern sie mit;
+      Titel unveraendert. theme check: 0 Offenses in der Datei, gesamt
+      400/41 unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
