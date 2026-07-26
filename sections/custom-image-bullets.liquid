@@ -34,8 +34,10 @@
 
   .iwb-description {
     margin: 0 0 32px;
-    font-size: 16px;
-    line-height: 1.5;
+    /* #152: font-size/line-height bewusst NICHT gesetzt - die Absaetze
+       erben damit die Body-Typografie aus den Theme Settings
+       (--g-font-size, --g-body-lineheight, --g-font-weight-body,
+       --g-body-spacing ueber die globale p-Regel). Vorher hart 16px/1.5. */
      {% if section.settings.text_color != blank and section.settings.text_color != "rgba(0,0,0,0)" %}
     color: {{ section.settings.text_color }};
     {% endif %}
@@ -122,12 +124,12 @@
 
   .c-{{ section.id }} .iwb-bullet-body {
     margin: 0;
-    font-size: 15px;
-    line-height: 1.5;
+    /* #152: wie .iwb-description - Body-Typografie aus den Theme Settings
+       statt harter 15px/1.5. */
     {% if section.settings.text_color != blank and section.settings.text_color != "rgba(0,0,0,0)" %}
     color: {{ section.settings.text_color }};
     {% endif %}
-    
+
   }
 
   .iwb-image-side {
@@ -177,9 +179,9 @@
       font-size: 17px;
     }
 
-    .iwb-bullet-body{
-      font-size: 14px;
-    }
+    {%- comment -%} #152: mobiler font-size-Override fuer .iwb-bullet-body
+        entfernt - auch mobil gilt jetzt die Body-Groesse aus den Theme
+        Settings (Operator-Vorgabe "auf Body umstellen"). {%- endcomment -%}
 
     .iwb-bullet-icon,
     .iwb-bullet-icon svg {
