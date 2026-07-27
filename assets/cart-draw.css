@@ -163,7 +163,9 @@ background-color: var(--g-chrome-bg, white);
 .drawer-crossell__item .product-card__info{
   flex: 1;
   padding: 0 0 4px 1.5rem !important;
-  margin-bottom: 1rem;
+  /* #160: margin-bottom:1rem entfernt - war eine tote Deklaration:
+     theme.css setzt .product-card__info{margin-bottom:0!important} und
+     gewinnt damit immer (headless belegt: computed 0px, alt wie neu). */
   background-color: transparent;
 }
 .drawer-crossell__item .product-card__name{
@@ -201,6 +203,19 @@ background-color: var(--g-chrome-bg, white);
   }
   .drawer-crossell .product-card__price{
     margin-bottom: 0rem;
+  }
+}
+
+/* #160: Mobil blockt der Upsell direkt ueber dem Footer. Der generische
+   Summen-Abstand (.mini-cart-total margin-top:16px, in #148 bewusst
+   belassen) wirkt hier als Leerraum UNTER den Produkten -> entfaellt nur
+   in dieser Konstellation; das padding-top:16px bleibt als Restabstand.
+   Desktop unveraendert: dort ist der Upsell das absolute Seitenpanel und
+   der Footer folgt der Artikelliste. Ohne Upsell (kein .drawer-crossell im
+   DOM) greift der Selektor nicht -> #148-Verhalten intakt. */
+@media (max-width:991px){
+  .drawer-crossell + .mini-cart-footer .mini-cart-total{
+    margin-top: 0;
   }
 }
 
