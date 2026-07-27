@@ -118,6 +118,7 @@
         "collection_bPcwJA",
         "collection_fntAT9"
       ],
+      "disabled": true,
       "settings": {
         "animation": "fade-up",
         "section_width": "container",
