@@ -130,7 +130,12 @@
      Collapsible Row fehlte dadurch die Trennlinie nach oben. Folgt ein
      Accordion direkt auf ein anderes, zeichnet dessen border-bottom die
      Linie bereits -> dort KEIN zweiter Strich (sonst 2px-Doppellinie,
-     z. B. Description-Block + Collapsible Row untereinander). */
+     z. B. Description-Block + Collapsible Row untereinander).
+     #162: Der Sibling-Selektor greift nur, wenn zwischen den Accordions
+     kein <style>-Element liegt - das per-Block-<style> der tabcustom-
+     Bloecke rendert die Section seit #162 INNERHALB des .accordion-Divs
+     (vorher matchte der Selektor im echten DOM NIE -> Doppellinien,
+     sichtbar sobald divider_color ein Gradient ist). */
   .product-single__meta .accordion .tabcustom{
     border-top: 1px solid var( --g-input-border);
   }

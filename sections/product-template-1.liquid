@@ -3091,6 +3091,14 @@ display:none;
                     assign tab_a = tab_item.a
                   endif
                 -%}
+                <div class="accordion accordion_{{ block.id }}" {{ block.shopify_attributes }}>
+                {%- comment -%} #162: Das per-Block-<style> liegt INNERHALB des
+                    .accordion-Divs. Vorher lag es davor - damit war im echten DOM
+                    zwischen zwei Accordions immer ein <style>-Element und
+                    .accordion + .accordion .tabcustom{border-top:0} (#143) matchte
+                    NIE: jede Row behielt border-top:1px, border-image malte Top+
+                    Bottom -> Doppellinie mit 8px-Luecke (h6 margin-bottom) zwischen
+                    allen Rows, sichtbar sobald divider_color ein Gradient ist. {%- endcomment -%}
                 <style>
                 .accordion_{{ block.id }} .tabcustom{
                   font-size:{{ block.settings.font_size }}px;
@@ -3126,7 +3134,6 @@ display:none;
                       }
                   }
                 </style>
-                <div class="accordion accordion_{{ block.id }}" {{ block.shopify_attributes }}>
                   <div
                     class="tabcustom {% if block.settings.no_border %} no-border{% endif %} {% if block.settings.open_default %}{% else %} collapsed{% endif %} d-flex align-items-center h6 {% if block.settings.open_default %} active-acc{% endif %}"
                     data-toggle="collapse"
