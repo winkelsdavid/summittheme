@@ -4356,6 +4356,28 @@ p a:not(.button):focus,
   flex: 0 0 auto;
   max-width: none;
 }
+/* #164: Fade-Slides blockierten die Buttons der ersten Slide. Die JS-
+   Laufzeit ist Swiper 6.7 und setzt die Effekt-Klasse als
+   "swiper-container-fade" (containerModifierClass + effect); das
+   mitgelieferte Bundle-CSS traegt die pointer-events-Regeln aber nur unter
+   dem Swiper-7+-Namen ".swiper-fade" -> sie griffen NIE. Im Fade-Modus
+   (Default-Transition der Slideshows) stapeln sich die Slides via
+   translate3d + inline-opacity; ohne pointer-events-Gate liegt der zuletzt
+   gemalte (transparente) Slide UEBER dem aktiven und frisst jeden Klick auf
+   dessen Buttons (Headless-A/B mit dem echten Bundle: Hit auf dem
+   Slide-1-Button war der Slide-2-Button, mit Fix der eigene). Spiegel der
+   Vendor-Regeln aus swiper-bundle.min.css - bewusst OHNE deren
+   transition-property:opacity (das Fade-Look-Detail bleibt wie bisher). */
+.swiper-container-fade .swiper-slide {
+  pointer-events: none;
+}
+.swiper-container-fade .swiper-slide .swiper-slide {
+  pointer-events: none;
+}
+.swiper-container-fade .swiper-slide-active,
+.swiper-container-fade .swiper-slide-active .swiper-slide-active {
+  pointer-events: auto;
+}
 .slick-dots li {
   position: relative;
   display: inline-block;
