@@ -3530,6 +3530,39 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       (0,1,0) unabhaengig von der Ladereihenfolge. Klammerbilanz 76/76,
       check-theme.mjs ohne neue Befunde. Klick-Test live steht aus.
 
+## 161. "Enable Upsell Cart" nur fuer Nischen-Shops sichtbar (Feature 27.07.)
+- [~] Operator: "option aus screenshot darf nur bei nischen shops sichtbar
+      sein." (Screenshot: Theme Settings > Cart > Toggle "Enable Upsell Cart").
+      Der KI-Fix-Hint behauptete, bedingte Sichtbarkeit sei im Schema nicht
+      moeglich - FALSCH: visible_if existiert in settings_schema.json und wird
+      dort bereits genutzt (enable_smoothness Z.46, enable_button_hover Z.2672).
+      Umsetzung (config/settings_schema.json, Cart-Gruppe):
+      1) NEUER Checkbox-Setting shop_is_niche ("Niche Shop (Summit internal)",
+         default false) direkt ueber e_upsellcart.
+      2) e_upsellcart bekommt visible_if "{{ settings.shop_is_niche }}" -
+         gleiches Muster wie smoothness_intensity (Checkbox steuert Setting).
+      Effekt: der Toggle ist nur sichtbar, wenn Summit shop_is_niche:true
+      pusht; ohne Push (default false) ueberall versteckt.
+      WICHTIG - zwei getrennte Ebenen:
+      a) SICHTBARKEIT (dieser Fix): visible_if blendet nur den Editor-Toggle
+         aus, der gespeicherte WERT wirkt weiter. e_upsellcart-Default bleibt
+         true, d.h. der Upsell rendert, wo er (per Default oder gespeichert)
+         aktiv ist - auch wenn der Toggle versteckt ist.
+      b) VERHALTEN pro Pool: muss Summit ueber die Push-Mappings steuern
+         (e_upsellcart je Pool true/false) - dieser Kern des Fix-Hints stimmt.
+      Bewusst NICHT gegated: title_upsell + cart_collection (Operator hat nur
+      den Toggle markiert; bei Bedarf Einzeiler-Nachfolger).
+      Parse-theme-Contract: unberuehrt - kein Rename, nur ein NEUER Theme-
+      Setting; checkbox -> boolean -> static (Typ-Heuristik), landet nicht in
+      der Mapping-Flaeche.
+      Verifiziert: live settings_schema.json (main "Nitro mapped · Summit ·
+      2026-07-27 17:48", id 199043449219, Admin-API) semantisch IDENTISCH zum
+      Repo; JSON valide (20 Gruppen, Cart-Gruppe mit neuem Setting an
+      Position 2, visible_if an e_upsellcart); check-theme.mjs unveraendert.
+      OFFEN (Summit): shop_is_niche in die Push-Mappings aufnehmen (true fuer
+      Nischen-Pools wie CANNABIS/SPOOKY NICHE, sonst weglassen/false) und je
+      Pool entscheiden, ob e_upsellcart aktiv gepusht wird.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
