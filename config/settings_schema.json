@@ -2883,9 +2883,17 @@
       },
       {
         "type": "checkbox",
+        "id": "shop_is_niche",
+        "label": "Niche Shop (Summit internal)",
+        "info": "Set by Summit for niche shops only. Controls the visibility of 'Enable Upsell Cart'.",
+        "default": false
+      },
+      {
+        "type": "checkbox",
         "id": "e_upsellcart",
         "label": "Enable Upsell Cart",
-        "default": true
+        "default": true,
+        "visible_if": "{{ settings.shop_is_niche }}"
       },
       {
         "type": "text",
