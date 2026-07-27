@@ -424,46 +424,10 @@ color:{{ section.settings.text_color }};
   </div>
   <div class="slider_items-i swiper slider_items-i-{{ section.id }} {{ section.settings.section_width }}">
     <div class="swiper-wrapper">
-      {%- comment -%} #157: METAFIELD_CONTRACT.md - name/heading/review_body <- summit.reviews[i],
-          image <- summit.review_images[i] (i = 0-basierter Index unter den review-Bloecken).
-          Referenz-Listen brauchen | compact (#156), sonst ist [i] nil. Semantik ITEMWEISE:
-          fehlender Eintrag ODER leeres Feld -> Block-Setting. {%- endcomment -%}
-      {%- liquid
-        assign smf_reviews = product.metafields.summit.reviews.value
-        unless smf_reviews and smf_reviews[0]
-          assign smf_reviews = nil
-        endunless
-        assign smf_rimgs = product.metafields.summit.review_images.value | compact
-        unless smf_rimgs and smf_rimgs[0]
-          assign smf_rimgs = nil
-        endunless
-        assign rs_i = 0
-      -%}
       {% for block in section.blocks %}
           {% case block.type %}
             {% when "review" %}
-                {%- liquid
-                  assign rs_name = block.settings.name
-                  assign rs_heading = block.settings.heading
-                  assign rs_body = block.settings.review_body
-                  assign rs_image = block.settings.image
-                  if smf_reviews and smf_reviews[rs_i]
-                    assign rs_item = smf_reviews[rs_i]
-                    if rs_item.name != blank
-                      assign rs_name = rs_item.name
-                    endif
-                    if rs_item.text != blank
-                      assign rs_body = rs_item.text
-                    endif
-                    if rs_item.title != blank
-                      assign rs_heading = rs_item.title
-                    endif
-                  endif
-                  if smf_rimgs and smf_rimgs[rs_i]
-                    assign rs_image = smf_rimgs[rs_i]
-                  endif
-                  assign rs_i = rs_i | plus: 1
-                -%}
+           
                 <div class="swiper-slide review-slider-i review-slider-i-{{ block.id }}">
                    <style>
               .review-slider-i-{{ block.id }} .cs_review,
@@ -475,7 +439,7 @@ color:{{ section.settings.text_color }};
                 <div class="reviewbox-footer-i">
                   <div class="reviewbox-user-info-i">
                     <div class="reviewbox-user-info-i-text">
-                      <span class="reviewbox-user-info-i-name" style="color:{{ block.settings.name_color }}">{{ rs_name }}</span>
+                      <span class="reviewbox-user-info-i-name" style="color:{{ block.settings.name_color }}">{{ block.settings.name }}</span>
                     </div>
                   </div>
                   <div class="reviewbox-rating-i"> 
@@ -496,8 +460,8 @@ color:{{ section.settings.text_color }};
                         </div>
                 </div>
                 </div>
-                  <p><strong>{{ rs_heading }}</strong></p>
-                  <div class="cs_review">{{ rs_body }}</div>
+                  <p><strong>{{ block.settings.heading }}</strong></p>
+                  <div class="cs_review">{{ block.settings.review_body }}</div>
                   <div class="review_badges">
                     {% if block.settings.badge_1 != blank %}
                         <div class="review_badge">{{ block.settings.badge_1 }}</div>
@@ -507,17 +471,17 @@ color:{{ section.settings.text_color }};
                     {% endif %}
                   </div>
                   <div class="review_footer">
-                        {% if rs_image != blank %}
+                        {% if block.settings.image != blank %}
                           {% if block.settings.pdp_link != blank %}
                             <a href="{{ block.settings.pdp_link }}">
                           {% endif %}
-                              <img src="{{ rs_image | image_url: width: 300 }}" height="auto" width="45" loading="lazy" alt="{{ rs_name }}">
+                              <img src="{{ block.settings.image | image_url: width: 300 }}" height="auto" width="45" loading="lazy" alt="{{ block.settings.name }}">
                           {% if block.settings.pdp_link != blank %}
                             </a>
                           {% endif %}
                     </a>
                     {% else %}
-                    {% render 'brand-image', handle: 'reviews-slider--review', position: forloop.index, width: 300, alt: rs_name, attr_width: 45 %}
+                    {% render 'brand-image', handle: 'reviews-slider--review', position: forloop.index, width: 300, alt: block.settings.name, attr_width: 45 %}
                     {% endif %}
                     <div class="review_footer_content">
                         <p><strong>{{ block.settings.title }}</strong></p>
