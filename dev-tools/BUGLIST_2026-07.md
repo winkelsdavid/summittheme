@@ -3592,6 +3592,32 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Bottom-Linien, erste Row behaelt ihre Oberkante (#143-Design intakt).
       check-theme.mjs unveraendert (84/282/95).
 
+## 163. Product Suggest: "Enable" bei Niche-Stores (Auftrag 27.07.)
+- [x] Operator: "funktion enable bei niche stores" - Klaerung mit David:
+      der Popup soll bei Niche-Stores automatisch AKTIV sein (Initial-Zustand),
+      nicht der Toggle sichtbarkeits-gegated (vgl. #161).
+      BEFUND (kein Theme-Bug): Die Section ist eine STATISCHE Instanz
+      (layout/theme.liquid:444, im Editor unter "Footer Group" sichtbar), ihr
+      Enable-Gate ({%- if section.settings.enable -%}) umschliesst das
+      komplette Markup und funktioniert. Der Zustand ist reine Datenlage:
+      settings_data.json -> sections.product-suggest.settings.enable - wird
+      von Summit pro Pool gepusht.
+      Live verifiziert (Admin-API): SPOOKY NICHE hat enable:true + shop-
+      gueltige Produkte (datejust-*) -> laeuft; CANNABIS hat enable:false
+      und Quellkatalog-Handles (creme/orella/bowl) -> selbst mit enable:true
+      waere der Popup dort TOT, weil all_products[handle] leer ist und der
+      Fallback (aktuelles Seitenprodukt) auf Nicht-Produktseiten nil ist ->
+      keine .data-product-Eintraege -> JS zeigt nie (graceful, kein Fehler).
+      Verifiziert headless mit dem echten theme.productSuggest-Modul
+      (repro-163): enable=true -> 3 Aktivierungen/300ms, Produktname+Local
+      gefuellt; 0 gueltige Produkte -> 0 Aktivierungen, kein Fehler;
+      enable=false -> kein Markup, JS-Fruehausstieg.
+      KEINE THEME-AENDERUNG. OFFEN (Summit, von David direkt einzustellen):
+      1) sections.product-suggest.settings.enable:true in den Push-Mappings
+      der Nischen-Pools; 2) die product-Handles der Bloecke muessen auf
+      Produkte des Ziel-Shops gemappt werden (type:product -> "system"-
+      Kategorie im MAPPABILITY_CONTRACT), sonst laeuft der Popup leer.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
