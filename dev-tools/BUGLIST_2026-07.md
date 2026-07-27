@@ -3563,6 +3563,35 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Nischen-Pools wie CANNABIS/SPOOKY NICHE, sonst weglassen/false) und je
       Pool entscheiden, ob e_upsellcart aktiv gepusht wird.
 
+## 162. Collapsible Row: Doppelte Trennlinien bei Gradient (Bug-Sammler 27.07.)
+- [~] Operator: "lines buggy (bei gradient)". Screenshot (BEAUTY, divider_color
+      = linear-gradient(110deg,#e6c563,#b3963f), aus dem gepushten
+      templates/product.json gezogen): zwei parallele Gold-Linien mit ~8px
+      Luecke zwischen JEDER Row.
+      URSACHE (headless belegt, A/B mit getreuem DOM): Der #143-Fix
+      (.product-single__meta .accordion + .accordion .tabcustom{border-top:0})
+      matchte im echten DOM NIE - die Section rendert das per-Block-<style>
+      VOR dem .accordion-Div, also lag zwischen zwei Accordions immer ein
+      <style>-Element und der Adjacent-Sibling-Selektor griff nicht
+      (prevElementSibling = STYLE, gemessen). Jede Row behielt damit
+      border-top:1px, und border-image (Gradient-Zweig, #90b) malt ALLE
+      Kanten mit Breite -> Bottom der Row N + Top der Row N+1, 8px auseinander
+      (margin-bottom:.5rem der h6-Klasse) = Doppellinie mit Luecke. Im Solid-
+      Zweig faellt es kaum auf (gleiche Farbe liest sich als eine 2px-Linie),
+      beim Gradient ist es der gemeldete Bug. Auch der #143-Description-Fall
+      (description.accordion + tabcustom.accordion) war davon betroffen.
+      FIX (sections/product-template-1.liquid, tabcustom-Block): Das
+      per-Block-<style> liegt jetzt INNERHALB des .accordion-Divs ->
+      Accordions sind echte direkte Geschwister, der #143-Kill greift wie
+      designed. Kein Rename, keine Schema-Aenderung. Hinweis-Kommentar an
+      der Kill-Regel in product-template.css ergaenzt.
+      Verifiziert headless (repro-lines, Bootstrap + theme.css +
+      product-template.css == live, Gradient aus dem BEAUTY-preset):
+      VORHER killMatch=false, alle Rows bTop=1px+bBottom=1px (Doppellinie,
+      Luecke 8px); NACHHER killMatch=true, Rows 2+ bTop=0px -> nur noch
+      Bottom-Linien, erste Row behaelt ihre Oberkante (#143-Design intakt).
+      check-theme.mjs unveraendert (84/282/95).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
