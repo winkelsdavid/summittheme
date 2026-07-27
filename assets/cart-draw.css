@@ -172,6 +172,17 @@ background-color: var(--g-chrome-bg, white);
   letter-spacing: 0;
   font-family: var(--g-font-2);
   text-transform: inherit;
+  /* #154: Titel im Cart-Upsell auf maximal 2 Zeilen, Rest mit Ellipse.
+     Nur hier gescoped - product-grid-buywith wird auch in
+     product-content/product-template-1/quotes-split/tab-information
+     gerendert, dort bleiben lange Titel vollstaendig.
+     !important, weil das Markup die Bootstrap-Utility .d-block traegt und
+     die display:block!important setzt (sonst greift der Clamp nicht). */
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .drawer-crossell .slick-dots{
   bottom: -1.5rem;
