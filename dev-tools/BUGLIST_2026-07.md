@@ -3404,6 +3404,57 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       nicht mehr - und mit eigenem Text erscheint er weiterhin.
       theme check: 0 Offenses in der Datei, gesamt 400/41 unveraendert.
 
+## 156. Referenz-Listen-Metafelder: | compact ist Pflicht (Auftrag 27.07.)
+- [~] Summit-Befund bestaetigt und LIVE nachgemessen (temporaerer
+      SMFDEBUG-Marker im Sync-Theme, danach per Revert entfernt -
+      Commits 1988e94/82790a4 -> 5770de7/f4cb6ca):
+        type=list.file_reference size=3
+        value[0].id  = LEER      <- Index-Zugriff scheitert
+        value|compact -> [0].id  = 72633028706691   <- funktioniert
+        for-Schleife = 0:...706691, 1:...673923, 2:...278403
+      Der Guard "unless liste and liste[0]" verwarf deshalb JEDE
+      Referenz-Liste sofort -> alles fiel auf die statischen Settings
+      zurueck (= gleiche Bilder auf allen Produktseiten).
+      FIX: | compact an 6 Lesestellen (Auftrag nannte 5, dazu kam
+      review_videos aus #153 von heute):
+      product-template-1 (review_images, review_videos), icon-list
+      (benefit_icons), image-with-icons (image_icons + benefit_icons-
+      Fallback), product-media (benefit_icons inline).
+      json-Listen und Einzel-Referenzen bewusst NICHT angefasst.
+      Verifiziert: 46 bestehende Repro-Checks (review-videos/iconlist/
+      iwi-blocks) weiter gruen; theme check 400/41 unveraendert.
+      WICHTIGER RESTBEFUND (Writer-Seite, gemessen): das Testprodukt hat
+      nur 3 aufloesbare review_images, die Arithmetik verteilt aber auf
+      [0..2], [3+i] und [4..6]. Nach dem compact-Fix bedient also nur der
+      review_images-Block (im Template disabled!) etwas; custom_review-
+      Avatar und videos-Block greifen weiter ins Leere. Entweder >=7
+      Bilder schreiben oder die Arithmetik beidseitig auf 0-basiert pro
+      Block umstellen. In METAFIELD_CONTRACT.md festgehalten.
+
+## 157. [FEATURE] reviews-slider + image-auto-slider: Metafeld-Wiring (Auftrag 27.07.)
+- [~] Punkt 2 desselben Auftrags: beide Sections zeigten auf jeder
+      Produktseite die statischen Hero-Werte.
+      reviews-slider (Block review): name <- reviews[i].name,
+      heading <- reviews[i].title, review_body <- reviews[i].text,
+      image <- review_images[i] (i = 0-basiert unter den review-Bloecken).
+      image-auto-slider (Block video): image <- slider_images[i] (NEUER
+      dedizierter Key) -> review_images[i] (geteilt, sofort wirksam).
+      Zwei-Ebenen-Muster wie #142, damit sich der Slider spaeter vom
+      Review-Content loesen kann, ohne erneuten Theme-Patch.
+      Semantik itemweise: fehlender Eintrag oder leeres Feld -> Setting.
+      Verifiziert headless (repro-157-wiring.js, 8 Checks PASS): MF fuellt
+      Block 0+1, Block 2 faellt auf Settings; heading nutzt MF-title mit
+      Setting-Fallback; dedizierte Keys schlagen geteilte; OHNE Metafelder
+      beide Sections HTML-identisch zum Alt-Stand; ohne product-Objekt
+      (Homepage) reine Settings. theme check unveraendert.
+      OFFEN (Summit): reviews braucht optional ein title-Feld;
+      slider_images anlegen, wenn der Slider eigenen Content bekommen soll.
+- [x] Zusatzpunkt 1 des Auftrags (statische image_1..3 des
+      review_images-Blocks rendern nicht): KEIN Theme-Bug. Die
+      shopify://shop_images/-Referenzen existieren im Zielshop nicht -
+      dieselbe Klasse wie #137 (eingefrorene Store-Bilder). Sobald echte
+      Dateien drinstehen, rendert der Pfad normal.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
