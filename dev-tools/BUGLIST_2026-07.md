@@ -3368,6 +3368,42 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       mit Semantik und Prioritaet. OFFEN (Summit): review_videos anlegen
       und schreiben - ohne den Key verhaelt sich der Block exakt wie bisher.
 
+## 154. Cart-Upsell: Produkttitel auf 2 Zeilen begrenzt (Bug-Sammler 27.07., split 3/3)
+- [~] Operator (Gesamtreport): "Upsell Function in cart funktioniert nicht
+      auf mobile. Buttons nicht sichtbar. Muss weniger spacing unter den
+      produkten haben. Und maximal 2 Zeilen pro produkttitel."
+      Dieser Split deckt NUR den Titel; die drei anderen Punkte kamen (noch)
+      nicht als eigene Briefings an -> offen.
+      Fix (cart-draw.css): .drawer-crossell__item .product-card__name
+      bekommt -webkit-line-clamp:2 + box-orient/overflow.
+      WICHTIG: display:-webkit-box mit !important - das Markup traegt die
+      Bootstrap-Utility .d-block, und die setzt display:block!important;
+      ohne !important berechnet der Browser zwar den Clamp, rendert aber
+      weiter 4 Zeilen (im Test zuerst genau daran gescheitert - gleiche
+      Falle wie bei #150/.d-flex).
+      Gescoped auf den Drawer: product-grid-buywith rendert auch in
+      product-content, product-template-1, quotes-split und
+      tab-information - dort bleiben lange Titel vollstaendig.
+      Verifiziert headless (repro-upsell-clamp.js, 5 Checks PASS, echte
+      Kaskade inkl. Bootstrap): Alt-Stand 4 Zeilen -> neu exakt 2, Text
+      wird real abgeschnitten (scrollHeight > clientHeight), kurzer Titel
+      bleibt einzeilig, Karte ausserhalb des Drawers unveraendert
+      (line-clamp none).
+
+## 155. Featured Products: "show all"-Button-Default entfernt (Bug-Sammler 27.07.)
+- [~] Operator: "ueberall unsichtbar machen bei der sektion".
+      Ursache: Schema-Default "show all" fuer txtbutton; das Rendering ist
+      bereits blank-gated ({% if section.settings.txtbutton != blank %}),
+      der Button erschien also allein wegen des Defaults.
+      Geprueft am gepushten Theme (27.07. 12:03): die Instanzen in
+      index.json und product.json tragen GAR KEINEN gespeicherten Wert ->
+      sie ziehen den Default. Das Leeren wirkt daher wie vom Operator
+      verlangt "ueberall", nicht nur bei neu hinzugefuegten Sektionen.
+      Verifiziert headless (repro-showall.js, 5 Checks PASS): Default weg,
+      restliches Schema unveraendert, Alt-Stand rendert den Button, neu
+      nicht mehr - und mit eigenem Text erscheint er weiterhin.
+      theme check: 0 Offenses in der Datei, gesamt 400/41 unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
