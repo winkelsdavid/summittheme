@@ -3492,6 +3492,44 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Entscheidung im Kontrakt dokumentiert. summit.slider_images wird damit
       vom Theme nicht mehr gelesen.
 
+## 160. Cart-Upsell: Leerraum unter den Produkten reduziert (Bug-Sammler 27.07., split 2/3)
+- [~] Operator (Gesamtreport): "Upsell Function in cart funktioniert nicht
+      auf mobile. Buttons nicht sichtbar. Muss weniger spacing unter den
+      produkten haben. Und maximal 2 Zeilen pro produkttitel."
+      Dieser Split deckt NUR das Spacing; Titel-Clamp = #154, Mobile/
+      Button-Sichtbarkeit = split 1/3 (offen).
+      Befund am gepushten Theme ("Nitro mapped · Summit · 2026-07-27 11:20",
+      id 199036010883, Admin-API-Diff): cart-draw.css live == Repo minus
+      #154-Clamp, block-cart.liquid identisch -> die Screenshot-Geometrie
+      ist exakt der Repo-Stand. Unter den Produkten (Reihenunterkante ->
+      "Total") stapelten sich 32px: .mini-cart-total margin-top:16px +
+      padding-top:16px (in #148 bewusst belassen - wirkt seit #149, wo der
+      Upsell direkt ueber dem Footer blockt, als Leerraum unter den
+      Produkten). Zudem blaehte der LIVE noch ungeklampfte 4-Zeilen-Titel
+      die Reihe auf (im Repo laengst gefixt, #154).
+      WICHTIG (headless belegt): .drawer-crossell__item .product-card__info
+      margin-bottom:1rem in cart-draw.css war eine TOTE Deklaration -
+      theme.css setzt .product-card__info{margin-bottom:0!important} und
+      gewinnt immer. Der vermeintliche 16px-Anteil existierte im gerenderten
+      Layout nie.
+      Fix (nur cart-draw.css, gescoped):
+      1) Tote margin-bottom:1rem-Deklaration entfernt (Klarstellung, kein
+         Render-Delta).
+      2) @media (max-width:991px): .drawer-crossell + .mini-cart-footer
+         .mini-cart-total{margin-top:0} - nur wenn der Upsell im DOM ist
+         (Adjacent-Sibling) und nur mobil (Desktop = absolutes Seitenpanel,
+         Footer folgt der Artikelliste). padding-top:16px bleibt als
+         Restabstand; ohne Upsell greift #148 unveraendert.
+      Verifiziert headless (repro-160, echte Kaskade: Bootstrap aus
+      header-css + theme.css + cart-draw.css, getreues Drawer-Markup,
+      mobile Viewport-Breite, A/B git-HEAD vs. Working Tree):
+      Reihenunterkante -> Total 32px -> 16px, Buttonunterkante -> Total
+      36px -> 20px; info marginBottom computed 0px in BEIDEN Staenden
+      (belegt tote Regel); Titel geklampft (2 Zeilen, scrollHeight >
+      clientHeight). Selektor-Spezifitaet (0,3,0) schlaegt .mini-cart-total
+      (0,1,0) unabhaengig von der Ladereihenfolge. Klammerbilanz 76/76,
+      check-theme.mjs ohne neue Befunde. Klick-Test live steht aus.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
