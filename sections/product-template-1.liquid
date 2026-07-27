@@ -534,6 +534,10 @@ display:none;
             unless smf_rimgs and smf_rimgs[0]
               assign smf_rimgs = nil
             endunless
+            assign smf_rvids = product.metafields.summit.review_videos.value
+            unless smf_rvids and smf_rvids[0]
+              assign smf_rvids = nil
+            endunless
             assign smf_banner = product.metafields.summit.banner.value
             assign smf_banner_video = product.metafields.summit.banner_video.value
           -%}
@@ -1592,7 +1596,8 @@ display:none;
                       {% if block.settings[image] != blank or block.settings[video] != blank or block.settings[video_pick] != blank %}
                           {% assign videos_found = true %}
                       {% endif %}
-                  {% endfor %}{% comment %} METAFIELD_CONTRACT.md Tab. 3: image_1..3 <- summit.review_images[4..6] {% endcomment %}{% if smf_rimgs and smf_rimgs[4] %}{% assign videos_found = true %}{% endif %}
+                  {% endfor %}{% comment %} METAFIELD_CONTRACT.md Tab. 3: image_1..3 <- summit.review_images[4..6],
+                      video_1..4 <- summit.review_videos[0..3] (0-basiert, Slot fuer Slot) {% endcomment %}{% if smf_rimgs and smf_rimgs[4] %}{% assign videos_found = true %}{% endif %}{% if smf_rvids and smf_rvids[0] %}{% assign videos_found = true %}{% endif %}
                   <div class="product-videos-cont">
                     {% for ii in (1..4) %}
                       {%- comment -%} b1-Positionszaehler pro Slot (zaehlt gefuellte wie
@@ -1601,11 +1606,13 @@ display:none;
                       {%- assign b1_pos_vids = b1_pos_vids | plus: 1 -%}
                       {% assign image = 'image_' | append: forloop.index %}
                       {% assign video_pick = 'video_pick_' | append: forloop.index %}
-                      {% assign video = 'video_' | append: forloop.index %}{% assign vid_img = block.settings[image] %}{% if smf_rimgs %}{% assign vid_img = nil %}{% if ii < 4 %}{% assign vid_idx = ii | plus: 3 %}{% assign vid_img = smf_rimgs[vid_idx] %}{% endif %}{% endif %}
-                      {% if vid_img != blank or block.settings[video] != blank or block.settings[video_pick] != blank %}
+                      {% assign video = 'video_' | append: forloop.index %}{% assign vid_img = block.settings[image] %}{% if smf_rimgs %}{% assign vid_img = nil %}{% if ii < 4 %}{% assign vid_idx = ii | plus: 3 %}{% assign vid_img = smf_rimgs[vid_idx] %}{% endif %}{% endif %}{% comment %} #153: produkteigenes Video aus summit.review_videos[Slot-1] schlaegt
+                          beide Section-Settings (video_pick = generische mp4-URL, video = Setting-Datei),
+                          analog #139. Ohne Metafeld bleibt die Kette exakt wie bisher. {% endcomment %}{% assign vid_vid = block.settings[video] %}{% assign vid_mf = false %}{% if smf_rvids and smf_rvids[forloop.index0] %}{% assign vid_vid = smf_rvids[forloop.index0] %}{% assign vid_mf = true %}{% endif %}
+                      {% if vid_img != blank or vid_vid != blank or block.settings[video_pick] != blank %}
                         <div class="video_item">
                           <div class="video_item_c">
-                            {% if block.settings[video_pick] != blank %}
+                            {% if block.settings[video_pick] != blank and vid_mf == false %}
                               <video width="700" height="auto" playsinline="" id="video" class="" loading="lazy">
                                 <source src="{{ block.settings[video_pick] }}" type="video/mp4">
                               </video>
@@ -1642,8 +1649,11 @@ display:none;
                                   <path d="M14 1H9V15H14V1Z" fill="#fff"/>
                                 </svg>
                               </button>
-                            {% elsif block.settings[video] != blank %}
-                              {% for source in block.settings[video].sources %}
+                            {% elsif vid_vid != blank %}
+                              {%- comment -%} #153: source_url pro Slot zuruecksetzen - sonst erbt ein
+                                  Slot ohne mp4-Quelle die URL des vorherigen Slots. {%- endcomment -%}
+                              {% assign source_url = nil %}
+                              {% for source in vid_vid.sources %}
                                 {% if source.url contains 'mp4' %}
                                   {% assign source_url = source.url %}
                                 {% endif %}

@@ -107,6 +107,7 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Overview | Block `custom_review` → `image` | `review_images[3 + i]`¹ |
 | Product Overview | Block `review_images` → `image_1..3` | `review_images[0..2]` |
 | Product Overview | Block `videos` → `image_1..3` | `review_images[4..6]` |
+| Product Overview | Block `videos` → `video_1..4` | `review_videos[0..3]` (NEU, Theme-Patch 27.07.2026) |
 | Product Overview | Block `image` → `image` | `banner` |
 | Product Overview | Block `title` → `custom_title` | `product.title` (nativ) |
 | Product Suggest | `product` | `product.title` (nativ) |
@@ -171,11 +172,18 @@ MUSS damit rechnen:
   Einträge als Blöcke = bewusstes Kürzen. Ausnahme `custom_review`-Avatar:
   fehlendes `review_images[3+i]` fällt in den bestehenden Blank-Pfad
   (Brand-Fallback/Placeholder), nie in das Settings-Bild.
-- **`videos`-Block, Slot 4**: der Kontrakt deckt nur `image_1..3` (=
-  `review_images[4..6]`). Bei gesetztem `review_images` rendert Slot 4 KEIN
-  Settings-Bild mehr (Kein-Mischen-Regel); die Video-Settings
-  (`video_pick_*`/`video_*`) sind nicht Teil des Kontrakts und rendern
-  unverändert weiter.
+- **`videos`-Block, Slot 4 (Bilder)**: der Bild-Kontrakt deckt nur
+  `image_1..3` (= `review_images[4..6]`). Bei gesetztem `review_images`
+  rendert Slot 4 KEIN Settings-Bild mehr (Kein-Mischen-Regel).
+- **`videos`-Block, Videos (`review_videos`, NEU 27.07.2026)**: Liste vom Typ
+  `list.file_reference` auf Shopify-**Video**-Files, Zuordnung schlicht
+  0-basiert Slot für Slot (`video_1..4` ← `review_videos[0..3]`) — bewusst
+  OHNE die geerbte Index-Arithmetik der Bilder. Semantik hier **itemweise**,
+  nicht „kein Mischen": ein fehlender Index lässt den Slot auf seine
+  Section-Settings zurückfallen. Priorität pro Slot:
+  `review_videos[i]` → `video_pick_i` (generische mp4-URL) → `video_i`
+  (Setting-Datei) → Bild-Slot. Der Writer muss den Key noch anlegen; ohne
+  ihn verhält sich der Block exakt wie bisher.
 - **Nicht metafield-gated (bewusste Verhaltensänderungen ab Theme-Merge):**
   (a) Der `title`-Block rendert IMMER `product.title` — auch wo
   `use_custom_title` aktiv war (Settings bleiben als tote Felder im Schema).
