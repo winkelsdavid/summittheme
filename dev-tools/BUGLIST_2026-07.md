@@ -3338,6 +3338,36 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Titel unveraendert. theme check: 0 Offenses in der Datei, gesamt
       400/41 unveraendert.
 
+## 153. [FEATURE] Reviews Videos And Images: Videos per Metafield (User 27.07.)
+- [~] Lueckenschluss aus der Bestandsaufnahme: im videos-Block waren nur die
+      BILDER metafield-faehig (image_1..3 <- review_images[4..6]), die
+      Video-Slots liefen ausschliesslich ueber Section-Settings. Da Summit
+      inzwischen produkteigene Videos erzeugt (#139), jetzt analog verdrahtet.
+      NEUER KEY summit.review_videos (list.file_reference auf Video-Files),
+      Zuordnung bewusst schlicht 0-basiert Slot fuer Slot
+      (video_1..4 <- review_videos[0..3]) statt der geerbten
+      Index-Arithmetik der Bilder - neuer Key, also keine Altlast.
+      Prioritaet je Slot: review_videos[i] -> video_pick_i (generische
+      mp4-URL) -> video_i (Setting-Datei) -> Bild-Slot. Semantik ITEMWEISE:
+      fehlender Index laesst den Slot auf seine Settings zurueckfallen
+      (kein Skip). videos_found beruecksichtigt den neuen Key, damit die
+      B1-Kacheln nicht faelschlich einspringen.
+      MITGENOMMEN (Altbug, faellt beim Anfassen auf): source_url wurde in
+      der Slot-Schleife NICHT zurueckgesetzt - ein Slot, dessen Video keine
+      mp4-Quelle hat, erbte die URL des vorherigen Slots und spielte
+      dasselbe Video doppelt. Im Repro belegt: Alt-Stand rendert mf1.mp4
+      zweimal, neu genau einmal.
+      Verifiziert headless (repro-review-videos.js, 9 Checks PASS): 4 MF-
+      Videos fuellen 4 Slots; MF schlaegt video_pick UND video-Setting;
+      OHNE Metafeld ist die Ausgabe zeichengleich zum Alt-Stand; einzelner
+      fehlender Index faellt aufs Setting zurueck; Video-MF gewinnt im
+      Slot, waehrend das Bild-MF die restlichen Slots bedient; B1-Fallback
+      weiter erreichbar; kein source_url-Leak. theme check: 400/41 und 56
+      in der Datei = unveraendert.
+      Kontrakt (METAFIELD_CONTRACT.md) erweitert: Tabellenzeile + Absatz
+      mit Semantik und Prioritaet. OFFEN (Summit): review_videos anlegen
+      und schreiben - ohne den Key verhaelt sich der Block exakt wie bisher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
