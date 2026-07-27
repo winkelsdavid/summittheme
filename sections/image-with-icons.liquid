@@ -7,9 +7,11 @@
     # (image_icons/image_icon_items) gewinnen; ohne sie greifen die geteilten
     # Keys benefit_icons/icon_items (wie in icon-list). Leere Listen = nicht
     # gesetzt; ausserhalb von Produktseiten ist product nil -> Alt-Verhalten.
-    assign p_icons = product.metafields.summit.image_icons.value
+    # #156: | compact - list.file_reference ist ohne den Filter nicht
+    # index-zugreifbar (liste[0] == nil), der Guard wuerde alles verwerfen.
+    assign p_icons = product.metafields.summit.image_icons.value | compact
     unless p_icons and p_icons[0]
-      assign p_icons = product.metafields.summit.benefit_icons.value
+      assign p_icons = product.metafields.summit.benefit_icons.value | compact
     endunless
     unless p_icons and p_icons[0]
       assign p_icons = nil

@@ -530,11 +530,17 @@ display:none;
             unless smf_reviews and smf_reviews[0]
               assign smf_reviews = nil
             endunless
-            assign smf_rimgs = product.metafields.summit.review_images.value
+            # #156: | compact ist bei list.<typ>_reference PFLICHT - ohne den
+            # Filter liefert Liquid bei Referenz-Listen KEINEN Index-Zugriff
+            # (liste[0] == nil, obwohl die Liste iterierbar ist). Der Guard
+            # unten wirft die Liste dann komplett weg und alles faellt auf die
+            # statischen Settings zurueck. Gilt NUR fuer Referenz-Listen -
+            # json-Listen (usps/faq/reviews) brauchen es nicht.
+            assign smf_rimgs = product.metafields.summit.review_images.value | compact
             unless smf_rimgs and smf_rimgs[0]
               assign smf_rimgs = nil
             endunless
-            assign smf_rvids = product.metafields.summit.review_videos.value
+            assign smf_rvids = product.metafields.summit.review_videos.value | compact
             unless smf_rvids and smf_rvids[0]
               assign smf_rvids = nil
             endunless
