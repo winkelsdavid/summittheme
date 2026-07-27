@@ -3403,6 +3403,9 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       restliches Schema unveraendert, Alt-Stand rendert den Button, neu
       nicht mehr - und mit eigenem Text erscheint er weiterhin.
       theme check: 0 Offenses in der Datei, gesamt 400/41 unveraendert.
+      NACHTRAG (Briefing 25.07. 17:55, "button text per default leer",
+      beobachtet auf Push 25.07. 17:44): derselbe Bug, gemeldet VOR dem
+      Fix - durch adae56b bereits erledigt, kein weiterer Eingriff noetig.
 
 ## 156. Referenz-Listen-Metafelder: | compact ist Pflicht (Auftrag 27.07.)
 - [~] Summit-Befund bestaetigt und LIVE nachgemessen (temporaerer
