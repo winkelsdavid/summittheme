@@ -515,6 +515,11 @@ display:none;
           href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
         >
         <div class="product-single__meta small--text-center">
+          {%- comment -%} #156-DEBUG TEMPORAER - wird nach der Messung wieder entfernt {%- endcomment -%}
+          {%- assign dbg_mf = product.metafields.summit.review_images -%}
+          {%- assign dbg = dbg_mf.value -%}
+          {%- assign dbg_c = dbg | compact -%}
+          <!--SMFDEBUG type=[{{ dbg_mf.type }}] present=[{% if dbg_mf %}1{% else %}0{% endif %}] valuePresent=[{% if dbg %}1{% else %}0{% endif %}] size=[{{ dbg.size }}] first=[{{ dbg.first.id }}] idx0=[{{ dbg[0].id }}] compactSize=[{{ dbg_c.size }}] compactIdx0=[{{ dbg_c[0].id }}] compactFirst=[{{ dbg_c.first.id }}] loop=[{% for f in dbg %}{{ forloop.index0 }}:{{ f.id }},{% endfor %}] SMFDEBUGEND-->
           {%- comment -%} METAFIELD_CONTRACT.md: summit.*-Metafields gewinnen, wenn gesetzt;
               leere Arrays zaehlen als nicht gesetzt (Normalisierung auf nil). {%- endcomment -%}
           {%- liquid
