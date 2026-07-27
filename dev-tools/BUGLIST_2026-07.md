@@ -3621,6 +3621,35 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Produkte des Ziel-Shops gemappt werden (type:product -> "system"-
       Kategorie im MAPPABILITY_CONTRACT), sonst laeuft der Popup leer.
 
+## 164. Slideshow: Buttons der ersten Slide unanklickbar (Bug-Sammler 24.07.)
+- [~] Operator: "slideshow buttons funktionieren nicht in der ersten slide
+      der slideshows. jedenfalls bei 'Hover 1' animation." Der Hover_1-
+      Verdacht (AI-Summary: ::before-Overlay) erwies sich als falsch - der
+      hover_1-Sweep ist z-index:-1-Kind des <a> und faengt keine Klicks ab
+      (headless geprueft: elementFromPoint = der Button selbst).
+      ECHTE URSACHE: Versions-Mismatch im Swiper-Bundle (beide Dateien seit
+      theme_start 31.05. unveraendert): die JS-Laufzeit ist Swiper 6.7.0 und
+      setzt die Effekt-Klasse dynamisch als "swiper-container-fade"
+      (containerModifierClass + effect); das Bundle-CSS traegt die
+      pointer-events-Regeln NUR unter dem Swiper-7+-Namen ".swiper-fade" ->
+      sie griffen NIE. Im Fade-Modus (Default-Transition!) stapeln sich die
+      Slides via translate3d + inline-opacity; opacity:0 entfernt die
+      Hit-Flaeche NICHT -> der zuletzt gemalte (transparente) Slide liegt
+      UEBER dem aktiven und frisst dessen Button-Klicks. Bei 2 Slides: Slide
+      2 deckt Slide 1 -> "erste Slide funktioniert nicht", auf Slide 2
+      klickbar. "hover_1" war Zufall (Default-Animation, "jedenfalls bei").
+      FIX (theme.css + theme.css.liquid, neben der P1-Swiper-Regel):
+      pointer-events-Spiegel der Vendor-Regeln auf den v6-Klassennamen -
+      .swiper-container-fade .swiper-slide{pointer-events:none} und
+      .swiper-container-fade .swiper-slide-active{pointer-events:auto}
+      (inkl. Nested-Varianten). Bewusst OHNE das vendor-seitige
+      transition-property:opacity - Fade-Look bleibt exakt wie bisher.
+      Verifiziert headless (repro-fade, ECHTES swiper-bundle.min.css,
+      DOM-Zustand wie Swiper 6.7 ihn im Fade-Modus erzeugt): VORHER
+      elementFromPoint auf dem Slide-1-Button = Slide-2-Button (blockiert),
+      NACHHER = eigener Button; pointerEvents slide2 none / slide1 auto.
+      Klammerbilanz 2290/2290 + 2336/2336, check-theme.mjs unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
