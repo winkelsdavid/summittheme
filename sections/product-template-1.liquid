@@ -552,6 +552,8 @@ display:none;
             assign smf_banner = product.metafields.summit.banner.value
             assign smf_banner_video = product.metafields.summit.banner_video.value
           -%}
+          {%- comment -%} #156-DEBUG2 TEMPORAER {%- endcomment -%}
+          <!--SMFDEBUG2 rimgsTruthy=[{% if smf_rimgs %}1{% else %}0{% endif %}] rimgsSize=[{{ smf_rimgs.size }}] i0=[{{ smf_rimgs[0].id }}] i3=[{{ smf_rimgs[3].id }}] i4=[{{ smf_rimgs[4].id }}] rvidsTruthy=[{% if smf_rvids %}1{% else %}0{% endif %}] SMFDEBUG2END-->
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}
