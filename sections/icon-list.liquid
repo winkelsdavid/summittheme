@@ -83,8 +83,14 @@
             assign il_icon = block.settings.image_icon
             assign il_title = block.settings.title
             assign il_desc = block.settings.description
-            if smf_bicons and smf_bicons[forloop.index0]
-              assign il_icon = smf_bicons[forloop.index0]
+            # #158: Slot-Index MODULO Listenlaenge - der Icon-Pool ist je nach
+            # Mengensteuerung kuerzer als die Blockzahl; ohne Modulo blieben die
+            # hinteren Bloecke auf ihren Settings haengen.
+            if smf_bicons
+              assign bi_idx = forloop.index0 | modulo: smf_bicons.size
+              if smf_bicons[bi_idx]
+                assign il_icon = smf_bicons[bi_idx]
+              endif
             endif
             if smf_icon_items and smf_icon_items[forloop.index0]
               assign il_item = smf_icon_items[forloop.index0]

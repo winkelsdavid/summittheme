@@ -161,16 +161,27 @@ laufen daher über `| compact`. Betrifft NUR Referenz-Listen; `json`-Listen
 Einzel-Referenzen (`banner`, `banner_image`, `banner_video`) sind nicht
 betroffen und bleiben ohne Filter.
 
-**Index-Deckung (offener Punkt für den Writer, gemessen 27.07.2026):** Das
-Test-Produkt liefert **3** auflösbare `review_images`. Die geerbte Arithmetik
-verteilt aber auf `[0..2]` (Block `review_images`), `[3+i]`
-(`custom_review`-Avatar) und `[4..6]` (Block `videos`). Mit 3 Einträgen
-bedient also nur der `review_images`-Block etwas — die anderen beiden Blöcke
-greifen ins Leere und fallen auf ihre statischen Settings zurück (= der
-sichtbare „überall dasselbe Bild"-Effekt). Entweder schreibt der Writer
-mindestens 7 Bilder pro Produkt, oder die Arithmetik wird beidseitig auf eine
-schlichte 0-basierte Zuordnung pro Block umgestellt (wie bei `review_videos`
-und den beiden neuen Slider-Zeilen oben bereits gemacht).
+**Index-Regel: Slot-Index MODULO Listenlänge (verbindlich ab 27.07.2026, #158).**
+Jede Referenz-Liste wird zyklisch gelesen: `index = slot | modulo: liste.size`.
+Die versetzte Zuordnung bleibt damit unverändert erhalten — sie greift nur nicht
+mehr ins Leere, wenn die Liste kürzer ist als der höchste Slot-Index.
+
+- **Leere/fehlende Liste ⇒ Settings-Fallback** (unverändert; die Normalisierung
+  setzt sie vorher auf `nil`).
+- **Nicht-leere Liste ⇒ alle Slots werden bedient**, notfalls mit Wiederholung.
+  Ein Settings-Fallback für einzelne Slots findet dann NICHT mehr statt.
+- Grund: Die Bildmenge pro Produkt ist operator-gesteuert (Per-Produkt-Limit)
+  und liegt typisch bei 3–4, beim Hero bis 16. Auffüllen per Wiederholung ist
+  writer-seitig keine Option, weil Shopify wiederholte GIDs in einer
+  `list.file_reference` beim Auflösen dedupliziert (live gemessen: 7 gespeichert
+  → 3 in Liquid).
+
+Beispiele: Liste mit 16 ⇒ `videos`-Block zieht wie bisher `[4,5,6]`; Liste mit 3
+⇒ `[1,2,0]`. Icon-Pool mit 2 auf 4 Blöcke ⇒ `0,1,0,1`.
+
+Gilt für: `review_images` (alle drei Bereiche), `review_videos`, `benefit_icons`,
+`image_icons`. Nicht für `json`-Listen — dort bleibt der itemweise
+Settings-Fallback (fehlender Eintrag ⇒ Block-Setting).
 
 ¹ Die Index-Arithmetik spiegelt die heutigen `outputIndex`-Werte der
 Block-Type-Mappings — die Theme-Session (Branch `feat/summit-metafields`,

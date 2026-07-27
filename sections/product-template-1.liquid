@@ -811,15 +811,22 @@ display:none;
                   </div>
                 </div>
               {% when 'review_images' %}
-                {% comment -%} METAFIELD_CONTRACT.md Tab. 3: image_1..3 <- summit.review_images[0..2] {%- endcomment -%}
+                {% comment -%} METAFIELD_CONTRACT.md Tab. 3: image_1..3 <- summit.review_images[0..2].
+                    #158: Slot-Index MODULO Listenlaenge - der Writer liefert je nach
+                    Mengensteuerung 3..16 Bilder; ohne Modulo griffen die hoeheren Slots
+                    ins Leere. Leere Liste ist oben schon auf nil normalisiert. {%- endcomment -%}
                 {%- liquid
                   assign ri1 = block.settings.image_1
                   assign ri2 = block.settings.image_2
                   assign ri3 = block.settings.image_3
                   if smf_rimgs
-                    assign ri1 = smf_rimgs[0]
-                    assign ri2 = smf_rimgs[1]
-                    assign ri3 = smf_rimgs[2]
+                    assign ri_n = smf_rimgs.size
+                    assign ri_i1 = 0 | modulo: ri_n
+                    assign ri_i2 = 1 | modulo: ri_n
+                    assign ri_i3 = 2 | modulo: ri_n
+                    assign ri1 = smf_rimgs[ri_i1]
+                    assign ri2 = smf_rimgs[ri_i2]
+                    assign ri3 = smf_rimgs[ri_i3]
                   endif
                 -%}
                 {%- if block.settings.border_color contains 'gradient' -%}
@@ -922,7 +929,8 @@ display:none;
                     assign cr_text = cr_item.text
                   endif
                   if smf_rimgs
-                    assign cr_img_i = b1_pos_cr | plus: 2
+                    # #158: 3+i MODULO Listenlaenge (Kontrakt: Slot-Index modulo size)
+                    assign cr_img_i = b1_pos_cr | plus: 2 | modulo: smf_rimgs.size
                     assign cr_image = smf_rimgs[cr_img_i]
                   endif
                 -%}
@@ -1603,7 +1611,7 @@ display:none;
                           {% assign videos_found = true %}
                       {% endif %}
                   {% endfor %}{% comment %} METAFIELD_CONTRACT.md Tab. 3: image_1..3 <- summit.review_images[4..6],
-                      video_1..4 <- summit.review_videos[0..3] (0-basiert, Slot fuer Slot) {% endcomment %}{% if smf_rimgs and smf_rimgs[4] %}{% assign videos_found = true %}{% endif %}{% if smf_rvids and smf_rvids[0] %}{% assign videos_found = true %}{% endif %}
+                      video_1..4 <- summit.review_videos[0..3] (0-basiert, Slot fuer Slot) {% endcomment %}{% comment %} #158: mit Modulo bedient JEDE nicht-leere Liste die Slots - Pruefung daher auf die Liste selbst statt auf Index 4. {% endcomment %}{% if smf_rimgs %}{% assign videos_found = true %}{% endif %}{% if smf_rvids %}{% assign videos_found = true %}{% endif %}
                   <div class="product-videos-cont">
                     {% for ii in (1..4) %}
                       {%- comment -%} b1-Positionszaehler pro Slot (zaehlt gefuellte wie
@@ -1612,9 +1620,9 @@ display:none;
                       {%- assign b1_pos_vids = b1_pos_vids | plus: 1 -%}
                       {% assign image = 'image_' | append: forloop.index %}
                       {% assign video_pick = 'video_pick_' | append: forloop.index %}
-                      {% assign video = 'video_' | append: forloop.index %}{% assign vid_img = block.settings[image] %}{% if smf_rimgs %}{% assign vid_img = nil %}{% if ii < 4 %}{% assign vid_idx = ii | plus: 3 %}{% assign vid_img = smf_rimgs[vid_idx] %}{% endif %}{% endif %}{% comment %} #153: produkteigenes Video aus summit.review_videos[Slot-1] schlaegt
+                      {% assign video = 'video_' | append: forloop.index %}{% assign vid_img = block.settings[image] %}{% if smf_rimgs %}{% assign vid_img = nil %}{% if ii < 4 %}{% comment %} #158: 4..6 MODULO Listenlaenge {% endcomment %}{% assign vid_idx = ii | plus: 3 | modulo: smf_rimgs.size %}{% assign vid_img = smf_rimgs[vid_idx] %}{% endif %}{% endif %}{% comment %} #153: produkteigenes Video aus summit.review_videos[Slot-1] schlaegt
                           beide Section-Settings (video_pick = generische mp4-URL, video = Setting-Datei),
-                          analog #139. Ohne Metafeld bleibt die Kette exakt wie bisher. {% endcomment %}{% assign vid_vid = block.settings[video] %}{% assign vid_mf = false %}{% if smf_rvids and smf_rvids[forloop.index0] %}{% assign vid_vid = smf_rvids[forloop.index0] %}{% assign vid_mf = true %}{% endif %}
+                          analog #139. Ohne Metafeld bleibt die Kette exakt wie bisher. {% endcomment %}{% assign vid_vid = block.settings[video] %}{% assign vid_mf = false %}{% if smf_rvids %}{% comment %} #158: Slot-Index MODULO Listenlaenge {% endcomment %}{% assign rv_idx = forloop.index0 | modulo: smf_rvids.size %}{% if smf_rvids[rv_idx] %}{% assign vid_vid = smf_rvids[rv_idx] %}{% assign vid_mf = true %}{% endif %}{% endif %}
                       {% if vid_img != blank or vid_vid != blank or block.settings[video_pick] != blank %}
                         <div class="video_item">
                           <div class="video_item_c">

@@ -215,8 +215,12 @@
                         # block_title/-_description <- (image_)icon_items[i].heading/.text
                         # (i = 0-basierter Block-Index). Fehlender Eintrag oder
                         # leeres Feld -> Block-Setting.
-                        if p_icons and p_icons[forloop.index0]
-                          assign icon_image = p_icons[forloop.index0]
+                        # #158: Slot-Index MODULO Listenlaenge (Kontrakt)
+                        if p_icons
+                          assign pi_idx = forloop.index0 | modulo: p_icons.size
+                          if p_icons[pi_idx]
+                            assign icon_image = p_icons[pi_idx]
+                          endif
                         endif
                         if p_items and p_items[forloop.index0]
                           assign p_item = p_items[forloop.index0]

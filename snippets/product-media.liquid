@@ -254,7 +254,7 @@
                   <div class="custom_images_icons {% if section.settings.hide_mobile %} mobile_hidden {% endif %}">
                     {% for ii in (1..4) %}
                       {% assign icon = 'icon_' | append: forloop.index %}
-                      {% assign text = 'text_' | append: forloop.index %}{% assign slot_icon = section.settings[icon] %}{% assign slot_text = section.settings[text] %}{% if smf_bicons %}{% assign slot_icon = smf_bicons[forloop.index0] %}{% endif %}{% if smf_btexts %}{% assign slot_text = smf_btexts[forloop.index0] %}{% endif %}
+                      {% assign text = 'text_' | append: forloop.index %}{% assign slot_icon = section.settings[icon] %}{% assign slot_text = section.settings[text] %}{% if smf_bicons %}{% comment %} #158: Slot-Index MODULO Listenlaenge {% endcomment %}{% assign bi_idx = forloop.index0 | modulo: smf_bicons.size %}{% assign slot_icon = smf_bicons[bi_idx] %}{% endif %}{% if smf_btexts %}{% assign slot_text = smf_btexts[forloop.index0] %}{% endif %}
                       {% if slot_icon != blank or slot_text != blank %}
                         <div class="custom_media_icon_item" style='background:{% if section.settings.bk != blank %}{{ section.settings.bk }}{% else %}{{ settings.branding_color }}{% endif %}'>
                           <div class="custom_media_icons">
