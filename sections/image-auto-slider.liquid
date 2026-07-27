@@ -214,10 +214,31 @@
       <div class="mb-lg-0  flex__item flex flex--center-vertical col-md-6">
             <div class="custom_video_items custom_video_items_x swiper custom_video_items-{{ section.id }}" data-autoslide="{{ section.settings.automatic_sliding }}">
                   <div class="swiper-wrapper">
+                    {%- comment -%} #157: METAFIELD_CONTRACT.md - image <- summit.slider_images[i]
+                        (dediziert, NEU) -> summit.review_images[i] (geteilt, sofort wirksam);
+                        i = 0-basierter Index unter den video-Bloecken. Referenz-Listen brauchen
+                        | compact (#156). Itemweise: fehlender Eintrag -> Block-Setting. {%- endcomment -%}
+                    {%- liquid
+                      assign smf_slider_imgs = product.metafields.summit.slider_images.value | compact
+                      unless smf_slider_imgs and smf_slider_imgs[0]
+                        assign smf_slider_imgs = product.metafields.summit.review_images.value | compact
+                      endunless
+                      unless smf_slider_imgs and smf_slider_imgs[0]
+                        assign smf_slider_imgs = nil
+                      endunless
+                      assign ias_i = 0
+                    -%}
                     {% for block in section.blocks %}
                         {% case block.type %}
                           {% when "video" %}
                           {%- assign b1_pos = b1_pos | plus: 1 -%}
+                          {%- liquid
+                            assign ias_image = block.settings.image
+                            if smf_slider_imgs and smf_slider_imgs[ias_i]
+                              assign ias_image = smf_slider_imgs[ias_i]
+                            endif
+                            assign ias_i = ias_i | plus: 1
+                          -%}
                           <div class="swiper-slide custom_shoppable_video custom_review-{{ block.id }}" {{ block.shopify_attributes }}>
                               <div class="c_video_content">
                                       {% if block.settings.video_pick != blank %}
@@ -271,11 +292,11 @@
                                         </div>
                                       </div>
                                   </div>
-                                {% elsif block.settings.image != blank %}
+                                {% elsif ias_image != blank %}
                                   <div class="video_item_image_text c_video-wrapper video-container">
                                       <div class="c_video_item_c low-power-video">
                                       <div class="wt-video__movie">
-                                              <img src="{{ block.settings.image | image_url: width: 5760 }}" loading="lazy">
+                                              <img src="{{ ias_image | image_url: width: 5760 }}" loading="lazy">
                                           </div>
                                         </div>
                                       </div>

@@ -108,6 +108,9 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Overview | Block `review_images` → `image_1..3` | `review_images[0..2]` |
 | Product Overview | Block `videos` → `image_1..3` | `review_images[4..6]` |
 | Product Overview | Block `videos` → `video_1..4` | `review_videos[0..3]` (NEU, Theme-Patch 27.07.2026) |
+| Testimonial Slider Auto (`reviews-slider`) | Block `review` → `name` / `heading` / `review_body` | `reviews[i].name` / `.title` / `.text` (i = Block-Index, NEU 27.07.2026) |
+| Testimonial Slider Auto (`reviews-slider`) | Block `review` → `image` | `review_images[i]` (NEU 27.07.2026) |
+| Image With Auto Slider (`image-auto-slider`) | Block `video` → `image` | `slider_images[i]` → `review_images[i]` (NEU 27.07.2026) |
 | Product Overview | Block `image` → `image` | `banner` |
 | Product Overview | Block `title` → `custom_title` | `product.title` (nativ) |
 | Product Suggest | `product` | `product.title` (nativ) |
@@ -147,6 +150,27 @@ unterscheiden, schreibt der Writer zusätzlich die **dedizierten** Keys
 `image_icons` (list.file_reference) und `image_icon_items` (json, gleiche
 Struktur wie `icon_items`) — die liest ausschließlich Image With 4 Icons und
 sie gewinnen dort vor den geteilten Keys.
+
+**Referenz-Listen brauchen `| compact` (Theme-Patch 27.07.2026, #156):** Bei
+`list.<typ>_reference` lässt Shopify-Liquid **keinen Index-Zugriff** zu —
+`metafield.value[0]` ist `nil`, obwohl die Liste iterierbar ist. Live gemessen
+am Produkt `after-sun-lotion-…`: `value.size` = 3, `value[0].id` = leer,
+`value | compact` → `[0].id` = `72633028706691`. Alle Lesestellen im Theme
+laufen daher über `| compact`. Betrifft NUR Referenz-Listen; `json`-Listen
+(`usps`, `faq`, `reviews`, `benefit_texts`, `icon_items`, …) und
+Einzel-Referenzen (`banner`, `banner_image`, `banner_video`) sind nicht
+betroffen und bleiben ohne Filter.
+
+**Index-Deckung (offener Punkt für den Writer, gemessen 27.07.2026):** Das
+Test-Produkt liefert **3** auflösbare `review_images`. Die geerbte Arithmetik
+verteilt aber auf `[0..2]` (Block `review_images`), `[3+i]`
+(`custom_review`-Avatar) und `[4..6]` (Block `videos`). Mit 3 Einträgen
+bedient also nur der `review_images`-Block etwas — die anderen beiden Blöcke
+greifen ins Leere und fallen auf ihre statischen Settings zurück (= der
+sichtbare „überall dasselbe Bild"-Effekt). Entweder schreibt der Writer
+mindestens 7 Bilder pro Produkt, oder die Arithmetik wird beidseitig auf eine
+schlichte 0-basierte Zuordnung pro Block umgestellt (wie bei `review_videos`
+und den beiden neuen Slider-Zeilen oben bereits gemacht).
 
 ¹ Die Index-Arithmetik spiegelt die heutigen `outputIndex`-Werte der
 Block-Type-Mappings — die Theme-Session (Branch `feat/summit-metafields`,
