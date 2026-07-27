@@ -3455,6 +3455,43 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       dieselbe Klasse wie #137 (eingefrorene Store-Bilder). Sobald echte
       Dateien drinstehen, rendert der Pfad normal.
 
+## 158. Index-Arithmetik: Slot-Index MODULO Listenlaenge (Auftrag 27.07., Variante C)
+- [~] Entscheidung des Auftraggebers gegen A (">=7 Bilder schreiben") und B
+      ("0-basiert"): die Bildmenge pro Produkt ist operator-gesteuert (3..16),
+      und Auffuellen per Wiederholung scheitert an Shopify - wiederholte GIDs
+      in einer list.file_reference werden beim Aufloesen DEDUPLIZIERT
+      (7 gespeichert -> 3 in Liquid, beidseitig gemessen).
+      UMSETZUNG - index = slot | modulo: liste.size an 6 Lesestellen:
+      product-template-1: review_images-Block [0,1,2]; custom_review-Avatar
+      [3+i]; videos-Block [4..6]; review_videos [0..3].
+      icon-list: benefit_icons[i]. image-with-icons: p_icons[i].
+      product-media: benefit_icons[i]. (json-Listen unveraendert.)
+      Zusaetzlich videos_found: prueft jetzt die Liste selbst statt Index 4 -
+      mit Modulo bedient jede nicht-leere Liste die Slots.
+      SEMANTIK-AENDERUNG (gewollt, im Kontrakt festgehalten): bei nicht-leerer
+      Liste gibt es KEINEN Settings-Fallback mehr fuer einzelne Slots - kurze
+      Listen wiederholen sich. Settings greifen nur noch bei leerer/fehlender
+      Liste. Drei bestehende Repro-Erwartungen wurden entsprechend nachgezogen.
+      Verifiziert headless (repro-modulo.js, 16 Checks PASS): Liste 1/2/3/16
+      am review_images-Block; Avatar-Index 3 bei Liste 3/4/7/16; videos-Block
+      [4,5,6] bei Liste 3 -> [1,2,0] und bei 7/16 -> [4,5,6] (= heutiges
+      Verhalten unveraendert); review_videos zyklisch; Icon-Pool 2 auf 4
+      Bloecke -> 0,1,0,1. Dazu 4 bestehende Repro-Suites gruen, theme check
+      400/41 unveraendert.
+
+## 159. #157 zurueckgenommen: Slider bleiben settings-basiert (Klarstellung 27.07.)
+- [x] Das Auftragsdokument widerruft Punkt 2 von gestern: reviews-slider und
+      image-auto-slider sind Marken-Beleg, kein Produkt-Detail - sie sollen den
+      ueber den Katalog gemischten Content zeigen, den Summit beim Push in die
+      Section-Settings schreibt.
+      WICHTIG: Die Annahme im Dokument ("euer Wiring laeuft ins Leere, der
+      Settings-Pfad gewinnt") trifft auf #157 NICHT zu - dort gewann das
+      Metafeld VOR den Settings. Stehengelassen haette es also genau den
+      gemischten Content ueberschrieben. Beide Sections daher auf den Stand
+      vor #157 zurueckgesetzt (git checkout f4cb6ca), Kontraktzeilen entfernt,
+      Entscheidung im Kontrakt dokumentiert. summit.slider_images wird damit
+      vom Theme nicht mehr gelesen.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
