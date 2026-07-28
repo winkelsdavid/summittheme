@@ -2932,8 +2932,7 @@
         "type": "product",
         "id": "gift_product",
         "label": "Gift Product",
-        "info": "Must be priced at €0 in the catalog, otherwise it will be added at its catalog price.",
-        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+        "info": "Must be priced at €0 in the catalog, otherwise it will be added at its catalog price. (Resource-type settings cannot use visible_if - therefore always visible.)"
       },
       {
         "type": "range",

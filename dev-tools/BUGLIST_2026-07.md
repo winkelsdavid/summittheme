@@ -3940,6 +3940,18 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       OFFEN (Summit): gift_product als EUR-0-Produkt anlegen/mappen - sonst
       wird der Katalogpreis berechnet (steht im Setting-info). Klick-Test
       live steht aus.
+      NACHTRAG (Sync-Blocker 28.07.): die GitHub-Integration lehnte
+      config/settings_schema.json ab - "Section 17: setting with
+      id=gift_product 'visible_if' is not a valid attribute".
+      Ressourcen-Typen (product/collection/blog/page/article/link_list/
+      *_list) duerfen KEIN visible_if tragen - die ganze Datei blieb deshalb
+      auf dem Altstand (Feature im Editor unsichtbar). Fix: visible_if von
+      gift_product entfernt (Picker jetzt immer sichtbar, info-Text
+      entsprechend). color_background+visible_if bleibt zulaessig
+      (Praezedenz #165 footer.liquid, syncte fehlerfrei). Guard im Repo:
+      settings_schema.json enthaelt keine visible_if auf Ressourcen-Typen
+      mehr (python-Check). Lektion kuenftig: visible_if nur auf
+      Nicht-Ressourcen-Typen.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
