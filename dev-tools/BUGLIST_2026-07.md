@@ -3972,6 +3972,54 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Registrierung gibt es theme-seitig nichts (dann Editor-Standard,
       nicht fixbar).
 
+## 176. Gift-Rubbellos: Audit gegen den Design-Export + 3 Fixes (User 29.07.)
+- [~] Auftrag: #175-Port gegen das Original ("Shopify Ajax Cart Drawer.zip",
+      Claude-Design-Export) pruefen - Design 1:1, Settings vollstaendig,
+      Funktionen verdrahtet; gemeldeter Bug: Freirubbeln geht nicht.
+      KERNBUG (live bewiesen am Test-Theme "Kopie von summittheme/main",
+      199064813955, Pointer-Simulation + Konsole): pageerror "theme is not
+      defined". Der Snippet rendert im Header (Layout Z.421), window.theme
+      entsteht aber erst in header-js (Z.457, theme.js defer). Die Zuweisung
+      theme.GiftScratch = (IIFE)() wertet die LINKE Seite zuerst aus ->
+      ReferenceError BEVOR die IIFE laeuft -> Folie ungemalt (Canvas 300x150
+      Default, alpha 0), Badge/Status leer, kein Binding, Rubbeln tot.
+      FIX A: window.theme = window.theme || {} direkt im Snippet-Script.
+      FIX B (Settings-Paritaet): scratchGoal war hart 48 - im Original ein
+      Editor-Setting (range 20-85). NEU settings.gift_scratch_goal (range
+      20-85, %, default 48) + Config-Wiring. -> Summit-Folgeliste.
+      FIX C (Ablauf ueberlebt Reload): vorher loeschte boot() nach Ablauf
+      schlicht den LS-Zustand -> Los startete frisch; hide/reappear/
+      show_expired galten nur bis zum naechsten Reload. Jetzt eigener
+      boot-Zweig: show_expired -> Expired-Karte, hide -> versteckt,
+      reappear -> Fenster am ECHTEN Ablaufzeitpunkt verankert; dazu raeumt
+      refreshUI ein nach Ablauf noch im Cart liegendes Geschenk ab
+      (removeGift bei expired ODER !qualified).
+      FIX D (1:1-Detail): Uhr zeigt bei Ablauf "abgelaufen" wie im Original
+      (neuer Key general.cart.gift_expired_clock, 10 Locales).
+      DESIGN-ABGLEICH: Masse/Farben/Animationen/Scratch-Parameter identisch
+      (21/7, #E6D8B6/#17140A-Bar, Gold-Stops, erase 34/17, Sampling 12,
+      moves%6, dpr<=2, Bar-Physik inkl. 0.02-Minimum). Bewusst theme-konform
+      abweichend: Playfair/Jost -> --g-font-1/--g-font-2, radius -> Var,
+      Paletten silver/black + expired-Modi + Farben als Zusatz-Settings;
+      Original-Props startDrawerOpen/showTrustBar entfallen (Theme hat
+      eigenes Drawer-/Trust-Verhalten). Gift-ZEILE im Cart vereinfacht:
+      Gratis-Badge statt Streichpreis+0,00, ohne "Automatisch hinzugefuegt
+      ... endet in" und Glow - auf Wunsch nachziehbar (generateCart).
+      Verifiziert headless (repro-gift-scratch.js, 17 Checks PASS, echte
+      Skript-Reihenfolge Snippet VOR theme.js + fetch-Mock + HTTP-Origin):
+      keine JS-Fehler, Folie gemalt, Status/Progress (0.75, "noch 5,00"),
+      Rubbeln -> Reveal -> Countdown + LS; unter Schwelle kein addGift,
+      qualifiziert -> addGift(variantId, _gift), Badge/Status/Streifen;
+      Unterschreiten -> Auto-Remove; echter Ablauf (~2s-Countdown) ->
+      Expired-Texte + Uhr "abgelaufen" + Gift entfernt; Reload-Semantik
+      show_expired + laufende Deadline. theme check 400/41, Snippet 0.
+      WICHTIG (Konfiguration, kein Code): Im Test-Theme ist das
+      Geschenk-Produkt das Purize-Glas zu 15 EUR - der Karte-Text sagt
+      "Gratis", Shopify berechnet aber den Katalogpreis (Schema-Info
+      verlangt 0-EUR-Produkt oder Automatic Discount). Vor Livegang
+      Preis/Discount setzen. Test-Theme ist eine KOPIE - erhaelt den Fix
+      nicht per Git-Sync (neu kopieren oder Asset-Update nach Freigabe).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
