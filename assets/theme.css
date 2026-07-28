@@ -4378,6 +4378,17 @@ p a:not(.button):focus,
 .swiper-container-fade .swiper-slide-active .swiper-slide-active {
   pointer-events: auto;
 }
+/* #164b: Die AOS-CSS (header-oncss.liquid: [data-aos]{pointer-events:none}
+   / [data-aos].aos-animate{pointer-events:auto}) setzt pointer-events DIREKT
+   am Element - das schlaegt die Vererbung von der Slide. Der bereits
+   animierte .container[data-aos] der INAKTIVEN Slide blieb dadurch klickbar
+   und deckte die Buttons der aktiven Slide ab (live gemessen: Cover =
+   swiper-slide-next > .container.aos-animate mit pointer-events:auto bei
+   pointer-events:none der Slide). Spezifitaet 0,3,0 schlaegt die 0,2,0 der
+   AOS-Regel; die aktive Slide ist per :not() ausgenommen. */
+.swiper-container-fade .swiper-slide:not(.swiper-slide-active) * {
+  pointer-events: none;
+}
 .slick-dots li {
   position: relative;
   display: inline-block;
