@@ -3850,6 +3850,24 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       bTop=0px, bBottom=1px mit border-image; Klammerbilanz 106/106,
       check-theme.mjs unveraendert.
 
+## 171. Trust-Text: 10.000+ -> 1.000+ in allen Sprachen (Bug-Sammler 28.07., split 3/3)
+- [~] Operator: "Ueber 1000+ zufrieden Kunden statt 10000 in allen
+      sprachen". Absprache mit David vor Umsetzung: Tausender-Format pro
+      Sprache spiegeln (de/it/nl/es/pt "1.000+", en/ja "1,000+", fr
+      "1 000"), das "+" bleibt, Schema-Default mit aendern (wirkt wie
+      #155 "ueberall" bei Shops ohne eigenen Text).
+      Fundstellen + Umsetzung:
+      1) locales/*.json Key general.cart.reviews_title (alle 10 Sprachen,
+         Zeile 63) - der gerenderte Text der Review-Leiste im Cart-Drawer
+         (settings.review_information_text != blank greift sonst).
+      2) config/settings_schema.json:3043 - Schema-Default von
+         review_information_text ("Join 10,000+ happy customers").
+      3) snippets/block-cart.liquid:267 - auskommentierter EN-Fallback
+         (toter Code, der Ordnung halber mitgezogen).
+      Verifiziert: kein "10.000/10,000/10 000" mehr im Repo (grep),
+      alle JSONs valide (da.json traegt Shopifys Auto-Kommentar-Header,
+      wird beim Parsen gestrippt), check-theme.mjs unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
