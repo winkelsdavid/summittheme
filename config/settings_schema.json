@@ -2913,6 +2913,125 @@
       },
       {
         "type": "header",
+        "content": "🎁 Free Gift (Scratch)"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_gift_scratch",
+        "label": "Enable Free Gift Scratch Card",
+        "info": "Shows a scratch-off free gift card in the cart drawer above the total.",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "gift_heading",
+        "label": "Heading",
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "product",
+        "id": "gift_product",
+        "label": "Gift Product",
+        "info": "Must be priced at €0 in the catalog, otherwise it will be added at its catalog price.",
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "range",
+        "id": "gift_threshold",
+        "min": 5,
+        "max": 500,
+        "step": 5,
+        "unit": "€",
+        "label": "Free Gift Threshold",
+        "default": 20,
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "range",
+        "id": "gift_valid_minutes",
+        "min": 5,
+        "max": 120,
+        "step": 5,
+        "unit": "min",
+        "label": "Valid For (Countdown)",
+        "default": 30,
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "select",
+        "id": "gift_style",
+        "label": "Scratch style",
+        "default": "gold",
+        "options": [
+          {
+            "value": "silver",
+            "label": "Silver foil"
+          },
+          {
+            "value": "gold",
+            "label": "Gold foil"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ],
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "select",
+        "id": "gift_expired_mode",
+        "label": "When the timer expires",
+        "default": "show_expired",
+        "options": [
+          {
+            "value": "show_expired",
+            "label": "Show expired state"
+          },
+          {
+            "value": "hide",
+            "label": "Hide the card"
+          },
+          {
+            "value": "reappear",
+            "label": "Show again after X hours"
+          }
+        ],
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "range",
+        "id": "gift_reappear_hours",
+        "min": 1,
+        "max": 72,
+        "step": 1,
+        "unit": "h",
+        "label": "Reappear After (Hours)",
+        "default": 24,
+        "visible_if": "{{ settings.enable_gift_scratch != false and settings.gift_expired_mode == 'reappear' }}"
+      },
+      {
+        "type": "color",
+        "id": "gift_accent_color",
+        "label": "Accent Color",
+        "default": "#F0A12A",
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "color_background",
+        "id": "gift_card_bg",
+        "label": "Card Background",
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "text",
+        "id": "gift_value",
+        "label": "Gift Value (Display, strikethrough)",
+        "info": "Optional. Falls back to the gift product's compare-at price.",
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "header",
         "content": "🚚 Free Shipping"
       },
       {

@@ -5077,8 +5077,16 @@ theme.miniCart = (function () {
         observeProductRecommendations(cart.items[0].product_id);
       }
       theme.freeShipping.load(cart);
+      // #175: Gift-Scratch-Modul (cart-gift-scratch.liquid) reagiert darauf
+      // (Progress/Status/Warnung/Auto-Remove des Gratisgeschenks).
+      document.dispatchEvent(new CustomEvent("summit:cart-updated", { detail: cart }));
     });
   }
+  // #175: externer Refresh-Hook fuer das Gift-Scratch-Modul (nach /cart/add|change).
+  theme.miniCartRefresh = function () {
+    updateElements();
+    generateCart();
+  };
   function generateCart() {
     getCart(function (cart) {
       var htmlCart = cart.item_count === 0 ? emptyCartHTML : "",
@@ -5160,8 +5168,11 @@ theme.miniCart = (function () {
           }
           theme.GiftWrap.hideGift(product.id);
           
+          // #175: Gratisgeschenk-Zeile (properties._gift via cart-gift-scratch)
+          var isGift = !!(product.properties && product.properties._gift);
+
           lastLine = line - 1;
-          htmlCart += `<div class="mini-cart-item">`;
+          htmlCart += `<div class="mini-cart-item${isGift ? ' mini-cart-item--gift' : ''}">`;
           htmlCart += `	<a class="mini-cart-image " href="${product.url}"> <span class="d-block mini-cart-img ${cartimgsize}">`;
           htmlCart += `		<img src="${product.image}&width=160"/>`;
           htmlCart += `	</span></a>`;
@@ -5170,7 +5181,10 @@ theme.miniCart = (function () {
 
           // Build price display
           var priceDisplay = '';
-          if (compareAtPrice && compareAtPrice > product.final_price) {
+          if (isGift) {
+            // #175: Gratis-Badge statt Preis (Qty/Remove per CSS .mini-cart-item--gift versteckt)
+            priceDisplay = `<span class="mini-cart-gift-badge"><i></i>${theme.strings.giftFreeLabel || 'Free'}</span>`;
+          } else if (compareAtPrice && compareAtPrice > product.final_price) {
             priceDisplay = `<s>${theme.Currency.formatMoney(compareAtPrice, theme.moneyFormat)}</s> <span>${ItemPrice}</span>`;
           } else {
             priceDisplay = `<span>${ItemPrice}</span>`;

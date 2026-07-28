@@ -37,6 +37,7 @@
     stringHurrify: {{ 'products.product.hurrify' | t: number: 'number' | json }},
     stockAvailable: {{ 'products.product.stock_available' | t: count: '1' | json }},
     freeShipping: {% if settings.free_shipping_text != blank %}{{ settings.free_shipping_text | json }}{% else %}{{ 'general.cart.coupon_free_delivery' | t | json }}{% endif %},
+    giftFreeLabel: {{ 'general.cart.gift_free_label' | t | json }},
     addToCart: {{ 'products.product.add_to_cart' | t | json }},
     addToCartSuccess: {{ 'products.product.product_added_to_cart_html' | t | json }},
     soldOut: {{ 'products.product.sold_out' | t | json }},

@@ -1,0 +1,540 @@
+{%- comment -%} cart-gift-scratch.liquid — Gratis-Geschenk-Rubbellos im Cart Drawer (#175).
+    1:1-Port des Claude-Design-Exports ("Shop Hero & Cart Drawer"), theme-konform:
+    Schwelle -> Rubbel-Folie (Canvas, Palette gold/silver/black wie scratch-newsletter)
+    -> Geschenk-Karte mit Countdown -> echtes Hinzufuegen per /cart/add.js.
+    Position: erstes Kind im mini-cart-footer (zwischen Upsell und Total).
+    Render-Gate: Feature aus, kein Produkt oder nicht verfuegbar -> nichts. {%- endcomment -%}
+{%- if settings.enable_gift_scratch and settings.gift_product != blank and settings.gift_product.available -%}
+{%- liquid
+  assign cgs_product = settings.gift_product
+  assign cgs_variant = cgs_product.selected_or_first_available_variant
+  assign cgs_value = settings.gift_value
+  if cgs_value == blank and cgs_product.compare_at_price > 0
+    assign cgs_value = cgs_product.compare_at_price | money
+  endif
+-%}
+<div class="cgs" id="cgs"
+  style="--cgs-accent: {{ settings.gift_accent_color }};{% if settings.gift_card_bg != blank and settings.gift_card_bg != 'rgba(0,0,0,0)' %}--cgs-card-bg: {{ settings.gift_card_bg }};{% endif %}">
+  <script type="application/json" id="cgs-config">{
+    "designMode": {% if request.design_mode %}true{% else %}false{% endif %},
+    "variantId": {{ cgs_variant.id }},
+    "thresholdCents": {{ settings.gift_threshold | times: 100 }},
+    "thresholdFmt": {{ settings.gift_threshold | times: 100 | money | json }},
+    "validMinutes": {{ settings.gift_valid_minutes }},
+    "expiredMode": {{ settings.gift_expired_mode | json }},
+    "reappearHours": {{ settings.gift_reappear_hours }},
+    "style": {{ settings.gift_style | default: 'gold' | json }},
+    "scratchGoal": 48,
+    "moneyFormat": {{ shop.money_format | json }},
+    "t": {
+      "heading": {% if settings.gift_heading != blank %}{{ settings.gift_heading | json }}{% else %}{{ 'general.cart.gift_heading' | t | json }}{% endif %},
+      "teaser": {{ 'general.cart.gift_teaser' | t | json }},
+      "scratchLabel": {{ 'general.cart.gift_scratch_label' | t | json }},
+      "scratchHint": {{ 'general.cart.gift_scratch_hint' | t | json }},
+      "endsIn": {{ 'general.cart.gift_ends_in' | t | json }},
+      "secured": {{ 'general.cart.gift_secured' | t | json }},
+      "expiredBadge": {{ 'general.cart.gift_expired_badge' | t | json }},
+      "expiredStatus": {{ 'general.cart.gift_expired_status' | t | json }},
+      "statusMissing": {{ 'general.cart.gift_status_missing_html' | t: price: '__PRICE__' | json }},
+      "statusUnlocked": {{ 'general.cart.gift_status_unlocked' | t | json }},
+      "freeLabel": {{ 'general.cart.gift_free_label' | t | json }},
+      "removeWarning": {{ 'general.cart.gift_remove_warning_html' | t: threshold: '__THRESHOLD__' | json }},
+      "giftName": {{ cgs_product.title | json }},
+      "giftValue": {{ cgs_value | json }}
+    }
+  }</script>
+
+  <div class="cgs__stage">
+    {%- comment -%} Geschenk-Karte (unter der Folie) {%- endcomment -%}
+    <div class="cgs__card" data-cgs-card>
+      <div class="cgs__badgebar">
+        <span class="cgs__badge"><span class="cgs__dot"></span><span data-cgs-badgetext></span></span>
+        <span class="cgs__clockwrap"><span class="cgs__endsin" data-cgs-endsin></span><span class="cgs__clock" data-cgs-clock></span></span>
+      </div>
+      <div class="cgs__body">
+        <div class="cgs__photo">
+          {%- assign cgs_img = cgs_product.featured_image -%}
+          {%- if cgs_img != blank -%}
+            <img src="{{ cgs_img | image_url: width: 300 }}" alt="{{ cgs_img.alt | escape }}" loading="lazy" width="{{ cgs_img.width }}" height="{{ cgs_img.height }}">
+          {%- endif -%}
+          <span class="cgs__sweep"></span>
+        </div>
+        <div class="cgs__meta">
+          <div class="cgs__namerow">
+            <span class="cgs__name">{{ cgs_product.title }}</span>
+            <span class="cgs__valuewrap">
+              {%- if cgs_value != blank -%}<s class="cgs__value">{{ cgs_value }}</s>{%- endif -%}
+              <span class="cgs__free">{{ 'general.cart.gift_free_label' | t }}</span>
+            </span>
+          </div>
+          <div class="cgs__track"><div class="cgs__fill" data-cgs-fill></div></div>
+          <div class="cgs__statusrow">
+            <span class="cgs__status" data-cgs-status></span>
+            <span class="cgs__threshold">{{ 'general.cart.gift_from_threshold' | t: threshold: settings.gift_threshold | times: 100 | money }}</span>
+          </div>
+          <div class="cgs__warn" data-cgs-warn hidden></div>
+        </div>
+      </div>
+    </div>
+    {%- comment -%} Teaser (sichtbar vor dem Reveal, unter der Folie) {%- endcomment -%}
+    <div class="cgs__teaser" data-cgs-teaser>
+      <span class="cgs__teaser-top"><span class="cgs__rule"></span>{{ 'general.cart.gift_teaser' | t }}<span class="cgs__rule"></span></span>
+      <span class="cgs__teaser-main">{% if settings.gift_heading != blank %}{{ settings.gift_heading }}{% else %}{{ 'general.cart.gift_heading' | t }}{% endif %}</span>
+    </div>
+    {%- comment -%} Rubbel-Folie {%- endcomment -%}
+    <canvas class="cgs__foil" data-cgs-foil></canvas>
+    <div class="cgs__hint" data-cgs-hint>{{ 'general.cart.gift_scratch_hint' | t }}</div>
+  </div>
+</div>
+
+<style>
+  /* ===== Cart Gift Scratch (cgs) — Design-Port 1:1 (#175) ===== */
+  @keyframes cgs-stripes { from { background-position: 0 0; } to { background-position: 28px 0; } }
+  @keyframes cgs-pop { 0% { transform: scale(.94); opacity: 0; } 60% { transform: scale(1.012); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes cgs-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes cgs-sweep { 0% { transform: translateX(-120%); } 100% { transform: translateX(220%); } }
+  .cgs{
+    border-top: 1px solid rgba(var(--g-color-heading-rgb, 0,0,0), 0.08);
+    padding: 16px 0 0;
+    margin-bottom: 1rem;
+    font-family: var(--g-font-2);
+  }
+  .cgs__stage{
+    position: relative; width: 100%; aspect-ratio: 21 / 7; min-height: 150px; max-height: 190px;
+    border-radius: var(--g-input-radius, 5px); overflow: hidden;
+    background: var(--cgs-card-bg, #FFFDF8);
+  }
+  .cgs__card{
+    position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden;
+    border: 1px solid #E6D8B6; border-radius: inherit;
+    background: var(--cgs-card-bg, linear-gradient(180deg, #FFFDF7 0%, #FCF5E4 100%));
+    opacity: 0;
+  }
+  .cgs--revealed .cgs__card{ opacity: 1; animation: cgs-pop .55s cubic-bezier(.2,.9,.2,1) both; }
+  .cgs__badgebar{
+    flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 7px 12px; background: #17140A;
+  }
+  .cgs__badge{
+    display: inline-flex; align-items: center; gap: 7px; min-width: 0;
+    font-size: 10px; font-weight: 600; letter-spacing: .19em; text-transform: uppercase;
+    color: #F2DCA8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cgs__dot{ width: 5px; height: 5px; border-radius: 999px; background: var(--cgs-accent, #F0A12A); flex: 0 0 auto; }
+  .cgs__clockwrap{ display: inline-flex; align-items: baseline; gap: 6px; flex: 0 0 auto; }
+  .cgs__endsin{ font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: #9C8B5F; }
+  .cgs__clock{ font-size: 12.5px; font-weight: 600; color: #FFD98A; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+  .cgs__body{ flex: 1; min-height: 0; display: flex; align-items: center; gap: 12px; padding: 11px 13px 12px; }
+  .cgs__photo{
+    flex: 0 0 auto; aspect-ratio: 1; height: 100%; max-height: 86px; border-radius: 4px;
+    border: 1px solid #E6D8B6; position: relative; overflow: hidden;
+    background: var(--color-item-product, #fff);
+    animation: cgs-bob 3.4s ease-in-out infinite;
+  }
+  .cgs__photo img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cgs__sweep{
+    position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(100deg, transparent 30%, rgba(255,238,190,.55) 48%, transparent 62%);
+    animation: cgs-sweep 3.2s ease-in-out infinite;
+  }
+  .cgs__meta{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+  .cgs__namerow{ display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .cgs__name{
+    font-family: var(--g-font-1); font-size: 14.5px; font-style: italic; font-weight: 600;
+    color: #17140A; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cgs__valuewrap{ display: inline-flex; align-items: baseline; gap: 6px; flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+  .cgs__value{ font-size: 11.5px; color: #A08B4F; }
+  .cgs__free{ font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #8A6A18; }
+  .cgs__track{ height: 7px; border-radius: 999px; background: #EBE3D1; overflow: hidden; }
+  .cgs__fill{
+    height: 100%; width: 100%; transform-origin: left center; border-radius: 999px;
+    transform: scaleX(0.02); background-image: linear-gradient(90deg, #111214, #3A3C41);
+    transition: transform .45s cubic-bezier(.3,.7,.2,1), background-image .5s ease;
+  }
+  .cgs__fill--done{
+    background-image: repeating-linear-gradient(115deg, #C9A227 0 7px, #F0CB5E 7px 14px);
+    background-size: 28px 100%;
+    animation: cgs-stripes .9s linear infinite;
+  }
+  .cgs__statusrow{ display: flex; align-items: center; justify-content: space-between; gap: 10px; font-variant-numeric: tabular-nums; }
+  .cgs__status{ font-size: 12px; font-weight: 600; color: #17140A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cgs__threshold{ font-size: 10.5px; letter-spacing: .04em; color: #97854E; flex: 0 0 auto; }
+  .cgs__warn{ font-size: 11.5px; line-height: 1.4; color: #B42318; font-weight: 600; }
+  .cgs__teaser{
+    position: absolute; inset: 0; z-index: 1;
+    border: 1px solid #E6D8B6; border-radius: inherit;
+    background: var(--cgs-card-bg, linear-gradient(180deg, #FFFDF7 0%, #FBF2DE 100%));
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+    pointer-events: none; transition: opacity .34s ease, transform .34s ease;
+  }
+  .cgs--revealed .cgs__teaser{ opacity: 0; transform: scale(1.03); }
+  .cgs__teaser-top{
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 9.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #A08B4F;
+  }
+  .cgs__rule{ width: 16px; height: 1px; background: #DCCB9F; }
+  .cgs__teaser-main{
+    font-family: var(--g-font-1); font-size: 24px; font-style: italic; font-weight: 600;
+    color: #17140A; letter-spacing: -.01em; text-align: center; padding: 0 12px;
+  }
+  .cgs__foil{
+    position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; display: block;
+    cursor: crosshair; touch-action: none; border-radius: inherit;
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .cgs--revealed .cgs__foil{ opacity: 0; transform: scale(1.04); pointer-events: none; }
+  .cgs__hint{
+    position: absolute; left: 0; right: 0; bottom: 8px; z-index: 3; text-align: center;
+    font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+    color: #4B3608; text-shadow: 0 1px 2px rgba(255,246,220,.85);
+    pointer-events: none; transition: opacity .3s ease;
+  }
+  .cgs--revealed .cgs__hint, .cgs--scratching .cgs__hint{ opacity: 0; }
+  .cgs--hidden{ display: none; }
+  /* Gift-Line im Warenkorb (Markup kommt aus theme.js generateCart) */
+  .mini-cart-item--gift .js-qty, .mini-cart-item--gift .js-remove-mini-cart{ display: none; }
+  .mini-cart-gift-badge{
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #17140A; color: #F2DCA8; border-radius: 2px;
+    padding: 2px 7px; font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  }
+  .mini-cart-gift-badge i{ width: 4px; height: 4px; border-radius: 999px; background: var(--cgs-accent, #F0A12A); font-style: normal; }
+  @media (max-width: 400px){
+    .cgs__stage{ aspect-ratio: auto; height: 190px; }
+    .cgs__teaser-main{ font-size: 20px; }
+  }
+</style>
+
+<script>
+/* Cart Gift Scratch (#175) — Vanilla-Port der Claude-Design-Logik, keine Libs.
+   Scratch-Engine adaptiert aus sections/scratch-newsletter.liquid (PALETTES),
+   Karten-/Timer-Logik aus dem Design-Export. */
+theme.GiftScratch = (function () {
+  var root = document.getElementById('cgs');
+  var cfgEl = document.getElementById('cgs-config');
+  if (!root || !cfgEl) return;
+  var cfg = JSON.parse(cfgEl.textContent);
+  var foil = root.querySelector('[data-cgs-foil]');
+  var hint = root.querySelector('[data-cgs-hint]');
+  var fill = root.querySelector('[data-cgs-fill]');
+  var statusEl = root.querySelector('[data-cgs-status]');
+  var badgeEl = root.querySelector('[data-cgs-badgetext]');
+  var clockEl = root.querySelector('[data-cgs-clock]');
+  var endsinEl = root.querySelector('[data-cgs-endsin]');
+  var warnEl = root.querySelector('[data-cgs-warn]');
+
+  var LS_DEADLINE = 'summit_cgs_deadline';
+  var LS_REVEALED = 'summit_cgs_revealed';
+  var LS_REAPPEAR = 'summit_cgs_reappear';
+
+  var PALETTES = {
+    silver: { stops: [[0,'#B9B4A6'],[0.18,'#DAD6CD'],[0.34,'#A9A396'],[0.52,'#F1EEE7'],[0.7,'#C7C2B6'],[0.86,'#E3DED4'],[1,'#B5AFA1']], ink: '#5D584D', line: 'rgba(93,88,77,.75)', sparkle: '#FFFDF8' },
+    gold:   { stops: [[0,'#B9902A'],[0.18,'#D9BC6C'],[0.34,'#A9821B'],[0.52,'#EBD79B'],[0.7,'#C6A034'],[0.86,'#E3CB86'],[1,'#B08325']], ink: '#4B3608', line: 'rgba(75,54,8,.75)', sparkle: '#FFFDF2' },
+    black:  { stops: [[0,'#2E2B24'],[0.2,'#4A463C'],[0.4,'#211F1A'],[0.55,'#57534A'],[0.75,'#2E2B24'],[0.9,'#6E6759'],[1,'#211F1A']], ink: '#F4F1EA', line: 'rgba(244,241,234,.6)', sparkle: '#D9D4C8' }
+  };
+  var pal = PALETTES[cfg.style] || PALETTES.gold;
+
+  var revealed = false, expired = false, deadline = null, timer = null;
+  var painted = false, bound = false, scratching = false, last = null, moves = 0;
+  var currentCart = null;
+
+  function lsGet(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
+  function lsDel(k) { try { window.localStorage.removeItem(k); } catch (e) {} }
+  function money(cents) {
+    if (theme.Currency && theme.moneyFormat) return theme.Currency.formatMoney(cents, theme.moneyFormat);
+    return (cents / 100).toFixed(2) + ' €';
+  }
+  function clock(sec) {
+    sec = Math.max(0, Math.round(sec));
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+  }
+  function lineOf(txt, map) {
+    Object.keys(map).forEach(function (k) { txt = txt.split(k).join(map[k]); });
+    return txt;
+  }
+
+  /* ---------- Folie malen (Design paintFoil + Palette) ---------- */
+  function paintFoil() {
+    var r = foil.getBoundingClientRect();
+    if (!r.width || !r.height) return false;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    foil.width = Math.round(r.width * dpr);
+    foil.height = Math.round(r.height * dpr);
+    var ctx = foil.getContext('2d');
+    ctx.scale(dpr, dpr);
+    var w = r.width, h = r.height, i;
+
+    var g = ctx.createLinearGradient(0, h, w, 0);
+    pal.stops.forEach(function (s) { g.addColorStop(s[0], s[1]); });
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.save();
+    ctx.strokeStyle = pal.sparkle;
+    ctx.lineWidth = 1.4;
+    for (i = -h; i < w + h; i += 9) {
+      ctx.globalAlpha = 0.06 + ((i * 37) % 11) / 60;
+      ctx.beginPath(); ctx.moveTo(i, h); ctx.lineTo(i + h * 0.75, 0); ctx.stroke();
+    }
+    ctx.restore();
+
+    var s = ctx.createLinearGradient(0, 0, w, h);
+    s.addColorStop(0, 'rgba(255,255,255,0)');
+    s.addColorStop(0.42, 'rgba(255,255,255,.34)');
+    s.addColorStop(0.58, 'rgba(255,255,255,0)');
+    ctx.fillStyle = s;
+    ctx.fillRect(0, 0, w, h);
+
+    var pts = [[0.06,0.86],[0.11,0.42],[0.16,0.64],[0.21,0.2],[0.27,0.78],[0.32,0.5],[0.36,0.12],[0.42,0.9],[0.47,0.3],[0.53,0.68],[0.58,0.16],[0.63,0.84],[0.68,0.44],[0.72,0.24],[0.77,0.72],[0.82,0.36],[0.86,0.9],[0.9,0.56],[0.94,0.22],[0.97,0.74],[0.3,0.34],[0.6,0.94]];
+    pts.forEach(function (p, i2) {
+      var rr = (i2 % 3 === 0 ? 9 : i2 % 3 === 1 ? 6.2 : 4.2) * (h / 170);
+      ctx.save();
+      ctx.globalAlpha = 0.5 + ((i2 * 13) % 5) / 10;
+      ctx.fillStyle = pal.sparkle;
+      ctx.beginPath();
+      ctx.moveTo(p[0] * w, p[1] * h - rr);
+      ctx.quadraticCurveTo(p[0] * w + rr * 0.16, p[1] * h - rr * 0.16, p[0] * w + rr, p[1] * h);
+      ctx.quadraticCurveTo(p[0] * w + rr * 0.16, p[1] * h + rr * 0.16, p[0] * w, p[1] * h + rr);
+      ctx.quadraticCurveTo(p[0] * w - rr * 0.16, p[1] * h + rr * 0.16, p[0] * w - rr, p[1] * h);
+      ctx.quadraticCurveTo(p[0] * w - rr * 0.16, p[1] * h - rr * 0.16, p[0] * w, p[1] * h - rr);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    ctx.save();
+    ctx.fillStyle = pal.ink;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    var fs = Math.max(11, Math.round(h * 0.082));
+    ctx.font = '600 ' + fs + 'px Jost, Helvetica, Arial, sans-serif';
+    try { ctx.letterSpacing = '0.24em'; } catch (e) {}
+    ctx.fillText(cfg.t.scratchLabel, w / 2, h / 2);
+    var tw = Math.max(ctx.measureText(cfg.t.scratchLabel).width, fs * 8);
+    ctx.strokeStyle = pal.line;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(w / 2 - tw / 2, h / 2 - fs * 1.5); ctx.lineTo(w / 2 + tw / 2, h / 2 - fs * 1.5);
+    ctx.moveTo(w / 2 - tw / 2, h / 2 + fs * 1.5); ctx.lineTo(w / 2 + tw / 2, h / 2 + fs * 1.5);
+    ctx.stroke();
+    ctx.restore();
+    return true;
+  }
+
+  function bindFoil() {
+    if (bound) return;
+    bound = true;
+    function down(e) { if (revealed) return; scratching = true; root.classList.add('cgs--scratching'); last = pointOf(e); erase(last, last); }
+    function move(e) {
+      if (!scratching || revealed) return;
+      var p = pointOf(e);
+      erase(last || p, p);
+      last = p;
+      if (++moves % 6 === 0 && cleared() * 100 >= cfg.scratchGoal) reveal();
+    }
+    function up() { scratching = false; root.classList.remove('cgs--scratching'); last = null; }
+    if (window.PointerEvent) {
+      foil.addEventListener('pointerdown', down);
+      foil.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', up);
+      foil.addEventListener('pointerleave', up);
+    } else {
+      foil.addEventListener('mousedown', down);
+      foil.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', up);
+    }
+    foil.addEventListener('touchstart', function (e) { e.preventDefault(); down(e.touches[0]); }, { passive: false });
+    foil.addEventListener('touchmove', function (e) { e.preventDefault(); move(e.touches[0]); }, { passive: false });
+    window.addEventListener('touchend', up);
+  }
+
+  function pointOf(e) {
+    var r = foil.getBoundingClientRect();
+    return { x: e.clientX - r.left, y: e.clientY - r.top };
+  }
+  function erase(from, to) {
+    var ctx = foil.getContext('2d');
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.lineWidth = 34;
+    ctx.beginPath(); ctx.moveTo(from.x, from.y); ctx.lineTo(to.x, to.y); ctx.stroke();
+    ctx.beginPath(); ctx.arc(to.x, to.y, 17, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+  function cleared() {
+    var ctx = foil.getContext('2d');
+    var d;
+    try { d = ctx.getImageData(0, 0, foil.width, foil.height).data; }
+    catch (e) { return 0; }
+    var total = 0, gone = 0;
+    for (var i = 3; i < d.length; i += 4 * 12) { total++; if (d[i] < 50) gone++; }
+    return total ? gone / total : 0;
+  }
+
+  /* ---------- Cart-Logik ---------- */
+  function giftLine(cart) {
+    if (!cart || !cart.items) return null;
+    for (var i = 0; i < cart.items.length; i++) {
+      var it = cart.items[i];
+      if (it.properties && it.properties._gift) return it;
+    }
+    return null;
+  }
+  function totalExGift(cart) {
+    var gl = giftLine(cart);
+    return cart.total_price - (gl ? gl.final_line_price : 0);
+  }
+  function addGift() {
+    if (cfg.designMode) return;
+    fetch(window.Shopify.routes.root + 'cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ items: [{ id: cfg.variantId, quantity: 1, properties: { _gift: '1' } }] })
+    }).then(function (r) {
+      if (!r.ok) throw r;
+      if (theme.miniCartRefresh) theme.miniCartRefresh();
+    }).catch(function () {});
+  }
+  function removeGift(cart, done) {
+    var gl = giftLine(cart);
+    if (!gl || cfg.designMode) { if (done) done(); return; }
+    fetch(window.Shopify.routes.root + 'cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: gl.key, quantity: 0 })
+    }).then(function () {
+      if (theme.miniCartRefresh) theme.miniCartRefresh();
+      if (done) done();
+    }).catch(function () { if (done) done(); });
+  }
+
+  function refreshUI(cart) {
+    currentCart = cart || currentCart;
+    if (!currentCart) return;
+    var total = totalExGift(currentCart);
+    var ratio = Math.min(1, Math.max(0.02, total / cfg.thresholdCents));
+    var qualified = total >= cfg.thresholdCents;
+    fill.style.transform = 'scaleX(' + ratio.toFixed(3) + ')';
+    fill.classList.toggle('cgs__fill--done', qualified && !expired);
+
+    if (expired) {
+      badgeEl.textContent = cfg.t.expiredBadge;
+      statusEl.textContent = cfg.t.expiredStatus;
+    } else {
+      badgeEl.textContent = qualified ? cfg.t.secured : cfg.t.heading;
+      statusEl.textContent = qualified
+        ? cfg.t.statusUnlocked
+        : lineOf(cfg.t.statusMissing, { '__PRICE__': money(cfg.thresholdCents - total) });
+    }
+    var gl = giftLine(currentCart);
+    var showWarn = !!(gl && !qualified && !expired);
+    warnEl.hidden = !showWarn;
+    if (showWarn) warnEl.textContent = lineOf(cfg.t.removeWarning, { '__THRESHOLD__': cfg.thresholdFmt });
+
+    // Auto-Remove bei Unterschreiten (Punkt 3)
+    if (gl && !qualified && !expired) {
+      expired = false; // Zustand bleibt "revealed"
+      removeGift(currentCart);
+    }
+    // Nachtraeglich qualifiziert -> zulegen
+    if (revealed && qualified && !gl && !expired) addGift();
+  }
+
+  function tick() {
+    if (!deadline) return;
+    var left = Math.round((deadline - Date.now()) / 1000);
+    if (left > 0) {
+      clockEl.textContent = clock(left) + ' Min';
+      return;
+    }
+    // Ablauf
+    clockEl.textContent = '';
+    applyExpiry();
+  }
+
+  function applyExpiry() {
+    if (expired) return;
+    expired = true;
+    clearInterval(timer);
+    lsDel(LS_DEADLINE);
+    removeGift(currentCart, function () {
+      if (cfg.expiredMode === 'hide') {
+        root.classList.add('cgs--hidden');
+      } else if (cfg.expiredMode === 'reappear') {
+        root.classList.add('cgs--hidden');
+        lsSet(LS_REAPPEAR, String(Date.now() + cfg.reappearHours * 3600 * 1000));
+      } else {
+        // show_expired: Design-Standardzustand
+        if (currentCart) refreshUI(currentCart);
+      }
+    });
+  }
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    root.classList.add('cgs--revealed');
+    if (!cfg.designMode) {
+      deadline = Date.now() + cfg.validMinutes * 60000;
+      lsSet(LS_DEADLINE, String(deadline));
+      lsSet(LS_REVEALED, '1');
+      endsinEl.textContent = cfg.t.endsIn;
+      clearInterval(timer);
+      timer = setInterval(tick, 1000);
+      tick();
+      if (currentCart && totalExGift(currentCart) >= cfg.thresholdCents && !giftLine(currentCart)) addGift();
+    }
+  }
+
+  /* ---------- Init ---------- */
+  function boot() {
+    // Reappear-Zyklus abgelaufen? -> komplett frisch starten
+    var rea = parseInt(lsGet(LS_REAPPEAR) || '0', 10);
+    if (rea && Date.now() >= rea) {
+      [LS_DEADLINE, LS_REVEALED, LS_REAPPEAR].forEach(lsDel);
+      root.classList.remove('cgs--hidden');
+    } else if (rea) {
+      root.classList.add('cgs--hidden');
+      // spaeter nochmal pruefen
+      setTimeout(boot, Math.min(rea - Date.now(), 3600000));
+      return;
+    }
+
+    var savedDeadline = parseInt(lsGet(LS_DEADLINE) || '0', 10);
+    var savedRevealed = lsGet(LS_REVEALED) === '1' && savedDeadline > Date.now();
+    if (savedRevealed) {
+      revealed = true;
+      deadline = savedDeadline;
+      root.classList.add('cgs--revealed');
+      endsinEl.textContent = cfg.t.endsIn;
+      timer = setInterval(tick, 1000);
+      tick();
+    } else {
+      if (savedDeadline && savedDeadline <= Date.now()) { lsDel(LS_DEADLINE); lsDel(LS_REVEALED); }
+      if (paintFoil()) painted = true;
+      bindFoil();
+      // Repaint bei Resize, solange unberuehrt
+      if (window.ResizeObserver && !savedRevealed) {
+        new ResizeObserver(function () { if (!revealed && !scratching && moves === 0) paintFoil(); }).observe(root.querySelector('.cgs__stage'));
+      }
+    }
+
+    if (theme.miniCartRefresh || cfg.designMode) {
+      fetch(window.Shopify.routes.root + 'cart.js')
+        .then(function (r) { return r.json(); })
+        .then(function (cart) { refreshUI(cart); })
+        .catch(function () {});
+    }
+    document.addEventListener('summit:cart-updated', function (e) {
+      if (e.detail) refreshUI(e.detail);
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+{%- endif -%}
