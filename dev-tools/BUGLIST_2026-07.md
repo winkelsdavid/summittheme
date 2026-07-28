@@ -3622,7 +3622,8 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Kategorie im MAPPABILITY_CONTRACT), sonst laeuft der Popup leer.
 
 ## 164. Slideshow: Buttons der ersten Slide unanklickbar (Bug-Sammler 24.07.)
-- [~] Operator: "slideshow buttons funktionieren nicht in der ersten slide
+- [x] BESTAETIGT (Klick-Test 28.07. nach #164b, 2d884e8): Fix funktioniert.
+      Operator: "slideshow buttons funktionieren nicht in der ersten slide
       der slideshows. jedenfalls bei 'Hover 1' animation." Der Hover_1-
       Verdacht (AI-Summary: ::before-Overlay) erwies sich als falsch - der
       hover_1-Sweep ist z-index:-1-Kind des <a> und faengt keine Klicks ab
@@ -3667,6 +3668,16 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       echte AOS-Regeln + committed CSS, Autoplay): vorher 13/36 Samples
       Fremd-Treffer (aktiv=b1, Hit=b2), nachher 36/36 eigener Button, 0
       tote Fenster.
+      CHECK Slideshow 2 (Anweisung 28.07.): gleicher Mechanismus, vom Fix
+      abgedeckt - slideshow-2.liquid registriert sich als
+      data-section-type="slideshow-section" (gleicher theme.Slideshow-Init,
+      theme.js:3877), der Node traegt KEIN data-transit -> useFade=true
+      (transit !== 'slide') -> effect:'fade' -> Container bekommt
+      swiper-container-fade -> die globalen pointer-events-Regeln greifen.
+      Den AOS-Durchstich (#164b) gibt es dort nicht: slideshow-2.liquid
+      enthaelt kein einziges data-aos-Attribut (kein .container[data-aos]
+      im Text-Content, kein Inner-Override moeglich). Kein eigener Eingriff
+      noetig; Klick-Test auf Slideshow 2 zur Absicherung empfohlen.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
