@@ -3868,6 +3868,33 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       alle JSONs valide (da.json traegt Shopifys Auto-Kommentar-Header,
       wird beim Parsen gestrippt), check-theme.mjs unveraendert.
 
+## 172. Mobile Cart-Upsell: Ein-Produkt-Ansicht statt freier Scroll (Operator 28.07., split 1/3)
+- [~] Operator: "mobile warenkorb, produkt scroll nicht frei sondern nur
+      ein produkt anzeigen". Bisher: freier Horizontal-Scroll mit 260px-
+      Karten (~1,5 sichtbar). Umsetzung (cart-draw.css):
+      .drawer-crossell-product .drawer-crossell__item von flex:0 0 260px
+      auf flex:0 0 100% (in beiden Media-Bloecken max-991 und max-749,
+      sonst gewoenne der spaetere 749er-Block die 260px zurueck) +
+      scroll-snap-type:x mandatory auf dem Track + scroll-snap-align:start
+      auf den Items. Die Pfeile brauchen KEINE JS-Aenderung: CrossellNav
+      stepOf misst die Kartenbreite dynamisch (theme.js:4852), die ist
+      jetzt = Containerbreite = exakt ein Produkt.
+      Verifiziert headless (repro-172, Viewport 500px, echte Kaskade):
+      Item 452px == Container 452px, flexBasis 100%, snapType
+      "x mandatory", snapAlign start.
+
+## 173. Cart-Upsell: Spacing Produkte -> Preisanzeige auf 4px (Operator 28.07., split 2/3)
+- [~] Operator: "spacing entfernen zwischen produkten und preisanzeige".
+      Lesart mit David klaergestellt: (a) Upsell-Reihe -> "Total:",
+      Zielwert 4px (nicht 0). Stand nach #160: margin-top:0 +
+      padding-top:16px (.mini-cart-total). Umsetzung: in der #160-Regel
+      (.drawer-crossell + .mini-cart-footer .mini-cart-total,
+      max-width:991px) padding-top:16px -> 4px. Desktop und No-Upsell-Fall
+      (#148) unveraendert; Spezifitaet (0,3,0) schlaegt .mini-cart-total
+      (0,1,0).
+      Verifiziert headless: totalMarginTop 0px, totalPaddingTop 4px
+      (vorher 16px).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
