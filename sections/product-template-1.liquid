@@ -2923,24 +2923,37 @@ display:none;
                     </div>
 
                   {% else %}
-                    <product-pairsright
-                      class="product-pairsright isolate product-pairs--loaded"
-                      data-id="{{ section.id }}"
-                      data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ block.settings.product_limit }}&intent=complementary"
-                    >
-                      {% if recommendations.performed and recommendations.products_count > 0 %}
-                        {%- if block.settings.title_heading != blank -%}
-                          <h5 class="mb-4 {{ block.settings.size_text }}">{{ block.settings.title_heading }}</h5>
-                        {%- endif -%}
-                        <div class="row custom_row">
-                          {% for recommendation in recommendations.products %}
-                            <div class="col-lg col-6">
-                              {%- render 'product-grid-buywith', product: recommendation -%}
-                            </div>
-                          {% endfor %}
-                        </div>
-                      {% endif %}
-                    </product-pairsright>
+                    {%- comment -%} #168: Wie #167 (product-content): Search & Discovery
+                        (recommendations.products + product-pairsright-Fetch) ersetzt durch
+                        summit.related_products (list.product_reference; Hero zuerst, dann
+                        Katalog-Reihenfolge). .value = Produkt-Objekte, kein all_products-
+                        Lookup, kein JS-Fetch. KEIN Fallback: leer/fehlend -> nichts rendert
+                        (auch kein Heading). Hartes limit: in der Schleife - das alte
+                        product_limit existierte hier gar nicht im Schema (URL-Parameter
+                        limit= leer) und die Schleife lief UNBEGRENZT; Setting jetzt
+                        nachgeruestet (additiv, Default 3 = Kartenmuster des manuellen
+                        Zweigs product_1..3). {%- endcomment -%}
+                    {%- assign related = product.metafields.summit.related_products.value -%}
+                    {%- if related and related.size > 0 -%}
+                    <div class="product-pairsright isolate product-pairs--loaded">
+                      {%- liquid
+                        assign rec_limit = block.settings.product_limit | plus: 0
+                        if rec_limit < 1
+                          assign rec_limit = 3
+                        endif
+                      -%}
+                      {%- if block.settings.title_heading != blank -%}
+                        <h5 class="mb-4 {{ block.settings.size_text }}">{{ block.settings.title_heading }}</h5>
+                      {%- endif -%}
+                      <div class="row custom_row">
+                        {% for rel in related limit: rec_limit %}
+                          <div class="col-lg col-6">
+                            {%- render 'product-grid-buywith', product: rel -%}
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    {%- endif -%}
                   {% endif %}
                 </div>
               {%- when 'list-info' -%}
@@ -3264,31 +3277,6 @@ display:none;
 {%- endif -%}
 
 {% javascript %}
-  class productPairsRight extends HTMLElement {
-    connectedCallback() {
-      fetch(this.dataset.url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('HTTP error! Status: '.concat(response.status));
-          }
-          return response.text();
-        })
-        .then((response) => {
-          var frag = document.createDocumentFragment(),
-            fetchedContent = document.createElement('div');
-          frag.appendChild(fetchedContent);
-          fetchedContent.innerHTML = response;
-
-          var replacementContent = fetchedContent.querySelector('[data-id="'.concat(CSS.escape(this.dataset.id), '"]'));
-          if (replacementContent) {
-            this.innerHTML = replacementContent.innerHTML;
-          }
-        });
-    }
-  }
-
-  customElements.define('product-pairsright', productPairsRight);
-
   class BuyNow extends HTMLElement {
     constructor() {
       super();
@@ -7732,6 +7720,16 @@ function formatPrice(value) {
           "type": "product",
           "id": "product_3",
           "label": "Product 3"
+        },
+        {
+          "type": "range",
+          "id": "product_limit",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "label": "Limit Products",
+          "default": 3,
+          "info": "Applies to the automatic mode (no products picked above): products come from the summit.related_products metafield. Block renders nothing when the metafield is empty."
         }
       ]
     },
