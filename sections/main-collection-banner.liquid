@@ -3,16 +3,20 @@
   assign colorH = section.settings.image_text_color
   assign colorBg = section.settings.bg_color
   assign opOverlay = section.settings.image_overlay_opacity | divided_by: 100.0
+  assign save_allproducts = section.settings.save_allproducts
+  # #166 (Variante B): Das All-Products-Bild ist jetzt der globale Fallback -
+  # es greift auf JEDER Collection ohne eigenes Bild (nicht mehr nur auf
+  # handle 'all') und ist erstmals auch an den Toggle gekoppelt (vorher lief
+  # das Bild am Toggle vorbei). Titel/Beschreibung bleiben 'all'-only.
   if collection.image != blank 
   assign collectionImage = collection.image
-  elsif collection.handle == 'all'
-  assign collectionImage = section.settings.img_bannercollection
+  elsif save_allproducts
+    assign collectionImage = section.settings.img_bannercollection
   endif
   assign img_height = section.settings.img_height
   assign style_banner = section.settings.style_banner
   assign title_all = section.settings.title_all
   assign des_all = section.settings.description_all
-  assign save_allproducts = section.settings.save_allproducts
 
   assign show_breadcrumb= section.settings.show_breadcrumb
   assign width_breadcrumb = section.settings.width_breadcrumb
@@ -354,25 +358,29 @@
       "type": "checkbox",
       "id": "save_allproducts",
       "default": true,
-      "label": "Apply To All Product Collection",
-      "info":"collection handle 'all' will use this configuration"
+      "label": "Apply To All Collections",
+      "info": "Background image becomes the fallback for every collection without its own image. Title and description apply only to the 'all' collection."
     },
     {
       "type": "image_picker",
       "id": "img_bannercollection",
-      "label": "Background All Products"
+      "label": "Background Fallback",
+      "info": "Shown on every collection that has no image of its own.",
+      "visible_if": "{{ section.settings.save_allproducts != false }}"
     },
     {
       "type": "text",
       "id": "title_all",
       "label": "Title All Products",
-      "default": "All Products"
+      "default": "All Products",
+      "visible_if": "{{ section.settings.save_allproducts != false }}"
     },
     {
       "type": "richtext",
       "id": "description_all",
       "label": "Description All Products",
-      "default": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.</p>"
+      "default": "<p>Shop now, not later. Browse the best of our favorite sale styles and brands.</p>",
+      "visible_if": "{{ section.settings.save_allproducts != false }}"
     },
     {
       "type": "header",
