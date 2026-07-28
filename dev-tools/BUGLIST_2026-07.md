@@ -3733,6 +3733,92 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Edits, Schema-JSON valide (24 Settings), check-theme.mjs
       unveraendert. Klick-Test live steht aus.
 
+## 167. Related Products: Search & Discovery durch summit.related_products ersetzt (Auftrag 28.07.)
+- [~] Auftrag: Recommendations-Logik (recommendations.products + JS-Fetch
+      auf die Recommendations-URL) im Block related_products
+      (product-content.liquid) komplett durch eine Schleife ueber das
+      Produkt-Metafeld summit.related_products (list.product_reference)
+      ersetzen; Summit-Seite bereits live (Hero zuerst, dann
+      Katalog-Reihenfolge; Ein-Produkt-Shops: leer/fehlend).
+      Umsetzung:
+      1) related = product.metafields.summit.related_products.value;
+         Gate {% if related and related.size > 0 %} um den GESAMTEN Block
+         (kein Heading-Torso bei leer). .size statt .count - im Repo bei
+         Listen-Metafeldern etabliert (#156/#158), identische Semantik.
+      2) Hartes Liquid-limit in der Schleife (for rel in related
+         limit: rec_limit) - der eigentliche Bug: als URL-Parameter der
+         Recommendations-API wurde product_limit ignoriert (#145).
+         rec_limit-Guard (| plus: 0, Fallback 6 bei < 1) aus #145
+         beibehalten; Setting-ID product_limit unveraendert.
+      3) <product-pairs>-Custom-Element + das {% javascript %}-Fetch-
+         Modul entfernt (tote Recommendations-Abhaengigkeit; Klassen
+         product-pairs/product-pairs--loaded am div belassen fuer CSS).
+      4) Info-Text von product_limit aktualisiert (zeigte auf die
+         S&D-App-Doku - jetzt Verweis aufs Metafeld).
+      Kein Fallback auf recommendations (Auftrag). Parse-theme-Contract:
+      keine Section-/Snippet-/Schema-Renames, reiner Innereien-Umbau.
+      Kontrakt (METAFIELD_CONTRACT.md) erweitert: Definition related_products
+      (list.product_reference) + Konsumenten-Zeile Product Content.
+      Verifiziert: Live-Diff (summittheme/main) zeigt exakt nur den Block-
+      Umbau + Info-Text, Schema-JSON valide, check-theme.mjs unveraendert.
+      Live-Test nach Produkt-Re-Push aus Summit steht aus (Erwartung: 3
+      andere Produkte pro Seite, Limit kuerzt korrekt).
+      HINWEIS: product-template-1.liquid hat mit <product-pairsright>
+      (Z.2926-2943 + JS Z.3267-3290) ein zweites, gleichartiges
+      Recommendations-Fetch-Element (anderer Block) - nicht Teil dieses
+      Auftrags, bei Bedarf gleiche Behandlung.
+
+## 168. Related Products 2: product-pairsright in product-template-1 ersetzt (Folge-Auftrag 28.07.)
+- [~] Folge zu #167, gleiche Behandlung des related-product-Blocks
+      ("Featured Products") in product-template-1.liquid:
+      1) Auto-Zweig (wenn product_1..3 leer): <product-pairsright>-Element +
+         recommendations.performed-Loop ersetzt durch related = product
+         .metafields.summit.related_products.value mit {% if related and
+         related.size > 0 %}-Gate um den ganzen Zweig (leer -> nichts,
+         auch kein Heading). Manueller Zweig (product_1..3) unveraendert
+         und hat weiter Vorrang.
+      2) JS-Modul productPairsRight aus dem {% javascript %}-Block entfernt
+         (BuyNow & Co. bleiben); CSS-Klassen am div belassen.
+      3) BEFUND korrigiert das Briefing: ein "bestehendes Limit-Setting"
+         gab es hier NICHT - das Schema hatte nur title_heading, size_text,
+         product_1..3; die data-url referenzierte ein nicht existierendes
+         product_limit (limit= leer) und die Schleife lief UNBEGRENZT.
+         product_limit daher additiv nachgeruestet (range 1-6, Default 3 =
+         Kartenmuster des manuellen Zweigs; info verweist aufs Metafeld) -
+         keine ID umbenannt, keine Renames. Hartes limit: rec_limit in der
+         Schleife, Guard-Fallback 3 (hier, statt 6 wie in #167).
+      Kontrakt: Konsumenten-Zeile Product Overview / related-product in
+      METAFIELD_CONTRACT.md ergaenzt.
+      Verifiziert: Live-Diff (summittheme/main) zeigt exakt die 3 Hunks
+      (Block-Umbau, JS-Entfernung, Schema-Addition); Schema-JSON valide
+      (33 Bloecke, product_limit an 6. Stelle); check-theme.mjs
+      unveraendert. Live-Test mit demselben Produkt-Re-Push wie #167.
+
+## 169. Image With 4 Icons: Banner-Bezug raus, eigenes Metafeld icons_image (Auftrag 28.07.)
+- [~] Auftrag: Die Sektion las ihr produkt-eigenes Bild aus summit
+      .banner_image (dem Banner-Motiv); Summit schreibt jetzt ein
+      dediziertes summit.icons_image (file_reference, pro Produkt aus dem
+      Section-Feld "Image" aufgeloest; ungemappt -> Key wird ausgelassen).
+      Umsetzung (image-with-icons.liquid):
+      1) assign p_icons_image = product.metafields.summit.icons_image.value
+         (statt p_banner_image/banner_image); Render-Zweig umgestellt.
+      2) JEDER banner_image-Bezug entfernt - auch nicht als Fallback.
+         Neue Kette: icons_image -> section.settings.section_image ->
+         Video-Settings -> Brand-Fallback (unveraendert). Video-Zweig
+         (#139: kein banner_video hier) unangetastet.
+      3) CSS-Klasse summit-pbanner-img -> summit-icons-img an beiden
+         Stellen zusammen (Style-Block + image_tag; reine CSS-Klasse,
+         kein Schema-Bezug).
+      Setting-IDs unveraendert (section_image bleibt). Keine Section-/
+      Snippet-/Schema-Renames.
+      Kontrakt (METAFIELD_CONTRACT.md): Definition icons_image (§2) +
+      Konsumenten-Zeile umgestellt (§3: icons_image-Kette; banner_image-
+      Konsument image-with-icons ausgetragen, bleibt Banner-Sektion).
+      Verifiziert: Live-Diff (summittheme/main) zeigt exakt die 3 Aenderungen
+      (Assign, CSS-Klasse, Render-Zweig); check-theme.mjs unveraendert.
+      Live-Test nach Produkt-Re-Push (Feld gemappt): pro Produkt eigenes
+      Bild statt Banner-Motiv; ohne Metafeld -> statisches Sektionsbild.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
