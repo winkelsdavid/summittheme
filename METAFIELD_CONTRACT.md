@@ -75,6 +75,8 @@ Scope-Ableitung MUSS die Chain bis zur Wurzel prüfen.
 | `banner` | `file_reference` | Produktseiten-Banner | Banner Design Product Page, Output 0 |
 | `banner_image` | `file_reference` (MediaImage) | Werbe-Banner-Bild (Dual-Write, gleiche GID wie `banner`) | Banner Design Product Page, Output 0 (BTM `image:image`) |
 | `banner_video` | `file_reference` (Video) | Werbe-Video des Produkts (Seedance, mp4, autoplay/loop/muted im Theme) | Seedance Video Generation, Output 0 (BTM `image:video`) |
+| `related_products` | `list.product_reference` | Alle anderen Katalog-Produkte des Shops, Hero zuerst, dann Katalog-Reihenfolge; bei Ein-Produkt-Shops leer oder fehlend | Summit-Produkt-Push (bereits live, gepinnt als „Summit Related Products“) |
+| `icons_image` | `file_reference` (MediaImage) | Produkt-eigenes Bild für die Sektion Image With 4 Icons (Quelle: Section-Feld „Image“ in Summit, pro Produkt aufgelöst; bei ungemapptem Feld wird der Key ausgelassen) | Summit-Produkt-Push (gepinnt als „Summit Icons Image“) |
 | `managed` | `boolean` | „Summit verwaltet dieses Produkt“ | existiert bereits (Push) |
 
 **Reserviert (aktuell unmapped, bei Aktivierung diesen Key nutzen):**
@@ -114,13 +116,15 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Overview | Block `image` → `image` | `banner` |
 | Product Overview | Block `title` → `custom_title` | `product.title` (nativ) |
 | Product Suggest | `product` | `product.title` (nativ) |
-| Image With 4 Icons | Section-Bild (`image-with-icons.liquid`) | `banner_image` → Section-Setting (Fallback-Kette; Theme-Patch 23.07.2026, Video-Zweig entfernt 25.07.2026) |
+| Image With 4 Icons | Section-Bild (`image-with-icons.liquid`) | `icons_image` → `section_image` (Section-Setting) → Video-Settings → Brand-Fallback; **kein `banner_image`-Bezug mehr** (bleibt der Banner-Sektion; Theme-Patch 28.07.2026) |
 | Image With 4 Icons | Block `text_icon` → `icon_image` | `image_icons[i]` → `benefit_icons[i]` (i = Block-Index) |
 | Image With 4 Icons | Block `text_icon` → `block_title` / `block_description` | `image_icon_items[i].heading` / `.text` → `icon_items[i].heading` / `.text` |
 | Icons (`icon-list`) | Block `icon_item` → `image_icon` | `benefit_icons[i]` |
 | Icons (`icon-list`) | Block `icon_item` → `title` / `description` | `icon_items[i].heading` / `.text` |
 | Icons (`icon-list`) | `subtitle_top` / `title` / `description` (Section) | `icons_intro.subtitle` / `.title` / `.description` |
 | Product Overview | Block `image` → `video` | `banner_video` → `banner` → Setting-Video → Setting-Bild (Theme-Patch 24.07.2026) |
+| Product Content (`product-content`) | Block `related_products` (Karten-Loop) | `related_products[i]`, Anzahl via Block-Setting `product_limit` (hartes Liquid-`limit:`); ersetzt Search & Discovery komplett, kein Fallback — leer ⇒ Block rendert nichts (Theme-Patch 28.07.2026) |
+| Product Overview | Block `related-product` (Auto-Zweig, wenn `product_1..3` leer) | `related_products[i]`, Anzahl via Block-Setting `product_limit` (NEU 28.07.2026, Default 3); manuelle Picks `product_1..3` haben Vorrang; kein Fallback — leer ⇒ Block rendert nichts (Theme-Patch 28.07.2026) |
 
 **Banner-Keys (K2, 23.07.2026; Slot-Aufteilung 25.07.2026):** Der Writer
 schreibt `banner` UND `banner_image` mit derselben MediaImage-GID
