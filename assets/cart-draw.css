@@ -143,9 +143,17 @@ background-color: var(--g-chrome-bg, white);
   .crossell-nav{
     display: flex;
   }
+  /* #172: Ein-Produkt-Ansicht statt freiem Scroll (Operator 28.07., split 1/3):
+     jede Karte fuellt die Containerbreite, Scroll-Snap sorgt fuer sauberes
+     Blaettern - die Pfeile schieben per scrollBy ohnehin um exakt eine
+     Kartenbreite (= ein Produkt, theme.js CrossellNav stepOf). */
+  .drawer-crossell-product {
+    scroll-snap-type: x mandatory;
+  }
   .drawer-crossell-product .drawer-crossell__item{
-    flex:0 0 260px;
-    width: 260px;
+    flex:0 0 100%;
+    width: 100%;
+    scroll-snap-align: start;
     padding-right: 1rem;
   }
 }
@@ -192,8 +200,8 @@ background-color: var(--g-chrome-bg, white);
 }
 @media (max-width:749px){
   .drawer-crossell-product .drawer-crossell__item{
-  flex:0 0 260px;
-  width: 260px;
+  flex:0 0 100%;
+  width: 100%;
   }
   .drawer-crossell__item .product-card__name{
     margin-bottom: 0;
@@ -209,13 +217,16 @@ background-color: var(--g-chrome-bg, white);
 /* #160: Mobil blockt der Upsell direkt ueber dem Footer. Der generische
    Summen-Abstand (.mini-cart-total margin-top:16px, in #148 bewusst
    belassen) wirkt hier als Leerraum UNTER den Produkten -> entfaellt nur
-   in dieser Konstellation; das padding-top:16px bleibt als Restabstand.
-   Desktop unveraendert: dort ist der Upsell das absolute Seitenpanel und
-   der Footer folgt der Artikelliste. Ohne Upsell (kein .drawer-crossell im
-   DOM) greift der Selektor nicht -> #148-Verhalten intakt. */
+   in dieser Konstellation. #173 (Operator 28.07., split 2/3): auch das
+   Rest-padding geht runter auf 4px ("spacing entfernen zwischen produkten
+   und preisanzeige"). Desktop unveraendert: dort ist der Upsell das
+   absolute Seitenpanel und der Footer folgt der Artikelliste. Ohne Upsell
+   (kein .drawer-crossell im DOM) greift der Selektor nicht ->
+   #148-Verhalten intakt. */
 @media (max-width:991px){
   .drawer-crossell + .mini-cart-footer .mini-cart-total{
     margin-top: 0;
+    padding-top: 4px;
   }
 }
 
