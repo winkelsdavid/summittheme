@@ -3819,6 +3819,37 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Live-Test nach Produkt-Re-Push (Feld gemappt): pro Produkt eigenes
       Bild statt Banner-Motiv; ohne Metafeld -> statisches Sektionsbild.
 
+## 170. Collapsible Row: Stoerlinie ueber der ersten Row (Rückbau #143, Bug 28.07.)
+- [~] Operator: "random line über collapsible row". Screenshot (PETS/
+      DEFAULT PRESET 28.07. 17:37): duenne hellgraue Linie ueber der
+      ersten Collapsible Row, darueber der videos-Block (Reviews Videos
+      And Images). Die Linie ist die #143-Oberkante
+      (.product-single__meta .accordion .tabcustom{border-top:1px solid
+      var(--g-input-border)}) - am 24.07. auf Operator-Wunsch ("obere
+      Trennlinie fehlte") eingefuehrt, jetzt vom selben Operator als
+      Stoerlinie gemeldet. Nachweis der Identitaet: headless rendert
+      border-image (Gradient #000->#0b0b0b der Bloecke) DUNKEL, die
+      gemeldete Linie ist HELLGRAU = Default --g-input-border, also die
+      #143-Regel (zum Report-Zeitpunkt divider_color offenbar
+      leer/nicht-gradient). Umgebungs-Delta zu #143: der videos-Block
+      (#139, 25.07.) sitzt jetzt davor -> die Linie schwebt optisch.
+      RUECKBAU (neueste Operator-Entscheidung gewinnt, wie #157->#159):
+      1) product-template.css: #143 border-top-Regel + obsoleter
+         Adjacent-Kill (.accordion + .accordion .tabcustom{border-top:0})
+         entfernt; Basis liefert nur border-bottom.
+      2) product-template-1.liquid: border-top-color aus dem Solid-Zweig
+         entfernt (war der #143-Anteil); #162-Kommentar aktualisiert.
+      Effekt: erste Row ohne Oberkante, Rows bleiben durch Unterkanten
+      getrennt; Gradient-Zweig (#90b, "nur Bottom hat Breite") stimmt
+      damit wieder exakt; Description+Row-Stapel = eine Linie
+      (Description-Bottom). Konflikt-Doku: #143 wollte die Oberkante,
+      #170 nimmt sie zurueck - bei erneuter Meldung "Linie fehlt" ist
+      das der Referenzpunkt.
+      Verifiziert headless (repro-lines2, echte Kaskade, 3 Bloecke mit
+      schwarzem Gradient): vorher row0 bTop=1px, nachher ALLE Rows
+      bTop=0px, bBottom=1px mit border-image; Klammerbilanz 106/106,
+      check-theme.mjs unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
