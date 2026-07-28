@@ -3649,6 +3649,24 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       elementFromPoint auf dem Slide-1-Button = Slide-2-Button (blockiert),
       NACHHER = eigener Button; pointerEvents slide2 none / slide1 auto.
       Klammerbilanz 2290/2290 + 2336/2336, check-theme.mjs unveraendert.
+      NACHTRAG #164b (Klick-Test 27./28.07.: "mal klickbar, mal nicht",
+      "nur gewisse Bereiche des Buttons"): Der Slide-Regel allein reichte
+      nicht - die AOS-CSS (header-oncss.liquid: [data-aos]{pointer-events:
+      none} / [data-aos].aos-animate{pointer-events:auto}) setzt pointer-
+      events DIREKT am Element und durchsticht die Vererbung von der
+      inaktiven Slide. Live vermessen (Konsolen-Proben auf der Kopie):
+      elementsFromPoint-Kette = swiper-slide-next > .container.aos-animate
+      (PE:auto) UEBER dem aktiven Button; Kette text-content:none ->
+      container:auto zeigte den Flip exakt an der AOS-Regel. Zusaetzlich
+      galt [data-aos]{pointer-events:none} fuer die Button-Row der aktiven
+      Slide bis zum AOS-Reveal (dead window nach Page-Load, AOS-Design).
+      Ergaenzende Regel (beide Dateien): .swiper-container-fade
+      .swiper-slide:not(.swiper-slide-active) *{pointer-events:none} -
+      Spezifitaet 0,3,0 schlaegt AOS 0,2,0; aktive Slide per :not()
+      ausgenommen. Verifiziert headless (repro-fade4, echtes Swiper +
+      echte AOS-Regeln + committed CSS, Autoplay): vorher 13/36 Samples
+      Fremd-Treffer (aktiv=b1, Hit=b2), nachher 36/36 eigener Button, 0
+      tote Fenster.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
