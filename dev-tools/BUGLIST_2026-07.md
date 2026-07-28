@@ -3679,6 +3679,31 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       im Text-Content, kein Inner-Override moeglich). Kein eigener Eingriff
       noetig; Klick-Test auf Slideshow 2 zur Absicherung empfohlen.
 
+## 165. Footer: Option zum Deaktivieren des Backgrounds (Feature 25.07.)
+- [~] Operator: "'Footer' - Option background zu deaktivieren". Bisher musste
+      die Hintergrundfarbe (color_background, default #282828) immer gesetzt
+      sein; Transparent war nur ueber den Alpha-Regler erreichbar (nicht
+      entdeckbar).
+      Umsetzung (sections/footer.liquid):
+      1) NEUER Checkbox-Setting enable_background (default true, "Enable
+         Background", info-Text) direkt ueber dem background-Setting.
+      2) background bekommt visible_if "{{ section.settings.enable_background
+         != false }}" - != false statt blank-Check, damit der Picker auf
+         Bestands-Instanzen (Setting noch nie gespeichert -> nil) sichtbar
+         bleibt: nil != false == true.
+      3) Render-Guard in der .site-footer-Regel: enable_background == false
+         -> background: transparent, sonst unveraendert var(--footer-bg).
+         Ebenfalls nil-sicher: Bestands-Instanzen (nil) landen im else-Zweig
+         -> Verhalten unveraendert.
+      Parse-theme-Contract: unberuehrt - kein Rename, nur ein NEUER Setting;
+      checkbox -> boolean -> static (Typ-Heuristik), landet nicht in der
+      Mapping-Flaeche. Live-Stand (summittheme/main) vor Fix == Repo
+      (diff_exit=0).
+      Verifiziert: Schema-JSON valide (36 Settings, enable_background an
+      Position 2, visible_if an background), check-theme.mjs unveraendert;
+      Logik nil/false/true durchgespielt (Bestand -> farbig, deaktiviert ->
+      transparent). Klick-Test live steht aus.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
