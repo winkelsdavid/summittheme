@@ -3953,6 +3953,25 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       mehr (python-Check). Lektion kuenftig: visible_if nur auf
       Nicht-Ressourcen-Typen.
 
+## 176. Editor: Warenkorb-Oeffnen wirft Merchant aus dem Settings-Panel (User 28.07.)
+- [~] User: "Immer wenn ich den warenkorb öffne geht er aus den settings
+      wo ich gerade war raus" (vor #175 bereits so). Ursache: der Toggle-
+      Klick (.js-toggle-cart, Span in der Header-Sektion) blubbert im
+      Editor-Vorschau-Frame hoch, der Editor selektiert dadurch die
+      Header-Sektion und wechselt das rechte Panel weg (z. B. aus Theme
+      Settings -> Cart in die Header-Sektion). Standard-Editor-Verhalten,
+      aber hier stoerend.
+      Fix (theme.js, beide MiniCart-Klick-Handler): bei
+      window.Shopify.designMode -> e.stopImmediatePropagation() - unsere
+      Handler laufen selbst weiter (Drawer oeffnet/schließt normal), aber
+      der Editor-Selektions-Listener bekommt den Klick nicht mehr.
+      Storefront unveraendert (Flag nur im Editor gesetzt).
+      OFFEN/Klick-Test noetig: wirkt nur, wenn der Editor seine Selektion
+      bubble-phase auf dem Preview-Document delegiert UND nach unserem
+      Listener registriert hat - bei Capture-Phase oder frueherer
+      Registrierung gibt es theme-seitig nichts (dann Editor-Standard,
+      nicht fixbar).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-

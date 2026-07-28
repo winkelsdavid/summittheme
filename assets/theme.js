@@ -5529,6 +5529,13 @@ setHtmlAll('.bottom-total', `
   document.addEventListener("click", function (e) {
     var btn = e.target.closest(cartToggle);
     if (!btn) return;
+    // #176: Im Theme-Editor (Shopify.designMode) den Klick nicht an andere
+    // Listener weiterreichen - der Editor selektiert sonst beim Oeffnen des
+    // Drawers die Header-Sektion und wirft den Merchant aus dem gerade
+    // offenen Settings-Panel. Nur im Editor: DesignMode-Flag, kein Storefront-
+    // Verhalten betroffen. (Wirkt nur, wenn der Editor bubble-phase delegiert;
+    // Klick-Test noetig.)
+    if (window.Shopify && Shopify.designMode) e.stopImmediatePropagation();
     var parent = btn.parentElement;
     if (parent && parent.matches && parent.matches(miniCart)) {
       parent.classList.toggle("active");
@@ -5538,6 +5545,8 @@ setHtmlAll('.bottom-total', `
   document.addEventListener("click", function (e) {
     var btn = e.target.closest(".overlaycart, .close");
     if (!btn) return;
+    // #176: s.o. - auch der Schliessen-Klick soll im Editor nicht deselektieren.
+    if (window.Shopify && Shopify.designMode) e.stopImmediatePropagation();
     var mc = btn.closest(miniCart);
     if (mc) mc.classList.remove("active");
     document.body.classList.remove("overflow-hidden");
