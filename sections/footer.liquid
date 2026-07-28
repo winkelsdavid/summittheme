@@ -29,7 +29,11 @@
     text-decoration-color: var(--footer-text-hover);
   }
   .site-footer {
+    {% if section.settings.enable_background == false %}
+    background: transparent;
+    {% else %}
     background: var(--footer-bg);
+    {% endif %}
     color: var(--footer-text);
     border-top: 1px solid var(--footer-head-border);
     line-height: 1.8;
@@ -704,10 +708,18 @@
       "label": "Background Image"
     },
     {
+      "type": "checkbox",
+      "id": "enable_background",
+      "label": "Enable Background",
+      "info": "Disable to make the footer background transparent.",
+      "default": true
+    },
+    {
       "type": "color_background",
       "id": "background",
       "label": "Background",
-      "default": "#282828"
+      "default": "#282828",
+      "visible_if": "{{ section.settings.enable_background != false }}"
     },
     {
       "type": "color",
