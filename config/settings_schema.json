@@ -2957,6 +2957,18 @@
         "visible_if": "{{ settings.enable_gift_scratch != false }}"
       },
       {
+        "type": "range",
+        "id": "gift_scratch_goal",
+        "min": 20,
+        "max": 85,
+        "step": 1,
+        "unit": "%",
+        "label": "Scratch Goal",
+        "info": "Revealed automatically once this share of the foil is scratched off.",
+        "default": 48,
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
         "type": "select",
         "id": "gift_style",
         "label": "Scratch style",

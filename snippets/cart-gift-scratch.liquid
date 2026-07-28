@@ -24,7 +24,7 @@
     "expiredMode": {{ settings.gift_expired_mode | json }},
     "reappearHours": {{ settings.gift_reappear_hours }},
     "style": {{ settings.gift_style | default: 'gold' | json }},
-    "scratchGoal": 48,
+    "scratchGoal": {{ settings.gift_scratch_goal | default: 48 }},
     "moneyFormat": {{ shop.money_format | json }},
     "t": {
       "heading": {% if settings.gift_heading != blank %}{{ settings.gift_heading | json }}{% else %}{{ 'general.cart.gift_heading' | t | json }}{% endif %},
@@ -35,6 +35,7 @@
       "secured": {{ 'general.cart.gift_secured' | t | json }},
       "expiredBadge": {{ 'general.cart.gift_expired_badge' | t | json }},
       "expiredStatus": {{ 'general.cart.gift_expired_status' | t | json }},
+      "expiredClock": {{ 'general.cart.gift_expired_clock' | t | json }},
       "statusMissing": {{ 'general.cart.gift_status_missing_html' | t: price: '__PRICE__' | json }},
       "statusUnlocked": {{ 'general.cart.gift_status_unlocked' | t | json }},
       "freeLabel": {{ 'general.cart.gift_free_label' | t | json }},
@@ -210,6 +211,12 @@
 /* Cart Gift Scratch (#175) — Vanilla-Port der Claude-Design-Logik, keine Libs.
    Scratch-Engine adaptiert aus sections/scratch-newsletter.liquid (PALETTES),
    Karten-/Timer-Logik aus dem Design-Export. */
+/* #176: window.theme HIER anlegen - dieses Inline-Script laeuft beim Parsen des
+   Headers (Layout Z.421), header-js/theme.js kommen erst danach (Z.457, defer).
+   Ohne den Guard stirbt die Zuweisung theme.GiftScratch mit "theme is not
+   defined" BEVOR die IIFE laeuft -> Folie ungemalt, Rubbeln komplett tot
+   (live gemessen: pageerror + Canvas 300x150 unbemalt). */
+window.theme = window.theme || {};
 theme.GiftScratch = (function () {
   var root = document.getElementById('cgs');
   var cfgEl = document.getElementById('cgs-config');
@@ -434,9 +441,9 @@ theme.GiftScratch = (function () {
     warnEl.hidden = !showWarn;
     if (showWarn) warnEl.textContent = lineOf(cfg.t.removeWarning, { '__THRESHOLD__': cfg.thresholdFmt });
 
-    // Auto-Remove bei Unterschreiten (Punkt 3)
-    if (gl && !qualified && !expired) {
-      expired = false; // Zustand bleibt "revealed"
+    // Auto-Remove bei Unterschreiten (Punkt 3) oder nach Ablauf
+    // (#176: auch ein nach Reload noch im Warenkorb liegendes Geschenk raeumen)
+    if (gl && (expired || !qualified)) {
       removeGift(currentCart);
     }
     // Nachtraeglich qualifiziert -> zulegen
@@ -450,8 +457,8 @@ theme.GiftScratch = (function () {
       clockEl.textContent = clock(left) + ' Min';
       return;
     }
-    // Ablauf
-    clockEl.textContent = '';
+    // Ablauf (Uhrtext wie im Original: "Endet in abgelaufen")
+    clockEl.textContent = cfg.t.expiredClock;
     applyExpiry();
   }
 
@@ -504,7 +511,8 @@ theme.GiftScratch = (function () {
     }
 
     var savedDeadline = parseInt(lsGet(LS_DEADLINE) || '0', 10);
-    var savedRevealed = lsGet(LS_REVEALED) === '1' && savedDeadline > Date.now();
+    var wasRevealed = lsGet(LS_REVEALED) === '1';
+    var savedRevealed = wasRevealed && savedDeadline > Date.now();
     if (savedRevealed) {
       revealed = true;
       deadline = savedDeadline;
@@ -512,6 +520,25 @@ theme.GiftScratch = (function () {
       endsinEl.textContent = cfg.t.endsIn;
       timer = setInterval(tick, 1000);
       tick();
+    } else if (wasRevealed && savedDeadline) {
+      // #176: Ablauf waehrend Abwesenheit -> expired_mode anwenden statt
+      // frisch zu starten (vorher: LS geloescht, Los begann von vorn und
+      // hide/reappear/show_expired galten nur bis zum naechsten Reload).
+      revealed = true;
+      expired = true;
+      lsDel(LS_DEADLINE);
+      if (cfg.expiredMode === 'hide') {
+        root.classList.add('cgs--hidden');
+      } else if (cfg.expiredMode === 'reappear') {
+        // Reappear-Fenster am ECHTEN Ablaufzeitpunkt verankern
+        if (!lsGet(LS_REAPPEAR)) lsSet(LS_REAPPEAR, String(savedDeadline + cfg.reappearHours * 3600 * 1000));
+        root.classList.add('cgs--hidden');
+        setTimeout(boot, Math.min(Math.max(parseInt(lsGet(LS_REAPPEAR), 10) - Date.now(), 1000), 3600000));
+      } else {
+        root.classList.add('cgs--revealed');
+        endsinEl.textContent = cfg.t.endsIn;
+        clockEl.textContent = cfg.t.expiredClock;
+      }
     } else {
       if (savedDeadline && savedDeadline <= Date.now()) { lsDel(LS_DEADLINE); lsDel(LS_REVEALED); }
       if (paintFoil()) painted = true;

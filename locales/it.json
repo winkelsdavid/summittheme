@@ -69,6 +69,7 @@
       "gift_secured": "Regalo assicurato",
       "gift_expired_badge": "Offerta scaduta",
       "gift_expired_status": "Tempo scaduto",
+      "gift_expired_clock": "scaduta",
       "gift_status_missing_html": "Mancano {{ price }} al regalo",
       "gift_status_unlocked": "Sbloccato – aggiunto al tuo ordine",
       "gift_free_label": "Gratis",

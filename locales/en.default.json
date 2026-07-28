@@ -69,6 +69,7 @@
       "gift_secured": "Gift secured",
       "gift_expired_badge": "Offer expired",
       "gift_expired_status": "Time window expired",
+      "gift_expired_clock": "expired",
       "gift_status_missing_html": "{{ price }} left until your gift",
       "gift_status_unlocked": "Unlocked – will be added to your order",
       "gift_free_label": "Free",

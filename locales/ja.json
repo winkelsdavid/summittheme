@@ -69,6 +69,7 @@
       "gift_secured": "ギフトを確保しました",
       "gift_expired_badge": "キャンペーン終了",
       "gift_expired_status": "期間が終了しました",
+      "gift_expired_clock": "終了",
       "gift_status_missing_html": "ギフトまであと{{ price }}",
       "gift_status_unlocked": "解禁されました – ご注文に追加されます",
       "gift_free_label": "無料",

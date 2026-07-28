@@ -69,6 +69,7 @@
       "gift_secured": "Cadeau veiliggesteld",
       "gift_expired_badge": "Actie verlopen",
       "gift_expired_status": "Tijdvenster verlopen",
+      "gift_expired_clock": "verlopen",
       "gift_status_missing_html": "Nog {{ price }} tot je cadeau",
       "gift_status_unlocked": "Vrijgespeeld – wordt aan je bestelling toegevoegd",
       "gift_free_label": "Gratis",
