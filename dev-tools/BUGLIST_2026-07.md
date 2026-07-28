@@ -3704,6 +3704,35 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Logik nil/false/true durchgespielt (Bestand -> farbig, deaktiviert ->
       transparent). Klick-Test live steht aus.
 
+## 166. Collection Banner: "Apply To All"-Logik + Benennung (Frage 27.07., Variante B)
+- [~] Operator-Frage: "ob das bild hier automatisch in allen kollektionen
+      erscheinen soll oder nicht. was ist beste loesung". IST-ANALYSE
+      (main-collection-banner.liquid): Das "Background All Products"-Bild
+      griff NUR bei collection.handle == 'all' - und lief dabei am Toggle
+      save_allproducts VORBEI (der Toggle steuerte nur Titel/Beschreibung).
+      Das Label "Apply To All Product Collection" versprach mehr.
+      ENTSCHEID (mit David): Variante B - das Bild wird globaler Fallback.
+      Umsetzung:
+      1) Render-Logik: elsif save_allproducts statt elsif collection.handle
+         == 'all' -> img_bannercollection greift auf JEDER Collection ohne
+         eigenes Bild (collection.image gewinnt immer) und ist erstmals an
+         den Toggle gekoppelt. Assign des Toggles vors if gezogen.
+         Titel/Beschreibung bleiben 'all'-only (unveraendert).
+      2) Labels (display-only, IDs unveraendert - parse-theme-Contract):
+         Toggle "Apply To All Collections" + Info (Bild = Fallback fuer
+         alle, Titel/Beschreibung nur 'all'); image_picker "Background
+         Fallback" + Info.
+      3) visible_if "{{ section.settings.save_allproducts != false }}" an
+         img_bannercollection/title_all/description_all - Toggle aus ->
+         Felder ausgeblendet; != false haelt sie auf Bestands-Instanzen
+         (nil) sichtbar.
+      Verhalten je Bestand: Collection MIT eigenem Bild unveraendert;
+      ohne Bild + Toggle an (Default) -> jetzt Fallback-Bild statt
+      generischem Brand-Fallback; Toggle aus -> wie bisher.
+      Verifiziert: Live-Diff (summittheme/main) zeigt exakt nur diese
+      Edits, Schema-JSON valide (24 Settings), check-theme.mjs
+      unveraendert. Klick-Test live steht aus.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
