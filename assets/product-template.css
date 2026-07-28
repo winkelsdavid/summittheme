@@ -126,22 +126,14 @@
     cursor: pointer;
     font-family: var(--g-font-2);
   }
-  /* #143: Die Basisregel zeichnet nur border-bottom - der obersten
-     Collapsible Row fehlte dadurch die Trennlinie nach oben. Folgt ein
-     Accordion direkt auf ein anderes, zeichnet dessen border-bottom die
-     Linie bereits -> dort KEIN zweiter Strich (sonst 2px-Doppellinie,
-     z. B. Description-Block + Collapsible Row untereinander).
-     #162: Der Sibling-Selektor greift nur, wenn zwischen den Accordions
-     kein <style>-Element liegt - das per-Block-<style> der tabcustom-
-     Bloecke rendert die Section seit #162 INNERHALB des .accordion-Divs
-     (vorher matchte der Selektor im echten DOM NIE -> Doppellinien,
-     sichtbar sobald divider_color ein Gradient ist). */
-  .product-single__meta .accordion .tabcustom{
-    border-top: 1px solid var( --g-input-border);
-  }
-  .product-single__meta .accordion + .accordion .tabcustom{
-    border-top: 0;
-  }
+  /* #143 (24.07., "obere Trennlinie fehlte") hatte hier zusaetzlich
+     border-top auf der ersten .accordion/.tabcustom gesetzt. #170 (28.07.,
+     "random line über collapsible row"): genau diese Linie empfindet der
+     Operator nun als Stoerlinie ueber der ersten Row (v. a. seit der
+     videos-Block darueber sitzt) -> Rückbau: die Basisregel liefert nur
+     border-bottom, die erste Row bekommt KEINE Oberkante mehr; Rows bleiben
+     durch ihre Unterkanten getrennt. Der Adjacent-Kill (.accordion +
+     .accordion) ist damit obsolet und entfaellt. */
   .tabcustom i{
     font-size: 14px;
     transition: transform .2s ease;

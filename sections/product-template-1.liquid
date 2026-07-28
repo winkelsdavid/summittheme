@@ -3111,7 +3111,10 @@ display:none;
                     .accordion + .accordion .tabcustom{border-top:0} (#143) matchte
                     NIE: jede Row behielt border-top:1px, border-image malte Top+
                     Bottom -> Doppellinie mit 8px-Luecke (h6 margin-bottom) zwischen
-                    allen Rows, sichtbar sobald divider_color ein Gradient ist. {%- endcomment -%}
+                    allen Rows, sichtbar sobald divider_color ein Gradient ist.
+                    #170: die #143-Oberkante (border-top auf der ersten Row) ist
+                    inzwischen rueckgebaut - der Operator meldete genau diese Linie
+                    als Stoerlinie ueber der ersten Row. {%- endcomment -%}
                 <style>
                 .accordion_{{ block.id }} .tabcustom{
                   font-size:{{ block.settings.font_size }}px;
@@ -3127,9 +3130,6 @@ display:none;
                   border-image: {{ block.settings.divider_color }} 1;
                   {% else %}
                   border-bottom-color: {{ block.settings.divider_color }};
-                  {%- comment -%} #143: gilt auch fuer die neue Oberkante der
-                      ersten Row - sonst haette sie die Default-Farbe. {%- endcomment -%}
-                  border-top-color: {{ block.settings.divider_color }};
                   {% endif %}
                 }
                 {% endif %}
