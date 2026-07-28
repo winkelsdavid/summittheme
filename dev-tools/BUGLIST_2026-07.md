@@ -3895,6 +3895,52 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Verifiziert headless: totalMarginTop 0px, totalPaddingTop 4px
       (vorher 16px).
 
+## 175. [FEATURE] Gratis-Geschenk-Rubbellos im Cart Drawer (Claude-Design-Port 1:1)
+- [~] Auftrag (28.07.): komplett neue Funktion aus Claude-Design-Export
+      ("Shop Hero & Cart Drawer") 1:1 ins Theme. Klaerung vorab mit David:
+      (1) ECHTES Hinzufuegen per Ajax, (2) kein Nischen-Gating (Enable-
+      Toggle reicht), (3) Warnung + Entfernen bei Unterschreiten der
+      Schwelle, Position zwischen Upsell und Total.
+      Umsetzung:
+      - NEU snippets/cart-gift-scratch.liquid (Markup+CSS+IIFE-JS):
+        Rubbel-Buehne (Teaser -> Karte -> Canvas-Folie), Folien-Engine aus
+        dem Design (Gradient/Streaks/Sheen/Sparkles/Label) mit PALETTES
+        silver/gold/black (aus scratch-newsletter uebernommen), Scratch-
+        Messung via getImageData, Reveal ab 48%, Countdown via localStorage
+        (Deadline+Revealed persistieren Reload), Expired-Modi
+        show_expired/hide/reappear(+Stunden), designMode-Guard (kein Add/
+        Timer/Remove im Editor), Reveal -> POST /cart/add.js mit
+        properties._gift, Auto-Remove via /cart/change.js bei Unterschreiten
+        ODER Timer-Ablauf, Progress-Bar mit stripes-Keyframe (wie Free-
+        Shipping), Warnzeile bei Unterschreiten.
+      - block-cart.liquid: render als erstes Kind im mini-cart-footer.
+      - theme.js: CustomEvent summit:cart-updated in updateElements +
+        theme.miniCartRefresh() Hook; Gift-Line in generateCart
+        (properties._gift -> Gratis-Badge statt Preis, Klasse
+        mini-cart-item--gift -> Qty/Remove per CSS versteckt).
+      - settings_schema.json Cart-Gruppe "Free Gift (Scratch)":
+        enable_gift_scratch (default false), gift_heading (pool/mappbar),
+        gift_product (system; MUSS EUR 0 kosten - info-Text),
+        gift_threshold/gift_valid_minutes (range), gift_style (silver/gold/
+        black), gift_expired_mode/gift_reappear_hours, gift_accent_color +
+        gift_card_bg (color_role), gift_value; alle Sub-Settings visible_if
+        (!= false, nil-sicher).
+      - Locales: 13 neue Keys general.cart.gift_* in ALLEN 10 Sprachen;
+        theme.strings.giftFreeLabel in header-js.liquid.
+      Parse-theme-Contract: keine Renames, neues Snippet + neue IDs nur
+      additiv; checkbox/range -> static, text -> pool, color -> color_role,
+      product -> system.
+      Verifiziert headless (repro-175, Snippet-CSS/JS VERBATIM, 3 Varianten):
+      [A] Folie gepaintet, Scratch-Sim -> revealed, add-POST 1, Clock
+      "30:00 Min", stripes, Badge/Status, Warnung sichtbar, change-POST 1,
+      miniCartRefresh 2x; [B] Ablauf -> expiredBadge "Aktion abgelaufen" +
+      Auto-Remove (2 change-POSTs); [C] designMode: 0 Adds, kein Timer,
+      kein Remove. Schema/alle 10 Locales valide, theme.js node --check OK,
+      check-theme.mjs unveraendert (283 Liquid).
+      OFFEN (Summit): gift_product als EUR-0-Produkt anlegen/mappen - sonst
+      wird der Katalogpreis berechnet (steht im Setting-info). Klick-Test
+      live steht aus.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
