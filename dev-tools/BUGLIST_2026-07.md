@@ -4005,6 +4005,32 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       eigenes Drawer-/Trust-Verhalten). Gift-ZEILE im Cart vereinfacht:
       Gratis-Badge statt Streichpreis+0,00, ohne "Automatisch hinzugefuegt
       ... endet in" und Glow - auf Wunsch nachziehbar (generateCart).
+
+## 177. Gift-Rubbellos: Folie malt nicht beim Oeffnen des Drawers (User 29.07.)
+- [~] Meldung "Freirubbeln funktioniert nicht, es passiert gar nichts"
+      (Screenshot: Teaser sichtbar, keine Goldfolie). Nach c8ad047 lief das
+      Modul wieder (Crash-Fix), aber die Folie blieb unbemalt:
+      paintFoil() laeuft beim boot() mit 0x0-Rect ins Leere (Drawer ist
+      beim Parsen versteckt), und der Repaint-Pfad trug nicht:
+      Headless-Analyse (instrumentiert): paintCalls nur 2 (= boot +
+      INITIALER ResizeObserver-Callback), KEIN Paint beim Open-Resize -
+      die unreferenzierte RO-Instanz feuerte nicht erneut (GC-Verdacht),
+      zudem feuert ein ResizeObserver auf display:none->block eines
+      AHNENELEMENTS in Chrome nicht zuverlaessig (gemessen).
+      Fix (dreifach abgesichert, snippets/cart-gift-scratch.liquid):
+      1) MutationObserver auf .js-mini-cart class -> malt, sobald der
+         Drawer .active bekommt (manueller Toggle in theme.js);
+      2) Lazy-Paint in refreshUI (summit:cart-updated -> Add-to-Cart-
+         und Qty-Fluesse);
+      3) Lazy-Paint beim ersten pointerdown (letzte Sicherung);
+      dazu RO mit Referenz gehalten. money() zusaetzlich window.theme-
+      ge guarded (Härtung, falls theme.js mal nicht laedt).
+      Verifiziert headless (Drawer display:none -> +active toggle):
+      foilGepaintetNachOeffnen true, Bitmap 486x162 (echte Groesse),
+      Scratch-Sim -> revealed, addPosts 1; Screenshot: Revealed-Karte
+      mit Countdown 29:59 + Stripes-Progress komplett.
+      Hinweis: Nummernkollision - "176" existiert zweimal (Editor-
+      Deselektion + Gift-Audit); dieser Fix ist 177.
       Verifiziert headless (repro-gift-scratch.js, 17 Checks PASS, echte
       Skript-Reihenfolge Snippet VOR theme.js + fetch-Mock + HTTP-Origin):
       keine JS-Fehler, Folie gemalt, Status/Progress (0.75, "noch 5,00"),

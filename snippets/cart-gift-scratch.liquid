@@ -250,7 +250,7 @@ theme.GiftScratch = (function () {
   function lsSet(k, v) { try { window.localStorage.setItem(k, v); } catch (e) {} }
   function lsDel(k) { try { window.localStorage.removeItem(k); } catch (e) {} }
   function money(cents) {
-    if (theme.Currency && theme.moneyFormat) return theme.Currency.formatMoney(cents, theme.moneyFormat);
+    if (window.theme && theme.Currency && theme.moneyFormat) return theme.Currency.formatMoney(cents, theme.moneyFormat);
     return (cents / 100).toFixed(2) + ' €';
   }
   function clock(sec) {
@@ -333,7 +333,12 @@ theme.GiftScratch = (function () {
   function bindFoil() {
     if (bound) return;
     bound = true;
-    function down(e) { if (revealed) return; scratching = true; root.classList.add('cgs--scratching'); last = pointOf(e); erase(last, last); }
+    function down(e) {
+      if (revealed) return;
+      // #176c: spaetestens bei der ersten Beruehrung malen (Drawer ist dann offen)
+      if (!painted) { if (paintFoil()) painted = true; }
+      scratching = true; root.classList.add('cgs--scratching'); last = pointOf(e); erase(last, last);
+    }
     function move(e) {
       if (!scratching || revealed) return;
       var p = pointOf(e);
@@ -421,6 +426,9 @@ theme.GiftScratch = (function () {
   function refreshUI(cart) {
     currentCart = cart || currentCart;
     if (!currentCart) return;
+    // #176c: Folie lazy nachmalen, sobald der Drawer sichtbar ist -
+    // boot laeuft bei verstecktem Drawer mit 0x0-Rect ins Leere.
+    if (!painted && paintFoil()) painted = true;
     var total = totalExGift(currentCart);
     var ratio = Math.min(1, Math.max(0.02, total / cfg.thresholdCents));
     var qualified = total >= cfg.thresholdCents;
@@ -543,9 +551,23 @@ theme.GiftScratch = (function () {
       if (savedDeadline && savedDeadline <= Date.now()) { lsDel(LS_DEADLINE); lsDel(LS_REVEALED); }
       if (paintFoil()) painted = true;
       bindFoil();
+      // #176c: beim Oeffnen des Drawers nachmalen - der ResizeObserver feuert
+      // auf display:none->block eines Ahne nicht zuverlaessig (headless
+      // belegt), daher zusaetzlich auf die .active-Klasse des mini-cart
+      // horchen (toggle in theme.js beim Oeffnen).
+      var miniCartEl = root.closest('.js-mini-cart');
+      if (miniCartEl && window.MutationObserver) {
+        new MutationObserver(function () {
+          if (!revealed && !painted && miniCartEl.classList.contains('active')) { if (paintFoil()) painted = true; }
+        }).observe(miniCartEl, { attributes: true, attributeFilter: ['class'] });
+      }
       // Repaint bei Resize, solange unberuehrt
+      // #176c: RO mit Referenz halten - die unreferenzierte Instanz wurde
+      // offenbar vom GC eingesammelt (feuerte nur den initialen Callback,
+      // nicht den Drawer-Open-Resize -> Folie blieb unbemalt).
       if (window.ResizeObserver && !savedRevealed) {
-        new ResizeObserver(function () { if (!revealed && !scratching && moves === 0) paintFoil(); }).observe(root.querySelector('.cgs__stage'));
+        var ro = new ResizeObserver(function () { if (!revealed && !scratching && moves === 0) { if (paintFoil()) painted = true; } });
+        ro.observe(root.querySelector('.cgs__stage'));
       }
     }
 
