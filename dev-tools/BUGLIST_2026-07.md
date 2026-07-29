@@ -4180,6 +4180,88 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Werbebanner (die Galerie "folgt" beim Scrollen); Gegenprobe mit
       7-Bilder-Produkt -> Verhalten wie bisher.
 
+## 180. [REDESIGN] Product Suggest: neue Sektion aus dem Design-Export eingebaut (User 30.07.)
+- [~] Auftrag: "ich habe eine sektion erneuert die muesste ins theme und die
+      alte ersetzen" ("Shopify Section Animation Redesign.zip" ->
+      shopify-upload/sections/product-suggest.liquid, self-contained).
+      UEBERNOMMEN: komplettes neues Markup (.psn statt
+      .product-notification), Karten-Design mit Blur-Rise-Eintritt,
+      Bild-Wipe, gestaffelten Zeilen-Reveals, gezeichnetem Haken,
+      Gradient-Countdown, Exit-Animation und ~4s Pause; Preis wird jetzt
+      automatisch aus dem Katalog gezogen; ganze Karte verlinkt aufs
+      Produkt; 4 neue Farb-Settings; Kompaktlayout <=600px;
+      prefers-reduced-motion respektiert; Sektions-eigenes Inline-JS.
+      Section-Slug, Schema-Name, Block-Type und alle Setting-IDs
+      unveraendert -> KEIN parse-theme-Kontraktbruch. Block-Setting
+      `local` entfaellt (im Export nicht mehr angezeigt; Altwerte in
+      settings_data bleiben stehen und werden ignoriert).
+      VIER INTEGRATIONS-ANPASSUNGEN am Export (Theme-spezifisch):
+      (1) LOCALE-FALLBACKS zurueckgeholt: settings_data traegt
+          text/verified_label LEER; der Export haette dann hart englisch
+          "Someone just bought" gezeigt und - weil er die Badge-Zeile nur
+          bei nicht-leerem verified_label rendert - Badge UND "View"-Link
+          komplett ausgeblendet. Jetzt wie vorher: leer -> uebersetzter
+          Default (general.defaults.suggest_pretext/-_verified). Neuer
+          Key general.defaults.suggest_view (10 Sprachen) fuer den
+          "View"-Link, aria-label des Close-Buttons auf
+          general.accessibility.close.
+      (2) PRESETS ENTFERNT: Die Sektion ist eine STATISCHE Instanz
+          (layout/theme.liquid:444, Footer-Group, vgl. #163). Ein Preset
+          haette sie zusaetzlich in Templates einfuegbar gemacht ->
+          zweite schwebende Karte auf derselben Seite. Alte Datei hatte
+          ebenfalls keine presets.
+      (3) THEME-EDITOR: Der Session-Merker (sessionStorage) wird bei
+          Shopify.designMode ignoriert und nicht gesetzt - sonst waere die
+          Sektion nach einem Test-Klick auf "X" fuer den Rest der
+          Editor-Session unsichtbar.
+      (4) A11Y-FOKUS: Karte (<a>) und Close-Button (<button>) waren im
+          Ruhezustand nur opacity:0 + pointer-events:none, blieben also
+          zwischen den Durchlaeufen unsichtbar TASTATUR-fokussierbar
+          (Fokus verschwindet ins Nichts). Zusaetzlich visibility:hidden
+          im Ruhezustand, visible bei .is-in (Exit laeuft mit .is-in +
+          .is-out, bleibt also sichtbar). WCAG 2.2.2 ist durch den
+          Close-Button erfuellt.
+      AUFRAEUMEN: theme.js-Modul theme.productSuggest entfernt - es hing
+      an den alten Klassen (.product-notification/.data-product/
+      .close-notifi) und waere ein No-Op geblieben; Steuerung liegt jetzt
+      im Section-Inline-Script. theme.cookie bleibt (oeffentliche
+      Utility). Tote CSS-Reste (.product-notification in theme.css/
+      theme.css.liquid/header-css.liquid) BEWUSST stehen gelassen:
+      matchen nichts mehr, Anfassen der globalen Radius-Sammelregel in
+      header-css waere unnoetiges Risiko.
+      Verifiziert (repro-180-product-suggest.js, 34 Checks PASS, echte
+      Section-Datei via liquidjs + echte HTTP-Origin fuer sessionStorage):
+      Render + beide Bloecke, Locale-Fallbacks und Vorrang eigener Texte,
+      Ruhezustand nicht fokussierbar / sichtbar fokussierbar, Inhalte
+      (Titel/Preis 24,90/Zeit/Link/Bild) + laufender Countdown, Zyklus
+      aufs zweite Produkt inkl. Link-Wechsel, Close -> ausgeblendet +
+      Session-Merker + stumm nach Reload, designMode ignoriert den
+      Merker, unbekanntes Handle -> 0 Datensaetze und kein Fehler
+      (#163-Verhalten), enable:false -> kein Markup/kein CSS,
+      reduced-motion sichtbar ohne Animation, mobil 44px-Bild + Karte im
+      Viewport, keine JS-Fehler. node --check OK, Schema-JSON valide,
+      check-theme.mjs unveraendert (84/283/95).
+      OFFEN (Konfiguration/Design, kein Code):
+      - Die 4 Farb-Defaults sind FIX (#FFFFFF/#16181D/#1A5BFF/#108043),
+        nicht an die Theme-Palette gekoppelt. Alte Karte nutzte
+        var(--g-chrome-bg)/var(--g-color-heading). Pro Store/Preset
+        setzen oder auf Wunsch an die Palette haengen.
+      - Der globale Radius (settings.radius_allimg_range, header-css)
+        greift nicht mehr auf die Karte (fix 14px / mobil 12px).
+      - Die "Local"-Ortsangabe wird nicht mehr angezeigt (Design-
+        Entscheidung des Exports).
+      Summit-Folgeliste: NEUE Settings color_bg/color_text/color_accent/
+      color_verified (Typ color); ENTFALLEN Block-Setting `local` (Writer
+      kann es weglassen, Altwerte schaden nicht); RENAME_MAP-Eintrag fuer
+      product-suggest (`local`->`location_caption`) ist damit gegenstands-
+      los. Block-Produkt-Handles muessen weiterhin pro Ziel-Shop gemappt
+      werden (#163), sonst laeuft die Karte leer.
+      Klick-Test: Storefront mit enable:true -> Karte erscheint nach ~2s
+      unten links, zeigt Produkt/Preis/Zeit, Countdown laeuft, wechselt
+      nach der Pause aufs naechste Produkt; Klick auf die Karte oeffnet
+      das Produkt; "X" blendet sie bis zum Tab-Schliessen aus; im Editor
+      bleibt sie beim Bearbeiten sichtbar.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
