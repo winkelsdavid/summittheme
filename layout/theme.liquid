@@ -504,6 +504,7 @@ padding-right:5px;
         normalizeWheel: false,
         syncTouch: false                 // native touch on mobile (Lenis 1.x default)
       });
+      window.lenis = lenis;              // #178: erreichbar machen (stop/start bei offenem Cart Drawer)
       function raf(time) {
         lenis.raf(time);
         requestAnimationFrame(raf);

@@ -5060,12 +5060,16 @@ theme.miniCart = (function () {
         if (styleCart === "true") {
           toggleClassAll(miniCart, "active", false);
           document.body.classList.remove("overflow-hidden");
+          document.documentElement.classList.remove("overflow-hidden");
+          if (window.lenis && window.lenis.start) window.lenis.start();
         }
       } else {
         setDisplayAll($cartBottom + ", " + $crosellcart, true);
         if (styleCart === "true") {
           toggleClassAll(miniCart, "active", true);
           document.body.classList.add("overflow-hidden");
+          document.documentElement.classList.add("overflow-hidden");
+          if (window.lenis && window.lenis.stop) window.lenis.stop();
         }
       }
       setTextAll(cartCount, cart.item_count);
@@ -5541,6 +5545,15 @@ setHtmlAll('.bottom-total', `
       parent.classList.toggle("active");
     }
     document.body.classList.toggle("overflow-hidden");
+    // #178: Hintergrund-Scroll bei offenem Drawer sperren -
+    // html braucht overflow:hidden mit (Firefox sperrt ueber body allein
+    // nicht), und Lenis (enable_smoothness) faengt Wheel-Events ab:
+    // bei offenem Drawer stoppen, beim Schliessen starten.
+    var drawerOpen = parent && parent.classList.contains("active");
+    document.documentElement.classList.toggle("overflow-hidden", !!drawerOpen);
+    if (window.lenis && window.lenis.stop && window.lenis.start) {
+      if (drawerOpen) window.lenis.stop(); else window.lenis.start();
+    }
   });
   document.addEventListener("click", function (e) {
     var btn = e.target.closest(".overlaycart, .close");
@@ -5550,6 +5563,9 @@ setHtmlAll('.bottom-total', `
     var mc = btn.closest(miniCart);
     if (mc) mc.classList.remove("active");
     document.body.classList.remove("overflow-hidden");
+    // #178: Hintergrund-Scroll wieder freigeben (s. Toggle oben)
+    document.documentElement.classList.remove("overflow-hidden");
+    if (window.lenis && window.lenis.start) window.lenis.start();
   });
 
   // renderRecommendations when load page
