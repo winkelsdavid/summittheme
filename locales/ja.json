@@ -26,7 +26,8 @@
       "faq_availability": "カスタマーサポートは月曜日から金曜日まで対応しています。",
       "faq_response_time": "平均返信時間:24時間",
       "suggest_pretext": "誰かが最近購入しました",
-      "suggest_verified": "認証済み"
+      "suggest_verified": "認証済み",
+      "suggest_view": "見る"
     },
     "accessibility": {
       "loading": "読み込み中...",

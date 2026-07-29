@@ -26,7 +26,8 @@
       "faq_availability": "Nosso atendimento está disponível de segunda a sexta-feira.",
       "faq_response_time": "Tempo médio de resposta: 24h",
       "suggest_pretext": "Alguém comprou recentemente",
-      "suggest_verified": "Verificado"
+      "suggest_verified": "Verificado",
+      "suggest_view": "Ver"
     },
     "accessibility": {
       "loading": "Carregando...",

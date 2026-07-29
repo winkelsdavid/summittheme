@@ -26,7 +26,8 @@
       "faq_availability": "Il nostro servizio clienti è disponibile dal lunedì al venerdì.",
       "faq_response_time": "Tempo medio di risposta: 24h",
       "suggest_pretext": "Qualcuno ha appena acquistato",
-      "suggest_verified": "Verificato"
+      "suggest_verified": "Verificato",
+      "suggest_view": "Vedi"
     },
     "accessibility": {
       "loading": "Caricamento...",

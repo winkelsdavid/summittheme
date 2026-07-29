@@ -1,84 +1,188 @@
 {%- if section.settings.enable -%}
-  <style>
-    .product-notification-img{
-      position: relative;
-      overflow: hidden;
-      background-color: var(--color-item-product);
-    }
-    .product-notification-img.portrait {
-      padding-top: var(--g-img-portrait) !important;
-    }
-    .product-notification-img.square {
-      padding-top: var(--g-img-square) !important;
-    }
-    .product-notification-img.wide {
-      padding-top: var(--g-img-wide) !important;
-    }
-    .product-notification-img.landscape {
-      padding-top: var(--g-img-landscape) !important;
-    }
-    .product-notification-img.portrait img,.product-notification-img.square img,.product-notification-img.wide img,.product-notification-img.landscape img{
-      position: absolute;
-      top:0;
-      left:0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  </style>
-<section class="product-notification" data-time="{{ section.settings.duration | times: 1000 }}" >
-  <span  title="Close" class="close-notifi">{% render 'icon-close-solid' %}</span>
-  <div class="product-suggest ">
-    <a class="product-image " href="/" title="">
-      <span class="w-100 d-block product-notification-img position-relative {{ settings.size_image_grid }}">
-        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" loading="lazy" width="150" height="">
+{%- liquid
+  assign dur = section.settings.duration | default: 7
+  assign c_bg = section.settings.color_bg | default: '#FFFFFF'
+  assign c_text = section.settings.color_text | default: '#16181D'
+  assign c_accent = section.settings.color_accent | default: '#1A5BFF'
+  assign c_verified = section.settings.color_verified | default: '#108043'
+  # Leere Textfelder fallen auf die uebersetzten Defaults zurueck (Theme-
+  # Konvention, settings_data traegt hier ueblicherweise "").
+  assign ps_pretext = section.settings.text
+  if ps_pretext == blank
+    assign ps_pretext = 'general.defaults.suggest_pretext' | t
+  endif
+  assign ps_verified = section.settings.verified_label
+  if ps_verified == blank
+    assign ps_verified = 'general.defaults.suggest_verified' | t
+  endif
+-%}
+<section class="psn" id="psn-{{ section.id }}" data-duration="{{ dur | times: 1000 }}" role="status" aria-live="polite" style="--psn-dur:{{ dur }}s">
+  <a class="psn-card" href="/">
+    <span class="psn-img"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" loading="lazy" width="184" height="224"></span>
+    <span class="psn-body">
+      <span class="psn-line"><span class="psn-inner psn-eyebrow"><span class="psn-dot"></span><span>{{ ps_pretext }}</span></span></span>
+      <span class="psn-line psn-l2"><span class="psn-inner psn-name js-psn-name"></span></span>
+      <span class="psn-line psn-l3"><span class="psn-inner psn-meta"><span class="psn-price js-psn-price"></span><span class="psn-time js-psn-time"></span></span></span>
+      <span class="psn-row">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="psn-check" d="M19.5 6L9 18L4.5 13.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="22" stroke-dashoffset="22"/></svg>
+        <span class="psn-verified">{{ ps_verified }}</span>
+        <span class="psn-spacer"></span>
+        <span class="psn-view">{{ 'general.defaults.suggest_view' | t }} &rarr;</span>
       </span>
-    </a>
-    <div class="column-right">
-      <label class="pr-2 mb-1">{% if section.settings.text != blank %}{{ section.settings.text }}{% else %}{{ 'general.defaults.suggest_pretext' | t }}{% endif %} <a class="product-name" href="/"></a></label>
-      <div class="from-ago"></div>
-      <div class="d-flex gap-3">
-        <div class="d-flex gap-1 align-items-center">
-          <svg class="txt-body-70" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 3C7.03125 3 3 7.03125 3 12C3 16.9688 7.03125 21 12 21C16.9688 21 21 16.9688 21 12C21 7.03125 16.9688 3 12 3Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
-          <path d="M12 6V12.75H16.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div class="time-ago small txt-body-70"></div>
-        </div>
-        {% assign ps_verified = section.settings.verified_label %}
-        {% if ps_verified == blank %}{% assign ps_verified = 'general.defaults.suggest_verified' | t %}{% endif %}
-        {% if ps_verified != blank %}
-        <div class="d-flex gap-1 align-items-center">
-          <svg class="svg-verified" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19.5 6L9 18L4.5 13.5" stroke="#108043" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="small txt-verified"> {{ ps_verified }} </span>
-        </div>
-        {% endif %}
-      </div>
-      
-    </div>
-  </div>
-  <div class="hide">{% comment %} METAFIELD_CONTRACT.md Abschn. 2: Setting gewinnt, wenn gesetzt;
-      sonst nativ das aktuelle Seitenprodukt (auf Nicht-Produktseiten wie bisher nichts). {% endcomment %}{% assign ps_page_product = product %}
+    </span>
+    <span class="psn-bar"></span>
+  </a>
+  <button type="button" class="psn-close" aria-label="{{ 'general.accessibility.close' | t }}">
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+  </button>
+  <div class="psn-data" hidden>
+    {%- comment -%} METAFIELD_CONTRACT.md Abschn. 2: Setting gewinnt, wenn gesetzt;
+        sonst nativ das aktuelle Seitenprodukt (auf Nicht-Produktseiten wie bisher
+        nichts). Eigene Variable statt `product`, damit die Seiten-Variable in der
+        Schleife nicht ueberschrieben wird. {%- endcomment -%}
+    {%- assign ps_page_product = product -%}
     {%- for block in section.blocks -%}
-    {%- assign product = all_products[block.settings.product] -%}{% if product == blank %}{% assign product = ps_page_product %}{% endif %}
-    {%- if product != blank -%}
-    <div class="data-product" 
-         data-id="{{ product.id }}" 
-         data-image="{{ product.featured_image | image_url: width: 160 }}" 
-         data-wimage = "{{ product.featured_image.width }}"
-         data-himage = "{{ product.featured_image.height }}"
-         data-url="{{ product.url | within: collection }}" 
-         data-title="{{ product.title }}" 
-         data-alt="{{ product.featured_image.alt }}" 
-         data-local="{{ block.settings.local }}" 
-         data-time="{{ block.settings.time }}"></div>
+    {%- assign bproduct = all_products[block.settings.product] -%}
+    {%- if bproduct == blank %}{% assign bproduct = ps_page_product %}{% endif -%}
+    {%- if bproduct != blank -%}
+    <div data-id="{{ bproduct.id }}"
+         data-image="{{ bproduct.featured_image | image_url: width: 368 }}"
+         data-url="{{ bproduct.url | within: collection }}"
+         data-title="{{ bproduct.title | escape }}"
+         data-price="{{ bproduct.price | money | strip_html | escape }}"
+         data-alt="{{ bproduct.featured_image.alt | escape }}"
+         data-time="{{ block.settings.time | escape }}"></div>
     {%- endif -%}
     {%- endfor -%}
   </div>
 </section>
+
+{% style %}
+#psn-{{ section.id }}{position:fixed;left:1.5rem;bottom:1.5rem;width:340px;max-width:calc(100vw - 3rem);z-index:998;pointer-events:none}
+/* visibility (nicht nur opacity) im Ruhezustand: sonst bleiben Karte und
+   Close-Button zwischen den Durchlaeufen unsichtbar tastatur-fokussierbar. */
+#psn-{{ section.id }} .psn-card{position:relative;display:flex;background:{{ c_bg }};border:1px solid color-mix(in srgb,{{ c_text }} 9%,transparent);border-radius:14px;box-shadow:0 18px 50px -12px rgba(15,20,30,.28),0 2px 6px rgba(15,20,30,.06);overflow:hidden;text-decoration:none;color:inherit;opacity:0;visibility:hidden;pointer-events:none;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1)}
+#psn-{{ section.id }}.is-in .psn-card{opacity:1;visibility:visible;pointer-events:auto;animation:psnCardIn .7s cubic-bezier(.16,1,.3,1) both}
+#psn-{{ section.id }}.is-in .psn-card:hover{transform:translateY(-2px);box-shadow:0 24px 60px -12px rgba(15,20,30,.34),0 2px 6px rgba(15,20,30,.06)}
+#psn-{{ section.id }}.is-out .psn-card{animation:psnExit .55s cubic-bezier(.55,0,.85,.4) both}
+#psn-{{ section.id }} .psn-img{position:relative;width:92px;flex:0 0 92px;min-height:112px;background:color-mix(in srgb,{{ c_text }} 6%,{{ c_bg }})}
+#psn-{{ section.id }}.is-in .psn-img{animation:psnClip .8s .12s cubic-bezier(.16,1,.3,1) both}
+#psn-{{ section.id }} .psn-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#psn-{{ section.id }} .psn-body{flex:1;min-width:0;padding:12px 14px 14px}
+#psn-{{ section.id }} .psn-line{display:block;overflow:hidden}
+#psn-{{ section.id }} .psn-l2{margin-top:4px}
+#psn-{{ section.id }} .psn-l3{margin-top:3px}
+#psn-{{ section.id }} .psn-inner{display:flex;align-items:center;gap:6px;transform:translateY(115%)}
+#psn-{{ section.id }}.is-in .psn-inner{animation:psnLine .6s cubic-bezier(.2,.8,.2,1) both}
+#psn-{{ section.id }}.is-in .psn-line:nth-child(1) .psn-inner{animation-delay:.3s}
+#psn-{{ section.id }}.is-in .psn-l2 .psn-inner{animation-delay:.42s}
+#psn-{{ section.id }}.is-in .psn-l3 .psn-inner{animation-delay:.54s}
+#psn-{{ section.id }} .psn-eyebrow{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,{{ c_text }} 55%,transparent);line-height:1.4}
+#psn-{{ section.id }} .psn-dot{width:6px;height:6px;flex:0 0 6px;border-radius:50%;background:{{ c_accent }}}
+#psn-{{ section.id }}.is-in .psn-dot{animation:psnPulse 2s 1s infinite}
+#psn-{{ section.id }} .psn-name{display:block;font-size:15px;font-weight:650;color:{{ c_text }};line-height:1.25;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+#psn-{{ section.id }} .psn-meta{align-items:baseline;gap:7px}
+#psn-{{ section.id }} .psn-price{font-size:13px;font-weight:700;color:{{ c_text }}}
+#psn-{{ section.id }} .psn-time{font-size:11.5px;color:color-mix(in srgb,{{ c_text }} 48%,transparent)}
+#psn-{{ section.id }} .psn-row{display:flex;align-items:center;gap:5px;margin-top:9px;opacity:0}
+#psn-{{ section.id }}.is-in .psn-row{animation:psnRise .5s .68s cubic-bezier(.16,1,.3,1) both}
+#psn-{{ section.id }} .psn-row svg{color:{{ c_verified }};flex:0 0 14px}
+#psn-{{ section.id }}.is-in .psn-check{animation:psnDraw .45s 1s cubic-bezier(.2,.8,.2,1) both}
+#psn-{{ section.id }} .psn-verified{font-size:11px;font-weight:500;color:{{ c_verified }}}
+#psn-{{ section.id }} .psn-spacer{flex:1}
+#psn-{{ section.id }} .psn-view{font-size:11.5px;font-weight:600;color:{{ c_accent }}}
+#psn-{{ section.id }} .psn-card:hover .psn-view{text-decoration:underline}
+#psn-{{ section.id }} .psn-bar{position:absolute;left:0;bottom:0;height:2.5px;width:0;border-radius:0 2px 2px 0;background:linear-gradient(90deg,color-mix(in srgb,{{ c_accent }} 75%,#000),{{ c_accent }} 55%,color-mix(in srgb,{{ c_accent }} 55%,#fff))}
+#psn-{{ section.id }}.is-in .psn-bar{animation:psnBar var(--psn-dur) linear .9s both}
+#psn-{{ section.id }} .psn-close{position:absolute;top:6px;right:6px;width:22px;height:22px;border:0;padding:0;border-radius:50%;display:flex;align-items:center;justify-content:center;background:transparent;color:color-mix(in srgb,{{ c_text }} 40%,transparent);cursor:pointer;opacity:0;visibility:hidden;pointer-events:none}
+#psn-{{ section.id }}.is-in .psn-close{animation:psnFadeIn .4s .9s both;visibility:visible;pointer-events:auto}
+#psn-{{ section.id }} .psn-close:hover{background:color-mix(in srgb,{{ c_text }} 8%,transparent);color:{{ c_text }}}
+@keyframes psnCardIn{0%{opacity:0;transform:translateY(26px) scale(.96);filter:blur(8px)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes psnExit{to{opacity:0;transform:translateY(18px) scale(.96);filter:blur(6px)}}
+@keyframes psnLine{0%{transform:translateY(115%)}100%{transform:translateY(0)}}
+@keyframes psnClip{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}}
+@keyframes psnRise{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes psnDraw{to{stroke-dashoffset:0}}
+@keyframes psnBar{0%{width:100%}100%{width:0%}}
+@keyframes psnPulse{0%,100%{opacity:1;box-shadow:0 0 0 0 color-mix(in srgb,{{ c_accent }} 55%,transparent)}50%{opacity:.7;box-shadow:0 0 0 5px transparent}}
+@keyframes psnFadeIn{0%{opacity:0}100%{opacity:1}}
+@media (max-width:600px){
+  #psn-{{ section.id }}{left:10px;right:10px;bottom:10px;width:auto;max-width:none}
+  #psn-{{ section.id }} .psn-card{border-radius:12px;align-items:center}
+  #psn-{{ section.id }} .psn-img{width:44px;flex:0 0 44px;min-height:0;height:44px;border-radius:9px;overflow:hidden;margin:8px 0 8px 10px}
+  #psn-{{ section.id }} .psn-body{padding:8px 10px}
+  #psn-{{ section.id }} .psn-line:nth-child(1){display:none}
+  #psn-{{ section.id }} .psn-l2{margin-top:0}
+  #psn-{{ section.id }} .psn-name{font-size:12px}
+  #psn-{{ section.id }} .psn-l3{margin-top:1px}
+  #psn-{{ section.id }} .psn-price{font-size:11px}
+  #psn-{{ section.id }} .psn-time{font-size:10px}
+  #psn-{{ section.id }} .psn-row{margin-top:2px}
+  #psn-{{ section.id }} .psn-verified{font-size:10px}
+  #psn-{{ section.id }} .psn-view{display:none}
+  #psn-{{ section.id }} .psn-close{top:50%;right:8px;transform:translateY(-50%)}
+  #psn-{{ section.id }} .psn-body{padding-right:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  #psn-{{ section.id }} .psn-card,#psn-{{ section.id }} .psn-inner,#psn-{{ section.id }} .psn-img,#psn-{{ section.id }} .psn-row,#psn-{{ section.id }} .psn-close,#psn-{{ section.id }} .psn-check,#psn-{{ section.id }} .psn-dot{animation:none !important}
+  #psn-{{ section.id }}.is-in .psn-inner{transform:none}
+  #psn-{{ section.id }}.is-in .psn-row,#psn-{{ section.id }}.is-in .psn-close{opacity:1}
+  #psn-{{ section.id }}.is-in .psn-check{stroke-dashoffset:0}
+  #psn-{{ section.id }}.is-out .psn-card{opacity:0}
+}
+{% endstyle %}
+
+<script>
+(function(){
+  var root=document.getElementById('psn-{{ section.id }}');
+  if(!root||root.dataset.psnInit)return;
+  root.dataset.psnInit='1';
+  var editor=!!(window.Shopify&&Shopify.designMode);
+  /* Im Theme-Editor nie wegen einer frueheren Schliessung stumm bleiben -
+     der Merchant muss die Sektion beim Bearbeiten sehen. */
+  if(!editor){try{if(sessionStorage.getItem('psn-hide-{{ section.id }}'))return;}catch(e){}}
+  var items=[].slice.call(root.querySelectorAll('.psn-data [data-id]'));
+  if(!items.length)return;
+  var dur=parseInt(root.dataset.duration,10)||7000;
+  var card=root.querySelector('.psn-card'),
+      img=root.querySelector('.psn-img img'),
+      name=root.querySelector('.js-psn-name'),
+      price=root.querySelector('.js-psn-price'),
+      time=root.querySelector('.js-psn-time'),
+      i=-1,t;
+  function show(){
+    i=(i+1)%items.length;
+    var d=items[i].dataset;
+    img.src=d.image;img.alt=d.alt||d.title;
+    name.textContent=d.title;
+    price.textContent=d.price||'';
+    price.style.display=d.price?'':'none';
+    time.textContent=d.time||'';
+    card.setAttribute('href',d.url||'/');
+    root.classList.remove('is-in','is-out');
+    void root.offsetWidth;
+    root.classList.add('is-in');
+    t=setTimeout(hide,dur+950);
+  }
+  function hide(){
+    root.classList.add('is-out');
+    t=setTimeout(function(){
+      root.classList.remove('is-in','is-out');
+      t=setTimeout(show,4000);
+    },600);
+  }
+  root.querySelector('.psn-close').addEventListener('click',function(ev){
+    ev.preventDefault();
+    clearTimeout(t);
+    root.classList.add('is-out');
+    setTimeout(function(){root.style.display='none';},600);
+    if(!editor){try{sessionStorage.setItem('psn-hide-{{ section.id }}','1');}catch(e){}}
+  });
+  t=setTimeout(show,2200);
+})();
+</script>
 {%- endif -%}
+
 {% schema %}
 {
   "name": "Product Suggest",
@@ -102,13 +206,43 @@
     {
       "type": "text",
       "id": "text",
-      "label": "Pretext"
+      "label": "Pretext",
+      "info": "Leave empty to use the translated default."
     },
     {
-          "type": "text",
-          "id": "verified_label",
-          "label": "Verify"
-        }
+      "type": "text",
+      "id": "verified_label",
+      "label": "Verify",
+      "info": "Leave empty to use the translated default."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": "Text",
+      "default": "#16181D"
+    },
+    {
+      "type": "color",
+      "id": "color_accent",
+      "label": "Accent (dot, link, countdown)",
+      "default": "#1A5BFF"
+    },
+    {
+      "type": "color",
+      "id": "color_verified",
+      "label": "Verified badge",
+      "default": "#108043"
+    }
   ],
   "blocks": [
     {
@@ -122,54 +256,12 @@
         },
         {
           "type": "text",
-          "id": "local",
-          "label": "Local",
-          "default": "in Blackburn, UK"
-        },
-        {
-          "type": "text",
           "id": "time",
           "label": "Time",
           "default": "about 21 minutes ago"
         }
-        
       ]
     }
   ]
 }
 {% endschema %}
-
-{% style %}
-@keyframes progressbar-countdown {
-  0% {
-    width: 100%;
-  }
-  100% {
-    width: 0%;
-  }
-}
-.product-notification{position:fixed;bottom:10vh;left:1.5rem;background:var(--g-chrome-bg, #fff);width:350px;opacity:0;z-index:998;border:1px solid #eee;border-radius:0px;visibility:hidden;transition:all ease 1s}.product-notification.active{opacity:1;bottom:1.5rem;visibility:visible}.product-notification .close-notifi{border-radius: 50%;display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-flex-align:center;-webkit-align-items:center;-moz-align-items:center;-ms-align-items:center;-o-align-items:center;align-items:center;-webkit-justify-content:center;-moz-justify-content:center;-ms-justify-content:center;justify-content:center;width:27px;height:27px;position:absolute;right:4px;top:4px}.product-notification .product-suggest{background:var(--g-chrome-bg, white);display:-webkit-flex;display:-ms-flexbox;display:flex;width:100%;-ms-flex-align:center;-webkit-align-items:center;-moz-align-items:center;-ms-align-items:center;-o-align-items:center;align-items:center}.product-notification .product-name{font-weight:600}.product-notification .product-image{max-width:100px;display:block;padding: 16px 0 16px 16px;flex:0 0 100px;}.product-notification .column-right{padding:16px;line-height:24px;font-size:calc(var(--g-font-size) - 2px)} .product-notification .column-right svg{ fill:none;}.product-notification label{display:block;line-height:1.35;}@media (max-width:480px){.product-notification{display:none}}@media (max-width:767px){ .product-notification{left:20px;}}
-.txt-verified{
-  color:#108043;
-}
-.svg-verified{
-  stroke:#108043;
-}
-.product-notification:before{
-  content:"";
-  height:2px;
-  left:0;
-  bottom:-1px;
-  background:var(--g-color-heading);
-  position:absolute;
-  width:0%;
-}
-.product-notification.active:before{
-  animation: progressbar-countdown;
-  animation-duration: {{ section.settings.duration | times: 1000 }}ms;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  animation-timing-function: linear;
-}
-
-{% endstyle %}

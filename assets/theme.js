@@ -6675,69 +6675,10 @@ theme.fakeViewer = (function () {
   initFakeViewCount();
 })();
 
-// Product-suggest
-theme.productSuggest = (function () {
-  var notification = document.querySelector(".product-notification");
-  if (!notification) return;
-  var closeButton = document.querySelector(".close-notifi");
-  var suggestionDuration =
-    parseInt(notification.getAttribute("data-time"), 10) || 0;
-  var suggestionCookie = "productSuggestClosed";
-
-  function closeSuggestion() {
-    notification.remove();
-    theme.cookie.set(suggestionCookie, "closed", 1, "/");
-  }
-
-  function toggleSuggestion() {
-    if (notification.classList.contains("active")) {
-      notification.classList.remove("active");
-    } else {
-      var items = document.querySelectorAll(".data-product");
-      if (!items.length) return;
-      var selected = items[Math.floor(Math.random() * items.length)];
-
-      notification.classList.add("active");
-      var img = notification.querySelector(".product-image img");
-      if (img) {
-        img.setAttribute("src", selected.getAttribute("data-image"));
-        img.setAttribute("width", selected.getAttribute("data-wimage"));
-        img.setAttribute("height", selected.getAttribute("data-himage"));
-      }
-      var imgLink = notification.querySelector(".product-image");
-      if (imgLink) {
-        imgLink.setAttribute("href", selected.getAttribute("data-url"));
-        imgLink.setAttribute("title", selected.getAttribute("data-title"));
-      }
-      var name = notification.querySelector(".product-name");
-      if (name) {
-        name.textContent = selected.getAttribute("data-title");
-        name.setAttribute("href", selected.getAttribute("data-url"));
-      }
-      var timeAgo = notification.querySelector(".time-ago");
-      if (timeAgo) timeAgo.textContent = selected.getAttribute("data-time");
-      var fromAgo = notification.querySelector(".from-ago");
-      if (fromAgo) fromAgo.textContent = selected.getAttribute("data-local");
-    }
-  }
-
-  function handleSuggestionInterval() {
-    if (suggestionDuration !== 0) {
-      setInterval(toggleSuggestion, suggestionDuration);
-    }
-  }
-
-  function init() {
-    if (theme.cookie.get(suggestionCookie) === "closed") {
-      notification.remove();
-    } else {
-      if (closeButton) closeButton.addEventListener("click", closeSuggestion);
-      handleSuggestionInterval();
-    }
-  }
-
-  init();
-})();
+// Product-suggest: Steuerung liegt seit dem Section-Redesign (#180) im
+// Section-eigenen Inline-Script (sections/product-suggest.liquid, Markup .psn).
+// Das fruehere Modul hier hing an den alten Klassen (.product-notification /
+// .data-product / .close-notifi) und war damit wirkungslos.
 
 theme.activeAccordion = (function () {
   // Bootstrap collapse accordions were migrated to native <details>; the

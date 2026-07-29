@@ -26,7 +26,8 @@
       "faq_availability": "Onze klantenservice is bereikbaar van maandag tot en met vrijdag.",
       "faq_response_time": "Gemiddelde reactietijd: 24 uur",
       "suggest_pretext": "Iemand kocht zojuist",
-      "suggest_verified": "Geverifieerd"
+      "suggest_verified": "Geverifieerd",
+      "suggest_view": "Bekijken"
     },
     "accessibility": {
       "loading": "Bezig met laden...",

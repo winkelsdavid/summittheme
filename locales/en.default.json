@@ -26,7 +26,8 @@
       "faq_availability": "Our customer support is available Monday to Friday.",
       "faq_response_time": "Average Answer Time: 24h",
       "suggest_pretext": "Someone recently bought",
-      "suggest_verified": "Verified"
+      "suggest_verified": "Verified",
+      "suggest_view": "View"
     },
     "accessibility": {
       "loading": "Loading...",

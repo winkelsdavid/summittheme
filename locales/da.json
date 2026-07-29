@@ -26,7 +26,8 @@
       "faq_availability": "Vores kundeservice er tilgængelig mandag til fredag.",
       "faq_response_time": "Gennemsnitlig svartid: 24 timer",
       "suggest_pretext": "Nogen har lige købt",
-      "suggest_verified": "Verificeret"
+      "suggest_verified": "Verificeret",
+      "suggest_view": "Se"
     },
     "accessibility": {
       "loading": "Indlæser...",
