@@ -13,7 +13,8 @@
     assign cgs_value = cgs_product.compare_at_price | money
   endif
 -%}
-<div class="cgs" id="cgs"
+{%- assign cgs_success = settings.gift_success_design | default: 'gold_pop' -%}
+<div class="cgs {% if cgs_success == 'ink_luxe' %}cgs--sink{% else %}cgs--sgold{% endif %}" id="cgs"
   style="--cgs-accent: {{ settings.gift_accent_color }};{% if settings.gift_card_bg != blank and settings.gift_card_bg != 'rgba(0,0,0,0)' %}--cgs-card-bg: {{ settings.gift_card_bg }};{% endif %}">
   <script type="application/json" id="cgs-config">{
     "designMode": {% if request.design_mode %}true{% else %}false{% endif %},
@@ -48,6 +49,10 @@
   <div class="cgs__stage">
     {%- comment -%} Geschenk-Karte (unter der Folie) {%- endcomment -%}
     <div class="cgs__card" data-cgs-card>
+      {%- comment -%} #177: Saver = Fortschritts-Ansicht; verschwindet, sobald das
+          Geschenk qualifiziert im Warenkorb liegt (Root-Klasse cgs--incart),
+          dann uebernimmt das Success-Layout (gift_success_design). {%- endcomment -%}
+      <div class="cgs__saver">
       <div class="cgs__badgebar">
         <span class="cgs__badge"><span class="cgs__dot"></span><span data-cgs-badgetext></span></span>
         <span class="cgs__clockwrap"><span class="cgs__endsin" data-cgs-endsin></span><span class="cgs__clock" data-cgs-clock></span></span>
@@ -76,6 +81,59 @@
           <div class="cgs__warn" data-cgs-warn hidden></div>
         </div>
       </div>
+      </div>
+      {%- comment -%} #177: Success-Layout (Design-Export v2). Nur die konfigurierte
+          Variante wird gerendert; sichtbar via .cgs--incart. {%- endcomment -%}
+      {%- if cgs_success == 'ink_luxe' -%}
+      <div class="cgs__success cgs__success--ink">
+        <span class="cgs__sglow"></span>
+        <span class="cgs__ssweep"></span>
+        <div class="cgs__scol">
+          <span class="cgs__skicker">{{ 'general.cart.gift_success_unlocked_kicker' | t }}</span>
+          <span class="cgs__stitle">{{ 'general.cart.gift_success_here' | t }}</span>
+          <span class="cgs__sline">{{ cgs_product.title }} · {% if cgs_value != blank %}<s>{{ cgs_value }}</s> {% endif %}<strong>{{ 0 | money }}</strong></span>
+          <span class="cgs__srow">
+            <span class="cgs__spill"><span class="cgs__scheck">✓</span>{{ 'general.cart.gift_in_cart_label' | t }}</span>
+            <span class="cgs__sclockwrap"><span class="cgs__sendsin">{{ 'general.cart.gift_ends_in' | t }}</span><span class="cgs__sclock" data-cgs-clock></span></span>
+          </span>
+        </div>
+        <div class="cgs__strophy">
+          <div class="cgs__strophy-frame">
+            {%- if cgs_img != blank -%}
+              <img src="{{ cgs_img | image_url: width: 300 }}" alt="{{ cgs_img.alt | escape }}" loading="lazy" width="{{ cgs_img.width }}" height="{{ cgs_img.height }}">
+            {%- endif -%}
+          </div>
+          <span class="cgs__seal">{{ 'general.cart.gift_free_label' | t }}</span>
+        </div>
+      </div>
+      {%- else -%}
+      <div class="cgs__success cgs__success--gold">
+        <span class="cgs__ssweep"></span>
+        <span class="cgs__confetti cgs__confetti--1"></span>
+        <span class="cgs__confetti cgs__confetti--2"></span>
+        <span class="cgs__confetti cgs__confetti--3"></span>
+        <span class="cgs__confetti cgs__confetti--4"></span>
+        <span class="cgs__confetti cgs__confetti--5"></span>
+        <span class="cgs__confetti cgs__confetti--6"></span>
+        <div class="cgs__strophy">
+          <div class="cgs__strophy-frame">
+            {%- if cgs_img != blank -%}
+              <img src="{{ cgs_img | image_url: width: 300 }}" alt="{{ cgs_img.alt | escape }}" loading="lazy" width="{{ cgs_img.width }}" height="{{ cgs_img.height }}">
+            {%- endif -%}
+          </div>
+          <span class="cgs__seal">{{ 'general.cart.gift_free_label' | t }}</span>
+        </div>
+        <div class="cgs__scol">
+          <span class="cgs__skicker">{{ 'general.cart.gift_success_done' | t }}</span>
+          <span class="cgs__stitle">{{ 'general.cart.gift_secured' | t }}</span>
+          <span class="cgs__sline">{{ cgs_product.title }} · {% if cgs_value != blank %}<s>{{ cgs_value }}</s> {% endif %}<strong>{{ 0 | money }}</strong></span>
+          <span class="cgs__srow">
+            <span class="cgs__spill"><span class="cgs__scheck">✓</span>{{ 'general.cart.gift_in_cart_label' | t }}</span>
+            <span class="cgs__sclockwrap"><span class="cgs__sendsin">{{ 'general.cart.gift_ends_in' | t }}</span><span class="cgs__sclock" data-cgs-clock></span></span>
+          </span>
+        </div>
+      </div>
+      {%- endif -%}
     </div>
     {%- comment -%} Teaser (sichtbar vor dem Reveal, unter der Folie) {%- endcomment -%}
     <div class="cgs__teaser" data-cgs-teaser>
@@ -94,6 +152,11 @@
   @keyframes cgs-pop { 0% { transform: scale(.94); opacity: 0; } 60% { transform: scale(1.012); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
   @keyframes cgs-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
   @keyframes cgs-sweep { 0% { transform: translateX(-120%); } 100% { transform: translateX(220%); } }
+  /* #177: Success-Zustand (Design-Export v2) */
+  @keyframes cgs-checkpop { 0% { transform: scale(0); } 70% { transform: scale(1.3); } 100% { transform: scale(1); } }
+  @keyframes cgs-pop2 { 0% { transform: scale(.95); } 55% { transform: scale(1.02); } 100% { transform: scale(1); } }
+  @keyframes cgs-sealpop { 0% { opacity: 0; transform: scale(0) rotate(-24deg); } 65% { opacity: 1; transform: scale(1.25) rotate(8deg); } 100% { opacity: 1; transform: scale(1) rotate(5deg); } }
+  @keyframes cgs-confetti { 0% { opacity: 0; transform: translateY(-16px) rotate(0deg); } 25% { opacity: 1; } 100% { opacity: 0; transform: translateY(52px) rotate(200deg); } }
   .cgs{
     border-top: 1px solid rgba(var(--g-color-heading-rgb, 0,0,0), 0.08);
     padding: 16px 0 0;
@@ -112,6 +175,113 @@
     opacity: 0;
   }
   .cgs--revealed .cgs__card{ opacity: 1; animation: cgs-pop .55s cubic-bezier(.2,.9,.2,1) both; }
+  /* #177: Saver fuellt die Karte; weicht dem Success-Layout, sobald das
+     Geschenk im Warenkorb liegt (cgs--incart via JS). */
+  .cgs__saver{ display: flex; flex-direction: column; flex: 1; min-height: 0; }
+  .cgs--incart .cgs__saver{ display: none; }
+  .cgs--revealed.cgs--incart .cgs__card{ animation: cgs-pop2 .5s cubic-bezier(.2,.9,.2,1) both; }
+  .cgs--incart.cgs--sgold .cgs__card{
+    background: linear-gradient(135deg, #F6D06B 0%, #F0A12A 58%, #E2921C 100%);
+    border-color: #B67F14;
+    box-shadow: 0 10px 30px rgba(240,161,42,.45);
+    transition: border-color .5s ease, box-shadow .5s ease;
+  }
+  .cgs--incart.cgs--sink .cgs__card{
+    background: linear-gradient(180deg, #211A0A 0%, #17140A 100%);
+    border-color: #C9A227;
+    box-shadow: 0 0 0 1px rgba(201,162,39,.3), 0 8px 26px rgba(201,162,39,.28);
+    transition: border-color .5s ease, box-shadow .5s ease;
+  }
+  .cgs__success{
+    display: none; position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
+    align-items: center; gap: 17px; padding: 13px 18px;
+  }
+  .cgs--incart .cgs__success{ display: flex; }
+  .cgs__success--ink{ gap: 18px; }
+  .cgs__ssweep{
+    position: absolute; top: 0; bottom: 0; left: 0; width: 70%; pointer-events: none;
+    background: linear-gradient(100deg, transparent 30%, rgba(255,253,244,.18) 50%, transparent 70%);
+    animation: cgs-sweep 6.5s ease-in-out 1s infinite;
+  }
+  .cgs__success--ink .cgs__ssweep{
+    background: linear-gradient(100deg, transparent 30%, rgba(255,217,138,.1) 50%, transparent 70%);
+    animation-duration: 7s;
+  }
+  .cgs__sglow{
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 78% 50%, rgba(240,161,42,.28), transparent 60%);
+  }
+  .cgs__confetti{ position: absolute; pointer-events: none; animation: cgs-confetti 1.5s ease-out both; }
+  .cgs__confetti--1{ left: 14%; top: 8%; width: 3px; height: 8px; background: #17140A; opacity: .5; animation-delay: .15s; }
+  .cgs__confetti--2{ left: 30%; top: 5%; width: 5px; height: 5px; border-radius: 999px; background: #FFFDF7; animation-delay: .3s; }
+  .cgs__confetti--3{ left: 46%; top: 10%; width: 3px; height: 9px; background: #A9821B; animation-delay: .05s; }
+  .cgs__confetti--4{ left: 62%; top: 4%; width: 4px; height: 4px; border-radius: 999px; background: #17140A; opacity: .45; animation-delay: .4s; }
+  .cgs__confetti--5{ left: 76%; top: 9%; width: 3px; height: 8px; background: #FFFDF7; animation-delay: .2s; }
+  .cgs__confetti--6{ left: 90%; top: 6%; width: 5px; height: 5px; border-radius: 999px; background: #A9821B; animation-delay: .5s; }
+  .cgs__strophy{
+    flex: 0 0 auto; aspect-ratio: 1; height: 82%; max-height: 104px; position: relative;
+  }
+  .cgs__success--gold .cgs__strophy{ transform: rotate(-3deg); }
+  .cgs__strophy-frame{
+    position: absolute; inset: 0; border-radius: 6px; overflow: hidden; background: #FFFDF7;
+    border: 3px solid #FFFDF7; box-shadow: 0 10px 24px rgba(122,80,8,.38);
+  }
+  .cgs__success--ink .cgs__strophy-frame{
+    border: 1px solid rgba(240,203,94,.75);
+    box-shadow: 0 0 0 3px rgba(240,161,42,.25), 0 8px 24px rgba(0,0,0,.5);
+    animation: cgs-bob 3.4s ease-in-out infinite;
+  }
+  .cgs__strophy-frame img{ width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cgs__seal{
+    position: absolute; right: -10px; top: -9px;
+    background: #17140A; color: #FFD98A;
+    font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 3px; box-shadow: 0 5px 14px rgba(23,20,10,.4);
+    animation: cgs-sealpop .5s cubic-bezier(.2,.9,.2,1) .4s both;
+  }
+  .cgs__success--ink .cgs__seal{
+    right: auto; left: -10px;
+    background: var(--cgs-accent, #F0A12A); color: #17140A;
+    box-shadow: 0 5px 14px rgba(240,161,42,.45);
+  }
+  .cgs__scol{ flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; position: relative; }
+  .cgs__skicker{ font-size: 9.5px; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: rgba(23,20,10,.6); }
+  .cgs__success--ink .cgs__skicker{ color: #F0CB5E; }
+  .cgs__stitle{
+    font-family: var(--g-font-1); font-size: 21px; font-style: italic; font-weight: 600;
+    color: #17140A; letter-spacing: -.01em; line-height: 1.1;
+  }
+  .cgs__success--ink .cgs__stitle{ color: #F6E7C1; }
+  .cgs__sline{
+    font-size: 12.5px; color: rgba(23,20,10,.82);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums;
+  }
+  .cgs__sline s{ opacity: .6; }
+  .cgs__sline strong{ font-weight: 700; }
+  .cgs__success--ink .cgs__sline{ color: rgba(246,231,193,.75); }
+  .cgs__success--ink .cgs__sline s{ opacity: .55; }
+  .cgs__success--ink .cgs__sline strong{ color: var(--cgs-accent, #F0A12A); }
+  .cgs__srow{ display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; }
+  .cgs__spill{
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #17140A; color: #F6E7C1;
+    font-size: 10.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+    animation: cgs-checkpop .45s cubic-bezier(.2,.9,.2,1) .25s both;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .cgs__success--ink .cgs__spill{ background: var(--cgs-accent, #F0A12A); color: #17140A; font-weight: 700; }
+  .cgs__scheck{
+    width: 13px; height: 13px; border-radius: 999px;
+    background: var(--cgs-accent, #F0A12A); color: #17140A;
+    font-size: 8.5px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+  }
+  .cgs__success--ink .cgs__scheck{ background: #17140A; color: var(--cgs-accent, #F0A12A); }
+  .cgs__sclockwrap{ display: inline-flex; align-items: baseline; gap: 5px; flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+  .cgs__sendsin{ font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: rgba(23,20,10,.55); }
+  .cgs__success--ink .cgs__sendsin{ color: rgba(246,231,193,.55); }
+  .cgs__sclock{ font-size: 13.5px; font-weight: 700; color: #17140A; }
+  .cgs__success--ink .cgs__sclock{ color: #FFD98A; }
   .cgs__badgebar{
     flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px;
     padding: 7px 12px; background: #17140A;
@@ -227,7 +397,9 @@ theme.GiftScratch = (function () {
   var fill = root.querySelector('[data-cgs-fill]');
   var statusEl = root.querySelector('[data-cgs-status]');
   var badgeEl = root.querySelector('[data-cgs-badgetext]');
-  var clockEl = root.querySelector('[data-cgs-clock]');
+  /* #177: zwei Uhren (Saver-Kopfleiste + Success-Layout) - immer beide setzen */
+  var clockEls = root.querySelectorAll('[data-cgs-clock]');
+  function setClock(txt) { clockEls.forEach(function (el) { el.textContent = txt; }); }
   var endsinEl = root.querySelector('[data-cgs-endsin]');
   var warnEl = root.querySelector('[data-cgs-warn]');
 
@@ -434,6 +606,9 @@ theme.GiftScratch = (function () {
     var qualified = total >= cfg.thresholdCents;
     fill.style.transform = 'scaleX(' + ratio.toFixed(3) + ')';
     fill.classList.toggle('cgs__fill--done', qualified && !expired);
+    /* #177: Success-Layout uebernimmt, sobald das Geschenk sicher ist
+       (Original: giftInCart = revealed && qualified && !expired) */
+    root.classList.toggle('cgs--incart', revealed && qualified && !expired);
 
     if (expired) {
       badgeEl.textContent = cfg.t.expiredBadge;
@@ -462,11 +637,11 @@ theme.GiftScratch = (function () {
     if (!deadline) return;
     var left = Math.round((deadline - Date.now()) / 1000);
     if (left > 0) {
-      clockEl.textContent = clock(left) + ' Min';
+      setClock(clock(left) + ' Min');
       return;
     }
     // Ablauf (Uhrtext wie im Original: "Endet in abgelaufen")
-    clockEl.textContent = cfg.t.expiredClock;
+    setClock(cfg.t.expiredClock);
     applyExpiry();
   }
 
@@ -502,6 +677,9 @@ theme.GiftScratch = (function () {
       tick();
       if (currentCart && totalExGift(currentCart) >= cfg.thresholdCents && !giftLine(currentCart)) addGift();
     }
+    /* #177: incart-Klasse sofort beim Reveal setzen (nicht erst nach dem
+       naechsten Cart-Event); gilt auch im Editor-Preview (designMode) */
+    if (currentCart) refreshUI(currentCart);
   }
 
   /* ---------- Init ---------- */
@@ -545,7 +723,7 @@ theme.GiftScratch = (function () {
       } else {
         root.classList.add('cgs--revealed');
         endsinEl.textContent = cfg.t.endsIn;
-        clockEl.textContent = cfg.t.expiredClock;
+        setClock(cfg.t.expiredClock);
       }
     } else {
       if (savedDeadline && savedDeadline <= Date.now()) { lsDel(LS_DEADLINE); lsDel(LS_REVEALED); }

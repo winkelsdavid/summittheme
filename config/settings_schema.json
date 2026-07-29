@@ -2991,6 +2991,24 @@
       },
       {
         "type": "select",
+        "id": "gift_success_design",
+        "label": "Success Design",
+        "info": "Card layout shown once the gift is secured in the cart.",
+        "default": "gold_pop",
+        "options": [
+          {
+            "value": "gold_pop",
+            "label": "Gold Pop"
+          },
+          {
+            "value": "ink_luxe",
+            "label": "Ink Luxe"
+          }
+        ],
+        "visible_if": "{{ settings.enable_gift_scratch != false }}"
+      },
+      {
+        "type": "select",
         "id": "gift_expired_mode",
         "label": "When the timer expires",
         "default": "show_expired",
