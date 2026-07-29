@@ -4927,7 +4927,10 @@ theme.CrossellNav = (function () {
    seine Flex-Breite passt (Untergrenze 8px, darunter greift das
    overflow:hidden des Balkens). Delegiert + defensiv (P3). */
 theme.CartPromoFit = (function () {
-  var SEL = ".discount-information p, .review-information p",
+  /* #178: .c-cart-delivery (Below-Checkout-Icons) fittet als GANZES -
+     die Spans stecken in 1fr-Grid-Tracks und melden selbst nie Overflow,
+     erst der Grid-Container laeuft ueber. */
+  var SEL = ".discount-information p, .review-information p, .c-cart-delivery",
     MAX = 12,
     MIN = 8;
 
