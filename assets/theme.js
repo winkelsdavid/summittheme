@@ -4969,6 +4969,89 @@ theme.CartPromoFit = (function () {
   return { fit: fit, fitAll: fitAll };
 })();
 
+/* #179: Produktseite - .photos-sticky liegt SSR-seitig fix auf einer Spalte
+   (media_style-abhaengig, Zeile 484ff in product-template-1). Ist aber die
+   ANDERE Spalte die kuerzere (z.B. nur 4 statt 7 Produktfotos), klebt die
+   laengere wirkungslos und die kuerzere endet beim Runterscrollen oberhalb
+   der Nachbarspalte. Hier wandert die Klasse auf die gemessen kuerzere
+   Spalte: die folgt dem Scroll und endet buendig auf der Row-Unterkante -
+   dasselbe Verhalten wie der eingespielte 7-Foto-Fall, nur unabhaengig von
+   der Fotoanzahl. Unter 991px ist die Klasse CSS-seitig wirkungslos. */
+theme.ProductColumnSticky = (function () {
+  var CLS = "photos-sticky",
+    MQ = "(min-width: 991px)", // muss zur Media-Query von .photos-sticky passen
+    EPS = 8,
+    ro = null;
+
+  function cols(row) {
+    var meta = row.querySelector(".product-single__meta");
+    if (!meta) return null;
+    var list = [];
+    for (var i = 0; i < row.children.length; i++) {
+      if (/(^|\s)col-/.test(row.children[i].className)) list.push(row.children[i]);
+    }
+    if (list.length !== 2) return null;
+    var metaCol = list[0].contains(meta) ? list[0] : list[1].contains(meta) ? list[1] : null;
+    if (!metaCol) return null;
+    return { media: list[0] === metaCol ? list[1] : list[0], meta: metaCol };
+  }
+
+  function sync(row) {
+    var c = cols(row);
+    if (!c || !window.matchMedia(MQ).matches) return;
+    var hMedia = c.media.offsetHeight,
+      hMeta = c.meta.offsetHeight;
+    // praktisch gleich hoch: SSR-Zuweisung behalten, kein Hin- und Herflippen
+    if (Math.abs(hMedia - hMeta) <= EPS) return;
+    var shorter = hMedia < hMeta ? c.media : c.meta,
+      taller = shorter === c.media ? c.meta : c.media;
+    taller.classList.remove(CLS);
+    shorter.classList.add(CLS);
+  }
+
+  function scan() {
+    var rows = document.querySelectorAll(".row.product-single");
+    if (ro) ro.disconnect();
+    rows.forEach(function (row) {
+      sync(row);
+      if (ro) {
+        var c = cols(row);
+        if (c) {
+          ro.observe(c.media);
+          ro.observe(c.meta);
+        }
+      }
+    });
+  }
+
+  try {
+    // Spaeter ladende Bilder/Variantenwechsel aendern die Spaltenhoehen:
+    // Klassenwechsel selbst aendert keine Groessen, also keine RO-Schleife.
+    ro = new ResizeObserver(function (entries) {
+      var seen = [];
+      entries.forEach(function (en) {
+        var row = en.target.closest(".row.product-single");
+        if (row && seen.indexOf(row) === -1) {
+          seen.push(row);
+          sync(row);
+        }
+      });
+    });
+  } catch (err) {
+    ro = null; // ohne ResizeObserver bleibt es bei Scan auf Load/Resize
+  }
+  window.addEventListener("resize", scan);
+  document.addEventListener("DOMContentLoaded", scan);
+  document.addEventListener("shopify:section:load", scan);
+  try {
+    scan();
+  } catch (err) {
+    /* defensiv (P3): Register-Kette nie abbrechen */
+  }
+
+  return { scan: scan, sync: sync };
+})();
+
 theme.openAddon = (function () {
   var openBlock = ".js-open-addon",
     closeBlock = ".btn-close-addon",
