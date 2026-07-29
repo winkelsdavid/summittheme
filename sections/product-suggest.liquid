@@ -1,10 +1,30 @@
 {%- if section.settings.enable -%}
 {%- liquid
   assign dur = section.settings.duration | default: 7
-  assign c_bg = section.settings.color_bg | default: '#FFFFFF'
-  assign c_text = section.settings.color_text | default: '#16181D'
-  assign c_accent = section.settings.color_accent | default: '#1A5BFF'
-  assign c_verified = section.settings.color_verified | default: '#108043'
+  # Farben folgen der Store-Palette, solange nichts gesetzt ist (Theme-
+  # Konvention BACKLOG.md: leer bzw. rgba(0,0,0,0) == "nicht gesetzt").
+  # So ist die Karte ohne einen einzigen Mapping-Eintrag markenrichtig;
+  # eine gesetzte Farbe gewinnt weiterhin. Verifiziert-Gruen bleibt fix -
+  # das ist ein semantisches Signal, kein Markenwert.
+  assign c_bg = section.settings.color_bg
+  if c_bg == blank or c_bg == 'rgba(0,0,0,0)'
+    assign c_bg = 'var(--g-chrome-bg, #fff)'
+  endif
+  assign c_text = section.settings.color_text
+  if c_text == blank or c_text == 'rgba(0,0,0,0)'
+    assign c_text = 'var(--g-color-heading, #16181D)'
+  endif
+  assign c_accent = section.settings.color_accent
+  if c_accent == blank or c_accent == 'rgba(0,0,0,0)'
+    assign c_accent = settings.branding_color
+  endif
+  if c_accent == blank or c_accent == 'rgba(0,0,0,0)'
+    assign c_accent = '#1A5BFF'
+  endif
+  assign c_verified = section.settings.color_verified
+  if c_verified == blank or c_verified == 'rgba(0,0,0,0)'
+    assign c_verified = '#108043'
+  endif
   # Leere Textfelder fallen auf die uebersetzten Defaults zurueck (Theme-
   # Konvention, settings_data traegt hier ueblicherweise "").
   assign ps_pretext = section.settings.text
@@ -217,25 +237,26 @@
     },
     {
       "type": "header",
-      "content": "Colors"
+      "content": "Colors",
+      "info": "Leave empty to follow the theme colours (Theme settings → Colors)."
     },
     {
       "type": "color",
       "id": "color_bg",
       "label": "Card background",
-      "default": "#FFFFFF"
+      "info": "Empty = Chrome background."
     },
     {
       "type": "color",
       "id": "color_text",
       "label": "Text",
-      "default": "#16181D"
+      "info": "Empty = Heading colour."
     },
     {
       "type": "color",
       "id": "color_accent",
       "label": "Accent (dot, link, countdown)",
-      "default": "#1A5BFF"
+      "info": "Empty = Branding colour."
     },
     {
       "type": "color",
