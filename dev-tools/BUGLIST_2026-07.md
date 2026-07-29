@@ -4031,6 +4031,29 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       mit Countdown 29:59 + Stripes-Progress komplett.
       Hinweis: Nummernkollision - "176" existiert zweimal (Editor-
       Deselektion + Gift-Audit); dieser Fix ist 177.
+
+## 178. Hintergrund scrollt bei offenem Cart Drawer mit (Bug 28.07.)
+- [~] Operator: "im warenkorb scrolling scrollt nicht nur produkte im
+      warenkorb sondern auch die webseite. nur der warencorb darf vom
+      mausrad gescrollt werden" (Firefox 153/Win). Ursachen-Dreierlei:
+      1) body.overflow-hidden allein sperrt den Viewport in Firefox nicht
+         (braucht html), 2) Lenis (enable_smoothness) faengt Wheel-Events
+         ab und scrollt die Seite weiter - Instanz war lokal und nicht
+         erreichbar, 3) kein data-lenis-prevent am Drawer, damit sein
+         eigener Scroll nativ laeuft.
+      Fix:
+      - layout/theme.liquid: window.lenis = lenis (Instanz erreichbar).
+      - theme.js Toggle: bei Open -> documentElement.overflow-hidden +
+        window.lenis.stop(); bei Close (overlay/X) -> Klasse weg +
+        window.lenis.start(); updateElements (styleCart-Pfade, inkl.
+        Leer-Cart-Schliessen) spiegelt beides.
+      - block-cart.liquid: data-lenis-prevent auf .mini-cart-content
+        (Wheel ueber dem Drawer scrollt ihn nativ; CSS-Konvention dafuer
+        existierte schon in theme.liquid:101).
+      Verifiziert: theme.js node --check OK, check-theme.mjs unveraendert.
+      Klick-Test (Firefox!): Drawer offen -> Rad ueber Artikeln scrollt
+      NUR den Drawer, Seite bleibt stehen; Rad ueber dem Rest der Seite
+      bewegt nichts; Schliessen -> Seite scrollt wieder.
       Verifiziert headless (repro-gift-scratch.js, 17 Checks PASS, echte
       Skript-Reihenfolge Snippet VOR theme.js + fetch-Mock + HTTP-Origin):
       keine JS-Fehler, Folie gemalt, Status/Progress (0.75, "noch 5,00"),
