@@ -4112,6 +4112,74 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Summit-Folgeliste: NEUES Setting gift_success_design (+ #176:
       gift_scratch_goal).
 
+## 178. Cart Drawer: Below-Checkout-Icon-Labels einzeilig (Bug 29.07., 79066e7)
+- [~] (Nummer doppelt vergeben - der Hintergrund-Scroll-Fix bbc53fe traegt
+      ebenfalls #178; massgeblich ist der Commit-Hash.) Operator: "diese
+      texte aus cart wenn moeglich immer in einer zeile." "Kostenloser
+      Versand" brach neben den Below-Checkout-Icons zweizeilig um
+      (Screenshot PETS, Editor-Drawer ~340px).
+      URSACHE: Die Labels sind Textknoten in .c-cart-delivery, einem Grid
+      1fr|auto|1fr ohne nowrap - wird der Drawer schmal, wickelt die
+      laengere Haelfte innerhalb ihres 1fr-Tracks.
+      FIX: white-space:nowrap am Container (erbt in die Spans) +
+      .c-cart-delivery in die #151-Fit-Mechanik (theme.js CartPromoFit,
+      12->8px) aufgenommen. Gefittet wird der GANZE Grid-Container: die
+      Spans sitzen in 1fr-Tracks und melden selbst nie Overflow, erst der
+      Container laeuft ueber. Im <=768-MQ das gepinnte font-size:12px der
+      Spans entfernt (redundant, blockierte aber die Vererbung des
+      Fit-Fonts; grid-gap bleibt). Drawer ist geschlossen nur
+      translateX(100%), nicht display:none -> jederzeit messbar.
+      Verifiziert (repro-178-checkout-icons.js, 12 Checks, A/B gegen
+      HEAD, echtes Style-Head + Markup-Fragment via liquidjs + echtes
+      Modul): ALT @340px bricht um (Repro) und pinnt mobil 12px; NEU
+      @340px/@330px mobil einzeilig ohne Ueberlauf, @380px bleiben 12px,
+      XXL-Custom-Labels einzeilig an der 8px-Grenze, Span erbt Fit-Font.
+      node --check OK, check-theme.mjs unveraendert.
+      Klick-Test: Drawer mit zweiwortigen Labels ("Kostenloser Versand")
+      schmal ziehen -> Label bleibt einzeilig, Schrift schrumpft dezent
+      statt umzubrechen; Editor-Preset PETS wie im Screenshot pruefen.
+
+## 179. Produktseite: Spalten-Unterkanten buendig bei jeder Fotoanzahl (Bug 29.07., bfec6bd)
+- [~] Operator (winkels): "Bei 7 Produktbildern ist die Unterkante vom
+      letzten Bild immer auf der Unterkante vom Werbebanner passend. Da
+      bei nischenstores aber teilweise nur 4 Produktbilder generiert
+      werden, verschiebt sich da anscheinend die Unterkante. Benoetigt
+      ist eine Mechanik, dass egal bei wievielen Produktfotos die Kanten
+      passen wenn man nach unten scrollt."
+      URSACHE (Live-Messung 4/7-Foto-Produkte, Juli): .photos-sticky
+      (position:sticky, top:6.65rem, ab 991px; product-template.css:366)
+      haengt SSR-seitig fix an EINER Spalte je media_style
+      (product-template-1.liquid:484ff - list/grid/collage: Meta-Spalte,
+      Thumb-Styles: Galerie). Die Row steht global auf
+      align-items:flex-start (theme.css:4845) - buendig macht die Kanten
+      allein die Sticky-Spalte, die dem Scroll folgt und auf der
+      Row-Unterkante endet. Das funktioniert nur, wenn die Sticky-Spalte
+      die KUERZERE ist: bei 7 Fotos ist das die Meta-Spalte (passt), bei
+      4 Fotos ist die Galerie kuerzer, das Sticky klebt wirkungslos auf
+      der laengeren Seite -> 56-152px Klaffung unter dem letzten Bild.
+      (Der collage-Stretch aus #41 ist durch das globale flex-start
+      inert - Sticky und Stretch schliessen sich auf derselben Row aus.)
+      FIX ("Option C" der Juli-Analyse): theme.js-Modul
+      theme.ProductColumnSticky - misst beide Spalten der
+      .row.product-single und legt photos-sticky auf die gemessen
+      kuerzere. EPS 8px gegen Flippen bei Gleichstand (SSR-Zuweisung
+      bleibt), ResizeObserver auf beiden Spalten (Lazyload/
+      Variantenwechsel), Re-Sync auf resize + shopify:section:load,
+      unter 991px keine Eingriffe (Klasse dort CSS-seitig wirkungslos,
+      matchMedia identisch zur CSS-MQ). Defensiv nach P3. Gilt fuer ALLE
+      media_styles inkl. Gegenrichtung (Meta kuerzer bei Thumb-Styles).
+      Verifiziert (repro-179-sticky-col.js, 11 Checks, reale Regeln +
+      extrahiertes Modul): ALT reproduziert 200px-Klaffung; NEU 4-Foto
+      buendig (0px Differenz am Scroll-Ende, Sticky auf Galerie);
+      7-Foto-Ist-Verhalten unveraendert; Lazyload-Wachstum flippt
+      zurueck; Gleichstand stabil; <991px unangetastet; Resize re-synct;
+      Invariante genau 1 Sticky-Spalte; keine JS-Fehler. node --check
+      OK, check-theme.mjs unveraendert.
+      Klick-Test (Desktop >=1200px): Produkt mit 4 Bildern oeffnen, ganz
+      nach unten scrollen -> letztes Bild endet buendig mit dem
+      Werbebanner (die Galerie "folgt" beim Scrollen); Gegenprobe mit
+      7-Bilder-Produkt -> Verhalten wie bisher.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
