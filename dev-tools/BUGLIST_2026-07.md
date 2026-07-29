@@ -4046,6 +4046,49 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Preis/Discount setzen. Test-Theme ist eine KOPIE - erhaelt den Fix
       nicht per Git-Sync (neu kopieren oder Asset-Update nach Freigabe).
 
+## 177. [FEATURE] Gift-Rubbellos: Success-Layouts aus Design-Export v2 (User 29.07.)
+- [~] Diff v1 -> v2 ("Shopify Ajax Cart Drawer (2).zip"): neuer
+      Erfolgs-Zustand, sobald das Geschenk qualifiziert im Warenkorb liegt.
+      Saver-Ansicht (Fortschritt) verschwindet, stattdessen eines von zwei
+      Layouts (Original-Prop successDesign):
+      GOLD POP: goldene Karte (135deg #F6D06B->#F0A12A->#E2921C, Border
+      #B67F14, Gold-Schatten), 6 Konfetti-Partikel, Foto -3 Grad rotiert
+      in weissem 3px-Rahmen, aufpoppendes "Gratis"-Siegel (sealPop),
+      "Geschafft!" / "Geschenk gesichert" / Name + Streichwert + 0,00 /
+      Pill "Im Warenkorb" (checkPop) / "Endet in" + Uhr.
+      INK LUXE: dunkle Karte (#211A0A->#17140A, Gold-Border + Glow),
+      Texte links ("Exklusiv freigeschaltet" / "Dein Geschenk ist da"),
+      Foto rechts mit Gold-Ring + bob, Siegel/Pill invertiert.
+      PORT: Saver in .cgs__saver gewrappt (display:none bei .cgs--incart),
+      Success-Markup im Card-Div (nur die konfigurierte Variante wird
+      gerendert; Wahl = NEUES Setting gift_success_design, Root-Klasse
+      cgs--sgold/--sink), 4 neue Keyframes (checkpop/pop2/sealpop/
+      confetti), Karten-Rekolorierung per .cgs--incart-Selektoren,
+      pop2 statt pop beim Success-Flip. JS: incart-Toggle in refreshUI
+      (Originalformel revealed && qualified && !expired), reveal()
+      refresht sofort (auch designMode), beide Uhren (Saver + Success)
+      via setClock/querySelectorAll.
+      0,00-Preis kommt aus {{ 0 | money }} (Shop-Format), Texte aus 4
+      NEUEN Locale-Keys (gift_success_done, gift_in_cart_label,
+      gift_success_unlocked_kicker, gift_success_here; 10 Sprachen);
+      Gold-Headline nutzt bestehendes gift_secured.
+      BEWUSST NICHT portiert: (a) die "rise"-Sternchen des Exports sind
+      dort toter Code (im showSaver-Zweig verschachtelt, der bei
+      giftInCart nie rendert - gegenseitig ausschliessend); (b) die
+      dynamischen Saver-Umfaerbungen (q ? gold : ...) sind aus demselben
+      Grund unsichtbar; (c) Statustext-Aenderung "Gratis in deinem
+      Warenkorb" ist im Saver ebenfalls unerreichbar (qualified ->
+      Success-Layout) - Key gift_status_unlocked bleibt unveraendert.
+      Verifiziert headless (repro-gift-scratch.js, jetzt 26 Checks PASS):
+      kompletter Alt-Flow weiter gruen; NEU: Success Gold sichtbar +
+      Saver weg, Karte gold (computed 135deg-Verlauf), Texte/Pill/0,00,
+      Uhr tickt im Success-Layout, 6 Konfetti; Unterschreiten -> Saver
+      kommt zurueck; Ablauf beendet Success; Reload qualifiziert ->
+      Success aktiv; Ink-Variante rendert exklusiv mit dunkler Karte,
+      Glow und eigenen Texten. theme check 400/41, Snippet 0 Offenses.
+      Summit-Folgeliste: NEUES Setting gift_success_design (+ #176:
+      gift_scratch_goal).
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
