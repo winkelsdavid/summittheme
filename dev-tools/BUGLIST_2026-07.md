@@ -4241,17 +4241,47 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       reduced-motion sichtbar ohne Animation, mobil 44px-Bild + Karte im
       Viewport, keine JS-Fehler. node --check OK, Schema-JSON valide,
       check-theme.mjs unveraendert (84/283/95).
+      NACHTRAG 30.07. (User-GO "es soll ja an die marken angepasst sein"):
+      Die drei markenrelevanten Farben sind jetzt an die Store-Palette
+      gekoppelt statt hart vorbelegt. Klaerung vorab am Kontrakt: Fuer das
+      MAPPING selbst braucht es das nicht - type:color wird per
+      MAPPABILITY_CONTRACT 1a automatisch color_role, und Farben sind
+      ausdruecklich KEINE Operator-Mapping-Flaeche ("Marke/Design laeuft
+      ueber color_role + Theme-Defaults"). Relevant ist, WOHER der Wert
+      pro Store kommt: entweder Summit fuellt die Rolle je Store aus der
+      Brand-Palette (funktioniert ueber semantische Color-IDs,
+      SUMMIT_V1_PLAN Phase 3: 11 Rollen greifen) - oder das Theme faellt
+      selbst auf die Palette zurueck, dann ist NICHTS zu befuellen.
+      UMSETZUNG nach der Theme-Konvention (BACKLOG.md: leer bzw.
+      rgba(0,0,0,0) == "nicht gesetzt", wie announcement-bar/
+      custom-reviews/Preis-Badges): Schema-Defaults der drei Felder
+      entfernt, Liquid-Fallback-Kette color_bg -> var(--g-chrome-bg,#fff),
+      color_text -> var(--g-color-heading,#16181D), color_accent ->
+      settings.branding_color -> #1A5BFF. Gesetzte Farben gewinnen
+      weiterhin. color_verified bleibt FIX #108043 (semantisches Signal,
+      kein Markenwert - ein Shop mit roter Marke soll kein rotes Haekchen
+      bekommen) und faengt geleerte Werte ab, damit kein unsichtbarer
+      Text entsteht. Schema-infos ergaenzt ("Empty = ...").
+      P4-Risiko geprueft und ausgeraeumt: color-mix(in srgb, var(--x) N%,
+      transparent) loest korrekt auf (computed: color(srgb ... / 0.55)) -
+      keine "invalid at computed-value time"-Falle, weil die var()s
+      Literal-Fallbacks tragen und beide im Theme definiert sind
+      (header-css 162/178, von der ALTEN Karte schon genutzt).
+      Verifiziert: repro-180 jetzt 51 Checks PASS - Palette-Zustand
+      (Karte Chrome-BG, Titel Heading-Farbe, Punkt/View/Countdown-Gradient
+      Branding-Farbe, Verifiziert-Gruen fix, color-mix aufgeloest,
+      Border/Bild-Tonung nicht transparent), Override-Zustand (gesetzte
+      Farben gewinnen) und Geleert-Zustand (Rueckfall auf die Palette,
+      kein transparenter Text).
       OFFEN (Konfiguration/Design, kein Code):
-      - Die 4 Farb-Defaults sind FIX (#FFFFFF/#16181D/#1A5BFF/#108043),
-        nicht an die Theme-Palette gekoppelt. Alte Karte nutzte
-        var(--g-chrome-bg)/var(--g-color-heading). Pro Store/Preset
-        setzen oder auf Wunsch an die Palette haengen.
       - Der globale Radius (settings.radius_allimg_range, header-css)
         greift nicht mehr auf die Karte (fix 14px / mobil 12px).
       - Die "Local"-Ortsangabe wird nicht mehr angezeigt (Design-
         Entscheidung des Exports).
       Summit-Folgeliste: NEUE Settings color_bg/color_text/color_accent/
-      color_verified (Typ color); ENTFALLEN Block-Setting `local` (Writer
+      color_verified (Typ color -> auto color_role; muessen NICHT gemappt
+      werden, ungesetzt folgen sie seit dem Nachtrag der Store-Palette);
+      ENTFALLEN Block-Setting `local` (Writer
       kann es weglassen, Altwerte schaden nicht); RENAME_MAP-Eintrag fuer
       product-suggest (`local`->`location_caption`) ist damit gegenstands-
       los. Block-Produkt-Handles muessen weiterhin pro Ziel-Shop gemappt
