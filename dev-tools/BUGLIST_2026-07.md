@@ -4292,6 +4292,71 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       das Produkt; "X" blendet sie bis zum Tab-Schliessen aus; im Editor
       bleibt sie beim Bearbeiten sichtbar.
 
+## 181. Produkt-Media-Icon-Rail: Geisterkachel bei kurzen Benefit-Listen
+- [~] UMGESETZT 2026-08-04 (Summit-Admin-Session). SYMPTOM: Produktseite,
+      Side-Icons-Rail (product-media, activate_side_icons) - die vierte
+      Kachel rendert mit Duplikat-Icon (gleich Kachel 1) und LEEREM Text,
+      immer dann wenn die benefit-Metafeld-Listen kuerzer als 4 sind.
+      Live gesehen am Grinder (nitrothemex): benefit_texts/icons hatten
+      3 Paare (ein Icon-Upload beim Push endgueltig fehlgeschlagen), die
+      Rail zeigte 4 Kacheln.
+      ORT: snippets/product-media.liquid, Loop `{% for ii in (1..4) %}`.
+      Slot-Icon lief ueber `smf_bicons[forloop.index0 | modulo:
+      smf_bicons.size]` und WRAPPT damit (#158), Slot-Text ueber
+      `smf_btexts[forloop.index0]` und wrappt NICHT. Der Guard
+      `{% if slot_icon != blank or slot_text != blank %}` liess die
+      Kachel also am gewrappten Icon durch, obwohl gar kein Paar da war.
+      MODULO IST ABSICHT UND BLEIBT (#158): Bei reduzierten Non-Hero-Pools
+      (Mengensteuerung) schreibt der Nitro-Writer wiederholte Icon-GIDs;
+      Shopify DEDUPLIZIERT die list.file_reference beim Aufloesen
+      (#156-Umfeld; live gemessen: gespeichert 7, resolved size=3).
+      benefit_icons kommt dann KUERZER an als benefit_texts, und der
+      Modulo ueberbrueckt das gewollt (A-B-A-B). Der Fall muss weiter
+      laufen - deshalb kein Rueckbau, sondern ein zusaetzlicher Guard.
+      KONTRAKT (Nitro-Seite, seit 29.07. live): benefit_texts +
+      benefit_icons werden PAARWEISE geschrieben - ein Slot zaehlt nur
+      mit Icon UND Text, Loecher kosten genau ihr eigenes Paar. Die
+      TEXT-Liste ist json und wird nie dedupliziert, ist damit die
+      Autoritaet fuer die Paar-Anzahl. Nitro-seitig neu (04.08.):
+      Second-Sweep-Retry + die Luecke steht jetzt im Run-Log
+      ("Benefit-Icon 3 fehlt") - das Theme muss nur sauber degradieren.
+      FIX: `render_slot` wird explizit berechnet; ist smf_btexts gesetzt
+      und der Slot-Text leer, faellt der Slot aus. Modulo unangetastet.
+      ABWEICHUNG VOM VORGESCHLAGENEN PATCH: Der Vorschlag war
+      `{% if render_slot and (slot_icon != blank or ...) %}` - Shopify
+      Liquid kennt KEINE Klammern in Bedingungen und haette `(slot_icon`
+      als Variablennamen gelesen. Liquid wertet `and`/`or` rechts-nach-
+      links aus, ohne Klammern waere die Gruppierung zufaellig richtig
+      gewesen - zu fragil. Stattdessen Boolean vorberechnet, Semantik
+      identisch, keine Praezedenz-Annahme.
+      Zweite Fundstelle geprueft und AUSGESCHLOSSEN: sections/icon-list
+      .liquid nutzt denselben #158-Modulo, hat den Bug aber nicht - dort
+      laeuft die Schleife ueber section.blocks, ein fehlender
+      Metafeld-Eintrag faellt auf das Block-Setting zurueck statt eine
+      leere Kachel zu erzeugen.
+      Verifiziert (repro-181-ghost-tile.mjs, 27 Checks PASS, ECHTER
+      Section-Block per Marker aus der Datei geschnitten, liquidjs,
+      Vorpatch-Fassung via `git show HEAD:` gegengerendert): Vorpatch
+      belegt die Geisterkachel in A (3 Paare) und C (texts=3/icons=1);
+      gepatcht 3 statt 4 Kacheln; Reduced-Pool A-B-A-B unveraendert
+      (B: texts=4/icons=2, C: texts=3/icons=1); Loch in der Mitte kostet
+      sein Paar (["a","","c"] -> 2 Kacheln); ohne Metafelder, mit nur
+      teilweise gefuellten Section-Settings, mit Nur-Text-Kachel und mit
+      leeren Arrays (Normalisierung auf nil) ist die Ausgabe BYTE-
+      IDENTISCH zur Vorpatch-Fassung. if/endif + unless/endunless
+      ausgeglichen, keine Klammer-Bedingung im Block.
+      Byte-Vergleich musste CRLF/LF normalisieren - die Arbeitskopie ist
+      CRLF, `git show` liefert LF; ohne Normalisierung vergleicht man den
+      Checkout statt den Patch (erste Abweichung an Index 24, also vor
+      jeder geaenderten Stelle). Datei bleibt rein CRLF (470/0).
+      Snippet-only, kein `{% schema %}` / kein Section-Rename ->
+      parse-theme-Kontrakt der Nitro-Seite unberuehrt.
+      check-theme.mjs unveraendert (84/283/95).
+      Klick-Test: Produktseite eines Produkts mit 3 Benefit-Paaren
+      (Grinder) -> Rail zeigt 3 Kacheln, keine leere vierte; Produkt mit
+      4 Paaren -> unveraendert 4; Produktseite ohne Benefit-Metafelder
+      (manuelle Section-Settings) -> unveraendert.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
