@@ -4357,6 +4357,49 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       4 Paaren -> unveraendert 4; Produktseite ohne Benefit-Metafelder
       (manuelle Section-Settings) -> unveraendert.
 
+## 182. Icons-Section liest dedizierte list_icons (Nitro-Sichtung #5)
+- [~] UMGESETZT 2026-08-06. BEFUND: icon-list.liquid zog seine Icon-BILDER
+      aus summit.benefit_icons - derselben 4er-Liste (Crops 4-7 des
+      15er-Sheets) wie die Benefit-Rail in product-media.liquid. Beide
+      Flaechen derselben Produktseite zeigten deshalb zwangslaeufig
+      dieselben 4 Icons (nur die Texte unterschieden sich, weil
+      icon_items eine eigene Liste ist).
+      NITRO-HAELFTE LIVE seit 06.08. (Commit 38c4cc8 im nitro-Repo): der
+      Push schreibt zusaetzlich summit.list_icons (list.file_reference,
+      4 GIDs = Crops 0-3 - ANDERE Icons als benefit_icons). Der Writer
+      skippt Upload-Loecher (Log list_icons_hole_skipped), die Liste darf
+      also ehrlich kuerzer als 4 sein.
+      FIX (Muster identisch zu #140/#142 image_icons in image-with-icons):
+      Lese-Stelle im Header-Liquid-Block erweitert - list_icons | compact
+      gewinnt; leer/fehlend -> benefit_icons | compact wie bisher (alte
+      Shops ohne das neue Metafeld rendern BYTE-identisch); leer ->
+      Normalisierung auf nil -> Block-Settings. Die Konsum-Stelle mit dem
+      #158-Modulo-Wrap ist UNANGETASTET - sie haengt an der Variablen
+      smf_bicons und wrappt damit automatisch auch die kuerzere
+      list_icons-Liste. Keine Klammer-Bedingungen noetig (alles im
+      {%- liquid -%}-Tag; Lehre aus #181 beachtet).
+      Verifiziert (repro-182-list-icons.mjs, 23 Checks PASS, ECHTE
+      Logik-Slices aus der Datei via Marker, liquidjs, Vorpatch via
+      `git show HEAD:` gegengerendert): list_icons gewinnt (L1-L4 statt
+      B1-B4); ohne list_icons identisch zu vorher; 3er-Liste wrappt
+      L1-L2-L3-L1; leere Liste faellt auf benefit_icons; nil-Eintraege
+      werden per compact geschluckt (2er-Wrap); ohne Metafelder und mit
+      product nil identisch zu vorher (Alt-Verhalten); list_icons ohne
+      icon_items mischt neue Icons mit Setting-Texten. Struktur: Modulo
+      unangetastet, genau eine Konsum-Stelle, keine neue Klammer-
+      Bedingung (2 Altbestand-Treffer "rgba(0,0,0,0)" in Z. 171/173 sind
+      String-Literale, legitim). check-theme.mjs unveraendert
+      (84/283/95), Datei rein CRLF (656/0).
+      Section-only, kein {% schema %}-Touch, kein Setting-/Slug-Rename ->
+      parse-theme-Kontrakt unberuehrt. METAFIELD_CONTRACT.md-Kopie im
+      Theme-Repo traegt list_icons noch nicht - Pflege-Regel: im
+      Summit-Admin-Repo aktualisieren, Kopie nachziehen.
+      Klick-Test (Beweis lt. Auftrag): Produktseite mit beiden Sections ->
+      Benefit-Rail und Icons-Section zeigen 8 VERSCHIEDENE Icons;
+      Metafeld summit.list_icons traegt 4 GIDs, die sich von
+      summit.benefit_icons unterscheiden. Alter Shop ohne list_icons ->
+      Icons-Section unveraendert wie vor dem Patch.
+
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
       beide Instanzen), DANACH Slideshow 1 splitten - Variante ohne den Schema-
