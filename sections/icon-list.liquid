@@ -38,9 +38,16 @@
   # METAFIELD_CONTRACT.md: summit.*-Metafields gewinnen, wenn gesetzt; leere
   # Arrays zaehlen als nicht gesetzt (Normalisierung auf nil). Ausserhalb von
   # Produktseiten ist product nil -> alle Reads leer -> Alt-Verhalten.
+  # #182: dedizierter Key list_icons (Crops 0-3) gewinnt; ohne ihn greift wie
+  # bisher der geteilte Key benefit_icons (Crops 4-7, gleiche Liste wie die
+  # Benefit-Rail in product-media) - alte Shops rendern damit unveraendert.
+  # Muster identisch zu image-with-icons (#140/#142 image_icons).
   # #156: | compact - ohne den Filter ist bei list.file_reference kein
   # Index-Zugriff moeglich (liste[0] == nil) und der Guard verwirft alles.
-  assign smf_bicons = product.metafields.summit.benefit_icons.value | compact
+  assign smf_bicons = product.metafields.summit.list_icons.value | compact
+  unless smf_bicons and smf_bicons[0]
+    assign smf_bicons = product.metafields.summit.benefit_icons.value | compact
+  endunless
   unless smf_bicons and smf_bicons[0]
     assign smf_bicons = nil
   endunless
@@ -77,7 +84,7 @@
         {%- for block in section.blocks -%}
           {%- liquid
             assign type_icon = block.settings.type_icon
-            # METAFIELD_CONTRACT.md: image_icon <- summit.benefit_icons[i],
+            # METAFIELD_CONTRACT.md: image_icon <- summit.list_icons[i]/benefit_icons[i],
             # title/description <- summit.icon_items[i].heading/.text
             # (i = 0-basierter Block-Index). Fehlender Eintrag -> Block-Setting.
             assign il_icon = block.settings.image_icon
