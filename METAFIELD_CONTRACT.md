@@ -1,4 +1,5 @@
-> **Read-only Kopie — Quelle: Summit-Admin-Repo, bei Abweichung dort aktualisieren.**
+> **Read-only Kopie — Quelle: Summit-Admin-Repo (nitro-Repo-Root), Stand 9cbe9cc (2026-08-06).**
+> **Änderungen NIE hier einpflegen — per Handoff an die Nitro-Session (Pflege-Regel §6). Direkt-Edits in der Kopie haben die Juli-Gabelung verursacht (BUGLIST #182-Nachtrag).**
 
 # METAFIELD_CONTRACT.md — produktspezifische Inhalte am Produkt statt in der Vorlage
 
@@ -68,6 +69,7 @@ Scope-Ableitung MUSS die Chain bis zur Wurzel prüfen.
 |---|---|---|---|
 | `benefit_icons` | `list.file_reference` | 4 Icons, Reihenfolge = Slot 1–4 | Icon Crop, Outputs 0–3 |
 | `benefit_texts` | `json` | `string[]` (4 Beschriftungen, index-gleich zu Icons) | Icon Design Base → `heading`, Outputs 0–3 |
+| `list_icons` | `list.file_reference` | 4 dedizierte Icons der Icons-Section (#5, 06.08.2026 — vorher las die Section `benefit_icons` und doppelte die Rail-Icons) | Icon Crop, 4 Outputs ab `icon_item:image_icon`-BTM-Index |
 | `usps` | `json` | `string[]` (Häkchen-/Salepoint-Texte) | Image with Bullets → `point` |
 | `faq` | `json` | `[{ "q": string, "a": string }]` (bis 12) | FAQs 12 Q&A → `question`/`answer` |
 | `reviews` | `json` | `[{ "name": string, "text": string }]` | Name Generation → `name` + Reviews → `review` |
@@ -75,8 +77,8 @@ Scope-Ableitung MUSS die Chain bis zur Wurzel prüfen.
 | `banner` | `file_reference` | Produktseiten-Banner | Banner Design Product Page, Output 0 |
 | `banner_image` | `file_reference` (MediaImage) | Werbe-Banner-Bild (Dual-Write, gleiche GID wie `banner`) | Banner Design Product Page, Output 0 (BTM `image:image`) |
 | `banner_video` | `file_reference` (Video) | Werbe-Video des Produkts (Seedance, mp4, autoplay/loop/muted im Theme) | Seedance Video Generation, Output 0 (BTM `image:video`) |
-| `related_products` | `list.product_reference` | Alle anderen Katalog-Produkte des Shops, Hero zuerst, dann Katalog-Reihenfolge; bei Ein-Produkt-Shops leer oder fehlend | Summit-Produkt-Push (bereits live, gepinnt als „Summit Related Products“) |
-| `icons_image` | `file_reference` (MediaImage) | Produkt-eigenes Bild für die Sektion Image With 4 Icons (Quelle: Section-Feld „Image“ in Summit, pro Produkt aufgelöst; bei ungemapptem Feld wird der Key ausgelassen) | Summit-Produkt-Push (gepinnt als „Summit Icons Image“) |
+| `related_products` | `list.product_reference` | Alle anderen Katalog-Produkte des Shops, Hero zuerst, dann Katalog-Reihenfolge; bei Ein-Produkt-Shops leer oder fehlend | Summit-Produkt-Push (live, gepinnt als „Summit Related Products“ — `relatedProductsSync.ts`; Merge aus Theme-Kopie 06.08.2026) |
+| `icons_image` | `file_reference` (MediaImage) | Produkt-eigenes Bild für die Sektion Image With 4 Icons (Quelle: Section-Feld `sec_image_with_icons:section_image`, pro Produkt aufgelöst; bei ungemapptem Feld wird der Key ausgelassen) | Summit-Produkt-Push (live, gepinnt als „Summit Icons Image“; Merge aus Theme-Kopie 06.08.2026) |
 | `managed` | `boolean` | „Summit verwaltet dieses Produkt“ | existiert bereits (Push) |
 
 **Reserviert (aktuell unmapped, bei Aktivierung diesen Key nutzen):**
@@ -109,32 +111,34 @@ Version, `resource_block_type_mappings` / `resource_field_definitions`):
 | Product Overview | Block `custom_review` → `image` | `review_images[3 + i]`¹ |
 | Product Overview | Block `review_images` → `image_1..3` | `review_images[0..2]` |
 | Product Overview | Block `videos` → `image_1..3` | `review_images[4..6]` |
-| Product Overview | Block `videos` → `video_1..4` | `review_videos[0..3]` (NEU, Theme-Patch 27.07.2026) |
-| Testimonial Slider Auto (`reviews-slider`) | Block `review` → `name` / `heading` / `review_body` | `reviews[i].name` / `.title` / `.text` (i = Block-Index, NEU 27.07.2026) |
-| Testimonial Slider Auto (`reviews-slider`) | Block `review` → `image` | `review_images[i]` (NEU 27.07.2026) |
-| Image With Auto Slider (`image-auto-slider`) | Block `video` → `image` | `slider_images[i]` → `review_images[i]` (NEU 27.07.2026) |
+| Product Overview | Block `videos` → `video_1..4` | `review_videos[0..3]` (Theme-Patch 27.07.2026; Writer-Key noch nicht angelegt — ohne ihn rendert der Block wie bisher) |
+| Testimonial Slider Auto (`reviews-slider`) | Block `review` → `name` / `heading` / `review_body` | `reviews[i].name` / `.title` / `.text` (i = Block-Index, 27.07.2026) |
+| Testimonial Slider Auto (`reviews-slider`) | Block `review` → `image` | `review_images[i]` (27.07.2026) |
+| Image With Auto Slider (`image-auto-slider`) | Block `video` → `image` | `slider_images[i]` → `review_images[i]` (27.07.2026) |
+| Product Content (`product-content`) | Block `related_products` (Karten-Loop) | `related_products[i]`, Anzahl via Block-Setting `product_limit` (hartes Liquid-`limit:`); ersetzt Search & Discovery komplett, kein Fallback — leer ⇒ Block rendert nichts (Theme-Patch 28.07.2026) |
+| Product Overview | Block `related-product` (Auto-Zweig, wenn `product_1..3` leer) | `related_products[i]`, Anzahl via Block-Setting `product_limit` (28.07.2026, Default 3); manuelle Picks `product_1..3` haben Vorrang; kein Fallback — leer ⇒ Block rendert nichts |
 | Product Overview | Block `image` → `image` | `banner` |
+| Product Overview | Block `image` → `video` | `banner_video` → `banner` → Setting-Video → Setting-Bild (`product-template-1.liquid`, Theme-Patch #139, 24.07.2026) |
 | Product Overview | Block `title` → `custom_title` | `product.title` (nativ) |
 | Product Suggest | `product` | `product.title` (nativ) |
-| Image With 4 Icons | Section-Bild (`image-with-icons.liquid`) | `icons_image` → `section_image` (Section-Setting) → Video-Settings → Brand-Fallback; **kein `banner_image`-Bezug mehr** (bleibt der Banner-Sektion; Theme-Patch 28.07.2026) |
-| Image With 4 Icons | Block `text_icon` → `icon_image` | `image_icons[i]` → `benefit_icons[i]` (i = Block-Index) |
-| Image With 4 Icons | Block `text_icon` → `block_title` / `block_description` | `image_icon_items[i].heading` / `.text` → `icon_items[i].heading` / `.text` |
-| Icons (`icon-list`) | Block `icon_item` → `image_icon` | `benefit_icons[i]` |
-| Icons (`icon-list`) | Block `icon_item` → `title` / `description` | `icon_items[i].heading` / `.text` |
-| Icons (`icon-list`) | `subtitle_top` / `title` / `description` (Section) | `icons_intro.subtitle` / `.title` / `.description` |
-| Product Overview | Block `image` → `video` | `banner_video` → `banner` → Setting-Video → Setting-Bild (Theme-Patch 24.07.2026) |
-| Product Content (`product-content`) | Block `related_products` (Karten-Loop) | `related_products[i]`, Anzahl via Block-Setting `product_limit` (hartes Liquid-`limit:`); ersetzt Search & Discovery komplett, kein Fallback — leer ⇒ Block rendert nichts (Theme-Patch 28.07.2026) |
-| Product Overview | Block `related-product` (Auto-Zweig, wenn `product_1..3` leer) | `related_products[i]`, Anzahl via Block-Setting `product_limit` (NEU 28.07.2026, Default 3); manuelle Picks `product_1..3` haben Vorrang; kein Fallback — leer ⇒ Block rendert nichts (Theme-Patch 28.07.2026) |
+| Image With 4 Icons | Section-Bild (`image-with-icons.liquid`) | `icons_image` → `section_image` (Section-Setting) → Video-Settings → Brand-Fallback; **kein `banner_image`-Bezug mehr** (Theme-Patches #167–169, 28.07.2026 — löste die #141-Fassung ab, die noch `banner_image` las) |
+| Image With 4 Icons | Block `text_icon` → `icon_image` | `image_icons[i]` → `benefit_icons[i]` (i = Block-Index, Theme-Patch #142) |
+| Image With 4 Icons | Block `text_icon` → `block_title` / `block_description` | `image_icon_items[i].heading` / `.text` → `icon_items[i].heading` / `.text` (#142) |
+| Icons (`icon-list`) | Block `icon_item` → `image_icon` | `list_icons[i]` → `benefit_icons[i]` (Fallback; Writer 06.08.2026, Theme-Patch #182 deployt 06.08.2026 — beide Hälften live) |
+| Icons (`icon-list`) | Block `icon_item` → `title` / `description` | `icon_items[i].heading` / `.text` (#140) |
+| Icons (`icon-list`) | `subtitle_top` / `title` / `description` (Section) | `icons_intro.subtitle` / `.title` / `.description` (#140; Writer live seit 28.07.2026 — Bundler `icons_intro` aus den Section-Feld-Mappings) |
 
-**Banner-Keys (K2, 23.07.2026; Slot-Aufteilung 25.07.2026):** Der Writer
-schreibt `banner` UND `banner_image` mit derselben MediaImage-GID
-(Dual-Write). `banner` bedient den älteren Reader (Branch
-`feat/summit-metafields`, Product Overview Block `image`); `banner_image`
-bedient die Image-With-4-Icons-Section (Priorität Bild → Section-Setting).
-`banner_video` liest **nur noch** Product Overview (Block `image`,
-Theme-Patch 24.07.2026) — der Video-Zweig in Image With 4 Icons ist am
-25.07.2026 entfernt worden, weil sonst beide Sections derselben
-Produktseite dasselbe Video zeigen.
+**Banner-Keys (K2 23.07.2026, Slot-Aufteilung seit #139/#141 am
+24.07.2026):** Der Writer schreibt `banner` UND `banner_image` mit
+derselben MediaImage-GID (Dual-Write). Die Slots sind seit #141 sauber
+getrennt: das **Video** lebt ausschließlich im Werbe-Banner der
+Produktseite (Product Overview Block `image`, gelesen von
+`product-template-1.liquid` seit #139), das **Bild** bedient zusätzlich
+die Image-With-4-Icons-Section. Grund der Trennung: Beide Sections lasen
+`banner_video`, sodass dieselbe Produktseite das Video doppelt zeigte —
+#136 hatte den Video-Read nur deshalb in Image-With-4-Icons, weil der
+Banner-Slot ihn damals noch nicht hatte. Beim Bearbeiten also nicht
+versehentlich wieder einbauen.
 `banner_video` ist die GID eines Shopify-**Video**-Files (fileCreate
 `contentType: VIDEO`, ohne Readiness-Polling — die Referenz auf ein noch
 verarbeitendes File ist gültig; das Theme rendert es, sobald Shopify
@@ -142,18 +146,32 @@ fertig transkodiert hat). Quelle ist das Block-Type-Mapping `image:video`
 der Version — Versionen ohne dieses Mapping schreiben schlicht kein
 `banner_video` (Skip-Reason `no_binding`).
 
-**Icon-Keys (Theme-Patches 24./25.07.2026):** `icon_items` (json-Liste
-`[{heading, text}]`) und `icons_intro` (json-Objekt
-`{subtitle, title, description}`) sind NEU und müssen writer-seitig noch
-angelegt werden; `benefit_icons` schreibt der Writer bereits. Alle Reads
-sind item-/feldweise: fehlender Index ODER leeres Feld → Section-/Block-
-Setting (kein Skip), Einträge über die Blockzahl hinaus werden ignoriert.
-Icons und Image With 4 Icons teilen sich `benefit_icons`/`icon_items`, d. h.
-ohne weitere Keys zeigen beide Sections denselben Inhalt. Sollen sie sich
-unterscheiden, schreibt der Writer zusätzlich die **dedizierten** Keys
-`image_icons` (list.file_reference) und `image_icon_items` (json, gleiche
-Struktur wie `icon_items`) — die liest ausschließlich Image With 4 Icons und
-sie gewinnen dort vor den geteilten Keys.
+**Icon-Keys (Theme-Patches #140/#142, Writer 25.07.2026):** Zwei Ebenen,
+weil Icons und Image With 4 Icons auf DERSELBEN Produktseite liegen —
+läsen beide nur die geteilten Keys, stünden identische Icon-Blöcke
+zweimal untereinander (die Doppelung, die beim Video gerade beseitigt
+wurde).
+- **Geteilt:** `benefit_icons` (list.file_reference) + `icon_items`
+  (json, `[{heading, text}]`) — beide Sections lesen sie.
+- **Dediziert:** `image_icons` + `image_icon_items` (gleiche Typen) liest
+  ausschließlich Image With 4 Icons und gewinnen dort. Damit lassen sich
+  beide Sections unterscheiden, ohne weiteren Theme-Patch — die
+  Entscheidung fällt auf der Writer-Seite.
+
+Quellen sind die Block-Type-Mappings der Version: `icon_item:title` +
+`icon_item:description` → `icon_items`; `text_icon:block_title` +
+`text_icon:block_description` → `image_icon_items`; `text_icon:icon_image`
+→ `image_icons`. Beide Text-Bindings dürfen aus demselben object_array-Pool
+kommen (Feld-Trennung über `objectField`) oder aus zwei Pools (dann per
+Index gezippt). Leere Paare fallen raus — das Theme greift für diesen Index
+auf sein Block-Setting zurück (item-/feldweiser Fallback).
+
+`icons_intro` (json `{subtitle, title, description}` für den Section-Kopf
+der Icons-Section) ist seit 28.07.2026 writer-seitig LIVE: anders als die
+Item-Listen speist es sich nicht aus Block-Type-Mappings, sondern aus den
+Section-Feld-Mappings (`sec_icon_list:subtitle_top/title/description`) —
+der Bundler hat dafür einen eigenen Pfad (Stale-Korrektur 06.08.2026;
+stand hier fälschlich als „noch offen").
 
 **Referenz-Listen brauchen `| compact` (Theme-Patch 27.07.2026, #156):** Bei
 `list.<typ>_reference` lässt Shopify-Liquid **keinen Index-Zugriff** zu —
@@ -184,7 +202,7 @@ Beispiele: Liste mit 16 ⇒ `videos`-Block zieht wie bisher `[4,5,6]`; Liste mit
 ⇒ `[1,2,0]`. Icon-Pool mit 2 auf 4 Blöcke ⇒ `0,1,0,1`.
 
 Gilt für: `review_images` (alle drei Bereiche), `review_videos`, `benefit_icons`,
-`image_icons`. Nicht für `json`-Listen — dort bleibt der itemweise
+`image_icons`, `list_icons`. Nicht für `json`-Listen — dort bleibt der itemweise
 Settings-Fallback (fehlender Eintrag ⇒ Block-Setting).
 
 ¹ Die Index-Arithmetik spiegelt die heutigen `outputIndex`-Werte der
@@ -214,7 +232,7 @@ MUSS damit rechnen:
 - **`videos`-Block, Slot 4 (Bilder)**: der Bild-Kontrakt deckt nur
   `image_1..3` (= `review_images[4..6]`). Bei gesetztem `review_images`
   rendert Slot 4 KEIN Settings-Bild mehr (Kein-Mischen-Regel).
-- **`videos`-Block, Videos (`review_videos`, NEU 27.07.2026)**: Liste vom Typ
+- **`videos`-Block, Videos (`review_videos`, 27.07.2026)**: Liste vom Typ
   `list.file_reference` auf Shopify-**Video**-Files, Zuordnung schlicht
   0-basiert Slot für Slot (`video_1..4` ← `review_videos[0..3]`) — bewusst
   OHNE die geerbte Index-Arithmetik der Bilder. Semantik hier **itemweise**,

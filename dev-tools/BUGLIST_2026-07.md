@@ -4422,6 +4422,14 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       RICHTIGER WEG (Pflege-Regel): Nitro-Session merged die Kopie-
       Zeilen in den Master + korrigiert die 2 Stale-Stellen, DANN Kopie
       frisch ziehen (Handoff-Liste an David uebergeben, 06.08.).
+      ERLEDIGT 06.08.: Merge nitro-seitig durch (9cbe9cc) - alle Kopie-
+      only-Inhalte im Master, beide Stale-Stellen korrigiert plus eine
+      dritte (icons_intro stand faelschlich als "writer-seitig offen",
+      Bundler schreibt es seit 28.07.). Kopie frisch gezogen (Superset
+      verifiziert: alle Keys/Konsumenten-Zeilen vorhanden, kein OFFEN-
+      Rest), Read-only-Header verschaerft: Aenderungen NIE direkt in die
+      Kopie, IMMER per Handoff an die Nitro-Session (Pflege-Regel §6) -
+      Direkt-Edits waren der Drift-Modus der Juli-Gabelung.
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
