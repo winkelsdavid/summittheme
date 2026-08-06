@@ -4399,6 +4399,29 @@ transparent fuer Layout-Paritaet). Innen bleibt exakt die ALT-Deklaration.
       Metafeld summit.list_icons traegt 4 GIDs, die sich von
       summit.benefit_icons unterscheiden. Alter Shop ohne list_icons ->
       Icons-Section unveraendert wie vor dem Patch.
+      NACHTRAG 06.08. (Auftrag "Kopie frisch aus dem Master ziehen" -
+      NICHT AUSGEFUEHRT, Befund stattdessen): METAFIELD_CONTRACT.md ist
+      GEGABELT. Der Master (nitro-Repo Root, Stand 38c4cc8) und die
+      Theme-Kopie haben sich seit ~23.07. unabhaengig weiterentwickelt -
+      Theme-Sessions schrieben Kontrakt-Updates in die Kopie (87ae4f2,
+      101a98c, 38d416c, fd737e6, 9472570, 0d1d423, 68eb4f0), die nie in
+      den Master zurueckflossen; `git log -S` findet related_products/
+      review_videos/icons_image in der Master-Historie NIE. Nur in der
+      KOPIE (im Master fehlend, aber live - Writer im nitro-Code
+      vorhanden): Tabellenzeilen related_products + icons_image; 5
+      Konsumenten-Zeilen (PO videos->video_1..4/review_videos, 2x
+      Testimonial Slider Auto, Image With Auto Slider, Product Content +
+      PO related-product/related_products); der #156-"| compact"-Absatz.
+      Im Master zudem STALE: Image-With-4-Icons-Section-Bild steht auf
+      banner_image (#141, 24.07.) - die Kopie und der Theme-Code lesen
+      seit #167-169 (28.07.) icons_image; die list_icons-Zeile traegt
+      noch "Theme-Patch OFFEN" (seit heute #182 erledigt). Nur im MASTER
+      (der Kopie voraus): list_icons-Zeilen, bessere Banner-/Icon-Keys-
+      Absaetze mit Begruendung, videos-Slot-4-Notiz. Kein File ist
+      Superset -> Overwrite in JEDE Richtung verliert Inhalt.
+      RICHTIGER WEG (Pflege-Regel): Nitro-Session merged die Kopie-
+      Zeilen in den Master + korrigiert die 2 Stale-Stellen, DANN Kopie
+      frisch ziehen (Handoff-Liste an David uebergeben, 06.08.).
 
 ## 21. [GEPARKT bis alle Bugs durch] Slideshow 1 in 2 Section-Typen splitten
 - [ ] User-Entscheidung 2026-07-09: Erst alle Bugs fixen (Fixes gelten dann fuer
